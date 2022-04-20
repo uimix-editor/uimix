@@ -1,6 +1,7 @@
 import { reaction } from "mobx";
 import { Element } from "../models/Element";
 import { Text } from "../models/Text";
+import { TextMount } from "./TextMount";
 
 export class ElementMount {
   constructor(element: Element) {
@@ -25,10 +26,48 @@ export class ElementMount {
   }
 
   private updateChildren(children: readonly (Element | Text)[]) {
-    throw new Error("TODO");
+    const existingElementMounts = new Map<Element, ElementMount>();
+    const existingTextMounts = new Map<Text, TextMount>();
+
+    for (const childMount of this.childMounts) {
+      if (childMount instanceof ElementMount) {
+        existingElementMounts.set(childMount.element, childMount);
+      } else {
+        existingTextMounts.set(childMount.text, childMount);
+      }
+    }
+
+    const newChildMounts: (ElementMount | TextMount)[] = [];
+    for (const child of children) {
+      if (child instanceof Element) {
+        const existingElementMount = existingElementMounts.get(child);
+        if (existingElementMount) {
+          newChildMounts.push(existingElementMount);
+          existingElementMounts.delete(child);
+        } else {
+          newChildMounts.push(new ElementMount(child));
+        }
+      } else {
+        const existingTextMount = existingTextMounts.get(child);
+        if (existingTextMount) {
+          newChildMounts.push(existingTextMount);
+          existingTextMounts.delete(child);
+        } else {
+          newChildMounts.push(new TextMount(child));
+        }
+      }
+    }
+
+    for (const elementMount of existingElementMounts.values()) {
+      elementMount.dispose();
+    }
+    for (const textMount of existingTextMounts.values()) {
+      textMount.dispose();
+    }
   }
 
   readonly element: Element;
   readonly dom: HTMLElement | SVGElement;
   private readonly disposers: (() => void)[] = [];
+  private childMounts: (ElementMount | TextMount)[] = [];
 }
