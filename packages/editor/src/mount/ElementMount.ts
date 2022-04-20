@@ -70,6 +70,13 @@ export class ChildMountSync {
     for (const textMount of existingTextMounts.values()) {
       textMount.dispose();
     }
+
+    while (this.dom.firstChild) {
+      this.dom.firstChild.remove();
+    }
+    for (const childMount of newChildMounts) {
+      this.dom.append(childMount.dom);
+    }
   }
 
   dispose(): void {
