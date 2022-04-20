@@ -1,5 +1,6 @@
 import { TreeNode } from "@seanchas116/paintkit/dist/util/TreeNode";
 import { makeObservable, observable } from "mobx";
+import { Component } from "./Component";
 import { Text } from "./Text";
 
 interface ElementOptions {
@@ -19,4 +20,8 @@ export class Element extends TreeNode<Element, Element, Element | Text> {
   @observable id = "";
 
   readonly attrs = observable.map<string, string>();
+
+  get component(): Component | undefined {
+    return this.parent?.component;
+  }
 }
