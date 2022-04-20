@@ -3,11 +3,13 @@ import { ElementMount } from "./ElementMount";
 import { MountRegistry } from "./MountRegistry";
 
 export class VariantMount {
-  constructor(variant: Variant) {
+  constructor(variant: Variant, registry: MountRegistry) {
     this.variant = variant;
+    this.registry = registry;
     this.rootMount = new ElementMount(
       variant.component.rootElement,
-      this.registry
+      variant,
+      registry
     );
     this.element.append(this.host);
 
@@ -15,7 +17,7 @@ export class VariantMount {
   }
 
   readonly variant: Variant;
-  readonly registry = new MountRegistry();
+  readonly registry: MountRegistry;
   readonly rootMount: ElementMount;
 
   readonly element = document.createElement("div");

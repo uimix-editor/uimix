@@ -1,12 +1,14 @@
 import { reaction } from "mobx";
 import { Element } from "../models/Element";
 import { Text } from "../models/Text";
+import { Variant } from "../models/Variant";
 import { MountRegistry } from "./MountRegistry";
 import { TextMount } from "./TextMount";
 
 export class ElementMount {
-  constructor(element: Element, registry: MountRegistry) {
+  constructor(element: Element, variant: Variant, registry: MountRegistry) {
     this.element = element;
+    this.variant = variant;
     // TODO: support reference to other component
     // TODO: support SVG elements
     this.dom = document.createElement(element.tagName);
@@ -21,12 +23,12 @@ export class ElementMount {
         }
       ),
     ];
-    this.registry.elementMounts.set(element, this);
+    this.registry.setElementMount(this);
   }
 
   dispose(): void {
     this.disposers.forEach((disposer) => disposer());
-    this.registry.elementMounts.deleteValue(this.element, this);
+    this.registry.deleteElementMount(this);
   }
 
   private updateChildren(children: readonly (Element | Text)[]) {
@@ -49,7 +51,9 @@ export class ElementMount {
           newChildMounts.push(existingElementMount);
           existingElementMounts.delete(child);
         } else {
-          newChildMounts.push(new ElementMount(child, this.registry));
+          newChildMounts.push(
+            new ElementMount(child, this.variant, this.registry)
+          );
         }
       } else {
         const existingTextMount = existingTextMounts.get(child);
@@ -57,7 +61,9 @@ export class ElementMount {
           newChildMounts.push(existingTextMount);
           existingTextMounts.delete(child);
         } else {
-          newChildMounts.push(new TextMount(child, this.registry));
+          newChildMounts.push(
+            new TextMount(child, this.variant, this.registry)
+          );
         }
       }
     }
@@ -71,6 +77,7 @@ export class ElementMount {
   }
 
   readonly element: Element;
+  readonly variant: Variant;
   readonly dom: HTMLElement | SVGElement;
   readonly registry: MountRegistry;
   private readonly disposers: (() => void)[] = [];
