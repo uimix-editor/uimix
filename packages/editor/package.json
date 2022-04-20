@@ -9,6 +9,7 @@
   },
   "dependencies": {
     "@seanchas116/paintkit": "*",
+    "css-what": "^6.1.0",
     "mobx": "^6.5.0",
     "mobx-react-lite": "^3.3.0",
     "react": "^18.0.0",
