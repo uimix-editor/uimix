@@ -1,5 +1,4 @@
 import { reaction } from "mobx";
-import { DOMElement } from "react";
 import { Element } from "../models/Element";
 import { Text } from "../models/Text";
 import { Variant } from "../models/Variant";
