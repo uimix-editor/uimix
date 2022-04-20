@@ -11,4 +11,8 @@ export class Variant {
 
   @observable selector = "";
   @observable mediaQuery = "";
+  @observable x = 0;
+  @observable y = 0;
+  @observable width: number | undefined = undefined;
+  @observable height: number | undefined = undefined;
 }
