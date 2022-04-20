@@ -3,11 +3,11 @@ import { Element } from "./Element";
 import { makeObservable, observable } from "mobx";
 
 export class Text extends TreeNode<Element, Text, never> {
-  constructor(text: string) {
+  constructor(content: string) {
     super();
-    this.text = text;
+    this.content = content;
     makeObservable(this);
   }
 
-  @observable text: string;
+  @observable content: string;
 }
