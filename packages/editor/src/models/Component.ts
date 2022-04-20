@@ -6,7 +6,7 @@ export class Component {
     makeObservable(this);
   }
 
-  readonly defaultVariant = new Variant();
+  readonly defaultVariant = new Variant(this);
   readonly variants = observable<Variant>([]);
 
   @observable name = "my-component";
