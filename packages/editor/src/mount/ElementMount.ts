@@ -21,12 +21,12 @@ export class ElementMount {
         }
       ),
     ];
-    this.registry.addElementMount(element, this);
+    this.registry.elementMounts.set(element, this);
   }
 
   dispose(): void {
     this.disposers.forEach((disposer) => disposer());
-    this.registry.removeElementMount(this.element, this);
+    this.registry.elementMounts.deleteValue(this.element, this);
   }
 
   private updateChildren(children: readonly (Element | Text)[]) {

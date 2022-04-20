@@ -16,12 +16,12 @@ export class TextMount {
         }
       ),
     ];
-    this.registry.addTextMount(text, this);
+    this.registry.textMounts.set(text, this);
   }
 
   dispose(): void {
     this.disposers.forEach((disposer) => disposer());
-    this.registry.removeTextMount(this.text, this);
+    this.registry.textMounts.deleteValue(this.text, this);
   }
 
   readonly text: Text;
