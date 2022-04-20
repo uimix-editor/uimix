@@ -1,8 +1,10 @@
 {
   "name": "macaron-next",
+  "private": true,
   "version": "0.1.0",
   "description": "Visual component editor for Web development",
   "scripts": {
+    "dev": "wsrun -m dev",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
@@ -14,5 +16,11 @@
   "bugs": {
     "url": "https://github.com/macaronapp/macaron-next/issues"
   },
-  "homepage": "https://github.com/macaronapp/macaron-next#readme"
+  "homepage": "https://github.com/macaronapp/macaron-next#readme",
+  "workspaces": [
+    "packages/*"
+  ],
+  "devDependencies": {
+    "wsrun": "^5.2.4"
+  }
 }
