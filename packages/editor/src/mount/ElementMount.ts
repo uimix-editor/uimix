@@ -1,19 +1,22 @@
 import { reaction } from "mobx";
+import { DOMElement } from "react";
 import { Element } from "../models/Element";
 import { Text } from "../models/Text";
 import { Variant } from "../models/Variant";
 import { MountRegistry } from "./MountRegistry";
 import { TextMount } from "./TextMount";
 
-export class ElementMount {
-  constructor(element: Element, variant: Variant, registry: MountRegistry) {
+export class ChildMountSync {
+  constructor(
+    element: Element,
+    variant: Variant,
+    dom: HTMLElement | SVGElement | ShadowRoot,
+    registry: MountRegistry
+  ) {
     this.element = element;
     this.variant = variant;
-    // TODO: support reference to other component
-    // TODO: support SVG elements
-    this.dom = document.createElement(element.tagName);
+    this.dom = dom;
     this.registry = registry;
-
     this.updateChildren(element.children);
     this.disposers = [
       reaction(
@@ -23,12 +26,6 @@ export class ElementMount {
         }
       ),
     ];
-    this.registry.setElementMount(this);
-  }
-
-  dispose(): void {
-    this.disposers.forEach((disposer) => disposer());
-    this.registry.deleteElementMount(this);
   }
 
   private updateChildren(children: readonly (Element | Text)[]) {
@@ -76,10 +73,41 @@ export class ElementMount {
     }
   }
 
+  dispose(): void {}
+
+  private readonly element: Element;
+  private readonly variant: Variant;
+  private readonly dom: HTMLElement | SVGElement | ShadowRoot;
+  private readonly registry: MountRegistry;
+  private childMounts: (ElementMount | TextMount)[] = [];
+  private readonly disposers: (() => void)[] = [];
+}
+
+export class ElementMount {
+  constructor(element: Element, variant: Variant, registry: MountRegistry) {
+    this.element = element;
+    this.variant = variant;
+    // TODO: support reference to other component
+    // TODO: support SVG elements
+    this.dom = document.createElement(element.tagName);
+    this.childMountSync = new ChildMountSync(
+      element,
+      variant,
+      this.dom,
+      registry
+    );
+    this.registry = registry;
+    this.registry.setElementMount(this);
+  }
+
+  dispose(): void {
+    this.childMountSync.dispose();
+    this.registry.deleteElementMount(this);
+  }
+
   readonly element: Element;
+  readonly registry: MountRegistry;
   readonly variant: Variant;
   readonly dom: HTMLElement | SVGElement;
-  readonly registry: MountRegistry;
-  private readonly disposers: (() => void)[] = [];
-  private childMounts: (ElementMount | TextMount)[] = [];
+  readonly childMountSync: ChildMountSync;
 }

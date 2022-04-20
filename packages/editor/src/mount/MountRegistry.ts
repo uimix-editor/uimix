@@ -59,7 +59,7 @@ export class MountRegistry {
     );
   }
 
-  deleteVariantMount(variant: Variant, mount: VariantMount): void {
-    this.getVariantMountRegistry(variant).variantMounts.delete(mount);
+  deleteVariantMount(mount: VariantMount): void {
+    this.getVariantMountRegistry(mount.variant).variantMounts.delete(mount);
   }
 }

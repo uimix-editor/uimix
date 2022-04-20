@@ -1,26 +1,35 @@
 import { Variant } from "../models/Variant";
-import { ElementMount } from "./ElementMount";
+import { ChildMountSync, ElementMount } from "./ElementMount";
 import { MountRegistry } from "./MountRegistry";
 
 export class VariantMount {
   constructor(variant: Variant, registry: MountRegistry) {
     this.variant = variant;
     this.registry = registry;
-    this.rootMount = new ElementMount(
-      variant.component.rootElement,
-      variant,
-      registry
-    );
     this.element.append(this.host);
 
-    // WIP
+    // TODO: add style
+
+    this.childMountSync = new ChildMountSync(
+      variant.component.rootElement,
+      variant,
+      this.shadow,
+      registry
+    );
+    registry.setVariantMount(this);
+  }
+
+  dispose(): void {
+    this.childMountSync.dispose();
+    this.registry.deleteVariantMount(this);
   }
 
   readonly variant: Variant;
   readonly registry: MountRegistry;
-  readonly rootMount: ElementMount;
 
   readonly element = document.createElement("div");
   readonly host = document.createElement("div");
   readonly shadow = this.host.attachShadow({ mode: "open" });
+
+  readonly childMountSync: ChildMountSync;
 }
