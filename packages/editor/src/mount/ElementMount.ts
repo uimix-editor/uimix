@@ -73,7 +73,10 @@ export class ChildMountSync {
     }
   }
 
-  dispose(): void {}
+  dispose(): void {
+    this.disposers.forEach((disposer) => disposer());
+    this.childMounts.forEach((childMount) => childMount.dispose());
+  }
 
   private readonly element: Element;
   private readonly variant: Variant;
