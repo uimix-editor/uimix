@@ -2,6 +2,8 @@
 
 Macaron is a visual component editor for Web development.
 
+## Features
+
 - Based on Web standards
   - Macaron is a design tool built around Web standards (HTML, CSS, and Web Components).
 - Freehand design
