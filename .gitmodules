@@ -1,0 +1,3 @@
+[submodule "packages/paintkit"]
+	path = packages/paintkit
+	url = git@github.com:seanchas116/paintkit.git
