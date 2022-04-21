@@ -26,6 +26,10 @@ export class Element extends TreeNode<Element, Element, Element | Text> {
     makeObservable(this);
   }
 
+  get type(): "element" {
+    return "element";
+  }
+
   readonly tagName: string;
 
   // TODO: avoid id name confilict
@@ -61,7 +65,7 @@ export class Element extends TreeNode<Element, Element, Element | Text> {
     const oldElements = new Map<string, Element>();
     const oldTexts = new Map<string, Text>();
     for (const child of this.children) {
-      if (child instanceof Element) {
+      if (child.type === "element") {
         oldElements.set(child.key, child);
       } else if (child instanceof Text) {
         oldTexts.set(child.key, child);

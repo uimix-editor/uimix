@@ -22,6 +22,10 @@ export class Text extends TreeNode<Element, Text, never> {
     makeObservable(this);
   }
 
+  get type(): "text" {
+    return "text";
+  }
+
   @observable content: string;
 
   toJSON(): TextJSON {

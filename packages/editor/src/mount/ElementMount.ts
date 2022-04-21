@@ -31,7 +31,7 @@ export class ChildMountSync {
     const existingTextMounts = new Map<Text, TextMount>();
 
     for (const childMount of this.childMounts) {
-      if (childMount instanceof ElementMount) {
+      if (childMount.type === "element") {
         existingElementMounts.set(childMount.instance.element, childMount);
       } else {
         existingTextMounts.set(childMount.instance.text, childMount);
@@ -40,7 +40,7 @@ export class ChildMountSync {
 
     const newChildMounts: (ElementMount | TextMount)[] = [];
     for (const child of children) {
-      if (child instanceof Element) {
+      if (child.type === "element") {
         const existingElementMount = existingElementMounts.get(child);
         if (existingElementMount) {
           newChildMounts.push(existingElementMount);
@@ -110,6 +110,10 @@ export class ElementMount {
   dispose(): void {
     this.childMountSync.dispose();
     this.registry.deleteElementMount(this);
+  }
+
+  get type(): "element" {
+    return "element";
   }
 
   readonly instance: ElementInstance;

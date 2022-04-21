@@ -24,6 +24,10 @@ export class TextMount {
     this.registry.deleteTextMount(this);
   }
 
+  get type(): "text" {
+    return "text";
+  }
+
   readonly instance: TextInstance;
   readonly dom: globalThis.Text;
   readonly registry: MountRegistry;

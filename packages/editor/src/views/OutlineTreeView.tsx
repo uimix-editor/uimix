@@ -116,7 +116,7 @@ class VariantItem extends TreeViewItem {
 
   get children(): readonly TreeViewItem[] {
     return this.variant.component.rootElement.children.map((node) => {
-      if (node instanceof Element) {
+      if (node.type === "element") {
         return new ElementItem(this, this.editorState, this.variant, node);
       } else {
         return new TextItem(this, this.editorState, this.variant, node);
@@ -173,7 +173,7 @@ class ElementItem extends TreeViewItem {
 
   get children(): readonly TreeViewItem[] {
     return this.element.children.map((node) => {
-      if (node instanceof Element) {
+      if (node.type === "element") {
         return new ElementItem(this, this.editorState, this.variant, node);
       } else {
         return new TextItem(this, this.editorState, this.variant, node);
