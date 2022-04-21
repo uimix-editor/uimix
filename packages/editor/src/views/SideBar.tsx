@@ -20,6 +20,8 @@ const RightSideBarWrap = styled.div`
   }
 `;
 
+const minSideBarWidth = 256;
+
 export const RightSideBar: React.FC<{ editorState: EditorState }> = observer(
   ({ editorState }) => {
     const onClickOutlineTab = useCallback(
@@ -54,7 +56,7 @@ export const RightSideBar: React.FC<{ editorState: EditorState }> = observer(
     );
     const onChangeWidth = useCallback(
       action((width: number) => {
-        editorState.sideBarWidth = width;
+        editorState.sideBarWidth = Math.max(width, minSideBarWidth);
       }),
       [editorState]
     );
