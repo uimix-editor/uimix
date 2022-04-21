@@ -1,21 +1,21 @@
 import React from "react";
 import styled from "styled-components";
 import menuIcon from "@iconify-icons/ic/outline-menu";
-import paragraphIcon from "@seanchas116/paintkit/dist/icon/Paragraph";
-import frameIcon from "@seanchas116/paintkit/dist/icon/Frame";
-import { ToolBar } from "@seanchas116/paintkit/dist/components/toolbar/ToolBar";
+import paragraphIcon from "@seanchas116/paintkit/src/icon/Paragraph";
+import frameIcon from "@seanchas116/paintkit/src/icon/Frame";
+import { ToolBar } from "@seanchas116/paintkit/src/components/toolbar/ToolBar";
 import {
   ToolButton,
   ToolButtonArray,
-} from "@seanchas116/paintkit/dist/components/toolbar/ToolButton";
-import { ZoomControl } from "@seanchas116/paintkit/dist/components/toolbar/ZoomControl";
-import { colors } from "@seanchas116/paintkit/dist/components/Palette";
-import { VSplitter } from "@seanchas116/paintkit/dist/components/sidebar/VSplitter";
+} from "@seanchas116/paintkit/src/components/toolbar/ToolButton";
+import { ZoomControl } from "@seanchas116/paintkit/src/components/toolbar/ZoomControl";
+import { colors } from "@seanchas116/paintkit/src/components/Palette";
+import { VSplitter } from "@seanchas116/paintkit/src/components/sidebar/VSplitter";
 import {
   InspectorTabBar,
   InspectorTabBarItem,
-} from "@seanchas116/paintkit/dist/components/sidebar/InspectorTabBar";
-import { WidthResizeHandle } from "@seanchas116/paintkit/dist/components/sidebar/WidthResizeHandle";
+} from "@seanchas116/paintkit/src/components/sidebar/InspectorTabBar";
+import { WidthResizeHandle } from "@seanchas116/paintkit/src/components/sidebar/WidthResizeHandle";
 
 const Columns = styled.div`
   position: fixed;

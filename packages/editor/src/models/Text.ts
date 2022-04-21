@@ -1,7 +1,7 @@
 import {
   TreeNode,
   TreeNodeOptions,
-} from "@seanchas116/paintkit/dist/util/TreeNode";
+} from "@seanchas116/paintkit/src/util/TreeNode";
 import { Element } from "./Element";
 import { makeObservable, observable } from "mobx";
 

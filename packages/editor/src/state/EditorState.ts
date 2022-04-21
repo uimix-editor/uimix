@@ -1,4 +1,4 @@
-import { JSONUndoHistory } from "@seanchas116/paintkit/dist/util/JSONUndoHistory";
+import { JSONUndoHistory } from "@seanchas116/paintkit/src/util/JSONUndoHistory";
 import { Document, DocumentJSON } from "../models/Document";
 
 export class EditorState {

@@ -3,7 +3,7 @@ import "./App.css";
 import {
   ColorSchemeProvider,
   PaintkitProvider,
-} from "@seanchas116/paintkit/dist/components/GlobalStyle";
+} from "@seanchas116/paintkit/src/components/GlobalStyle";
 import { Editor } from "./views/Editor";
 
 function App() {
