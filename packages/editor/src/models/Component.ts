@@ -1,12 +1,16 @@
 import { makeObservable, observable } from "mobx";
+import shortUUID from "short-uuid";
 import { ElementJSON } from "./Element";
 import { RootElement } from "./RootElement";
 import { Variant, VariantJSON } from "./Variant";
 
 export class Component {
-  constructor() {
+  constructor(key?: string) {
+    this.key = key ?? shortUUID.generate();
     makeObservable(this);
   }
+
+  readonly key: string;
 
   @observable name = "my-component";
 
@@ -17,6 +21,7 @@ export class Component {
 
   toJSON(): ComponentJSON {
     return {
+      key: this.key,
       name: this.name,
       variants: this.variants.map((variant) => variant.toJSON()),
       rootElement: this.rootElement.toJSON(),
@@ -24,6 +29,10 @@ export class Component {
   }
 
   loadJSON(json: ComponentJSON): void {
+    if (json.key !== this.key) {
+      throw new Error("Component key mismatch");
+    }
+
     this.name = json.name;
 
     const oldVariants = new Map<string, Variant>();
@@ -44,6 +53,7 @@ export class Component {
 }
 
 export interface ComponentJSON {
+  key: string;
   name: string;
   variants: VariantJSON[];
   rootElement: ElementJSON;
