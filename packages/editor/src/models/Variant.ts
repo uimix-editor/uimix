@@ -1,22 +1,16 @@
 import { makeObservable, observable } from "mobx";
+import shortUUID from "short-uuid";
 import { Component } from "./Component";
 
-export interface VariantJSON {
-  selector?: string;
-  mediaQuery?: string;
-  x: number;
-  y: number;
-  width?: number;
-  height?: number;
-}
-
 export class Variant {
-  constructor(component: Component) {
+  constructor(component: Component, key?: string) {
     this.component = component;
+    this.key = key ?? shortUUID.generate();
     makeObservable(this);
   }
 
   readonly component: Component;
+  readonly key: string;
 
   @observable selector = "";
   @observable mediaQuery = "";
@@ -27,6 +21,7 @@ export class Variant {
 
   toJSON(): VariantJSON {
     return {
+      key: this.key,
       selector: this.selector || undefined,
       mediaQuery: this.mediaQuery || undefined,
       x: this.x,
@@ -37,6 +32,10 @@ export class Variant {
   }
 
   loadJSON(json: VariantJSON): void {
+    if (json.key !== this.key) {
+      throw new Error("Variant key mismatch");
+    }
+
     this.selector = json.selector || "";
     this.mediaQuery = json.mediaQuery || "";
     this.x = json.x;
@@ -44,4 +43,14 @@ export class Variant {
     this.width = json.width;
     this.height = json.height;
   }
+}
+
+export interface VariantJSON {
+  key: string;
+  selector?: string;
+  mediaQuery?: string;
+  x: number;
+  y: number;
+  width?: number;
+  height?: number;
 }
