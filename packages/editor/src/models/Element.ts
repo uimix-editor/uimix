@@ -1,15 +1,27 @@
-import { TreeNode } from "@seanchas116/paintkit/dist/util/TreeNode";
+import {
+  TreeNode,
+  TreeNodeOptions,
+} from "@seanchas116/paintkit/dist/util/TreeNode";
 import { makeObservable, observable } from "mobx";
 import { Component } from "./Component";
-import { Text } from "./Text";
+import { Text, TextJSON } from "./Text";
 
-interface ElementOptions {
+export interface ElementJSON {
+  type: "element";
+  key: string;
+  tagName: string;
+  id: string;
+  attrs: { [key: string]: string };
+  children: (ElementJSON | TextJSON)[];
+}
+
+export interface ElementOptions extends TreeNodeOptions {
   tagName: string;
 }
 
 export class Element extends TreeNode<Element, Element, Element | Text> {
   constructor(options: ElementOptions) {
-    super();
+    super(options);
     this.tagName = options.tagName;
     makeObservable(this);
   }
@@ -23,5 +35,63 @@ export class Element extends TreeNode<Element, Element, Element | Text> {
 
   get component(): Component | undefined {
     return this.parent?.component;
+  }
+
+  toJSON(): ElementJSON {
+    return {
+      type: "element",
+      key: this.key,
+      tagName: this.tagName,
+      id: this.id,
+      attrs: Object.fromEntries(this.attrs),
+      children: this.children.map((child) => child.toJSON()),
+    };
+  }
+
+  loadJSON(json: ElementJSON): void {
+    if (json.key !== this.key || json.tagName !== this.tagName) {
+      throw new Error("Element key and tagName must match");
+    }
+    this.id = json.id;
+    this.attrs.clear();
+    for (const [key, value] of Object.entries(json.attrs)) {
+      this.attrs.set(key, value);
+    }
+
+    const oldElements = new Map<string, Element>();
+    const oldTexts = new Map<string, Text>();
+    for (const child of this.children) {
+      if (child instanceof Element) {
+        oldElements.set(child.key, child);
+      } else if (child instanceof Text) {
+        oldTexts.set(child.key, child);
+      }
+    }
+
+    this.replaceChildren([]);
+
+    for (const childJSON of json.children) {
+      if (childJSON.type === "element") {
+        const child =
+          oldElements.get(childJSON.key) ||
+          new Element({
+            key: childJSON.key,
+            tagName: childJSON.tagName,
+          });
+        child.loadJSON(childJSON);
+        this.append(child);
+      } else if (childJSON.type === "text") {
+        const child =
+          oldTexts.get(childJSON.key) ||
+          new Text({
+            key: childJSON.key,
+            content: childJSON.content,
+          });
+        child.loadJSON(childJSON);
+        this.append(child);
+      } else {
+        throw new Error("Invalid child type");
+      }
+    }
   }
 }
