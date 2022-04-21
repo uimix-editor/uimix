@@ -1,18 +1,16 @@
 import { reaction } from "mobx";
-import { Text } from "../models/Text";
-import { Variant } from "../models/Variant";
+import { TextInstance } from "../models/TextInstance";
 import { MountRegistry } from "./MountRegistry";
 
 export class TextMount {
-  constructor(text: Text, variant: Variant, registry: MountRegistry) {
-    this.text = text;
-    this.variant = variant;
-    this.dom = document.createTextNode(text.content);
+  constructor(instance: TextInstance, registry: MountRegistry) {
+    this.instance = instance;
+    this.dom = document.createTextNode(instance.text.content);
     this.registry = registry;
 
     this.disposers = [
       reaction(
-        () => text.content,
+        () => instance.text.content,
         (content) => {
           this.dom.textContent = content;
         }
@@ -26,8 +24,7 @@ export class TextMount {
     this.registry.deleteTextMount(this);
   }
 
-  readonly text: Text;
-  readonly variant: Variant;
+  readonly instance: TextInstance;
   readonly dom: globalThis.Text;
   readonly registry: MountRegistry;
   private readonly disposers: (() => void)[] = [];

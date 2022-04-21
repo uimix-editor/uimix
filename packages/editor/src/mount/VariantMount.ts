@@ -1,3 +1,4 @@
+import { ElementInstance } from "../models/ElementInstance";
 import { Variant } from "../models/Variant";
 import { ChildMountSync } from "./ElementMount";
 import { MountRegistry } from "./MountRegistry";
@@ -11,8 +12,7 @@ export class VariantMount {
     // TODO: add style
 
     this.childMountSync = new ChildMountSync(
-      variant.component.rootElement,
-      variant,
+      ElementInstance.get(variant, variant.component.rootElement),
       this.shadow,
       registry
     );

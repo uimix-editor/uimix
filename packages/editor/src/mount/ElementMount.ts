@@ -1,25 +1,24 @@
 import { reaction } from "mobx";
 import { Element } from "../models/Element";
 import { Text } from "../models/Text";
-import { Variant } from "../models/Variant";
+import { ElementInstance } from "../models/ElementInstance";
+import { TextInstance } from "../models/TextInstance";
 import { MountRegistry } from "./MountRegistry";
 import { TextMount } from "./TextMount";
 
 export class ChildMountSync {
   constructor(
-    element: Element,
-    variant: Variant,
+    instance: ElementInstance,
     dom: HTMLElement | SVGElement | ShadowRoot,
     registry: MountRegistry
   ) {
-    this.element = element;
-    this.variant = variant;
+    this.instance = instance;
     this.dom = dom;
     this.registry = registry;
-    this.updateChildren(element.children);
+    this.updateChildren(instance.element.children);
     this.disposers = [
       reaction(
-        () => element.children,
+        () => instance.element.children,
         (children) => {
           this.updateChildren(children);
         }
@@ -33,9 +32,9 @@ export class ChildMountSync {
 
     for (const childMount of this.childMounts) {
       if (childMount instanceof ElementMount) {
-        existingElementMounts.set(childMount.element, childMount);
+        existingElementMounts.set(childMount.instance.element, childMount);
       } else {
-        existingTextMounts.set(childMount.text, childMount);
+        existingTextMounts.set(childMount.instance.text, childMount);
       }
     }
 
@@ -48,7 +47,10 @@ export class ChildMountSync {
           existingElementMounts.delete(child);
         } else {
           newChildMounts.push(
-            new ElementMount(child, this.variant, this.registry)
+            new ElementMount(
+              ElementInstance.get(this.instance.variant, child),
+              this.registry
+            )
           );
         }
       } else {
@@ -58,7 +60,10 @@ export class ChildMountSync {
           existingTextMounts.delete(child);
         } else {
           newChildMounts.push(
-            new TextMount(child, this.variant, this.registry)
+            new TextMount(
+              TextInstance.get(this.instance.variant, child),
+              this.registry
+            )
           );
         }
       }
@@ -84,8 +89,7 @@ export class ChildMountSync {
     this.childMounts.forEach((childMount) => childMount.dispose());
   }
 
-  private readonly element: Element;
-  private readonly variant: Variant;
+  private readonly instance: ElementInstance;
   private readonly dom: HTMLElement | SVGElement | ShadowRoot;
   private readonly registry: MountRegistry;
   private childMounts: (ElementMount | TextMount)[] = [];
@@ -93,18 +97,12 @@ export class ChildMountSync {
 }
 
 export class ElementMount {
-  constructor(element: Element, variant: Variant, registry: MountRegistry) {
-    this.element = element;
-    this.variant = variant;
+  constructor(instance: ElementInstance, registry: MountRegistry) {
+    this.instance = instance;
     // TODO: support reference to other component
     // TODO: support SVG elements
-    this.dom = document.createElement(element.tagName);
-    this.childMountSync = new ChildMountSync(
-      element,
-      variant,
-      this.dom,
-      registry
-    );
+    this.dom = document.createElement(instance.element.tagName);
+    this.childMountSync = new ChildMountSync(instance, this.dom, registry);
     this.registry = registry;
     this.registry.setElementMount(this);
   }
@@ -114,9 +112,8 @@ export class ElementMount {
     this.registry.deleteElementMount(this);
   }
 
-  readonly element: Element;
+  readonly instance: ElementInstance;
   readonly registry: MountRegistry;
-  readonly variant: Variant;
   readonly dom: HTMLElement | SVGElement;
   readonly childMountSync: ChildMountSync;
 }
