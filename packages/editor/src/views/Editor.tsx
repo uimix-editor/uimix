@@ -56,22 +56,10 @@ const RightSideBar = styled.div`
 
 export const Editor: React.FC = () => {
   const [splitRatio, setSplitRatio] = React.useState(0.5);
-  const [leftWidth, setLeftWidth] = React.useState(200);
   const [rightWidth, setRightWidth] = React.useState(200);
 
   return (
     <Columns>
-      <LeftSideBar
-        style={{
-          width: `${leftWidth}px`,
-        }}
-      >
-        <WidthResizeHandle
-          position="right"
-          width={leftWidth}
-          onChangeWidth={setLeftWidth}
-        />
-      </LeftSideBar>
       <Center>
         <ToolBar>
           <ToolButton label="Menu" icon={menuIcon} />
