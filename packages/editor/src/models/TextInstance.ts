@@ -27,6 +27,10 @@ export class TextInstance {
     this.text = text;
   }
 
+  get type(): "text" {
+    return "text";
+  }
+
   readonly variant: Variant;
   readonly text: Text;
 }

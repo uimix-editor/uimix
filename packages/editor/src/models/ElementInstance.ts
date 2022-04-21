@@ -27,6 +27,10 @@ export class ElementInstance {
     this.element = element;
   }
 
+  get type(): "element" {
+    return "element";
+  }
+
   readonly variant: Variant;
   readonly element: Element;
 }
