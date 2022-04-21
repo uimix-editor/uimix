@@ -98,14 +98,14 @@ export const Editor: React.FC = () => {
         <VSplitter ratio={splitRatio} onChangeRatio={setSplitRatio}>
           <div>
             <InspectorTabBar>
-              <InspectorTabBarItem aria-selected>Tab 1</InspectorTabBarItem>
-              <InspectorTabBarItem>Tab 2</InspectorTabBarItem>
+              <InspectorTabBarItem aria-selected>Outline</InspectorTabBarItem>
+              <InspectorTabBarItem>Assets</InspectorTabBarItem>
             </InspectorTabBar>
           </div>
           <div>
             <InspectorTabBar>
-              <InspectorTabBarItem aria-selected>Tab 1</InspectorTabBarItem>
-              <InspectorTabBarItem>Tab 2</InspectorTabBarItem>
+              <InspectorTabBarItem aria-selected>Element</InspectorTabBarItem>
+              <InspectorTabBarItem>Style</InspectorTabBarItem>
             </InspectorTabBar>
           </div>
         </VSplitter>
