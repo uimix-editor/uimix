@@ -7,4 +7,8 @@ export class EditorState {
   }
 
   readonly history: JSONUndoHistory<DocumentJSON, Document>;
+
+  get document(): Document {
+    return this.history.target;
+  }
 }
