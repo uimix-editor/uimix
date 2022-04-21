@@ -1,9 +1,9 @@
+import { WeakMultiMap } from "@seanchas116/paintkit/src/util/WeakMultiMap";
 import { Element } from "../models/Element";
 import { Text } from "../models/Text";
+import { Variant } from "../models/Variant";
 import { ElementMount } from "./ElementMount";
 import { TextMount } from "./TextMount";
-import { WeakMultiMap } from "@seanchas116/paintkit/src/util/WeakMultiMap";
-import { Variant } from "../models/Variant";
 import { VariantMount } from "./VariantMount";
 
 class VariantMountRegistry {

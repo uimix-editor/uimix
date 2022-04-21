@@ -10,14 +10,7 @@ import {
 } from "@seanchas116/paintkit/src/components/toolbar/ToolButton";
 import { ZoomControl } from "@seanchas116/paintkit/src/components/toolbar/ZoomControl";
 import { colors } from "@seanchas116/paintkit/src/components/Palette";
-import { VSplitter } from "@seanchas116/paintkit/src/components/sidebar/VSplitter";
-import {
-  InspectorTabBar,
-  InspectorTabBarItem,
-} from "@seanchas116/paintkit/src/components/sidebar/InspectorTabBar";
-import { WidthResizeHandle } from "@seanchas116/paintkit/src/components/sidebar/WidthResizeHandle";
 import { EditorState } from "../state/EditorState";
-import { action } from "mobx";
 import { RightSideBar } from "./SideBar";
 
 const Columns = styled.div`

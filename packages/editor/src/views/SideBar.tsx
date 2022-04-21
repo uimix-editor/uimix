@@ -7,9 +7,9 @@ import {
   InspectorTabBarItem,
 } from "@seanchas116/paintkit/src/components/sidebar/InspectorTabBar";
 import { WidthResizeHandle } from "@seanchas116/paintkit/src/components/sidebar/WidthResizeHandle";
-import { EditorState } from "../state/EditorState";
 import { action } from "mobx";
 import { observer } from "mobx-react-lite";
+import { EditorState } from "../state/EditorState";
 
 const RightSideBarWrap = styled.div`
   position: relative;

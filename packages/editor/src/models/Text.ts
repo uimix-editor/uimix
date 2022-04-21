@@ -2,8 +2,8 @@ import {
   TreeNode,
   TreeNodeOptions,
 } from "@seanchas116/paintkit/src/util/TreeNode";
-import { Element } from "./Element";
 import { makeObservable, observable } from "mobx";
+import { Element } from "./Element";
 
 export interface TextJSON {
   type: "text";

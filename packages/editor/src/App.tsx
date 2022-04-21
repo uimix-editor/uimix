@@ -4,12 +4,12 @@ import {
   ColorSchemeProvider,
   PaintkitProvider,
 } from "@seanchas116/paintkit/src/components/GlobalStyle";
+import { JSONUndoHistory } from "@seanchas116/paintkit/src/util/JSONUndoHistory";
 import { Editor } from "./views/Editor";
 import { EditorState } from "./state/EditorState";
 import { Document, DocumentJSON } from "./models/Document";
-import { JSONUndoHistory } from "@seanchas116/paintkit/src/util/JSONUndoHistory";
 
-function App() {
+export const App: React.FC = () => {
   const [editorState] = useState(() => {
     const document = new Document();
     const history = new JSONUndoHistory<DocumentJSON, Document>(document);
@@ -23,6 +23,4 @@ function App() {
       </PaintkitProvider>
     </ColorSchemeProvider>
   );
-}
-
-export default App;
+};

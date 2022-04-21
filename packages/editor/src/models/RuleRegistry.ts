@@ -1,5 +1,4 @@
 import { observable } from "mobx";
-import * as CSSwhat from "css-what";
 import { Rule } from "./Rule";
 
 export class RuleRegistry {

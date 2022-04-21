@@ -1,5 +1,5 @@
 import { Variant } from "../models/Variant";
-import { ChildMountSync, ElementMount } from "./ElementMount";
+import { ChildMountSync } from "./ElementMount";
 import { MountRegistry } from "./MountRegistry";
 
 export class VariantMount {
