@@ -16,6 +16,9 @@ import {
   InspectorTabBarItem,
 } from "@seanchas116/paintkit/src/components/sidebar/InspectorTabBar";
 import { WidthResizeHandle } from "@seanchas116/paintkit/src/components/sidebar/WidthResizeHandle";
+import { EditorState } from "../state/EditorState";
+import { action } from "mobx";
+import { RightSideBar } from "./SideBar";
 
 const Columns = styled.div`
   position: fixed;
@@ -39,25 +42,9 @@ const Viewport = styled.div`
   flex: 1;
 `;
 
-const LeftSideBar = styled.div`
-  position: relative;
-  width: 200px;
-  border-right: 2px solid ${colors.separator};
-`;
-
-const RightSideBar = styled.div`
-  position: relative;
-  width: 200px;
-  border-left: 2px solid ${colors.separator};
-  > * {
-    height: 100%;
-  }
-`;
-
-export const Editor: React.FC = () => {
-  const [splitRatio, setSplitRatio] = React.useState(0.5);
-  const [rightWidth, setRightWidth] = React.useState(200);
-
+export const Editor: React.FC<{ editorState: EditorState }> = ({
+  editorState,
+}) => {
   return (
     <Columns>
       <Center>
@@ -78,31 +65,7 @@ export const Editor: React.FC = () => {
         </ToolBar>
         <Viewport />
       </Center>
-      <RightSideBar
-        style={{
-          width: `${rightWidth}px`,
-        }}
-      >
-        <VSplitter ratio={splitRatio} onChangeRatio={setSplitRatio}>
-          <div>
-            <InspectorTabBar>
-              <InspectorTabBarItem aria-selected>Outline</InspectorTabBarItem>
-              <InspectorTabBarItem>Assets</InspectorTabBarItem>
-            </InspectorTabBar>
-          </div>
-          <div>
-            <InspectorTabBar>
-              <InspectorTabBarItem aria-selected>Element</InspectorTabBarItem>
-              <InspectorTabBarItem>Style</InspectorTabBarItem>
-            </InspectorTabBar>
-          </div>
-        </VSplitter>
-        <WidthResizeHandle
-          position="left"
-          width={rightWidth}
-          onChangeWidth={setRightWidth}
-        />
-      </RightSideBar>
+      <RightSideBar editorState={editorState} />
     </Columns>
   );
 };
