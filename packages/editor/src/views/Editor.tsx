@@ -25,6 +25,7 @@ const Columns = styled.div`
   height: 100%;
 
   display: flex;
+  background-color: ${colors.background};
 `;
 
 const Center = styled.div`
