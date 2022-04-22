@@ -10,8 +10,8 @@ import { makeObservable } from "mobx";
 import { EditorState } from "../state/EditorState";
 import { Component } from "../models/Component";
 import { Variant } from "../models/Variant";
-import { Element } from "../models/Element";
-import { Text } from "../models/Text";
+import { ElementInstance } from "../models/ElementInstance";
+import { TextInstance } from "../models/TextInstance";
 
 export const OutlineTreeView: React.FC<{
   editorState: EditorState;
@@ -117,9 +117,17 @@ class VariantItem extends TreeViewItem {
   get children(): readonly TreeViewItem[] {
     return this.variant.component.rootElement.children.map((node) => {
       if (node.type === "element") {
-        return new ElementItem(this, this.editorState, this.variant, node);
+        return new ElementItem(
+          this,
+          this.editorState,
+          ElementInstance.get(this.variant, node)
+        );
       } else {
-        return new TextItem(this, this.editorState, this.variant, node);
+        return new TextItem(
+          this,
+          this.editorState,
+          TextInstance.get(this.variant, node)
+        );
       }
     });
   }
@@ -156,33 +164,38 @@ class ElementItem extends TreeViewItem {
   constructor(
     parent: ElementItem | VariantItem,
     editorState: EditorState,
-    variant: Variant,
-    element: Element
+    instance: ElementInstance
   ) {
     super();
     this.parent = parent;
     this.editorState = editorState;
-    this.variant = variant;
-    this.element = element;
+    this.instance = instance;
   }
 
   readonly parent: ElementItem | VariantItem;
   readonly editorState: EditorState;
-  readonly variant: Variant;
-  readonly element: Element;
+  readonly instance: ElementInstance;
 
   get children(): readonly TreeViewItem[] {
-    return this.element.children.map((node) => {
+    return this.instance.element.children.map((node) => {
       if (node.type === "element") {
-        return new ElementItem(this, this.editorState, this.variant, node);
+        return new ElementItem(
+          this,
+          this.editorState,
+          ElementInstance.get(this.instance.variant, node)
+        );
       } else {
-        return new TextItem(this, this.editorState, this.variant, node);
+        return new TextItem(
+          this,
+          this.editorState,
+          TextInstance.get(this.instance.variant, node)
+        );
       }
     });
   }
 
   get key(): string {
-    return this.element.key;
+    return this.instance.element.key;
   }
 
   get selected(): boolean {
@@ -217,23 +230,20 @@ class TextItem extends LeafTreeViewItem {
   constructor(
     parent: ElementItem | VariantItem,
     editorState: EditorState,
-    variant: Variant,
-    text: Text
+    instance: TextInstance
   ) {
     super();
     this.parent = parent;
     this.editorState = editorState;
-    this.variant = variant;
-    this.text = text;
+    this.instance = instance;
   }
 
   readonly parent: ElementItem | VariantItem;
   readonly editorState: EditorState;
-  readonly variant: Variant;
-  readonly text: Text;
+  readonly instance: TextInstance;
 
   get key(): string {
-    return this.text.key;
+    return this.instance.text.key;
   }
 
   get selected(): boolean {
