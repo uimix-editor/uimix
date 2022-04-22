@@ -141,7 +141,7 @@ class ComponentItem extends TreeViewItem {
   readonly component: Component;
 
   get key(): string {
-    return this.key;
+    return this.component.key;
   }
 
   get children(): readonly TreeViewItem[] {

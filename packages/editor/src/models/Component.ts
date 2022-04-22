@@ -14,13 +14,13 @@ export class Component {
 
   @observable name = "my-component";
 
+  readonly rootElement = new RootElement(this);
+
   readonly defaultVariant = new Variant(this);
   readonly variants = observable<Variant>([]);
   get allVariants(): Variant[] {
     return [this.defaultVariant, ...this.variants];
   }
-
-  readonly rootElement = new RootElement(this);
 
   @observable selected = false;
 
