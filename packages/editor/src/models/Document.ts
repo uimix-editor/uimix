@@ -35,6 +35,10 @@ export class Document {
   @computed get selectedNodes(): (Element | Text)[] {
     return this.components.flatMap((component) => component.selectedNodes);
   }
+
+  @computed get selectedComponents(): Component[] {
+    return this.components.filter((component) => component.selected);
+  }
 }
 
 export interface DocumentJSON {

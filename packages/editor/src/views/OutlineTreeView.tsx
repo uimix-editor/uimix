@@ -28,7 +28,8 @@ import { ElementInstance } from "../models/ElementInstance";
 import { TextInstance } from "../models/TextInstance";
 import { Document } from "../models/Document";
 
-const DRAG_MIME = "application/x.macaron-tree-drag";
+const NODE_DRAG_MIME = "application/x.macaron-tree-drag-node";
+const COMPONENT_DRAG_MIME = "application/x.macaron-tree-drag-component";
 
 const TreeViewPadding = styled.div`
   height: 8px;
@@ -188,11 +189,11 @@ class ElementItem extends TreeViewItem {
 
   handleDragStart(e: React.DragEvent) {
     e.dataTransfer.effectAllowed = "copyMove";
-    e.dataTransfer.setData(DRAG_MIME, "drag");
+    e.dataTransfer.setData(NODE_DRAG_MIME, "drag");
   }
 
   canDropData(dataTransfer: DataTransfer) {
-    return dataTransfer.types.includes(DRAG_MIME);
+    return dataTransfer.types.includes(NODE_DRAG_MIME);
   }
 
   handleDrop(event: React.DragEvent, before: TreeViewItem | undefined) {
@@ -273,7 +274,7 @@ class TextItem extends LeafTreeViewItem {
 
   handleDragStart(e: React.DragEvent) {
     e.dataTransfer.effectAllowed = "copyMove";
-    e.dataTransfer.setData(DRAG_MIME, "drag");
+    e.dataTransfer.setData(NODE_DRAG_MIME, "drag");
   }
 }
 
@@ -379,6 +380,11 @@ class ComponentItem extends TreeViewItem {
       </StyledRow>
     );
   }
+
+  handleDragStart(e: React.DragEvent) {
+    e.dataTransfer.effectAllowed = "copyMove";
+    e.dataTransfer.setData(COMPONENT_DRAG_MIME, "drag");
+  }
 }
 
 class RootItem extends RootTreeViewItem {
@@ -413,6 +419,21 @@ class RootItem extends RootTreeViewItem {
       e.clientX,
       e.clientY,
       this.context.editorState.getOutlineContextMenu()
+    );
+  }
+
+  canDropData(dataTransfer: DataTransfer) {
+    return dataTransfer.types.includes(COMPONENT_DRAG_MIME);
+  }
+
+  handleDrop(event: React.DragEvent, before: TreeViewItem | undefined) {
+    const copy = event.altKey || event.ctrlKey;
+    const beforeComponent = (before as ComponentItem | undefined)?.component;
+
+    // TODO
+
+    this.context.editorState.history.commit(
+      copy ? "Duplicate Components" : "Move Components"
     );
   }
 }
