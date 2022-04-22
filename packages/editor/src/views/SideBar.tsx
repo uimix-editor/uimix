@@ -10,6 +10,7 @@ import { WidthResizeHandle } from "@seanchas116/paintkit/src/components/sidebar/
 import { action } from "mobx";
 import { observer } from "mobx-react-lite";
 import { EditorState } from "../state/EditorState";
+import { OutlineTreeView } from "./OutlineTreeView";
 
 const RightSideBarWrap = styled.div`
   position: relative;
@@ -21,6 +22,15 @@ const RightSideBarWrap = styled.div`
 `;
 
 const minSideBarWidth = 256;
+
+const TabArea = styled.div`
+  display: flex;
+  flex-direction: column;
+
+  > :last-child {
+    flex: 1;
+  }
+`;
 
 export const RightSideBar: React.FC<{ editorState: EditorState }> = observer(
   ({ editorState }) => {
@@ -71,7 +81,7 @@ export const RightSideBar: React.FC<{ editorState: EditorState }> = observer(
           ratio={editorState.sideBarSplitRatio}
           onChangeRatio={onChangeSplitRatio}
         >
-          <div>
+          <TabArea>
             <InspectorTabBar>
               <InspectorTabBarItem
                 aria-selected={editorState.currentOutlineTab === "outline"}
@@ -86,7 +96,8 @@ export const RightSideBar: React.FC<{ editorState: EditorState }> = observer(
                 Assets
               </InspectorTabBarItem>
             </InspectorTabBar>
-          </div>
+            <OutlineTreeView editorState={editorState} />
+          </TabArea>
           <div>
             <InspectorTabBar>
               <InspectorTabBarItem

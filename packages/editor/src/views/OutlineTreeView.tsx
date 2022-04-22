@@ -1,11 +1,12 @@
 import { observer } from "mobx-react-lite";
-import React from "react";
+import React, { useMemo } from "react";
 import styled from "styled-components";
 import {
   LeafTreeViewItem,
   RootTreeViewItem,
   TreeViewItem,
 } from "@seanchas116/paintkit/dist/components/treeview/TreeViewItem";
+import { TreeView } from "@seanchas116/paintkit/dist/components/treeview/TreeView";
 import { computed, makeObservable } from "mobx";
 import { EditorState } from "../state/EditorState";
 import { Component } from "../models/Component";
@@ -13,10 +14,26 @@ import { Variant } from "../models/Variant";
 import { ElementInstance } from "../models/ElementInstance";
 import { TextInstance } from "../models/TextInstance";
 
+const TreeViewPadding = styled.div`
+  height: 8px;
+`;
+
 export const OutlineTreeView: React.FC<{
+  className?: string;
+  hidden?: boolean;
   editorState: EditorState;
-}> = observer(({ editorState }) => {
-  return <OutlineTreeViewWrap></OutlineTreeViewWrap>;
+}> = observer(({ className, hidden, editorState }) => {
+  const rootItem = useMemo(() => new RootItem(editorState), [editorState]);
+
+  return (
+    <TreeView
+      className={className}
+      hidden={hidden}
+      rootItem={rootItem}
+      header={<TreeViewPadding />}
+      footer={<TreeViewPadding />}
+    />
+  );
 });
 
 class RootItem extends RootTreeViewItem {
@@ -250,5 +267,3 @@ class TextItem extends LeafTreeViewItem {
     throw new Error("Method not implemented.");
   }
 }
-
-const OutlineTreeViewWrap = styled.div``;
