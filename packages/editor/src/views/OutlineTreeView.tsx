@@ -17,6 +17,7 @@ import { Component } from "../models/Component";
 import { Variant } from "../models/Variant";
 import { ElementInstance } from "../models/ElementInstance";
 import { TextInstance } from "../models/TextInstance";
+import { Document } from "../models/Document";
 
 const TreeViewPadding = styled.div`
   height: 8px;
@@ -62,14 +63,20 @@ class RootItem extends RootTreeViewItem {
 
   readonly context: OutlineContext;
 
+  get document(): Document {
+    return this.context.editorState.document;
+  }
+
   get children(): readonly TreeViewItem[] {
-    return this.context.editorState.document.components.map(
+    return this.document.components.map(
       (c) => new ComponentItem(this.context, this, c)
     );
   }
 
   deselect(): void {
-    throw new Error("Method not implemented.");
+    for (const component of this.document.components) {
+      component.deselect();
+    }
   }
 
   handleContextMenu(e: React.MouseEvent): void {
