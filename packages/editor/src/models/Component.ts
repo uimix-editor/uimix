@@ -16,8 +16,29 @@ export class Component {
 
   readonly defaultVariant = new Variant(this);
   readonly variants = observable<Variant>([]);
+  get allVariants(): Variant[] {
+    return [this.defaultVariant, ...this.variants];
+  }
 
   readonly rootElement = new RootElement(this);
+
+  @observable selected = false;
+
+  select(): void {
+    this.selected = true;
+    for (const variant of this.allVariants) {
+      variant.rootInstance.select();
+    }
+  }
+
+  deselect(): void {
+    this.selected = false;
+    for (const variant of this.allVariants) {
+      variant.rootInstance.deselect();
+    }
+  }
+
+  @observable collapsed = true;
 
   toJSON(): ComponentJSON {
     return {

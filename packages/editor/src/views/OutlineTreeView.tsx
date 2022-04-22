@@ -66,26 +66,26 @@ class ComponentItem extends TreeViewItem {
   }
 
   get selected(): boolean {
-    throw new Error("Method not implemented.");
+    return this.component.selected;
   }
   get hovered(): boolean {
     throw new Error("Method not implemented.");
   }
   get collapsed(): boolean {
-    throw new Error("Method not implemented.");
+    return this.component.collapsed;
   }
   get showsCollapseButton(): boolean {
     return true;
   }
 
   deselect(): void {
-    throw new Error("Method not implemented.");
+    this.component.deselect();
   }
   select(): void {
-    throw new Error("Method not implemented.");
+    this.component.select();
   }
   toggleCollapsed(): void {
-    throw new Error("Method not implemented.");
+    this.component.collapsed = !this.component.collapsed;
   }
 
   renderRow(options: { inverted: boolean }): React.ReactNode {
@@ -125,26 +125,26 @@ class VariantItem extends TreeViewItem {
   }
 
   get selected(): boolean {
-    throw new Error("Method not implemented.");
+    return this.variant.rootInstance.selected;
   }
   get hovered(): boolean {
     throw new Error("Method not implemented.");
   }
   get collapsed(): boolean {
-    throw new Error("Method not implemented.");
+    return this.variant.rootInstance.collapsed;
   }
   get showsCollapseButton(): boolean {
     return true;
   }
 
   deselect(): void {
-    throw new Error("Method not implemented.");
+    return this.variant.rootInstance.deselect();
   }
   select(): void {
-    throw new Error("Method not implemented.");
+    return this.variant.rootInstance.select();
   }
   toggleCollapsed(): void {
-    throw new Error("Method not implemented.");
+    this.variant.rootInstance.collapsed = !this.variant.rootInstance.collapsed;
   }
 
   renderRow(options: { inverted: boolean }): React.ReactNode {
@@ -183,26 +183,26 @@ class ElementItem extends TreeViewItem {
   }
 
   get selected(): boolean {
-    throw new Error("Method not implemented.");
+    return this.instance.selected;
   }
   get hovered(): boolean {
     throw new Error("Method not implemented.");
   }
   get collapsed(): boolean {
-    throw new Error("Method not implemented.");
+    return this.instance.collapsed;
   }
   get showsCollapseButton(): boolean {
     return true;
   }
 
   deselect(): void {
-    throw new Error("Method not implemented.");
+    this.instance.deselect();
   }
   select(): void {
-    throw new Error("Method not implemented.");
+    this.instance.select();
   }
   toggleCollapsed(): void {
-    throw new Error("Method not implemented.");
+    this.instance.collapsed = !this.instance.collapsed;
   }
 
   renderRow(options: { inverted: boolean }): React.ReactNode {
@@ -231,17 +231,17 @@ class TextItem extends LeafTreeViewItem {
   }
 
   get selected(): boolean {
-    throw new Error("Method not implemented.");
+    return this.instance.selected;
   }
   get hovered(): boolean {
     throw new Error("Method not implemented.");
   }
 
   deselect(): void {
-    throw new Error("Method not implemented.");
+    this.instance.deselect();
   }
   select(): void {
-    throw new Error("Method not implemented.");
+    this.instance.select();
   }
 
   renderRow(options: { inverted: boolean }): React.ReactNode {
