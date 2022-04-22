@@ -7,6 +7,10 @@ import {
   TreeViewItem,
 } from "@seanchas116/paintkit/dist/components/treeview/TreeViewItem";
 import { TreeView } from "@seanchas116/paintkit/dist/components/treeview/TreeView";
+import {
+  ContextMenuController,
+  useContextMenu,
+} from "@seanchas116/paintkit/dist/components/menu/ContextMenuProvider";
 import { computed, makeObservable } from "mobx";
 import { EditorState } from "../state/EditorState";
 import { Component } from "../models/Component";
@@ -23,7 +27,16 @@ export const OutlineTreeView: React.FC<{
   hidden?: boolean;
   editorState: EditorState;
 }> = observer(({ className, hidden, editorState }) => {
-  const rootItem = useMemo(() => new RootItem(editorState), [editorState]);
+  const contextMenu = useContextMenu();
+
+  const rootItem = useMemo(
+    () =>
+      new RootItem({
+        editorState,
+        contextMenu,
+      }),
+    [editorState, contextMenu]
+  );
 
   return (
     <TreeView
@@ -36,40 +49,57 @@ export const OutlineTreeView: React.FC<{
   );
 });
 
+interface OutlineContext {
+  editorState: EditorState;
+  contextMenu: ContextMenuController;
+}
+
 class RootItem extends RootTreeViewItem {
-  constructor(editorState: EditorState) {
+  constructor(context: OutlineContext) {
     super();
-    this.editorState = editorState;
+    this.context = context;
   }
 
-  readonly editorState: EditorState;
+  readonly context: OutlineContext;
 
   get children(): readonly TreeViewItem[] {
-    return this.editorState.document.components.map(
-      (c) => new ComponentItem(this, this.editorState, c)
+    return this.context.editorState.document.components.map(
+      (c) => new ComponentItem(this.context, this, c)
     );
   }
 
   deselect(): void {
     throw new Error("Method not implemented.");
   }
+
+  handleContextMenu(e: React.MouseEvent): void {
+    console.log("context menu");
+
+    e.preventDefault();
+    e.stopPropagation();
+
+    this.context.contextMenu.show(e.clientX, e.clientY, [
+      {
+        text: "Test",
+        run: () => {
+          return true;
+        },
+      },
+    ]);
+  }
 }
 
 class ComponentItem extends TreeViewItem {
-  constructor(
-    parent: RootItem,
-    editorState: EditorState,
-    component: Component
-  ) {
+  constructor(context: OutlineContext, parent: RootItem, component: Component) {
     super();
+    this.context = context;
     this.parent = parent;
-    this.editorState = editorState;
     this.component = component;
     makeObservable(this);
   }
 
+  readonly context: OutlineContext;
   readonly parent: RootItem;
-  readonly editorState: EditorState;
   readonly component: Component;
 
   get key(): string {
@@ -78,7 +108,7 @@ class ComponentItem extends TreeViewItem {
 
   get children(): readonly TreeViewItem[] {
     return [this.component.defaultVariant, ...this.component.variants].map(
-      (variant) => new VariantItem(this, this.editorState, variant)
+      (variant) => new VariantItem(this.context, this, variant)
     );
   }
 
@@ -112,19 +142,19 @@ class ComponentItem extends TreeViewItem {
 
 class VariantItem extends TreeViewItem {
   constructor(
+    context: OutlineContext,
     parent: ComponentItem,
-    editorState: EditorState,
     variant: Variant
   ) {
     super();
+    this.context = context;
     this.parent = parent;
-    this.editorState = editorState;
     this.variant = variant;
     makeObservable(this);
   }
 
   readonly parent: ComponentItem;
-  readonly editorState: EditorState;
+  readonly context: OutlineContext;
   readonly variant: Variant;
 
   get key(): string {
@@ -134,9 +164,9 @@ class VariantItem extends TreeViewItem {
   get children(): readonly TreeViewItem[] {
     return this.variant.rootInstance.children.map((instance) => {
       if (instance.type === "element") {
-        return new ElementItem(this, this.editorState, instance);
+        return new ElementItem(this.context, this, instance);
       } else {
-        return new TextItem(this, this.editorState, instance);
+        return new TextItem(this.context, this, instance);
       }
     });
   }
@@ -145,7 +175,7 @@ class VariantItem extends TreeViewItem {
     return this.variant.rootInstance.selected;
   }
   get hovered(): boolean {
-    return this.editorState.hoveredItem === this.variant.rootInstance;
+    return this.context.editorState.hoveredItem === this.variant.rootInstance;
   }
   get collapsed(): boolean {
     return this.variant.rootInstance.collapsed;
@@ -171,27 +201,27 @@ class VariantItem extends TreeViewItem {
 
 class ElementItem extends TreeViewItem {
   constructor(
+    context: OutlineContext,
     parent: ElementItem | VariantItem,
-    editorState: EditorState,
     instance: ElementInstance
   ) {
     super();
+    this.context = context;
     this.parent = parent;
-    this.editorState = editorState;
     this.instance = instance;
     makeObservable(this);
   }
 
+  readonly context: OutlineContext;
   readonly parent: ElementItem | VariantItem;
-  readonly editorState: EditorState;
   readonly instance: ElementInstance;
 
   get children(): readonly TreeViewItem[] {
     return this.instance.children.map((instance) => {
       if (instance.type === "element") {
-        return new ElementItem(this, this.editorState, instance);
+        return new ElementItem(this.context, this, instance);
       } else {
-        return new TextItem(this, this.editorState, instance);
+        return new TextItem(this.context, this, instance);
       }
     });
   }
@@ -204,7 +234,7 @@ class ElementItem extends TreeViewItem {
     return this.instance.selected;
   }
   @computed get hovered(): boolean {
-    return this.editorState.hoveredItem === this.instance;
+    return this.context.editorState.hoveredItem === this.instance;
   }
   get collapsed(): boolean {
     return this.instance.collapsed;
@@ -230,19 +260,19 @@ class ElementItem extends TreeViewItem {
 
 class TextItem extends LeafTreeViewItem {
   constructor(
+    context: OutlineContext,
     parent: ElementItem | VariantItem,
-    editorState: EditorState,
     instance: TextInstance
   ) {
     super();
+    this.context = context;
     this.parent = parent;
-    this.editorState = editorState;
     this.instance = instance;
     makeObservable(this);
   }
 
+  readonly context: OutlineContext;
   readonly parent: ElementItem | VariantItem;
-  readonly editorState: EditorState;
   readonly instance: TextInstance;
 
   get key(): string {
@@ -253,7 +283,7 @@ class TextItem extends LeafTreeViewItem {
     return this.instance.selected;
   }
   @computed get hovered(): boolean {
-    return this.editorState.hoveredItem === this.instance;
+    return this.context.editorState.hoveredItem === this.instance;
   }
 
   deselect(): void {
