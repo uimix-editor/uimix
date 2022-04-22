@@ -93,28 +93,84 @@ interface OutlineContext {
   contextMenu: ContextMenuController;
 }
 
-class RootItem extends RootTreeViewItem {
-  constructor(context: OutlineContext) {
+class ElementItem extends TreeViewItem {
+  constructor(
+    context: OutlineContext,
+    parent: ElementItem | ComponentItem,
+    instance: ElementInstance
+  ) {
     super();
     this.context = context;
+    this.parent = parent;
+    this.instance = instance;
+    makeObservable(this);
   }
 
   readonly context: OutlineContext;
-
-  get document(): Document {
-    return this.context.editorState.document;
-  }
+  readonly parent: ElementItem | ComponentItem;
+  readonly instance: ElementInstance;
 
   get children(): readonly TreeViewItem[] {
-    return this.document.components.map(
-      (c) => new ComponentItem(this.context, this, c)
-    );
+    return this.instance.children.map((instance) => {
+      if (instance.type === "element") {
+        return new ElementItem(this.context, this, instance);
+      } else {
+        return new TextItem(this.context, this, instance);
+      }
+    });
+  }
+
+  get key(): string {
+    return this.instance.element.key;
+  }
+
+  get selected(): boolean {
+    return this.instance.selected;
+  }
+  @computed get hovered(): boolean {
+    return this.context.editorState.hoveredItem === this.instance;
+  }
+  get collapsed(): boolean {
+    return this.instance.collapsed;
+  }
+  get showsCollapseButton(): boolean {
+    return true;
   }
 
   deselect(): void {
-    for (const component of this.document.components) {
-      component.deselect();
-    }
+    this.instance.deselect();
+  }
+  select(): void {
+    this.instance.select();
+  }
+  toggleCollapsed(): void {
+    this.instance.collapsed = !this.instance.collapsed;
+  }
+
+  private onNameChange = action((id: string) => {
+    this.instance.element.id = id;
+    return true;
+  });
+
+  protected rowElement: HTMLElement | undefined;
+
+  renderRow(options: { inverted: boolean }): React.ReactNode {
+    return (
+      <StyledRow
+        ref={(e) => (this.rowElement = e || undefined)}
+        inverted={options.inverted}
+      >
+        <TagName color={colors.text}> {this.instance.element.tagName}</TagName>
+        <StyledNameEdit
+          color={colors.text}
+          value={this.instance.element.id}
+          // TODO: validate
+          onChange={this.onNameChange}
+          disabled={!options.inverted}
+          trigger="click"
+        />
+      </StyledRow>
+    );
   }
 
   handleContextMenu(e: React.MouseEvent): void {
@@ -124,7 +180,98 @@ class RootItem extends RootTreeViewItem {
     this.context.contextMenu.show(
       e.clientX,
       e.clientY,
-      this.context.editorState.getOutlineContextMenu()
+      this.context.editorState.getElementContextMenu(this.instance)
+    );
+  }
+}
+
+class TextItem extends LeafTreeViewItem {
+  constructor(
+    context: OutlineContext,
+    parent: ElementItem,
+    instance: TextInstance
+  ) {
+    super();
+    this.context = context;
+    this.parent = parent;
+    this.instance = instance;
+    makeObservable(this);
+  }
+
+  readonly context: OutlineContext;
+  readonly parent: ElementItem | VariantItem;
+  readonly instance: TextInstance;
+
+  get key(): string {
+    return this.instance.text.key;
+  }
+
+  get selected(): boolean {
+    return this.instance.selected;
+  }
+  @computed get hovered(): boolean {
+    return this.context.editorState.hoveredItem === this.instance;
+  }
+
+  deselect(): void {
+    this.instance.deselect();
+  }
+  select(): void {
+    this.instance.select();
+  }
+
+  private onNameChange = action((content: string) => {
+    this.instance.text.content = content;
+    return true;
+  });
+
+  private rowElement: HTMLElement | undefined;
+
+  renderRow(options: { inverted: boolean }): React.ReactNode {
+    return (
+      <StyledRow
+        ref={(e) => (this.rowElement = e || undefined)}
+        inverted={options.inverted}
+      >
+        <StyledNameEdit
+          color={colors.text}
+          value={this.instance.text.content}
+          // TODO: validate
+          onChange={this.onNameChange}
+          disabled={!options.inverted}
+          trigger="click"
+        />
+      </StyledRow>
+    );
+  }
+}
+
+class VariantItem extends ElementItem {
+  constructor(
+    context: OutlineContext,
+    parent: ComponentItem,
+    variant: Variant
+  ) {
+    super(context, parent, variant.rootInstance);
+    this.variant = variant;
+    makeObservable(this);
+  }
+
+  readonly variant: Variant;
+
+  get key(): string {
+    return this.variant.key;
+  }
+
+  renderRow(options: { inverted: boolean }): React.ReactNode {
+    return (
+      <StyledRow
+        ref={(e) => (this.rowElement = e || undefined)}
+        inverted={options.inverted}
+      >
+        <StyledIcon icon={switchIcon} iconColor={colors.icon} />
+        <TreeRowLabel>Default</TreeRowLabel>
+      </StyledRow>
     );
   }
 }
@@ -203,72 +350,28 @@ class ComponentItem extends TreeViewItem {
   }
 }
 
-class VariantItem extends TreeViewItem {
-  constructor(
-    context: OutlineContext,
-    parent: ComponentItem,
-    variant: Variant
-  ) {
+class RootItem extends RootTreeViewItem {
+  constructor(context: OutlineContext) {
     super();
     this.context = context;
-    this.parent = parent;
-    this.variant = variant;
-    makeObservable(this);
   }
 
-  readonly parent: ComponentItem;
   readonly context: OutlineContext;
-  readonly variant: Variant;
 
-  get key(): string {
-    return this.variant.key;
+  get document(): Document {
+    return this.context.editorState.document;
   }
 
   get children(): readonly TreeViewItem[] {
-    return this.variant.rootInstance.children.map((instance) => {
-      if (instance.type === "element") {
-        return new ElementItem(this.context, this, instance);
-      } else {
-        return new TextItem(this.context, this, instance);
-      }
-    });
-  }
-
-  get selected(): boolean {
-    return this.variant.rootInstance.selected;
-  }
-  get hovered(): boolean {
-    return this.context.editorState.hoveredItem === this.variant.rootInstance;
-  }
-  get collapsed(): boolean {
-    return this.variant.rootInstance.collapsed;
-  }
-  get showsCollapseButton(): boolean {
-    return true;
+    return this.document.components.map(
+      (c) => new ComponentItem(this.context, this, c)
+    );
   }
 
   deselect(): void {
-    return this.variant.rootInstance.deselect();
-  }
-  select(): void {
-    return this.variant.rootInstance.select();
-  }
-  toggleCollapsed(): void {
-    this.variant.rootInstance.collapsed = !this.variant.rootInstance.collapsed;
-  }
-
-  private rowElement: HTMLElement | undefined;
-
-  renderRow(options: { inverted: boolean }): React.ReactNode {
-    return (
-      <StyledRow
-        ref={(e) => (this.rowElement = e || undefined)}
-        inverted={options.inverted}
-      >
-        <StyledIcon icon={switchIcon} iconColor={colors.icon} />
-        <TreeRowLabel>Default</TreeRowLabel>
-      </StyledRow>
-    );
+    for (const component of this.document.components) {
+      component.deselect();
+    }
   }
 
   handleContextMenu(e: React.MouseEvent): void {
@@ -278,160 +381,7 @@ class VariantItem extends TreeViewItem {
     this.context.contextMenu.show(
       e.clientX,
       e.clientY,
-      this.context.editorState.getElementContextMenu(this.variant.rootInstance)
-    );
-  }
-}
-
-class ElementItem extends TreeViewItem {
-  constructor(
-    context: OutlineContext,
-    parent: ElementItem | VariantItem,
-    instance: ElementInstance
-  ) {
-    super();
-    this.context = context;
-    this.parent = parent;
-    this.instance = instance;
-    makeObservable(this);
-  }
-
-  readonly context: OutlineContext;
-  readonly parent: ElementItem | VariantItem;
-  readonly instance: ElementInstance;
-
-  get children(): readonly TreeViewItem[] {
-    return this.instance.children.map((instance) => {
-      if (instance.type === "element") {
-        return new ElementItem(this.context, this, instance);
-      } else {
-        return new TextItem(this.context, this, instance);
-      }
-    });
-  }
-
-  get key(): string {
-    return this.instance.element.key;
-  }
-
-  get selected(): boolean {
-    return this.instance.selected;
-  }
-  @computed get hovered(): boolean {
-    return this.context.editorState.hoveredItem === this.instance;
-  }
-  get collapsed(): boolean {
-    return this.instance.collapsed;
-  }
-  get showsCollapseButton(): boolean {
-    return true;
-  }
-
-  deselect(): void {
-    this.instance.deselect();
-  }
-  select(): void {
-    this.instance.select();
-  }
-  toggleCollapsed(): void {
-    this.instance.collapsed = !this.instance.collapsed;
-  }
-
-  private onNameChange = action((id: string) => {
-    this.instance.element.id = id;
-    return true;
-  });
-
-  private rowElement: HTMLElement | undefined;
-
-  renderRow(options: { inverted: boolean }): React.ReactNode {
-    return (
-      <StyledRow
-        ref={(e) => (this.rowElement = e || undefined)}
-        inverted={options.inverted}
-      >
-        <TagName color={colors.text}> {this.instance.element.tagName}</TagName>
-        <StyledNameEdit
-          color={colors.text}
-          value={this.instance.element.id}
-          // TODO: validate
-          onChange={this.onNameChange}
-          disabled={!options.inverted}
-          trigger="click"
-        />
-      </StyledRow>
-    );
-  }
-
-  handleContextMenu(e: React.MouseEvent): void {
-    e.preventDefault();
-    e.stopPropagation();
-
-    this.context.contextMenu.show(
-      e.clientX,
-      e.clientY,
-      this.context.editorState.getElementContextMenu(this.instance)
-    );
-  }
-}
-
-class TextItem extends LeafTreeViewItem {
-  constructor(
-    context: OutlineContext,
-    parent: ElementItem | VariantItem,
-    instance: TextInstance
-  ) {
-    super();
-    this.context = context;
-    this.parent = parent;
-    this.instance = instance;
-    makeObservable(this);
-  }
-
-  readonly context: OutlineContext;
-  readonly parent: ElementItem | VariantItem;
-  readonly instance: TextInstance;
-
-  get key(): string {
-    return this.instance.text.key;
-  }
-
-  get selected(): boolean {
-    return this.instance.selected;
-  }
-  @computed get hovered(): boolean {
-    return this.context.editorState.hoveredItem === this.instance;
-  }
-
-  deselect(): void {
-    this.instance.deselect();
-  }
-  select(): void {
-    this.instance.select();
-  }
-
-  private onNameChange = action((content: string) => {
-    this.instance.text.content = content;
-    return true;
-  });
-
-  private rowElement: HTMLElement | undefined;
-
-  renderRow(options: { inverted: boolean }): React.ReactNode {
-    return (
-      <StyledRow
-        ref={(e) => (this.rowElement = e || undefined)}
-        inverted={options.inverted}
-      >
-        <StyledNameEdit
-          color={colors.text}
-          value={this.instance.text.content}
-          // TODO: validate
-          onChange={this.onNameChange}
-          disabled={!options.inverted}
-          trigger="click"
-        />
-      </StyledRow>
+      this.context.editorState.getOutlineContextMenu()
     );
   }
 }
