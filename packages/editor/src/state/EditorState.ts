@@ -1,5 +1,7 @@
+import { MenuItem } from "@seanchas116/paintkit/dist/components/menu/Menu";
 import { JSONUndoHistory } from "@seanchas116/paintkit/src/util/JSONUndoHistory";
-import { makeObservable, observable } from "mobx";
+import { action, makeObservable, observable } from "mobx";
+import { Component } from "../models/Component";
 import { Document, DocumentJSON } from "../models/Document";
 import { ElementInstance } from "../models/ElementInstance";
 import { TextInstance } from "../models/TextInstance";
@@ -23,4 +25,18 @@ export class EditorState {
 
   @observable hoveredItem: ElementInstance | TextInstance | undefined =
     undefined;
+
+  getOutlineContextMenu(): MenuItem[] {
+    return [
+      {
+        text: "Add Component",
+        run: action(() => {
+          const component = new Component();
+          this.document.components.push(component);
+          this.history.commit("Add Component");
+          return true;
+        }),
+      },
+    ];
+  }
 }

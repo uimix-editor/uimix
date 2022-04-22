@@ -73,19 +73,14 @@ class RootItem extends RootTreeViewItem {
   }
 
   handleContextMenu(e: React.MouseEvent): void {
-    console.log("context menu");
-
     e.preventDefault();
     e.stopPropagation();
 
-    this.context.contextMenu.show(e.clientX, e.clientY, [
-      {
-        text: "Test",
-        run: () => {
-          return true;
-        },
-      },
-    ]);
+    this.context.contextMenu.show(
+      e.clientX,
+      e.clientY,
+      this.context.editorState.getOutlineContextMenu()
+    );
   }
 }
 
