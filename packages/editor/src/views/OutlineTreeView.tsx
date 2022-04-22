@@ -430,7 +430,10 @@ class RootItem extends RootTreeViewItem {
     const copy = event.altKey || event.ctrlKey;
     const beforeComponent = (before as ComponentItem | undefined)?.component;
 
-    // TODO
+    // TODO: copy
+    for (const node of this.document.selectedComponents) {
+      this.document.components.insertBefore(node, beforeComponent);
+    }
 
     this.context.editorState.history.commit(
       copy ? "Duplicate Components" : "Move Components"
