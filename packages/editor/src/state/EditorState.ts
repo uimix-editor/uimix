@@ -3,7 +3,9 @@ import { JSONUndoHistory } from "@seanchas116/paintkit/src/util/JSONUndoHistory"
 import { action, makeObservable, observable } from "mobx";
 import { Component } from "../models/Component";
 import { Document, DocumentJSON } from "../models/Document";
+import { Element } from "../models/Element";
 import { ElementInstance } from "../models/ElementInstance";
+import { Text } from "../models/Text";
 import { TextInstance } from "../models/TextInstance";
 
 export class EditorState {
@@ -34,6 +36,29 @@ export class EditorState {
           const component = new Component();
           this.document.components.push(component);
           this.history.commit("Add Component");
+          return true;
+        }),
+      },
+    ];
+  }
+
+  getElementContextMenu(instance: ElementInstance): MenuItem[] {
+    return [
+      {
+        text: "Add Element",
+        run: action(() => {
+          const element = new Element({ tagName: "div" });
+          instance.element.append(element);
+          this.history.commit("Add Element");
+          return true;
+        }),
+      },
+      {
+        text: "Add Text",
+        run: action(() => {
+          const text = new Text({ content: "Text" });
+          instance.element.append(text);
+          this.history.commit("Add Text");
           return true;
         }),
       },

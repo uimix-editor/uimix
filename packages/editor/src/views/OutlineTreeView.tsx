@@ -50,7 +50,7 @@ const StyledIcon = styled(TreeRowIcon)<{
 `;
 
 const StyledNameEdit = styled(TreeRowNameEdit)<{
-  isComponent: boolean;
+  isComponent?: boolean;
   color: string;
 }>`
   color: ${(p) => p.color};
@@ -270,6 +270,17 @@ class VariantItem extends TreeViewItem {
       </StyledRow>
     );
   }
+
+  handleContextMenu(e: React.MouseEvent): void {
+    e.preventDefault();
+    e.stopPropagation();
+
+    this.context.contextMenu.show(
+      e.clientX,
+      e.clientY,
+      this.context.editorState.getElementContextMenu(this.variant.rootInstance)
+    );
+  }
 }
 
 class ElementItem extends TreeViewItem {
@@ -326,10 +337,41 @@ class ElementItem extends TreeViewItem {
     this.instance.collapsed = !this.instance.collapsed;
   }
 
+  private onNameChange = action((id: string) => {
+    this.instance.element.id = id;
+    return true;
+  });
+
   private rowElement: HTMLElement | undefined;
 
   renderRow(options: { inverted: boolean }): React.ReactNode {
-    throw new Error("Method not implemented.");
+    return (
+      <StyledRow
+        ref={(e) => (this.rowElement = e || undefined)}
+        inverted={options.inverted}
+      >
+        <TagName color={colors.text}> {this.instance.element.tagName}</TagName>
+        <StyledNameEdit
+          color={colors.text}
+          value={this.instance.element.id}
+          // TODO: validate
+          onChange={this.onNameChange}
+          disabled={!options.inverted}
+          trigger="click"
+        />
+      </StyledRow>
+    );
+  }
+
+  handleContextMenu(e: React.MouseEvent): void {
+    e.preventDefault();
+    e.stopPropagation();
+
+    this.context.contextMenu.show(
+      e.clientX,
+      e.clientY,
+      this.context.editorState.getElementContextMenu(this.instance)
+    );
   }
 }
 
@@ -368,9 +410,28 @@ class TextItem extends LeafTreeViewItem {
     this.instance.select();
   }
 
+  private onNameChange = action((content: string) => {
+    this.instance.text.content = content;
+    return true;
+  });
+
   private rowElement: HTMLElement | undefined;
 
   renderRow(options: { inverted: boolean }): React.ReactNode {
-    throw new Error("Method not implemented.");
+    return (
+      <StyledRow
+        ref={(e) => (this.rowElement = e || undefined)}
+        inverted={options.inverted}
+      >
+        <StyledNameEdit
+          color={colors.text}
+          value={this.instance.text.content}
+          // TODO: validate
+          onChange={this.onNameChange}
+          disabled={!options.inverted}
+          trigger="click"
+        />
+      </StyledRow>
+    );
   }
 }
