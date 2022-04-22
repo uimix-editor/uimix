@@ -115,19 +115,11 @@ class VariantItem extends TreeViewItem {
   }
 
   get children(): readonly TreeViewItem[] {
-    return this.variant.component.rootElement.children.map((node) => {
-      if (node.type === "element") {
-        return new ElementItem(
-          this,
-          this.editorState,
-          ElementInstance.get(this.variant, node)
-        );
+    return this.variant.rootInstance.children.map((instance) => {
+      if (instance.type === "element") {
+        return new ElementItem(this, this.editorState, instance);
       } else {
-        return new TextItem(
-          this,
-          this.editorState,
-          TextInstance.get(this.variant, node)
-        );
+        return new TextItem(this, this.editorState, instance);
       }
     });
   }
@@ -177,19 +169,11 @@ class ElementItem extends TreeViewItem {
   readonly instance: ElementInstance;
 
   get children(): readonly TreeViewItem[] {
-    return this.instance.element.children.map((node) => {
-      if (node.type === "element") {
-        return new ElementItem(
-          this,
-          this.editorState,
-          ElementInstance.get(this.instance.variant, node)
-        );
+    return this.instance.children.map((instance) => {
+      if (instance.type === "element") {
+        return new ElementItem(this, this.editorState, instance);
       } else {
-        return new TextItem(
-          this,
-          this.editorState,
-          TextInstance.get(this.instance.variant, node)
-        );
+        return new TextItem(this, this.editorState, instance);
       }
     });
   }

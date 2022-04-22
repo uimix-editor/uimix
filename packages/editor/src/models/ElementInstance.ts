@@ -1,4 +1,5 @@
 import { Element } from "./Element";
+import { TextInstance } from "./TextInstance";
 import { Variant } from "./Variant";
 
 // Variant × Element
@@ -33,4 +34,12 @@ export class ElementInstance {
 
   readonly variant: Variant;
   readonly element: Element;
+
+  get children(): readonly (ElementInstance | TextInstance)[] {
+    return this.element.children.map((child) =>
+      child.type === "element"
+        ? ElementInstance.get(this.variant, child)
+        : TextInstance.get(this.variant, child)
+    );
+  }
 }

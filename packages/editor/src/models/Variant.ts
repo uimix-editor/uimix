@@ -1,16 +1,19 @@
 import { makeObservable, observable } from "mobx";
 import shortUUID from "short-uuid";
 import { Component } from "./Component";
+import { ElementInstance } from "./ElementInstance";
 
 export class Variant {
   constructor(component: Component, key?: string) {
     this.component = component;
     this.key = key ?? shortUUID.generate();
+    this.rootInstance = ElementInstance.get(this, this.component.rootElement);
     makeObservable(this);
   }
 
   readonly component: Component;
   readonly key: string;
+  readonly rootInstance: ElementInstance;
 
   @observable selector = "";
   @observable mediaQuery = "";
