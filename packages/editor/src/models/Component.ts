@@ -74,7 +74,14 @@ export class Component {
   }
 
   @computed get selectedNodes(): (Element | Text)[] {
-    throw new Error("TODO");
+    // TODO: disallow selecting elements from multiple variants
+    for (const variant of this.allVariants) {
+      const selectedInstances = variant.rootInstance.selectedDescendants;
+      if (selectedInstances.length) {
+        return selectedInstances.map((instance) => instance.node);
+      }
+    }
+    return [];
   }
 }
 
