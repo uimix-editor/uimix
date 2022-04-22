@@ -1,6 +1,8 @@
 import { JSONUndoHistory } from "@seanchas116/paintkit/src/util/JSONUndoHistory";
 import { makeObservable, observable } from "mobx";
 import { Document, DocumentJSON } from "../models/Document";
+import { ElementInstance } from "../models/ElementInstance";
+import { TextInstance } from "../models/TextInstance";
 
 export class EditorState {
   constructor(history: JSONUndoHistory<DocumentJSON, Document>) {
@@ -18,4 +20,7 @@ export class EditorState {
   @observable currentInspectorTab: "element" | "style" = "element";
   @observable sideBarSplitRatio = 0.3;
   @observable sideBarWidth = 256;
+
+  @observable hoveredItem: ElementInstance | TextInstance | undefined =
+    undefined;
 }

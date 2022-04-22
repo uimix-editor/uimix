@@ -6,7 +6,7 @@ import {
   RootTreeViewItem,
   TreeViewItem,
 } from "@seanchas116/paintkit/dist/components/treeview/TreeViewItem";
-import { makeObservable } from "mobx";
+import { computed, makeObservable } from "mobx";
 import { EditorState } from "../state/EditorState";
 import { Component } from "../models/Component";
 import { Variant } from "../models/Variant";
@@ -69,7 +69,7 @@ class ComponentItem extends TreeViewItem {
     return this.component.selected;
   }
   get hovered(): boolean {
-    throw new Error("Method not implemented.");
+    return false;
   }
   get collapsed(): boolean {
     return this.component.collapsed;
@@ -128,7 +128,7 @@ class VariantItem extends TreeViewItem {
     return this.variant.rootInstance.selected;
   }
   get hovered(): boolean {
-    throw new Error("Method not implemented.");
+    return this.editorState.hoveredItem === this.variant.rootInstance;
   }
   get collapsed(): boolean {
     return this.variant.rootInstance.collapsed;
@@ -162,6 +162,7 @@ class ElementItem extends TreeViewItem {
     this.parent = parent;
     this.editorState = editorState;
     this.instance = instance;
+    makeObservable(this);
   }
 
   readonly parent: ElementItem | VariantItem;
@@ -185,8 +186,8 @@ class ElementItem extends TreeViewItem {
   get selected(): boolean {
     return this.instance.selected;
   }
-  get hovered(): boolean {
-    throw new Error("Method not implemented.");
+  @computed get hovered(): boolean {
+    return this.editorState.hoveredItem === this.instance;
   }
   get collapsed(): boolean {
     return this.instance.collapsed;
@@ -220,6 +221,7 @@ class TextItem extends LeafTreeViewItem {
     this.parent = parent;
     this.editorState = editorState;
     this.instance = instance;
+    makeObservable(this);
   }
 
   readonly parent: ElementItem | VariantItem;
@@ -233,8 +235,8 @@ class TextItem extends LeafTreeViewItem {
   get selected(): boolean {
     return this.instance.selected;
   }
-  get hovered(): boolean {
-    throw new Error("Method not implemented.");
+  @computed get hovered(): boolean {
+    return this.editorState.hoveredItem === this.instance;
   }
 
   deselect(): void {
