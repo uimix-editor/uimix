@@ -27,7 +27,7 @@ export class Component {
   select(): void {
     this.selected = true;
     for (const variant of this.allVariants) {
-      variant.rootInstance.select();
+      variant.rootInstance.deselect();
     }
   }
 
