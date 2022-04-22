@@ -1,24 +1,29 @@
-import { computed, makeObservable, observable } from "mobx";
+import { TreeNode } from "@seanchas116/paintkit/src/util/TreeNode";
+import { computed, makeObservable } from "mobx";
 import { Component, ComponentJSON } from "./Component";
 import { Element } from "./Element";
 import { Text } from "./Text";
+
+export class ComponentList extends TreeNode<never, ComponentList, Component> {}
 
 export class Document {
   constructor() {
     makeObservable(this);
   }
 
-  readonly components = observable<Component>([]);
+  readonly components = new ComponentList();
 
   toJSON(): DocumentJSON {
     return {
-      components: this.components.map((component) => component.toJSON()),
+      components: this.components.children.map((component) =>
+        component.toJSON()
+      ),
     };
   }
 
   loadJSON(json: DocumentJSON): void {
     const oldComponents = new Map<string, Component>();
-    for (const component of this.components) {
+    for (const component of this.components.children) {
       oldComponents.set(component.key, component);
     }
 
@@ -28,16 +33,18 @@ export class Document {
         oldComponents.get(componentJSON.key) ||
         new Component(componentJSON.key);
       component.loadJSON(componentJSON);
-      this.components.push(component);
+      this.components.append(component);
     }
   }
 
   @computed get selectedNodes(): (Element | Text)[] {
-    return this.components.flatMap((component) => component.selectedNodes);
+    return this.components.children.flatMap(
+      (component) => component.selectedNodes
+    );
   }
 
   @computed get selectedComponents(): Component[] {
-    return this.components.filter((component) => component.selected);
+    return this.components.children.filter((component) => component.selected);
   }
 }
 

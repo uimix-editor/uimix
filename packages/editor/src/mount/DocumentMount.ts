@@ -9,7 +9,7 @@ export class DocumentMount {
     this.document = document;
 
     const getAllVariants = () =>
-      document.components.flatMap((component) => [
+      document.components.children.flatMap((component) => [
         component.defaultVariant,
         ...component.variants,
       ]);

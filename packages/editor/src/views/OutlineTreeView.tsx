@@ -400,13 +400,13 @@ class RootItem extends RootTreeViewItem {
   }
 
   get children(): readonly TreeViewItem[] {
-    return this.document.components.map(
+    return this.document.components.children.map(
       (c) => new ComponentItem(this.context, this, c)
     );
   }
 
   deselect(): void {
-    for (const component of this.document.components) {
+    for (const component of this.document.components.children) {
       component.deselect();
     }
   }

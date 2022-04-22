@@ -1,17 +1,16 @@
+import { TreeNode } from "@seanchas116/paintkit/src/util/TreeNode";
 import { computed, makeObservable, observable } from "mobx";
-import shortUUID from "short-uuid";
+import { ComponentList } from "./Document";
 import { Element, ElementJSON } from "./Element";
 import { RootElement } from "./RootElement";
 import { Text } from "./Text";
 import { Variant, VariantJSON } from "./Variant";
 
-export class Component {
+export class Component extends TreeNode<ComponentList, Component, never> {
   constructor(key?: string) {
-    this.key = key ?? shortUUID.generate();
+    super({ key });
     makeObservable(this);
   }
-
-  readonly key: string;
 
   @observable name = "my-component";
 

@@ -34,7 +34,7 @@ export class EditorState {
         text: "Add Component",
         run: action(() => {
           const component = new Component();
-          this.document.components.push(component);
+          this.document.components.append(component);
           this.history.commit("Add Component");
           return true;
         }),
