@@ -12,6 +12,7 @@ import { ZoomControl } from "@seanchas116/paintkit/src/components/toolbar/ZoomCo
 import { colors } from "@seanchas116/paintkit/src/components/Palette";
 import { EditorState } from "../state/EditorState";
 import { RightSideBar } from "./SideBar";
+import { EditorStateContext } from "./EditorStateContext";
 
 const Columns = styled.div`
   position: fixed;
@@ -39,26 +40,28 @@ export const Editor: React.FC<{ editorState: EditorState }> = ({
   editorState,
 }) => {
   return (
-    <Columns onContextMenuCapture={(e) => e.preventDefault()}>
-      <Center>
-        <ToolBar>
-          <ToolButton label="Menu" icon={menuIcon} />
+    <EditorStateContext.Provider value={editorState}>
+      <Columns onContextMenuCapture={(e) => e.preventDefault()}>
+        <Center>
+          <ToolBar>
+            <ToolButton label="Menu" icon={menuIcon} />
 
-          <ToolButtonArray>
-            <ToolButton label="Frame" icon={frameIcon} />
-            <ToolButton label="Text" icon={paragraphIcon} />
-          </ToolButtonArray>
+            <ToolButtonArray>
+              <ToolButton label="Frame" icon={frameIcon} />
+              <ToolButton label="Text" icon={paragraphIcon} />
+            </ToolButtonArray>
 
-          <ZoomControl
-            percentage={100}
-            onZoomIn={() => {}}
-            onZoomOut={() => {}}
-            onChangePercentage={() => {}}
-          />
-        </ToolBar>
-        <Viewport />
-      </Center>
-      <RightSideBar editorState={editorState} />
-    </Columns>
+            <ZoomControl
+              percentage={100}
+              onZoomIn={() => {}}
+              onZoomOut={() => {}}
+              onChangePercentage={() => {}}
+            />
+          </ToolBar>
+          <Viewport />
+        </Center>
+        <RightSideBar />
+      </Columns>
+    </EditorStateContext.Provider>
   );
 };

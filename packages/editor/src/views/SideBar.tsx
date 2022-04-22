@@ -9,8 +9,8 @@ import {
 import { WidthResizeHandle } from "@seanchas116/paintkit/src/components/sidebar/WidthResizeHandle";
 import { action } from "mobx";
 import { observer } from "mobx-react-lite";
-import { EditorState } from "../state/EditorState";
 import { OutlineTreeView } from "./OutlineTreeView";
+import { useEditorState } from "./EditorStateContext";
 
 const RightSideBarWrap = styled.div`
   position: relative;
@@ -32,95 +32,95 @@ const TabArea = styled.div`
   }
 `;
 
-export const RightSideBar: React.FC<{ editorState: EditorState }> = observer(
-  ({ editorState }) => {
-    const onClickOutlineTab = useCallback(
-      action(() => {
-        editorState.currentOutlineTab = "outline";
-      }),
-      [editorState]
-    );
-    const onClickAssetsTab = useCallback(
-      action(() => {
-        editorState.currentOutlineTab = "assets";
-      }),
-      [editorState]
-    );
-    const onClickElementTab = useCallback(
-      action(() => {
-        editorState.currentInspectorTab = "element";
-      }),
-      [editorState]
-    );
-    const onClickStyleTab = useCallback(
-      action(() => {
-        editorState.currentInspectorTab = "style";
-      }),
-      [editorState]
-    );
-    const onChangeSplitRatio = useCallback(
-      action((ratio: number) => {
-        editorState.sideBarSplitRatio = ratio;
-      }),
-      [editorState]
-    );
-    const onChangeWidth = useCallback(
-      action((width: number) => {
-        editorState.sideBarWidth = Math.max(width, minSideBarWidth);
-      }),
-      [editorState]
-    );
+export const RightSideBar: React.FC = observer(() => {
+  const editorState = useEditorState();
 
-    return (
-      <RightSideBarWrap
-        style={{
-          width: `${editorState.sideBarWidth}px`,
-        }}
+  const onClickOutlineTab = useCallback(
+    action(() => {
+      editorState.currentOutlineTab = "outline";
+    }),
+    [editorState]
+  );
+  const onClickAssetsTab = useCallback(
+    action(() => {
+      editorState.currentOutlineTab = "assets";
+    }),
+    [editorState]
+  );
+  const onClickElementTab = useCallback(
+    action(() => {
+      editorState.currentInspectorTab = "element";
+    }),
+    [editorState]
+  );
+  const onClickStyleTab = useCallback(
+    action(() => {
+      editorState.currentInspectorTab = "style";
+    }),
+    [editorState]
+  );
+  const onChangeSplitRatio = useCallback(
+    action((ratio: number) => {
+      editorState.sideBarSplitRatio = ratio;
+    }),
+    [editorState]
+  );
+  const onChangeWidth = useCallback(
+    action((width: number) => {
+      editorState.sideBarWidth = Math.max(width, minSideBarWidth);
+    }),
+    [editorState]
+  );
+
+  return (
+    <RightSideBarWrap
+      style={{
+        width: `${editorState.sideBarWidth}px`,
+      }}
+    >
+      <VSplitter
+        ratio={editorState.sideBarSplitRatio}
+        onChangeRatio={onChangeSplitRatio}
       >
-        <VSplitter
-          ratio={editorState.sideBarSplitRatio}
-          onChangeRatio={onChangeSplitRatio}
-        >
-          <TabArea>
-            <InspectorTabBar>
-              <InspectorTabBarItem
-                aria-selected={editorState.currentOutlineTab === "outline"}
-                onClick={onClickOutlineTab}
-              >
-                Outline
-              </InspectorTabBarItem>
-              <InspectorTabBarItem
-                aria-selected={editorState.currentOutlineTab === "assets"}
-                onClick={onClickAssetsTab}
-              >
-                Assets
-              </InspectorTabBarItem>
-            </InspectorTabBar>
-            <OutlineTreeView editorState={editorState} />
-          </TabArea>
-          <div>
-            <InspectorTabBar>
-              <InspectorTabBarItem
-                aria-selected={editorState.currentInspectorTab === "element"}
-                onClick={onClickElementTab}
-              >
-                Element
-              </InspectorTabBarItem>
-              <InspectorTabBarItem
-                aria-selected={editorState.currentInspectorTab === "style"}
-                onClick={onClickStyleTab}
-              >
-                Style
-              </InspectorTabBarItem>
-            </InspectorTabBar>
-          </div>
-        </VSplitter>
-        <WidthResizeHandle
-          position="left"
-          width={editorState.sideBarWidth}
-          onChangeWidth={onChangeWidth}
-        />
-      </RightSideBarWrap>
-    );
-  }
-);
+        <TabArea>
+          <InspectorTabBar>
+            <InspectorTabBarItem
+              aria-selected={editorState.currentOutlineTab === "outline"}
+              onClick={onClickOutlineTab}
+            >
+              Outline
+            </InspectorTabBarItem>
+            <InspectorTabBarItem
+              aria-selected={editorState.currentOutlineTab === "assets"}
+              onClick={onClickAssetsTab}
+            >
+              Assets
+            </InspectorTabBarItem>
+          </InspectorTabBar>
+          <OutlineTreeView />
+        </TabArea>
+        <div>
+          <InspectorTabBar>
+            <InspectorTabBarItem
+              aria-selected={editorState.currentInspectorTab === "element"}
+              onClick={onClickElementTab}
+            >
+              Element
+            </InspectorTabBarItem>
+            <InspectorTabBarItem
+              aria-selected={editorState.currentInspectorTab === "style"}
+              onClick={onClickStyleTab}
+            >
+              Style
+            </InspectorTabBarItem>
+          </InspectorTabBar>
+        </div>
+      </VSplitter>
+      <WidthResizeHandle
+        position="left"
+        width={editorState.sideBarWidth}
+        onChangeWidth={onChangeWidth}
+      />
+    </RightSideBarWrap>
+  );
+});

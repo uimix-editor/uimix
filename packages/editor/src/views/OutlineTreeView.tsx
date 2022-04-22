@@ -27,6 +27,7 @@ import { Variant } from "../models/Variant";
 import { ElementInstance } from "../models/ElementInstance";
 import { TextInstance } from "../models/TextInstance";
 import { Document } from "../models/Document";
+import { useEditorState } from "./EditorStateContext";
 
 const NODE_DRAG_MIME = "application/x.macaron-tree-drag-node";
 const COMPONENT_DRAG_MIME = "application/x.macaron-tree-drag-component";
@@ -67,9 +68,9 @@ const StyledRow = styled(TreeRow)`
 export const OutlineTreeView: React.FC<{
   className?: string;
   hidden?: boolean;
-  editorState: EditorState;
-}> = observer(({ className, hidden, editorState }) => {
+}> = observer(({ className, hidden }) => {
   const contextMenu = useContextMenu();
+  const editorState = useEditorState();
 
   const rootItem = useMemo(
     () =>
