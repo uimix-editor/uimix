@@ -1,7 +1,8 @@
-import { makeObservable, observable } from "mobx";
+import { computed, makeObservable, observable } from "mobx";
 import shortUUID from "short-uuid";
-import { ElementJSON } from "./Element";
+import { Element, ElementJSON } from "./Element";
 import { RootElement } from "./RootElement";
+import { Text } from "./Text";
 import { Variant, VariantJSON } from "./Variant";
 
 export class Component {
@@ -70,6 +71,10 @@ export class Component {
     }
 
     this.rootElement.loadJSON(json.rootElement);
+  }
+
+  @computed get selectedNodes(): (Element | Text)[] {
+    throw new Error("TODO");
   }
 }
 

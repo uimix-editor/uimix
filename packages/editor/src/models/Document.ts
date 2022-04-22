@@ -33,7 +33,7 @@ export class Document {
   }
 
   @computed get selectedNodes(): (Element | Text)[] {
-    throw new Error("TODO");
+    return this.components.flatMap((component) => component.selectedNodes);
   }
 }
 
