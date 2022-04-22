@@ -9,6 +9,7 @@ import {
 import {
   TreeRow,
   TreeRowIcon,
+  TreeRowLabel,
   TreeRowNameEdit,
 } from "@seanchas116/paintkit/dist/components/treeview/TreeRow";
 import { TreeView } from "@seanchas116/paintkit/dist/components/treeview/TreeView";
@@ -17,6 +18,7 @@ import {
   useContextMenu,
 } from "@seanchas116/paintkit/dist/components/menu/ContextMenuProvider";
 import widgetsFilledIcon from "@iconify-icons/ic/baseline-widgets";
+import switchIcon from "@seanchas116/paintkit/dist/icon/Switch";
 import { action, computed, makeObservable } from "mobx";
 import { colors } from "@seanchas116/paintkit/src/components/Palette";
 import { EditorState } from "../state/EditorState";
@@ -255,8 +257,18 @@ class VariantItem extends TreeViewItem {
     this.variant.rootInstance.collapsed = !this.variant.rootInstance.collapsed;
   }
 
+  private rowElement: HTMLElement | undefined;
+
   renderRow(options: { inverted: boolean }): React.ReactNode {
-    throw new Error("Method not implemented.");
+    return (
+      <StyledRow
+        ref={(e) => (this.rowElement = e || undefined)}
+        inverted={options.inverted}
+      >
+        <StyledIcon icon={switchIcon} iconColor={colors.icon} />
+        <TreeRowLabel>Default</TreeRowLabel>
+      </StyledRow>
+    );
   }
 }
 
@@ -314,6 +326,8 @@ class ElementItem extends TreeViewItem {
     this.instance.collapsed = !this.instance.collapsed;
   }
 
+  private rowElement: HTMLElement | undefined;
+
   renderRow(options: { inverted: boolean }): React.ReactNode {
     throw new Error("Method not implemented.");
   }
@@ -353,6 +367,8 @@ class TextItem extends LeafTreeViewItem {
   select(): void {
     this.instance.select();
   }
+
+  private rowElement: HTMLElement | undefined;
 
   renderRow(options: { inverted: boolean }): React.ReactNode {
     throw new Error("Method not implemented.");
