@@ -201,10 +201,10 @@ class ElementItem extends TreeViewItem {
       .node;
 
     // TODO: copy
-    this.instance.node.insertBefore(
-      this.context.editorState.selectedNodes,
-      beforeNode
-    );
+    for (const node of this.context.editorState.document.selectedNodes) {
+      this.instance.node.insertBefore(node, beforeNode);
+    }
+
     this.context.editorState.history.commit(
       copy ? "Duplicate Layers" : "Move Layers"
     );
