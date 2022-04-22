@@ -34,6 +34,10 @@ export class TextInstance {
     return "text";
   }
 
+  get node(): Text {
+    return this.text;
+  }
+
   get parent(): ElementInstance | undefined {
     return this.text.parent
       ? ElementInstance.get(this.variant, this.text.parent)

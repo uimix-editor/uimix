@@ -1,7 +1,13 @@
-import { observable } from "mobx";
+import { computed, makeObservable, observable } from "mobx";
 import { Component, ComponentJSON } from "./Component";
+import { Element } from "./Element";
+import { Text } from "./Text";
 
 export class Document {
+  constructor() {
+    makeObservable(this);
+  }
+
   readonly components = observable<Component>([]);
 
   toJSON(): DocumentJSON {
@@ -24,6 +30,10 @@ export class Document {
       component.loadJSON(componentJSON);
       this.components.push(component);
     }
+  }
+
+  @computed get selectedNodes(): (Element | Text)[] {
+    throw new Error("TODO");
   }
 }
 

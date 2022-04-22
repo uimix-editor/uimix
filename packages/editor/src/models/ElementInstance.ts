@@ -37,6 +37,10 @@ export class ElementInstance {
   readonly variant: Variant;
   readonly element: Element;
 
+  get node(): Element {
+    return this.element;
+  }
+
   get parent(): ElementInstance | undefined {
     return this.element.parent
       ? ElementInstance.get(this.variant, this.element.parent)

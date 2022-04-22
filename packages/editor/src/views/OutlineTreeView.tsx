@@ -28,6 +28,8 @@ import { ElementInstance } from "../models/ElementInstance";
 import { TextInstance } from "../models/TextInstance";
 import { Document } from "../models/Document";
 
+const DRAG_MIME = "application/x.macaron-tree-drag";
+
 const TreeViewPadding = styled.div`
   height: 8px;
 `;
@@ -183,6 +185,30 @@ class ElementItem extends TreeViewItem {
       this.context.editorState.getElementContextMenu(this.instance)
     );
   }
+
+  handleDragStart(e: React.DragEvent) {
+    e.dataTransfer.effectAllowed = "copyMove";
+    e.dataTransfer.setData(DRAG_MIME, "drag");
+  }
+
+  canDropData(dataTransfer: DataTransfer) {
+    return dataTransfer.types.includes(DRAG_MIME);
+  }
+
+  handleDrop(event: React.DragEvent, before: TreeViewItem | undefined) {
+    const copy = event.altKey || event.ctrlKey;
+    const beforeNode = (before as ElementItem | TextItem | undefined)?.instance
+      .node;
+
+    // TODO: copy
+    this.instance.node.insertBefore(
+      this.context.editorState.selectedNodes,
+      beforeNode
+    );
+    this.context.editorState.history.commit(
+      copy ? "Duplicate Layers" : "Move Layers"
+    );
+  }
 }
 
 class TextItem extends LeafTreeViewItem {
@@ -243,6 +269,11 @@ class TextItem extends LeafTreeViewItem {
         />
       </StyledRow>
     );
+  }
+
+  handleDragStart(e: React.DragEvent) {
+    e.dataTransfer.effectAllowed = "copyMove";
+    e.dataTransfer.setData(DRAG_MIME, "drag");
   }
 }
 
