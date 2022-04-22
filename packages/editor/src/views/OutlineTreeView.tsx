@@ -6,12 +6,19 @@ import {
   RootTreeViewItem,
   TreeViewItem,
 } from "@seanchas116/paintkit/dist/components/treeview/TreeViewItem";
+import {
+  TreeRow,
+  TreeRowIcon,
+  TreeRowNameEdit,
+} from "@seanchas116/paintkit/dist/components/treeview/TreeRow";
 import { TreeView } from "@seanchas116/paintkit/dist/components/treeview/TreeView";
 import {
   ContextMenuController,
   useContextMenu,
 } from "@seanchas116/paintkit/dist/components/menu/ContextMenuProvider";
-import { computed, makeObservable } from "mobx";
+import widgetsFilledIcon from "@iconify-icons/ic/baseline-widgets";
+import { action, computed, makeObservable } from "mobx";
+import { colors } from "@seanchas116/paintkit/src/components/Palette";
 import { EditorState } from "../state/EditorState";
 import { Component } from "../models/Component";
 import { Variant } from "../models/Variant";
@@ -21,6 +28,35 @@ import { Document } from "../models/Document";
 
 const TreeViewPadding = styled.div`
   height: 8px;
+`;
+
+const TagName = styled.div<{
+  color: string;
+}>`
+  font-size: 8px;
+  font-weight: 600;
+  text-transform: uppercase;
+  color: ${(p) => p.color};
+  opacity: 0.5;
+  margin-right: 6px;
+`;
+
+const StyledIcon = styled(TreeRowIcon)<{
+  iconColor: string;
+}>`
+  color: ${(p) => p.iconColor};
+`;
+
+const StyledNameEdit = styled(TreeRowNameEdit)<{
+  isComponent: boolean;
+  color: string;
+}>`
+  color: ${(p) => p.color};
+  font-weight: ${(p) => (p.isComponent ? "700" : "400")};
+`;
+
+const StyledRow = styled(TreeRow)`
+  position: relative;
 `;
 
 export const OutlineTreeView: React.FC<{
@@ -137,8 +173,31 @@ class ComponentItem extends TreeViewItem {
     this.component.collapsed = !this.component.collapsed;
   }
 
+  private rowElement: HTMLElement | undefined;
+
+  private onNameChange = action((name: string) => {
+    this.component.name = name;
+    return true;
+  });
+
   renderRow(options: { inverted: boolean }): React.ReactNode {
-    throw new Error("Method not implemented.");
+    return (
+      <StyledRow
+        ref={(e) => (this.rowElement = e || undefined)}
+        inverted={options.inverted}
+      >
+        <StyledIcon icon={widgetsFilledIcon} iconColor={colors.component} />
+        <StyledNameEdit
+          color={colors.text}
+          isComponent
+          value={this.component.name}
+          // TODO: validate
+          onChange={this.onNameChange}
+          disabled={!options.inverted}
+          trigger="click"
+        />
+      </StyledRow>
+    );
   }
 }
 
