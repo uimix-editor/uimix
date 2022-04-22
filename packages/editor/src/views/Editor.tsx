@@ -39,7 +39,7 @@ export const Editor: React.FC<{ editorState: EditorState }> = ({
   editorState,
 }) => {
   return (
-    <Columns>
+    <Columns onContextMenuCapture={(e) => e.preventDefault()}>
       <Center>
         <ToolBar>
           <ToolButton label="Menu" icon={menuIcon} />
