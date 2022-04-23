@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useMemo } from "react";
 import "./App.css";
 import {
   ColorSchemeProvider,
@@ -10,12 +10,12 @@ import { Editor } from "./views/Editor";
 import { EditorState } from "./state/EditorState";
 import { Document, DocumentJSON } from "./models/Document";
 
-export const App: React.FC = () => {
-  const [editorState] = useState(() => {
-    const document = new Document();
-    const history = new JSONUndoHistory<DocumentJSON, Document>(document);
+export const App: React.FC<{
+  history: JSONUndoHistory<DocumentJSON, Document>;
+}> = ({ history }) => {
+  const editorState = useMemo(() => {
     return new EditorState(history);
-  });
+  }, [history]);
 
   return (
     <ColorSchemeProvider colorScheme="auto">
