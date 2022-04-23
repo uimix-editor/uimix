@@ -67,4 +67,34 @@ export class EditorState {
       },
     ];
   }
+
+  getEditMenu(): MenuItem[] {
+    return [
+      {
+        text: "Undo",
+        disabled: !this.history.undoStack.canUndo,
+        run: action(() => {
+          this.history.undoStack.undo();
+          return true;
+        }),
+      },
+      {
+        text: "Redo",
+        disabled: !this.history.undoStack.canRedo,
+        run: action(() => {
+          this.history.undoStack.redo();
+          return true;
+        }),
+      },
+    ];
+  }
+
+  getMainMenu(): MenuItem[] {
+    return [
+      {
+        text: "Edit",
+        children: this.getEditMenu(),
+      },
+    ];
+  }
 }
