@@ -1,5 +1,6 @@
 import { MenuItem } from "@seanchas116/paintkit/dist/components/menu/Menu";
 import { JSONUndoHistory } from "@seanchas116/paintkit/src/util/JSONUndoHistory";
+import { KeyGesture } from "@seanchas116/paintkit/src/util/KeyGesture";
 import { action, makeObservable, observable } from "mobx";
 import { Component } from "../models/Component";
 import { Document, DocumentJSON } from "../models/Document";
@@ -73,6 +74,7 @@ export class EditorState {
       {
         text: "Undo",
         disabled: !this.history.undoStack.canUndo,
+        shortcut: [new KeyGesture(["Command"], "KeyZ")],
         run: action(() => {
           this.history.undoStack.undo();
           return true;
@@ -81,6 +83,10 @@ export class EditorState {
       {
         text: "Redo",
         disabled: !this.history.undoStack.canRedo,
+        shortcut: [
+          new KeyGesture(["Command", "Shift"], "KeyZ"),
+          new KeyGesture(["Command"], "KeyY"),
+        ],
         run: action(() => {
           this.history.undoStack.redo();
           return true;
