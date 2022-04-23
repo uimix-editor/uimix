@@ -56,6 +56,7 @@ export class EditorState {
         text: "Add Element",
         run: action(() => {
           const element = new Element({ tagName: "div" });
+          element.rename("div");
           instance.element.append(element);
           this.history.commit("Add Element");
           return true;
