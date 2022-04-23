@@ -32,36 +32,22 @@ export class Element extends TreeNode<Element, Element, Element | Text> {
 
   readonly tagName: string;
 
-  @observable private _id = "";
-
   get id(): string {
-    return this._id;
+    return this.uniqueName;
   }
 
   setID(id: string): void {
-    if (!this.component) {
-      this._id = id;
-      return;
-    }
-    this.component.nameScope.rename(this, id);
+    this.setUniqueName(id);
+  }
+
+  get hasUniqueName(): boolean {
+    return true;
   }
 
   readonly attrs = observable.map<string, string>();
 
   get component(): Component | undefined {
     return this.parent?.component;
-  }
-
-  insertBefore(child: Element | Text, next: Element | Text | undefined): void {
-    super.insertBefore(child, next);
-    if (child.type === "element") {
-      this.component?.nameScope.add(child);
-    }
-  }
-
-  remove(): void {
-    this.component?.nameScope.delete(this);
-    super.remove();
   }
 
   toJSON(): ElementJSON {

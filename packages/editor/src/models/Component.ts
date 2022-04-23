@@ -1,9 +1,7 @@
 import { TreeNode } from "@seanchas116/paintkit/src/util/TreeNode";
-import { filterInstance } from "@seanchas116/paintkit/src/util/Collection";
 import { computed, makeObservable, observable } from "mobx";
 import { ComponentList } from "./Document";
 import { Element, ElementJSON } from "./Element";
-import { NameScope } from "./NameScope";
 import { RootElement } from "./RootElement";
 import { Text } from "./Text";
 import { Variant, VariantJSON } from "./Variant";
@@ -15,13 +13,6 @@ export class Component extends TreeNode<ComponentList, Component, never> {
   }
 
   @observable name = "my-component";
-
-  readonly nameScope = new NameScope<Element>({
-    getName: (element) => element.id,
-    // @ts-ignore
-    setName: (element, id) => (element._id = id),
-    getChildren: (element) => filterInstance(element.children, [Element]),
-  });
 
   readonly rootElement = new RootElement(this);
 

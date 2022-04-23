@@ -7,7 +7,10 @@ export class RootElement extends Element {
       tagName: "div",
     });
     this._component = component;
-    component.nameScope.add(this);
+  }
+
+  get isUniqueNameRoot(): boolean {
+    return true;
   }
 
   private readonly _component: Component;
