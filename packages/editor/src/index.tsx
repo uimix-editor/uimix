@@ -1,13 +1,10 @@
 import React from "react";
 import ReactDOM from "react-dom/client";
 import { App } from "./App";
+import { File } from "./File";
 import "./index.css";
-import { Document, DocumentJSON } from "./models/Document";
-// eslint-disable-next-line import/order
-import { JSONUndoHistory } from "@seanchas116/paintkit/src/util/JSONUndoHistory";
 
-const doc = new Document();
-const history = new JSONUndoHistory<DocumentJSON, Document>(doc);
+const file = new File();
 
 const rootElem = document.createElement("div");
 document.body.append(rootElem);
@@ -15,7 +12,7 @@ document.body.append(rootElem);
 let root = ReactDOM.createRoot(rootElem);
 root.render(
   <React.StrictMode>
-    <App history={history} />
+    <App file={file} />
   </React.StrictMode>
 );
 
@@ -27,7 +24,7 @@ if (module.hot) {
     const NextApp = (await import("./App")).App;
     root.render(
       <React.StrictMode>
-        <NextApp history={history} />
+        <NextApp file={file} />
       </React.StrictMode>
     );
   });

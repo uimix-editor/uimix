@@ -3,18 +3,17 @@ import {
   ColorSchemeProvider,
   PaintkitProvider,
 } from "@seanchas116/paintkit/src/components/GlobalStyle";
-import { JSONUndoHistory } from "@seanchas116/paintkit/src/util/JSONUndoHistory";
 import { ContextMenuProvider } from "@seanchas116/paintkit/dist/components/menu/ContextMenuProvider";
 import { Editor } from "./views/Editor";
-import { Document, DocumentJSON } from "./models/Document";
 import { AppEditorState } from "./AppEditorState";
+import { File } from "./File";
 
 export const App: React.FC<{
-  history: JSONUndoHistory<DocumentJSON, Document>;
-}> = ({ history }) => {
+  file: File;
+}> = ({ file }) => {
   const editorState = useMemo(() => {
-    return new AppEditorState(history);
-  }, [history]);
+    return new AppEditorState(file);
+  }, [file]);
 
   return (
     <ColorSchemeProvider colorScheme="auto">
