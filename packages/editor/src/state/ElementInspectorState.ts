@@ -59,4 +59,10 @@ export class ElementInspectorState {
     this.editorState.history.commit("Change ID");
     return true;
   });
+
+  @computed get innerHTML(): string | typeof MIXED | undefined {
+    return sameOrMixed(
+      this.selectedElements.map((element) => element.innerHTML)
+    );
+  }
 }

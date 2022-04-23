@@ -28,6 +28,10 @@ export class Text extends TreeNode<Element, Text, never> {
 
   @observable content: string;
 
+  get outerHTML(): string {
+    return this.content;
+  }
+
   toJSON(): TextJSON {
     return {
       type: "text",

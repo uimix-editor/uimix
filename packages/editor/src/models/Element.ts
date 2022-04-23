@@ -2,7 +2,7 @@ import {
   TreeNode,
   TreeNodeOptions,
 } from "@seanchas116/paintkit/src/util/TreeNode";
-import { makeObservable, observable } from "mobx";
+import { computed, makeObservable, observable } from "mobx";
 import { Component } from "./Component";
 import { Text, TextJSON } from "./Text";
 
@@ -48,6 +48,17 @@ export class Element extends TreeNode<Element, Element, Element | Text> {
 
   get component(): Component | undefined {
     return this.parent?.component;
+  }
+
+  @computed get innerHTML(): string {
+    return this.children.map((child) => child.outerHTML).join("");
+  }
+
+  @computed get outerHTML(): string {
+    const attrString = [["id", this.id], ...this.attrs]
+      .map(([key, value]) => ` ${key}="${value}"`)
+      .join("");
+    return `<${this.tagName}${attrString}>${this.innerHTML}</${this.tagName}>`;
   }
 
   toJSON(): ElementJSON {
