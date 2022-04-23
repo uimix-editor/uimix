@@ -1,8 +1,17 @@
 import { action, computed, makeObservable } from "mobx";
 import { MIXED, sameOrMixed } from "@seanchas116/paintkit/src/util/Mixed";
 import { filterInstance } from "@seanchas116/paintkit/src/util/Collection";
+import prettier from "prettier/standalone";
+import parserHTML from "prettier/parser-html";
 import { Element } from "../models/Element";
 import { EditorState } from "./EditorState";
+
+export function formatHTML(html: string): string {
+  return prettier.format(html, {
+    parser: "html",
+    plugins: [parserHTML],
+  });
+}
 
 export class ElementInspectorState {
   constructor(editorState: EditorState) {
@@ -61,8 +70,12 @@ export class ElementInspectorState {
   });
 
   @computed get innerHTML(): string | typeof MIXED | undefined {
-    return sameOrMixed(
+    const value = sameOrMixed(
       this.selectedElements.map((element) => element.innerHTML)
     );
+    if (typeof value === "string") {
+      return formatHTML(value);
+    }
+    return value;
   }
 }
