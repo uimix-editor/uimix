@@ -32,13 +32,36 @@ export class Element extends TreeNode<Element, Element, Element | Text> {
 
   readonly tagName: string;
 
-  // TODO: avoid id name confilict
-  @observable id = "";
+  @observable private _id = "";
+
+  get id(): string {
+    return this._id;
+  }
+
+  setID(id: string): void {
+    if (!this.component) {
+      this._id = id;
+      return;
+    }
+    this.component.nameScope.rename(this, id);
+  }
 
   readonly attrs = observable.map<string, string>();
 
   get component(): Component | undefined {
     return this.parent?.component;
+  }
+
+  insertBefore(child: Element | Text, next: Element | Text | undefined): void {
+    super.insertBefore(child, next);
+    if (child.type === "element") {
+      this.component?.nameScope.add(child);
+    }
+  }
+
+  remove(): void {
+    this.component?.nameScope.delete(this);
+    super.remove();
   }
 
   toJSON(): ElementJSON {
@@ -56,7 +79,7 @@ export class Element extends TreeNode<Element, Element, Element | Text> {
     if (json.key !== this.key || json.tagName !== this.tagName) {
       throw new Error("Element key and tagName must match");
     }
-    this.id = json.id;
+    this.setID(json.id);
     this.attrs.clear();
     for (const [key, value] of Object.entries(json.attrs)) {
       this.attrs.set(key, value);

@@ -152,7 +152,7 @@ class ElementItem extends TreeViewItem {
   }
 
   private onNameChange = action((id: string) => {
-    this.instance.element.id = id;
+    this.instance.element.setID(id);
     return true;
   });
 
