@@ -1,5 +1,4 @@
 import React, { useMemo } from "react";
-import "./App.css";
 import {
   ColorSchemeProvider,
   PaintkitProvider,
