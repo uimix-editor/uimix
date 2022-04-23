@@ -33,11 +33,11 @@ export class Element extends TreeNode<Element, Element, Element | Text> {
   readonly tagName: string;
 
   get id(): string {
-    return this.uniqueName;
+    return this.name;
   }
 
   setID(id: string): void {
-    this.setUniqueName(id);
+    this.rename(id);
   }
 
   get hasUniqueName(): boolean {

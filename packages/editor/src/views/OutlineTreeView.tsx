@@ -358,7 +358,7 @@ class ComponentItem extends TreeViewItem {
   private rowElement: HTMLElement | undefined;
 
   private onNameChange = action((name: string) => {
-    this.component.name = name;
+    this.component.rename(name);
     return true;
   });
 

@@ -9,10 +9,9 @@ import { Variant, VariantJSON } from "./Variant";
 export class Component extends TreeNode<ComponentList, Component, never> {
   constructor(key?: string) {
     super({ key });
+    this.rename("my-component");
     makeObservable(this);
   }
-
-  @observable name = "my-component";
 
   readonly rootElement = new RootElement(this);
 
@@ -20,6 +19,10 @@ export class Component extends TreeNode<ComponentList, Component, never> {
   readonly variants = observable<Variant>([]);
   get allVariants(): Variant[] {
     return [this.defaultVariant, ...this.variants];
+  }
+
+  get hasUniqueName(): boolean {
+    return true;
   }
 
   @observable selected = false;
@@ -54,7 +57,7 @@ export class Component extends TreeNode<ComponentList, Component, never> {
       throw new Error("Component key mismatch");
     }
 
-    this.name = json.name;
+    this.rename(json.name);
 
     const oldVariants = new Map<string, Variant>();
     for (const variant of this.variants) {

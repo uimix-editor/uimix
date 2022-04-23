@@ -4,7 +4,11 @@ import { Component, ComponentJSON } from "./Component";
 import { Element } from "./Element";
 import { Text } from "./Text";
 
-export class ComponentList extends TreeNode<never, ComponentList, Component> {}
+export class ComponentList extends TreeNode<never, ComponentList, Component> {
+  get isUniqueNameRoot(): boolean {
+    return true;
+  }
+}
 
 export class Document {
   constructor() {
