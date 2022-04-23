@@ -1,5 +1,5 @@
 import { MenuItem } from "@seanchas116/paintkit/dist/components/menu/Menu";
-import { action } from "mobx";
+import { action, computed } from "mobx";
 import { File } from "./File";
 import { EditorState } from "./state/EditorState";
 
@@ -11,15 +11,14 @@ export class AppEditorState extends EditorState {
 
   readonly file: File;
 
+  @computed get windowTitle(): string {
+    return `${this.file.history.isModified ? "*" : ""}${
+      this.file.fileName
+    } - Macaron`;
+  }
+
   getFileMenu(): MenuItem[] {
     return [
-      {
-        text: this.file.fileName,
-        disabled: true,
-      },
-      {
-        type: "separator",
-      },
       {
         text: "New",
         run: action(() => {
