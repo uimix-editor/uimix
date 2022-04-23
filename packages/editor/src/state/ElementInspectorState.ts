@@ -20,6 +20,34 @@ export class ElementInspectorState {
     return sameOrMixed(this.selectedElements.map((element) => element.tagName));
   }
 
+  readonly onChangeTagName = action((tagName: string) => {
+    for (const element of this.selectedElements) {
+      if (!element.parent) {
+        continue;
+      }
+
+      // TODO: keep selection
+      // TODO: keep treeview collapsed/expanded state
+
+      const newElement = new Element({ tagName });
+      newElement.setID(element.id);
+      newElement.attrs.replace(element.attrs);
+
+      for (const child of element.children) {
+        newElement.append(child);
+      }
+
+      const next = element.nextSibling;
+      const parent = element.parent;
+      element.remove();
+      parent.insertBefore(newElement, next);
+    }
+
+    this.editorState.history.commit("Change Tag Name");
+
+    return true;
+  });
+
   @computed get id(): string | typeof MIXED | undefined {
     return sameOrMixed(this.selectedElements.map((element) => element.id));
   }
