@@ -3,7 +3,7 @@ import { computed, makeObservable, observable } from "mobx";
 import { ComponentList } from "./Document";
 import { Element, ElementJSON } from "./Element";
 import { RootElement } from "./RootElement";
-import { Text } from "./Text";
+import { Text, TextJSON } from "./Text";
 import { Variant, VariantJSON } from "./Variant";
 
 export class Component extends TreeNode<ComponentList, Component, never> {
@@ -48,7 +48,7 @@ export class Component extends TreeNode<ComponentList, Component, never> {
       key: this.key,
       name: this.name,
       variants: this.variants.map((variant) => variant.toJSON()),
-      rootElement: this.rootElement.toJSON(),
+      children: this.rootElement.children.map((child) => child.toJSON()),
     };
   }
 
@@ -72,7 +72,14 @@ export class Component extends TreeNode<ComponentList, Component, never> {
       this.variants.push(variant);
     }
 
-    this.rootElement.loadJSON(json.rootElement);
+    this.rootElement.loadJSON({
+      type: "element",
+      key: this.rootElement.key,
+      tagName: "div",
+      id: "",
+      attrs: {},
+      children: json.children,
+    });
   }
 
   @computed get selectedNodes(): (Element | Text)[] {
@@ -91,5 +98,5 @@ export interface ComponentJSON {
   key: string;
   name: string;
   variants: VariantJSON[];
-  rootElement: ElementJSON;
+  children: (ElementJSON | TextJSON)[];
 }
