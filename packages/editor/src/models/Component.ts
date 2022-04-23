@@ -16,6 +16,13 @@ export class Component extends TreeNode<ComponentList, Component, never> {
 
   @observable name = "my-component";
 
+  readonly nameScope = new NameScope<Element>({
+    getName: (element) => element.id,
+    // @ts-ignore
+    setName: (element, id) => (element._id = id),
+    getChildren: (element) => filterInstance(element.children, [Element]),
+  });
+
   readonly rootElement = new RootElement(this);
 
   readonly defaultVariant = new Variant(this);
@@ -23,13 +30,6 @@ export class Component extends TreeNode<ComponentList, Component, never> {
   get allVariants(): Variant[] {
     return [this.defaultVariant, ...this.variants];
   }
-
-  readonly nameScope = new NameScope<Element>({
-    getName: (element) => element.id,
-    // @ts-ignore
-    setName: (element, id) => (element._id = id),
-    getChildren: (element) => filterInstance(element.children, [Element]),
-  });
 
   @observable selected = false;
 

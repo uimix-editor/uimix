@@ -7,6 +7,7 @@ export class RootElement extends Element {
       tagName: "div",
     });
     this._component = component;
+    component.nameScope.add(this);
   }
 
   private readonly _component: Component;
