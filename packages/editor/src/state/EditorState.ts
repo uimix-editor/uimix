@@ -1,5 +1,4 @@
 import { MenuItem } from "@seanchas116/paintkit/dist/components/menu/Menu";
-import { Menu } from "@seanchas116/paintkit/src/components/menu/Menu";
 import { JSONUndoHistory } from "@seanchas116/paintkit/src/util/JSONUndoHistory";
 import { KeyGesture } from "@seanchas116/paintkit/src/util/KeyGesture";
 import { isTextInputFocused } from "@seanchas116/paintkit/src/util/CurrentFocus";
@@ -109,31 +108,6 @@ export class EditorState {
     ];
   }
 
-  // TODO: move to paintkit
-  private handleShortcut(e: KeyboardEvent): boolean {
-    const iterateCommands = (children: readonly MenuItem[]) => {
-      for (const child of children) {
-        if ("run" in child) {
-          if (
-            !child.disabled &&
-            (child.shortcut ?? []).some((shortcut) => shortcut.matches(e))
-          ) {
-            if (child.run?.()) {
-              return true;
-            }
-          }
-        }
-        if ("children" in child && child.children) {
-          if (iterateCommands(child.children)) {
-            return true;
-          }
-        }
-      }
-      return false;
-    };
-    return iterateCommands(this.getMainMenu());
-  }
-
   handleGlobalKeyDown(e: KeyboardEvent): boolean {
     switch (e.key) {
       case "Escape":
@@ -150,7 +124,7 @@ export class EditorState {
     // TODO: arrow key movement
 
     if (e.ctrlKey || e.metaKey || !isTextInputFocused()) {
-      if (this.handleShortcut(e)) {
+      if (MenuItem.handleShortcut(this.getMainMenu(), e)) {
         return true;
       }
     }
