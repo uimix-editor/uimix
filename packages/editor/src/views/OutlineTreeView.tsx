@@ -153,6 +153,7 @@ class ElementItem extends TreeViewItem {
 
   private onNameChange = action((id: string) => {
     this.instance.element.setID(id);
+    this.context.editorState.history.commit("Change ID");
     return true;
   });
 
@@ -250,6 +251,7 @@ class TextItem extends LeafTreeViewItem {
 
   private onNameChange = action((content: string) => {
     this.instance.text.content = content;
+    this.context.editorState.history.commit("Change Text");
     return true;
   });
 
@@ -359,6 +361,7 @@ class ComponentItem extends TreeViewItem {
 
   private onNameChange = action((name: string) => {
     this.component.rename(name);
+    this.context.editorState.history.commit("Rename Component");
     return true;
   });
 
