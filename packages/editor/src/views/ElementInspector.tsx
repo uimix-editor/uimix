@@ -4,6 +4,7 @@ import styled from "styled-components";
 import {
   Pane,
   Row12,
+  TopLabelArea,
 } from "@seanchas116/paintkit/src/components/sidebar/Inspector";
 import { ComboBox } from "@seanchas116/paintkit/src/components/ComboBox";
 import { TextArea } from "@seanchas116/paintkit/src/components/TextArea";
@@ -35,11 +36,13 @@ export const ElementInspector: React.FC = observer(() => {
           <Label>ID</Label>
           <Input value={state.id} onChange={state.onChangeID} />
         </Row12>
-
-        <TextArea
-          value={typeof innerHTML === "string" ? innerHTML : undefined}
-          placeholder={innerHTML === MIXED ? "Mixed" : undefined}
-        />
+        <TopLabelArea>
+          <Label>Inner HTML</Label>
+          <TextArea
+            value={typeof innerHTML === "string" ? innerHTML : undefined}
+            placeholder={innerHTML === MIXED ? "Mixed" : undefined}
+          />
+        </TopLabelArea>
       </Pane>
     </ElementInspectorWrap>
   );
