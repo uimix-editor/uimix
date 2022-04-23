@@ -1,6 +1,8 @@
 import { MenuItem } from "@seanchas116/paintkit/dist/components/menu/Menu";
+import { Menu } from "@seanchas116/paintkit/src/components/menu/Menu";
 import { JSONUndoHistory } from "@seanchas116/paintkit/src/util/JSONUndoHistory";
 import { KeyGesture } from "@seanchas116/paintkit/src/util/KeyGesture";
+import { isTextInputFocused } from "@seanchas116/paintkit/src/util/CurrentFocus";
 import { action, makeObservable, observable } from "mobx";
 import { Component } from "../models/Component";
 import { Document, DocumentJSON } from "../models/Document";
@@ -31,6 +33,9 @@ export class EditorState {
 
   @observable hoveredItem: ElementInstance | TextInstance | undefined =
     undefined;
+
+  @observable measureMode = false;
+  @observable panMode = false;
 
   getOutlineContextMenu(): MenuItem[] {
     return [
@@ -102,5 +107,65 @@ export class EditorState {
         children: this.getEditMenu(),
       },
     ];
+  }
+
+  // TODO: move to paintkit
+  private handleShortcut(e: KeyboardEvent): boolean {
+    const iterateCommands = (children: readonly MenuItem[]) => {
+      for (const child of children) {
+        if ("run" in child) {
+          if (
+            !child.disabled &&
+            (child.shortcut ?? []).some((shortcut) => shortcut.matches(e))
+          ) {
+            if (child.run?.()) {
+              return true;
+            }
+          }
+        }
+        if ("children" in child && child.children) {
+          if (iterateCommands(child.children)) {
+            return true;
+          }
+        }
+      }
+      return false;
+    };
+    return iterateCommands(this.getMainMenu());
+  }
+
+  handleGlobalKeyDown(e: KeyboardEvent): boolean {
+    switch (e.key) {
+      case "Escape":
+        // TODO
+        break;
+      case "Alt":
+        this.measureMode = true;
+        break;
+      case " ":
+        this.panMode = true;
+        break;
+    }
+
+    // TODO: arrow key movement
+
+    if (e.ctrlKey || e.metaKey || !isTextInputFocused()) {
+      if (this.handleShortcut(e)) {
+        return true;
+      }
+    }
+
+    return false;
+  }
+
+  handleGlobalKeyUp(e: KeyboardEvent): void {
+    switch (e.key) {
+      case "Alt":
+        this.measureMode = false;
+        break;
+      case " ":
+        this.panMode = false;
+        break;
+    }
   }
 }
