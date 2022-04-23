@@ -7,6 +7,7 @@ import { Element } from "../models/Element";
 import { ElementInstance } from "../models/ElementInstance";
 import { Text } from "../models/Text";
 import { TextInstance } from "../models/TextInstance";
+import { ElementInspectorState } from "./ElementInspectorState";
 
 export class EditorState {
   constructor(history: JSONUndoHistory<DocumentJSON, Document>) {
@@ -24,6 +25,8 @@ export class EditorState {
   @observable currentInspectorTab: "element" | "style" = "element";
   @observable sideBarSplitRatio = 0.3;
   @observable sideBarWidth = 256;
+
+  readonly elementInspectorState = new ElementInspectorState(this);
 
   @observable hoveredItem: ElementInstance | TextInstance | undefined =
     undefined;
