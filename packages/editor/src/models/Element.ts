@@ -78,6 +78,15 @@ export class Element extends TreeNode<Element, Element, Element | Text> {
         const element = new Element({
           tagName: child.tagName,
         });
+
+        for (const [key, value] of Object.entries(child.properties ?? {})) {
+          if (key === "id") {
+            element.rename(String(value));
+          } else {
+            element.attrs.set(key, String(value));
+          }
+        }
+
         element.setInnerHTML(child.children);
         this.append(element);
       }
