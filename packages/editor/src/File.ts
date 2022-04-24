@@ -45,12 +45,10 @@ export class File {
       return;
     }
 
-    const writable = await this.fileHandle.createWritable();
-
     const contents = stringifyDocument(this.history.target);
 
+    const writable = await this.fileHandle.createWritable();
     await writable.write(contents);
-
     await writable.close();
 
     runInAction(() => {
