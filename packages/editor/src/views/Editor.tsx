@@ -6,6 +6,7 @@ import { EditorState } from "../state/EditorState";
 import { RightSideBar } from "./SideBar";
 import { EditorStateContext } from "./EditorStateContext";
 import { ToolBar } from "./ToolBar";
+import { Viewport } from "./Viewport";
 
 const Columns = styled.div`
   position: fixed;
@@ -24,8 +25,7 @@ const Center = styled.div`
   flex-direction: column;
 `;
 
-const Viewport = styled.div`
-  background-color: ${colors.uiBackground};
+const StyledViewport = styled(Viewport)`
   flex: 1;
 `;
 
@@ -56,7 +56,7 @@ export const Editor: React.FC<{ editorState: EditorState }> = ({
       <Columns onContextMenuCapture={(e) => e.preventDefault()}>
         <Center>
           <ToolBar />
-          <Viewport />
+          <StyledViewport />
         </Center>
         <RightSideBar />
       </Columns>
