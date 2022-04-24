@@ -1,7 +1,7 @@
 import { JSONUndoHistory } from "@seanchas116/paintkit/src/util/JSONUndoHistory";
 import { computed, makeObservable, observable, runInAction } from "mobx";
 import { Document, DocumentJSON } from "./models/Document";
-import { stringifyDocument } from "./models/FileFormat";
+import { parseDocument, stringifyDocument } from "./models/FileFormat";
 
 const filePickerOptions = {
   types: [
@@ -30,8 +30,24 @@ export class File {
   }
 
   clear(): void {
+    // TODO: warn if modified
     this.fileHandle = undefined;
     this.history = new JSONUndoHistory<DocumentJSON, Document>(new Document());
+  }
+
+  async open(): Promise<void> {
+    // TODO: warn if modified
+    const [fileHandle] = await showOpenFilePicker(filePickerOptions);
+    const data = await (await fileHandle.getFile()).text();
+
+    runInAction(() => {
+      try {
+        const document = parseDocument(data);
+        this.history = new JSONUndoHistory<DocumentJSON, Document>(document);
+      } catch (e) {
+        window.alert(`Error parsing ${fileHandle.name}: ${String(e)}`);
+      }
+    });
   }
 
   async saveAs(): Promise<void> {

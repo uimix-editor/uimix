@@ -34,7 +34,10 @@ export class AppEditorState extends EditorState {
       {
         text: "Open...",
         shortcut: [new KeyGesture(["Command"], "KeyO")],
-        disabled: true,
+        run: action(() => {
+          void this.file.open();
+          return true;
+        }),
       },
       {
         type: "separator",

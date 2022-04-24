@@ -13,15 +13,18 @@
     "@seanchas116/paintkit": "*",
     "@types/hast": "^2.3.4",
     "css-what": "^6.1.0",
+    "hast-util-from-parse5": "^7.1.0",
     "hast-util-to-html": "^8.0.3",
     "hastscript": "^7.0.2",
     "mobx": "^6.5.0",
     "mobx-react-lite": "^3.3.0",
+    "parse5": "^7.0.0",
     "prettier": "^2.6.2",
     "react": "^18.0.0",
     "react-dom": "^18.0.0",
     "short-uuid": "^4.2.0",
-    "styled-components": "^5.3.5"
+    "styled-components": "^5.3.5",
+    "unist-util-inspect": "^7.0.0"
   },
   "devDependencies": {
     "@types/react": "^18.0.0",

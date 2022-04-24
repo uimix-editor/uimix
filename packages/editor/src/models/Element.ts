@@ -67,7 +67,7 @@ export class Element extends TreeNode<Element, Element, Element | Text> {
     );
   }
 
-  setInnerHTML(innerHTML: hast.ElementContent[]): void {
+  setInnerHTML(innerHTML: hast.Content[]): void {
     // TODO: reuse existing elements
 
     this.replaceChildren([]);
