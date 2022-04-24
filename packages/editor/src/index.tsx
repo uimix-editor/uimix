@@ -6,6 +6,14 @@ import "./index.css";
 
 const file = new File();
 
+window.addEventListener("beforeunload", (e) => {
+  e.preventDefault();
+
+  if (file.history.isModified) {
+    return (e.returnValue = "Are you sure you want to exit?");
+  }
+});
+
 const rootElem = document.createElement("div");
 document.body.append(rootElem);
 

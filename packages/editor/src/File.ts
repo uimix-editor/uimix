@@ -29,14 +29,20 @@ export class File {
     return this.fileHandle?.name ?? "Untitled";
   }
 
-  clear(): void {
-    // TODO: warn if modified
+  async clear(): Promise<void> {
+    if (!(await this.confirmClose())) {
+      return;
+    }
+
     this.fileHandle = undefined;
     this.history = new JSONUndoHistory<DocumentJSON, Document>(new Document());
   }
 
   async open(): Promise<void> {
-    // TODO: warn if modified
+    if (!(await this.confirmClose())) {
+      return;
+    }
+
     const [fileHandle] = await showOpenFilePicker(filePickerOptions);
 
     try {
@@ -71,5 +77,21 @@ export class File {
     runInAction(() => {
       this.history.updateSavePoint();
     });
+  }
+
+  async confirmClose(): Promise<boolean> {
+    if (!this.history.isModified) {
+      return true;
+    }
+
+    if (
+      window.confirm(
+        `"${this.fileName}" is modified. Do you want to discard your changes?`
+      )
+    ) {
+      return true;
+    }
+
+    return false;
   }
 }
