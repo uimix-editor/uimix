@@ -296,10 +296,6 @@ class VariantItem extends ElementItem {
 
   readonly variant: Variant | DefaultVariant;
 
-  get key(): string {
-    return this.variant.type === "variant" ? this.variant.key : "";
-  }
-
   renderRow(options: { inverted: boolean }): React.ReactNode {
     return (
       <StyledRow
