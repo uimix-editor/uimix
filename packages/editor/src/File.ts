@@ -18,9 +18,9 @@ export class File {
     makeObservable(this);
   }
 
-  readonly document = new Document();
-  readonly history = new JSONUndoHistory<DocumentJSON, Document>(this.document);
-
+  @observable.ref history = new JSONUndoHistory<DocumentJSON, Document>(
+    new Document()
+  );
   @observable.ref private fileHandle: FileSystemFileHandle | undefined =
     undefined;
 
@@ -30,9 +30,7 @@ export class File {
 
   clear(): void {
     this.fileHandle = undefined;
-    this.history.revert({
-      components: [],
-    });
+    this.history = new JSONUndoHistory<DocumentJSON, Document>(new Document());
   }
 
   async saveAs(): Promise<void> {

@@ -12,15 +12,19 @@ import { TextInstance } from "../models/TextInstance";
 import { ElementInspectorState } from "./ElementInspectorState";
 
 export class EditorState {
-  constructor(history: JSONUndoHistory<DocumentJSON, Document>) {
-    this.history = history;
+  constructor(getHistory: () => JSONUndoHistory<DocumentJSON, Document>) {
+    this.getHistory = getHistory;
     makeObservable(this);
   }
 
-  readonly history: JSONUndoHistory<DocumentJSON, Document>;
+  private readonly getHistory: () => JSONUndoHistory<DocumentJSON, Document>;
+
+  get history(): JSONUndoHistory<DocumentJSON, Document> {
+    return this.getHistory();
+  }
 
   get document(): Document {
-    return this.history.target;
+    return this.getHistory().target;
   }
 
   @observable currentOutlineTab: "outline" | "assets" = "outline";

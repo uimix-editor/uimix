@@ -5,7 +5,7 @@ import { EditorState } from "./state/EditorState";
 
 export class AppEditorState extends EditorState {
   constructor(file: File) {
-    super(file.history);
+    super(() => file.history);
     this.file = file;
   }
 
