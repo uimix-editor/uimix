@@ -21,6 +21,7 @@ import widgetsFilledIcon from "@iconify-icons/ic/baseline-widgets";
 import switchIcon from "@seanchas116/paintkit/dist/icon/Switch";
 import { action, computed, makeObservable } from "mobx";
 import { colors } from "@seanchas116/paintkit/src/components/Palette";
+import { filterInstance } from "@seanchas116/paintkit/src/util/Collection";
 import { EditorState } from "../state/EditorState";
 import { Component } from "../models/Component";
 import { DefaultVariant, Variant } from "../models/Variant";
@@ -418,7 +419,24 @@ class ComponentItem extends TreeViewItem {
     const copy = event.altKey || event.ctrlKey;
     const beforeVariant = (before as VariantItem | undefined)?.variant;
 
-    // TODO
+    const selectedVariants = filterInstance(this.component.selectedVariants, [
+      Variant,
+    ]);
+    for (const variant of selectedVariants) {
+      this.component.variants.remove(variant);
+    }
+    let index =
+      beforeVariant === undefined
+        ? this.component.variants.length
+        : beforeVariant.type === "variant"
+        ? this.component.variants.indexOf(beforeVariant)
+        : 0;
+    if (index < 0) {
+      index = 0;
+    }
+    for (const variant of selectedVariants) {
+      this.component.variants.splice(index++, 0, variant);
+    }
 
     this.context.editorState.history.commit(
       copy ? "Duplicate Variants" : "Move Variants"
