@@ -6,7 +6,7 @@ import { ElementInstance } from "./ElementInstance";
 import { RootElement } from "./RootElement";
 import { Text, TextJSON } from "./Text";
 import { TextInstance } from "./TextInstance";
-import { Variant, VariantJSON } from "./Variant";
+import { DefaultVariant, Variant, VariantJSON } from "./Variant";
 
 export class Component extends TreeNode<ComponentList, Component, never> {
   constructor(key?: string) {
@@ -17,9 +17,9 @@ export class Component extends TreeNode<ComponentList, Component, never> {
 
   readonly rootElement = new RootElement(this);
 
-  readonly defaultVariant = new Variant(this);
+  readonly defaultVariant = new DefaultVariant(this);
   readonly variants = observable<Variant>([]);
-  get allVariants(): Variant[] {
+  get allVariants(): (Variant | DefaultVariant)[] {
     return [this.defaultVariant, ...this.variants];
   }
 
@@ -88,7 +88,7 @@ export class Component extends TreeNode<ComponentList, Component, never> {
     return this.allVariants.flatMap((v) => v.rootInstance.selectedDescendants);
   }
 
-  @computed.struct get selectedVariants(): Variant[] {
+  @computed.struct get selectedVariants(): (Variant | DefaultVariant)[] {
     return this.allVariants.filter((v) => v.rootInstance.selected);
   }
 

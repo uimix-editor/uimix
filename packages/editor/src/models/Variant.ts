@@ -3,24 +3,75 @@ import shortUUID from "short-uuid";
 import { Component } from "./Component";
 import { ElementInstance } from "./ElementInstance";
 
-export class Variant {
-  constructor(component: Component, key?: string) {
+export interface BaseVariantJSON {
+  x: number;
+  y: number;
+  width?: number;
+  height?: number;
+}
+
+abstract class BaseVariant {
+  constructor(component: Component) {
     this.component = component;
-    this.key = key ?? shortUUID.generate();
-    this.rootInstance = ElementInstance.get(this, this.component.rootElement);
+    this.rootInstance = ElementInstance.get(
+      this as BaseVariant as Variant | DefaultVariant,
+      this.component.rootElement
+    );
     makeObservable(this);
   }
 
   readonly component: Component;
-  readonly key: string;
   readonly rootInstance: ElementInstance;
 
-  @observable selector = "";
-  @observable mediaQuery = "";
   @observable x = 0;
   @observable y = 0;
   @observable width: number | undefined = undefined;
   @observable height: number | undefined = undefined;
+
+  abstract get name(): string;
+
+  toJSON(): BaseVariantJSON {
+    return {
+      x: this.x,
+      y: this.y,
+      width: this.width,
+      height: this.height,
+    };
+  }
+
+  loadJSON(json: BaseVariantJSON): void {
+    this.x = json.x;
+    this.y = json.y;
+    this.width = json.width;
+    this.height = json.height;
+  }
+}
+
+export class DefaultVariant extends BaseVariant {
+  get type(): "defaultVariant" {
+    return "defaultVariant";
+  }
+
+  get name(): string {
+    return "default";
+  }
+}
+
+export class Variant extends BaseVariant {
+  constructor(component: Component, key?: string) {
+    super(component);
+    this.key = key ?? shortUUID.generate();
+    makeObservable(this);
+  }
+
+  get type(): "variant" {
+    return "variant";
+  }
+
+  readonly key: string;
+
+  @observable selector = "";
+  @observable mediaQuery = "";
 
   @computed get name(): string {
     if (this.selector && this.mediaQuery) {
@@ -32,7 +83,7 @@ export class Variant {
     if (this.mediaQuery) {
       return this.mediaQuery;
     }
-    return "default";
+    return "";
   }
 
   toJSON(): VariantJSON {
@@ -40,10 +91,7 @@ export class Variant {
       key: this.key,
       selector: this.selector || undefined,
       mediaQuery: this.mediaQuery || undefined,
-      x: this.x,
-      y: this.y,
-      width: this.width,
-      height: this.height,
+      ...super.toJSON(),
     };
   }
 
@@ -54,19 +102,12 @@ export class Variant {
 
     this.selector = json.selector || "";
     this.mediaQuery = json.mediaQuery || "";
-    this.x = json.x;
-    this.y = json.y;
-    this.width = json.width;
-    this.height = json.height;
+    super.loadJSON(json);
   }
 }
 
-export interface VariantJSON {
+export interface VariantJSON extends BaseVariantJSON {
   key: string;
   selector?: string;
   mediaQuery?: string;
-  x: number;
-  y: number;
-  width?: number;
-  height?: number;
 }

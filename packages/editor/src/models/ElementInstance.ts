@@ -1,16 +1,19 @@
 import { computed, makeObservable, observable } from "mobx";
 import { Element } from "./Element";
 import { TextInstance } from "./TextInstance";
-import { Variant } from "./Variant";
+import { DefaultVariant, Variant } from "./Variant";
 
 // Variant × Element
 export class ElementInstance {
   private static instances = new WeakMap<
-    Variant,
+    Variant | DefaultVariant,
     WeakMap<Element, ElementInstance>
   >();
 
-  static get(variant: Variant, element: Element): ElementInstance {
+  static get(
+    variant: Variant | DefaultVariant,
+    element: Element
+  ): ElementInstance {
     let instances = this.instances.get(variant);
     if (!instances) {
       instances = new WeakMap();
@@ -24,7 +27,7 @@ export class ElementInstance {
     return instance;
   }
 
-  private constructor(variant: Variant, element: Element) {
+  private constructor(variant: Variant | DefaultVariant, element: Element) {
     this.variant = variant;
     this.element = element;
     makeObservable(this);
@@ -34,7 +37,7 @@ export class ElementInstance {
     return "element";
   }
 
-  readonly variant: Variant;
+  readonly variant: Variant | DefaultVariant;
   readonly element: Element;
 
   get node(): Element {

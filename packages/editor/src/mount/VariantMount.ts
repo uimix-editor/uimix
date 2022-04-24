@@ -1,11 +1,11 @@
 import { ElementInstance } from "../models/ElementInstance";
-import { Variant } from "../models/Variant";
+import { DefaultVariant, Variant } from "../models/Variant";
 import { ChildMountSync } from "./ElementMount";
 import { MountRegistry } from "./MountRegistry";
 
 export class VariantMount {
   constructor(
-    variant: Variant,
+    variant: Variant | DefaultVariant,
     registry: MountRegistry,
     domDocument: globalThis.Document
   ) {
@@ -36,7 +36,7 @@ export class VariantMount {
     this.element.remove();
   }
 
-  readonly variant: Variant;
+  readonly variant: Variant | DefaultVariant;
   readonly registry: MountRegistry;
   readonly domDocument: globalThis.Document;
 

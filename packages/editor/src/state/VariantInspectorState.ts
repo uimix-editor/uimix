@@ -1,5 +1,5 @@
 import { computed, makeObservable } from "mobx";
-import { Variant } from "../models/Variant";
+import { DefaultVariant, Variant } from "../models/Variant";
 import { EditorState } from "./EditorState";
 
 export class VariantInspectorState {
@@ -10,7 +10,7 @@ export class VariantInspectorState {
 
   readonly editorState: EditorState;
 
-  @computed get selectedVariants(): Variant[] {
+  @computed get selectedVariants(): (Variant | DefaultVariant)[] {
     return this.editorState.document.selectedVariants;
   }
 

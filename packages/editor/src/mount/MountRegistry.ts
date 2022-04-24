@@ -1,13 +1,16 @@
 import { WeakMultiMap } from "@seanchas116/paintkit/src/util/WeakMultiMap";
 import { ElementInstance } from "../models/ElementInstance";
 import { TextInstance } from "../models/TextInstance";
-import { Variant } from "../models/Variant";
+import { DefaultVariant, Variant } from "../models/Variant";
 import { ElementMount } from "./ElementMount";
 import { TextMount } from "./TextMount";
 import { VariantMount } from "./VariantMount";
 
 export class MountRegistry {
-  private readonly variantMounts = new WeakMultiMap<Variant, VariantMount>();
+  private readonly variantMounts = new WeakMultiMap<
+    Variant | DefaultVariant,
+    VariantMount
+  >();
   private readonly elementMounts = new WeakMultiMap<
     ElementInstance,
     ElementMount

@@ -23,7 +23,7 @@ import { action, computed, makeObservable } from "mobx";
 import { colors } from "@seanchas116/paintkit/src/components/Palette";
 import { EditorState } from "../state/EditorState";
 import { Component } from "../models/Component";
-import { Variant } from "../models/Variant";
+import { DefaultVariant, Variant } from "../models/Variant";
 import { ElementInstance } from "../models/ElementInstance";
 import { TextInstance } from "../models/TextInstance";
 import { Document } from "../models/Document";
@@ -285,17 +285,17 @@ class VariantItem extends ElementItem {
   constructor(
     context: OutlineContext,
     parent: ComponentItem,
-    variant: Variant
+    variant: Variant | DefaultVariant
   ) {
     super(context, parent, variant.rootInstance);
     this.variant = variant;
     makeObservable(this);
   }
 
-  readonly variant: Variant;
+  readonly variant: Variant | DefaultVariant;
 
   get key(): string {
-    return this.variant.key;
+    return this.variant.type === "variant" ? this.variant.key : "";
   }
 
   renderRow(options: { inverted: boolean }): React.ReactNode {

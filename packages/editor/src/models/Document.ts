@@ -5,7 +5,7 @@ import { Element } from "./Element";
 import { ElementInstance } from "./ElementInstance";
 import { Text } from "./Text";
 import { TextInstance } from "./TextInstance";
-import { Variant } from "./Variant";
+import { DefaultVariant, Variant } from "./Variant";
 
 export class ComponentList extends TreeNode<never, ComponentList, Component> {
   get isUniqueNameRoot(): boolean {
@@ -50,7 +50,7 @@ export class Document {
     );
   }
 
-  @computed.struct get selectedVariants(): Variant[] {
+  @computed.struct get selectedVariants(): (Variant | DefaultVariant)[] {
     return this.components.children.flatMap(
       (component) => component.selectedVariants
     );

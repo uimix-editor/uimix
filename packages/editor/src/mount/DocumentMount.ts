@@ -1,6 +1,6 @@
 import { reaction } from "mobx";
 import { Document } from "../models/Document";
-import { Variant } from "../models/Variant";
+import { DefaultVariant, Variant } from "../models/Variant";
 import { MountRegistry } from "./MountRegistry";
 import { VariantMount } from "./VariantMount";
 
@@ -30,8 +30,11 @@ export class DocumentMount {
     this.disposers.forEach((disposer) => disposer());
   }
 
-  private updateVariants(variants: Variant[]): void {
-    const existingVariantMounts = new Map<Variant, VariantMount>();
+  private updateVariants(variants: (Variant | DefaultVariant)[]): void {
+    const existingVariantMounts = new Map<
+      Variant | DefaultVariant,
+      VariantMount
+    >();
 
     for (const variantMount of this.variantMounts) {
       existingVariantMounts.set(variantMount.variant, variantMount);
