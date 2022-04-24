@@ -69,17 +69,40 @@ function loadComponent(node: hast.Element): Component {
   const component = new Component();
   component.rename(String(name));
 
+  let variantIndex = 0;
+
   for (const child of node.children) {
-    if (
-      child.type === "element" &&
-      child.tagName === "template" &&
-      child.content
-    ) {
+    if (child.type !== "element") {
+      continue;
+    }
+
+    if (child.tagName === "template" && child.content) {
       const newContent = unified()
         .use(rehypeMinifyWhitespace)
         .runSync(child.content);
 
       component.rootElement.setInnerHTML(newContent.children);
+    }
+
+    if (child.tagName === "macaron-variant") {
+      let variant: Variant | DefaultVariant;
+      if (variantIndex++ === 0) {
+        variant = component.defaultVariant;
+      } else {
+        variant = new Variant(component);
+        variant.selector = String(child.properties?.selector ?? "");
+        variant.mediaQuery = String(child.properties?.mediaQuery ?? "");
+        component.variants.push(variant);
+      }
+
+      variant.x = Number(child.properties?.x ?? 0);
+      variant.y = Number(child.properties?.y ?? 0);
+      if (child.properties?.width) {
+        variant.width = Number(child.properties.width);
+      }
+      if (child.properties?.height) {
+        variant.height = Number(child.properties.height);
+      }
     }
   }
 
