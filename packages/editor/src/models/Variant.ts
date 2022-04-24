@@ -1,4 +1,4 @@
-import { makeObservable, observable } from "mobx";
+import { computed, makeObservable, observable } from "mobx";
 import shortUUID from "short-uuid";
 import { Component } from "./Component";
 import { ElementInstance } from "./ElementInstance";
@@ -21,6 +21,19 @@ export class Variant {
   @observable y = 0;
   @observable width: number | undefined = undefined;
   @observable height: number | undefined = undefined;
+
+  @computed get name(): string {
+    if (this.selector && this.mediaQuery) {
+      return `${this.mediaQuery} ${this.selector}`;
+    }
+    if (this.selector) {
+      return this.selector;
+    }
+    if (this.mediaQuery) {
+      return this.mediaQuery;
+    }
+    return "default";
+  }
 
   toJSON(): VariantJSON {
     return {

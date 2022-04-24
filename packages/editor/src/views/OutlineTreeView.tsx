@@ -305,7 +305,7 @@ class VariantItem extends ElementItem {
         inverted={options.inverted}
       >
         <StyledIcon icon={switchIcon} iconColor={colors.icon} />
-        <TreeRowLabel>Default</TreeRowLabel>
+        <TreeRowLabel>{this.variant.name}</TreeRowLabel>
       </StyledRow>
     );
   }
@@ -382,6 +382,17 @@ class ComponentItem extends TreeViewItem {
           trigger="click"
         />
       </StyledRow>
+    );
+  }
+
+  handleContextMenu(e: React.MouseEvent): void {
+    e.preventDefault();
+    e.stopPropagation();
+
+    this.context.contextMenu.show(
+      e.clientX,
+      e.clientY,
+      this.context.editorState.getComponentContextMenu(this.component)
     );
   }
 

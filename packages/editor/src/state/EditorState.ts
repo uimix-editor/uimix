@@ -9,6 +9,7 @@ import { Element } from "../models/Element";
 import { ElementInstance } from "../models/ElementInstance";
 import { Text } from "../models/Text";
 import { TextInstance } from "../models/TextInstance";
+import { Variant } from "../models/Variant";
 import { ElementInspectorState } from "./ElementInspectorState";
 
 export class EditorState {
@@ -48,6 +49,20 @@ export class EditorState {
           const component = new Component();
           this.document.components.append(component);
           this.history.commit("Add Component");
+          return true;
+        }),
+      },
+    ];
+  }
+
+  getComponentContextMenu(component: Component): MenuItem[] {
+    return [
+      {
+        text: "Add Variant",
+        run: action(() => {
+          const variant = new Variant(component);
+          variant.selector = ":hover";
+          component.variants.push(variant);
           return true;
         }),
       },
