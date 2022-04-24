@@ -12,20 +12,25 @@ import { Document } from "./Document";
 import { DefaultVariant, Variant } from "./Variant";
 
 function dumpComponent(component: Component): hast.Element {
+  const children: (hast.Element | string)[] = [];
+  children.push("\n", dumpDefaultVariant(component.defaultVariant));
+
+  for (const variant of component.variants) {
+    children.push("\n", dumpVariant(variant));
+  }
+
+  children.push(
+    "\n",
+    h("template", ["\n", ...component.rootElement.innerHTML, "\n"]),
+    "\n"
+  );
+
   return h(
     "macaron-component",
     {
       name: component.name,
     },
-    [
-      "\n",
-      dumpDefaultVariant(component.defaultVariant),
-      "\n",
-      ...component.variants.map(dumpVariant),
-      "\n",
-      h("template", ["\n", ...component.rootElement.innerHTML, "\n"]),
-      "\n",
-    ]
+    children
   );
 }
 
