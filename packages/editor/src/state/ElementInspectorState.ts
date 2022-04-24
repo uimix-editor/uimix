@@ -18,6 +18,10 @@ export class ElementInspectorState {
     return filterInstance(this.editorState.document.selectedNodes, [Element]);
   }
 
+  @computed get isVisible(): boolean {
+    return this.selectedElements.length > 0;
+  }
+
   @computed get tagName(): string | typeof MIXED | undefined {
     return sameOrMixed(this.selectedElements.map((element) => element.tagName));
   }

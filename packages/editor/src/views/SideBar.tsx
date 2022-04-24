@@ -115,7 +115,7 @@ export const RightSideBar: React.FC = observer(() => {
               Style
             </InspectorTabBarItem>
           </InspectorTabBar>
-          <ElementInspector />
+          {editorState.elementInspectorState.isVisible && <ElementInspector />}
         </TabArea>
       </VSplitter>
       <WidthResizeHandle
