@@ -24,10 +24,16 @@ export class DocumentMount {
   }
 
   dispose(): void {
+    if (this.isDisposed) {
+      throw new Error("DocumentMount is already disposed");
+    }
+
     for (const variantMount of this.variantMounts) {
       variantMount.dispose();
     }
     this.disposers.forEach((disposer) => disposer());
+
+    this.isDisposed = true;
   }
 
   private updateVariants(variants: (Variant | DefaultVariant)[]): void {
@@ -55,9 +61,11 @@ export class DocumentMount {
     }
   }
 
+  private isDisposed = false;
+  private readonly disposers: (() => void)[] = [];
+
   readonly document: Document;
   readonly domDocument: globalThis.Document;
   readonly registry = new MountRegistry();
-  readonly disposers: (() => void)[] = [];
-  variantMounts: VariantMount[] = [];
+  private variantMounts: VariantMount[] = [];
 }

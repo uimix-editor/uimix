@@ -115,17 +115,24 @@ export class ElementMount {
   }
 
   dispose(): void {
+    if (this.isDisposed) {
+      throw new Error("ElementMount is already disposed");
+    }
+
     this.childMountSync.dispose();
     this.registry.deleteElementMount(this);
+
+    this.isDisposed = true;
   }
 
   get type(): "element" {
     return "element";
   }
 
+  private isDisposed = false;
   readonly instance: ElementInstance;
   readonly registry: MountRegistry;
   readonly domDocument: globalThis.Document;
   readonly dom: HTMLElement | SVGElement;
-  readonly childMountSync: ChildMountSync;
+  private readonly childMountSync: ChildMountSync;
 }

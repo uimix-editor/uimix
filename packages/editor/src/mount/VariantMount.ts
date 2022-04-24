@@ -31,18 +31,26 @@ export class VariantMount {
   }
 
   dispose(): void {
+    if (this.isDisposed) {
+      throw new Error("VariantMount is already disposed");
+    }
+
     this.childMountSync.dispose();
     this.registry.deleteVariantMount(this);
     this.element.remove();
+
+    this.isDisposed = true;
   }
+
+  private isDisposed = false;
 
   readonly variant: Variant | DefaultVariant;
   readonly registry: MountRegistry;
   readonly domDocument: globalThis.Document;
 
   readonly element: HTMLDivElement;
-  readonly host: HTMLDivElement;
-  readonly shadow: ShadowRoot;
+  private readonly host: HTMLDivElement;
+  private readonly shadow: ShadowRoot;
 
-  readonly childMountSync: ChildMountSync;
+  private readonly childMountSync: ChildMountSync;
 }
