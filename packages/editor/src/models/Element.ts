@@ -67,6 +67,23 @@ export class Element extends TreeNode<Element, Element, Element | Text> {
     );
   }
 
+  setInnerHTML(innerHTML: hast.ElementContent[]): void {
+    // TODO: reuse existing elements
+
+    this.replaceChildren([]);
+    for (const child of innerHTML) {
+      if (child.type === "text") {
+        this.append(new Text({ content: child.value }));
+      } else if (child.type === "element") {
+        const element = new Element({
+          tagName: child.tagName,
+        });
+        element.setInnerHTML(child.children);
+        this.append(element);
+      }
+    }
+  }
+
   toJSON(): ElementJSON {
     return {
       type: "element",
