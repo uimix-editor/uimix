@@ -11,7 +11,9 @@
   "dependencies": {
     "@iconify-icons/ic": "^1.2.3",
     "@seanchas116/paintkit": "*",
+    "@types/hast": "^2.3.4",
     "css-what": "^6.1.0",
+    "hastscript": "^7.0.2",
     "mobx": "^6.5.0",
     "mobx-react-lite": "^3.3.0",
     "prettier": "^2.6.2",
