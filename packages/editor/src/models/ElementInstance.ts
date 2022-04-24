@@ -1,4 +1,5 @@
 import { computed, makeObservable, observable } from "mobx";
+import shortUUID from "short-uuid";
 import { Element } from "./Element";
 import { TextInstance } from "./TextInstance";
 import { DefaultVariant, Variant } from "./Variant";
@@ -9,6 +10,8 @@ export class ElementInstance {
     Variant | DefaultVariant,
     WeakMap<Element, ElementInstance>
   >();
+
+  readonly key = shortUUID.generate();
 
   static get(
     variant: Variant | DefaultVariant,

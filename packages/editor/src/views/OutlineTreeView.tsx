@@ -127,7 +127,7 @@ class ElementItem extends TreeViewItem {
   }
 
   get key(): string {
-    return this.instance.element.key;
+    return this.instance.key;
   }
 
   get selected(): boolean {
@@ -234,7 +234,7 @@ class TextItem extends LeafTreeViewItem {
   readonly instance: TextInstance;
 
   get key(): string {
-    return this.instance.text.key;
+    return this.instance.key;
   }
 
   get selected(): boolean {
