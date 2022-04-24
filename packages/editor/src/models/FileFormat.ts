@@ -9,6 +9,7 @@ import { unified } from "unified";
 import { formatHTML } from "../util/Format";
 import { Component } from "./Component";
 import { Document } from "./Document";
+import { DefaultVariant, Variant } from "./Variant";
 
 function dumpComponent(component: Component): hast.Element {
   return h(
@@ -18,10 +19,34 @@ function dumpComponent(component: Component): hast.Element {
     },
     [
       "\n",
+      dumpDefaultVariant(component.defaultVariant),
+      "\n",
+      ...component.variants.map(dumpVariant),
+      "\n",
       h("template", ["\n", ...component.rootElement.innerHTML, "\n"]),
       "\n",
     ]
   );
+}
+
+function dumpDefaultVariant(variant: DefaultVariant): hast.Element {
+  return h("macaron-variant", {
+    x: variant.x,
+    y: variant.y,
+    width: variant.width,
+    height: variant.height,
+  });
+}
+
+function dumpVariant(variant: Variant): hast.Element {
+  return h("macaron-variant", {
+    selector: variant.selector || undefined,
+    mediaQuery: variant.mediaQuery || undefined,
+    x: variant.x,
+    y: variant.y,
+    width: variant.width,
+    height: variant.height,
+  });
 }
 
 function dumpDocument(document: Document): hast.Element[] {
