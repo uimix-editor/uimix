@@ -31,6 +31,7 @@ import { useEditorState } from "./EditorStateContext";
 
 const NODE_DRAG_MIME = "application/x.macaron-tree-drag-node";
 const COMPONENT_DRAG_MIME = "application/x.macaron-tree-drag-component";
+const VARIANT_DRAG_MIME = "application/x.macaron-tree-drag-variant";
 
 const TreeViewPadding = styled.div`
   height: 8px;
@@ -309,6 +310,14 @@ class VariantItem extends ElementItem {
       </StyledRow>
     );
   }
+
+  handleDragStart(e: React.DragEvent) {
+    if (this.variant.type === "defaultVariant") {
+      return;
+    }
+    e.dataTransfer.effectAllowed = "copyMove";
+    e.dataTransfer.setData(VARIANT_DRAG_MIME, "drag");
+  }
 }
 
 class ComponentItem extends TreeViewItem {
@@ -399,6 +408,21 @@ class ComponentItem extends TreeViewItem {
   handleDragStart(e: React.DragEvent) {
     e.dataTransfer.effectAllowed = "copyMove";
     e.dataTransfer.setData(COMPONENT_DRAG_MIME, "drag");
+  }
+
+  canDropData(dataTransfer: DataTransfer) {
+    return dataTransfer.types.includes(VARIANT_DRAG_MIME);
+  }
+
+  handleDrop(event: React.DragEvent, before: TreeViewItem | undefined) {
+    const copy = event.altKey || event.ctrlKey;
+    const beforeVariant = (before as VariantItem | undefined)?.variant;
+
+    // TODO
+
+    this.context.editorState.history.commit(
+      copy ? "Duplicate Variants" : "Move Variants"
+    );
   }
 }
 
