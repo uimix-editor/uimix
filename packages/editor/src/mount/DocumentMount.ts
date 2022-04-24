@@ -5,8 +5,9 @@ import { MountRegistry } from "./MountRegistry";
 import { VariantMount } from "./VariantMount";
 
 export class DocumentMount {
-  constructor(document: Document) {
+  constructor(document: Document, domDocument: globalThis.Document) {
     this.document = document;
+    this.domDocument = domDocument;
 
     const getAllVariants = () =>
       document.components.children.flatMap((component) => [
@@ -41,7 +42,11 @@ export class DocumentMount {
       if (existingVariantMounts.has(variant)) {
         existingVariantMounts.delete(variant);
       } else {
-        const variantMount = new VariantMount(variant, this.registry);
+        const variantMount = new VariantMount(
+          variant,
+          this.registry,
+          this.domDocument
+        );
         this.variantMounts.push(variantMount);
       }
     }
@@ -52,6 +57,7 @@ export class DocumentMount {
   }
 
   readonly document: Document;
+  readonly domDocument: globalThis.Document;
   readonly registry = new MountRegistry();
   readonly disposers: (() => void)[] = [];
   variantMounts: VariantMount[] = [];

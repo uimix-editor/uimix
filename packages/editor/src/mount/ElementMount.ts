@@ -9,8 +9,8 @@ import { TextMount } from "./TextMount";
 export class ChildMountSync {
   constructor(
     instance: ElementInstance,
-    dom: HTMLElement | SVGElement | ShadowRoot,
-    registry: MountRegistry
+    registry: MountRegistry,
+    dom: HTMLElement | SVGElement | ShadowRoot
   ) {
     this.instance = instance;
     this.dom = dom;
@@ -49,7 +49,8 @@ export class ChildMountSync {
           newChildMounts.push(
             new ElementMount(
               ElementInstance.get(this.instance.variant, child),
-              this.registry
+              this.registry,
+              this.dom.ownerDocument
             )
           );
         }
@@ -62,7 +63,8 @@ export class ChildMountSync {
           newChildMounts.push(
             new TextMount(
               TextInstance.get(this.instance.variant, child),
-              this.registry
+              this.registry,
+              this.dom.ownerDocument
             )
           );
         }
@@ -97,14 +99,19 @@ export class ChildMountSync {
 }
 
 export class ElementMount {
-  constructor(instance: ElementInstance, registry: MountRegistry) {
+  constructor(
+    instance: ElementInstance,
+    registry: MountRegistry,
+    domDocument: globalThis.Document
+  ) {
     this.instance = instance;
     // TODO: support reference to other component
     // TODO: support SVG elements
-    this.dom = document.createElement(instance.element.tagName);
-    this.childMountSync = new ChildMountSync(instance, this.dom, registry);
+    this.dom = domDocument.createElement(instance.element.tagName);
+    this.childMountSync = new ChildMountSync(instance, registry, this.dom);
     this.registry = registry;
     this.registry.setElementMount(this);
+    this.domDocument = domDocument;
   }
 
   dispose(): void {
@@ -118,6 +125,7 @@ export class ElementMount {
 
   readonly instance: ElementInstance;
   readonly registry: MountRegistry;
+  readonly domDocument: globalThis.Document;
   readonly dom: HTMLElement | SVGElement;
   readonly childMountSync: ChildMountSync;
 }
