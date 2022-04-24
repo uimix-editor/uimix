@@ -44,6 +44,7 @@ export class File {
       try {
         const document = parseDocument(data);
         this.history = new JSONUndoHistory<DocumentJSON, Document>(document);
+        this.fileHandle = fileHandle;
       } catch (e) {
         window.alert(`Error parsing ${fileHandle.name}: ${String(e)}`);
       }
