@@ -38,17 +38,17 @@ export class File {
   async open(): Promise<void> {
     // TODO: warn if modified
     const [fileHandle] = await showOpenFilePicker(filePickerOptions);
-    const data = await (await fileHandle.getFile()).text();
 
-    runInAction(() => {
-      try {
-        const document = parseDocument(data);
+    try {
+      const data = await (await fileHandle.getFile()).text();
+      const document = parseDocument(data);
+      runInAction(() => {
         this.history = new JSONUndoHistory<DocumentJSON, Document>(document);
         this.fileHandle = fileHandle;
-      } catch (e) {
-        window.alert(`Error parsing ${fileHandle.name}: ${String(e)}`);
-      }
-    });
+      });
+    } catch (e) {
+      window.alert(`Error parsing ${fileHandle.name}: ${String(e)}`);
+    }
   }
 
   async saveAs(): Promise<void> {

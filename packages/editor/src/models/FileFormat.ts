@@ -4,6 +4,8 @@ import { toHtml } from "hast-util-to-html";
 import * as parse5 from "parse5";
 import { inspect } from "unist-util-inspect";
 import { fromParse5 } from "hast-util-from-parse5";
+import rehypeMinifyWhitespace from "rehype-minify-whitespace";
+import { unified } from "unified";
 import { formatHTML } from "../util/Format";
 import { Component } from "./Component";
 import { Document } from "./Document";
@@ -43,7 +45,11 @@ function loadComponent(node: hast.Element): Component {
       child.tagName === "template" &&
       child.content
     ) {
-      component.rootElement.setInnerHTML(child.content.children);
+      const newContent = unified()
+        .use(rehypeMinifyWhitespace)
+        .runSync(child.content);
+
+      component.rootElement.setInnerHTML(newContent.children);
     }
   }
 
@@ -53,8 +59,9 @@ function loadComponent(node: hast.Element): Component {
 export function parseDocument(data: string): Document {
   const p5ast = parse5.parseFragment(data);
   //@ts-ignore
-  const hast = fromParse5(p5ast);
-
+  let hast: hast.Root = fromParse5(p5ast);
+  console.log(inspect(hast));
+  hast = unified().use(rehypeMinifyWhitespace).runSync(hast);
   console.log(inspect(hast));
 
   if (hast.type !== "root") {
