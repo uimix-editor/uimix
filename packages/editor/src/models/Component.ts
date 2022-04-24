@@ -2,8 +2,10 @@ import { TreeNode } from "@seanchas116/paintkit/src/util/TreeNode";
 import { computed, makeObservable, observable } from "mobx";
 import { ComponentList } from "./Document";
 import { Element, ElementJSON } from "./Element";
+import { ElementInstance } from "./ElementInstance";
 import { RootElement } from "./RootElement";
 import { Text, TextJSON } from "./Text";
+import { TextInstance } from "./TextInstance";
 import { Variant, VariantJSON } from "./Variant";
 
 export class Component extends TreeNode<ComponentList, Component, never> {
@@ -82,7 +84,15 @@ export class Component extends TreeNode<ComponentList, Component, never> {
     });
   }
 
-  @computed get selectedNodes(): (Element | Text)[] {
+  @computed.struct get selectedInstances(): (ElementInstance | TextInstance)[] {
+    return this.allVariants.flatMap((v) => v.rootInstance.selectedDescendants);
+  }
+
+  @computed.struct get selectedVariants(): Variant[] {
+    return this.allVariants.filter((v) => v.rootInstance.selected);
+  }
+
+  @computed.struct get selectedNodes(): (Element | Text)[] {
     // TODO: disallow selecting elements from multiple variants
     for (const variant of this.allVariants) {
       const selectedInstances = variant.rootInstance.selectedDescendants;

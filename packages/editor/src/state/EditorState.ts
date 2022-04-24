@@ -11,6 +11,7 @@ import { Text } from "../models/Text";
 import { TextInstance } from "../models/TextInstance";
 import { Variant } from "../models/Variant";
 import { ElementInspectorState } from "./ElementInspectorState";
+import { VariantInspectorState } from "./VariantInspectorState";
 
 export class EditorState {
   constructor(getHistory: () => JSONUndoHistory<DocumentJSON, Document>) {
@@ -33,6 +34,7 @@ export class EditorState {
   @observable sideBarSplitRatio = 0.3;
   @observable sideBarWidth = 256;
 
+  readonly variantInspectorState = new VariantInspectorState(this);
   readonly elementInspectorState = new ElementInspectorState(this);
 
   @observable hoveredItem: ElementInstance | TextInstance | undefined =

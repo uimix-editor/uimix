@@ -2,7 +2,10 @@ import { TreeNode } from "@seanchas116/paintkit/src/util/TreeNode";
 import { computed, makeObservable } from "mobx";
 import { Component, ComponentJSON } from "./Component";
 import { Element } from "./Element";
+import { ElementInstance } from "./ElementInstance";
 import { Text } from "./Text";
+import { TextInstance } from "./TextInstance";
+import { Variant } from "./Variant";
 
 export class ComponentList extends TreeNode<never, ComponentList, Component> {
   get isUniqueNameRoot(): boolean {
@@ -41,7 +44,19 @@ export class Document {
     }
   }
 
-  @computed get selectedNodes(): (Element | Text)[] {
+  @computed.struct get selectedInstances(): (ElementInstance | TextInstance)[] {
+    return this.components.children.flatMap(
+      (component) => component.selectedInstances
+    );
+  }
+
+  @computed.struct get selectedVariants(): Variant[] {
+    return this.components.children.flatMap(
+      (component) => component.selectedVariants
+    );
+  }
+
+  @computed.struct get selectedNodes(): (Element | Text)[] {
     return this.components.children.flatMap(
       (component) => component.selectedNodes
     );

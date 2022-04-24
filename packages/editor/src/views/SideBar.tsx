@@ -12,6 +12,7 @@ import { observer } from "mobx-react-lite";
 import { OutlineTreeView } from "./OutlineTreeView";
 import { useEditorState } from "./EditorStateContext";
 import { ElementInspector } from "./ElementInspector";
+import { VariantInspector } from "./VariantInspector";
 
 const RightSideBarWrap = styled.div`
   position: relative;
@@ -115,7 +116,13 @@ export const RightSideBar: React.FC = observer(() => {
               Style
             </InspectorTabBarItem>
           </InspectorTabBar>
-          {editorState.elementInspectorState.isVisible && <ElementInspector />}
+          {editorState.variantInspectorState.isVisible ? (
+            <VariantInspector />
+          ) : editorState.elementInspectorState.isVisible ? (
+            <ElementInspector />
+          ) : (
+            <div />
+          )}
         </TabArea>
       </VSplitter>
       <WidthResizeHandle
