@@ -42,17 +42,13 @@ export class DocumentMount {
     this.variantMounts = [];
 
     for (const variant of variants) {
-      if (existingVariantMounts.has(variant)) {
-        existingVariantMounts.delete(variant);
-      } else {
-        const variantMount = new VariantMount(
-          variant,
-          this.registry,
-          this.domDocument
-        );
-        this.variantMounts.push(variantMount);
-      }
+      const variantMount =
+        existingVariantMounts.get(variant) ||
+        new VariantMount(variant, this.registry, this.domDocument);
+      existingVariantMounts.delete(variant);
+      this.variantMounts.push(variantMount);
     }
+    console.log(this.variantMounts);
 
     for (const variantMount of existingVariantMounts.values()) {
       variantMount.dispose();
