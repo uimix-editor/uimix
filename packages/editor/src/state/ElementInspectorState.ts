@@ -3,6 +3,7 @@ import { MIXED, sameOrMixed } from "@seanchas116/paintkit/src/util/Mixed";
 import { filterInstance } from "@seanchas116/paintkit/src/util/Collection";
 import prettier from "prettier/standalone";
 import parserHTML from "prettier/parser-html";
+import { toHtml } from "hast-util-to-html";
 import { Element } from "../models/Element";
 import { EditorState } from "./EditorState";
 
@@ -71,7 +72,7 @@ export class ElementInspectorState {
 
   @computed get innerHTML(): string | typeof MIXED | undefined {
     const value = sameOrMixed(
-      this.selectedElements.map((element) => element.innerHTML)
+      this.selectedElements.map((element) => toHtml(element.innerHTML))
     );
     if (typeof value === "string") {
       return formatHTML(value);

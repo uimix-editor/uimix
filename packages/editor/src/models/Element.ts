@@ -3,6 +3,8 @@ import {
   TreeNodeOptions,
 } from "@seanchas116/paintkit/src/util/TreeNode";
 import { computed, makeObservable, observable } from "mobx";
+import type * as hast from "hast";
+import { h } from "hastscript";
 import { Component } from "./Component";
 import { Text, TextJSON } from "./Text";
 
@@ -50,15 +52,19 @@ export class Element extends TreeNode<Element, Element, Element | Text> {
     return this.parent?.component;
   }
 
-  @computed get innerHTML(): string {
-    return this.children.map((child) => child.outerHTML).join("");
+  @computed get innerHTML(): hast.ElementContent[] {
+    return this.children.map((child) => child.outerHTML);
   }
 
-  @computed get outerHTML(): string {
-    const attrString = [["id", this.id], ...this.attrs]
-      .map(([key, value]) => ` ${key}="${value}"`)
-      .join("");
-    return `<${this.tagName}${attrString}>${this.innerHTML}</${this.tagName}>`;
+  @computed get outerHTML(): hast.Element {
+    return h(
+      this.tagName,
+      {
+        ...Object.fromEntries(this.attrs),
+        id: this.id,
+      },
+      this.innerHTML
+    );
   }
 
   toJSON(): ElementJSON {

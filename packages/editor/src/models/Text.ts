@@ -3,6 +3,7 @@ import {
   TreeNodeOptions,
 } from "@seanchas116/paintkit/src/util/TreeNode";
 import { makeObservable, observable } from "mobx";
+import type * as hast from "hast";
 import { Element } from "./Element";
 
 export interface TextJSON {
@@ -28,8 +29,11 @@ export class Text extends TreeNode<Element, Text, never> {
 
   @observable content: string;
 
-  get outerHTML(): string {
-    return this.content;
+  get outerHTML(): hast.Text {
+    return {
+      type: "text",
+      value: this.content,
+    };
   }
 
   toJSON(): TextJSON {

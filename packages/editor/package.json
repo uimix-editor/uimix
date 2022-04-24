@@ -13,6 +13,7 @@
     "@seanchas116/paintkit": "*",
     "@types/hast": "^2.3.4",
     "css-what": "^6.1.0",
+    "hast-util-to-html": "^8.0.3",
     "hastscript": "^7.0.2",
     "mobx": "^6.5.0",
     "mobx-react-lite": "^3.3.0",
