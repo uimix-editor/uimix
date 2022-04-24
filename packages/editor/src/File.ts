@@ -1,6 +1,7 @@
 import { JSONUndoHistory } from "@seanchas116/paintkit/src/util/JSONUndoHistory";
 import { computed, makeObservable, observable, runInAction } from "mobx";
 import { Document, DocumentJSON } from "./models/Document";
+import { stringifyDocument } from "./models/FileFormat";
 
 const filePickerOptions = {
   types: [
@@ -46,7 +47,8 @@ export class File {
 
     const writable = await this.fileHandle.createWritable();
 
-    const contents = ""; // TODO
+    const contents = stringifyDocument(this.history.target);
+
     await writable.write(contents);
 
     await writable.close();
