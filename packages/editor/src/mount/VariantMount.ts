@@ -18,6 +18,8 @@ export class VariantMount {
     this.shadow = this.host.attachShadow({ mode: "open" });
     this.element.append(this.host);
 
+    domDocument.body.append(this.element);
+
     // TODO: add style
 
     this.childMountSync = new ChildMountSync(
@@ -31,6 +33,7 @@ export class VariantMount {
   dispose(): void {
     this.childMountSync.dispose();
     this.registry.deleteVariantMount(this);
+    this.element.remove();
   }
 
   readonly variant: Variant;
