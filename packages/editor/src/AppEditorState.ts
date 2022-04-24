@@ -1,4 +1,5 @@
 import { MenuItem } from "@seanchas116/paintkit/dist/components/menu/Menu";
+import { KeyGesture } from "@seanchas116/paintkit/src/util/KeyGesture";
 import { action, computed } from "mobx";
 import { File } from "./File";
 import { EditorState } from "./state/EditorState";
@@ -21,6 +22,7 @@ export class AppEditorState extends EditorState {
     return [
       {
         text: "New",
+        shortcut: [new KeyGesture(["Command"], "KeyN")],
         run: action(() => {
           void this.file.clear();
           return true;
@@ -31,6 +33,7 @@ export class AppEditorState extends EditorState {
       },
       {
         text: "Open...",
+        shortcut: [new KeyGesture(["Command"], "KeyO")],
         disabled: true,
       },
       {
@@ -38,6 +41,7 @@ export class AppEditorState extends EditorState {
       },
       {
         text: "Save",
+        shortcut: [new KeyGesture(["Command"], "KeyS")],
         run: action(() => {
           void this.file.save();
           return true;
@@ -45,6 +49,7 @@ export class AppEditorState extends EditorState {
       },
       {
         text: "Save As...",
+        shortcut: [new KeyGesture(["Shift", "Command"], "KeyS")],
         run: action(() => {
           void this.file.saveAs();
           return true;
