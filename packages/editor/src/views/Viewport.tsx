@@ -1,7 +1,7 @@
 import { colors } from "@seanchas116/paintkit/src/components/Palette";
-import { Rect } from "paintvec";
+import { Rect, Vec2 } from "paintvec";
 import { action, reaction, runInAction } from "mobx";
-import React, { useEffect } from "react";
+import React, { useCallback, useEffect } from "react";
 import styled from "styled-components";
 import { DocumentMount } from "../mount/DocumentMount";
 import { useEditorState } from "./EditorStateContext";
@@ -12,6 +12,15 @@ const ViewportWrap = styled.div`
 `;
 
 const ViewportIFrame = styled.iframe`
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  border: none;
+`;
+
+const ViewportOverlay = styled.div`
   position: absolute;
   top: 0;
   left: 0;
@@ -82,9 +91,44 @@ export const Viewport: React.FC<{ className?: string }> = ({ className }) => {
     };
   }, [iframeRef]);
 
+  const onWheel = useCallback(
+    action((e: React.WheelEvent) => {
+      // if (!editorState.wheelScrollEnabled) {
+      //   return;
+      // }
+
+      e.preventDefault();
+      e.stopPropagation();
+
+      if (e.ctrlKey || e.metaKey) {
+        const factor = Math.pow(2, e.deltaY / 100);
+        const pos = new Vec2(e.clientX, e.clientY).sub(
+          editorState.scroll.viewportClientRect.topLeft
+        );
+        editorState.scroll.zoomAround(pos, editorState.scroll.scale * factor);
+
+        if (!editorState.document.components.firstChild) {
+          // No layers in page
+          editorState.scroll.translation = new Vec2(0);
+        }
+      } else {
+        if (!editorState.document.components.firstChild) {
+          // No layers in page
+          return;
+        }
+        const { scroll } = editorState;
+        scroll.translation = scroll.translation.sub(
+          new Vec2(e.deltaX, e.deltaY).round
+        );
+      }
+    }),
+    [editorState]
+  );
+
   return (
-    <ViewportWrap className={className} ref={ref}>
+    <ViewportWrap className={className} ref={ref} onWheel={onWheel}>
       <ViewportIFrame ref={iframeRef} />
+      <ViewportOverlay />
     </ViewportWrap>
   );
 };
