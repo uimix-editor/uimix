@@ -1,6 +1,6 @@
 import { colors } from "@seanchas116/paintkit/src/components/Palette";
 import { Rect } from "paintvec";
-import { reaction } from "mobx";
+import { action, reaction, runInAction } from "mobx";
 import React, { useEffect } from "react";
 import styled from "styled-components";
 import { DocumentMount } from "../mount/DocumentMount";
@@ -23,7 +23,30 @@ const ViewportIFrame = styled.iframe`
 export const Viewport: React.FC<{ className?: string }> = ({ className }) => {
   const editorState = useEditorState();
 
+  const ref = React.createRef<HTMLDivElement>();
   const iframeRef = React.createRef<HTMLIFrameElement>();
+
+  useEffect(() => {
+    const elem = ref.current;
+    if (!elem) {
+      return;
+    }
+
+    runInAction(() => {
+      editorState.scroll.viewportClientRect = Rect.from(
+        elem.getBoundingClientRect()
+      );
+    });
+    const resizeObserver = new ResizeObserver(
+      action(() => {
+        editorState.scroll.viewportClientRect = Rect.from(
+          elem.getBoundingClientRect()
+        );
+      })
+    );
+    resizeObserver.observe(elem);
+    return () => resizeObserver.disconnect();
+  }, [ref]);
 
   useEffect(() => {
     const iframe = iframeRef.current;
@@ -34,10 +57,6 @@ export const Viewport: React.FC<{ className?: string }> = ({ className }) => {
     if (!document) {
       return;
     }
-
-    editorState.scroll.viewportClientRect = Rect.from(
-      iframe.getBoundingClientRect()
-    );
 
     document.body.style.margin = "0";
 
@@ -60,7 +79,7 @@ export const Viewport: React.FC<{ className?: string }> = ({ className }) => {
   }, [iframeRef]);
 
   return (
-    <ViewportWrap className={className}>
+    <ViewportWrap className={className} ref={ref}>
       <ViewportIFrame ref={iframeRef} />
     </ViewportWrap>
   );
