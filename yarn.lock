@@ -9987,6 +9987,11 @@ p-try@^2.0.0:
   resolved "https://registry.yarnpkg.com/p-try/-/p-try-2.2.0.tgz#cb2868540e313d61de58fafbe35ce9004d5540e6"
   integrity sha512-R4nPAVTAU0B9D35/Gk3uJf/7XYbQcyohSKdvAxIRSNghFl4e71hVoGnBNQz9cWaXxO2I10KTC+3jMdvvoKw6dQ==
 
+paintvec@^0.4.0:
+  version "0.4.0"
+  resolved "https://registry.yarnpkg.com/paintvec/-/paintvec-0.4.0.tgz#728b8f5ec2bd20b34caff7ef7d708f243e95d2bb"
+  integrity sha512-hI4Ug4ZBoBcCls4a7viusuoIuSZ749QQJhzW6XHKhKGHYPDUyUrJHDnZXoQNOsK++N6+O7RmMr+e9r7/9r8l7Q==
+
 paintvec@seanchas116/paintvec#74051cf:
   version "0.4.0"
   resolved "https://codeload.github.com/seanchas116/paintvec/tar.gz/74051cf97b59b4ec04997a51f3f0064968e26010"

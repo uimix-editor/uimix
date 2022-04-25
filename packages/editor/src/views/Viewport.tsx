@@ -1,4 +1,6 @@
 import { colors } from "@seanchas116/paintkit/src/components/Palette";
+import { Rect } from "paintvec";
+import { reaction } from "mobx";
 import React, { useEffect } from "react";
 import styled from "styled-components";
 import { DocumentMount } from "../mount/DocumentMount";
@@ -33,7 +35,24 @@ export const Viewport: React.FC<{ className?: string }> = ({ className }) => {
       return;
     }
 
+    editorState.scroll.viewportClientRect = Rect.from(
+      iframe.getBoundingClientRect()
+    );
+
+    document.body.style.margin = "0";
+
     const mount = new DocumentMount(() => editorState.document, document);
+    mount.dom.style.position = "absolute";
+    mount.dom.style.top = "0";
+    mount.dom.style.left = "0";
+    mount.dom.style.transformOrigin = "left top";
+
+    reaction(
+      () => editorState.scroll.documentToViewport,
+      (transform) => {
+        mount.dom.style.transform = transform.toCSSMatrixString();
+      }
+    );
 
     document.body.append(mount.dom);
 
