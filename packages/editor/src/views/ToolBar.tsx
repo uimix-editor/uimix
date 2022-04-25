@@ -10,6 +10,7 @@ import {
 import { Dropdown } from "@seanchas116/paintkit/src/components/menu/Dropdown";
 import { ZoomControl } from "@seanchas116/paintkit/src/components/toolbar/ZoomControl";
 import { observer } from "mobx-react-lite";
+import { action } from "mobx";
 import { useEditorState } from "./EditorStateContext";
 
 export const ToolBar: React.FC = observer(() => {
@@ -34,10 +35,12 @@ export const ToolBar: React.FC = observer(() => {
       </ToolButtonArray>
 
       <ZoomControl
-        percentage={100}
-        onZoomIn={() => {}}
-        onZoomOut={() => {}}
-        onChangePercentage={() => {}}
+        percentage={Math.round(editorState.scroll.scale * 100)}
+        onZoomOut={action(() => editorState.scroll.zoomOut())}
+        onZoomIn={action(() => editorState.scroll.zoomIn())}
+        onChangePercentage={action((percentage) => {
+          editorState.scroll.zoomAroundCenter(percentage / 100);
+        })}
       />
     </ToolBarWrap>
   );

@@ -2,6 +2,7 @@ import { MenuItem } from "@seanchas116/paintkit/dist/components/menu/Menu";
 import { JSONUndoHistory } from "@seanchas116/paintkit/src/util/JSONUndoHistory";
 import { KeyGesture } from "@seanchas116/paintkit/src/util/KeyGesture";
 import { isTextInputFocused } from "@seanchas116/paintkit/src/util/CurrentFocus";
+import { Scroll } from "@seanchas116/paintkit/src/util/Scroll";
 import { action, makeObservable, observable } from "mobx";
 import { Component } from "../models/Component";
 import { Document, DocumentJSON } from "../models/Document";
@@ -36,6 +37,8 @@ export class EditorState {
 
   readonly variantInspectorState = new VariantInspectorState(this);
   readonly elementInspectorState = new ElementInspectorState(this);
+
+  readonly scroll = new Scroll();
 
   @observable hoveredItem: ElementInstance | TextInstance | undefined =
     undefined;
