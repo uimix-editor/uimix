@@ -1,11 +1,11 @@
 import { action, computed, makeObservable, observable } from "mobx";
 import { MIXED, sameOrMixed } from "@seanchas116/paintkit/src/util/Mixed";
 import { filterInstance } from "@seanchas116/paintkit/src/util/Collection";
+import { getIncrementalUniqueName } from "@seanchas116/paintkit/src/util/Name";
 import { toHtml } from "hast-util-to-html";
 import { Element } from "../models/Element";
 import { formatHTML } from "../util/Format";
 import { EditorState } from "./EditorState";
-import { getIncrementalUniqueName } from "@seanchas116/paintkit/src/util/Name";
 
 export class ElementInspectorState {
   constructor(editorState: EditorState) {
