@@ -19,6 +19,7 @@ import {
 } from "@seanchas116/paintkit/dist/components/menu/ContextMenuProvider";
 import widgetsFilledIcon from "@iconify-icons/ic/baseline-widgets";
 import switchIcon from "@seanchas116/paintkit/dist/icon/Switch";
+import chevronsIcon from "@seanchas116/paintkit/dist/icon/Chevrons";
 import { action, computed, makeObservable } from "mobx";
 import { colors } from "@seanchas116/paintkit/src/components/Palette";
 import { filterInstance } from "@seanchas116/paintkit/src/util/Collection";
@@ -167,6 +168,7 @@ class ElementItem extends TreeViewItem {
         ref={(e) => (this.rowElement = e || undefined)}
         inverted={options.inverted}
       >
+        <StyledIcon icon={chevronsIcon} iconColor={colors.label} />
         <TagName color={colors.text}> {this.instance.element.tagName}</TagName>
         <StyledNameEdit
           color={colors.text}
@@ -266,7 +268,7 @@ class TextItem extends LeafTreeViewItem {
         inverted={options.inverted}
       >
         <StyledNameEdit
-          color={colors.text}
+          color={colors.label}
           value={this.instance.text.content}
           // TODO: validate
           onChange={this.onNameChange}
@@ -302,7 +304,7 @@ class VariantItem extends ElementItem {
         ref={(e) => (this.rowElement = e || undefined)}
         inverted={options.inverted}
       >
-        <StyledIcon icon={switchIcon} iconColor={colors.icon} />
+        <StyledIcon icon={switchIcon} iconColor={colors.label} />
         <TreeRowLabel>{this.variant.name}</TreeRowLabel>
       </StyledRow>
     );
