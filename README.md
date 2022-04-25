@@ -29,6 +29,10 @@ Create future-proof components and use them in any project.
 
 Macaron can also emit React wrappers for the output Web components. It also generates TypeScript definitions.
 
+## Roadmap
+
+- [Roadmap](https://github.com/macaronapp/macaron-next/projects/1)
+
 ## File format (`*.macaron`)
 
 ```html
