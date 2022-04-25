@@ -1,13 +1,26 @@
 # Macaron
 
-Macaron is a visual component editor for Web development.
+Macaron is an open-source Web design tool to create and maintain components visually
+where you can create production components just like in vector design tools.
+
+It primarily emits Web Components (which can be used from most frameworks except React), and generate React wrappers.
+
+Unlike other Web design tools, Macaron is intended to be integrated to your existing codebase and development workflow.
 
 ## Goals
 
 ### Freehand design
 
-Draw elements at arbitrary positions on the canvas and add auto layout later.  
-You can create production components with the same experience as popular graphics design tools.
+Draw elements at arbitrary positions on the canvas and add auto layout later.
+
+### Import from Figma
+
+Import existing designs from Figma by copy-paste using the Macaron plugin for Figma.
+
+### Run in VS Code
+
+Macaron will be released as a custom editor extension for Visual Studio Code.  
+No need to install another app or open another browser tab.
 
 ### Based on Web standards
 
