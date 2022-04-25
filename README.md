@@ -4,13 +4,14 @@ Macaron is a visual component editor for Web development.
 
 ## Goals
 
+### Freehand design
+
+Draw elements at arbitrary positions on the canvas and add auto layout later.  
+You can create production components with the same experience as popular graphics design tools.
+
 ### Based on Web standards
 
 Macaron is a design tool built around Web standards (HTML, CSS, and Web Components).
-
-### Freehand design
-
-Draw elements at arbitrary positions on the canvas and add auto layout later.
 
 ### Clean file format
 
@@ -23,11 +24,11 @@ Import existing Web Components and place them in the editor.
 
 ### Export to Web Components
 
-Create future-proof components and use them in any project.
+Create future-proof components and use them with any frameworks (or without frameworks).
 
 ### First-class support for React and TypeScript
 
-Macaron can also emit React wrappers for the output Web components. It also generates TypeScript definitions.
+Emit React wrappers and TypeScript definitions for the output Web components.
 
 ## Roadmap
 
