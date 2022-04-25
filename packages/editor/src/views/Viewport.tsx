@@ -66,7 +66,7 @@ export const Viewport: React.FC<{ className?: string }> = ({ className }) => {
     mount.dom.style.left = "0";
     mount.dom.style.transformOrigin = "left top";
 
-    reaction(
+    const disposer = reaction(
       () => editorState.scroll.documentToViewport,
       (transform) => {
         mount.dom.style.transform = transform.toCSSMatrixString();
@@ -75,7 +75,11 @@ export const Viewport: React.FC<{ className?: string }> = ({ className }) => {
 
     document.body.append(mount.dom);
 
-    return () => mount.dispose();
+    return () => {
+      disposer();
+      mount.dom.remove();
+      mount.dispose();
+    };
   }, [iframeRef]);
 
   return (
