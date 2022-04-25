@@ -92,5 +92,5 @@ yarn
 yarn dev
 ```
 
-- http://localhost:8080 : [Demo editor](/editor/src/index.tsx)
+- http://localhost:8080 : [Demo editor](/packages/editor/src/index.tsx)
 - http://localhost:7007 : Storybook for paintkit
