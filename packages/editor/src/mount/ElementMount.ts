@@ -112,6 +112,16 @@ export class ElementMount {
     this.registry = registry;
     this.registry.setElementMount(this);
     this.domDocument = domDocument;
+
+    this.disposers.push(
+      reaction(
+        () => this.instance.element.id,
+        (id) => {
+          this.dom.id = id;
+        },
+        { fireImmediately: true }
+      )
+    );
   }
 
   dispose(): void {
@@ -119,6 +129,7 @@ export class ElementMount {
       throw new Error("ElementMount is already disposed");
     }
 
+    this.disposers.forEach((disposer) => disposer());
     this.childMountSync.dispose();
     this.registry.deleteElementMount(this);
 
@@ -130,6 +141,7 @@ export class ElementMount {
   }
 
   private isDisposed = false;
+  private readonly disposers: (() => void)[] = [];
   readonly instance: ElementInstance;
   readonly registry: MountRegistry;
   readonly domDocument: globalThis.Document;
