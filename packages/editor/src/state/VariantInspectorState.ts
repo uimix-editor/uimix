@@ -26,6 +26,59 @@ export class VariantInspectorState {
     ]);
   }
 
+  @computed get x(): number | typeof MIXED | undefined {
+    return sameOrMixed(this.selectedAllVariants.map((v) => v.x));
+  }
+  @computed get y(): number | typeof MIXED | undefined {
+    return sameOrMixed(this.selectedAllVariants.map((v) => v.y));
+  }
+  @computed get width(): number | typeof MIXED | undefined {
+    return sameOrMixed(this.selectedAllVariants.map((v) => v.width));
+  }
+  @computed get height(): number | typeof MIXED | undefined {
+    return sameOrMixed(this.selectedAllVariants.map((v) => v.height));
+  }
+
+  readonly onXChange = action((x?: number) => {
+    if (x == null) {
+      return false;
+    }
+
+    for (const variant of this.selectedVariants) {
+      variant.x = x;
+    }
+    this.editorState.history.commit("Change X");
+    return true;
+  });
+
+  readonly onYChange = action((y?: number) => {
+    if (y == null) {
+      return false;
+    }
+
+    for (const variant of this.selectedVariants) {
+      variant.y = y;
+    }
+    this.editorState.history.commit("Change Y");
+    return true;
+  });
+
+  readonly onWidthChange = action((width?: number) => {
+    for (const variant of this.selectedVariants) {
+      variant.width = width;
+    }
+    this.editorState.history.commit("Change Width");
+    return true;
+  });
+
+  readonly onHeightChange = action((height?: number) => {
+    for (const variant of this.selectedVariants) {
+      variant.height = height;
+    }
+    this.editorState.history.commit("Change Height");
+    return true;
+  });
+
   @computed get selector(): string | typeof MIXED | undefined {
     return sameOrMixed(this.selectedVariants.map((v) => v.selector));
   }
