@@ -61,10 +61,24 @@ export const VariantInspector: React.FC = observer(() => {
         </RowGroup>
 
         {state.selectedVariants.length > 0 && (
-          <TopLabelArea>
-            <Label>Selector</Label>
-            <Input value={state.selector} onChange={state.onChangeSelector} />
-          </TopLabelArea>
+          <>
+            <TopLabelArea>
+              <Label>Selector</Label>
+              <Input
+                value={state.selector}
+                onChange={state.onChangeSelector}
+                placeholder='e.g. ":hover", "[type="primary"]"'
+              />
+            </TopLabelArea>
+            <TopLabelArea>
+              <Label>Media Query</Label>
+              <Input
+                value={state.mediaQuery}
+                onChange={state.onChangeMediaQuery}
+                placeholder='e.g. "(max-width: 768px)"'
+              />
+            </TopLabelArea>
+          </>
         )}
       </Pane>
     </VariantInspectorWrap>

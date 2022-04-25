@@ -90,4 +90,16 @@ export class VariantInspectorState {
     this.editorState.history.commit("Change Variant Selector");
     return true;
   });
+
+  @computed get mediaQuery(): string | typeof MIXED | undefined {
+    return sameOrMixed(this.selectedVariants.map((v) => v.mediaQuery));
+  }
+
+  readonly onChangeMediaQuery = action((mediaQuery: string) => {
+    for (const v of this.selectedVariants) {
+      v.mediaQuery = mediaQuery;
+    }
+    this.editorState.history.commit("Change Variant Media Query");
+    return true;
+  });
 }
