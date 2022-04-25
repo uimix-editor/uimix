@@ -14,15 +14,13 @@ export class VariantMount {
     this.registry = registry;
     this.domDocument = domDocument;
 
-    this.element = domDocument.createElement("div");
+    this.dom = domDocument.createElement("div");
     this.host = domDocument.createElement("div");
     this.shadow = this.host.attachShadow({ mode: "open" });
+    this.dom.append(this.host);
 
-    this.element.append(this.host);
-    this.element.style.position = "absolute";
-    this.element.style.background = "white";
-
-    domDocument.body.append(this.element);
+    this.dom.style.position = "absolute";
+    this.dom.style.background = "white";
 
     // TODO: add style
 
@@ -42,11 +40,11 @@ export class VariantMount {
           height: this.variant.height,
         }),
         ({ x, y, width, height }) => {
-          this.element.style.left = `${x}px`;
-          this.element.style.top = `${y}px`;
-          this.element.style.width =
+          this.dom.style.left = `${x}px`;
+          this.dom.style.top = `${y}px`;
+          this.dom.style.width =
             width === undefined ? `fit-content` : `${width}px`;
-          this.element.style.height =
+          this.dom.style.height =
             height === undefined ? `fit-content` : `${height}px`;
         },
         { fireImmediately: true }
@@ -63,7 +61,6 @@ export class VariantMount {
 
     this.childMountSync.dispose();
     this.registry.deleteVariantMount(this);
-    this.element.remove();
 
     this.isDisposed = true;
   }
@@ -75,7 +72,7 @@ export class VariantMount {
   readonly registry: MountRegistry;
   readonly domDocument: globalThis.Document;
 
-  readonly element: HTMLDivElement;
+  readonly dom: HTMLDivElement;
   private readonly host: HTMLDivElement;
   private readonly shadow: ShadowRoot;
 

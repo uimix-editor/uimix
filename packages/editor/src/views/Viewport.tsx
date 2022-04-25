@@ -34,6 +34,9 @@ export const Viewport: React.FC<{ className?: string }> = ({ className }) => {
     }
 
     const mount = new DocumentMount(() => editorState.document, document);
+
+    document.body.append(mount.dom);
+
     return () => mount.dispose();
   }, [iframeRef]);
 
