@@ -41,11 +41,7 @@ Macaron can also emit React wrappers for the output Web components. It also gene
 
   <macaron-variant x="0" y="0"></macaron-variant>
   <macaron-variant x="200" y="0" selector=":hover"></macaron-variant>
-  <macaron-variant
-    x="400"
-    y="0"
-    media-query="(max-width:768px)"
-  ></macaron-variant>
+  <macaron-variant x="400" y="0" media="(max-width: 768px)"></macaron-variant>
 
   <!-- DOM structure -->
 

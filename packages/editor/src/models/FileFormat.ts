@@ -46,7 +46,7 @@ function dumpDefaultVariant(variant: DefaultVariant): hast.Element {
 function dumpVariant(variant: Variant): hast.Element {
   return h("macaron-variant", {
     selector: variant.selector || undefined,
-    mediaQuery: variant.mediaQuery || undefined,
+    media: variant.mediaQuery || undefined,
     x: variant.x,
     y: variant.y,
     width: variant.width,
@@ -91,7 +91,7 @@ function loadComponent(node: hast.Element): Component {
       } else {
         variant = new Variant(component);
         variant.selector = String(child.properties?.selector ?? "");
-        variant.mediaQuery = String(child.properties?.mediaQuery ?? "");
+        variant.mediaQuery = String(child.properties?.media ?? "");
         component.variants.push(variant);
       }
 
