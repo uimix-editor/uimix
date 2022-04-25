@@ -71,6 +71,24 @@ export class EditorState {
     ];
   }
 
+  getNodeContextMenu(instance: ElementInstance | TextInstance): MenuItem[] {
+    return [
+      {
+        text: "Delete",
+        run: action(() => {
+          for (const node of this.document.selectedNodes) {
+            if (!node.parent) {
+              continue;
+            }
+            node.remove();
+          }
+          this.history.commit("Delete Element");
+          return true;
+        }),
+      },
+    ];
+  }
+
   getElementContextMenu(instance: ElementInstance): MenuItem[] {
     return [
       {
@@ -92,7 +110,15 @@ export class EditorState {
           return true;
         }),
       },
+      {
+        type: "separator",
+      },
+      ...this.getNodeContextMenu(instance),
     ];
+  }
+
+  getTextContextMenu(instance: TextInstance): MenuItem[] {
+    return [...this.getNodeContextMenu(instance)];
   }
 
   getEditMenu(): MenuItem[] {

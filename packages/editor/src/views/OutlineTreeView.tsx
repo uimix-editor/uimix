@@ -279,6 +279,17 @@ class TextItem extends LeafTreeViewItem {
     );
   }
 
+  handleContextMenu(e: React.MouseEvent): void {
+    e.preventDefault();
+    e.stopPropagation();
+
+    this.context.contextMenu.show(
+      e.clientX,
+      e.clientY,
+      this.context.editorState.getTextContextMenu(this.instance)
+    );
+  }
+
   handleDragStart(e: React.DragEvent) {
     e.dataTransfer.effectAllowed = "copyMove";
     e.dataTransfer.setData(NODE_DRAG_MIME, "drag");
