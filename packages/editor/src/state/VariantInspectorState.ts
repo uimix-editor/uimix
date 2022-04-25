@@ -44,7 +44,7 @@ export class VariantInspectorState {
       return false;
     }
 
-    for (const variant of this.selectedVariants) {
+    for (const variant of this.selectedAllVariants) {
       variant.x = x;
     }
     this.editorState.history.commit("Change X");
@@ -56,7 +56,7 @@ export class VariantInspectorState {
       return false;
     }
 
-    for (const variant of this.selectedVariants) {
+    for (const variant of this.selectedAllVariants) {
       variant.y = y;
     }
     this.editorState.history.commit("Change Y");
@@ -64,7 +64,7 @@ export class VariantInspectorState {
   });
 
   readonly onWidthChange = action((width?: number) => {
-    for (const variant of this.selectedVariants) {
+    for (const variant of this.selectedAllVariants) {
       variant.width = width;
     }
     this.editorState.history.commit("Change Width");
@@ -72,7 +72,7 @@ export class VariantInspectorState {
   });
 
   readonly onHeightChange = action((height?: number) => {
-    for (const variant of this.selectedVariants) {
+    for (const variant of this.selectedAllVariants) {
       variant.height = height;
     }
     this.editorState.history.commit("Change Height");
