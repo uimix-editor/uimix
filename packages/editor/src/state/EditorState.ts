@@ -166,6 +166,10 @@ export class EditorState {
           return true;
         }),
       },
+      {
+        type: "separator",
+      },
+      ...this.getBasicEditMenu(),
     ];
   }
 
