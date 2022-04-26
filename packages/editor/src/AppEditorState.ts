@@ -67,11 +67,7 @@ export class AppEditorState extends EditorState {
         text: "File",
         children: this.getFileMenu(),
       },
-
-      {
-        text: "Edit",
-        children: this.getEditMenu(),
-      },
+      ...super.getMainMenu(),
     ];
   }
 }

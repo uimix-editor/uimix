@@ -150,11 +150,50 @@ export class EditorState {
     ];
   }
 
+  getViewMenu(): MenuItem[] {
+    return [
+      {
+        text: "Zoom In",
+        shortcut: [
+          new KeyGesture([], "Equal"),
+          new KeyGesture([], "NumpadAdd"),
+          new KeyGesture(["Command"], "Equal"),
+          new KeyGesture(["Command"], "NumpadAdd"),
+          new KeyGesture(["Shift"], "Equal"),
+          new KeyGesture(["Shift", "Command"], "Equal"),
+        ],
+        run: action(() => {
+          this.scroll.zoomIn();
+          return true;
+        }),
+      },
+      {
+        text: "Zoom Out",
+        shortcut: [
+          new KeyGesture([], "Minus"),
+          new KeyGesture([], "NumpadSubtract"),
+          new KeyGesture(["Command"], "Minus"),
+          new KeyGesture(["Command"], "NumpadSubtract"),
+          new KeyGesture(["Shift"], "Minus"),
+          new KeyGesture(["Shift", "Command"], "Minus"),
+        ],
+        run: action(() => {
+          this.scroll.zoomOut();
+          return true;
+        }),
+      },
+    ];
+  }
+
   getMainMenu(): MenuItem[] {
     return [
       {
         text: "Edit",
         children: this.getEditMenu(),
+      },
+      {
+        text: "View",
+        children: this.getViewMenu(),
       },
     ];
   }
