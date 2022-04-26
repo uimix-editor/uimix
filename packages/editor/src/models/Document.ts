@@ -65,6 +65,23 @@ export class Document {
   @computed get selectedComponents(): Component[] {
     return this.components.children.filter((component) => component.selected);
   }
+
+  deleteSelected(): void {
+    for (const component of this.selectedComponents) {
+      component.remove();
+    }
+    for (const variant of this.selectedVariants) {
+      if (variant.type === "variant") {
+        variant.component.variants.remove(variant);
+      }
+    }
+    for (const node of this.selectedNodes) {
+      if (!node.parent) {
+        continue;
+      }
+      node.remove();
+    }
+  }
 }
 
 export interface DocumentJSON {

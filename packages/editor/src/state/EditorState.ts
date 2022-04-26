@@ -67,12 +67,7 @@ export class EditorState {
         text: "Delete",
         shortcut: [new KeyGesture([], "Backspace")],
         run: action(() => {
-          for (const node of this.document.selectedNodes) {
-            if (!node.parent) {
-              continue;
-            }
-            node.remove();
-          }
+          this.document.deleteSelected();
           this.history.commit("Delete Element");
           return true;
         }),
@@ -91,6 +86,10 @@ export class EditorState {
           return true;
         }),
       },
+      {
+        type: "separator",
+      },
+      ...this.getBasicEditMenu(),
     ];
   }
 
@@ -105,6 +104,10 @@ export class EditorState {
           return true;
         }),
       },
+      {
+        type: "separator",
+      },
+      ...this.getBasicEditMenu(),
     ];
   }
 
