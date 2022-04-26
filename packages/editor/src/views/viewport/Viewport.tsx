@@ -3,8 +3,9 @@ import { Rect, Vec2 } from "paintvec";
 import { action, reaction, runInAction } from "mobx";
 import React, { useCallback, useEffect } from "react";
 import styled from "styled-components";
-import { DocumentMount } from "../mount/DocumentMount";
-import { useEditorState } from "./EditorStateContext";
+import { DocumentMount } from "../../mount/DocumentMount";
+import { useEditorState } from "../EditorStateContext";
+import { PanOverlay } from "./PanOverlay";
 
 const ViewportWrap = styled.div`
   background-color: ${colors.uiBackground};
@@ -126,6 +127,7 @@ export const Viewport: React.FC<{ className?: string }> = ({ className }) => {
     <ViewportWrap className={className} ref={ref} onWheel={onWheel}>
       <ViewportIFrame ref={iframeRef} />
       <ViewportOverlay />
+      <PanOverlay />
     </ViewportWrap>
   );
 };

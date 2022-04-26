@@ -6,7 +6,7 @@ import { EditorState } from "../state/EditorState";
 import { RightSideBar } from "./SideBar";
 import { EditorStateContext } from "./EditorStateContext";
 import { ToolBar } from "./ToolBar";
-import { Viewport } from "./Viewport";
+import { Viewport } from "./viewport/Viewport";
 
 const Columns = styled.div`
   position: fixed;
