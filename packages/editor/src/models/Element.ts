@@ -69,28 +69,7 @@ export class Element extends TreeNode<Element, Element, Element | Text> {
 
   setInnerHTML(innerHTML: hast.Content[]): void {
     // TODO: reuse existing elements
-
-    this.replaceChildren([]);
-    for (const child of innerHTML) {
-      if (child.type === "text") {
-        this.append(new Text({ content: child.value }));
-      } else if (child.type === "element") {
-        const element = new Element({
-          tagName: child.tagName,
-        });
-
-        for (const [key, value] of Object.entries(child.properties ?? {})) {
-          if (key === "id") {
-            element.rename(String(value));
-          } else {
-            element.attrs.set(key, String(value));
-          }
-        }
-
-        element.setInnerHTML(child.children);
-        this.append(element);
-      }
-    }
+    this.replaceChildren(nodesFromHTML(innerHTML));
   }
 
   toJSON(): ElementJSON {
@@ -150,4 +129,31 @@ export class Element extends TreeNode<Element, Element, Element | Text> {
       }
     }
   }
+}
+
+export function nodesFromHTML(html: hast.Content[]): (Element | Text)[] {
+  const result: (Element | Text)[] = [];
+
+  for (const child of html) {
+    if (child.type === "text") {
+      result.push(new Text({ content: child.value }));
+    } else if (child.type === "element") {
+      const element = new Element({
+        tagName: child.tagName,
+      });
+
+      for (const [key, value] of Object.entries(child.properties ?? {})) {
+        if (key === "id") {
+          element.rename(String(value));
+        } else {
+          element.attrs.set(key, String(value));
+        }
+      }
+
+      element.setInnerHTML(child.children);
+      result.push(element);
+    }
+  }
+
+  return result;
 }

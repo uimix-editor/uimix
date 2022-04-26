@@ -2,7 +2,6 @@ import type * as hast from "hast";
 import { h } from "hastscript";
 import { toHtml } from "hast-util-to-html";
 import * as parse5 from "parse5";
-import { inspect } from "unist-util-inspect";
 import { fromParse5 } from "hast-util-from-parse5";
 import rehypeMinifyWhitespace from "rehype-minify-whitespace";
 import { unified } from "unified";
@@ -10,6 +9,8 @@ import { formatHTML } from "../util/Format";
 import { Component } from "./Component";
 import { Document } from "./Document";
 import { DefaultVariant, Variant } from "./Variant";
+import { Element, nodesFromHTML } from "./Element";
+import { Text } from "./Text";
 
 function dumpComponent(component: Component): hast.Element {
   const children: (hast.Element | string)[] = [];
@@ -86,22 +87,13 @@ function loadComponent(node: hast.Element): Component {
 
     if (child.tagName === "macaron-variant") {
       let variant: Variant | DefaultVariant;
+
       if (variantIndex++ === 0) {
         variant = component.defaultVariant;
+        loadVariantDimensions(variant, child);
       } else {
-        variant = new Variant(component);
-        variant.selector = String(child.properties?.selector ?? "");
-        variant.mediaQuery = String(child.properties?.media ?? "");
+        variant = loadVariant(child);
         component.variants.push(variant);
-      }
-
-      variant.x = Number(child.properties?.x ?? 0);
-      variant.y = Number(child.properties?.y ?? 0);
-      if (child.properties?.width) {
-        variant.width = Number(child.properties.width);
-      }
-      if (child.properties?.height) {
-        variant.height = Number(child.properties.height);
       }
     }
   }
@@ -109,18 +101,37 @@ function loadComponent(node: hast.Element): Component {
   return component;
 }
 
-export function parseDocument(data: string): Document {
+function loadVariantDimensions(
+  variant: Variant | DefaultVariant,
+  node: hast.Element
+) {
+  variant.x = Number(node.properties?.x ?? 0);
+  variant.y = Number(node.properties?.y ?? 0);
+  if (node.properties?.width) {
+    variant.width = Number(node.properties.width);
+  }
+  if (node.properties?.height) {
+    variant.height = Number(node.properties.height);
+  }
+}
+
+function loadVariant(node: hast.Element): Variant {
+  const variant = new Variant();
+  variant.selector = String(node.properties?.selector ?? "");
+  variant.mediaQuery = String(node.properties?.media ?? "");
+  loadVariantDimensions(variant, node);
+  return variant;
+}
+
+function parseHTMLFragment(data: string): hast.Root {
   const p5ast = parse5.parseFragment(data);
   //@ts-ignore
-  let hast: hast.Root = fromParse5(p5ast);
-  console.log(inspect(hast));
-  hast = unified().use(rehypeMinifyWhitespace).runSync(hast);
-  console.log(inspect(hast));
+  const hast: hast.Root = fromParse5(p5ast);
+  return unified().use(rehypeMinifyWhitespace).runSync(hast);
+}
 
-  if (hast.type !== "root") {
-    throw new Error("Root node expected");
-  }
-
+export function parseDocument(data: string): Document {
+  const hast = parseHTMLFragment(data);
   const document = new Document();
 
   for (const child of hast.children) {
@@ -131,4 +142,49 @@ export function parseDocument(data: string): Document {
   }
 
   return document;
+}
+
+type Fragment =
+  | {
+      type: "components";
+      components: Component[];
+    }
+  | {
+      type: "variants";
+      variants: Variant[];
+    }
+  | {
+      type: "nodes";
+      nodes: (Element | Text)[];
+    };
+
+export function parseFragment(data: string): Fragment | undefined {
+  const hast = parseHTMLFragment(data);
+
+  const componentHasts = hast.children.filter(
+    (child): child is hast.Element =>
+      child.type === "element" && child.tagName === "macaron-component"
+  );
+  if (componentHasts.length) {
+    return {
+      type: "components",
+      components: componentHasts.map(loadComponent),
+    };
+  }
+
+  const variantHasts = hast.children.filter(
+    (child): child is hast.Element =>
+      child.type === "element" && child.tagName === "macaron-variant"
+  );
+  if (variantHasts.length) {
+    return {
+      type: "variants",
+      variants: variantHasts.map(loadVariant),
+    };
+  }
+
+  return {
+    type: "nodes",
+    nodes: nodesFromHTML(hast.children),
+  };
 }
