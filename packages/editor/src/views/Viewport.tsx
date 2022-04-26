@@ -97,9 +97,6 @@ export const Viewport: React.FC<{ className?: string }> = ({ className }) => {
       //   return;
       // }
 
-      e.preventDefault();
-      e.stopPropagation();
-
       if (e.ctrlKey || e.metaKey) {
         const factor = Math.pow(2, e.deltaY / 100);
         const pos = new Vec2(e.clientX, e.clientY).sub(
