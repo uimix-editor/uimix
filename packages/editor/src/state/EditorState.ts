@@ -46,6 +46,40 @@ export class EditorState {
   @observable measureMode = false;
   @observable panMode = false;
 
+  getBasicEditMenu(): MenuItem[] {
+    return [
+      {
+        text: "Cut",
+        shortcut: [new KeyGesture(["Command"], "KeyX")],
+        // TODO
+      },
+      {
+        text: "Copy",
+        shortcut: [new KeyGesture(["Command"], "KeyC")],
+        // TODO
+      },
+      {
+        text: "Paste",
+        shortcut: [new KeyGesture(["Command"], "KeyV")],
+        // TODO
+      },
+      {
+        text: "Delete",
+        shortcut: [new KeyGesture([], "Backspace")],
+        run: action(() => {
+          for (const node of this.document.selectedNodes) {
+            if (!node.parent) {
+              continue;
+            }
+            node.remove();
+          }
+          this.history.commit("Delete Element");
+          return true;
+        }),
+      },
+    ];
+  }
+
   getOutlineContextMenu(): MenuItem[] {
     return [
       {
@@ -68,24 +102,6 @@ export class EditorState {
           const variant = new Variant(component);
           variant.selector = ":hover";
           component.variants.push(variant);
-          return true;
-        }),
-      },
-    ];
-  }
-
-  getNodeContextMenu(instance: ElementInstance | TextInstance): MenuItem[] {
-    return [
-      {
-        text: "Delete",
-        run: action(() => {
-          for (const node of this.document.selectedNodes) {
-            if (!node.parent) {
-              continue;
-            }
-            node.remove();
-          }
-          this.history.commit("Delete Element");
           return true;
         }),
       },
@@ -116,12 +132,12 @@ export class EditorState {
       {
         type: "separator",
       },
-      ...this.getNodeContextMenu(instance),
+      ...this.getBasicEditMenu(),
     ];
   }
 
   getTextContextMenu(instance: TextInstance): MenuItem[] {
-    return [...this.getNodeContextMenu(instance)];
+    return [...this.getBasicEditMenu()];
   }
 
   getEditMenu(): MenuItem[] {
