@@ -1,4 +1,5 @@
 import { reaction } from "mobx";
+import { Component } from "../models/Component";
 import { ElementInstance } from "../models/ElementInstance";
 import { DefaultVariant, Variant } from "../models/Variant";
 import { ChildMountSync } from "./ElementMount";
@@ -6,10 +7,12 @@ import { MountRegistry } from "./MountRegistry";
 
 export class VariantMount {
   constructor(
+    component: Component,
     variant: Variant | DefaultVariant,
     registry: MountRegistry,
     domDocument: globalThis.Document
   ) {
+    this.component = component;
     this.variant = variant;
     this.registry = registry;
     this.domDocument = domDocument;
@@ -25,7 +28,7 @@ export class VariantMount {
     // TODO: add style
 
     this.childMountSync = new ChildMountSync(
-      ElementInstance.get(variant, variant.component.rootElement),
+      ElementInstance.get(variant, component.rootElement),
       registry,
       this.shadow
     );
@@ -68,6 +71,7 @@ export class VariantMount {
   private isDisposed = false;
   private readonly disposers: (() => void)[] = [];
 
+  readonly component: Component;
   readonly variant: Variant | DefaultVariant;
   readonly registry: MountRegistry;
   readonly domDocument: globalThis.Document;

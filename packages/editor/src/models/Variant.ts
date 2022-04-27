@@ -1,6 +1,7 @@
+import { TreeNode } from "@seanchas116/paintkit/src/util/TreeNode";
 import { computed, makeObservable, observable } from "mobx";
 import shortUUID from "short-uuid";
-import { Component } from "./Component";
+import { Component, VariantList } from "./Component";
 import { ElementInstance } from "./ElementInstance";
 
 export interface BaseVariantJSON {
@@ -10,18 +11,23 @@ export interface BaseVariantJSON {
   height?: number;
 }
 
-abstract class BaseVariant {
-  constructor(component: Component) {
-    this.component = component;
-    this.rootInstance = ElementInstance.get(
-      this as BaseVariant as Variant | DefaultVariant,
-      this.component.rootElement
-    );
+abstract class BaseVariant extends TreeNode<VariantList, BaseVariant, never> {
+  constructor() {
+    super();
     makeObservable(this);
   }
 
-  readonly component: Component;
-  readonly rootInstance: ElementInstance;
+  abstract get component(): Component | undefined;
+
+  get rootInstance(): ElementInstance | undefined {
+    return (
+      this.component &&
+      ElementInstance.get(
+        this as BaseVariant as Variant | DefaultVariant,
+        this.component.rootElement
+      )
+    );
+  }
 
   @observable x = 0;
   @observable y = 0;
@@ -48,6 +54,16 @@ abstract class BaseVariant {
 }
 
 export class DefaultVariant extends BaseVariant {
+  constructor(component: Component) {
+    super();
+    this._component = component;
+  }
+
+  private _component: Component;
+  get component(): Component {
+    return this._component;
+  }
+
   get type(): "defaultVariant" {
     return "defaultVariant";
   }
@@ -58,10 +74,14 @@ export class DefaultVariant extends BaseVariant {
 }
 
 export class Variant extends BaseVariant {
-  constructor(component: Component, key?: string) {
-    super(component);
+  constructor(key?: string) {
+    super();
     this.key = key ?? shortUUID.generate();
     makeObservable(this);
+  }
+
+  get component(): Component | undefined {
+    return this.parent?.component;
   }
 
   get type(): "variant" {

@@ -72,7 +72,7 @@ export class Document {
     }
     for (const variant of this.selectedVariants) {
       if (variant.type === "variant") {
-        variant.component.variants.remove(variant);
+        variant.remove();
       }
     }
     for (const node of this.selectedNodes) {

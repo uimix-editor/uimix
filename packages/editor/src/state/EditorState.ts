@@ -98,9 +98,9 @@ export class EditorState {
       {
         text: "Add Variant",
         run: action(() => {
-          const variant = new Variant(component);
+          const variant = new Variant();
           variant.selector = ":hover";
-          component.variants.push(variant);
+          component.variants.append(variant);
           return true;
         }),
       },

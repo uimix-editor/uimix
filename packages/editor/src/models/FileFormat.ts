@@ -16,7 +16,7 @@ function dumpComponent(component: Component): hast.Element {
   const children: (hast.Element | string)[] = [];
   children.push("\n", dumpDefaultVariant(component.defaultVariant));
 
-  for (const variant of component.variants) {
+  for (const variant of component.variants.children) {
     children.push("\n", dumpVariant(variant));
   }
 
@@ -93,7 +93,7 @@ function loadComponent(node: hast.Element): Component {
         loadVariantDimensions(variant, child);
       } else {
         variant = loadVariant(child);
-        component.variants.push(variant);
+        component.variants.append(variant);
       }
     }
   }

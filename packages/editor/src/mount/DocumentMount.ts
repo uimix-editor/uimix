@@ -1,3 +1,4 @@
+import { assertNonNull } from "@seanchas116/paintkit/src/util/Assert";
 import { reaction } from "mobx";
 import { Document } from "../models/Document";
 import { DefaultVariant, Variant } from "../models/Variant";
@@ -12,7 +13,7 @@ export class DocumentMount {
     const getAllVariants = () =>
       getDocument().components.children.flatMap((component) => [
         component.defaultVariant,
-        ...component.variants,
+        ...component.variants.children,
       ]);
 
     this.disposers = [
@@ -50,7 +51,12 @@ export class DocumentMount {
     for (const variant of variants) {
       const variantMount =
         existingVariantMounts.get(variant) ||
-        new VariantMount(variant, this.registry, this.dom.ownerDocument);
+        new VariantMount(
+          assertNonNull(variant.component),
+          variant,
+          this.registry,
+          this.dom.ownerDocument
+        );
       existingVariantMounts.delete(variant);
       this.variantMounts.push(variantMount);
     }

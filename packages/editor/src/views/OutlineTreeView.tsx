@@ -23,6 +23,8 @@ import chevronsIcon from "@seanchas116/paintkit/dist/icon/Chevrons";
 import { action, computed, makeObservable } from "mobx";
 import { colors } from "@seanchas116/paintkit/src/components/Palette";
 import { filterInstance } from "@seanchas116/paintkit/src/util/Collection";
+import { compact } from "lodash-es";
+import { assertNonNull } from "@seanchas116/paintkit/src/util/Assert";
 import { EditorState } from "../state/EditorState";
 import { Component } from "../models/Component";
 import { DefaultVariant, Variant } from "../models/Variant";
@@ -300,9 +302,10 @@ class VariantItem extends ElementItem {
   constructor(
     context: OutlineContext,
     parent: ComponentItem,
-    variant: Variant | DefaultVariant
+    variant: Variant | DefaultVariant,
+    rootInstance: ElementInstance
   ) {
-    super(context, parent, variant.rootInstance);
+    super(context, parent, rootInstance);
     this.variant = variant;
     makeObservable(this);
   }
@@ -348,8 +351,16 @@ class ComponentItem extends TreeViewItem {
   }
 
   get children(): readonly TreeViewItem[] {
-    return [this.component.defaultVariant, ...this.component.variants].map(
-      (variant) => new VariantItem(this.context, this, variant)
+    return compact(
+      this.component.allVariants.map(
+        (variant) =>
+          new VariantItem(
+            this.context,
+            this,
+            variant,
+            assertNonNull(variant.rootInstance)
+          )
+      )
     );
   }
 
@@ -426,25 +437,16 @@ class ComponentItem extends TreeViewItem {
 
   handleDrop(event: React.DragEvent, before: TreeViewItem | undefined) {
     const copy = event.altKey || event.ctrlKey;
-    const beforeVariant = (before as VariantItem | undefined)?.variant;
+    let beforeVariant = (before as VariantItem | undefined)?.variant;
+    if (beforeVariant?.type === "defaultVariant") {
+      beforeVariant = this.component.variants.firstChild;
+    }
 
     const selectedVariants = filterInstance(this.component.selectedVariants, [
       Variant,
     ]);
     for (const variant of selectedVariants) {
-      this.component.variants.remove(variant);
-    }
-    let index =
-      beforeVariant === undefined
-        ? this.component.variants.length
-        : beforeVariant.type === "variant"
-        ? this.component.variants.indexOf(beforeVariant)
-        : 0;
-    if (index < 0) {
-      index = 0;
-    }
-    for (const variant of selectedVariants) {
-      this.component.variants.splice(index++, 0, variant);
+      this.component.variants.insertBefore(variant, beforeVariant);
     }
 
     this.context.editorState.history.commit(
