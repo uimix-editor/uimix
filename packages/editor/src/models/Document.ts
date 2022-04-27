@@ -92,10 +92,23 @@ export class Document {
     }
   }
 
+  deselect(): void {
+    for (const component of this.components.children) {
+      component.deselect();
+      for (const variant of component.allVariants) {
+        variant.rootInstance?.deselect();
+      }
+    }
+  }
+
   appendFragmentBeforeSelection(fragment: Fragment): void {
     switch (fragment.type) {
       case "components":
         this.components.append(...fragment.components);
+        this.deselect();
+        for (const c of fragment.components) {
+          c.select();
+        }
         return;
       case "variants":
         return;
