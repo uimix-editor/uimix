@@ -158,6 +158,23 @@ type Fragment =
       nodes: (Element | Text)[];
     };
 
+export function stringifyFragment(fragment: Fragment): string {
+  switch (fragment.type) {
+    case "components": {
+      const hast = fragment.components.map(dumpComponent);
+      return toHtml(hast);
+    }
+    case "variants": {
+      const hast = fragment.variants.map(dumpVariant);
+      return toHtml(hast);
+    }
+    case "nodes": {
+      const hast = fragment.nodes.map((node) => node.outerHTML);
+      return toHtml(hast);
+    }
+  }
+}
+
 export function parseFragment(data: string): Fragment | undefined {
   const hast = parseHTMLFragment(data);
 
