@@ -1,0 +1,9 @@
+<macaron-component name="my-component">
+  <macaron-variant x="0" y="0"></macaron-variant>
+  <macaron-variant x="200" y="0" selector=":hover"></macaron-variant>
+  <macaron-variant x="400" y="0" media="(max-width: 768px)"></macaron-variant>
+  <template>
+    <h1 title="Hover Me" id="heading">Hello, world!</h1>
+    <div id="div1">Type something</div>
+  </template>
+</macaron-component>
