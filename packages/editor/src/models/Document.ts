@@ -1,8 +1,10 @@
+import { filterInstance } from "@seanchas116/paintkit/src/util/Collection";
 import { TreeNode } from "@seanchas116/paintkit/src/util/TreeNode";
 import { computed, makeObservable } from "mobx";
 import { Component, ComponentJSON } from "./Component";
 import { Element } from "./Element";
 import { ElementInstance } from "./ElementInstance";
+import { Fragment } from "./Fragment";
 import { Text } from "./Text";
 import { TextInstance } from "./TextInstance";
 import { DefaultVariant, Variant } from "./Variant";
@@ -64,6 +66,30 @@ export class Document {
 
   @computed get selectedComponents(): Component[] {
     return this.components.children.filter((component) => component.selected);
+  }
+
+  @computed get selectedFragment(): Fragment | undefined {
+    const components = this.selectedComponents;
+    if (components.length === 1) {
+      return {
+        type: "components",
+        components: components,
+      };
+    }
+    const variants = filterInstance(this.selectedVariants, [Variant]);
+    if (variants.length === 1) {
+      return {
+        type: "variants",
+        variants: variants,
+      };
+    }
+    const nodes = this.selectedNodes;
+    if (nodes.length === 1) {
+      return {
+        type: "nodes",
+        nodes: nodes,
+      };
+    }
   }
 
   deleteSelected(): void {

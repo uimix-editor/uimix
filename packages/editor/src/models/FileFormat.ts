@@ -9,8 +9,8 @@ import { formatHTML } from "../util/Format";
 import { Component } from "./Component";
 import { Document } from "./Document";
 import { DefaultVariant, Variant } from "./Variant";
-import { Element, nodesFromHTML } from "./Element";
-import { Text } from "./Text";
+import { nodesFromHTML } from "./Element";
+import { Fragment } from "./Fragment";
 
 function dumpComponent(component: Component): hast.Element {
   const children: (hast.Element | string)[] = [];
@@ -142,20 +142,6 @@ export function parseDocument(data: string): Document {
   const hast = parseHTMLFragment(data);
   return loadDocument(hast.children);
 }
-
-type Fragment =
-  | {
-      type: "components";
-      components: Component[];
-    }
-  | {
-      type: "variants";
-      variants: Variant[];
-    }
-  | {
-      type: "nodes";
-      nodes: (Element | Text)[];
-    };
 
 export function stringifyFragment(fragment: Fragment): string {
   switch (fragment.type) {
