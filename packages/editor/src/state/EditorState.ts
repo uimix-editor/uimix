@@ -3,7 +3,7 @@ import { JSONUndoHistory } from "@seanchas116/paintkit/src/util/JSONUndoHistory"
 import { KeyGesture } from "@seanchas116/paintkit/src/util/KeyGesture";
 import { isTextInputFocused } from "@seanchas116/paintkit/src/util/CurrentFocus";
 import { Scroll } from "@seanchas116/paintkit/src/util/Scroll";
-import { action, makeObservable, observable } from "mobx";
+import { action, makeObservable, observable, runInAction } from "mobx";
 import { Component } from "../models/Component";
 import { Document, DocumentJSON } from "../models/Document";
 import { Element } from "../models/Element";
@@ -11,6 +11,7 @@ import { ElementInstance } from "../models/ElementInstance";
 import { Text } from "../models/Text";
 import { TextInstance } from "../models/TextInstance";
 import { Variant } from "../models/Variant";
+import { parseFragment, stringifyFragment } from "../models/FileFormat";
 import { ElementInspectorState } from "./ElementInspectorState";
 import { VariantInspectorState } from "./VariantInspectorState";
 
@@ -56,12 +57,45 @@ export class EditorState {
       {
         text: "Copy",
         shortcut: [new KeyGesture(["Command"], "KeyC")],
-        // TODO
+        run: action(() => {
+          const fragment = this.document.selectedFragment;
+          if (fragment) {
+            const html = stringifyFragment(fragment);
+            console.log(html);
+
+            const type = "text/html";
+            const blob = new Blob([html], { type });
+            const data = [new ClipboardItem({ [type]: blob })];
+
+            void navigator.clipboard.write(data);
+          }
+
+          return true;
+        }),
       },
       {
         text: "Paste",
         shortcut: [new KeyGesture(["Command"], "KeyV")],
-        // TODO
+        run: action(() => {
+          void navigator.clipboard.read().then(async (contents) => {
+            for (const item of contents) {
+              if (item.types.includes("text/html")) {
+                const html = await (await item.getType("text/html")).text();
+                const fragment = parseFragment(html);
+                if (fragment) {
+                  runInAction(() => {
+                    this.document.appendFragmentBeforeSelection(fragment);
+                    this.history.commit("Paste");
+                  });
+                }
+
+                break;
+              }
+            }
+          });
+
+          return true;
+        }),
       },
       {
         text: "Delete",

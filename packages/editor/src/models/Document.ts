@@ -92,6 +92,18 @@ export class Document {
     }
   }
 
+  appendFragmentBeforeSelection(fragment: Fragment): void {
+    switch (fragment.type) {
+      case "components":
+        this.components.append(...fragment.components);
+        return;
+      case "variants":
+        return;
+      case "nodes":
+        return;
+    }
+  }
+
   deleteSelected(): void {
     for (const component of this.selectedComponents) {
       component.remove();
