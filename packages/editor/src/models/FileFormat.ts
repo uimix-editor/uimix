@@ -14,7 +14,7 @@ import { Text } from "./Text";
 
 function dumpComponent(component: Component): hast.Element {
   const children: (hast.Element | string)[] = [];
-  children.push("\n", dumpDefaultVariant(component.defaultVariant));
+  children.push("\n", dumpVariant(component.defaultVariant));
 
   for (const variant of component.variants.children) {
     children.push("\n", dumpVariant(variant));
@@ -33,35 +33,6 @@ function dumpComponent(component: Component): hast.Element {
     },
     children
   );
-}
-
-function dumpDefaultVariant(variant: DefaultVariant): hast.Element {
-  return h("macaron-variant", {
-    x: variant.x,
-    y: variant.y,
-    width: variant.width,
-    height: variant.height,
-  });
-}
-
-function dumpVariant(variant: Variant): hast.Element {
-  return h("macaron-variant", {
-    selector: variant.selector || undefined,
-    media: variant.mediaQuery || undefined,
-    x: variant.x,
-    y: variant.y,
-    width: variant.width,
-    height: variant.height,
-  });
-}
-
-function dumpDocument(document: Document): hast.Element[] {
-  return document.components.children.map(dumpComponent);
-}
-
-export function stringifyDocument(document: Document): string {
-  const html = toHtml(dumpDocument(document));
-  return formatHTML(html);
 }
 
 function loadComponent(node: hast.Element): Component {
@@ -101,6 +72,21 @@ function loadComponent(node: hast.Element): Component {
   return component;
 }
 
+function dumpVariant(variant: Variant | DefaultVariant): hast.Element {
+  return h("macaron-variant", {
+    x: variant.x,
+    y: variant.y,
+    width: variant.width,
+    height: variant.height,
+    ...(variant.type === "variant"
+      ? {
+          selector: variant.selector || undefined,
+          media: variant.mediaQuery || undefined,
+        }
+      : undefined),
+  });
+}
+
 function loadVariantDimensions(
   variant: Variant | DefaultVariant,
   node: hast.Element
@@ -123,6 +109,28 @@ function loadVariant(node: hast.Element): Variant {
   return variant;
 }
 
+function dumpDocument(document: Document): hast.Element[] {
+  return document.components.children.map(dumpComponent);
+}
+
+function loadDocument(hastNodes: hast.Content[]): Document {
+  const document = new Document();
+
+  for (const child of hastNodes) {
+    if (child.type === "element" && child.tagName === "macaron-component") {
+      const component = loadComponent(child);
+      document.components.append(component);
+    }
+  }
+
+  return document;
+}
+
+export function stringifyDocument(document: Document): string {
+  const html = toHtml(dumpDocument(document));
+  return formatHTML(html);
+}
+
 function parseHTMLFragment(data: string): hast.Root {
   const p5ast = parse5.parseFragment(data);
   //@ts-ignore
@@ -132,16 +140,7 @@ function parseHTMLFragment(data: string): hast.Root {
 
 export function parseDocument(data: string): Document {
   const hast = parseHTMLFragment(data);
-  const document = new Document();
-
-  for (const child of hast.children) {
-    if (child.type === "element" && child.tagName === "macaron-component") {
-      const component = loadComponent(child);
-      document.components.append(component);
-    }
-  }
-
-  return document;
+  return loadDocument(hast.children);
 }
 
 type Fragment =
@@ -161,16 +160,16 @@ type Fragment =
 export function stringifyFragment(fragment: Fragment): string {
   switch (fragment.type) {
     case "components": {
-      const hast = fragment.components.map(dumpComponent);
-      return toHtml(hast);
+      const hastNodes = fragment.components.map(dumpComponent);
+      return toHtml(hastNodes);
     }
     case "variants": {
-      const hast = fragment.variants.map(dumpVariant);
-      return toHtml(hast);
+      const hastNodes = fragment.variants.map(dumpVariant);
+      return toHtml(hastNodes);
     }
     case "nodes": {
-      const hast = fragment.nodes.map((node) => node.outerHTML);
-      return toHtml(hast);
+      const hastNodes = fragment.nodes.map((node) => node.outerHTML);
+      return toHtml(hastNodes);
     }
   }
 }
