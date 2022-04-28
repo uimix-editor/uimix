@@ -95,6 +95,7 @@ export const OutlineTreeView: React.FC<{
     [editorState, contextMenu]
   );
 
+  // reveal nodes on selection change
   useEffect(
     () =>
       reaction(
@@ -120,6 +121,7 @@ export const OutlineTreeView: React.FC<{
     [editorState, instanceToItem]
   );
 
+  // reveal component on selection change
   useEffect(
     () =>
       reaction(
