@@ -93,16 +93,28 @@ export class Component extends TreeNode<ComponentList, Component, never> {
   }
 
   @computed.struct get selectedInstances(): (ElementInstance | TextInstance)[] {
+    if (this.selected) {
+      return [];
+    }
+
     return this.allVariants.flatMap(
       (v) => v.rootInstance?.selectedDescendants ?? []
     );
   }
 
   @computed.struct get selectedVariants(): (Variant | DefaultVariant)[] {
+    if (this.selected) {
+      return [];
+    }
+
     return this.allVariants.filter((v) => v.rootInstance?.selected ?? false);
   }
 
   @computed.struct get selectedNodes(): (Element | Text)[] {
+    if (this.selected) {
+      return [];
+    }
+
     // TODO: disallow selecting elements from multiple variants
     for (const variant of this.allVariants) {
       const selectedInstances = variant.rootInstance?.selectedDescendants;
