@@ -5,6 +5,7 @@ import * as parse5 from "parse5";
 import { fromParse5 } from "hast-util-from-parse5";
 import rehypeMinifyWhitespace from "rehype-minify-whitespace";
 import { unified } from "unified";
+import { isNonVisualElement } from "@seanchas116/paintkit/src/util/HTMLTagCategory";
 import { formatHTML } from "../util/Format";
 import { Component } from "./Component";
 import { Document } from "./Document";
@@ -185,8 +186,15 @@ export function parseFragment(data: string): Fragment | undefined {
     };
   }
 
+  const visualNodes = hast.children.filter((child) => {
+    if (child.type === "element" && isNonVisualElement(child.tagName)) {
+      return false;
+    }
+    return true;
+  });
+
   return {
     type: "nodes",
-    nodes: nodesFromHTML(hast.children),
+    nodes: nodesFromHTML(visualNodes),
   };
 }
