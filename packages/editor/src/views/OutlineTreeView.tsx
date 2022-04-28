@@ -78,7 +78,11 @@ export const OutlineTreeView: React.FC<{
   const contextMenu = useContextMenu();
   const editorState = useEditorState();
   const [instanceToItem] = useState(
-    () => new WeakMap<ElementInstance | TextInstance, ElementItem | TextItem>()
+    () =>
+      new WeakMap<
+        ElementInstance | TextInstance | Component,
+        ElementItem | TextItem | ComponentItem
+      >()
   );
 
   const rootItem = useMemo(
@@ -113,7 +117,28 @@ export const OutlineTreeView: React.FC<{
           }
         }
       ),
-    [editorState]
+    [editorState, instanceToItem]
+  );
+
+  useEffect(
+    () =>
+      reaction(
+        () => editorState.document.selectedComponents,
+        async (components) => {
+          // wait for render
+          await new Promise((resolve) => setTimeout(resolve, 0));
+
+          for (const component of components) {
+            const item = instanceToItem.get(component);
+            if (item?.rowElement) {
+              scrollIntoView(item.rowElement, {
+                scrollMode: "if-needed",
+              });
+            }
+          }
+        }
+      ),
+    [editorState, instanceToItem]
   );
 
   return (
@@ -131,8 +156,8 @@ interface OutlineContext {
   editorState: EditorState;
   contextMenu: ContextMenuController;
   instanceToItem: WeakMap<
-    ElementInstance | TextInstance,
-    ElementItem | TextItem
+    ElementInstance | TextInstance | Component,
+    ElementItem | TextItem | ComponentItem
   >;
 }
 
@@ -376,6 +401,7 @@ class ComponentItem extends TreeViewItem {
     this.parent = parent;
     this.component = component;
     makeObservable(this);
+    context.instanceToItem.set(component, this);
   }
 
   readonly context: OutlineContext;
@@ -423,7 +449,7 @@ class ComponentItem extends TreeViewItem {
     this.component.collapsed = !this.component.collapsed;
   }
 
-  private rowElement: HTMLElement | undefined;
+  rowElement: HTMLElement | undefined;
 
   private onNameChange = action((name: string) => {
     this.component.rename(name);
