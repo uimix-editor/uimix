@@ -167,6 +167,11 @@ export class ElementMount {
   }
 
   updateBoundingBox(): void {
-    this.instance.boundingBox = Rect.from(this.dom.getBoundingClientRect());
+    const viewportToDocument =
+      this.context.editorState.scroll.viewportToDocument;
+
+    this.instance.boundingBox = Rect.from(
+      this.dom.getBoundingClientRect()
+    ).transform(viewportToDocument);
   }
 }
