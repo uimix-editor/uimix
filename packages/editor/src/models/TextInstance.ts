@@ -67,4 +67,8 @@ export class TextInstance {
   @computed get selectedDescendants(): TextInstance[] {
     return this.selected ? [this] : [];
   }
+
+  expandAncestors(): void {
+    this.parent?.expandAncestors();
+  }
 }

@@ -1,6 +1,7 @@
 import { observer } from "mobx-react-lite";
-import React, { useMemo } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import styled from "styled-components";
+import scrollIntoView from "scroll-into-view-if-needed";
 import {
   LeafTreeViewItem,
   RootTreeViewItem,
@@ -20,7 +21,7 @@ import {
 import widgetsFilledIcon from "@iconify-icons/ic/baseline-widgets";
 import switchIcon from "@seanchas116/paintkit/dist/icon/Switch";
 import chevronsIcon from "@seanchas116/paintkit/dist/icon/Chevrons";
-import { action, computed, makeObservable } from "mobx";
+import { action, computed, makeObservable, reaction } from "mobx";
 import { colors } from "@seanchas116/paintkit/src/components/Palette";
 import { filterInstance } from "@seanchas116/paintkit/src/util/Collection";
 import { compact } from "lodash-es";
@@ -76,14 +77,70 @@ export const OutlineTreeView: React.FC<{
 }> = observer(({ className, hidden }) => {
   const contextMenu = useContextMenu();
   const editorState = useEditorState();
+  const [instanceToItem] = useState(
+    () =>
+      new WeakMap<
+        ElementInstance | TextInstance | Component,
+        ElementItem | TextItem | ComponentItem
+      >()
+  );
 
   const rootItem = useMemo(
     () =>
       new RootItem({
         editorState,
         contextMenu,
+        instanceToItem,
       }),
     [editorState, contextMenu]
+  );
+
+  // reveal nodes on selection change
+  useEffect(
+    () =>
+      reaction(
+        () => editorState.document.selectedInstances,
+        async (instances) => {
+          for (const instance of instances) {
+            instance.parent?.expandAncestors();
+          }
+
+          // wait for render
+          await new Promise((resolve) => setTimeout(resolve, 0));
+
+          for (const instance of instances) {
+            const item = instanceToItem.get(instance);
+            if (item?.rowElement) {
+              scrollIntoView(item.rowElement, {
+                scrollMode: "if-needed",
+              });
+            }
+          }
+        }
+      ),
+    [editorState, instanceToItem]
+  );
+
+  // reveal component on selection change
+  useEffect(
+    () =>
+      reaction(
+        () => editorState.document.selectedComponents,
+        async (components) => {
+          // wait for render
+          await new Promise((resolve) => setTimeout(resolve, 0));
+
+          for (const component of components) {
+            const item = instanceToItem.get(component);
+            if (item?.rowElement) {
+              scrollIntoView(item.rowElement, {
+                scrollMode: "if-needed",
+              });
+            }
+          }
+        }
+      ),
+    [editorState, instanceToItem]
   );
 
   return (
@@ -100,6 +157,10 @@ export const OutlineTreeView: React.FC<{
 interface OutlineContext {
   editorState: EditorState;
   contextMenu: ContextMenuController;
+  instanceToItem: WeakMap<
+    ElementInstance | TextInstance | Component,
+    ElementItem | TextItem | ComponentItem
+  >;
 }
 
 class ElementItem extends TreeViewItem {
@@ -113,6 +174,7 @@ class ElementItem extends TreeViewItem {
     this.parent = parent;
     this.instance = instance;
     makeObservable(this);
+    context.instanceToItem.set(instance, this);
   }
 
   readonly context: OutlineContext;
@@ -162,7 +224,7 @@ class ElementItem extends TreeViewItem {
     return true;
   });
 
-  protected rowElement: HTMLElement | undefined;
+  rowElement: HTMLElement | undefined;
 
   renderRow(options: { inverted: boolean }): React.ReactNode {
     return (
@@ -231,6 +293,7 @@ class TextItem extends LeafTreeViewItem {
     this.parent = parent;
     this.instance = instance;
     makeObservable(this);
+    context.instanceToItem.set(instance, this);
   }
 
   readonly context: OutlineContext;
@@ -261,7 +324,7 @@ class TextItem extends LeafTreeViewItem {
     return true;
   });
 
-  private rowElement: HTMLElement | undefined;
+  rowElement: HTMLElement | undefined;
 
   renderRow(options: { inverted: boolean }): React.ReactNode {
     return (
@@ -340,6 +403,7 @@ class ComponentItem extends TreeViewItem {
     this.parent = parent;
     this.component = component;
     makeObservable(this);
+    context.instanceToItem.set(component, this);
   }
 
   readonly context: OutlineContext;
@@ -387,7 +451,7 @@ class ComponentItem extends TreeViewItem {
     this.component.collapsed = !this.component.collapsed;
   }
 
-  private rowElement: HTMLElement | undefined;
+  rowElement: HTMLElement | undefined;
 
   private onNameChange = action((name: string) => {
     this.component.rename(name);
