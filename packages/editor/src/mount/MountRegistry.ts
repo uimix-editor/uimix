@@ -29,6 +29,18 @@ export class MountRegistry {
     this.variantMounts.set(mount.variant, mount);
   }
 
+  getElementMount(instance: ElementInstance): ElementMount | undefined {
+    return [...this.elementMounts.get(instance)][0];
+  }
+
+  getTextMount(instance: TextInstance): TextMount | undefined {
+    return [...this.textMounts.get(instance)][0];
+  }
+
+  getVariantMount(variant: Variant | DefaultVariant): VariantMount | undefined {
+    return [...this.variantMounts.get(variant)][0];
+  }
+
   deleteElementMount(mount: ElementMount): void {
     this.elementMounts.deleteValue(mount.instance, mount);
   }

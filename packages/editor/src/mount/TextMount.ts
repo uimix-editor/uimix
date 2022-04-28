@@ -19,6 +19,12 @@ export class TextMount {
         () => instance.text.content,
         (content) => {
           this.dom.textContent = content;
+
+          const parent = this.instance.parent;
+          if (parent) {
+            const parentMount = this.registry.getElementMount(parent);
+            parentMount?.updateBoundingBoxLater();
+          }
         }
       ),
     ];

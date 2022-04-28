@@ -11,11 +11,13 @@ export class ChildMountSync {
   constructor(
     instance: ElementInstance,
     registry: MountRegistry,
-    dom: HTMLElement | SVGElement | ShadowRoot
+    dom: HTMLElement | SVGElement | ShadowRoot,
+    onUpdateChildren?: () => void
   ) {
     this.instance = instance;
     this.dom = dom;
     this.registry = registry;
+    this.onUpdateChildren = onUpdateChildren;
     this.updateChildren(instance.element.children);
     this.disposers = [
       reaction(
@@ -86,16 +88,7 @@ export class ChildMountSync {
       this.dom.append(childMount.dom);
     }
 
-    setTimeout(
-      action(() => {
-        if ("getBoundingClientRect" in this.dom) {
-          this.instance.boundingBox = Rect.from(
-            this.dom.getBoundingClientRect()
-          );
-        }
-      }),
-      0
-    );
+    this.onUpdateChildren?.();
   }
 
   dispose(): void {
@@ -106,6 +99,7 @@ export class ChildMountSync {
   private readonly instance: ElementInstance;
   private readonly dom: HTMLElement | SVGElement | ShadowRoot;
   private readonly registry: MountRegistry;
+  private readonly onUpdateChildren?: () => void;
   private childMounts: (ElementMount | TextMount)[] = [];
   private readonly disposers: (() => void)[] = [];
 }
@@ -120,7 +114,9 @@ export class ElementMount {
     // TODO: support reference to other component
     // TODO: support SVG elements
     this.dom = domDocument.createElement(instance.element.tagName);
-    this.childMountSync = new ChildMountSync(instance, registry, this.dom);
+    this.childMountSync = new ChildMountSync(instance, registry, this.dom, () =>
+      this.updateBoundingBoxLater()
+    );
     this.registry = registry;
     this.registry.setElementMount(this);
     this.domDocument = domDocument;
@@ -130,6 +126,7 @@ export class ElementMount {
         () => this.instance.element.id,
         (id) => {
           this.dom.id = id;
+          this.updateBoundingBoxLater();
         },
         { fireImmediately: true }
       )
@@ -159,4 +156,17 @@ export class ElementMount {
   readonly domDocument: globalThis.Document;
   readonly dom: HTMLElement | SVGElement;
   private readonly childMountSync: ChildMountSync;
+
+  updateBoundingBoxLater(): void {
+    setTimeout(
+      action(() => {
+        this.updateBoundingBox();
+      }),
+      0
+    );
+  }
+
+  updateBoundingBox(): void {
+    this.instance.boundingBox = Rect.from(this.dom.getBoundingClientRect());
+  }
 }
