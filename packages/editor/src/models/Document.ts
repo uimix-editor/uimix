@@ -1,3 +1,4 @@
+import { assertNonNull } from "@seanchas116/paintkit/src/util/Assert";
 import { filterInstance } from "@seanchas116/paintkit/src/util/Collection";
 import { TreeNode } from "@seanchas116/paintkit/src/util/TreeNode";
 import { last } from "lodash-es";
@@ -136,7 +137,7 @@ export class Document {
   }
 
   appendNodesBeforeSelection(nodes: (Element | Text)[]): void {
-    const { selectedComponents, selectedNodes } = this;
+    const { selectedComponents, selectedVariants, selectedNodes } = this;
     let selectedNode = last(selectedNodes);
 
     if (!selectedNode && selectedComponents.length) {
@@ -163,8 +164,25 @@ export class Document {
       return;
     }
 
+    const component = assertNonNull(parent.component);
+
+    const variantToSelect =
+      [...this.selectedInstances]
+        .map((instance) => instance.variant)
+        .reverse()
+        .find((variant) => variant.component === component) ||
+      component.defaultVariant;
+
+    this.deselect();
+
     for (const node of nodes) {
       parent.insertBefore(node, next);
+
+      if (node.type === "element") {
+        ElementInstance.get(variantToSelect, node).select();
+      } else {
+        TextInstance.get(variantToSelect, node).select();
+      }
     }
   }
 
