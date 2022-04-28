@@ -131,21 +131,36 @@ export class Document {
   }
 
   appendVariantsBeforeSelection(variants: Variant[]): void {
-    const prev = last(this.selectedVariants);
-    if (prev && prev.component) {
-      const component = prev.component;
-      const next =
-        prev.type === "defaultVariant"
-          ? component.variants.firstChild
-          : prev.nextSibling;
+    let component: Component;
+    let next: Variant | undefined;
 
-      this.deselect();
-      for (const variant of variants) {
-        component.variants.insertBefore(variant, next as Variant);
-        variant.rootInstance?.select();
+    // selected directly or indirectly
+    const selectedVariants = [...this.selectedInstances].map(
+      (instance) => instance.variant
+    );
+
+    if (selectedVariants.length) {
+      const last = selectedVariants[selectedVariants.length - 1];
+      component = assertNonNull(last.component);
+      next =
+        last.type === "defaultVariant"
+          ? component.variants.firstChild
+          : (last.nextSibling as Variant);
+    } else {
+      const component_ =
+        last(this.selectedComponents) || this.components.lastChild;
+      if (!component_) {
+        return;
       }
+      component = component_;
+      next = undefined;
     }
-    return;
+
+    this.deselect();
+    for (const variant of variants) {
+      component.variants.insertBefore(variant, next as Variant);
+      variant.rootInstance?.select();
+    }
   }
 
   appendNodesBeforeSelection(nodes: (Element | Text)[]): void {
