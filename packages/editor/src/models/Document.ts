@@ -107,26 +107,11 @@ export class Document {
   appendFragmentBeforeSelection(fragment: Fragment): void {
     switch (fragment.type) {
       case "components": {
-        this.components.append(...fragment.components);
-        this.deselect();
-        for (const c of fragment.components) {
-          c.select();
-        }
+        this.appendComponentsBeforeSelection(fragment.components);
         return;
       }
       case "variants": {
-        const prev = last(this.selectedVariants);
-        if (prev && prev.component) {
-          const component = prev.component;
-          const next =
-            prev.type === "defaultVariant"
-              ? component.variants.firstChild
-              : prev.nextSibling;
-
-          for (const variant of fragment.variants) {
-            component.variants.insertBefore(variant, next as Variant);
-          }
-        }
+        this.appendVariantsBeforeSelection(fragment.variants);
         return;
       }
       case "nodes": {
@@ -134,6 +119,33 @@ export class Document {
         return;
       }
     }
+  }
+
+  appendComponentsBeforeSelection(components: Component[]): void {
+    this.components.append(...components);
+    this.deselect();
+    for (const c of components) {
+      c.select();
+    }
+    return;
+  }
+
+  appendVariantsBeforeSelection(variants: Variant[]): void {
+    const prev = last(this.selectedVariants);
+    if (prev && prev.component) {
+      const component = prev.component;
+      const next =
+        prev.type === "defaultVariant"
+          ? component.variants.firstChild
+          : prev.nextSibling;
+
+      this.deselect();
+      for (const variant of variants) {
+        component.variants.insertBefore(variant, next as Variant);
+        variant.rootInstance?.select();
+      }
+    }
+    return;
   }
 
   appendNodesBeforeSelection(nodes: (Element | Text)[]): void {
