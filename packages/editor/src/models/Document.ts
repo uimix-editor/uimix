@@ -145,7 +145,9 @@ export class Document {
     }
 
     if (!selectedNode) {
-      return;
+      const component = new Component();
+      this.components.append(component);
+      selectedNode = component.rootElement;
     }
 
     let parent: Element;
