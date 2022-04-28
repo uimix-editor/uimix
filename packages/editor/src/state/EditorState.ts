@@ -3,7 +3,7 @@ import { JSONUndoHistory } from "@seanchas116/paintkit/src/util/JSONUndoHistory"
 import { KeyGesture } from "@seanchas116/paintkit/src/util/KeyGesture";
 import { isTextInputFocused } from "@seanchas116/paintkit/src/util/CurrentFocus";
 import { Scroll } from "@seanchas116/paintkit/src/util/Scroll";
-import { action, makeObservable, observable } from "mobx";
+import { action, makeObservable, observable, runInAction } from "mobx";
 import { Component } from "../models/Component";
 import { Document, DocumentJSON } from "../models/Document";
 import { Element } from "../models/Element";
@@ -11,6 +11,7 @@ import { ElementInstance } from "../models/ElementInstance";
 import { Text } from "../models/Text";
 import { TextInstance } from "../models/TextInstance";
 import { Variant } from "../models/Variant";
+import { parseFragment, stringifyFragment } from "../models/FileFormat";
 import { ElementInspectorState } from "./ElementInspectorState";
 import { VariantInspectorState } from "./VariantInspectorState";
 
@@ -46,6 +47,68 @@ export class EditorState {
   @observable measureMode = false;
   @observable panMode = false;
 
+  getBasicEditMenu(): MenuItem[] {
+    return [
+      {
+        text: "Cut",
+        shortcut: [new KeyGesture(["Command"], "KeyX")],
+        // TODO
+      },
+      {
+        text: "Copy",
+        shortcut: [new KeyGesture(["Command"], "KeyC")],
+        run: action(() => {
+          const fragment = this.document.selectedFragment;
+          if (fragment) {
+            const html = stringifyFragment(fragment);
+            console.log(html);
+
+            const type = "text/html";
+            const blob = new Blob([html], { type });
+            const data = [new ClipboardItem({ [type]: blob })];
+
+            void navigator.clipboard.write(data);
+          }
+
+          return true;
+        }),
+      },
+      {
+        text: "Paste",
+        shortcut: [new KeyGesture(["Command"], "KeyV")],
+        run: action(() => {
+          void navigator.clipboard.read().then(async (contents) => {
+            for (const item of contents) {
+              if (item.types.includes("text/html")) {
+                const html = await (await item.getType("text/html")).text();
+                const fragment = parseFragment(html);
+                if (fragment) {
+                  runInAction(() => {
+                    this.document.appendFragmentBeforeSelection(fragment);
+                    this.history.commit("Paste");
+                  });
+                }
+
+                break;
+              }
+            }
+          });
+
+          return true;
+        }),
+      },
+      {
+        text: "Delete",
+        shortcut: [new KeyGesture([], "Backspace")],
+        run: action(() => {
+          this.document.deleteSelected();
+          this.history.commit("Delete Element");
+          return true;
+        }),
+      },
+    ];
+  }
+
   getOutlineContextMenu(): MenuItem[] {
     return [
       {
@@ -57,6 +120,10 @@ export class EditorState {
           return true;
         }),
       },
+      {
+        type: "separator",
+      },
+      ...this.getBasicEditMenu(),
     ];
   }
 
@@ -65,30 +132,16 @@ export class EditorState {
       {
         text: "Add Variant",
         run: action(() => {
-          const variant = new Variant(component);
+          const variant = new Variant();
           variant.selector = ":hover";
-          component.variants.push(variant);
+          component.variants.append(variant);
           return true;
         }),
       },
-    ];
-  }
-
-  getNodeContextMenu(instance: ElementInstance | TextInstance): MenuItem[] {
-    return [
       {
-        text: "Delete",
-        run: action(() => {
-          for (const node of this.document.selectedNodes) {
-            if (!node.parent) {
-              continue;
-            }
-            node.remove();
-          }
-          this.history.commit("Delete Element");
-          return true;
-        }),
+        type: "separator",
       },
+      ...this.getBasicEditMenu(),
     ];
   }
 
@@ -116,12 +169,12 @@ export class EditorState {
       {
         type: "separator",
       },
-      ...this.getNodeContextMenu(instance),
+      ...this.getBasicEditMenu(),
     ];
   }
 
   getTextContextMenu(instance: TextInstance): MenuItem[] {
-    return [...this.getNodeContextMenu(instance)];
+    return [...this.getBasicEditMenu()];
   }
 
   getEditMenu(): MenuItem[] {
@@ -147,6 +200,10 @@ export class EditorState {
           return true;
         }),
       },
+      {
+        type: "separator",
+      },
+      ...this.getBasicEditMenu(),
     ];
   }
 

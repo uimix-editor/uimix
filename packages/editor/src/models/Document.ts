@@ -1,8 +1,13 @@
+import { assertNonNull } from "@seanchas116/paintkit/src/util/Assert";
+import { filterInstance } from "@seanchas116/paintkit/src/util/Collection";
 import { TreeNode } from "@seanchas116/paintkit/src/util/TreeNode";
+import { last } from "lodash-es";
 import { computed, makeObservable } from "mobx";
 import { Component, ComponentJSON } from "./Component";
 import { Element } from "./Element";
 import { ElementInstance } from "./ElementInstance";
+import { Fragment } from "./Fragment";
+import { RootElement } from "./RootElement";
 import { Text } from "./Text";
 import { TextInstance } from "./TextInstance";
 import { DefaultVariant, Variant } from "./Variant";
@@ -64,6 +69,165 @@ export class Document {
 
   @computed get selectedComponents(): Component[] {
     return this.components.children.filter((component) => component.selected);
+  }
+
+  @computed get selectedFragment(): Fragment | undefined {
+    const components = this.selectedComponents;
+    if (components.length) {
+      return {
+        type: "components",
+        components: components,
+      };
+    }
+    const variants = filterInstance(this.selectedVariants, [Variant]);
+    if (variants.length) {
+      return {
+        type: "variants",
+        variants: variants,
+      };
+    }
+    const nodes = this.selectedNodes;
+    if (nodes.length) {
+      return {
+        type: "nodes",
+        nodes: nodes,
+      };
+    }
+  }
+
+  deselect(): void {
+    for (const component of this.components.children) {
+      component.deselect();
+      for (const variant of component.allVariants) {
+        variant.rootInstance?.deselect();
+      }
+    }
+  }
+
+  appendFragmentBeforeSelection(fragment: Fragment): void {
+    switch (fragment.type) {
+      case "components": {
+        this.appendComponentsBeforeSelection(fragment.components);
+        return;
+      }
+      case "variants": {
+        this.appendVariantsBeforeSelection(fragment.variants);
+        return;
+      }
+      case "nodes": {
+        this.appendNodesBeforeSelection(fragment.nodes);
+        return;
+      }
+    }
+  }
+
+  appendComponentsBeforeSelection(components: Component[]): void {
+    this.components.append(...components);
+    this.deselect();
+    for (const c of components) {
+      c.select();
+    }
+    return;
+  }
+
+  appendVariantsBeforeSelection(variants: Variant[]): void {
+    let component: Component;
+    let next: Variant | undefined;
+
+    // selected directly or indirectly
+    const selectedVariants = [...this.selectedInstances].map(
+      (instance) => instance.variant
+    );
+
+    if (selectedVariants.length) {
+      const last = selectedVariants[selectedVariants.length - 1];
+      component = assertNonNull(last.component);
+      next =
+        last.type === "defaultVariant"
+          ? component.variants.firstChild
+          : (last.nextSibling as Variant);
+    } else {
+      const component_ =
+        last(this.selectedComponents) || this.components.lastChild;
+      if (!component_) {
+        return;
+      }
+      component = component_;
+      next = undefined;
+    }
+
+    this.deselect();
+    for (const variant of variants) {
+      component.variants.insertBefore(variant, next as Variant);
+      variant.rootInstance?.select();
+    }
+  }
+
+  appendNodesBeforeSelection(nodes: (Element | Text)[]): void {
+    const { selectedComponents, selectedNodes } = this;
+    let selectedNode = last(selectedNodes);
+
+    if (!selectedNode && selectedComponents.length) {
+      selectedNode =
+        selectedComponents[selectedComponents.length - 1].rootElement;
+    }
+
+    if (!selectedNode) {
+      const component = new Component();
+      this.components.append(component);
+      selectedNode = component.rootElement;
+    }
+
+    let parent: Element;
+    let next: Element | Text | undefined;
+
+    if (selectedNode.parent) {
+      parent = selectedNode.parent;
+      next = selectedNode.nextSibling;
+    } else if (selectedNode instanceof RootElement) {
+      parent = selectedNode;
+      next = undefined;
+    } else {
+      return;
+    }
+
+    const component = assertNonNull(parent.component);
+
+    const variantToSelect =
+      [...this.selectedInstances]
+        .map((instance) => instance.variant)
+        .reverse()
+        .find((variant) => variant.component === component) ||
+      component.defaultVariant;
+
+    this.deselect();
+
+    for (const node of nodes) {
+      parent.insertBefore(node, next);
+
+      if (node.type === "element") {
+        ElementInstance.get(variantToSelect, node).select();
+      } else {
+        TextInstance.get(variantToSelect, node).select();
+      }
+    }
+  }
+
+  deleteSelected(): void {
+    for (const component of this.selectedComponents) {
+      component.remove();
+    }
+    for (const variant of this.selectedVariants) {
+      if (variant.type === "variant") {
+        variant.remove();
+      }
+    }
+    for (const node of this.selectedNodes) {
+      if (!node.parent) {
+        continue;
+      }
+      node.remove();
+    }
   }
 }
 
