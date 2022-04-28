@@ -73,21 +73,21 @@ export class Document {
 
   @computed get selectedFragment(): Fragment | undefined {
     const components = this.selectedComponents;
-    if (components.length === 1) {
+    if (components.length) {
       return {
         type: "components",
         components: components,
       };
     }
     const variants = filterInstance(this.selectedVariants, [Variant]);
-    if (variants.length === 1) {
+    if (variants.length) {
       return {
         type: "variants",
         variants: variants,
       };
     }
     const nodes = this.selectedNodes;
-    if (nodes.length === 1) {
+    if (nodes.length) {
       return {
         type: "nodes",
         nodes: nodes,
