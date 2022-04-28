@@ -1,6 +1,7 @@
 import { computed, makeObservable, observable } from "mobx";
 import shortUUID from "short-uuid";
 import { Element } from "./Element";
+import { RootElement } from "./RootElement";
 import { TextInstance } from "./TextInstance";
 import { DefaultVariant, Variant } from "./Variant";
 
@@ -95,6 +96,10 @@ export class ElementInstance {
 
   expandAncestors(): void {
     this.collapsed = false;
-    this.parent?.expandAncestors();
+    if (this.parent) {
+      this.parent.expandAncestors();
+    } else if (this.element instanceof RootElement) {
+      this.element.component.collapsed = false;
+    }
   }
 }
