@@ -137,7 +137,7 @@ export class Document {
   }
 
   appendNodesBeforeSelection(nodes: (Element | Text)[]): void {
-    const { selectedComponents, selectedVariants, selectedNodes } = this;
+    const { selectedComponents, selectedNodes } = this;
     let selectedNode = last(selectedNodes);
 
     if (!selectedNode && selectedComponents.length) {
