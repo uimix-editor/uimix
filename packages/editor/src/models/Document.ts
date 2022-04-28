@@ -1,10 +1,12 @@
 import { filterInstance } from "@seanchas116/paintkit/src/util/Collection";
 import { TreeNode } from "@seanchas116/paintkit/src/util/TreeNode";
+import { last } from "lodash-es";
 import { computed, makeObservable } from "mobx";
 import { Component, ComponentJSON } from "./Component";
 import { Element } from "./Element";
 import { ElementInstance } from "./ElementInstance";
 import { Fragment } from "./Fragment";
+import { RootElement } from "./RootElement";
 import { Text } from "./Text";
 import { TextInstance } from "./TextInstance";
 import { DefaultVariant, Variant } from "./Variant";
@@ -103,19 +105,64 @@ export class Document {
 
   appendFragmentBeforeSelection(fragment: Fragment): void {
     switch (fragment.type) {
-      case "components":
+      case "components": {
         this.components.append(...fragment.components);
         this.deselect();
         for (const c of fragment.components) {
           c.select();
         }
         return;
-      case "variants":
-        // TODO
+      }
+      case "variants": {
+        const prev = last(this.selectedVariants);
+        if (prev && prev.component) {
+          const component = prev.component;
+          const next =
+            prev.type === "defaultVariant"
+              ? component.variants.firstChild
+              : prev.nextSibling;
+
+          for (const variant of fragment.variants) {
+            component.variants.insertBefore(variant, next as Variant);
+          }
+        }
         return;
-      case "nodes":
-        // TODO
+      }
+      case "nodes": {
+        this.appendNodesBeforeSelection(fragment.nodes);
         return;
+      }
+    }
+  }
+
+  appendNodesBeforeSelection(nodes: (Element | Text)[]): void {
+    const { selectedComponents, selectedNodes } = this;
+    let selectedNode = last(selectedNodes);
+
+    if (!selectedNode && selectedComponents.length) {
+      selectedNode =
+        selectedComponents[selectedComponents.length - 1].rootElement;
+    }
+
+    if (!selectedNode) {
+      return;
+    }
+
+    let parent: Element;
+    let next: Element | Text | undefined;
+
+    if (selectedNode.parent) {
+      parent = selectedNode.parent;
+      next = selectedNode.nextSibling;
+    } else if (selectedNode instanceof RootElement) {
+      parent = selectedNode;
+      next = undefined;
+    } else {
+      return;
+    }
+
+    for (const node of nodes) {
+      parent.insertBefore(node, next);
     }
   }
 
