@@ -3,18 +3,18 @@ import { Component } from "../models/Component";
 import { ElementInstance } from "../models/ElementInstance";
 import { DefaultVariant, Variant } from "../models/Variant";
 import { ChildMountSync } from "./ElementMount";
-import { MountRegistry } from "./MountRegistry";
+import { MountContext } from "./MountContext";
 
 export class VariantMount {
   constructor(
     component: Component,
     variant: Variant | DefaultVariant,
-    registry: MountRegistry,
+    context: MountContext,
     domDocument: globalThis.Document
   ) {
     this.component = component;
     this.variant = variant;
-    this.registry = registry;
+    this.context = context;
     this.domDocument = domDocument;
 
     this.dom = domDocument.createElement("div");
@@ -29,10 +29,10 @@ export class VariantMount {
 
     this.childMountSync = new ChildMountSync(
       ElementInstance.get(variant, component.rootElement),
-      registry,
+      context,
       this.shadow
     );
-    registry.setVariantMount(this);
+    context.registry.setVariantMount(this);
 
     this.disposers.push(
       reaction(
@@ -63,7 +63,7 @@ export class VariantMount {
     this.disposers.forEach((disposer) => disposer());
 
     this.childMountSync.dispose();
-    this.registry.deleteVariantMount(this);
+    this.context.registry.deleteVariantMount(this);
 
     this.isDisposed = true;
   }
@@ -73,7 +73,7 @@ export class VariantMount {
 
   readonly component: Component;
   readonly variant: Variant | DefaultVariant;
-  readonly registry: MountRegistry;
+  readonly context: MountContext;
   readonly domDocument: globalThis.Document;
 
   readonly dom: HTMLDivElement;

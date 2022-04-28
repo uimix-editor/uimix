@@ -1,18 +1,18 @@
 import { reaction } from "mobx";
 import { TextInstance } from "../models/TextInstance";
-import { MountRegistry } from "./MountRegistry";
+import { MountContext } from "./MountContext";
 
 export class TextMount {
   constructor(
     instance: TextInstance,
-    registry: MountRegistry,
+    context: MountContext,
     domDocument: globalThis.Document
   ) {
     this.instance = instance;
     this.domDocument = domDocument;
     this.dom = domDocument.createTextNode(instance.text.content);
-    this.registry = registry;
-    this.registry.setTextMount(this);
+    this.context = context;
+    this.context.registry.setTextMount(this);
 
     this.disposers = [
       reaction(
@@ -22,7 +22,7 @@ export class TextMount {
 
           const parent = this.instance.parent;
           if (parent) {
-            const parentMount = this.registry.getElementMount(parent);
+            const parentMount = this.context.registry.getElementMount(parent);
             parentMount?.updateBoundingBoxLater();
           }
         }
@@ -36,7 +36,7 @@ export class TextMount {
     }
 
     this.disposers.forEach((disposer) => disposer());
-    this.registry.deleteTextMount(this);
+    this.context.registry.deleteTextMount(this);
 
     this.isDisposed = true;
   }
@@ -51,5 +51,5 @@ export class TextMount {
   readonly instance: TextInstance;
   readonly domDocument: globalThis.Document;
   readonly dom: globalThis.Text;
-  readonly registry: MountRegistry;
+  readonly context: MountContext;
 }

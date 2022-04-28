@@ -71,7 +71,7 @@ export const Viewport: React.FC<{ className?: string }> = ({ className }) => {
 
     document.body.style.margin = "0";
 
-    const mount = new DocumentMount(() => editorState.document, document);
+    const mount = new DocumentMount(editorState, document);
     mount.dom.style.position = "absolute";
     mount.dom.style.top = "0";
     mount.dom.style.left = "0";
