@@ -6,6 +6,7 @@ import styled from "styled-components";
 import { DocumentMount } from "../../mount/DocumentMount";
 import { useEditorState } from "../EditorStateContext";
 import { PanOverlay } from "./PanOverlay";
+import { Indicators } from "./indicators/Indicators";
 
 const ViewportWrap = styled.div`
   background-color: ${colors.uiBackground};
@@ -128,6 +129,7 @@ export const Viewport: React.FC<{ className?: string }> = ({ className }) => {
       <ViewportIFrame ref={iframeRef} />
       <ViewportOverlay />
       <PanOverlay />
+      <Indicators />
     </ViewportWrap>
   );
 };

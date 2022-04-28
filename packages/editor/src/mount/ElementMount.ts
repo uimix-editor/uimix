@@ -1,4 +1,5 @@
-import { reaction } from "mobx";
+import { action, reaction } from "mobx";
+import { Rect } from "paintvec";
 import { Element } from "../models/Element";
 import { Text } from "../models/Text";
 import { ElementInstance } from "../models/ElementInstance";
@@ -84,6 +85,17 @@ export class ChildMountSync {
     for (const childMount of newChildMounts) {
       this.dom.append(childMount.dom);
     }
+
+    setTimeout(
+      action(() => {
+        if ("getBoundingClientRect" in this.dom) {
+          this.instance.boundingBox = Rect.from(
+            this.dom.getBoundingClientRect()
+          );
+        }
+      }),
+      0
+    );
   }
 
   dispose(): void {
