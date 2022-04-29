@@ -73,6 +73,7 @@ export class ChildMountSync {
         }
       }
     }
+    this._childMounts = newChildMounts;
 
     for (const elementMount of existingElementMounts.values()) {
       elementMount.dispose();
@@ -96,11 +97,15 @@ export class ChildMountSync {
     this.childMounts.forEach((childMount) => childMount.dispose());
   }
 
+  get childMounts(): (ElementMount | TextMount)[] {
+    return this._childMounts;
+  }
+
   private readonly instance: ElementInstance;
   private readonly dom: HTMLElement | SVGElement | ShadowRoot;
   private readonly context: MountContext;
   private readonly onUpdateChildren?: () => void;
-  private childMounts: (ElementMount | TextMount)[] = [];
+  private _childMounts: (ElementMount | TextMount)[] = [];
   private readonly disposers: (() => void)[] = [];
 }
 
@@ -150,16 +155,10 @@ export class ElementMount {
     return "element";
   }
 
-  private isDisposed = false;
-  private readonly disposers: (() => void)[] = [];
-  readonly instance: ElementInstance;
-  readonly context: MountContext;
-  readonly domDocument: globalThis.Document;
-  readonly dom: HTMLElement | SVGElement;
-  private readonly childMountSync: ChildMountSync;
-
   updateBoundingBoxLater(): void {
-    this.context.boundingBoxUpdateScheduler.schedule(this);
+    this.context.registry
+      .getVariantMount(this.instance.variant)
+      ?.updateBoundingBoxLater();
   }
 
   updateBoundingBox(): void {
@@ -169,5 +168,17 @@ export class ElementMount {
     this.instance.boundingBox = Rect.from(
       this.dom.getBoundingClientRect()
     ).transform(viewportToDocument);
+
+    for (const childMount of this.childMountSync.childMounts) {
+      childMount.updateBoundingBox();
+    }
   }
+
+  private isDisposed = false;
+  private readonly disposers: (() => void)[] = [];
+  readonly instance: ElementInstance;
+  readonly context: MountContext;
+  readonly domDocument: globalThis.Document;
+  readonly dom: HTMLElement | SVGElement;
+  private readonly childMountSync: ChildMountSync;
 }

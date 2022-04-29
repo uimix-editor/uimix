@@ -107,6 +107,10 @@ export class VariantMount {
         this.host.getBoundingClientRect()
       ).transform(viewportToDocument);
     }
+
+    for (const childMount of this.childMountSync.childMounts) {
+      childMount.updateBoundingBox();
+    }
   }
 
   getCSSTexts(): string[] {
@@ -140,5 +144,7 @@ export class VariantMount {
     for (const cssText of cssTexts) {
       this.styleSheet.insertRule(cssText);
     }
+
+    this.updateBoundingBoxLater();
   }
 }
