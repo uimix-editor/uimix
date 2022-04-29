@@ -28,12 +28,9 @@ export const StyleInspector: React.FC = observer(function StyleInspector() {
         <PaneHeading>Text</PaneHeading>
         <RowGroup>
           <ComboBox
-            value={"Times"}
+            value={state.fontFamily.value}
             options={["Times", "Helvetica"].map((value) => ({ value }))}
-            onChange={(value) => {
-              // TODO
-              return false;
-            }}
+            onChange={state.fontFamily.onChange}
           />
           <Row11>
             <Select

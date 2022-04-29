@@ -1,6 +1,32 @@
-import { computed, makeObservable } from "mobx";
+import { MIXED, sameOrMixed } from "@seanchas116/paintkit/src/util/Mixed";
+import { startCase } from "lodash-es";
+import { action, computed, makeObservable } from "mobx";
 import { ElementInstance } from "../models/ElementInstance";
+import { Style, StyleKey } from "../models/Style";
 import { EditorState } from "./EditorState";
+
+class StylePropertyState {
+  constructor(state: StyleInspectorState, key: StyleKey) {
+    this.state = state;
+    this.key = key;
+    makeObservable(this);
+  }
+
+  readonly state: StyleInspectorState;
+  readonly key: StyleKey;
+
+  @computed get value(): string | typeof MIXED | undefined {
+    return sameOrMixed(this.state.styles.map((style) => style[this.key]));
+  }
+
+  readonly onChange = action((value: string) => {
+    for (const style of this.state.styles) {
+      style[this.key] = value;
+    }
+    this.state.editorState.history.commit(`Change ${startCase(this.key)}`);
+    return true;
+  });
+}
 
 export class StyleInspectorState {
   constructor(editorState: EditorState) {
@@ -13,4 +39,10 @@ export class StyleInspectorState {
   @computed get selectedInstances(): ElementInstance[] {
     return this.editorState.document.selectedElementInstances;
   }
+
+  @computed get styles(): Style[] {
+    return this.selectedInstances.map((instance) => instance.style);
+  }
+
+  readonly fontFamily = new StylePropertyState(this, "fontFamily");
 }

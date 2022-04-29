@@ -1,7 +1,7 @@
 import { omitEmpties } from "@seanchas116/paintkit/src/util/Collection";
 import { makeObservable, observable } from "mobx";
 
-const styleKeys = [
+export const styleKeys = [
   "color",
   "fontFamily",
   "fontWeight",
@@ -13,14 +13,20 @@ const styleKeys = [
   "textAlign",
 ] as const;
 
+export type StyleKey = typeof styleKeys[number];
+
 export type StyleJSON = {
-  [key in typeof styleKeys[number]]?: string;
+  [key in StyleKey]?: string;
 };
 
 const StyleBase: {
   new (): StyleJSON;
 } = class {
   constructor() {
+    for (const key of styleKeys) {
+      // @ts-ignore
+      this[key] = undefined;
+    }
     makeObservable(
       this,
       // @ts-ignore
