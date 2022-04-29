@@ -1,4 +1,5 @@
 import { omitEmpties } from "@seanchas116/paintkit/src/util/Collection";
+import { kebabCase } from "lodash-es";
 import { makeObservable, observable } from "mobx";
 
 export const styleKeys = [
@@ -51,7 +52,7 @@ export class Style extends StyleBase {
   toCSSString(): string {
     const props = omitEmpties(this.toJSON());
     return Object.entries(props)
-      .map(([key, value]) => `${key}: ${value};`)
+      .map(([key, value]) => `${kebabCase(key)}: ${value};`)
       .join("");
   }
 }

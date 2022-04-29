@@ -42,14 +42,9 @@ export class VariantMount {
     context.registry.setVariantMount(this);
 
     this.disposers.push(
-      reaction(
-        () =>
-          filterInstance(this.variant.rootInstance!.allDescendants, [
-            ElementInstance,
-          ]),
-        this.updateCSS.bind(this),
-        { fireImmediately: true }
-      ),
+      reaction(this.getCSSTexts.bind(this), this.updateCSS.bind(this), {
+        fireImmediately: true,
+      }),
       reaction(
         () => ({
           x: this.variant.x,
@@ -114,19 +109,36 @@ export class VariantMount {
     }
   }
 
-  updateCSS(instances: ElementInstance[]): void {
-    for (let i = 0; i < this.styleSheet.cssRules.length; i++) {
-      this.styleSheet.deleteRule(i);
-    }
+  getCSSTexts(): string[] {
+    const instances = filterInstance(
+      this.variant.rootInstance!.allDescendants,
+      [ElementInstance]
+    );
+
+    const cssTexts: string[] = [];
 
     for (const instance of instances) {
       const props = instance.style.toCSSString();
       if (instance === this.variant.rootInstance) {
-        this.styleSheet.insertRule(`:host { ${props} }`);
+        cssTexts.push(`:host { ${props} }`);
       } else {
         const id = instance.element.id;
-        this.styleSheet.insertRule(`#${id} { ${props} }`);
+        cssTexts.push(`#${id} { ${props} }`);
       }
+    }
+
+    return cssTexts;
+  }
+
+  updateCSS(cssTexts: string[]): void {
+    console.log(cssTexts);
+
+    for (let i = 0; i < this.styleSheet.cssRules.length; i++) {
+      this.styleSheet.deleteRule(i);
+    }
+
+    for (const cssText of cssTexts) {
+      this.styleSheet.insertRule(cssText);
     }
   }
 }
