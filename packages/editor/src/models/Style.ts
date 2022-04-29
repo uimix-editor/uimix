@@ -1,3 +1,4 @@
+import { omitEmpties } from "@seanchas116/paintkit/src/util/Collection";
 import { makeObservable, observable } from "mobx";
 
 export interface StyleJSON {
@@ -19,5 +20,15 @@ export class Style {
 
   loadJSON(json: StyleJSON): void {
     this.color = json.color;
+  }
+
+  toCSSString(): string {
+    const props = omitEmpties({
+      color: this.color,
+    });
+
+    return Object.entries(props)
+      .map(([key, value]) => `${key}: ${value};`)
+      .join("");
   }
 }

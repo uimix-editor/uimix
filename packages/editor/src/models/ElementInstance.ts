@@ -3,6 +3,7 @@ import { Rect } from "paintvec";
 import shortUUID from "short-uuid";
 import { Element } from "./Element";
 import { RootElement } from "./RootElement";
+import { Style } from "./Style";
 import { TextInstance } from "./TextInstance";
 import { DefaultVariant, Variant } from "./Variant";
 
@@ -62,6 +63,8 @@ export class ElementInstance {
         : TextInstance.get(this.variant, child)
     );
   }
+
+  readonly style = new Style();
 
   @observable selected = false;
 
