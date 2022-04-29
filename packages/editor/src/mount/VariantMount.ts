@@ -25,6 +25,7 @@ export class VariantMount {
 
     this.dom.style.position = "absolute";
     this.dom.style.background = "white";
+    this.dom.style.display = "flex";
 
     // TODO: add style
 
@@ -95,7 +96,7 @@ export class VariantMount {
     const { rootInstance } = this.variant;
     if (rootInstance) {
       rootInstance.boundingBox = Rect.from(
-        this.dom.getBoundingClientRect()
+        this.host.getBoundingClientRect()
       ).transform(viewportToDocument);
     }
   }
