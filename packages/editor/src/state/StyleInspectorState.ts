@@ -45,4 +45,5 @@ export class StyleInspectorState {
   }
 
   readonly fontFamily = new StylePropertyState(this, "fontFamily");
+  readonly fontWeight = new StylePropertyState(this, "fontWeight");
 }

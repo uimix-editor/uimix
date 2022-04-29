@@ -8,7 +8,6 @@ import {
   RowGroup,
 } from "@seanchas116/paintkit/src/components/sidebar/Inspector";
 import { ComboBox } from "@seanchas116/paintkit/src/components/ComboBox";
-import { Select } from "@seanchas116/paintkit/src/components/Select";
 import { ColorInput } from "@seanchas116/paintkit/src/components/color/ColorInput";
 import { StyleInspectorState } from "../../../state/StyleInspectorState";
 import { useEditorState } from "../../EditorStateContext";
@@ -34,23 +33,21 @@ export const StyleInspector: React.FC = observer(function StyleInspector() {
             onChange={state.fontFamily.onChange}
           />
           <Row11>
-            <Select
-              value={"100"}
+            <ComboBox
+              value={state.fontWeight.value}
               placeholder="Weight"
               options={[
-                { value: "100", text: "Thin" },
-                { value: "200", text: "Extra Light" },
-                { value: "300", text: "Light" },
-                { value: "400", text: "Normal" },
-                { value: "500", text: "Medium" },
-                { value: "600", text: "Semi Bold" },
-                { value: "700", text: "Bold" },
-                { value: "800", text: "Extra Bold" },
-                { value: "900", text: "Black" },
+                { value: "100", text: "100" },
+                { value: "200", text: "200" },
+                { value: "300", text: "300" },
+                { value: "400", text: "400 (normal)" },
+                { value: "500", text: "500" },
+                { value: "600", text: "600" },
+                { value: "700", text: "700 (bold)" },
+                { value: "800", text: "800" },
+                { value: "900", text: "900" },
               ]}
-              onChange={(value: string) => {
-                // TODO
-              }}
+              onChange={state.fontWeight.onChange}
             />
             <ColorInput />
           </Row11>
