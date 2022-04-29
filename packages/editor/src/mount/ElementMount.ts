@@ -1,4 +1,4 @@
-import { action, reaction } from "mobx";
+import { reaction } from "mobx";
 import { Rect } from "paintvec";
 import { Element } from "../models/Element";
 import { Text } from "../models/Text";
@@ -114,12 +114,13 @@ export class ElementMount {
     // TODO: support reference to other component
     // TODO: support SVG elements
     this.dom = domDocument.createElement(instance.element.tagName);
-    this.childMountSync = new ChildMountSync(instance, context, this.dom, () =>
-      this.updateBoundingBoxLater()
-    );
     this.context = context;
     this.context.registry.setElementMount(this);
     this.domDocument = domDocument;
+
+    this.childMountSync = new ChildMountSync(instance, context, this.dom, () =>
+      this.updateBoundingBoxLater()
+    );
 
     this.disposers.push(
       reaction(
@@ -158,12 +159,7 @@ export class ElementMount {
   private readonly childMountSync: ChildMountSync;
 
   updateBoundingBoxLater(): void {
-    setTimeout(
-      action(() => {
-        this.updateBoundingBox();
-      }),
-      0
-    );
+    this.context.boundingBoxUpdateScheduler.schedule(this);
   }
 
   updateBoundingBox(): void {

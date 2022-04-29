@@ -2,6 +2,7 @@ import { assertNonNull } from "@seanchas116/paintkit/src/util/Assert";
 import { reaction } from "mobx";
 import { DefaultVariant, Variant } from "../models/Variant";
 import { EditorState } from "../state/EditorState";
+import { BoundingBoxUpdateScheduler } from "./BoundingBoxUpdateScheduler";
 import { MountRegistry } from "./MountRegistry";
 import { VariantMount } from "./VariantMount";
 
@@ -57,6 +58,7 @@ export class DocumentMount {
           {
             editorState: this.editorState,
             registry: this.registry,
+            boundingBoxUpdateScheduler: this.boundingBoxUpdateScheduler,
           },
           this.dom.ownerDocument
         );
@@ -82,5 +84,6 @@ export class DocumentMount {
   readonly editorState: EditorState;
   readonly dom: HTMLDivElement;
   readonly registry = new MountRegistry();
+  readonly boundingBoxUpdateScheduler = new BoundingBoxUpdateScheduler();
   private variantMounts: VariantMount[] = [];
 }
