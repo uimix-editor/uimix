@@ -12,7 +12,7 @@ import {
 import { Label } from "@seanchas116/paintkit/src/components/Label";
 import { Input } from "@seanchas116/paintkit/src/components/Input";
 import { NumberInput } from "@seanchas116/paintkit/src/components/NumberInput";
-import { useEditorState } from "./EditorStateContext";
+import { useEditorState } from "../../EditorStateContext";
 
 const VariantInspectorWrap = styled.div``;
 

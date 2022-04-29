@@ -9,10 +9,10 @@ import {
 import { WidthResizeHandle } from "@seanchas116/paintkit/src/components/sidebar/WidthResizeHandle";
 import { action } from "mobx";
 import { observer } from "mobx-react-lite";
-import { OutlineTreeView } from "./OutlineTreeView";
-import { useEditorState } from "./EditorStateContext";
-import { ElementInspector } from "./ElementInspector";
-import { VariantInspector } from "./VariantInspector";
+import { useEditorState } from "../EditorStateContext";
+import { OutlineTreeView } from "./outline/OutlineTreeView";
+import { ElementInspector } from "./inspector/ElementInspector";
+import { VariantInspector } from "./inspector/VariantInspector";
 
 const RightSideBarWrap = styled.div`
   position: relative;

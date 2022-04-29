@@ -19,7 +19,7 @@ import {
   PlusButton,
   MinusButton,
 } from "@seanchas116/paintkit/src/components/IconButton";
-import { useEditorState } from "./EditorStateContext";
+import { useEditorState } from "../../EditorStateContext";
 
 const ElementInspectorWrap = styled.div``;
 
