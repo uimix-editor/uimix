@@ -13,6 +13,7 @@ import { useEditorState } from "../EditorStateContext";
 import { OutlineTreeView } from "./outline/OutlineTreeView";
 import { ElementInspector } from "./inspector/ElementInspector";
 import { VariantInspector } from "./inspector/VariantInspector";
+import { StyleInspector } from "./inspector/StyleInspector";
 
 const RightSideBarWrap = styled.div`
   position: relative;
@@ -116,13 +117,16 @@ export const RightSideBar: React.FC = observer(() => {
               Style
             </InspectorTabBarItem>
           </InspectorTabBar>
-          {editorState.variantInspectorState.isVisible ? (
-            <VariantInspector />
-          ) : editorState.elementInspectorState.isVisible ? (
-            <ElementInspector />
-          ) : (
-            <div />
-          )}
+          <div hidden={editorState.currentInspectorTab !== "element"}>
+            {editorState.variantInspectorState.isVisible ? (
+              <VariantInspector />
+            ) : editorState.elementInspectorState.isVisible ? (
+              <ElementInspector />
+            ) : null}
+          </div>
+          <div hidden={editorState.currentInspectorTab !== "style"}>
+            <StyleInspector />
+          </div>
         </TabArea>
       </VSplitter>
       <WidthResizeHandle
