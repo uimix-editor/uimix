@@ -1,4 +1,5 @@
 import { reaction } from "mobx";
+import { Rect } from "paintvec";
 import { Component } from "../models/Component";
 import { ElementInstance } from "../models/ElementInstance";
 import { DefaultVariant, Variant } from "../models/Variant";
@@ -30,7 +31,8 @@ export class VariantMount {
     this.childMountSync = new ChildMountSync(
       ElementInstance.get(variant, component.rootElement),
       context,
-      this.shadow
+      this.shadow,
+      () => this.updateBoundingBoxLater()
     );
     context.registry.setVariantMount(this);
 
@@ -81,4 +83,20 @@ export class VariantMount {
   private readonly shadow: ShadowRoot;
 
   private readonly childMountSync: ChildMountSync;
+
+  updateBoundingBoxLater(): void {
+    this.context.boundingBoxUpdateScheduler.schedule(this);
+  }
+
+  updateBoundingBox(): void {
+    const viewportToDocument =
+      this.context.editorState.scroll.viewportToDocument;
+
+    const { rootInstance } = this.variant;
+    if (rootInstance) {
+      rootInstance.boundingBox = Rect.from(
+        this.dom.getBoundingClientRect()
+      ).transform(viewportToDocument);
+    }
+  }
 }
