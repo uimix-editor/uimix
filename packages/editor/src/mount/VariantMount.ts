@@ -1,3 +1,4 @@
+import { filterInstance } from "@seanchas116/paintkit/src/util/Collection";
 import { reaction } from "mobx";
 import { Rect } from "paintvec";
 import { Component } from "../models/Component";
@@ -21,6 +22,9 @@ export class VariantMount {
     this.dom = domDocument.createElement("div");
     this.host = domDocument.createElement("div");
     this.shadow = this.host.attachShadow({ mode: "open" });
+    this.styleSheet = new domDocument.defaultView!.CSSStyleSheet();
+    // @ts-ignore
+    this.shadow.adoptedStyleSheets = [this.styleSheet];
     this.dom.append(this.host);
 
     this.dom.style.position = "absolute";
@@ -38,6 +42,14 @@ export class VariantMount {
     context.registry.setVariantMount(this);
 
     this.disposers.push(
+      reaction(
+        () =>
+          filterInstance(this.variant.rootInstance!.allDescendants, [
+            ElementInstance,
+          ]),
+        this.updateCSS.bind(this),
+        { fireImmediately: true }
+      ),
       reaction(
         () => ({
           x: this.variant.x,
@@ -82,6 +94,7 @@ export class VariantMount {
   readonly dom: HTMLDivElement;
   private readonly host: HTMLDivElement;
   private readonly shadow: ShadowRoot;
+  private readonly styleSheet: CSSStyleSheet;
 
   private readonly childMountSync: ChildMountSync;
 
@@ -98,6 +111,22 @@ export class VariantMount {
       rootInstance.boundingBox = Rect.from(
         this.host.getBoundingClientRect()
       ).transform(viewportToDocument);
+    }
+  }
+
+  updateCSS(instances: ElementInstance[]): void {
+    for (let i = 0; i < this.styleSheet.cssRules.length; i++) {
+      this.styleSheet.deleteRule(i);
+    }
+
+    for (const instance of instances) {
+      const props = instance.style.toCSSString();
+      if (instance === this.variant.rootInstance) {
+        this.styleSheet.insertRule(`:host { ${props} }`);
+      } else {
+        const id = instance.element.id;
+        this.styleSheet.insertRule(`#${id} { ${props} }`);
+      }
     }
   }
 }

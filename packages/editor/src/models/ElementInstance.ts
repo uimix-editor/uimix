@@ -108,4 +108,8 @@ export class ElementInstance {
   }
 
   @observable.ref boundingBox: Rect = new Rect();
+
+  @computed get allDescendants(): (ElementInstance | TextInstance)[] {
+    return [this, ...this.children.flatMap((child) => child.allDescendants)];
+  }
 }
