@@ -1,17 +1,18 @@
 import { assertNonNull } from "@seanchas116/paintkit/src/util/Assert";
 import { reaction } from "mobx";
-import { Document } from "../models/Document";
 import { DefaultVariant, Variant } from "../models/Variant";
+import { EditorState } from "../state/EditorState";
+import { BoundingBoxUpdateScheduler } from "./BoundingBoxUpdateScheduler";
 import { MountRegistry } from "./MountRegistry";
 import { VariantMount } from "./VariantMount";
 
 export class DocumentMount {
-  constructor(getDocument: () => Document, domDocument: globalThis.Document) {
-    this.getDocument = getDocument;
+  constructor(editorState: EditorState, domDocument: globalThis.Document) {
+    this.editorState = editorState;
     this.dom = domDocument.createElement("div");
 
     const getAllVariants = () =>
-      getDocument().components.children.flatMap((component) => [
+      editorState.document.components.children.flatMap((component) => [
         component.defaultVariant,
         ...component.variants.children,
       ]);
@@ -54,7 +55,11 @@ export class DocumentMount {
         new VariantMount(
           assertNonNull(variant.component),
           variant,
-          this.registry,
+          {
+            editorState: this.editorState,
+            registry: this.registry,
+            boundingBoxUpdateScheduler: this.boundingBoxUpdateScheduler,
+          },
           this.dom.ownerDocument
         );
       existingVariantMounts.delete(variant);
@@ -76,8 +81,9 @@ export class DocumentMount {
   private isDisposed = false;
   private readonly disposers: (() => void)[] = [];
 
-  readonly getDocument: () => Document;
+  readonly editorState: EditorState;
   readonly dom: HTMLDivElement;
   readonly registry = new MountRegistry();
+  readonly boundingBoxUpdateScheduler = new BoundingBoxUpdateScheduler();
   private variantMounts: VariantMount[] = [];
 }

@@ -6,6 +6,7 @@ import styled from "styled-components";
 import { DocumentMount } from "../../mount/DocumentMount";
 import { useEditorState } from "../EditorStateContext";
 import { PanOverlay } from "./PanOverlay";
+import { Indicators } from "./indicators/Indicators";
 
 const ViewportWrap = styled.div`
   background-color: ${colors.uiBackground};
@@ -70,7 +71,7 @@ export const Viewport: React.FC<{ className?: string }> = ({ className }) => {
 
     document.body.style.margin = "0";
 
-    const mount = new DocumentMount(() => editorState.document, document);
+    const mount = new DocumentMount(editorState, document);
     mount.dom.style.position = "absolute";
     mount.dom.style.top = "0";
     mount.dom.style.left = "0";
@@ -128,6 +129,7 @@ export const Viewport: React.FC<{ className?: string }> = ({ className }) => {
       <ViewportIFrame ref={iframeRef} />
       <ViewportOverlay />
       <PanOverlay />
+      <Indicators />
     </ViewportWrap>
   );
 };

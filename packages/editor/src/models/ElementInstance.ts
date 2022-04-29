@@ -1,4 +1,5 @@
 import { computed, makeObservable, observable } from "mobx";
+import { Rect } from "paintvec";
 import shortUUID from "short-uuid";
 import { Element } from "./Element";
 import { RootElement } from "./RootElement";
@@ -102,4 +103,6 @@ export class ElementInstance {
       this.element.component.collapsed = false;
     }
   }
+
+  @observable.ref boundingBox: Rect = new Rect();
 }

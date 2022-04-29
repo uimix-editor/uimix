@@ -55,6 +55,10 @@ export class Document {
     );
   }
 
+  @computed.struct get selectedElementInstances(): ElementInstance[] {
+    return filterInstance(this.selectedInstances, [ElementInstance]);
+  }
+
   @computed.struct get selectedVariants(): (Variant | DefaultVariant)[] {
     return this.components.children.flatMap(
       (component) => component.selectedVariants

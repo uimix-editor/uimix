@@ -1,20 +1,21 @@
 import { reaction } from "mobx";
+import { Rect } from "paintvec";
 import { Component } from "../models/Component";
 import { ElementInstance } from "../models/ElementInstance";
 import { DefaultVariant, Variant } from "../models/Variant";
 import { ChildMountSync } from "./ElementMount";
-import { MountRegistry } from "./MountRegistry";
+import { MountContext } from "./MountContext";
 
 export class VariantMount {
   constructor(
     component: Component,
     variant: Variant | DefaultVariant,
-    registry: MountRegistry,
+    context: MountContext,
     domDocument: globalThis.Document
   ) {
     this.component = component;
     this.variant = variant;
-    this.registry = registry;
+    this.context = context;
     this.domDocument = domDocument;
 
     this.dom = domDocument.createElement("div");
@@ -24,15 +25,17 @@ export class VariantMount {
 
     this.dom.style.position = "absolute";
     this.dom.style.background = "white";
+    this.dom.style.display = "flex";
 
     // TODO: add style
 
     this.childMountSync = new ChildMountSync(
       ElementInstance.get(variant, component.rootElement),
-      registry,
-      this.shadow
+      context,
+      this.shadow,
+      () => this.updateBoundingBoxLater()
     );
-    registry.setVariantMount(this);
+    context.registry.setVariantMount(this);
 
     this.disposers.push(
       reaction(
@@ -63,7 +66,7 @@ export class VariantMount {
     this.disposers.forEach((disposer) => disposer());
 
     this.childMountSync.dispose();
-    this.registry.deleteVariantMount(this);
+    this.context.registry.deleteVariantMount(this);
 
     this.isDisposed = true;
   }
@@ -73,7 +76,7 @@ export class VariantMount {
 
   readonly component: Component;
   readonly variant: Variant | DefaultVariant;
-  readonly registry: MountRegistry;
+  readonly context: MountContext;
   readonly domDocument: globalThis.Document;
 
   readonly dom: HTMLDivElement;
@@ -81,4 +84,20 @@ export class VariantMount {
   private readonly shadow: ShadowRoot;
 
   private readonly childMountSync: ChildMountSync;
+
+  updateBoundingBoxLater(): void {
+    this.context.boundingBoxUpdateScheduler.schedule(this);
+  }
+
+  updateBoundingBox(): void {
+    const viewportToDocument =
+      this.context.editorState.scroll.viewportToDocument;
+
+    const { rootInstance } = this.variant;
+    if (rootInstance) {
+      rootInstance.boundingBox = Rect.from(
+        this.host.getBoundingClientRect()
+      ).transform(viewportToDocument);
+    }
+  }
 }
