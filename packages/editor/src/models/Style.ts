@@ -33,28 +33,17 @@ export class Style extends StyleBase {
   // Text
 
   toJSON(): StyleJSON {
-    return {
-      color: this.color,
-      fontFamily: this.fontFamily,
-      fontWeight: this.fontWeight,
-      fontSize: this.fontSize,
-      lineHeight: this.lineHeight,
-      letterSpacing: this.letterSpacing,
-      textDecoration: this.textDecoration,
-      textStyle: this.textStyle,
-      textAlign: this.textAlign,
-    };
+    return Object.fromEntries(styleKeys.map((key) => [key, this[key]]));
   }
 
   loadJSON(json: StyleJSON): void {
-    this.color = json.color;
+    for (const key of styleKeys) {
+      this[key] = json[key];
+    }
   }
 
   toCSSString(): string {
-    const props = omitEmpties({
-      color: this.color,
-    });
-
+    const props = omitEmpties(this.toJSON());
     return Object.entries(props)
       .map(([key, value]) => `${key}: ${value};`)
       .join("");
