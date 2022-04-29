@@ -1,20 +1,48 @@
 import { omitEmpties } from "@seanchas116/paintkit/src/util/Collection";
 import { makeObservable, observable } from "mobx";
 
-export interface StyleJSON {
-  color?: string;
-}
+const styleKeys = [
+  "color",
+  "fontFamily",
+  "fontWeight",
+  "fontSize",
+  "lineHeight",
+  "letterSpacing",
+  "textDecoration",
+  "textStyle",
+  "textAlign",
+] as const;
 
-export class Style {
+export type StyleJSON = {
+  [key in typeof styleKeys[number]]?: string;
+};
+
+const StyleBase: {
+  new (): StyleJSON;
+} = class {
   constructor() {
-    makeObservable(this);
+    makeObservable(
+      this,
+      // @ts-ignore
+      Object.fromEntries(styleKeys.map((key) => [key, observable]))
+    );
   }
+};
 
-  @observable color: string | undefined = undefined;
+export class Style extends StyleBase {
+  // Text
 
   toJSON(): StyleJSON {
     return {
       color: this.color,
+      fontFamily: this.fontFamily,
+      fontWeight: this.fontWeight,
+      fontSize: this.fontSize,
+      lineHeight: this.lineHeight,
+      letterSpacing: this.letterSpacing,
+      textDecoration: this.textDecoration,
+      textStyle: this.textStyle,
+      textAlign: this.textAlign,
     };
   }
 
