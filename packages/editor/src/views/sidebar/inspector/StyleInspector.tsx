@@ -9,6 +9,7 @@ import {
 } from "@seanchas116/paintkit/src/components/sidebar/Inspector";
 import { ComboBox } from "@seanchas116/paintkit/src/components/ComboBox";
 import { Select } from "@seanchas116/paintkit/src/components/Select";
+import { ColorInput } from "@seanchas116/paintkit/src/components/color/ColorInput";
 import { StyleInspectorState } from "../../../state/StyleInspectorState";
 import { useEditorState } from "../../EditorStateContext";
 
@@ -51,6 +52,7 @@ export const StyleInspector: React.FC = observer(function StyleInspector() {
                 // TODO
               }}
             />
+            <ColorInput />
           </Row11>
         </RowGroup>
       </Pane>
