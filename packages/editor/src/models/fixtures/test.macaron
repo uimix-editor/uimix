@@ -3,7 +3,7 @@
   <macaron-variant x="200" y="0" selector=":hover"></macaron-variant>
   <macaron-variant x="400" y="0" media="(max-width: 768px)"></macaron-variant>
   <template>
-    <h1 title="Hover Me" id="heading">Hello, world!</h1>
+    <h1 title="Hover Me" id="heading">Hello, <em id="em">World!</em></h1>
     <div id="div1">Type something</div>
   </template>
 </macaron-component>
