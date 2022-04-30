@@ -10,6 +10,9 @@
     :host {
         font-family: Helvetica
     }
+    #heading {
+        color: #FF0000
+    }
     :host(:hover) {
         font-family: Menlo
     }
