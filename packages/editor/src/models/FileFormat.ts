@@ -5,7 +5,7 @@ import * as parse5 from "parse5";
 import { fromParse5 } from "hast-util-from-parse5";
 import rehypeMinifyWhitespace from "rehype-minify-whitespace";
 import { unified } from "unified";
-import { Root } from "postcss";
+import { Root, ChildNode, AtRule } from "postcss";
 import { isNonVisualElement } from "@seanchas116/paintkit/src/util/HTMLTagCategory";
 import { formatHTML } from "../util/Format";
 import { Component } from "./Component";
@@ -25,23 +25,42 @@ function dumpComponent(component: Component): hast.Element {
   }
 
   for (const variant of component.allVariants) {
-    if (variant.type === "defaultVariant") {
-      const rootInstance = variant.rootInstance!;
+    const rootInstance = variant.rootInstance!;
 
-      for (const instance of rootInstance.allDescendants ?? []) {
-        if (instance.type !== "element") {
-          continue;
-        }
+    const rules: ChildNode[] = [];
 
-        const selector =
-          instance === rootInstance ? ":host" : `#${instance.element.id}`;
-
-        const rule = instance.style.toPostCSS({ selector });
-
-        if (rule.nodes.length) {
-          style.append(rule);
-        }
+    for (const instance of rootInstance.allDescendants ?? []) {
+      if (instance.type !== "element") {
+        continue;
       }
+
+      let selector: string;
+      if (variant.type === "variant" && variant.selector) {
+        selector =
+          instance === rootInstance
+            ? `:host(${variant.selector})`
+            : `:host(${variant.selector}) #${instance.element.id}`;
+      } else {
+        selector =
+          instance === rootInstance ? ":host" : `#${instance.element.id}`;
+      }
+
+      const rule = instance.style.toPostCSS({ selector });
+
+      if (rule.nodes.length) {
+        rules.push(rule);
+      }
+    }
+
+    if (variant.type === "variant" && variant.mediaQuery) {
+      const atRule = new AtRule({
+        name: "media",
+        params: variant.mediaQuery,
+      });
+      atRule.append(...rules);
+      style.append(atRule);
+    } else {
+      style.append(...rules);
     }
   }
 
