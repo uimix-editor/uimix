@@ -6,4 +6,12 @@
     <h1 title="Hover Me" id="heading">Hello, <em id="em">World!</em></h1>
     <div id="div1">Type something</div>
   </template>
-</macaron-component>
+  <style>
+    :host {
+        font-family: Helvetica
+    }
+    #heading {
+        color: #333333
+    }
+  </style></macaron-component
+>
