@@ -23,6 +23,10 @@ export class VariantMount {
     this.shadow.adoptedStyleSheets = [styleSheet];
     this.dom.append(this.host);
 
+    if (this.variant.type === "variant") {
+      this.host.classList.add("variant-" + this.variant.key);
+    }
+
     this.dom.style.position = "absolute";
     this.dom.style.background = "white";
     this.dom.style.display = "flex";

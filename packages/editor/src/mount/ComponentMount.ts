@@ -89,24 +89,36 @@ export class ComponentMount {
   private readonly styleSheet: CSSStyleSheet;
 
   private getCSSTexts(): string[] {
-    const rootInstance = this.component.defaultVariant.rootInstance!;
-
-    const instances = filterInstance(rootInstance.allDescendants, [
-      ElementInstance,
-    ]);
-
     const cssTexts: string[] = [];
 
-    for (const instance of instances) {
-      const props = instance.style.toCSSString();
-      if (instance === rootInstance) {
-        cssTexts.push(`:host { ${props} }`);
-      } else {
-        const id = instance.element.id;
-        cssTexts.push(`#${id} { ${props} }`);
+    for (const variant of this.component.allVariants) {
+      const rootInstance = variant.rootInstance!;
+
+      const instances = filterInstance(rootInstance.allDescendants, [
+        ElementInstance,
+      ]);
+
+      const scope =
+        variant.type === "defaultVariant" ? "" : ".variant-" + variant.key;
+
+      for (const instance of instances) {
+        const props = instance.style.toCSSString();
+        if (instance === rootInstance) {
+          if (scope) {
+            cssTexts.push(`:host(${scope}) { ${props} }`);
+          } else {
+            cssTexts.push(`:host { ${props} }`);
+          }
+        } else {
+          const id = instance.element.id;
+          if (scope) {
+            cssTexts.push(`:host(${scope}) #${id} { ${props} }`);
+          } else {
+            cssTexts.push(`#${id} { ${props} }`);
+          }
+        }
       }
     }
-
     return cssTexts;
   }
 
