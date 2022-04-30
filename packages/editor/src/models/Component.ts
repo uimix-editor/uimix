@@ -4,6 +4,7 @@ import { ComponentList } from "./Document";
 import { Element, ElementJSON } from "./Element";
 import { ElementInstance } from "./ElementInstance";
 import { RootElement } from "./RootElement";
+import { StyleJSON } from "./Style";
 import { Text, TextJSON } from "./Text";
 import { TextInstance } from "./TextInstance";
 import { DefaultVariant, Variant, VariantJSON } from "./Variant";
@@ -54,11 +55,26 @@ export class Component extends TreeNode<ComponentList, Component, never> {
   @observable collapsed = true;
 
   toJSON(): ComponentJSON {
+    const styles: Record<string, Record<string, StyleJSON>> = {}; // TODO
+
+    for (const variant of this.allVariants) {
+      const variantStyles: Record<string, StyleJSON> = {};
+
+      for (const instance of variant.rootInstance?.allDescendants ?? []) {
+        if (instance.type === "element") {
+          variantStyles[instance.node.key] = instance.style.toJSON();
+        }
+      }
+
+      styles[variant.key] = variantStyles;
+    }
+
     return {
       key: this.key,
       name: this.name,
       variants: this.variants.children.map((variant) => variant.toJSON()),
       children: this.rootElement.children.map((child) => child.toJSON()),
+      styles,
     };
   }
 
@@ -90,6 +106,22 @@ export class Component extends TreeNode<ComponentList, Component, never> {
       attrs: {},
       children: json.children,
     });
+
+    for (const variant of this.allVariants) {
+      const variantStylesJSON = json.styles[variant.key];
+      if (!variantStylesJSON) {
+        continue;
+      }
+
+      for (const instance of variant.rootInstance?.allDescendants ?? []) {
+        if (instance.type === "element") {
+          const styleJSON = variantStylesJSON[instance.node.key];
+          if (styleJSON) {
+            instance.style.loadJSON(styleJSON);
+          }
+        }
+      }
+    }
   }
 
   @computed.struct get selectedInstances(): (ElementInstance | TextInstance)[] {
@@ -131,4 +163,8 @@ export interface ComponentJSON {
   name: string;
   variants: VariantJSON[];
   children: (ElementJSON | TextJSON)[];
+  styles: Record<
+    string /* variant key */,
+    Record<string /* element key */, StyleJSON>
+  >;
 }
