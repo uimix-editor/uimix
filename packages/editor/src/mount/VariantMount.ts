@@ -1,10 +1,9 @@
 import { filterInstance } from "@seanchas116/paintkit/src/util/Collection";
 import { reaction } from "mobx";
-import { Rect } from "paintvec";
 import { Component } from "../models/Component";
 import { ElementInstance } from "../models/ElementInstance";
 import { DefaultVariant, Variant } from "../models/Variant";
-import { ChildMountSync } from "./ElementMount";
+import { ChildMountSync, fetchComputedValues } from "./ElementMount";
 import { MountContext } from "./MountContext";
 
 export class VariantMount {
@@ -98,14 +97,9 @@ export class VariantMount {
   }
 
   updateBoundingBox(): void {
-    const viewportToDocument =
-      this.context.editorState.scroll.viewportToDocument;
-
     const { rootInstance } = this.variant;
     if (rootInstance) {
-      rootInstance.boundingBox = Rect.from(
-        this.host.getBoundingClientRect()
-      ).transform(viewportToDocument);
+      fetchComputedValues(rootInstance, this.host, this.context);
     }
 
     for (const childMount of this.childMountSync.childMounts) {

@@ -164,19 +164,7 @@ export class ElementMount {
   }
 
   updateBoundingBox(): void {
-    const viewportToDocument =
-      this.context.editorState.scroll.viewportToDocument;
-
-    this.instance.boundingBox = Rect.from(
-      this.dom.getBoundingClientRect()
-    ).transform(viewportToDocument);
-
-    const computedStyle = getComputedStyle(this.dom);
-    for (const key of styleKeys) {
-      this.instance.computedStyle[key] = computedStyle.getPropertyValue(
-        kebabCase(key)
-      );
-    }
+    fetchComputedValues(this.instance, this.dom, this.context);
 
     for (const childMount of this.childMountSync.childMounts) {
       childMount.updateBoundingBox();
@@ -190,4 +178,23 @@ export class ElementMount {
   readonly domDocument: globalThis.Document;
   readonly dom: HTMLElement | SVGElement;
   private readonly childMountSync: ChildMountSync;
+}
+
+export function fetchComputedValues(
+  instance: ElementInstance,
+  dom: HTMLElement | SVGElement,
+  context: MountContext
+): void {
+  const viewportToDocument = context.editorState.scroll.viewportToDocument;
+
+  instance.boundingBox = Rect.from(dom.getBoundingClientRect()).transform(
+    viewportToDocument
+  );
+
+  const computedStyle = getComputedStyle(dom);
+  for (const key of styleKeys) {
+    instance.computedStyle[key] = computedStyle.getPropertyValue(
+      kebabCase(key)
+    );
+  }
 }
