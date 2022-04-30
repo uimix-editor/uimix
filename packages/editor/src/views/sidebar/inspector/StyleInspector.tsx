@@ -4,6 +4,9 @@ import styled from "styled-components";
 import spaceBarIcon from "@iconify-icons/ic/outline-space-bar";
 import formatSizeIcon from "@iconify-icons/ic/outline-format-size";
 import lineSpacingIcon from "@iconify-icons/ic/outline-format-line-spacing";
+import formatAlignLeftIcon from "@iconify-icons/ic/outline-format-align-left";
+import formatAlignCenterIcon from "@iconify-icons/ic/outline-format-align-center";
+import formatAlignRightIcon from "@iconify-icons/ic/outline-format-align-right";
 import {
   Pane,
   PaneHeading,
@@ -13,11 +16,27 @@ import {
 } from "@seanchas116/paintkit/src/components/sidebar/Inspector";
 import { ComboBox } from "@seanchas116/paintkit/src/components/ComboBox";
 import { DimensionInput } from "@seanchas116/paintkit/src/components/DimensionInput";
+import { IconRadio } from "@seanchas116/paintkit/src/components/IconRadio";
 import { StyleInspectorState } from "../../../state/StyleInspectorState";
 import { useEditorState } from "../../EditorStateContext";
 import { CSSColorInput } from "./CSSColorInput";
 
 const StyleInspectorWrap = styled.div``;
+
+const textAlignOptions = [
+  {
+    value: "left",
+    icon: formatAlignLeftIcon,
+  },
+  {
+    value: "center",
+    icon: formatAlignCenterIcon,
+  },
+  {
+    value: "right",
+    icon: formatAlignRightIcon,
+  },
+];
 
 export const StyleInspector: React.FC = observer(function StyleInspector() {
   const editorState = useEditorState();
@@ -87,6 +106,12 @@ export const StyleInspector: React.FC = observer(function StyleInspector() {
               onChange={state.props.letterSpacing.onChange}
             />
           </Row111>
+          <IconRadio
+            options={textAlignOptions}
+            value={state.props.textAlign.value}
+            placeholder="left"
+            onChange={state.props.textAlign.onChange}
+          />
         </RowGroup>
       </Pane>
     </StyleInspectorWrap>
