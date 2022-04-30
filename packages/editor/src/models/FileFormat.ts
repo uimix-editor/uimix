@@ -80,6 +80,26 @@ function loadComponentStyles(component: Component, root: postcss.Root): void {
     for (const node of nodes) {
       if (node.type === "rule") {
         for (const selector of CSSwhat.parse(node.selector)) {
+          // :host or :host({condition})
+          if (selector.length === 1) {
+            const host = selector[0];
+
+            if (host.type === "pseudo" && host.name === "host") {
+              const variantSelector = Array.isArray(host.data)
+                ? CSSwhat.stringify(host.data)
+                : host.data || undefined;
+
+              console.log(variantSelector);
+
+              getVariantRules({ selector: variantSelector, media }).set(
+                "",
+                node
+              );
+            }
+
+            continue;
+          }
+
           // #{id}
           if (selector.length === 1) {
             const id = selector[0];
