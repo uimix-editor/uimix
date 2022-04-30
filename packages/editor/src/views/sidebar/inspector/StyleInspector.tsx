@@ -7,14 +7,20 @@ import lineSpacingIcon from "@iconify-icons/ic/outline-format-line-spacing";
 import formatAlignLeftIcon from "@iconify-icons/ic/outline-format-align-left";
 import formatAlignCenterIcon from "@iconify-icons/ic/outline-format-align-center";
 import formatAlignRightIcon from "@iconify-icons/ic/outline-format-align-right";
+import noItalicIcon from "@seanchas116/paintkit/src/icon/NoItalic";
+import italicIcon from "@seanchas116/paintkit/src/icon/Italic";
 import {
   Pane,
   PaneHeading,
   Row11,
   Row111,
   RowGroup,
+  RowPackLeft,
 } from "@seanchas116/paintkit/src/components/sidebar/Inspector";
 import { ComboBox } from "@seanchas116/paintkit/src/components/ComboBox";
+import strikethroughIcon from "@iconify-icons/ic/outline-strikethrough-s";
+import underlineIcon from "@iconify-icons/ic/outline-format-underlined";
+import closeIcon from "@iconify-icons/ic/outline-close";
 import { DimensionInput } from "@seanchas116/paintkit/src/components/DimensionInput";
 import { IconRadio } from "@seanchas116/paintkit/src/components/IconRadio";
 import { StyleInspectorState } from "../../../state/StyleInspectorState";
@@ -35,6 +41,32 @@ const textAlignOptions = [
   {
     value: "right",
     icon: formatAlignRightIcon,
+  },
+];
+
+const fontStyleOptions = [
+  {
+    value: "normal",
+    icon: noItalicIcon,
+  },
+  {
+    value: "italic",
+    icon: italicIcon,
+  },
+];
+
+const textDecorationOptions = [
+  {
+    value: "none",
+    icon: closeIcon,
+  },
+  {
+    value: "underline",
+    icon: underlineIcon,
+  },
+  {
+    value: "line-through",
+    icon: strikethroughIcon,
   },
 ];
 
@@ -106,10 +138,26 @@ export const StyleInspector: React.FC = observer(function StyleInspector() {
               onChange={state.props.letterSpacing.onChange}
             />
           </Row111>
+          <RowPackLeft>
+            <IconRadio
+              options={fontStyleOptions}
+              value={state.props.fontStyle.value}
+              placeholder={state.props.fontStyle.placeholder}
+              unsettable
+              onChange={state.props.fontStyle.onChange}
+            />
+            <IconRadio
+              options={textDecorationOptions}
+              value={state.props.textDecorationLine.value}
+              placeholder={state.props.textDecorationLine.placeholder}
+              unsettable
+              onChange={state.props.textDecorationLine.onChange}
+            />
+          </RowPackLeft>
           <IconRadio
             options={textAlignOptions}
             value={state.props.textAlign.value}
-            placeholder="left"
+            placeholder={state.props.textAlign.placeholder}
             unsettable
             onChange={state.props.textAlign.onChange}
           />

@@ -6,11 +6,11 @@ export const styleKeys = [
   "color",
   "fontFamily",
   "fontWeight",
+  "fontStyle",
   "fontSize",
   "lineHeight",
   "letterSpacing",
-  "textDecoration",
-  "textStyle",
+  "textDecorationLine",
   "textAlign",
 ] as const;
 
