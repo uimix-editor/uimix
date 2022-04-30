@@ -1,6 +1,6 @@
-import { omitEmpties } from "@seanchas116/paintkit/src/util/Collection";
 import { kebabCase } from "lodash-es";
 import { makeObservable, observable } from "mobx";
+import { RuleProps, Rule } from "postcss";
 
 export const styleKeys = [
   "color",
@@ -49,10 +49,19 @@ export class Style extends StyleBase {
     }
   }
 
-  toCSSString(): string {
-    const props = omitEmpties(this.toJSON());
-    return Object.entries(props)
-      .map(([key, value]) => `${kebabCase(key)}: ${value};`)
-      .join("");
+  toPostCSS(defaults?: RuleProps): Rule {
+    const rule = new Rule(defaults);
+
+    for (const key of styleKeys) {
+      const value = this[key];
+      if (value !== undefined) {
+        rule.append({
+          prop: kebabCase(key),
+          value: value,
+        });
+      }
+    }
+
+    return rule;
   }
 }

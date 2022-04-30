@@ -5,16 +5,14 @@ import * as parse5 from "parse5";
 import { fromParse5 } from "hast-util-from-parse5";
 import rehypeMinifyWhitespace from "rehype-minify-whitespace";
 import { unified } from "unified";
-import { Rule, Root } from "postcss";
+import { Root } from "postcss";
 import { isNonVisualElement } from "@seanchas116/paintkit/src/util/HTMLTagCategory";
-import { kebabCase } from "lodash-es";
 import { formatHTML } from "../util/Format";
 import { Component } from "./Component";
 import { Document } from "./Document";
 import { DefaultVariant, Variant } from "./Variant";
 import { nodesFromHTML } from "./Element";
 import { Fragment } from "./Fragment";
-import { styleKeys } from "./Style";
 
 function dumpComponent(component: Component): hast.Element {
   const children: (hast.Element | string)[] = [];
@@ -38,18 +36,7 @@ function dumpComponent(component: Component): hast.Element {
         const selector =
           instance === rootInstance ? ":host" : `#${instance.element.id}`;
 
-        const rule = new Rule({ selector });
-        for (const key of styleKeys) {
-          if (instance.style[key] !== undefined) {
-            const value = instance.style[key];
-            if (value !== undefined) {
-              rule.append({
-                prop: kebabCase(key),
-                value: value,
-              });
-            }
-          }
-        }
+        const rule = instance.style.toPostCSS({ selector });
 
         if (rule.nodes.length) {
           style.append(rule);

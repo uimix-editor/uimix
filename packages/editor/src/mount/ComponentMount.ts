@@ -1,6 +1,7 @@
 import { assertNonNull } from "@seanchas116/paintkit/src/util/Assert";
 import { filterInstance } from "@seanchas116/paintkit/src/util/Collection";
 import { reaction } from "mobx";
+import * as postcss from "postcss";
 import { Component } from "../models/Component";
 import { ElementInstance } from "../models/ElementInstance";
 import { DefaultVariant, Variant } from "../models/Variant";
@@ -88,8 +89,8 @@ export class ComponentMount {
   private variantMounts: VariantMount[] = [];
   private readonly styleSheet: CSSStyleSheet;
 
-  private getCSSTexts(): string[] {
-    const cssTexts: string[] = [];
+  private getCSSTexts(): postcss.Root {
+    const root = new postcss.Root();
 
     for (const variant of this.component.allVariants) {
       const rootInstance = variant.rootInstance!;
@@ -102,35 +103,38 @@ export class ComponentMount {
         variant.type === "defaultVariant" ? "" : ".variant-" + variant.key;
 
       for (const instance of instances) {
-        const props = instance.style.toCSSString();
+        let selector: string;
         if (instance === rootInstance) {
           if (scope) {
-            cssTexts.push(`:host(${scope}) { ${props} }`);
+            selector = `:host(${scope})`;
           } else {
-            cssTexts.push(`:host { ${props} }`);
+            selector = `:host`;
           }
         } else {
           const id = instance.element.id;
           if (scope) {
-            cssTexts.push(`:host(${scope}) #${id} { ${props} }`);
+            selector = `:host(${scope}) #${id}`;
           } else {
-            cssTexts.push(`#${id} { ${props} }`);
+            selector = `#${id}`;
           }
+        }
+
+        const props = instance.style.toPostCSS({ selector });
+        if (props.nodes.length) {
+          root.append(props);
         }
       }
     }
-    return cssTexts;
+    return root;
   }
 
-  private updateCSS(cssTexts: string[]): void {
-    console.log(cssTexts);
-
+  private updateCSS(css: postcss.Root): void {
     for (let i = 0; i < this.styleSheet.cssRules.length; i++) {
       this.styleSheet.deleteRule(i);
     }
 
-    for (const cssText of cssTexts) {
-      this.styleSheet.insertRule(cssText);
+    for (const rule of css.nodes) {
+      this.styleSheet.insertRule(rule.toString());
     }
 
     for (const mount of this.variantMounts) {
