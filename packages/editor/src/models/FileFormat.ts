@@ -6,6 +6,7 @@ import { fromParse5 } from "hast-util-from-parse5";
 import rehypeMinifyWhitespace from "rehype-minify-whitespace";
 import { unified } from "unified";
 import * as postcss from "postcss";
+import * as CSSwhat from "css-what";
 import { isNonVisualElement } from "@seanchas116/paintkit/src/util/HTMLTagCategory";
 import { formatHTML } from "../util/Format";
 import { Component } from "./Component";
@@ -60,6 +61,41 @@ function dumpComponentStyles(component: Component): postcss.Root {
   return root;
 }
 
+function loadComponentStyles(component: Component, root: postcss.Root): void {
+  const ruleForID = new Map<string, postcss.Rule>();
+
+  for (const node of root.nodes) {
+    if (node.type === "rule") {
+      const selectors = CSSwhat.parse(node.selector);
+      if (selectors.length === 1 && selectors[0].length === 1) {
+        const selector = selectors[0][0];
+
+        if (
+          selector.type === "attribute" &&
+          selector.action === "equals" &&
+          selector.name === "id"
+        ) {
+          ruleForID.set(selector.value, node);
+        }
+      }
+    }
+  }
+
+  for (const instance of component.defaultVariant.rootInstance
+    ?.allDescendants ?? []) {
+    if (instance.type !== "element") {
+      continue;
+    }
+
+    const rule = ruleForID.get(instance.element.id);
+    if (rule) {
+      instance.style.loadPostCSS(rule);
+    }
+  }
+
+  // TODO: variants
+}
+
 function dumpComponent(component: Component): hast.Element {
   const children: (hast.Element | string)[] = [];
   children.push("\n", dumpVariant(component.defaultVariant));
@@ -93,6 +129,8 @@ function loadComponent(node: hast.Element): Component {
 
   let variantIndex = 0;
 
+  let styleElement: hast.Element | undefined;
+
   for (const child of node.children) {
     if (child.type !== "element") {
       continue;
@@ -117,6 +155,17 @@ function loadComponent(node: hast.Element): Component {
         component.variants.append(variant);
       }
     }
+
+    if (child.tagName === "style") {
+      styleElement = child;
+    }
+  }
+
+  if (styleElement && styleElement.children.length) {
+    loadComponentStyles(
+      component,
+      postcss.parse(toHtml(styleElement.children))
+    );
   }
 
   return component;

@@ -64,4 +64,17 @@ export class Style extends StyleBase {
 
     return rule;
   }
+
+  loadPostCSS(rule: postcss.Rule): void {
+    const props: Record<string, string> = {};
+    for (const node of rule.nodes) {
+      if (node.type === "decl") {
+        props[node.prop] = node.value;
+      }
+    }
+
+    for (const key of styleKeys) {
+      this[key] = props[kebabCase(key)];
+    }
+  }
 }

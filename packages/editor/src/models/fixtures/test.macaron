@@ -7,10 +7,9 @@
     <div id="div1">Type something</div>
   </template>
   <style>
-    @media (max-width: 768px) {
-        :host {
-            font-family: Helvetica
-        }
+    #heading {
+        font-family: Helvetica
     }
+    @media (max-width: 768px) {}
   </style></macaron-component
 >
