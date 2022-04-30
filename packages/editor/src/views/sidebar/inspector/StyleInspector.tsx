@@ -1,13 +1,18 @@
 import { observer } from "mobx-react-lite";
 import React, { useMemo } from "react";
 import styled from "styled-components";
+import spaceBarIcon from "@iconify-icons/ic/outline-space-bar";
+import formatSizeIcon from "@iconify-icons/ic/outline-format-size";
+import lineSpacingIcon from "@iconify-icons/ic/outline-format-line-spacing";
 import {
   Pane,
   PaneHeading,
   Row11,
+  Row111,
   RowGroup,
 } from "@seanchas116/paintkit/src/components/sidebar/Inspector";
 import { ComboBox } from "@seanchas116/paintkit/src/components/ComboBox";
+import { DimensionInput } from "@seanchas116/paintkit/src/components/DimensionInput";
 import { StyleInspectorState } from "../../../state/StyleInspectorState";
 import { useEditorState } from "../../EditorStateContext";
 import { CSSColorInput } from "./CSSColorInput";
@@ -55,6 +60,26 @@ export const StyleInspector: React.FC = observer(function StyleInspector() {
               onChangeEnd={state.props.color.onChange}
             />
           </Row11>
+          <Row111>
+            <DimensionInput
+              icon={formatSizeIcon}
+              title="font-size"
+              value={state.props.fontSize.value}
+              onChange={state.props.fontSize.onChange}
+            />
+            <DimensionInput
+              icon={lineSpacingIcon}
+              title="line-height"
+              value={state.props.lineHeight.value}
+              onChange={state.props.lineHeight.onChange}
+            />
+            <DimensionInput
+              icon={spaceBarIcon}
+              title="letter-spacing"
+              value={state.props.letterSpacing.value}
+              onChange={state.props.letterSpacing.onChange}
+            />
+          </Row111>
         </RowGroup>
       </Pane>
     </StyleInspectorWrap>
