@@ -1,4 +1,3 @@
-import { filterInstance } from "@seanchas116/paintkit/src/util/Collection";
 import { reaction } from "mobx";
 import { Component } from "../models/Component";
 import { ElementInstance } from "../models/ElementInstance";
@@ -10,6 +9,7 @@ export class VariantMount {
   constructor(
     component: Component,
     variant: Variant | DefaultVariant,
+    styleSheet: CSSStyleSheet,
     context: MountContext
   ) {
     this.component = component;
@@ -19,9 +19,8 @@ export class VariantMount {
     this.dom = context.domDocument.createElement("div");
     this.host = context.domDocument.createElement("div");
     this.shadow = this.host.attachShadow({ mode: "open" });
-    this.styleSheet = new context.domDocument.defaultView!.CSSStyleSheet();
     // @ts-ignore
-    this.shadow.adoptedStyleSheets = [this.styleSheet];
+    this.shadow.adoptedStyleSheets = [styleSheet];
     this.dom.append(this.host);
 
     this.dom.style.position = "absolute";
@@ -39,9 +38,6 @@ export class VariantMount {
     context.registry.setVariantMount(this);
 
     this.disposers.push(
-      reaction(this.getCSSTexts.bind(this), this.updateCSS.bind(this), {
-        fireImmediately: true,
-      }),
       reaction(
         () => ({
           x: this.variant.x,
@@ -85,7 +81,6 @@ export class VariantMount {
   readonly dom: HTMLDivElement;
   private readonly host: HTMLDivElement;
   private readonly shadow: ShadowRoot;
-  private readonly styleSheet: CSSStyleSheet;
 
   private readonly childMountSync: ChildMountSync;
 
@@ -102,40 +97,5 @@ export class VariantMount {
     for (const childMount of this.childMountSync.childMounts) {
       childMount.updateBoundingBox();
     }
-  }
-
-  getCSSTexts(): string[] {
-    const instances = filterInstance(
-      this.variant.rootInstance!.allDescendants,
-      [ElementInstance]
-    );
-
-    const cssTexts: string[] = [];
-
-    for (const instance of instances) {
-      const props = instance.style.toCSSString();
-      if (instance === this.variant.rootInstance) {
-        cssTexts.push(`:host { ${props} }`);
-      } else {
-        const id = instance.element.id;
-        cssTexts.push(`#${id} { ${props} }`);
-      }
-    }
-
-    return cssTexts;
-  }
-
-  updateCSS(cssTexts: string[]): void {
-    console.log(cssTexts);
-
-    for (let i = 0; i < this.styleSheet.cssRules.length; i++) {
-      this.styleSheet.deleteRule(i);
-    }
-
-    for (const cssText of cssTexts) {
-      this.styleSheet.insertRule(cssText);
-    }
-
-    this.updateBoundingBoxLater();
   }
 }
