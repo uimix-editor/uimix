@@ -5,7 +5,7 @@ import * as parse5 from "parse5";
 import { fromParse5 } from "hast-util-from-parse5";
 import rehypeMinifyWhitespace from "rehype-minify-whitespace";
 import { unified } from "unified";
-import { Root, ChildNode, AtRule } from "postcss";
+import * as postcss from "postcss";
 import { isNonVisualElement } from "@seanchas116/paintkit/src/util/HTMLTagCategory";
 import { formatHTML } from "../util/Format";
 import { Component } from "./Component";
@@ -14,20 +14,13 @@ import { DefaultVariant, Variant } from "./Variant";
 import { nodesFromHTML } from "./Element";
 import { Fragment } from "./Fragment";
 
-function dumpComponent(component: Component): hast.Element {
-  const children: (hast.Element | string)[] = [];
-  children.push("\n", dumpVariant(component.defaultVariant));
-
-  const style = new Root();
-
-  for (const variant of component.variants.children) {
-    children.push("\n", dumpVariant(variant));
-  }
+function dumpComponentStyles(component: Component): postcss.Root {
+  const root = new postcss.Root();
 
   for (const variant of component.allVariants) {
     const rootInstance = variant.rootInstance!;
 
-    const rules: ChildNode[] = [];
+    const rules: postcss.ChildNode[] = [];
 
     for (const instance of rootInstance.allDescendants ?? []) {
       if (instance.type !== "element") {
@@ -53,15 +46,26 @@ function dumpComponent(component: Component): hast.Element {
     }
 
     if (variant.type === "variant" && variant.mediaQuery) {
-      const atRule = new AtRule({
+      const atRule = new postcss.AtRule({
         name: "media",
         params: variant.mediaQuery,
       });
       atRule.append(...rules);
-      style.append(atRule);
+      root.append(atRule);
     } else {
-      style.append(...rules);
+      root.append(...rules);
     }
+  }
+
+  return root;
+}
+
+function dumpComponent(component: Component): hast.Element {
+  const children: (hast.Element | string)[] = [];
+  children.push("\n", dumpVariant(component.defaultVariant));
+
+  for (const variant of component.variants.children) {
+    children.push("\n", dumpVariant(variant));
   }
 
   children.push(
@@ -70,7 +74,7 @@ function dumpComponent(component: Component): hast.Element {
     "\n"
   );
 
-  children.push(h("style", {}, style.toString()));
+  children.push(h("style", {}, dumpComponentStyles(component).toString()));
 
   return h(
     "macaron-component",
