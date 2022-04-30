@@ -8,6 +8,7 @@ import { unified } from "unified";
 import * as postcss from "postcss";
 import * as CSSwhat from "css-what";
 import { isNonVisualElement } from "@seanchas116/paintkit/src/util/HTMLTagCategory";
+import { getOrSetDefault } from "@seanchas116/paintkit/src/util/Collection";
 import { formatHTML } from "../util/Format";
 import { Component } from "./Component";
 import { Document } from "./Document";
@@ -62,7 +63,18 @@ function dumpComponentStyles(component: Component): postcss.Root {
 }
 
 function loadComponentStyles(component: Component, root: postcss.Root): void {
-  const ruleForID = new Map<string, postcss.Rule>();
+  const variantRules = new Map<string, Map<string, postcss.Rule>>();
+
+  const getVariantRules = (condition: {
+    selector?: string;
+    media?: string;
+  }) => {
+    return getOrSetDefault(
+      variantRules,
+      JSON.stringify(condition),
+      () => new Map<string, postcss.Rule>()
+    );
+  };
 
   for (const node of root.nodes) {
     if (node.type === "rule") {
@@ -75,25 +87,33 @@ function loadComponentStyles(component: Component, root: postcss.Root): void {
           selector.action === "equals" &&
           selector.name === "id"
         ) {
-          ruleForID.set(selector.value, node);
+          getVariantRules({}).set(selector.value, node);
         }
       }
     }
   }
 
-  for (const instance of component.defaultVariant.rootInstance
-    ?.allDescendants ?? []) {
-    if (instance.type !== "element") {
-      continue;
-    }
+  for (const variant of component.allVariants) {
+    const rules =
+      variant.type === "defaultVariant"
+        ? getVariantRules({})
+        : getVariantRules({
+            selector: variant.selector || undefined,
+            media: variant.mediaQuery || undefined,
+          });
 
-    const rule = ruleForID.get(instance.element.id);
-    if (rule) {
-      instance.style.loadPostCSS(rule);
+    for (const instance of component.defaultVariant.rootInstance
+      ?.allDescendants ?? []) {
+      if (instance.type !== "element") {
+        continue;
+      }
+
+      const rule = rules.get(instance.element.id);
+      if (rule) {
+        instance.style.loadPostCSS(rule);
+      }
     }
   }
-
-  // TODO: variants
 }
 
 function dumpComponent(component: Component): hast.Element {
