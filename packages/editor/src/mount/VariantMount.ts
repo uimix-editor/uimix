@@ -10,18 +10,16 @@ export class VariantMount {
   constructor(
     component: Component,
     variant: Variant | DefaultVariant,
-    context: MountContext,
-    domDocument: globalThis.Document
+    context: MountContext
   ) {
     this.component = component;
     this.variant = variant;
     this.context = context;
-    this.domDocument = domDocument;
 
-    this.dom = domDocument.createElement("div");
-    this.host = domDocument.createElement("div");
+    this.dom = context.domDocument.createElement("div");
+    this.host = context.domDocument.createElement("div");
     this.shadow = this.host.attachShadow({ mode: "open" });
-    this.styleSheet = new domDocument.defaultView!.CSSStyleSheet();
+    this.styleSheet = new context.domDocument.defaultView!.CSSStyleSheet();
     // @ts-ignore
     this.shadow.adoptedStyleSheets = [this.styleSheet];
     this.dom.append(this.host);
@@ -83,7 +81,6 @@ export class VariantMount {
   readonly component: Component;
   readonly variant: Variant | DefaultVariant;
   readonly context: MountContext;
-  readonly domDocument: globalThis.Document;
 
   readonly dom: HTMLDivElement;
   private readonly host: HTMLDivElement;

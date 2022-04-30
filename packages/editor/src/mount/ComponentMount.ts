@@ -54,8 +54,7 @@ export class ComponentMount {
         new VariantMount(
           assertNonNull(variant.component),
           variant,
-          this.context,
-          this.dom.ownerDocument
+          this.context
         );
       existingVariantMounts.delete(variant);
       this.variantMounts.push(variantMount);
