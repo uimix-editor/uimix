@@ -7,12 +7,22 @@
     <div id="div1">Type something</div>
   </template>
   <style>
-    #heading {
+    :host {
         font-family: Helvetica
     }
-    :host(:hover) #heading {
-        color: #FF0000
+    :host(:hover) {
+        font-family: Menlo
     }
-    @media (max-width: 768px) {}
+    :host(:hover) #heading {
+        color: #0000FF
+    }
+    @media (max-width: 768px) {
+        :host {
+            font-family: Avenir Next
+        }
+        #heading {
+            color: #008000
+        }
+    }
   </style></macaron-component
 >
