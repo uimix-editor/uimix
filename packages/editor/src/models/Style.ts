@@ -1,6 +1,6 @@
 import { kebabCase } from "lodash-es";
 import { makeObservable, observable } from "mobx";
-import { RuleProps, Rule } from "postcss";
+import * as postcss from "postcss";
 
 export const styleKeys = [
   "color",
@@ -49,8 +49,8 @@ export class Style extends StyleBase {
     }
   }
 
-  toPostCSS(defaults?: RuleProps): Rule {
-    const rule = new Rule(defaults);
+  toPostCSS(defaults?: postcss.RuleProps): postcss.Rule {
+    const rule = new postcss.Rule(defaults);
 
     for (const key of styleKeys) {
       const value = this[key];
