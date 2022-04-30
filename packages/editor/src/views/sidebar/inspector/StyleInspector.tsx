@@ -110,6 +110,7 @@ export const StyleInspector: React.FC = observer(function StyleInspector() {
             options={textAlignOptions}
             value={state.props.textAlign.value}
             placeholder="left"
+            unsettable
             onChange={state.props.textAlign.onChange}
           />
         </RowGroup>
