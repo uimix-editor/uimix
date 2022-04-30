@@ -10,6 +10,9 @@
     #heading {
         font-family: Helvetica
     }
+    :host(:hover) #heading {
+        color: #FF0000
+    }
     @media (max-width: 768px) {}
   </style></macaron-component
 >

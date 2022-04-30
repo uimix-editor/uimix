@@ -78,19 +78,50 @@ function loadComponentStyles(component: Component, root: postcss.Root): void {
 
   for (const node of root.nodes) {
     if (node.type === "rule") {
-      const selectors = CSSwhat.parse(node.selector);
-      if (selectors.length === 1 && selectors[0].length === 1) {
-        const selector = selectors[0][0];
+      for (const selector of CSSwhat.parse(node.selector)) {
+        // #{id}
+        if (selector.length === 1) {
+          const id = selector[0];
+          if (
+            id.type === "attribute" &&
+            id.action === "equals" &&
+            id.name === "id"
+          ) {
+            getVariantRules({}).set(id.value, node);
+          }
 
-        if (
-          selector.type === "attribute" &&
-          selector.action === "equals" &&
-          selector.name === "id"
-        ) {
-          getVariantRules({}).set(selector.value, node);
+          continue;
+        }
+
+        // :host #{id} or :host({condition}) #{id}
+        if (selector.length === 3) {
+          const host = selector[0];
+          const desc = selector[1];
+          const id = selector[2];
+
+          if (
+            host.type === "pseudo" &&
+            host.name === "host" &&
+            desc.type === "descendant" &&
+            id.type === "attribute" &&
+            id.action === "equals" &&
+            id.name === "id"
+          ) {
+            const variantSelector = Array.isArray(host.data)
+              ? CSSwhat.stringify(host.data)
+              : host.data || undefined;
+
+            console.log(variantSelector);
+
+            getVariantRules({ selector: variantSelector }).set(id.value, node);
+          }
+
+          continue;
         }
       }
     }
+
+    // TODO: media queries
   }
 
   for (const variant of component.allVariants) {
@@ -102,8 +133,7 @@ function loadComponentStyles(component: Component, root: postcss.Root): void {
             media: variant.mediaQuery || undefined,
           });
 
-    for (const instance of component.defaultVariant.rootInstance
-      ?.allDescendants ?? []) {
+    for (const instance of variant.rootInstance?.allDescendants ?? []) {
       if (instance.type !== "element") {
         continue;
       }
