@@ -28,13 +28,13 @@ export const StyleInspector: React.FC = observer(function StyleInspector() {
         <PaneHeading>Text</PaneHeading>
         <RowGroup>
           <ComboBox
-            value={state.fontFamily.value}
+            value={state.props.fontFamily.value}
             options={["Times", "Helvetica"].map((value) => ({ value }))}
-            onChange={state.fontFamily.onChange}
+            onChange={state.props.fontFamily.onChange}
           />
           <Row11>
             <ComboBox
-              value={state.fontWeight.value}
+              value={state.props.fontWeight.value}
               placeholder="Weight"
               options={[
                 { value: "100", text: "100" },
@@ -47,12 +47,12 @@ export const StyleInspector: React.FC = observer(function StyleInspector() {
                 { value: "800", text: "800" },
                 { value: "900", text: "900" },
               ]}
-              onChange={state.fontWeight.onChange}
+              onChange={state.props.fontWeight.onChange}
             />
             <CSSColorInput
-              value={state.color.value}
-              onChange={state.color.onChangeWithoutCommit}
-              onChangeEnd={state.color.onChange}
+              value={state.props.color.value}
+              onChange={state.props.color.onChangeWithoutCommit}
+              onChangeEnd={state.props.color.onChange}
             />
           </Row11>
         </RowGroup>

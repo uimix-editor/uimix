@@ -2,7 +2,7 @@ import { MIXED, sameOrMixed } from "@seanchas116/paintkit/src/util/Mixed";
 import { startCase } from "lodash-es";
 import { action, computed, makeObservable } from "mobx";
 import { ElementInstance } from "../models/ElementInstance";
-import { Style, StyleKey } from "../models/Style";
+import { Style, StyleKey, styleKeys } from "../models/Style";
 import { EditorState } from "./EditorState";
 
 class StylePropertyState {
@@ -39,6 +39,10 @@ export class StyleInspectorState {
   constructor(editorState: EditorState) {
     this.editorState = editorState;
     makeObservable(this);
+
+    this.props = Object.fromEntries(
+      styleKeys.map((key) => [key, new StylePropertyState(this, key)])
+    ) as Record<StyleKey, StylePropertyState>;
   }
 
   readonly editorState: EditorState;
@@ -51,7 +55,5 @@ export class StyleInspectorState {
     return this.selectedInstances.map((instance) => instance.style);
   }
 
-  readonly fontFamily = new StylePropertyState(this, "fontFamily");
-  readonly fontWeight = new StylePropertyState(this, "fontWeight");
-  readonly color = new StylePropertyState(this, "color");
+  readonly props: Record<StyleKey, StylePropertyState>;
 }
