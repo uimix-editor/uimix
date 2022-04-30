@@ -19,9 +19,16 @@ class StylePropertyState {
     return sameOrMixed(this.state.styles.map((style) => style[this.key]));
   }
 
-  readonly onChange = action((value: string) => {
+  readonly onChangeWithoutCommit = action((value?: string) => {
     for (const style of this.state.styles) {
-      style[this.key] = value;
+      style[this.key] = value || undefined;
+    }
+    return true;
+  });
+
+  readonly onChange = action((value?: string) => {
+    for (const style of this.state.styles) {
+      style[this.key] = value || undefined;
     }
     this.state.editorState.history.commit(`Change ${startCase(this.key)}`);
     return true;
@@ -46,4 +53,5 @@ export class StyleInspectorState {
 
   readonly fontFamily = new StylePropertyState(this, "fontFamily");
   readonly fontWeight = new StylePropertyState(this, "fontWeight");
+  readonly color = new StylePropertyState(this, "color");
 }

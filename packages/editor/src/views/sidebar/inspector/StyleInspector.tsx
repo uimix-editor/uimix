@@ -8,9 +8,9 @@ import {
   RowGroup,
 } from "@seanchas116/paintkit/src/components/sidebar/Inspector";
 import { ComboBox } from "@seanchas116/paintkit/src/components/ComboBox";
-import { ColorInput } from "@seanchas116/paintkit/src/components/color/ColorInput";
 import { StyleInspectorState } from "../../../state/StyleInspectorState";
 import { useEditorState } from "../../EditorStateContext";
+import { CSSColorInput } from "./CSSColorInput";
 
 const StyleInspectorWrap = styled.div``;
 
@@ -49,7 +49,11 @@ export const StyleInspector: React.FC = observer(function StyleInspector() {
               ]}
               onChange={state.fontWeight.onChange}
             />
-            <ColorInput />
+            <CSSColorInput
+              value={state.color.value}
+              onChange={state.color.onChangeWithoutCommit}
+              onChangeEnd={state.color.onChange}
+            />
           </Row11>
         </RowGroup>
       </Pane>
