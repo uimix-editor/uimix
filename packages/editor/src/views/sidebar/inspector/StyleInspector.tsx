@@ -27,6 +27,10 @@ export const StyleInspector: React.FC = observer(function StyleInspector() {
     [editorState]
   );
 
+  if (state.styles.length === 0) {
+    return null;
+  }
+
   return (
     <StyleInspectorWrap>
       <Pane>
