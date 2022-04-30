@@ -62,6 +62,69 @@ function dumpComponentStyles(component: Component): postcss.Root {
   return root;
 }
 
+// :host or :host({condition})
+function parseHostSelector(selector: CSSwhat.Selector[]):
+  | {
+      hostSelector?: string;
+    }
+  | undefined {
+  if (selector.length === 1) {
+    const host = selector[0];
+
+    if (host.type === "pseudo" && host.name === "host") {
+      const data = Array.isArray(host.data)
+        ? CSSwhat.stringify(host.data)
+        : host.data || undefined;
+
+      return {
+        hostSelector: data,
+      };
+    }
+  }
+}
+
+// #{id}
+function parseIDSelector(selector: CSSwhat.Selector[]): string | undefined {
+  if (selector.length === 1) {
+    const id = selector[0];
+    if (id.type === "attribute" && id.action === "equals" && id.name === "id") {
+      return id.value;
+    }
+  }
+}
+
+// :host #{id} or :host({condition}) #{id}
+function parseIDInsideHostSelector(selector: CSSwhat.Selector[]):
+  | {
+      hostSelector?: string;
+      id: string;
+    }
+  | undefined {
+  if (selector.length === 3) {
+    const host = selector[0];
+    const desc = selector[1];
+    const id = selector[2];
+
+    if (
+      host.type === "pseudo" &&
+      host.name === "host" &&
+      desc.type === "descendant" &&
+      id.type === "attribute" &&
+      id.action === "equals" &&
+      id.name === "id"
+    ) {
+      const variantSelector = Array.isArray(host.data)
+        ? CSSwhat.stringify(host.data)
+        : host.data || undefined;
+
+      return {
+        hostSelector: variantSelector,
+        id: id.value,
+      };
+    }
+  }
+}
+
 function loadComponentStyles(component: Component, root: postcss.Root): void {
   const variantRules = new Map<string, Map<string, postcss.Rule>>();
 
@@ -80,62 +143,27 @@ function loadComponentStyles(component: Component, root: postcss.Root): void {
     for (const node of nodes) {
       if (node.type === "rule") {
         for (const selector of CSSwhat.parse(node.selector)) {
-          // :host or :host({condition})
-          if (selector.length === 1) {
-            const host = selector[0];
-
-            if (host.type === "pseudo" && host.name === "host") {
-              const variantSelector = Array.isArray(host.data)
-                ? CSSwhat.stringify(host.data)
-                : host.data || undefined;
-
-              console.log(variantSelector);
-
-              getVariantRules({ selector: variantSelector, media }).set(
-                "",
-                node
-              );
-            }
-
-            const id = selector[0];
-            if (
-              id.type === "attribute" &&
-              id.action === "equals" &&
-              id.name === "id"
-            ) {
-              console.log(media, id.value);
-              getVariantRules({ media }).set(id.value, node);
-            }
-
+          const host = parseHostSelector(selector);
+          if (host) {
+            getVariantRules({ selector: host.hostSelector, media }).set(
+              "",
+              node
+            );
             continue;
           }
 
-          // :host #{id} or :host({condition}) #{id}
-          if (selector.length === 3) {
-            const host = selector[0];
-            const desc = selector[1];
-            const id = selector[2];
+          const id = parseIDSelector(selector);
+          if (id) {
+            getVariantRules({ media }).set(id, node);
+            continue;
+          }
 
-            if (
-              host.type === "pseudo" &&
-              host.name === "host" &&
-              desc.type === "descendant" &&
-              id.type === "attribute" &&
-              id.action === "equals" &&
-              id.name === "id"
-            ) {
-              const variantSelector = Array.isArray(host.data)
-                ? CSSwhat.stringify(host.data)
-                : host.data || undefined;
-
-              console.log(variantSelector);
-
-              getVariantRules({ selector: variantSelector, media }).set(
-                id.value,
-                node
-              );
-            }
-
+          const idInsideHost = parseIDInsideHostSelector(selector);
+          if (idInsideHost) {
+            getVariantRules({ selector: idInsideHost.hostSelector, media }).set(
+              idInsideHost.id,
+              node
+            );
             continue;
           }
         }
