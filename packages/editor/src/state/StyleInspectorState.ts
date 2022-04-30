@@ -1,3 +1,4 @@
+import { sameOrNone } from "@seanchas116/paintkit/src/util/Collection";
 import { MIXED, sameOrMixed } from "@seanchas116/paintkit/src/util/Mixed";
 import { startCase } from "lodash-es";
 import { action, computed, makeObservable } from "mobx";
@@ -14,6 +15,12 @@ class StylePropertyState {
 
   readonly state: StyleInspectorState;
   readonly key: StyleKey;
+
+  @computed get placeholder(): string | undefined {
+    return sameOrNone(
+      this.state.computedStyles.map((style) => style[this.key])
+    );
+  }
 
   @computed get value(): string | typeof MIXED | undefined {
     return sameOrMixed(this.state.styles.map((style) => style[this.key]));
@@ -53,6 +60,9 @@ export class StyleInspectorState {
 
   @computed get styles(): Style[] {
     return this.selectedInstances.map((instance) => instance.style);
+  }
+  @computed get computedStyles(): Style[] {
+    return this.selectedInstances.map((instance) => instance.computedStyle);
   }
 
   readonly props: Record<StyleKey, StylePropertyState>;

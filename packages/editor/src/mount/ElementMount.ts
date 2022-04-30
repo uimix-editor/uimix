@@ -1,9 +1,11 @@
 import { reaction } from "mobx";
 import { Rect } from "paintvec";
+import { kebabCase } from "lodash-es";
 import { Element } from "../models/Element";
 import { Text } from "../models/Text";
 import { ElementInstance } from "../models/ElementInstance";
 import { TextInstance } from "../models/TextInstance";
+import { styleKeys } from "../models/Style";
 import { TextMount } from "./TextMount";
 import { MountContext } from "./MountContext";
 
@@ -168,6 +170,13 @@ export class ElementMount {
     this.instance.boundingBox = Rect.from(
       this.dom.getBoundingClientRect()
     ).transform(viewportToDocument);
+
+    const computedStyle = getComputedStyle(this.dom);
+    for (const key of styleKeys) {
+      this.instance.computedStyle[key] = computedStyle.getPropertyValue(
+        kebabCase(key)
+      );
+    }
 
     for (const childMount of this.childMountSync.childMounts) {
       childMount.updateBoundingBox();

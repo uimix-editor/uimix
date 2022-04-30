@@ -65,6 +65,7 @@ export class ElementInstance {
   }
 
   readonly style = new Style();
+  readonly computedStyle = new Style();
 
   @observable selected = false;
 

@@ -64,18 +64,21 @@ export const StyleInspector: React.FC = observer(function StyleInspector() {
             <DimensionInput
               icon={formatSizeIcon}
               title="font-size"
+              placeholder={state.props.fontSize.placeholder}
               value={state.props.fontSize.value}
               onChange={state.props.fontSize.onChange}
             />
             <DimensionInput
               icon={lineSpacingIcon}
               title="line-height"
+              placeholder={state.props.lineHeight.placeholder}
               value={state.props.lineHeight.value}
               onChange={state.props.lineHeight.onChange}
             />
             <DimensionInput
               icon={spaceBarIcon}
               title="letter-spacing"
+              placeholder={state.props.letterSpacing.placeholder}
               value={state.props.letterSpacing.value}
               onChange={state.props.letterSpacing.onChange}
             />
