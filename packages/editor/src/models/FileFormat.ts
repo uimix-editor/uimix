@@ -210,10 +210,10 @@ function dumpComponent(component: Component): hast.Element {
   children.push(
     "\n",
     h("template", ["\n", ...component.rootElement.innerHTML, "\n"]),
+    "\n",
+    h("style", {}, dumpComponentStyles(component).toString()),
     "\n"
   );
-
-  children.push(h("style", {}, dumpComponentStyles(component).toString()));
 
   return h(
     "macaron-component",
