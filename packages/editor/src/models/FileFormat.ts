@@ -76,53 +76,62 @@ function loadComponentStyles(component: Component, root: postcss.Root): void {
     );
   };
 
-  for (const node of root.nodes) {
-    if (node.type === "rule") {
-      for (const selector of CSSwhat.parse(node.selector)) {
-        // #{id}
-        if (selector.length === 1) {
-          const id = selector[0];
-          if (
-            id.type === "attribute" &&
-            id.action === "equals" &&
-            id.name === "id"
-          ) {
-            getVariantRules({}).set(id.value, node);
+  const addNodes = (nodes: postcss.ChildNode[], media?: string) => {
+    for (const node of nodes) {
+      if (node.type === "rule") {
+        for (const selector of CSSwhat.parse(node.selector)) {
+          // #{id}
+          if (selector.length === 1) {
+            const id = selector[0];
+            if (
+              id.type === "attribute" &&
+              id.action === "equals" &&
+              id.name === "id"
+            ) {
+              getVariantRules({ media }).set(id.value, node);
+            }
+
+            continue;
           }
 
-          continue;
+          // :host #{id} or :host({condition}) #{id}
+          if (selector.length === 3) {
+            const host = selector[0];
+            const desc = selector[1];
+            const id = selector[2];
+
+            if (
+              host.type === "pseudo" &&
+              host.name === "host" &&
+              desc.type === "descendant" &&
+              id.type === "attribute" &&
+              id.action === "equals" &&
+              id.name === "id"
+            ) {
+              const variantSelector = Array.isArray(host.data)
+                ? CSSwhat.stringify(host.data)
+                : host.data || undefined;
+
+              console.log(variantSelector);
+
+              getVariantRules({ selector: variantSelector, media }).set(
+                id.value,
+                node
+              );
+            }
+
+            continue;
+          }
         }
-
-        // :host #{id} or :host({condition}) #{id}
-        if (selector.length === 3) {
-          const host = selector[0];
-          const desc = selector[1];
-          const id = selector[2];
-
-          if (
-            host.type === "pseudo" &&
-            host.name === "host" &&
-            desc.type === "descendant" &&
-            id.type === "attribute" &&
-            id.action === "equals" &&
-            id.name === "id"
-          ) {
-            const variantSelector = Array.isArray(host.data)
-              ? CSSwhat.stringify(host.data)
-              : host.data || undefined;
-
-            console.log(variantSelector);
-
-            getVariantRules({ selector: variantSelector }).set(id.value, node);
-          }
-
-          continue;
+      } else if (node.type === "atrule") {
+        if (node.name === "media") {
+          addNodes(node.nodes, node.params);
         }
       }
     }
+  };
 
-    // TODO: media queries
-  }
+  addNodes(root.nodes);
 
   for (const variant of component.allVariants) {
     const rules =
