@@ -8,24 +8,24 @@
   </template>
   <style>
     :host {
-        font-family: Helvetica
+      font-family: Helvetica;
     }
     #heading {
-        color: #FF0000
+      color: #ff0000;
     }
     :host(:hover) {
-        font-family: Menlo
+      font-family: Menlo;
     }
     :host(:hover) #heading {
-        color: #0000FF
+      color: #0000ff;
     }
     @media (max-width: 768px) {
-        :host {
-            font-family: Avenir Next
-        }
-        #heading {
-            color: #008000
-        }
+      :host {
+        font-family: Avenir Next;
+      }
+      #heading {
+        color: #008000;
+      }
     }
   </style>
 </macaron-component>
