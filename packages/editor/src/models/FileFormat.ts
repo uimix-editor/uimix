@@ -97,17 +97,13 @@ function loadComponentStyles(component: Component, root: postcss.Root): void {
               );
             }
 
-            continue;
-          }
-
-          // #{id}
-          if (selector.length === 1) {
             const id = selector[0];
             if (
               id.type === "attribute" &&
               id.action === "equals" &&
               id.name === "id"
             ) {
+              console.log(media, id.value);
               getVariantRules({ media }).set(id.value, node);
             }
 
