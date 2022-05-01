@@ -16,6 +16,7 @@ import marginBottomIcon from "@seanchas116/paintkit/src/icon/MarginBottom";
 import marginLeftIcon from "@seanchas116/paintkit/src/icon/MarginLeft";
 import { DimensionInput } from "@seanchas116/paintkit/src/components/DimensionInput";
 import { StyleInspectorState } from "../../../../state/StyleInspectorState";
+import { lengthPercentageUnits } from "./Units";
 
 const positionOptions = [
   {
@@ -55,6 +56,8 @@ export const PositionPane: React.FC<{
             label="T"
             title="top"
             placeholder={state.props.top.placeholder}
+            units={lengthPercentageUnits}
+            keywords={["auto"]}
             value={state.props.top.value}
             onChange={state.props.top.onChange}
           />
@@ -62,6 +65,8 @@ export const PositionPane: React.FC<{
             label="R"
             title="right"
             placeholder={state.props.right.placeholder}
+            units={lengthPercentageUnits}
+            keywords={["auto"]}
             value={state.props.right.value}
             onChange={state.props.right.onChange}
           />
@@ -69,6 +74,8 @@ export const PositionPane: React.FC<{
             label="B"
             title="bottom"
             placeholder={state.props.bottom.placeholder}
+            units={lengthPercentageUnits}
+            keywords={["auto"]}
             value={state.props.bottom.value}
             onChange={state.props.bottom.onChange}
           />
@@ -76,6 +83,8 @@ export const PositionPane: React.FC<{
             label="L"
             title="left"
             placeholder={state.props.left.placeholder}
+            units={lengthPercentageUnits}
+            keywords={["auto"]}
             value={state.props.left.value}
             onChange={state.props.left.onChange}
           />
@@ -85,6 +94,8 @@ export const PositionPane: React.FC<{
             icon={marginTopIcon}
             title="margin-top"
             placeholder={state.props.marginTop.placeholder}
+            units={lengthPercentageUnits}
+            keywords={["auto"]}
             value={state.props.marginTop.value}
             onChange={state.props.marginTop.onChange}
           />
@@ -92,6 +103,8 @@ export const PositionPane: React.FC<{
             icon={marginRightIcon}
             title="margin-right"
             placeholder={state.props.marginRight.placeholder}
+            units={lengthPercentageUnits}
+            keywords={["auto"]}
             value={state.props.marginRight.value}
             onChange={state.props.marginRight.onChange}
           />
@@ -99,6 +112,8 @@ export const PositionPane: React.FC<{
             icon={marginBottomIcon}
             title="margin-bottom"
             placeholder={state.props.marginBottom.placeholder}
+            units={lengthPercentageUnits}
+            keywords={["auto"]}
             value={state.props.marginBottom.value}
             onChange={state.props.marginBottom.onChange}
           />
@@ -106,6 +121,8 @@ export const PositionPane: React.FC<{
             icon={marginLeftIcon}
             title="margin-left"
             placeholder={state.props.marginLeft.placeholder}
+            units={lengthPercentageUnits}
+            keywords={["auto"]}
             value={state.props.marginLeft.value}
             onChange={state.props.marginLeft.onChange}
           />

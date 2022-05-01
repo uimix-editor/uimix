@@ -26,6 +26,7 @@ import { DimensionInput } from "@seanchas116/paintkit/src/components/DimensionIn
 import { IconRadio } from "@seanchas116/paintkit/src/components/IconRadio";
 import { StyleInspectorState } from "../../../../state/StyleInspectorState";
 import { CSSColorInput } from "../CSSColorInput";
+import { lengthPercentageUnits } from "./Units";
 
 const textAlignOptions = [
   {
@@ -121,6 +122,7 @@ export const TextPane: React.FC<{
           <DimensionInput
             icon={formatSizeIcon}
             title="font-size"
+            units={lengthPercentageUnits}
             placeholder={state.props.fontSize.placeholder}
             value={state.props.fontSize.value}
             onChange={state.props.fontSize.onChange}
@@ -128,6 +130,7 @@ export const TextPane: React.FC<{
           <DimensionInput
             icon={lineSpacingIcon}
             title="line-height"
+            units={["", ...lengthPercentageUnits]}
             placeholder={state.props.lineHeight.placeholder}
             value={state.props.lineHeight.value}
             onChange={state.props.lineHeight.onChange}
@@ -135,6 +138,7 @@ export const TextPane: React.FC<{
           <DimensionInput
             icon={spaceBarIcon}
             title="letter-spacing"
+            units={["", ...lengthPercentageUnits]}
             placeholder={state.props.letterSpacing.placeholder}
             value={state.props.letterSpacing.value}
             onChange={state.props.letterSpacing.onChange}
