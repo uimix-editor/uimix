@@ -13,7 +13,7 @@ import { useEditorState } from "../EditorStateContext";
 import { OutlineTreeView } from "./outline/OutlineTreeView";
 import { ElementInspector } from "./inspector/ElementInspector";
 import { VariantInspector } from "./inspector/VariantInspector";
-import { StyleInspector } from "./inspector/StyleInspector";
+import { StyleInspector } from "./inspector/style/StyleInspector";
 
 const RightSideBarWrap = styled.div`
   position: relative;
