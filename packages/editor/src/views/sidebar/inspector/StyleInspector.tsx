@@ -7,6 +7,8 @@ import lineSpacingIcon from "@iconify-icons/ic/outline-format-line-spacing";
 import formatAlignLeftIcon from "@iconify-icons/ic/outline-format-align-left";
 import formatAlignCenterIcon from "@iconify-icons/ic/outline-format-align-center";
 import formatAlignRightIcon from "@iconify-icons/ic/outline-format-align-right";
+import lineWeightIcon from "@iconify-icons/ic/outline-line-weight";
+import fontDownloadIcon from "@iconify-icons/ic/outline-font-download";
 import noItalicIcon from "@seanchas116/paintkit/src/icon/NoItalic";
 import italicIcon from "@seanchas116/paintkit/src/icon/Italic";
 import {
@@ -88,14 +90,17 @@ export const StyleInspector: React.FC = observer(function StyleInspector() {
         <PaneHeading>Text</PaneHeading>
         <RowGroup>
           <ComboBox
+            icon={fontDownloadIcon}
             value={state.props.fontFamily.value}
+            placeholder={state.props.fontFamily.placeholder}
             options={["Times", "Helvetica"].map((value) => ({ value }))}
             onChange={state.props.fontFamily.onChange}
           />
           <Row11>
             <ComboBox
+              icon={lineWeightIcon}
               value={state.props.fontWeight.value}
-              placeholder="Weight"
+              placeholder={state.props.fontWeight.placeholder}
               options={[
                 { value: "100", text: "100" },
                 { value: "200", text: "200" },
