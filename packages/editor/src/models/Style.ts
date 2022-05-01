@@ -12,6 +12,18 @@ export const styleKeys = [
   "marginRight",
   "marginBottom",
   "marginLeft",
+
+  "width",
+  "minWidth",
+  "maxWidth",
+  "height",
+  "minHeight",
+  "maxHeight",
+  "borderTopLeftRadius",
+  "borderTopRightRadius",
+  "borderBottomRightRadius",
+  "borderBottomLeftRadius",
+
   "color",
   "fontFamily",
   "fontWeight",
