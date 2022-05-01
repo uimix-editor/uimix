@@ -9,6 +9,10 @@ import { IconRadio } from "@seanchas116/paintkit/src/components/IconRadio";
 import relativePositionIcon from "@seanchas116/paintkit/src/icon/RelativePosition";
 import staticPositionIcon from "@seanchas116/paintkit/src/icon/StaticPosition";
 import absolutePositionIcon from "@seanchas116/paintkit/src/icon/AbsolutePosition";
+import marginTopIcon from "@seanchas116/paintkit/src/icon/MarginTop";
+import marginRightIcon from "@seanchas116/paintkit/src/icon/MarginRight";
+import marginBottomIcon from "@seanchas116/paintkit/src/icon/MarginBottom";
+import marginLeftIcon from "@seanchas116/paintkit/src/icon/MarginLeft";
 import styled from "styled-components";
 import { DimensionInput } from "@seanchas116/paintkit/src/components/DimensionInput";
 import { StyleInspectorState } from "../../../../state/StyleInspectorState";
@@ -102,6 +106,36 @@ export const PositionPane: React.FC<{
             placeholder={state.props.left.placeholder}
             value={state.props.left.value}
             onChange={state.props.left.onChange}
+          />
+        </FourEdgeGrid>
+        <FourEdgeGrid>
+          <DimensionInput
+            icon={marginTopIcon}
+            title="margin-top"
+            placeholder={state.props.marginTop.placeholder}
+            value={state.props.marginTop.value}
+            onChange={state.props.marginTop.onChange}
+          />
+          <DimensionInput
+            icon={marginRightIcon}
+            title="margin-right"
+            placeholder={state.props.marginRight.placeholder}
+            value={state.props.marginRight.value}
+            onChange={state.props.marginRight.onChange}
+          />
+          <DimensionInput
+            icon={marginBottomIcon}
+            title="margin-bottom"
+            placeholder={state.props.marginBottom.placeholder}
+            value={state.props.marginBottom.value}
+            onChange={state.props.marginBottom.onChange}
+          />
+          <DimensionInput
+            icon={marginLeftIcon}
+            title="margin-left"
+            placeholder={state.props.marginLeft.placeholder}
+            value={state.props.marginLeft.value}
+            onChange={state.props.marginLeft.onChange}
           />
         </FourEdgeGrid>
       </RowGroup>
