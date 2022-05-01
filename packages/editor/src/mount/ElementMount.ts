@@ -1,9 +1,11 @@
 import { reaction } from "mobx";
 import { Rect } from "paintvec";
+import { kebabCase } from "lodash-es";
 import { Element } from "../models/Element";
 import { Text } from "../models/Text";
 import { ElementInstance } from "../models/ElementInstance";
 import { TextInstance } from "../models/TextInstance";
+import { styleKeys } from "../models/Style";
 import { TextMount } from "./TextMount";
 import { MountContext } from "./MountContext";
 
@@ -73,6 +75,7 @@ export class ChildMountSync {
         }
       }
     }
+    this._childMounts = newChildMounts;
 
     for (const elementMount of existingElementMounts.values()) {
       elementMount.dispose();
@@ -96,11 +99,15 @@ export class ChildMountSync {
     this.childMounts.forEach((childMount) => childMount.dispose());
   }
 
+  get childMounts(): (ElementMount | TextMount)[] {
+    return this._childMounts;
+  }
+
   private readonly instance: ElementInstance;
   private readonly dom: HTMLElement | SVGElement | ShadowRoot;
   private readonly context: MountContext;
   private readonly onUpdateChildren?: () => void;
-  private childMounts: (ElementMount | TextMount)[] = [];
+  private _childMounts: (ElementMount | TextMount)[] = [];
   private readonly disposers: (() => void)[] = [];
 }
 
@@ -150,6 +157,20 @@ export class ElementMount {
     return "element";
   }
 
+  updateBoundingBoxLater(): void {
+    this.context.registry
+      .getVariantMount(this.instance.variant)
+      ?.updateBoundingBoxLater();
+  }
+
+  updateBoundingBox(): void {
+    fetchComputedValues(this.instance, this.dom, this.context);
+
+    for (const childMount of this.childMountSync.childMounts) {
+      childMount.updateBoundingBox();
+    }
+  }
+
   private isDisposed = false;
   private readonly disposers: (() => void)[] = [];
   readonly instance: ElementInstance;
@@ -157,17 +178,23 @@ export class ElementMount {
   readonly domDocument: globalThis.Document;
   readonly dom: HTMLElement | SVGElement;
   private readonly childMountSync: ChildMountSync;
+}
 
-  updateBoundingBoxLater(): void {
-    this.context.boundingBoxUpdateScheduler.schedule(this);
-  }
+export function fetchComputedValues(
+  instance: ElementInstance,
+  dom: HTMLElement | SVGElement,
+  context: MountContext
+): void {
+  const viewportToDocument = context.editorState.scroll.viewportToDocument;
 
-  updateBoundingBox(): void {
-    const viewportToDocument =
-      this.context.editorState.scroll.viewportToDocument;
+  instance.boundingBox = Rect.from(dom.getBoundingClientRect()).transform(
+    viewportToDocument
+  );
 
-    this.instance.boundingBox = Rect.from(
-      this.dom.getBoundingClientRect()
-    ).transform(viewportToDocument);
+  const computedStyle = getComputedStyle(dom);
+  for (const key of styleKeys) {
+    instance.computedStyle[key] = computedStyle.getPropertyValue(
+      kebabCase(key)
+    );
   }
 }

@@ -6,4 +6,26 @@
     <h1 title="Hover Me" id="heading">Hello, <em id="em">World!</em></h1>
     <div id="div1">Type something</div>
   </template>
+  <style>
+    :host {
+      font-family: Helvetica;
+    }
+    #heading {
+      color: #ff0000;
+    }
+    :host(:hover) {
+      font-family: Menlo;
+    }
+    :host(:hover) #heading {
+      color: #0000ff;
+    }
+    @media (max-width: 768px) {
+      :host {
+        font-family: Avenir Next;
+      }
+      #heading {
+        color: #008000;
+      }
+    }
+  </style>
 </macaron-component>

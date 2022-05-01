@@ -8,4 +8,7 @@ module.exports = {
       useESM: true,
     },
   },
+  moduleNameMapper: {
+    "^postcss$": "postcss/lib/postcss.mjs",
+  },
 };

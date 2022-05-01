@@ -1,28 +1,24 @@
-import { assertNonNull } from "@seanchas116/paintkit/src/util/Assert";
 import { reaction } from "mobx";
-import { DefaultVariant, Variant } from "../models/Variant";
+import { Component } from "../models/Component";
 import { EditorState } from "../state/EditorState";
 import { BoundingBoxUpdateScheduler } from "./BoundingBoxUpdateScheduler";
+import { ComponentMount } from "./ComponentMount";
 import { MountRegistry } from "./MountRegistry";
-import { VariantMount } from "./VariantMount";
 
 export class DocumentMount {
   constructor(editorState: EditorState, domDocument: globalThis.Document) {
     this.editorState = editorState;
     this.dom = domDocument.createElement("div");
 
-    const getAllVariants = () =>
-      editorState.document.components.children.flatMap((component) => [
-        component.defaultVariant,
-        ...component.variants.children,
-      ]);
-
     this.disposers = [
-      reaction(getAllVariants, (variants) => {
-        this.updateVariants(variants);
-      }),
+      reaction(
+        () => editorState.document.components.children,
+        (components) => {
+          this.updateComponents(components);
+        }
+      ),
     ];
-    this.updateVariants(getAllVariants());
+    this.updateComponents(editorState.document.components.children);
   }
 
   dispose(): void {
@@ -30,51 +26,42 @@ export class DocumentMount {
       throw new Error("DocumentMount is already disposed");
     }
 
-    for (const variantMount of this.variantMounts) {
-      variantMount.dispose();
-    }
+    this.componentMounts.forEach((mount) => mount.dispose());
     this.disposers.forEach((disposer) => disposer());
 
     this.isDisposed = true;
   }
 
-  private updateVariants(variants: (Variant | DefaultVariant)[]): void {
-    const existingVariantMounts = new Map<
-      Variant | DefaultVariant,
-      VariantMount
-    >();
+  private updateComponents(components: readonly Component[]): void {
+    const oldMounts = new Map<Component, ComponentMount>();
 
-    for (const variantMount of this.variantMounts) {
-      existingVariantMounts.set(variantMount.variant, variantMount);
+    for (const mount of this.componentMounts) {
+      oldMounts.set(mount.component, mount);
     }
-    this.variantMounts = [];
+    this.componentMounts = [];
 
-    for (const variant of variants) {
+    for (const component of components) {
       const variantMount =
-        existingVariantMounts.get(variant) ||
-        new VariantMount(
-          assertNonNull(variant.component),
-          variant,
-          {
-            editorState: this.editorState,
-            registry: this.registry,
-            boundingBoxUpdateScheduler: this.boundingBoxUpdateScheduler,
-          },
-          this.dom.ownerDocument
-        );
-      existingVariantMounts.delete(variant);
-      this.variantMounts.push(variantMount);
+        oldMounts.get(component) ||
+        new ComponentMount(component, {
+          domDocument: this.dom.ownerDocument,
+          editorState: this.editorState,
+          registry: this.registry,
+          boundingBoxUpdateScheduler: this.boundingBoxUpdateScheduler,
+        });
+      oldMounts.delete(component);
+      this.componentMounts.push(variantMount);
     }
 
-    for (const variantMount of existingVariantMounts.values()) {
+    for (const variantMount of oldMounts.values()) {
       variantMount.dispose();
     }
 
     while (this.dom.firstChild) {
       this.dom.firstChild.remove();
     }
-    for (const variantMount of this.variantMounts) {
-      this.dom.append(variantMount.dom);
+    for (const mount of this.componentMounts) {
+      this.dom.append(mount.dom);
     }
   }
 
@@ -85,5 +72,5 @@ export class DocumentMount {
   readonly dom: HTMLDivElement;
   readonly registry = new MountRegistry();
   readonly boundingBoxUpdateScheduler = new BoundingBoxUpdateScheduler();
-  private variantMounts: VariantMount[] = [];
+  private componentMounts: ComponentMount[] = [];
 }

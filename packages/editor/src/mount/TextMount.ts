@@ -45,6 +45,10 @@ export class TextMount {
     return "text";
   }
 
+  updateBoundingBox(): void {
+    // do nothing
+  }
+
   private isDisposed = false;
   private readonly disposers: (() => void)[] = [];
 

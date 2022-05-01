@@ -1,27 +1,31 @@
 import { reaction } from "mobx";
-import { Rect } from "paintvec";
 import { Component } from "../models/Component";
 import { ElementInstance } from "../models/ElementInstance";
 import { DefaultVariant, Variant } from "../models/Variant";
-import { ChildMountSync } from "./ElementMount";
+import { ChildMountSync, fetchComputedValues } from "./ElementMount";
 import { MountContext } from "./MountContext";
 
 export class VariantMount {
   constructor(
     component: Component,
     variant: Variant | DefaultVariant,
-    context: MountContext,
-    domDocument: globalThis.Document
+    styleSheet: CSSStyleSheet,
+    context: MountContext
   ) {
     this.component = component;
     this.variant = variant;
     this.context = context;
-    this.domDocument = domDocument;
 
-    this.dom = domDocument.createElement("div");
-    this.host = domDocument.createElement("div");
+    this.dom = context.domDocument.createElement("div");
+    this.host = context.domDocument.createElement("div");
     this.shadow = this.host.attachShadow({ mode: "open" });
+    // @ts-ignore
+    this.shadow.adoptedStyleSheets = [styleSheet];
     this.dom.append(this.host);
+
+    if (this.variant.type === "variant") {
+      this.host.classList.add("variant-" + this.variant.key);
+    }
 
     this.dom.style.position = "absolute";
     this.dom.style.background = "white";
@@ -77,7 +81,6 @@ export class VariantMount {
   readonly component: Component;
   readonly variant: Variant | DefaultVariant;
   readonly context: MountContext;
-  readonly domDocument: globalThis.Document;
 
   readonly dom: HTMLDivElement;
   private readonly host: HTMLDivElement;
@@ -90,14 +93,13 @@ export class VariantMount {
   }
 
   updateBoundingBox(): void {
-    const viewportToDocument =
-      this.context.editorState.scroll.viewportToDocument;
-
     const { rootInstance } = this.variant;
     if (rootInstance) {
-      rootInstance.boundingBox = Rect.from(
-        this.host.getBoundingClientRect()
-      ).transform(viewportToDocument);
+      fetchComputedValues(rootInstance, this.host, this.context);
+    }
+
+    for (const childMount of this.childMountSync.childMounts) {
+      childMount.updateBoundingBox();
     }
   }
 }

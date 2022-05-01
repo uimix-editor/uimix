@@ -71,4 +71,8 @@ export class TextInstance {
   expandAncestors(): void {
     this.parent?.expandAncestors();
   }
+
+  @computed get allDescendants(): (ElementInstance | TextInstance)[] {
+    return [this];
+  }
 }

@@ -3,7 +3,7 @@ import styled from "styled-components";
 import { colors } from "@seanchas116/paintkit/src/components/Palette";
 import { action } from "mobx";
 import { EditorState } from "../state/EditorState";
-import { RightSideBar } from "./SideBar";
+import { RightSideBar } from "./sidebar/SideBar";
 import { EditorStateContext } from "./EditorStateContext";
 import { ToolBar } from "./ToolBar";
 import { Viewport } from "./viewport/Viewport";

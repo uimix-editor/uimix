@@ -3,6 +3,7 @@ import { Rect } from "paintvec";
 import shortUUID from "short-uuid";
 import { Element } from "./Element";
 import { RootElement } from "./RootElement";
+import { Style } from "./Style";
 import { TextInstance } from "./TextInstance";
 import { DefaultVariant, Variant } from "./Variant";
 
@@ -63,6 +64,9 @@ export class ElementInstance {
     );
   }
 
+  readonly style = new Style();
+  readonly computedStyle = new Style();
+
   @observable selected = false;
 
   @computed get ancestorSelected(): boolean {
@@ -105,4 +109,8 @@ export class ElementInstance {
   }
 
   @observable.ref boundingBox: Rect = new Rect();
+
+  @computed get allDescendants(): (ElementInstance | TextInstance)[] {
+    return [this, ...this.children.flatMap((child) => child.allDescendants)];
+  }
 }
