@@ -1,25 +1,28 @@
-import { sameOrNone } from "@seanchas116/paintkit/src/util/Collection";
 import { MIXED, sameOrMixed } from "@seanchas116/paintkit/src/util/Mixed";
 import { startCase } from "lodash-es";
 import { action, computed, makeObservable, observable } from "mobx";
 import { ElementInstance } from "../models/ElementInstance";
-import { Style, StyleKey, styleKeys } from "../models/Style";
+import { ExtraStyleKey, extraStyleKeys, Style } from "../models/Style";
 import { EditorState } from "./EditorState";
 
 class StylePropertyState {
-  constructor(state: StyleInspectorState, key: StyleKey) {
+  constructor(state: StyleInspectorState, key: ExtraStyleKey) {
     this.state = state;
     this.key = key;
     makeObservable(this);
   }
 
   readonly state: StyleInspectorState;
-  readonly key: StyleKey;
+  readonly key: ExtraStyleKey;
 
   @computed get computed(): string | undefined {
-    return sameOrNone(
+    const value = sameOrMixed(
       this.state.computedStyles.map((style) => style[this.key])
     );
+    if (value === MIXED) {
+      return;
+    }
+    return value;
   }
 
   @computed get value(): string | typeof MIXED | undefined {
@@ -48,8 +51,8 @@ export class StyleInspectorState {
     makeObservable(this);
 
     this.props = Object.fromEntries(
-      styleKeys.map((key) => [key, new StylePropertyState(this, key)])
-    ) as Record<StyleKey, StylePropertyState>;
+      extraStyleKeys.map((key) => [key, new StylePropertyState(this, key)])
+    ) as Record<ExtraStyleKey, StylePropertyState>;
   }
 
   readonly editorState: EditorState;
@@ -65,7 +68,7 @@ export class StyleInspectorState {
     return this.selectedInstances.map((instance) => instance.computedStyle);
   }
 
-  readonly props: Record<StyleKey, StylePropertyState>;
+  readonly props: Record<ExtraStyleKey, StylePropertyState>;
 
   @observable showsSizeDetails = false;
 

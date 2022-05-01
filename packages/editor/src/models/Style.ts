@@ -1,3 +1,4 @@
+import { MIXED, sameOrMixed } from "@seanchas116/paintkit/src/util/Mixed";
 import { kebabCase } from "lodash-es";
 import { makeObservable, observable } from "mobx";
 import * as postcss from "postcss";
@@ -35,7 +36,11 @@ export const styleKeys = [
   "textAlign",
 ] as const;
 
+export const extraStyleKeys = [...styleKeys, "borderRadius"] as const;
+
 export type StyleKey = typeof styleKeys[number];
+
+export type ExtraStyleKey = typeof extraStyleKeys[number];
 
 export type StyleJSON = {
   [key in StyleKey]?: string;
@@ -97,5 +102,30 @@ export class Style extends StyleBase {
     for (const key of styleKeys) {
       this[key] = props[kebabCase(key)];
     }
+  }
+
+  get borderRadius(): string | typeof MIXED | undefined {
+    return sameOrMixed(
+      (
+        [
+          "borderTopLeftRadius",
+          "borderTopRightRadius",
+          "borderBottomRightRadius",
+          "borderBottomLeftRadius",
+        ] as const
+      )
+        .map((key) => this[key])
+        .filter((value) => value !== undefined)
+    );
+  }
+
+  set borderRadius(value: string | typeof MIXED | undefined) {
+    if (value === MIXED) {
+      return;
+    }
+    this.borderTopLeftRadius = value;
+    this.borderTopRightRadius = value;
+    this.borderBottomRightRadius = value;
+    this.borderBottomLeftRadius = value;
   }
 }

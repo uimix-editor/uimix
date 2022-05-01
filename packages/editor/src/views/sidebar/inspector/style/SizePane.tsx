@@ -9,6 +9,7 @@ import {
 } from "@seanchas116/paintkit/src/components/sidebar/Inspector";
 import { DimensionInput } from "@seanchas116/paintkit/src/components/DimensionInput";
 import { MoreButton } from "@seanchas116/paintkit/src/components/IconButton";
+import roundedCorderIcon from "@iconify-icons/ic/outline-rounded-corner";
 import Tippy from "@tippyjs/react";
 import { StyleInspectorState } from "../../../../state/StyleInspectorState";
 import { lengthPercentageUnits } from "./Units";
@@ -93,6 +94,48 @@ export const SizePane: React.FC<{
               />
             </Row111>
           </RowGroup>
+          <RowGroup>
+            <Row111>
+              <DimensionInput
+                icon={{ ...roundedCorderIcon, rotate: -1 }}
+                title="border-top-left-radius"
+                placeholder={state.props.borderTopLeftRadius.computed}
+                units={lengthPercentageUnits}
+                keywords={["auto"]}
+                value={state.props.borderTopLeftRadius.value}
+                onChange={state.props.borderTopLeftRadius.onChange}
+              />
+              <DimensionInput
+                icon={roundedCorderIcon}
+                title="border-top-right-radius"
+                placeholder={state.props.borderTopRightRadius.computed}
+                units={lengthPercentageUnits}
+                keywords={["auto"]}
+                value={state.props.borderTopRightRadius.value}
+                onChange={state.props.borderTopRightRadius.onChange}
+              />
+            </Row111>
+            <Row111>
+              <DimensionInput
+                icon={{ ...roundedCorderIcon, rotate: 2 }}
+                title="border-bottom-left-radius"
+                placeholder={state.props.borderBottomLeftRadius.computed}
+                units={lengthPercentageUnits}
+                keywords={["auto"]}
+                value={state.props.borderBottomLeftRadius.value}
+                onChange={state.props.borderBottomLeftRadius.onChange}
+              />
+              <DimensionInput
+                icon={{ ...roundedCorderIcon, rotate: 1 }}
+                title="border-bottom-right-radius"
+                placeholder={state.props.borderBottomRightRadius.computed}
+                units={lengthPercentageUnits}
+                keywords={["auto"]}
+                value={state.props.borderBottomRightRadius.value}
+                onChange={state.props.borderBottomRightRadius.onChange}
+              />
+            </Row111>
+          </RowGroup>
         </>
       ) : (
         <RowGroup>
@@ -114,6 +157,17 @@ export const SizePane: React.FC<{
               keywords={["auto"]}
               value={state.props.height.value}
               onChange={state.props.height.onChange}
+            />
+          </Row111>
+          <Row111>
+            <DimensionInput
+              icon={roundedCorderIcon}
+              title="border-radius"
+              placeholder={state.props.borderRadius.computed}
+              units={lengthPercentageUnits}
+              keywords={["auto"]}
+              value={state.props.borderRadius.value}
+              onChange={state.props.borderRadius.onChange}
             />
           </Row111>
         </RowGroup>
