@@ -129,13 +129,10 @@ export class ComponentMount {
   }
 
   private updateCSS(css: postcss.Root): void {
-    for (let i = 0; i < this.styleSheet.cssRules.length; i++) {
-      this.styleSheet.deleteRule(i);
-    }
 
-    for (const rule of css.nodes) {
-      this.styleSheet.insertRule(rule.toString());
-    }
+    // @ts-ignore
+    // eslint-disable-next-line @typescript-eslint/no-unsafe-call
+    this.styleSheet.replaceSync(css);
 
     for (const mount of this.variantMounts) {
       mount.updateBoundingBoxLater();
