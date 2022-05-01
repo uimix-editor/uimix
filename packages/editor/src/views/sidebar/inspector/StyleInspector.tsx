@@ -72,6 +72,13 @@ const textDecorationOptions = [
   },
 ];
 
+function stripQuotes(value: string | undefined): string | undefined {
+  if (value) {
+    return value.replace(/^['"]|['"]$/g, "");
+  }
+  return value;
+}
+
 export const StyleInspector: React.FC = observer(function StyleInspector() {
   const editorState = useEditorState();
 
@@ -92,7 +99,7 @@ export const StyleInspector: React.FC = observer(function StyleInspector() {
           <ComboBox
             icon={fontDownloadIcon}
             value={state.props.fontFamily.value}
-            placeholder={state.props.fontFamily.placeholder}
+            placeholder={stripQuotes(state.props.fontFamily.placeholder)}
             options={["Times", "Helvetica"].map((value) => ({ value }))}
             onChange={state.props.fontFamily.onChange}
           />
