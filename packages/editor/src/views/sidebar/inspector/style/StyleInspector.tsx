@@ -3,6 +3,7 @@ import React, { useMemo } from "react";
 import styled from "styled-components";
 import { StyleInspectorState } from "../../../../state/StyleInspectorState";
 import { useEditorState } from "../../../EditorStateContext";
+import { PositionPane } from "./PositionPane";
 import { TextPane } from "./TextPane";
 
 const StyleInspectorWrap = styled.div``;
@@ -21,6 +22,7 @@ export const StyleInspector: React.FC = observer(function StyleInspector() {
 
   return (
     <StyleInspectorWrap>
+      <PositionPane state={state} />
       <TextPane state={state} />
     </StyleInspectorWrap>
   );

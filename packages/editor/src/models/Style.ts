@@ -3,6 +3,11 @@ import { makeObservable, observable } from "mobx";
 import * as postcss from "postcss";
 
 export const styleKeys = [
+  "position",
+  "top",
+  "right",
+  "bottom",
+  "left",
   "color",
   "fontFamily",
   "fontWeight",
