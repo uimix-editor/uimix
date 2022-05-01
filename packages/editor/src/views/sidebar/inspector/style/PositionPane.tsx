@@ -9,9 +9,9 @@ import { IconRadio } from "@seanchas116/paintkit/src/components/IconRadio";
 import relativePositionIcon from "@seanchas116/paintkit/src/icon/RelativePosition";
 import staticPositionIcon from "@seanchas116/paintkit/src/icon/StaticPosition";
 import absolutePositionIcon from "@seanchas116/paintkit/src/icon/AbsolutePosition";
-import { StyleInspectorState } from "../../../../state/StyleInspectorState";
 import styled from "styled-components";
 import { DimensionInput } from "@seanchas116/paintkit/src/components/DimensionInput";
+import { StyleInspectorState } from "../../../../state/StyleInspectorState";
 
 const positionOptions = [
   {
