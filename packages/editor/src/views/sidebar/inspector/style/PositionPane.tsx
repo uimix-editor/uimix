@@ -1,6 +1,7 @@
 import { observer } from "mobx-react-lite";
 import React from "react";
 import {
+  FourEdgeGrid,
   Pane,
   PaneHeading,
   RowGroup,
@@ -13,7 +14,6 @@ import marginTopIcon from "@seanchas116/paintkit/src/icon/MarginTop";
 import marginRightIcon from "@seanchas116/paintkit/src/icon/MarginRight";
 import marginBottomIcon from "@seanchas116/paintkit/src/icon/MarginBottom";
 import marginLeftIcon from "@seanchas116/paintkit/src/icon/MarginLeft";
-import styled from "styled-components";
 import { DimensionInput } from "@seanchas116/paintkit/src/components/DimensionInput";
 import { StyleInspectorState } from "../../../../state/StyleInspectorState";
 
@@ -31,34 +31,6 @@ const positionOptions = [
     icon: absolutePositionIcon,
   },
 ];
-
-const FourEdgeGrid = styled.div`
-  display: grid;
-  grid-template-columns: 1fr 1fr 1fr;
-  grid-template-rows: 24px 24px;
-  gap: 8px;
-  align-items: center;
-
-  > :nth-child(1) {
-    grid-column: 2 / 3;
-    grid-row: 1 / 2;
-  }
-
-  > :nth-child(2) {
-    grid-column: 3 / 4;
-    grid-row: 1 / 3;
-  }
-
-  > :nth-child(3) {
-    grid-column: 2 / 3;
-    grid-row: 2 / 3;
-  }
-
-  > :nth-child(4) {
-    grid-column: 1 / 2;
-    grid-row: 1 / 3;
-  }
-`;
 
 export const PositionPane: React.FC<{
   state: StyleInspectorState;
