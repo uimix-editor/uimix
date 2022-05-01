@@ -16,7 +16,7 @@ class StylePropertyState {
   readonly state: StyleInspectorState;
   readonly key: StyleKey;
 
-  @computed get placeholder(): string | undefined {
+  @computed get computed(): string | undefined {
     return sameOrNone(
       this.state.computedStyles.map((style) => style[this.key])
     );

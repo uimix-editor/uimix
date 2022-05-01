@@ -90,7 +90,7 @@ export const TextPane: React.FC<{
         <ComboBox
           icon={fontDownloadIcon}
           value={state.props.fontFamily.value}
-          placeholder={stripQuotes(state.props.fontFamily.placeholder)}
+          placeholder={stripQuotes(state.props.fontFamily.computed)}
           options={["Times", "Helvetica"].map((value) => ({ value }))}
           onChange={state.props.fontFamily.onChange}
         />
@@ -98,7 +98,7 @@ export const TextPane: React.FC<{
           <ComboBox
             icon={lineWeightIcon}
             value={state.props.fontWeight.value}
-            placeholder={state.props.fontWeight.placeholder}
+            placeholder={state.props.fontWeight.computed}
             options={[
               { value: "100", text: "100" },
               { value: "200", text: "200" },
@@ -123,7 +123,7 @@ export const TextPane: React.FC<{
             icon={formatSizeIcon}
             title="font-size"
             units={lengthPercentageUnits}
-            placeholder={state.props.fontSize.placeholder}
+            placeholder={state.props.fontSize.computed}
             value={state.props.fontSize.value}
             onChange={state.props.fontSize.onChange}
           />
@@ -131,7 +131,7 @@ export const TextPane: React.FC<{
             icon={lineSpacingIcon}
             title="line-height"
             units={["", ...lengthPercentageUnits]}
-            placeholder={state.props.lineHeight.placeholder}
+            placeholder={state.props.lineHeight.computed}
             value={state.props.lineHeight.value}
             onChange={state.props.lineHeight.onChange}
           />
@@ -139,7 +139,7 @@ export const TextPane: React.FC<{
             icon={spaceBarIcon}
             title="letter-spacing"
             units={["", ...lengthPercentageUnits]}
-            placeholder={state.props.letterSpacing.placeholder}
+            placeholder={state.props.letterSpacing.computed}
             value={state.props.letterSpacing.value}
             onChange={state.props.letterSpacing.onChange}
           />
@@ -148,14 +148,14 @@ export const TextPane: React.FC<{
           <IconRadio
             options={fontStyleOptions}
             value={state.props.fontStyle.value}
-            placeholder={state.props.fontStyle.placeholder}
+            placeholder={state.props.fontStyle.computed}
             unsettable
             onChange={state.props.fontStyle.onChange}
           />
           <IconRadio
             options={textDecorationOptions}
             value={state.props.textDecorationLine.value}
-            placeholder={state.props.textDecorationLine.placeholder}
+            placeholder={state.props.textDecorationLine.computed}
             unsettable
             onChange={state.props.textDecorationLine.onChange}
           />
@@ -163,7 +163,7 @@ export const TextPane: React.FC<{
         <IconRadio
           options={textAlignOptions}
           value={state.props.textAlign.value}
-          placeholder={state.props.textAlign.placeholder}
+          placeholder={state.props.textAlign.computed}
           unsettable
           onChange={state.props.textAlign.onChange}
         />

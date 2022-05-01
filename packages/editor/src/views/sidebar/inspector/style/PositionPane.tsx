@@ -47,7 +47,7 @@ export const PositionPane: React.FC<{
         <IconRadio
           options={positionOptions}
           value={state.props.position.value}
-          placeholder={state.props.position.placeholder}
+          placeholder={state.props.position.computed}
           unsettable
           onChange={state.props.position.onChange}
         />
@@ -55,7 +55,7 @@ export const PositionPane: React.FC<{
           <DimensionInput
             label="T"
             title="top"
-            placeholder={state.props.top.placeholder}
+            placeholder={state.props.top.computed}
             units={lengthPercentageUnits}
             keywords={["auto"]}
             value={state.props.top.value}
@@ -64,7 +64,7 @@ export const PositionPane: React.FC<{
           <DimensionInput
             label="R"
             title="right"
-            placeholder={state.props.right.placeholder}
+            placeholder={state.props.right.computed}
             units={lengthPercentageUnits}
             keywords={["auto"]}
             value={state.props.right.value}
@@ -73,7 +73,7 @@ export const PositionPane: React.FC<{
           <DimensionInput
             label="B"
             title="bottom"
-            placeholder={state.props.bottom.placeholder}
+            placeholder={state.props.bottom.computed}
             units={lengthPercentageUnits}
             keywords={["auto"]}
             value={state.props.bottom.value}
@@ -82,7 +82,7 @@ export const PositionPane: React.FC<{
           <DimensionInput
             label="L"
             title="left"
-            placeholder={state.props.left.placeholder}
+            placeholder={state.props.left.computed}
             units={lengthPercentageUnits}
             keywords={["auto"]}
             value={state.props.left.value}
@@ -93,7 +93,7 @@ export const PositionPane: React.FC<{
           <DimensionInput
             icon={marginTopIcon}
             title="margin-top"
-            placeholder={state.props.marginTop.placeholder}
+            placeholder={state.props.marginTop.computed}
             units={lengthPercentageUnits}
             keywords={["auto"]}
             value={state.props.marginTop.value}
@@ -102,7 +102,7 @@ export const PositionPane: React.FC<{
           <DimensionInput
             icon={marginRightIcon}
             title="margin-right"
-            placeholder={state.props.marginRight.placeholder}
+            placeholder={state.props.marginRight.computed}
             units={lengthPercentageUnits}
             keywords={["auto"]}
             value={state.props.marginRight.value}
@@ -111,7 +111,7 @@ export const PositionPane: React.FC<{
           <DimensionInput
             icon={marginBottomIcon}
             title="margin-bottom"
-            placeholder={state.props.marginBottom.placeholder}
+            placeholder={state.props.marginBottom.computed}
             units={lengthPercentageUnits}
             keywords={["auto"]}
             value={state.props.marginBottom.value}
@@ -120,7 +120,7 @@ export const PositionPane: React.FC<{
           <DimensionInput
             icon={marginLeftIcon}
             title="margin-left"
-            placeholder={state.props.marginLeft.placeholder}
+            placeholder={state.props.marginLeft.computed}
             units={lengthPercentageUnits}
             keywords={["auto"]}
             value={state.props.marginLeft.value}
