@@ -1,7 +1,7 @@
 import { sameOrNone } from "@seanchas116/paintkit/src/util/Collection";
 import { MIXED, sameOrMixed } from "@seanchas116/paintkit/src/util/Mixed";
 import { startCase } from "lodash-es";
-import { action, computed, makeObservable } from "mobx";
+import { action, computed, makeObservable, observable } from "mobx";
 import { ElementInstance } from "../models/ElementInstance";
 import { Style, StyleKey, styleKeys } from "../models/Style";
 import { EditorState } from "./EditorState";
@@ -66,4 +66,10 @@ export class StyleInspectorState {
   }
 
   readonly props: Record<StyleKey, StylePropertyState>;
+
+  @observable showsSizeDetails = false;
+
+  readonly onToggleShowSizeDetails = action(() => {
+    this.showsSizeDetails = !this.showsSizeDetails;
+  });
 }
