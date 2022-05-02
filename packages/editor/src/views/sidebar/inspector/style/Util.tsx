@@ -87,10 +87,14 @@ export const StyleIconRadio: React.FC<{
   className?: string;
   property: StylePropertyState;
   options: IconRadioOption<string>[];
-}> = observer(({ property, ...props }) => {
+}> = observer(({ property, options, ...props }) => {
   return (
     <IconRadio
       {...props}
+      options={options.map((option) => ({
+        ...option,
+        text: `${kebabCase(property.key)}: ${option.value}`,
+      }))}
       value={property.value}
       placeholder={property.computed}
       unsettable
