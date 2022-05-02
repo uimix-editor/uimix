@@ -15,9 +15,9 @@ import marginTopIcon from "@seanchas116/paintkit/src/icon/MarginTop";
 import marginRightIcon from "@seanchas116/paintkit/src/icon/MarginRight";
 import marginBottomIcon from "@seanchas116/paintkit/src/icon/MarginBottom";
 import marginLeftIcon from "@seanchas116/paintkit/src/icon/MarginLeft";
-import { DimensionInput } from "@seanchas116/paintkit/src/components/DimensionInput";
 import { StyleInspectorState } from "../../../../state/StyleInspectorState";
 import { lengthPercentageUnits } from "./Units";
+import { StyleDimensionInput } from "./Util";
 
 const positionOptions = [
   {
@@ -56,80 +56,56 @@ export const PositionPane: React.FC<{
         />
         {state.props.position.computed !== "static" && (
           <FourEdgeGrid>
-            <DimensionInput
+            <StyleDimensionInput
               label="T"
-              title="top"
-              placeholder={state.props.top.computed}
               units={lengthPercentageUnits}
               keywords={["auto"]}
-              value={state.props.top.value}
-              onChange={state.props.top.onChange}
+              property={state.props.top}
             />
-            <DimensionInput
+            <StyleDimensionInput
               label="R"
-              title="right"
-              placeholder={state.props.right.computed}
               units={lengthPercentageUnits}
               keywords={["auto"]}
-              value={state.props.right.value}
-              onChange={state.props.right.onChange}
+              property={state.props.right}
             />
-            <DimensionInput
+            <StyleDimensionInput
               label="B"
-              title="bottom"
-              placeholder={state.props.bottom.computed}
               units={lengthPercentageUnits}
               keywords={["auto"]}
-              value={state.props.bottom.value}
-              onChange={state.props.bottom.onChange}
+              property={state.props.bottom}
             />
-            <DimensionInput
+            <StyleDimensionInput
               label="L"
-              title="left"
-              placeholder={state.props.left.computed}
               units={lengthPercentageUnits}
               keywords={["auto"]}
-              value={state.props.left.value}
-              onChange={state.props.left.onChange}
+              property={state.props.left}
             />
           </FourEdgeGrid>
         )}
         <FourEdgeGrid>
-          <DimensionInput
+          <StyleDimensionInput
             icon={marginTopIcon}
-            title="margin-top"
-            placeholder={state.props.marginTop.computed}
             units={lengthPercentageUnits}
             keywords={["auto"]}
-            value={state.props.marginTop.value}
-            onChange={state.props.marginTop.onChange}
+            property={state.props.marginTop}
           />
-          <DimensionInput
+          <StyleDimensionInput
             icon={marginRightIcon}
-            title="margin-right"
-            placeholder={state.props.marginRight.computed}
             units={lengthPercentageUnits}
             keywords={["auto"]}
-            value={state.props.marginRight.value}
-            onChange={state.props.marginRight.onChange}
+            property={state.props.marginRight}
           />
-          <DimensionInput
+          <StyleDimensionInput
             icon={marginBottomIcon}
-            title="margin-bottom"
-            placeholder={state.props.marginBottom.computed}
             units={lengthPercentageUnits}
             keywords={["auto"]}
-            value={state.props.marginBottom.value}
-            onChange={state.props.marginBottom.onChange}
+            property={state.props.marginBottom}
           />
-          <DimensionInput
+          <StyleDimensionInput
             icon={marginLeftIcon}
-            title="margin-left"
-            placeholder={state.props.marginLeft.computed}
             units={lengthPercentageUnits}
             keywords={["auto"]}
-            value={state.props.marginLeft.value}
-            onChange={state.props.marginLeft.onChange}
+            property={state.props.marginLeft}
           />
         </FourEdgeGrid>
       </RowGroup>

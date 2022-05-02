@@ -8,7 +8,6 @@ import {
   Row111,
   RowGroup,
 } from "@seanchas116/paintkit/src/components/sidebar/Inspector";
-import { DimensionInput } from "@seanchas116/paintkit/src/components/DimensionInput";
 import {
   IconButton,
   MoreButton,
@@ -18,6 +17,7 @@ import radiusIcon from "@seanchas116/paintkit/src/icon/Radius";
 import Tippy from "@tippyjs/react";
 import { StyleInspectorState } from "../../../../state/StyleInspectorState";
 import { lengthPercentageUnits } from "./Units";
+import { StyleDimensionInput } from "./Util";
 
 export const SizePane: React.FC<{
   state: StyleInspectorState;
@@ -54,140 +54,101 @@ export const SizePane: React.FC<{
         {state.showsSizeDetails ? (
           <>
             <Row111>
-              <DimensionInput
+              <StyleDimensionInput
                 label="W"
-                title="width"
-                placeholder={state.props.width.computed}
                 units={lengthPercentageUnits}
                 keywords={["auto"]}
-                value={state.props.width.value}
-                onChange={state.props.width.onChange}
+                property={state.props.width}
               />
-              <DimensionInput
+              <StyleDimensionInput
                 label=">"
-                title="min-width"
-                placeholder={state.props.minWidth.computed}
                 units={lengthPercentageUnits}
                 keywords={["auto"]}
-                value={state.props.minWidth.value}
-                onChange={state.props.minWidth.onChange}
+                property={state.props.minWidth}
               />
-              <DimensionInput
+              <StyleDimensionInput
                 label="<"
-                title="max-width"
-                placeholder={state.props.maxWidth.computed}
                 units={lengthPercentageUnits}
                 keywords={["auto"]}
-                value={state.props.maxWidth.value}
-                onChange={state.props.maxWidth.onChange}
+                property={state.props.maxWidth}
               />
             </Row111>
             <Row111>
-              <DimensionInput
+              <StyleDimensionInput
                 label="H"
-                title="height"
-                placeholder={state.props.height.computed}
                 units={lengthPercentageUnits}
                 keywords={["auto"]}
-                value={state.props.height.value}
-                onChange={state.props.height.onChange}
+                property={state.props.height}
               />
-              <DimensionInput
+              <StyleDimensionInput
                 label=">"
-                title="min-height"
-                placeholder={state.props.minHeight.computed}
                 units={lengthPercentageUnits}
                 keywords={["auto"]}
-                value={state.props.minHeight.value}
-                onChange={state.props.minHeight.onChange}
+                property={state.props.minHeight}
               />
-              <DimensionInput
+              <StyleDimensionInput
                 label="<"
-                title="max-height"
-                placeholder={state.props.maxHeight.computed}
                 units={lengthPercentageUnits}
                 keywords={["auto"]}
-                value={state.props.maxHeight.value}
-                onChange={state.props.maxHeight.onChange}
+                property={state.props.maxHeight}
               />
             </Row111>
           </>
         ) : (
           <Row11>
-            <DimensionInput
+            <StyleDimensionInput
               label="W"
-              title="width"
-              placeholder={state.props.width.computed}
               units={lengthPercentageUnits}
               keywords={["auto"]}
-              value={state.props.width.value}
-              onChange={state.props.width.onChange}
+              property={state.props.width}
             />
-            <DimensionInput
+            <StyleDimensionInput
               label="H"
-              title="height"
-              placeholder={state.props.height.computed}
               units={lengthPercentageUnits}
               keywords={["auto"]}
-              value={state.props.height.value}
-              onChange={state.props.height.onChange}
+              property={state.props.height}
             />
           </Row11>
         )}
         {state.showsSeparateRadiuses ? (
           <>
             <Row111>
-              <DimensionInput
+              <StyleDimensionInput
                 icon={radiusIcon}
-                title="border-top-left-radius"
-                placeholder={state.props.borderTopLeftRadius.computed}
                 units={lengthPercentageUnits}
                 keywords={["auto"]}
-                value={state.props.borderTopLeftRadius.value}
-                onChange={state.props.borderTopLeftRadius.onChange}
+                property={state.props.borderTopLeftRadius}
               />
-              <DimensionInput
+              <StyleDimensionInput
                 icon={{ ...radiusIcon, rotate: 1 }}
-                title="border-top-right-radius"
-                placeholder={state.props.borderTopRightRadius.computed}
                 units={lengthPercentageUnits}
                 keywords={["auto"]}
-                value={state.props.borderTopRightRadius.value}
-                onChange={state.props.borderTopRightRadius.onChange}
+                property={state.props.borderTopRightRadius}
               />
               {separateRadiusesButton}
             </Row111>
             <Row111>
-              <DimensionInput
+              <StyleDimensionInput
                 icon={{ ...radiusIcon, rotate: 3 }}
-                title="border-bottom-left-radius"
-                placeholder={state.props.borderBottomLeftRadius.computed}
                 units={lengthPercentageUnits}
                 keywords={["auto"]}
-                value={state.props.borderBottomLeftRadius.value}
-                onChange={state.props.borderBottomLeftRadius.onChange}
+                property={state.props.borderBottomLeftRadius}
               />
-              <DimensionInput
+              <StyleDimensionInput
                 icon={{ ...radiusIcon, rotate: 2 }}
-                title="border-bottom-right-radius"
-                placeholder={state.props.borderBottomRightRadius.computed}
                 units={lengthPercentageUnits}
                 keywords={["auto"]}
-                value={state.props.borderBottomRightRadius.value}
-                onChange={state.props.borderBottomRightRadius.onChange}
+                property={state.props.borderBottomRightRadius}
               />
             </Row111>
           </>
         ) : (
           <Row111>
-            <DimensionInput
+            <StyleDimensionInput
               icon={radiusIcon}
-              title="border-radius"
-              placeholder={state.props.borderRadius.computed}
               units={lengthPercentageUnits}
               keywords={["auto"]}
-              value={state.props.borderRadius.value}
-              onChange={state.props.borderRadius.onChange}
+              property={state.props.borderRadius}
             />
             <div />
             {separateRadiusesButton}

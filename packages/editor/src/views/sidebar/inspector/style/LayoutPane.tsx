@@ -28,11 +28,11 @@ import justifyCenterIcon from "@seanchas116/paintkit/src/icon/JustifyCenter";
 import justifyEndIcon from "@seanchas116/paintkit/src/icon/JustifyEnd";
 import justifySpaceBetweenIcon from "@seanchas116/paintkit/src/icon/JustifySpaceBetween";
 import { IconRadio } from "@seanchas116/paintkit/src/components/IconRadio";
-import { DimensionInput } from "@seanchas116/paintkit/src/components/DimensionInput";
 import spaceBarIcon from "@iconify-icons/ic/outline-space-bar";
 import styled from "styled-components";
 import { StyleInspectorState } from "../../../../state/StyleInspectorState";
 import { lengthPercentageUnits } from "./Units";
+import { StyleDimensionInput } from "./Util";
 
 const verticalSpaceBarIcon = {
   ...spaceBarIcon,
@@ -199,11 +199,8 @@ export const LayoutPane: React.FC<{
           />
           <SizedDimensionInput
             icon={verticalSpaceBarIcon}
-            title="row-gap"
-            placeholder={state.props.rowGap.computed}
             units={lengthPercentageUnits}
-            value={state.props.rowGap.value}
-            onChange={state.props.rowGap.onChange}
+            property={state.props.rowGap}
           />
         </RowPackLeft>
         <RowPackLeft>
@@ -224,11 +221,8 @@ export const LayoutPane: React.FC<{
           />
           <SizedDimensionInput
             icon={spaceBarIcon}
-            title="column-gap"
-            placeholder={state.props.columnGap.computed}
             units={lengthPercentageUnits}
-            value={state.props.columnGap.value}
-            onChange={state.props.columnGap.onChange}
+            property={state.props.columnGap}
           />
         </RowPackLeft>
       </>
@@ -237,37 +231,25 @@ export const LayoutPane: React.FC<{
   const paddingInputs =
     computedDisplay !== "none" ? (
       <FourEdgeGrid>
-        <DimensionInput
+        <StyleDimensionInput
           icon={edgeTopIcon}
-          title="padding-top"
-          placeholder={state.props.paddingTop.computed}
           units={lengthPercentageUnits}
-          value={state.props.paddingTop.value}
-          onChange={state.props.paddingTop.onChange}
+          property={state.props.paddingTop}
         />
-        <DimensionInput
+        <StyleDimensionInput
           icon={edgeRightIcon}
-          title="padding-right"
-          placeholder={state.props.paddingRight.computed}
           units={lengthPercentageUnits}
-          value={state.props.paddingRight.value}
-          onChange={state.props.paddingRight.onChange}
+          property={state.props.paddingRight}
         />
-        <DimensionInput
+        <StyleDimensionInput
           icon={edgeBottomIcon}
-          title="padding-bottom"
-          placeholder={state.props.paddingBottom.computed}
           units={lengthPercentageUnits}
-          value={state.props.paddingBottom.value}
-          onChange={state.props.paddingBottom.onChange}
+          property={state.props.paddingBottom}
         />
-        <DimensionInput
+        <StyleDimensionInput
           icon={edgeLeftIcon}
-          title="padding-left"
-          placeholder={state.props.paddingLeft.computed}
           units={lengthPercentageUnits}
-          value={state.props.paddingLeft.value}
-          onChange={state.props.paddingLeft.onChange}
+          property={state.props.paddingLeft}
         />
       </FourEdgeGrid>
     ) : null;
@@ -292,6 +274,6 @@ export const LayoutPane: React.FC<{
   );
 });
 
-const SizedDimensionInput = styled(DimensionInput)`
+const SizedDimensionInput = styled(StyleDimensionInput)`
   width: 72px;
 `;

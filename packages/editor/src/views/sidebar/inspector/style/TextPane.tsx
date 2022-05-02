@@ -23,11 +23,11 @@ import { ComboBox } from "@seanchas116/paintkit/src/components/ComboBox";
 import strikethroughIcon from "@iconify-icons/ic/outline-strikethrough-s";
 import underlineIcon from "@iconify-icons/ic/outline-format-underlined";
 import closeIcon from "@iconify-icons/ic/outline-close";
-import { DimensionInput } from "@seanchas116/paintkit/src/components/DimensionInput";
 import { IconRadio } from "@seanchas116/paintkit/src/components/IconRadio";
 import { StyleInspectorState } from "../../../../state/StyleInspectorState";
 import { CSSColorInput } from "../CSSColorInput";
 import { lengthPercentageUnits } from "./Units";
+import { StyleDimensionInput } from "./Util";
 
 const textAlignOptions = [
   {
@@ -126,29 +126,20 @@ export const TextPane: React.FC<{
           />
         </Row11>
         <Row111>
-          <DimensionInput
+          <StyleDimensionInput
             icon={formatSizeIcon}
-            title="font-size"
             units={lengthPercentageUnits}
-            placeholder={state.props.fontSize.computed}
-            value={state.props.fontSize.value}
-            onChange={state.props.fontSize.onChange}
+            property={state.props.fontSize}
           />
-          <DimensionInput
+          <StyleDimensionInput
             icon={lineSpacingIcon}
-            title="line-height"
             units={["", ...lengthPercentageUnits]}
-            placeholder={state.props.lineHeight.computed}
-            value={state.props.lineHeight.value}
-            onChange={state.props.lineHeight.onChange}
+            property={state.props.lineHeight}
           />
-          <DimensionInput
+          <StyleDimensionInput
             icon={spaceBarIcon}
-            title="letter-spacing"
             units={["", ...lengthPercentageUnits]}
-            placeholder={state.props.letterSpacing.computed}
-            value={state.props.letterSpacing.value}
-            onChange={state.props.letterSpacing.onChange}
+            property={state.props.letterSpacing}
           />
         </Row111>
         <RowPackLeft>
