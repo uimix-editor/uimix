@@ -14,7 +14,7 @@ export const CSSColorInput: React.FC<{
   return (
     <ColorInput
       color={color}
-      text={color?.toString()}
+      text={value}
       placeholder={placeholder}
       onChangeColor={(color) => onChange?.(color?.toString())}
       onChangeEndColor={(color) => onChangeEnd?.(color?.toString())}
@@ -28,7 +28,8 @@ export const CSSColorInput: React.FC<{
         if (!color) {
           return false;
         }
-        onChange?.(color.toString()), onChangeEnd?.(color.toString());
+        onChange?.(text);
+        onChangeEnd?.(text);
         return true;
       }}
     />

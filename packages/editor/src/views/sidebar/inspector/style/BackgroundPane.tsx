@@ -24,6 +24,7 @@ export const BackgroundPane: React.FC<{
       <RowGroup>
         <CSSColorInput
           value={state.props.backgroundColor.value}
+          placeholder={state.props.backgroundColor.computed}
           onChange={state.props.backgroundColor.onChangeWithoutCommit}
           onChangeEnd={state.props.backgroundColor.onChange}
         />

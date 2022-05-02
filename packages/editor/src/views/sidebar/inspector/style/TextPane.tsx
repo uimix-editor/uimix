@@ -117,6 +117,7 @@ export const TextPane: React.FC<{
           />
           <CSSColorInput
             value={state.props.color.value}
+            placeholder={state.props.color.computed}
             onChange={state.props.color.onChangeWithoutCommit}
             onChangeEnd={state.props.color.onChange}
           />
