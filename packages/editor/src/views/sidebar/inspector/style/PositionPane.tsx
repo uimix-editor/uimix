@@ -4,6 +4,7 @@ import {
   FourEdgeGrid,
   Pane,
   PaneHeading,
+  PaneHeadingRow,
   RowGroup,
 } from "@seanchas116/paintkit/src/components/sidebar/Inspector";
 import { IconRadio } from "@seanchas116/paintkit/src/components/IconRadio";
@@ -42,7 +43,9 @@ export const PositionPane: React.FC<{
 
   return (
     <Pane>
-      <PaneHeading>Position</PaneHeading>
+      <PaneHeadingRow>
+        <PaneHeading>Position</PaneHeading>
+      </PaneHeadingRow>
       <RowGroup>
         <IconRadio
           options={positionOptions}

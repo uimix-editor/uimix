@@ -13,6 +13,7 @@ import italicIcon from "@seanchas116/paintkit/src/icon/Italic";
 import {
   Pane,
   PaneHeading,
+  PaneHeadingRow,
   Row11,
   Row111,
   RowGroup,
@@ -85,7 +86,9 @@ export const TextPane: React.FC<{
 
   return (
     <Pane>
-      <PaneHeading>Text</PaneHeading>
+      <PaneHeadingRow>
+        <PaneHeading>Text</PaneHeading>
+      </PaneHeadingRow>
       <RowGroup>
         <ComboBox
           icon={fontDownloadIcon}
