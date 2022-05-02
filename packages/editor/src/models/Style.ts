@@ -61,6 +61,8 @@ export const styleKeys = [
   "borderLeftWidth",
   "borderLeftStyle",
   "borderLeftColor",
+
+  "opacity",
 ] as const;
 
 export const extraStyleKeys = [
