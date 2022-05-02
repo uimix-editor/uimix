@@ -54,44 +54,46 @@ export const PositionPane: React.FC<{
           unsettable
           onChange={state.props.position.onChange}
         />
-        <FourEdgeGrid>
-          <DimensionInput
-            label="T"
-            title="top"
-            placeholder={state.props.top.computed}
-            units={lengthPercentageUnits}
-            keywords={["auto"]}
-            value={state.props.top.value}
-            onChange={state.props.top.onChange}
-          />
-          <DimensionInput
-            label="R"
-            title="right"
-            placeholder={state.props.right.computed}
-            units={lengthPercentageUnits}
-            keywords={["auto"]}
-            value={state.props.right.value}
-            onChange={state.props.right.onChange}
-          />
-          <DimensionInput
-            label="B"
-            title="bottom"
-            placeholder={state.props.bottom.computed}
-            units={lengthPercentageUnits}
-            keywords={["auto"]}
-            value={state.props.bottom.value}
-            onChange={state.props.bottom.onChange}
-          />
-          <DimensionInput
-            label="L"
-            title="left"
-            placeholder={state.props.left.computed}
-            units={lengthPercentageUnits}
-            keywords={["auto"]}
-            value={state.props.left.value}
-            onChange={state.props.left.onChange}
-          />
-        </FourEdgeGrid>
+        {state.props.position.computed !== "static" && (
+          <FourEdgeGrid>
+            <DimensionInput
+              label="T"
+              title="top"
+              placeholder={state.props.top.computed}
+              units={lengthPercentageUnits}
+              keywords={["auto"]}
+              value={state.props.top.value}
+              onChange={state.props.top.onChange}
+            />
+            <DimensionInput
+              label="R"
+              title="right"
+              placeholder={state.props.right.computed}
+              units={lengthPercentageUnits}
+              keywords={["auto"]}
+              value={state.props.right.value}
+              onChange={state.props.right.onChange}
+            />
+            <DimensionInput
+              label="B"
+              title="bottom"
+              placeholder={state.props.bottom.computed}
+              units={lengthPercentageUnits}
+              keywords={["auto"]}
+              value={state.props.bottom.value}
+              onChange={state.props.bottom.onChange}
+            />
+            <DimensionInput
+              label="L"
+              title="left"
+              placeholder={state.props.left.computed}
+              units={lengthPercentageUnits}
+              keywords={["auto"]}
+              value={state.props.left.value}
+              onChange={state.props.left.onChange}
+            />
+          </FourEdgeGrid>
+        )}
         <FourEdgeGrid>
           <DimensionInput
             icon={marginTopIcon}
