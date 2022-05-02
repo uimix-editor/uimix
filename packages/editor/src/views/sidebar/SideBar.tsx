@@ -31,7 +31,7 @@ const TabArea = styled.div`
   display: flex;
   flex-direction: column;
 
-  > :last-child {
+  > :not(:first-child) {
     flex: 1;
   }
 `;
