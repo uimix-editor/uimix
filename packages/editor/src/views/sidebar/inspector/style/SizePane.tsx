@@ -134,8 +134,6 @@ export const SizePane: React.FC<{
             />
           </Row11>
         )}
-      </RowGroup>
-      <RowGroup>
         {state.showsSeparateRadiuses ? (
           <>
             <Row111>
