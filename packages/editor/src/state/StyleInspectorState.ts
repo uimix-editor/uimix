@@ -75,4 +75,10 @@ export class StyleInspectorState {
   readonly onToggleShowSizeDetails = action(() => {
     this.showsSizeDetails = !this.showsSizeDetails;
   });
+
+  @observable showsSeparateRadiuses = false;
+
+  readonly onToggleShowSeparateRadiuses = action(() => {
+    this.showsSeparateRadiuses = !this.showsSeparateRadiuses;
+  });
 }

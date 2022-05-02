@@ -9,8 +9,12 @@ import {
   RowGroup,
 } from "@seanchas116/paintkit/src/components/sidebar/Inspector";
 import { DimensionInput } from "@seanchas116/paintkit/src/components/DimensionInput";
-import { MoreButton } from "@seanchas116/paintkit/src/components/IconButton";
+import {
+  IconButton,
+  MoreButton,
+} from "@seanchas116/paintkit/src/components/IconButton";
 import roundedCorderIcon from "@iconify-icons/ic/outline-rounded-corner";
+import separateCornersIcon from "@seanchas116/paintkit/src/icon/SeparateCorners";
 import Tippy from "@tippyjs/react";
 import { StyleInspectorState } from "../../../../state/StyleInspectorState";
 import { lengthPercentageUnits } from "./Units";
@@ -21,6 +25,17 @@ export const SizePane: React.FC<{
   if (state.styles.length === 0) {
     return null;
   }
+
+  const separateRadiusesButton = (
+    <IconButton
+      style={{
+        justifySelf: "flex-end",
+      }}
+      icon={separateCornersIcon}
+      pressed={state.showsSeparateRadiuses}
+      onClick={state.onToggleShowSeparateRadiuses}
+    />
+  );
 
   return (
     <Pane>
@@ -35,9 +50,9 @@ export const SizePane: React.FC<{
           </div>
         </Tippy>
       </PaneHeadingRow>
-      {state.showsSizeDetails ? (
-        <>
-          <RowGroup>
+      <RowGroup>
+        {state.showsSizeDetails ? (
+          <>
             <Row111>
               <DimensionInput
                 label="W"
@@ -96,8 +111,33 @@ export const SizePane: React.FC<{
                 onChange={state.props.maxHeight.onChange}
               />
             </Row111>
-          </RowGroup>
-          <RowGroup>
+          </>
+        ) : (
+          <Row11>
+            <DimensionInput
+              label="W"
+              title="width"
+              placeholder={state.props.width.computed}
+              units={lengthPercentageUnits}
+              keywords={["auto"]}
+              value={state.props.width.value}
+              onChange={state.props.width.onChange}
+            />
+            <DimensionInput
+              label="H"
+              title="height"
+              placeholder={state.props.height.computed}
+              units={lengthPercentageUnits}
+              keywords={["auto"]}
+              value={state.props.height.value}
+              onChange={state.props.height.onChange}
+            />
+          </Row11>
+        )}
+      </RowGroup>
+      <RowGroup>
+        {state.showsSeparateRadiuses ? (
+          <>
             <Row111>
               <DimensionInput
                 icon={{ ...roundedCorderIcon, rotate: -1 }}
@@ -117,6 +157,7 @@ export const SizePane: React.FC<{
                 value={state.props.borderTopRightRadius.value}
                 onChange={state.props.borderTopRightRadius.onChange}
               />
+              {separateRadiusesButton}
             </Row111>
             <Row111>
               <DimensionInput
@@ -138,30 +179,8 @@ export const SizePane: React.FC<{
                 onChange={state.props.borderBottomRightRadius.onChange}
               />
             </Row111>
-          </RowGroup>
-        </>
-      ) : (
-        <RowGroup>
-          <Row11>
-            <DimensionInput
-              label="W"
-              title="width"
-              placeholder={state.props.width.computed}
-              units={lengthPercentageUnits}
-              keywords={["auto"]}
-              value={state.props.width.value}
-              onChange={state.props.width.onChange}
-            />
-            <DimensionInput
-              label="H"
-              title="height"
-              placeholder={state.props.height.computed}
-              units={lengthPercentageUnits}
-              keywords={["auto"]}
-              value={state.props.height.value}
-              onChange={state.props.height.onChange}
-            />
-          </Row11>
+          </>
+        ) : (
           <Row111>
             <DimensionInput
               icon={roundedCorderIcon}
@@ -172,9 +191,11 @@ export const SizePane: React.FC<{
               value={state.props.borderRadius.value}
               onChange={state.props.borderRadius.onChange}
             />
+            <div />
+            {separateRadiusesButton}
           </Row111>
-        </RowGroup>
-      )}
+        )}
+      </RowGroup>
     </Pane>
   );
 });
