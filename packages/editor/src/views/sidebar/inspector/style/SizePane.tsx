@@ -4,6 +4,7 @@ import {
   Pane,
   PaneHeading,
   PaneHeadingRow,
+  Row11,
   Row111,
   RowGroup,
 } from "@seanchas116/paintkit/src/components/sidebar/Inspector";
@@ -26,10 +27,12 @@ export const SizePane: React.FC<{
       <PaneHeadingRow>
         <PaneHeading>Size</PaneHeading>
         <Tippy content="Show details">
-          <MoreButton
-            pressed={state.showsSizeDetails}
-            onClick={state.onToggleShowSizeDetails}
-          />
+          <div>
+            <MoreButton
+              pressed={state.showsSizeDetails}
+              onClick={state.onToggleShowSizeDetails}
+            />
+          </div>
         </Tippy>
       </PaneHeadingRow>
       {state.showsSizeDetails ? (
@@ -139,7 +142,7 @@ export const SizePane: React.FC<{
         </>
       ) : (
         <RowGroup>
-          <Row111>
+          <Row11>
             <DimensionInput
               label="W"
               title="width"
@@ -158,7 +161,7 @@ export const SizePane: React.FC<{
               value={state.props.height.value}
               onChange={state.props.height.onChange}
             />
-          </Row111>
+          </Row11>
           <Row111>
             <DimensionInput
               icon={roundedCorderIcon}
