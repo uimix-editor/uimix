@@ -140,16 +140,12 @@ export class Style extends StyleBase {
   }
 
   get borderRadius(): string | typeof MIXED | undefined {
-    return sameOrMixed(
-      (
-        [
-          "borderTopLeftRadius",
-          "borderTopRightRadius",
-          "borderBottomRightRadius",
-          "borderBottomLeftRadius",
-        ] as const
-      ).map((key) => this[key])
-    );
+    return sameOrMixed([
+      this.borderTopLeftRadius,
+      this.borderTopRightRadius,
+      this.borderBottomRightRadius,
+      this.borderBottomLeftRadius,
+    ]);
   }
 
   set borderRadius(value: string | typeof MIXED | undefined) {
@@ -163,16 +159,12 @@ export class Style extends StyleBase {
   }
 
   get borderWidth(): string | typeof MIXED | undefined {
-    return sameOrMixed(
-      (
-        [
-          "borderTopWidth",
-          "borderRightWidth",
-          "borderBottomWidth",
-          "borderLeftWidth",
-        ] as const
-      ).map((key) => this[key])
-    );
+    return sameOrMixed([
+      this.borderTopWidth,
+      this.borderRightWidth,
+      this.borderBottomWidth,
+      this.borderLeftWidth,
+    ]);
   }
 
   set borderWidth(value: string | typeof MIXED | undefined) {
@@ -186,16 +178,12 @@ export class Style extends StyleBase {
   }
 
   get borderStyle(): string | typeof MIXED | undefined {
-    return sameOrMixed(
-      (
-        [
-          "borderTopStyle",
-          "borderRightStyle",
-          "borderBottomStyle",
-          "borderLeftStyle",
-        ] as const
-      ).map((key) => this[key])
-    );
+    return sameOrMixed([
+      this.borderTopStyle,
+      this.borderRightStyle,
+      this.borderBottomStyle,
+      this.borderLeftStyle,
+    ]);
   }
 
   set borderStyle(value: string | typeof MIXED | undefined) {
@@ -209,16 +197,12 @@ export class Style extends StyleBase {
   }
 
   get borderColor(): string | typeof MIXED | undefined {
-    return sameOrMixed(
-      (
-        [
-          "borderTopColor",
-          "borderRightColor",
-          "borderBottomColor",
-          "borderLeftColor",
-        ] as const
-      ).map((key) => this[key])
-    );
+    return sameOrMixed([
+      this.borderTopColor,
+      this.borderRightColor,
+      this.borderBottomColor,
+      this.borderLeftColor,
+    ]);
   }
 
   set borderColor(value: string | typeof MIXED | undefined) {
