@@ -13,8 +13,8 @@ import {
   IconButton,
   MoreButton,
 } from "@seanchas116/paintkit/src/components/IconButton";
-import roundedCorderIcon from "@iconify-icons/ic/outline-rounded-corner";
 import separateCornersIcon from "@seanchas116/paintkit/src/icon/SeparateCorners";
+import radiusIcon from "@seanchas116/paintkit/src/icon/Radius";
 import Tippy from "@tippyjs/react";
 import { StyleInspectorState } from "../../../../state/StyleInspectorState";
 import { lengthPercentageUnits } from "./Units";
@@ -140,7 +140,7 @@ export const SizePane: React.FC<{
           <>
             <Row111>
               <DimensionInput
-                icon={{ ...roundedCorderIcon, rotate: -1 }}
+                icon={radiusIcon}
                 title="border-top-left-radius"
                 placeholder={state.props.borderTopLeftRadius.computed}
                 units={lengthPercentageUnits}
@@ -149,7 +149,7 @@ export const SizePane: React.FC<{
                 onChange={state.props.borderTopLeftRadius.onChange}
               />
               <DimensionInput
-                icon={roundedCorderIcon}
+                icon={{ ...radiusIcon, rotate: 1 }}
                 title="border-top-right-radius"
                 placeholder={state.props.borderTopRightRadius.computed}
                 units={lengthPercentageUnits}
@@ -161,7 +161,7 @@ export const SizePane: React.FC<{
             </Row111>
             <Row111>
               <DimensionInput
-                icon={{ ...roundedCorderIcon, rotate: 2 }}
+                icon={{ ...radiusIcon, rotate: 3 }}
                 title="border-bottom-left-radius"
                 placeholder={state.props.borderBottomLeftRadius.computed}
                 units={lengthPercentageUnits}
@@ -170,7 +170,7 @@ export const SizePane: React.FC<{
                 onChange={state.props.borderBottomLeftRadius.onChange}
               />
               <DimensionInput
-                icon={{ ...roundedCorderIcon, rotate: 1 }}
+                icon={{ ...radiusIcon, rotate: 2 }}
                 title="border-bottom-right-radius"
                 placeholder={state.props.borderBottomRightRadius.computed}
                 units={lengthPercentageUnits}
@@ -183,7 +183,7 @@ export const SizePane: React.FC<{
         ) : (
           <Row111>
             <DimensionInput
-              icon={roundedCorderIcon}
+              icon={radiusIcon}
               title="border-radius"
               placeholder={state.props.borderRadius.computed}
               units={lengthPercentageUnits}
