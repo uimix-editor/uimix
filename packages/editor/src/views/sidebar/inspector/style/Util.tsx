@@ -1,5 +1,6 @@
 import { IconifyIcon } from "@iconify/types";
 import { DimensionInput } from "@seanchas116/paintkit/src/components/DimensionInput";
+import { Input } from "@seanchas116/paintkit/src/components/Input";
 import { kebabCase } from "lodash-es";
 import { observer } from "mobx-react-lite";
 import React from "react";
@@ -14,6 +15,22 @@ export const StyleDimensionInput: React.FC<{
 }> = observer(({ property, ...props }) => {
   return (
     <DimensionInput
+      {...props}
+      title={kebabCase(property.key)}
+      placeholder={property.computed}
+      value={property.value}
+      onChange={property.onChange}
+    />
+  );
+});
+
+export const StyleInput: React.FC<{
+  property: StylePropertyState;
+  label?: string;
+  icon?: IconifyIcon;
+}> = observer(({ property, ...props }) => {
+  return (
+    <Input
       {...props}
       title={kebabCase(property.key)}
       placeholder={property.computed}

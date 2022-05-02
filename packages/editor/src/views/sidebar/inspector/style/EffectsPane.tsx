@@ -8,8 +8,8 @@ import {
   RowGroup,
 } from "@seanchas116/paintkit/src/components/sidebar/Inspector";
 import opacityIcon from "@iconify-icons/ic/outline-opacity";
-import { Input } from "@seanchas116/paintkit/src/components/Input";
 import { StyleInspectorState } from "../../../../state/StyleInspectorState";
+import { StyleInput } from "./Util";
 
 export const EffectsPane: React.FC<{
   state: StyleInspectorState;
@@ -26,13 +26,7 @@ export const EffectsPane: React.FC<{
 
       <RowGroup>
         <Row111>
-          <Input
-            icon={opacityIcon}
-            title="opacity"
-            placeholder={state.props.opacity.computed}
-            value={state.props.opacity.value}
-            onChange={state.props.opacity.onChange}
-          />
+          <StyleInput icon={opacityIcon} property={state.props.opacity} />
         </Row111>
       </RowGroup>
     </Pane>
