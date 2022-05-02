@@ -93,7 +93,7 @@ const flexWrapOptions = [
   },
 ];
 
-const alignItemsOptions = [
+const alignItemsOptionsRow = [
   {
     value: "stretch",
     icon: alignStretchIcon,
@@ -112,12 +112,12 @@ const alignItemsOptions = [
   },
 ];
 
-const alignItemsOptionsVertical = alignItemsOptions.map((option) => ({
+const alignItemsOptionsColumn = alignItemsOptionsRow.map((option) => ({
   value: option.value,
   icon: { ...option.icon, rotate: (option.icon.rotate ?? 0) - 1 },
 }));
 
-const justifyContentOptions = [
+const justifyContentOptionsRow = [
   {
     value: "flex-start",
     icon: justifyStartIcon,
@@ -137,6 +137,25 @@ const justifyContentOptions = [
   },
 ];
 
+const justifyContentOptionsRowReverse = justifyContentOptionsRow.map(
+  (option) => ({
+    value: option.value,
+    icon: { ...option.icon, rotate: (option.icon.rotate ?? 0) + 2 },
+  })
+);
+
+const justifyContentOptionsColumn = justifyContentOptionsRow.map((option) => ({
+  value: option.value,
+  icon: { ...option.icon, rotate: (option.icon.rotate ?? 0) + 1 },
+}));
+
+const justifyContentOptionsColumnReverse = justifyContentOptionsRow.map(
+  (option) => ({
+    value: option.value,
+    icon: { ...option.icon, rotate: (option.icon.rotate ?? 0) + 3 },
+  })
+);
+
 export const LayoutPane: React.FC<{
   state: StyleInspectorState;
 }> = observer(function LayoutPane({ state }) {
@@ -144,8 +163,11 @@ export const LayoutPane: React.FC<{
     return null;
   }
 
+  const computedDisplay = state.props.display.computed;
+  const computedFlexDirection = state.props.flexDirection.computed;
+
   const flexInputs =
-    state.props.display.computed === "flex" ? (
+    computedDisplay === "flex" ? (
       <>
         <RowPackLeft>
           <IconRadio
@@ -166,9 +188,9 @@ export const LayoutPane: React.FC<{
         <RowPackLeft>
           <IconRadio
             options={
-              state.props.flexDirection.computed?.includes("column")
-                ? alignItemsOptionsVertical
-                : alignItemsOptions
+              computedFlexDirection?.includes("column")
+                ? alignItemsOptionsColumn
+                : alignItemsOptionsRow
             }
             value={state.props.alignItems.value}
             placeholder={state.props.alignItems.computed}
@@ -186,7 +208,15 @@ export const LayoutPane: React.FC<{
         </RowPackLeft>
         <RowPackLeft>
           <IconRadio
-            options={justifyContentOptions}
+            options={
+              computedFlexDirection === "column-reverse"
+                ? justifyContentOptionsColumnReverse
+                : computedFlexDirection === "row-reverse"
+                ? justifyContentOptionsRowReverse
+                : computedFlexDirection === "column"
+                ? justifyContentOptionsColumn
+                : justifyContentOptionsRow
+            }
             value={state.props.justifyContent.value}
             placeholder={state.props.justifyContent.computed}
             unsettable
@@ -205,7 +235,7 @@ export const LayoutPane: React.FC<{
     ) : null;
 
   const paddingInputs =
-    state.props.display.computed !== "none" ? (
+    computedDisplay !== "none" ? (
       <FourEdgeGrid>
         <DimensionInput
           icon={edgeTopIcon}
