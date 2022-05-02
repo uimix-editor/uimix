@@ -14,6 +14,7 @@ import { StylePropertyState } from "../../../../state/StyleInspectorState";
 import { CSSColorInput } from "../CSSColorInput";
 
 export const StyleDimensionInput: React.FC<{
+  className?: string;
   property: StylePropertyState;
   label?: string;
   icon?: IconifyIcon;
@@ -32,6 +33,7 @@ export const StyleDimensionInput: React.FC<{
 });
 
 export const StyleInput: React.FC<{
+  className?: string;
   property: StylePropertyState;
   label?: string;
   icon?: IconifyIcon;
@@ -48,6 +50,7 @@ export const StyleInput: React.FC<{
 });
 
 export const StyleComboBox: React.FC<{
+  className?: string;
   property: StylePropertyState;
   label?: string;
   icon?: IconifyIcon;
@@ -65,10 +68,12 @@ export const StyleComboBox: React.FC<{
 });
 
 export const StyleColorInput: React.FC<{
+  className?: string;
   property: StylePropertyState;
-}> = observer(({ property }) => {
+}> = observer(({ property, ...props }) => {
   return (
     <CSSColorInput
+      {...props}
       title={kebabCase(property.key)}
       value={property.value}
       placeholder={property.computed}
@@ -79,12 +84,13 @@ export const StyleColorInput: React.FC<{
 });
 
 export const StyleIconRadio: React.FC<{
+  className?: string;
   property: StylePropertyState;
   options: IconRadioOption<string>[];
-}> = observer(({ property, options }) => {
+}> = observer(({ property, ...props }) => {
   return (
     <IconRadio
-      options={options}
+      {...props}
       value={property.value}
       placeholder={property.computed}
       unsettable
