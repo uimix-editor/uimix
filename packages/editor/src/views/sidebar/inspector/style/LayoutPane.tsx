@@ -112,6 +112,11 @@ const alignItemsOptions = [
   },
 ];
 
+const alignItemsOptionsVertical = alignItemsOptions.map((option) => ({
+  value: option.value,
+  icon: { ...option.icon, rotate: (option.icon.rotate ?? 0) - 1 },
+}));
+
 const justifyContentOptions = [
   {
     value: "flex-start",
@@ -160,7 +165,11 @@ export const LayoutPane: React.FC<{
         </RowPackLeft>
         <RowPackLeft>
           <IconRadio
-            options={alignItemsOptions}
+            options={
+              state.props.flexDirection.computed?.includes("column")
+                ? alignItemsOptionsVertical
+                : alignItemsOptions
+            }
             value={state.props.alignItems.value}
             placeholder={state.props.alignItems.computed}
             unsettable
