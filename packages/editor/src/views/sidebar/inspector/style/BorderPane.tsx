@@ -116,20 +116,7 @@ export const BorderPane: React.FC<{
         />
       </PaneHeadingRow>
       <RowGroup>
-        <CSSColorInput
-          value={color.value}
-          onChange={color.onChangeWithoutCommit}
-          onChangeEnd={color.onChange}
-        />
         <Row12>
-          <DimensionInput
-            icon={lineWeightIcon}
-            title={kebabCase(width.key)}
-            units={lengthPercentageUnits}
-            placeholder={width.computed}
-            value={width.value}
-            onChange={width.onChange}
-          />
           <IconRadio
             options={borderStyleOptions}
             value={style.value}
@@ -137,7 +124,24 @@ export const BorderPane: React.FC<{
             unsettable
             onChange={style.onChange}
           />
+          {style.computed !== "none" && (
+            <DimensionInput
+              icon={lineWeightIcon}
+              title={kebabCase(width.key)}
+              units={lengthPercentageUnits}
+              placeholder={width.computed}
+              value={width.value}
+              onChange={width.onChange}
+            />
+          )}
         </Row12>
+        {style.computed !== "none" && (
+          <CSSColorInput
+            value={color.value}
+            onChange={color.onChangeWithoutCommit}
+            onChangeEnd={color.onChange}
+          />
+        )}
       </RowGroup>
     </Pane>
   );
