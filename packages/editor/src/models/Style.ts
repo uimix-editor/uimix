@@ -134,9 +134,7 @@ export class Style extends StyleBase {
           "borderBottomRightRadius",
           "borderBottomLeftRadius",
         ] as const
-      )
-        .map((key) => this[key])
-        .filter((value) => value !== undefined)
+      ).map((key) => this[key])
     );
   }
 
@@ -159,9 +157,7 @@ export class Style extends StyleBase {
           "borderBottomWidth",
           "borderLeftWidth",
         ] as const
-      )
-        .map((key) => this[key])
-        .filter((value) => value !== undefined)
+      ).map((key) => this[key])
     );
   }
 
@@ -184,9 +180,7 @@ export class Style extends StyleBase {
           "borderBottomStyle",
           "borderLeftStyle",
         ] as const
-      )
-        .map((key) => this[key])
-        .filter((value) => value !== undefined)
+      ).map((key) => this[key])
     );
   }
 
@@ -209,9 +203,7 @@ export class Style extends StyleBase {
           "borderBottomColor",
           "borderLeftColor",
         ] as const
-      )
-        .map((key) => this[key])
-        .filter((value) => value !== undefined)
+      ).map((key) => this[key])
     );
   }
 
