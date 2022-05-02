@@ -1,2 +1,2 @@
 export const lengthUnits = ["px", "em", "rem", "vw", "vh"];
-export const lengthPercentageUnits = ["%", ...lengthUnits];
+export const lengthPercentageUnits = ["px", "%", "em", "rem", "vw", "vh"];
