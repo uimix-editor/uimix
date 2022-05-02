@@ -20,6 +20,7 @@ import edgeRightIcon from "@seanchas116/paintkit/src/icon/EdgeRight";
 import { DimensionInput } from "@seanchas116/paintkit/src/components/DimensionInput";
 import { IconRadio } from "@seanchas116/paintkit/src/components/IconRadio";
 import { IconButton } from "@seanchas116/paintkit/src/components/IconButton";
+import { kebabCase } from "lodash-es";
 import {
   StyleInspectorState,
   StylePropertyState,
@@ -123,7 +124,7 @@ export const BorderPane: React.FC<{
         <Row12>
           <DimensionInput
             icon={lineWeightIcon}
-            title="border-width"
+            title={kebabCase(width.key)}
             units={lengthPercentageUnits}
             placeholder={width.computed}
             value={width.value}
