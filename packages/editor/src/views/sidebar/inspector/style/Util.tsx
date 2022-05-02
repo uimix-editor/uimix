@@ -1,6 +1,10 @@
 import { IconifyIcon } from "@iconify/types";
 import { ComboBox } from "@seanchas116/paintkit/src/components/ComboBox";
 import { DimensionInput } from "@seanchas116/paintkit/src/components/DimensionInput";
+import {
+  IconRadio,
+  IconRadioOption,
+} from "@seanchas116/paintkit/src/components/IconRadio";
 import { Input } from "@seanchas116/paintkit/src/components/Input";
 import { SelectItem } from "@seanchas116/paintkit/src/components/Select";
 import { kebabCase } from "lodash-es";
@@ -70,6 +74,21 @@ export const StyleColorInput: React.FC<{
       placeholder={property.computed}
       onChange={property.onChangeWithoutCommit}
       onChangeEnd={property.onChange}
+    />
+  );
+});
+
+export const StyleIconRadio: React.FC<{
+  property: StylePropertyState;
+  options: IconRadioOption<string>[];
+}> = observer(({ property, options }) => {
+  return (
+    <IconRadio
+      options={options}
+      value={property.value}
+      placeholder={property.computed}
+      unsettable
+      onChange={property.onChange}
     />
   );
 });

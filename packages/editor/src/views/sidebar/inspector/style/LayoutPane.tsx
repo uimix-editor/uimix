@@ -27,12 +27,11 @@ import justifyStartIcon from "@seanchas116/paintkit/src/icon/JustifyStart";
 import justifyCenterIcon from "@seanchas116/paintkit/src/icon/JustifyCenter";
 import justifyEndIcon from "@seanchas116/paintkit/src/icon/JustifyEnd";
 import justifySpaceBetweenIcon from "@seanchas116/paintkit/src/icon/JustifySpaceBetween";
-import { IconRadio } from "@seanchas116/paintkit/src/components/IconRadio";
 import spaceBarIcon from "@iconify-icons/ic/outline-space-bar";
 import styled from "styled-components";
 import { StyleInspectorState } from "../../../../state/StyleInspectorState";
 import { lengthPercentageUnits } from "./Units";
-import { StyleDimensionInput } from "./Util";
+import { StyleDimensionInput, StyleIconRadio } from "./Util";
 
 const verticalSpaceBarIcon = {
   ...spaceBarIcon,
@@ -170,32 +169,23 @@ export const LayoutPane: React.FC<{
     computedDisplay === "flex" ? (
       <>
         <RowPackLeft>
-          <IconRadio
+          <StyleIconRadio
             options={flexDirectionOptions}
-            value={state.props.flexDirection.value}
-            placeholder={state.props.flexDirection.computed}
-            unsettable
-            onChange={state.props.flexDirection.onChange}
+            property={state.props.flexDirection}
           />
-          <IconRadio
+          <StyleIconRadio
             options={flexWrapOptions}
-            value={state.props.flexWrap.value}
-            placeholder={state.props.flexWrap.computed}
-            unsettable
-            onChange={state.props.flexWrap.onChange}
+            property={state.props.flexWrap}
           />
         </RowPackLeft>
         <RowPackLeft>
-          <IconRadio
+          <StyleIconRadio
             options={
               computedFlexDirection?.includes("column")
                 ? alignItemsOptionsColumn
                 : alignItemsOptionsRow
             }
-            value={state.props.alignItems.value}
-            placeholder={state.props.alignItems.computed}
-            unsettable
-            onChange={state.props.alignItems.onChange}
+            property={state.props.alignItems}
           />
           <SizedDimensionInput
             icon={verticalSpaceBarIcon}
@@ -204,7 +194,7 @@ export const LayoutPane: React.FC<{
           />
         </RowPackLeft>
         <RowPackLeft>
-          <IconRadio
+          <StyleIconRadio
             options={
               computedFlexDirection === "column-reverse"
                 ? justifyContentOptionsColumnReverse
@@ -214,10 +204,7 @@ export const LayoutPane: React.FC<{
                 ? justifyContentOptionsColumn
                 : justifyContentOptionsRow
             }
-            value={state.props.justifyContent.value}
-            placeholder={state.props.justifyContent.computed}
-            unsettable
-            onChange={state.props.justifyContent.onChange}
+            property={state.props.justifyContent}
           />
           <SizedDimensionInput
             icon={spaceBarIcon}
@@ -260,12 +247,9 @@ export const LayoutPane: React.FC<{
         <PaneHeading>Layout</PaneHeading>
       </PaneHeadingRow>
       <RowGroup>
-        <IconRadio
+        <StyleIconRadio
           options={displayOptions}
-          value={state.props.display.value}
-          placeholder={state.props.display.computed}
-          unsettable
-          onChange={state.props.display.onChange}
+          property={state.props.display}
         />
         {paddingInputs}
         {flexInputs}

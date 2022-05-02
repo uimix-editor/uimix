@@ -23,10 +23,14 @@ import { ComboBox } from "@seanchas116/paintkit/src/components/ComboBox";
 import strikethroughIcon from "@iconify-icons/ic/outline-strikethrough-s";
 import underlineIcon from "@iconify-icons/ic/outline-format-underlined";
 import closeIcon from "@iconify-icons/ic/outline-close";
-import { IconRadio } from "@seanchas116/paintkit/src/components/IconRadio";
 import { StyleInspectorState } from "../../../../state/StyleInspectorState";
 import { lengthPercentageUnits } from "./Units";
-import { StyleColorInput, StyleComboBox, StyleDimensionInput } from "./Util";
+import {
+  StyleColorInput,
+  StyleComboBox,
+  StyleDimensionInput,
+  StyleIconRadio,
+} from "./Util";
 
 const textAlignOptions = [
   {
@@ -133,27 +137,18 @@ export const TextPane: React.FC<{
           />
         </Row111>
         <RowPackLeft>
-          <IconRadio
+          <StyleIconRadio
             options={fontStyleOptions}
-            value={state.props.fontStyle.value}
-            placeholder={state.props.fontStyle.computed}
-            unsettable
-            onChange={state.props.fontStyle.onChange}
+            property={state.props.fontStyle}
           />
-          <IconRadio
+          <StyleIconRadio
             options={textDecorationOptions}
-            value={state.props.textDecorationLine.value}
-            placeholder={state.props.textDecorationLine.computed}
-            unsettable
-            onChange={state.props.textDecorationLine.onChange}
+            property={state.props.textDecorationLine}
           />
         </RowPackLeft>
-        <IconRadio
+        <StyleIconRadio
           options={textAlignOptions}
-          value={state.props.textAlign.value}
-          placeholder={state.props.textAlign.computed}
-          unsettable
-          onChange={state.props.textAlign.onChange}
+          property={state.props.textAlign}
         />
       </RowGroup>
     </Pane>

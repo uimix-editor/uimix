@@ -17,14 +17,13 @@ import edgeTopIcon from "@seanchas116/paintkit/src/icon/EdgeTop";
 import edgeBottomIcon from "@seanchas116/paintkit/src/icon/EdgeBottom";
 import edgeLeftIcon from "@seanchas116/paintkit/src/icon/EdgeLeft";
 import edgeRightIcon from "@seanchas116/paintkit/src/icon/EdgeRight";
-import { IconRadio } from "@seanchas116/paintkit/src/components/IconRadio";
 import { IconButton } from "@seanchas116/paintkit/src/components/IconButton";
 import {
   StyleInspectorState,
   StylePropertyState,
 } from "../../../../state/StyleInspectorState";
 import { lengthPercentageUnits } from "./Units";
-import { StyleColorInput, StyleDimensionInput } from "./Util";
+import { StyleColorInput, StyleDimensionInput, StyleIconRadio } from "./Util";
 
 const borderStyleOptions = [
   {
@@ -115,13 +114,7 @@ export const BorderPane: React.FC<{
       </PaneHeadingRow>
       <RowGroup>
         <Row12>
-          <IconRadio
-            options={borderStyleOptions}
-            value={style.value}
-            placeholder={style.computed}
-            unsettable
-            onChange={style.onChange}
-          />
+          <StyleIconRadio options={borderStyleOptions} property={style} />
           {style.computed !== "none" && (
             <StyleDimensionInput
               icon={lineWeightIcon}

@@ -7,7 +7,6 @@ import {
   PaneHeadingRow,
   RowGroup,
 } from "@seanchas116/paintkit/src/components/sidebar/Inspector";
-import { IconRadio } from "@seanchas116/paintkit/src/components/IconRadio";
 import relativePositionIcon from "@seanchas116/paintkit/src/icon/RelativePosition";
 import staticPositionIcon from "@seanchas116/paintkit/src/icon/StaticPosition";
 import absolutePositionIcon from "@seanchas116/paintkit/src/icon/AbsolutePosition";
@@ -17,7 +16,7 @@ import marginBottomIcon from "@seanchas116/paintkit/src/icon/MarginBottom";
 import marginLeftIcon from "@seanchas116/paintkit/src/icon/MarginLeft";
 import { StyleInspectorState } from "../../../../state/StyleInspectorState";
 import { lengthPercentageUnits } from "./Units";
-import { StyleDimensionInput } from "./Util";
+import { StyleDimensionInput, StyleIconRadio } from "./Util";
 
 const positionOptions = [
   {
@@ -47,12 +46,9 @@ export const PositionPane: React.FC<{
         <PaneHeading>Position</PaneHeading>
       </PaneHeadingRow>
       <RowGroup>
-        <IconRadio
+        <StyleIconRadio
           options={positionOptions}
-          value={state.props.position.value}
-          placeholder={state.props.position.computed}
-          unsettable
-          onChange={state.props.position.onChange}
+          property={state.props.position}
         />
         {state.props.position.computed !== "static" && (
           <FourEdgeGrid>
