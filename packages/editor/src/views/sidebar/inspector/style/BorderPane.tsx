@@ -23,7 +23,11 @@ import {
   StylePropertyState,
 } from "../../../../state/StyleInspectorState";
 import { lengthPercentageUnits } from "./Units";
-import { StyleColorInput, StyleDimensionInput, StyleIconRadio } from "./Util";
+import {
+  StyleColorInput,
+  StyleDimensionInput,
+  StyleIconRadio,
+} from "./Components";
 
 const borderStyleOptions = [
   {

@@ -16,7 +16,7 @@ import marginBottomIcon from "@seanchas116/paintkit/src/icon/MarginBottom";
 import marginLeftIcon from "@seanchas116/paintkit/src/icon/MarginLeft";
 import { StyleInspectorState } from "../../../../state/StyleInspectorState";
 import { lengthPercentageUnits } from "./Units";
-import { StyleDimensionInput, StyleIconRadio } from "./Util";
+import { StyleDimensionInput, StyleIconRadio } from "./Components";
 
 const positionOptions = [
   {

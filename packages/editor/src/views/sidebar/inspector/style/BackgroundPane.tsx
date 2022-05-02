@@ -7,7 +7,7 @@ import {
   RowGroup,
 } from "@seanchas116/paintkit/src/components/sidebar/Inspector";
 import { StyleInspectorState } from "../../../../state/StyleInspectorState";
-import { StyleColorInput } from "./Util";
+import { StyleColorInput } from "./Components";
 
 export const BackgroundPane: React.FC<{
   state: StyleInspectorState;

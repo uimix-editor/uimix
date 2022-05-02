@@ -17,7 +17,7 @@ import radiusIcon from "@seanchas116/paintkit/src/icon/Radius";
 import Tippy from "@tippyjs/react";
 import { StyleInspectorState } from "../../../../state/StyleInspectorState";
 import { lengthPercentageUnits } from "./Units";
-import { StyleDimensionInput } from "./Util";
+import { StyleDimensionInput } from "./Components";
 
 export const SizePane: React.FC<{
   state: StyleInspectorState;

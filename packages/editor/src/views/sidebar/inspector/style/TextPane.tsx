@@ -30,7 +30,7 @@ import {
   StyleComboBox,
   StyleDimensionInput,
   StyleIconRadio,
-} from "./Util";
+} from "./Components";
 
 const textAlignOptions = [
   {

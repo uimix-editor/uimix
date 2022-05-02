@@ -31,7 +31,7 @@ import spaceBarIcon from "@iconify-icons/ic/outline-space-bar";
 import styled from "styled-components";
 import { StyleInspectorState } from "../../../../state/StyleInspectorState";
 import { lengthPercentageUnits } from "./Units";
-import { StyleDimensionInput, StyleIconRadio } from "./Util";
+import { StyleDimensionInput, StyleIconRadio } from "./Components";
 
 const verticalSpaceBarIcon = {
   ...spaceBarIcon,

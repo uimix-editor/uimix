@@ -9,7 +9,7 @@ import {
 } from "@seanchas116/paintkit/src/components/sidebar/Inspector";
 import opacityIcon from "@iconify-icons/ic/outline-opacity";
 import { StyleInspectorState } from "../../../../state/StyleInspectorState";
-import { StyleInput } from "./Util";
+import { StyleInput } from "./Components";
 
 export const EffectsPane: React.FC<{
   state: StyleInspectorState;
