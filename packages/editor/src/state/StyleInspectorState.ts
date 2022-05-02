@@ -5,7 +5,7 @@ import { ElementInstance } from "../models/ElementInstance";
 import { ExtraStyleKey, extraStyleKeys, Style } from "../models/Style";
 import { EditorState } from "./EditorState";
 
-class StylePropertyState {
+export class StylePropertyState {
   constructor(state: StyleInspectorState, key: ExtraStyleKey) {
     this.state = state;
     this.key = key;
@@ -80,5 +80,24 @@ export class StyleInspectorState {
 
   readonly onToggleShowSeparateRadiuses = action(() => {
     this.showsSeparateRadiuses = !this.showsSeparateRadiuses;
+  });
+
+  @observable borderEdgeMode: "all" | "top" | "right" | "bottom" | "left" =
+    "all";
+
+  readonly setBorderEdgeModeToAll = action(() => {
+    this.borderEdgeMode = "all";
+  });
+  readonly setBorderEdgeModeToTop = action(() => {
+    this.borderEdgeMode = "top";
+  });
+  readonly setBorderEdgeModeToRight = action(() => {
+    this.borderEdgeMode = "right";
+  });
+  readonly setBorderEdgeModeToBottom = action(() => {
+    this.borderEdgeMode = "bottom";
+  });
+  readonly setBorderEdgeModeToLeft = action(() => {
+    this.borderEdgeMode = "left";
   });
 }

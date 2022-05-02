@@ -3,6 +3,8 @@ import React, { useMemo } from "react";
 import styled from "styled-components";
 import { StyleInspectorState } from "../../../../state/StyleInspectorState";
 import { useEditorState } from "../../../EditorStateContext";
+import { BackgroundPane } from "./BackgroundPane";
+import { BorderPane } from "./BorderPane";
 import { PositionPane } from "./PositionPane";
 import { SizePane } from "./SizePane";
 import { TextPane } from "./TextPane";
@@ -26,6 +28,8 @@ export const StyleInspector: React.FC = observer(function StyleInspector() {
       <PositionPane state={state} />
       <SizePane state={state} />
       <TextPane state={state} />
+      <BackgroundPane state={state} />
+      <BorderPane state={state} />
     </StyleInspectorWrap>
   );
 });

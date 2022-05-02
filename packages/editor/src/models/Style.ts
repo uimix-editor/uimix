@@ -34,9 +34,30 @@ export const styleKeys = [
   "letterSpacing",
   "textDecorationLine",
   "textAlign",
+
+  "backgroundColor",
+
+  "borderTopWidth",
+  "borderTopStyle",
+  "borderTopColor",
+  "borderRightWidth",
+  "borderRightStyle",
+  "borderRightColor",
+  "borderBottomWidth",
+  "borderBottomStyle",
+  "borderBottomColor",
+  "borderLeftWidth",
+  "borderLeftStyle",
+  "borderLeftColor",
 ] as const;
 
-export const extraStyleKeys = [...styleKeys, "borderRadius"] as const;
+export const extraStyleKeys = [
+  ...styleKeys,
+  "borderRadius",
+  "borderWidth",
+  "borderStyle",
+  "borderColor",
+] as const;
 
 export type StyleKey = typeof styleKeys[number];
 
@@ -127,5 +148,80 @@ export class Style extends StyleBase {
     this.borderTopRightRadius = value;
     this.borderBottomRightRadius = value;
     this.borderBottomLeftRadius = value;
+  }
+
+  get borderWidth(): string | typeof MIXED | undefined {
+    return sameOrMixed(
+      (
+        [
+          "borderTopWidth",
+          "borderRightWidth",
+          "borderBottomWidth",
+          "borderLeftWidth",
+        ] as const
+      )
+        .map((key) => this[key])
+        .filter((value) => value !== undefined)
+    );
+  }
+
+  set borderWidth(value: string | typeof MIXED | undefined) {
+    if (value === MIXED) {
+      return;
+    }
+    this.borderTopWidth = value;
+    this.borderRightWidth = value;
+    this.borderBottomWidth = value;
+    this.borderLeftWidth = value;
+  }
+
+  get borderStyle(): string | typeof MIXED | undefined {
+    return sameOrMixed(
+      (
+        [
+          "borderTopStyle",
+          "borderRightStyle",
+          "borderBottomStyle",
+          "borderLeftStyle",
+        ] as const
+      )
+        .map((key) => this[key])
+        .filter((value) => value !== undefined)
+    );
+  }
+
+  set borderStyle(value: string | typeof MIXED | undefined) {
+    if (value === MIXED) {
+      return;
+    }
+    this.borderTopStyle = value;
+    this.borderRightStyle = value;
+    this.borderBottomStyle = value;
+    this.borderLeftStyle = value;
+  }
+
+  get borderColor(): string | typeof MIXED | undefined {
+    return sameOrMixed(
+      (
+        [
+          "borderTopColor",
+          "borderRightColor",
+          "borderBottomColor",
+          "borderLeftColor",
+        ] as const
+      )
+        .map((key) => this[key])
+        .filter((value) => value !== undefined)
+    );
+  }
+
+  set borderColor(value: string | typeof MIXED | undefined) {
+    if (value === MIXED) {
+      return;
+    }
+    this.borderTopColor = value;
+    this.borderRightColor = value;
+    this.borderBottomColor = value;
+    this.borderLeftColor = value;
   }
 }
