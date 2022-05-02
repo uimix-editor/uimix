@@ -27,7 +27,7 @@ import { IconRadio } from "@seanchas116/paintkit/src/components/IconRadio";
 import { StyleInspectorState } from "../../../../state/StyleInspectorState";
 import { CSSColorInput } from "../CSSColorInput";
 import { lengthPercentageUnits } from "./Units";
-import { StyleDimensionInput } from "./Util";
+import { StyleComboBox, StyleDimensionInput } from "./Util";
 
 const textAlignOptions = [
   {
@@ -99,11 +99,8 @@ export const TextPane: React.FC<{
           onChange={state.props.fontFamily.onChange}
         />
         <Row11>
-          <ComboBox
+          <StyleComboBox
             icon={lineWeightIcon}
-            title="font-weight"
-            value={state.props.fontWeight.value}
-            placeholder={state.props.fontWeight.computed}
             options={[
               { value: "100", text: "100" },
               { value: "200", text: "200" },
@@ -115,7 +112,7 @@ export const TextPane: React.FC<{
               { value: "800", text: "800" },
               { value: "900", text: "900" },
             ]}
-            onChange={state.props.fontWeight.onChange}
+            property={state.props.fontWeight}
           />
           <CSSColorInput
             title="color"
