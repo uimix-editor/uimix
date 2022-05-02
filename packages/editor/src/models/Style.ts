@@ -25,6 +25,18 @@ export const styleKeys = [
   "borderBottomRightRadius",
   "borderBottomLeftRadius",
 
+  "display",
+  "paddingTop",
+  "paddingRight",
+  "paddingBottom",
+  "paddingLeft",
+  "flexDirection",
+  "flexWrap",
+  "alignItems",
+  "justifyContent",
+  "rowGap",
+  "columnGap",
+
   "color",
   "fontFamily",
   "fontWeight",

@@ -5,6 +5,7 @@ import { StyleInspectorState } from "../../../../state/StyleInspectorState";
 import { useEditorState } from "../../../EditorStateContext";
 import { BackgroundPane } from "./BackgroundPane";
 import { BorderPane } from "./BorderPane";
+import { LayoutPane } from "./LayoutPane";
 import { PositionPane } from "./PositionPane";
 import { SizePane } from "./SizePane";
 import { TextPane } from "./TextPane";
@@ -27,6 +28,7 @@ export const StyleInspector: React.FC = observer(function StyleInspector() {
     <StyleInspectorWrap>
       <PositionPane state={state} />
       <SizePane state={state} />
+      <LayoutPane state={state} />
       <TextPane state={state} />
       <BackgroundPane state={state} />
       <BorderPane state={state} />
