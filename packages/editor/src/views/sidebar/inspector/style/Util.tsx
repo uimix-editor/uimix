@@ -7,6 +7,7 @@ import { kebabCase } from "lodash-es";
 import { observer } from "mobx-react-lite";
 import React from "react";
 import { StylePropertyState } from "../../../../state/StyleInspectorState";
+import { CSSColorInput } from "../CSSColorInput";
 
 export const StyleDimensionInput: React.FC<{
   property: StylePropertyState;
@@ -55,6 +56,20 @@ export const StyleComboBox: React.FC<{
       placeholder={property.computed}
       value={property.value}
       onChange={property.onChange}
+    />
+  );
+});
+
+export const StyleColorInput: React.FC<{
+  property: StylePropertyState;
+}> = observer(({ property }) => {
+  return (
+    <CSSColorInput
+      title={kebabCase(property.key)}
+      value={property.value}
+      placeholder={property.computed}
+      onChange={property.onChangeWithoutCommit}
+      onChangeEnd={property.onChange}
     />
   );
 });

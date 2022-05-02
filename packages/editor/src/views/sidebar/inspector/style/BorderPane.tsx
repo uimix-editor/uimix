@@ -19,14 +19,12 @@ import edgeLeftIcon from "@seanchas116/paintkit/src/icon/EdgeLeft";
 import edgeRightIcon from "@seanchas116/paintkit/src/icon/EdgeRight";
 import { IconRadio } from "@seanchas116/paintkit/src/components/IconRadio";
 import { IconButton } from "@seanchas116/paintkit/src/components/IconButton";
-import { kebabCase } from "lodash-es";
 import {
   StyleInspectorState,
   StylePropertyState,
 } from "../../../../state/StyleInspectorState";
-import { CSSColorInput } from "../CSSColorInput";
 import { lengthPercentageUnits } from "./Units";
-import { StyleDimensionInput } from "./Util";
+import { StyleColorInput, StyleDimensionInput } from "./Util";
 
 const borderStyleOptions = [
   {
@@ -132,15 +130,7 @@ export const BorderPane: React.FC<{
             />
           )}
         </Row12>
-        {style.computed !== "none" && (
-          <CSSColorInput
-            value={color.value}
-            title={kebabCase(color.key)}
-            placeholder={color.computed}
-            onChange={color.onChangeWithoutCommit}
-            onChangeEnd={color.onChange}
-          />
-        )}
+        {style.computed !== "none" && <StyleColorInput property={color} />}
       </RowGroup>
     </Pane>
   );

@@ -7,7 +7,7 @@ import {
   RowGroup,
 } from "@seanchas116/paintkit/src/components/sidebar/Inspector";
 import { StyleInspectorState } from "../../../../state/StyleInspectorState";
-import { CSSColorInput } from "../CSSColorInput";
+import { StyleColorInput } from "./Util";
 
 export const BackgroundPane: React.FC<{
   state: StyleInspectorState;
@@ -22,13 +22,7 @@ export const BackgroundPane: React.FC<{
         <PaneHeading>Background</PaneHeading>
       </PaneHeadingRow>
       <RowGroup>
-        <CSSColorInput
-          value={state.props.backgroundColor.value}
-          title="background-color"
-          placeholder={state.props.backgroundColor.computed}
-          onChange={state.props.backgroundColor.onChangeWithoutCommit}
-          onChangeEnd={state.props.backgroundColor.onChange}
-        />
+        <StyleColorInput property={state.props.backgroundColor} />
       </RowGroup>
     </Pane>
   );

@@ -25,9 +25,8 @@ import underlineIcon from "@iconify-icons/ic/outline-format-underlined";
 import closeIcon from "@iconify-icons/ic/outline-close";
 import { IconRadio } from "@seanchas116/paintkit/src/components/IconRadio";
 import { StyleInspectorState } from "../../../../state/StyleInspectorState";
-import { CSSColorInput } from "../CSSColorInput";
 import { lengthPercentageUnits } from "./Units";
-import { StyleComboBox, StyleDimensionInput } from "./Util";
+import { StyleColorInput, StyleComboBox, StyleDimensionInput } from "./Util";
 
 const textAlignOptions = [
   {
@@ -114,13 +113,7 @@ export const TextPane: React.FC<{
             ]}
             property={state.props.fontWeight}
           />
-          <CSSColorInput
-            title="color"
-            value={state.props.color.value}
-            placeholder={state.props.color.computed}
-            onChange={state.props.color.onChangeWithoutCommit}
-            onChangeEnd={state.props.color.onChange}
-          />
+          <StyleColorInput property={state.props.color} />
         </Row11>
         <Row111>
           <StyleDimensionInput
