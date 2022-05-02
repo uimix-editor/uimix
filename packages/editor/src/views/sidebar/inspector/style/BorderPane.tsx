@@ -138,6 +138,7 @@ export const BorderPane: React.FC<{
         {style.computed !== "none" && (
           <CSSColorInput
             value={color.value}
+            title={kebabCase(color.key)}
             placeholder={color.computed}
             onChange={color.onChangeWithoutCommit}
             onChangeEnd={color.onChange}

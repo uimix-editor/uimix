@@ -92,6 +92,7 @@ export const TextPane: React.FC<{
       <RowGroup>
         <ComboBox
           icon={fontDownloadIcon}
+          title="font-family"
           value={state.props.fontFamily.value}
           placeholder={stripQuotes(state.props.fontFamily.computed)}
           options={["Times", "Helvetica"].map((value) => ({ value }))}
@@ -100,6 +101,7 @@ export const TextPane: React.FC<{
         <Row11>
           <ComboBox
             icon={lineWeightIcon}
+            title="font-weight"
             value={state.props.fontWeight.value}
             placeholder={state.props.fontWeight.computed}
             options={[
@@ -116,6 +118,7 @@ export const TextPane: React.FC<{
             onChange={state.props.fontWeight.onChange}
           />
           <CSSColorInput
+            title="color"
             value={state.props.color.value}
             placeholder={state.props.color.computed}
             onChange={state.props.color.onChangeWithoutCommit}

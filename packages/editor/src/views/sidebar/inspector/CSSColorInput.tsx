@@ -4,17 +4,19 @@ import { MIXED } from "@seanchas116/paintkit/src/util/Mixed";
 import React from "react";
 
 export const CSSColorInput: React.FC<{
-  value?: string | typeof MIXED;
+  title?: string;
   placeholder?: string;
+  value?: string | typeof MIXED;
   onChange?: (value?: string) => void;
   onChangeEnd?: (value?: string) => void;
-}> = ({ value, placeholder, onChange, onChangeEnd }) => {
+}> = ({ title, placeholder, value, onChange, onChangeEnd }) => {
   const color = typeof value === "string" ? Color.fromCSS(value) : undefined;
 
   return (
     <ColorInput
       color={color}
       text={value}
+      title={title}
       placeholder={placeholder}
       onChangeColor={(color) => onChange?.(color?.toString())}
       onChangeEndColor={(color) => onChangeEnd?.(color?.toString())}
