@@ -2,7 +2,6 @@ import React from "react";
 import ReactDOM from "react-dom/client";
 import { App } from "./App";
 import { File } from "./File";
-import "./index.css";
 
 const file = new File();
 
