@@ -10,11 +10,15 @@ export class ElementMoveDragHandler implements DragHandler {
     picker: ElementPicker,
     overrides: ElementInstance[],
     initPos: Vec2
-  ) {}
-  move(event: MouseEvent | DragEvent): void {
-    throw new Error("Method not implemented.");
+  ) {
+    // TODO
   }
+
+  move(event: MouseEvent | DragEvent): void {
+    // TODO
+  }
+
   end(event: MouseEvent | DragEvent): void {
-    throw new Error("Method not implemented.");
+    // TODO
   }
 }
