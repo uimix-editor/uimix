@@ -6,6 +6,12 @@ import { ChildMountSync, fetchComputedValues } from "./ElementMount";
 import { MountContext } from "./MountContext";
 
 export class VariantMount {
+  private static domToMount = new WeakMap<globalThis.Element, VariantMount>();
+
+  static forDOM(dom: globalThis.Element): VariantMount | undefined {
+    return this.domToMount.get(dom);
+  }
+
   constructor(
     component: Component,
     variant: Variant | DefaultVariant,
@@ -17,6 +23,7 @@ export class VariantMount {
     this.context = context;
 
     this.dom = context.domDocument.createElement("div");
+    VariantMount.domToMount.set(this.dom, this);
     this.host = context.domDocument.createElement("div");
     this.shadow = this.host.attachShadow({ mode: "open" });
     // @ts-ignore
