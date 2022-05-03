@@ -1,7 +1,9 @@
+import { assertNonNull } from "@seanchas116/paintkit/src/util/Assert";
 import { compact } from "lodash-es";
 import { Document } from "../models/Document";
 import { ElementInstance } from "../models/ElementInstance";
 import { ElementMount } from "./ElementMount";
+import { VariantMount } from "./VariantMount";
 
 export function elementsFromPointRecursive(
   root: DocumentOrShadowRoot,
@@ -58,22 +60,41 @@ export class ElementPicker {
   }
   readonly document: Document;
 
-  root?: DocumentOrShadowRoot;
+  root?: globalThis.Document;
 
-  pick(event: MouseEventLike): ElementPickResult {
+  private instancesFromPoint(
+    clientX: number,
+    clientY: number
+  ): ElementInstance[] {
     if (!this.root) {
       throw new Error("root not set");
     }
 
-    const doms = elementsFromPointRecursive(
-      this.root,
-      event.clientX,
-      event.clientY
-    );
+    const variantDOM = this.root.elementFromPoint(clientX, clientY);
+    if (!variantDOM) {
+      return [];
+    }
+    const variantMount = VariantMount.forHostDOM(variantDOM);
+    if (!variantMount) {
+      return [];
+    }
+    if (!variantDOM.shadowRoot) {
+      return [];
+    }
+
+    const doms = variantDOM.shadowRoot.elementsFromPoint(clientX, clientY);
+
+    return [
+      ...compact(doms.map((dom) => ElementMount.forDOM(dom)?.instance)),
+      assertNonNull(variantMount.variant.rootInstance),
+    ];
+  }
+
+  pick(event: MouseEventLike): ElementPickResult {
     return new ElementPickResult(
       this.document,
       event,
-      compact(doms.map((elem) => ElementMount.forDOM(elem)?.instance))
+      this.instancesFromPoint(event.clientX, event.clientY)
     );
   }
 }

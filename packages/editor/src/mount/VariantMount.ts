@@ -6,10 +6,13 @@ import { ChildMountSync, fetchComputedValues } from "./ElementMount";
 import { MountContext } from "./MountContext";
 
 export class VariantMount {
-  private static domToMount = new WeakMap<globalThis.Element, VariantMount>();
+  private static hostDOMToMount = new WeakMap<
+    globalThis.Element,
+    VariantMount
+  >();
 
-  static forDOM(dom: globalThis.Element): VariantMount | undefined {
-    return this.domToMount.get(dom);
+  static forHostDOM(dom: globalThis.Element): VariantMount | undefined {
+    return this.hostDOMToMount.get(dom);
   }
 
   constructor(
@@ -23,8 +26,8 @@ export class VariantMount {
     this.context = context;
 
     this.dom = context.domDocument.createElement("div");
-    VariantMount.domToMount.set(this.dom, this);
     this.host = context.domDocument.createElement("div");
+    VariantMount.hostDOMToMount.set(this.host, this);
     this.shadow = this.host.attachShadow({ mode: "open" });
     // @ts-ignore
     this.shadow.adoptedStyleSheets = [styleSheet];
