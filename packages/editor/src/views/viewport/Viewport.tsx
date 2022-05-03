@@ -8,6 +8,7 @@ import { useEditorState } from "../EditorStateContext";
 import { ElementPicker } from "../../mount/ElementPicker";
 import { PanOverlay } from "./PanOverlay";
 import { Indicators } from "./indicators/Indicators";
+import { PointerOverlay } from "./pointer/PointerOverlay";
 
 const ViewportWrap = styled.div`
   background-color: ${colors.uiBackground};
@@ -23,19 +24,10 @@ const ViewportIFrame = styled.iframe`
   border: none;
 `;
 
-const ViewportOverlay = styled.div`
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  border: none;
-`;
-
 export const Viewport: React.FC<{ className?: string }> = ({ className }) => {
   const editorState = useEditorState();
 
-  const elementPicker = useMemo(
+  const picker = useMemo(
     () => new ElementPicker(editorState.document),
     [editorState]
   );
@@ -74,6 +66,7 @@ export const Viewport: React.FC<{ className?: string }> = ({ className }) => {
     if (!document) {
       return;
     }
+    picker.root = document;
 
     document.body.style.margin = "0";
 
@@ -130,28 +123,10 @@ export const Viewport: React.FC<{ className?: string }> = ({ className }) => {
     [editorState]
   );
 
-  const onClick = (e: React.MouseEvent) => {
-    const pos = new Vec2(e.clientX, e.clientY).sub(
-      editorState.scroll.viewportClientRect.topLeft
-    );
-
-    const document = iframeRef.current!.contentDocument!;
-    elementPicker.root = document;
-
-    console.log(
-      elementPicker.pick({
-        clientX: pos.x,
-        clientY: pos.y,
-        ctrlKey: e.ctrlKey,
-        metaKey: e.metaKey,
-      })
-    );
-  };
-
   return (
     <ViewportWrap className={className} ref={ref} onWheel={onWheel}>
       <ViewportIFrame ref={iframeRef} />
-      <ViewportOverlay onClick={onClick} />
+      <PointerOverlay picker={picker} />
       <PanOverlay />
       <Indicators />
     </ViewportWrap>
