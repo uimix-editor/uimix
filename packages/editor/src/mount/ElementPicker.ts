@@ -150,9 +150,6 @@ export class ElementPickResult {
       return this.doubleClickable;
     }
 
-    console.log(this.event.metaKey, this.event.ctrlKey);
-    console.log(this.all, this.clickable);
-
     return this.event.metaKey || this.event.ctrlKey
       ? this.all[0]
       : this.clickable;
