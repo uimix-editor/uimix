@@ -6,9 +6,8 @@ import { DragHandler } from "./DragHandler";
 export class ElementInsertDragHandler implements DragHandler {
   constructor(
     editorState: EditorState,
-    pickResult: ElementPickResult,
     mode: InsertMode,
-    event: MouseEvent | DragEvent
+    pickResult: ElementPickResult
   ) {
     // TODO
   }

@@ -92,39 +92,39 @@ export class ElementPicker {
     ];
   }
 
-  pick(event: MouseEventLike): ElementPickResult {
+  pick(
+    event: MouseEvent | DragEvent,
+    mode: "click" | "doubleClick" = "click"
+  ): ElementPickResult {
     return new ElementPickResult(
       this.document,
-      event,
       this.instancesFromPoint(
         event.clientX - this.rootXOffset,
         event.clientY - this.rootYOffset
-      )
+      ),
+      event,
+      mode
     );
   }
-}
-
-interface MouseEventLike {
-  clientX: number;
-  clientY: number;
-  metaKey: boolean;
-  ctrlKey: boolean;
 }
 
 export class ElementPickResult {
   constructor(
     document: Document,
-    event: MouseEventLike,
-    all: readonly ElementInstance[]
+    all: readonly ElementInstance[],
+    event: MouseEvent | DragEvent,
+    mode: "click" | "doubleClick"
   ) {
     this.document = document;
-    this.event = event;
     this.all = all;
+    this.event = event;
+    this.mode = mode;
   }
 
   readonly document: Document;
-  readonly event: MouseEventLike;
   readonly all: readonly ElementInstance[];
+  readonly event: MouseEvent | DragEvent;
+  readonly mode: "click" | "doubleClick";
 
   get clickable(): ElementInstance | undefined {
     const instance = this.all[0];
@@ -141,6 +141,13 @@ export class ElementPickResult {
   }
 
   get default(): ElementInstance | undefined {
+    if (this.mode === "doubleClick") {
+      return this.doubleClickable;
+    }
+
+    console.log(this.event.metaKey, this.event.ctrlKey);
+    console.log(this.all, this.clickable);
+
     return this.event.metaKey || this.event.ctrlKey
       ? this.all[0]
       : this.clickable;

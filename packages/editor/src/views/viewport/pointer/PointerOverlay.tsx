@@ -34,7 +34,10 @@ export const PointerOverlay: React.FC<{
       lastClickTimestampRef.current = e.timeStamp;
       const isDoubleClick = interval < doubleClickInterval;
 
-      const pickResult = picker.pick(e.nativeEvent);
+      const pickResult = picker.pick(
+        e.nativeEvent,
+        isDoubleClick ? "doubleClick" : "click"
+      );
 
       editorState.hoveredItem = undefined;
       // editorState.endTextEdit();
@@ -42,9 +45,8 @@ export const PointerOverlay: React.FC<{
       if (editorState.insertMode) {
         return new ElementInsertDragHandler(
           editorState,
-          pickResult,
           editorState.insertMode,
-          e.nativeEvent
+          pickResult
         );
       }
 
@@ -60,9 +62,7 @@ export const PointerOverlay: React.FC<{
       const clickMove = ElementClickMoveDragHandler.create(
         editorState,
         picker,
-        pickResult,
-        e.nativeEvent,
-        isDoubleClick
+        pickResult
       );
       if (clickMove) {
         return clickMove;
