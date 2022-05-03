@@ -60,7 +60,7 @@ export class ElementPicker {
 
   root?: DocumentOrShadowRoot;
 
-  pick(event: MouseLikeEvent): ElementPickResult {
+  pick(event: MouseEventLike): ElementPickResult {
     if (!this.root) {
       throw new Error("root not set");
     }
@@ -78,7 +78,7 @@ export class ElementPicker {
   }
 }
 
-interface MouseLikeEvent {
+interface MouseEventLike {
   clientX: number;
   clientY: number;
   metaKey: boolean;
@@ -88,7 +88,7 @@ interface MouseLikeEvent {
 export class ElementPickResult {
   constructor(
     document: Document,
-    event: MouseLikeEvent,
+    event: MouseEventLike,
     all: readonly ElementInstance[]
   ) {
     this.document = document;
@@ -97,7 +97,7 @@ export class ElementPickResult {
   }
 
   readonly document: Document;
-  readonly event: MouseLikeEvent;
+  readonly event: MouseEventLike;
   readonly all: readonly ElementInstance[];
 
   get clickable(): ElementInstance | undefined {
