@@ -56,6 +56,16 @@ export class ElementInstance {
       : undefined;
   }
 
+  get ancestors(): readonly ElementInstance[] {
+    const result: ElementInstance[] = [];
+    let current: ElementInstance | undefined = this;
+    while (current) {
+      result.unshift(current);
+      current = current.parent;
+    }
+    return result;
+  }
+
   get children(): readonly (ElementInstance | TextInstance)[] {
     return this.element.children.map((child) =>
       child.type === "element"
