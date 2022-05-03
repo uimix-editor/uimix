@@ -2,7 +2,6 @@ import { usePointerStroke } from "@seanchas116/paintkit/src/components/hooks/use
 import { action } from "mobx";
 import React, { useRef } from "react";
 import styled from "styled-components";
-import { ElementPicker } from "../../../mount/ElementPicker";
 import { useEditorState } from "../../EditorStateContext";
 import { doubleClickInterval } from "../Constants";
 import { DragHandler } from "./DragHandler";
@@ -18,9 +17,7 @@ const PointerOverlayWrap = styled.div`
   border: none;
 `;
 
-export const PointerOverlay: React.FC<{
-  picker: ElementPicker;
-}> = ({ picker }) => {
+export const PointerOverlay: React.FC<{}> = () => {
   const editorState = useEditorState();
 
   const lastClickTimestampRef = useRef(0);
@@ -34,7 +31,7 @@ export const PointerOverlay: React.FC<{
       lastClickTimestampRef.current = e.timeStamp;
       const isDoubleClick = interval < doubleClickInterval;
 
-      const pickResult = picker.pick(
+      const pickResult = editorState.elementPicker.pick(
         e.nativeEvent,
         isDoubleClick ? "doubleClick" : "click"
       );
@@ -61,7 +58,6 @@ export const PointerOverlay: React.FC<{
 
       const clickMove = ElementClickMoveDragHandler.create(
         editorState,
-        picker,
         pickResult
       );
       if (clickMove) {
@@ -81,7 +77,9 @@ export const PointerOverlay: React.FC<{
       }
     }),
     onHover: action((e: React.PointerEvent) => {
-      editorState.hoveredItem = picker.pick(e.nativeEvent).default;
+      editorState.hoveredItem = editorState.elementPicker.pick(
+        e.nativeEvent
+      ).default;
       editorState.resizeBoxVisible = true;
 
       // TODO: snapping

@@ -1,6 +1,6 @@
 import { Vec2 } from "paintvec";
 import { ElementInstance } from "../../../models/ElementInstance";
-import { ElementPicker, ElementPickResult } from "../../../mount/ElementPicker";
+import { ElementPickResult } from "../../../mount/ElementPicker";
 import { EditorState } from "../../../state/EditorState";
 import { dragStartThreshold } from "../Constants";
 import { DragHandler } from "./DragHandler";
@@ -9,28 +9,20 @@ import { ElementMoveDragHandler } from "./ElementMoveDragHandler";
 export class ElementClickMoveDragHandler implements DragHandler {
   static create(
     editorState: EditorState,
-    picker: ElementPicker,
     pickResult: ElementPickResult
   ): ElementClickMoveDragHandler | undefined {
     const override = pickResult.default;
     if (override) {
-      return new ElementClickMoveDragHandler(
-        editorState,
-        picker,
-        override,
-        pickResult
-      );
+      return new ElementClickMoveDragHandler(editorState, override, pickResult);
     }
   }
 
   constructor(
     editorState: EditorState,
-    picker: ElementPicker,
     override: ElementInstance,
     pickResult: ElementPickResult
   ) {
     this.editorState = editorState;
-    this.picker = picker;
     this.initPos = editorState.scroll.documentPosForEvent(pickResult.event);
     this.override = override;
     this.additive = pickResult.event.shiftKey;
@@ -54,7 +46,6 @@ export class ElementClickMoveDragHandler implements DragHandler {
 
       this.handler = new ElementMoveDragHandler(
         this.editorState,
-        this.picker,
         this.editorState.document.selectedElementInstances,
         this.initPos
       );
@@ -75,7 +66,6 @@ export class ElementClickMoveDragHandler implements DragHandler {
   }
 
   private readonly editorState: EditorState;
-  private readonly picker: ElementPicker;
   private readonly initPos: Vec2;
   private readonly override: ElementInstance;
   private readonly additive: boolean;

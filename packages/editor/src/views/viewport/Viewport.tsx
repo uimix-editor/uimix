@@ -1,11 +1,10 @@
 import { colors } from "@seanchas116/paintkit/src/components/Palette";
 import { Rect, Vec2 } from "paintvec";
 import { action, reaction, runInAction } from "mobx";
-import React, { useCallback, useEffect, useMemo } from "react";
+import React, { useCallback, useEffect } from "react";
 import styled from "styled-components";
 import { DocumentMount } from "../../mount/DocumentMount";
 import { useEditorState } from "../EditorStateContext";
-import { ElementPicker } from "../../mount/ElementPicker";
 import { PanOverlay } from "./PanOverlay";
 import { Indicators } from "./indicators/Indicators";
 import { PointerOverlay } from "./pointer/PointerOverlay";
@@ -27,8 +26,6 @@ const ViewportIFrame = styled.iframe`
 export const Viewport: React.FC<{ className?: string }> = ({ className }) => {
   const editorState = useEditorState();
 
-  const picker = useMemo(() => new ElementPicker(editorState), [editorState]);
-
   const ref = React.createRef<HTMLDivElement>();
   const iframeRef = React.createRef<HTMLIFrameElement>();
 
@@ -42,16 +39,12 @@ export const Viewport: React.FC<{ className?: string }> = ({ className }) => {
       editorState.scroll.viewportClientRect = Rect.from(
         elem.getBoundingClientRect()
       );
-      picker.rootXOffset = editorState.scroll.viewportClientRect.left;
-      picker.rootYOffset = editorState.scroll.viewportClientRect.top;
     });
     const resizeObserver = new ResizeObserver(
       action(() => {
         editorState.scroll.viewportClientRect = Rect.from(
           elem.getBoundingClientRect()
         );
-        picker.rootXOffset = editorState.scroll.viewportClientRect.left;
-        picker.rootYOffset = editorState.scroll.viewportClientRect.top;
       })
     );
     resizeObserver.observe(elem);
@@ -67,7 +60,7 @@ export const Viewport: React.FC<{ className?: string }> = ({ className }) => {
     if (!document) {
       return;
     }
-    picker.root = document;
+    editorState.elementPicker.root = document;
 
     document.body.style.margin = "0";
 
@@ -127,7 +120,7 @@ export const Viewport: React.FC<{ className?: string }> = ({ className }) => {
   return (
     <ViewportWrap className={className} ref={ref} onWheel={onWheel}>
       <ViewportIFrame ref={iframeRef} />
-      <PointerOverlay picker={picker} />
+      <PointerOverlay />
       <PanOverlay />
       <Indicators />
     </ViewportWrap>

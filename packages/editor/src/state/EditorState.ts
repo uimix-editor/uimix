@@ -12,6 +12,7 @@ import { Text } from "../models/Text";
 import { TextInstance } from "../models/TextInstance";
 import { Variant } from "../models/Variant";
 import { parseFragment, stringifyFragment } from "../models/FileFormat";
+import { ElementPicker } from "../mount/ElementPicker";
 import { ElementInspectorState } from "./ElementInspectorState";
 import { VariantInspectorState } from "./VariantInspectorState";
 import { InsertMode } from "./InsertMode";
@@ -51,6 +52,8 @@ export class EditorState {
   @observable insertMode: InsertMode | undefined = undefined;
 
   @observable resizeBoxVisible = true;
+
+  elementPicker = new ElementPicker(this);
 
   getBasicEditMenu(): MenuItem[] {
     return [

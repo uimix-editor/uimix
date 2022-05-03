@@ -66,8 +66,6 @@ export class ElementPicker {
   }
 
   root?: globalThis.Document;
-  rootXOffset = 0;
-  rootYOffset = 0;
 
   private instancesFromPoint(
     clientX: number,
@@ -101,11 +99,13 @@ export class ElementPicker {
     event: MouseEvent | DragEvent,
     mode: "click" | "doubleClick" = "click"
   ): ElementPickResult {
+    const offset = this.editorState.scroll.viewportClientRect.topLeft;
+
     return new ElementPickResult(
       this.document,
       this.instancesFromPoint(
-        event.clientX - this.rootXOffset,
-        event.clientY - this.rootYOffset
+        event.clientX - offset.x,
+        event.clientY - offset.y
       ),
       event,
       mode
