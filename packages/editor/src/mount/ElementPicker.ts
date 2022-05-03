@@ -2,6 +2,7 @@ import { assertNonNull } from "@seanchas116/paintkit/src/util/Assert";
 import { compact } from "lodash-es";
 import { Document } from "../models/Document";
 import { ElementInstance } from "../models/ElementInstance";
+import { EditorState } from "../state/EditorState";
 import { ElementMount } from "./ElementMount";
 import { VariantMount } from "./VariantMount";
 
@@ -55,10 +56,14 @@ function clickableAncestor(
 }
 
 export class ElementPicker {
-  constructor(document: Document) {
-    this.document = document;
+  constructor(editorState: EditorState) {
+    this.editorState = editorState;
   }
-  readonly document: Document;
+  readonly editorState: EditorState;
+
+  get document(): Document {
+    return this.editorState.document;
+  }
 
   root?: globalThis.Document;
   rootXOffset = 0;

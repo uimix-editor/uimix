@@ -27,10 +27,7 @@ const ViewportIFrame = styled.iframe`
 export const Viewport: React.FC<{ className?: string }> = ({ className }) => {
   const editorState = useEditorState();
 
-  const picker = useMemo(
-    () => new ElementPicker(editorState.document),
-    [editorState]
-  );
+  const picker = useMemo(() => new ElementPicker(editorState), [editorState]);
 
   const ref = React.createRef<HTMLDivElement>();
   const iframeRef = React.createRef<HTMLIFrameElement>();
