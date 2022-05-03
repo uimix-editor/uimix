@@ -1,8 +1,42 @@
+import { MIXED, sameOrMixed } from "@seanchas116/paintkit/src/util/Mixed";
 import { kebabCase } from "lodash-es";
 import { makeObservable, observable } from "mobx";
 import * as postcss from "postcss";
 
 export const styleKeys = [
+  "position",
+  "top",
+  "right",
+  "bottom",
+  "left",
+  "marginTop",
+  "marginRight",
+  "marginBottom",
+  "marginLeft",
+
+  "width",
+  "minWidth",
+  "maxWidth",
+  "height",
+  "minHeight",
+  "maxHeight",
+  "borderTopLeftRadius",
+  "borderTopRightRadius",
+  "borderBottomRightRadius",
+  "borderBottomLeftRadius",
+
+  "display",
+  "paddingTop",
+  "paddingRight",
+  "paddingBottom",
+  "paddingLeft",
+  "flexDirection",
+  "flexWrap",
+  "alignItems",
+  "justifyContent",
+  "rowGap",
+  "columnGap",
+
   "color",
   "fontFamily",
   "fontWeight",
@@ -12,9 +46,36 @@ export const styleKeys = [
   "letterSpacing",
   "textDecorationLine",
   "textAlign",
+
+  "backgroundColor",
+
+  "borderTopWidth",
+  "borderTopStyle",
+  "borderTopColor",
+  "borderRightWidth",
+  "borderRightStyle",
+  "borderRightColor",
+  "borderBottomWidth",
+  "borderBottomStyle",
+  "borderBottomColor",
+  "borderLeftWidth",
+  "borderLeftStyle",
+  "borderLeftColor",
+
+  "opacity",
+] as const;
+
+export const extraStyleKeys = [
+  ...styleKeys,
+  "borderRadius",
+  "borderWidth",
+  "borderStyle",
+  "borderColor",
 ] as const;
 
 export type StyleKey = typeof styleKeys[number];
+
+export type ExtraStyleKey = typeof extraStyleKeys[number];
 
 export type StyleJSON = {
   [key in StyleKey]?: string;
@@ -76,5 +137,81 @@ export class Style extends StyleBase {
     for (const key of styleKeys) {
       this[key] = props[kebabCase(key)];
     }
+  }
+
+  get borderRadius(): string | typeof MIXED | undefined {
+    return sameOrMixed([
+      this.borderTopLeftRadius,
+      this.borderTopRightRadius,
+      this.borderBottomRightRadius,
+      this.borderBottomLeftRadius,
+    ]);
+  }
+
+  set borderRadius(value: string | typeof MIXED | undefined) {
+    if (value === MIXED) {
+      return;
+    }
+    this.borderTopLeftRadius = value;
+    this.borderTopRightRadius = value;
+    this.borderBottomRightRadius = value;
+    this.borderBottomLeftRadius = value;
+  }
+
+  get borderWidth(): string | typeof MIXED | undefined {
+    return sameOrMixed([
+      this.borderTopWidth,
+      this.borderRightWidth,
+      this.borderBottomWidth,
+      this.borderLeftWidth,
+    ]);
+  }
+
+  set borderWidth(value: string | typeof MIXED | undefined) {
+    if (value === MIXED) {
+      return;
+    }
+    this.borderTopWidth = value;
+    this.borderRightWidth = value;
+    this.borderBottomWidth = value;
+    this.borderLeftWidth = value;
+  }
+
+  get borderStyle(): string | typeof MIXED | undefined {
+    return sameOrMixed([
+      this.borderTopStyle,
+      this.borderRightStyle,
+      this.borderBottomStyle,
+      this.borderLeftStyle,
+    ]);
+  }
+
+  set borderStyle(value: string | typeof MIXED | undefined) {
+    if (value === MIXED) {
+      return;
+    }
+    this.borderTopStyle = value;
+    this.borderRightStyle = value;
+    this.borderBottomStyle = value;
+    this.borderLeftStyle = value;
+  }
+
+  get borderColor(): string | typeof MIXED | undefined {
+    return sameOrMixed([
+      this.borderTopColor,
+      this.borderRightColor,
+      this.borderBottomColor,
+      this.borderLeftColor,
+    ]);
+  }
+
+  set borderColor(value: string | typeof MIXED | undefined) {
+    if (value === MIXED) {
+      return;
+    }
+    this.borderTopColor = value;
+    this.borderRightColor = value;
+    this.borderBottomColor = value;
+    this.borderLeftColor = value;
   }
 }

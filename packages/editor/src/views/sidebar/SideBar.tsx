@@ -7,13 +7,14 @@ import {
   InspectorTabBarItem,
 } from "@seanchas116/paintkit/src/components/sidebar/InspectorTabBar";
 import { WidthResizeHandle } from "@seanchas116/paintkit/src/components/sidebar/WidthResizeHandle";
+import { Scrollable } from "@seanchas116/paintkit/src/components/Scrollable";
 import { action } from "mobx";
 import { observer } from "mobx-react-lite";
 import { useEditorState } from "../EditorStateContext";
 import { OutlineTreeView } from "./outline/OutlineTreeView";
 import { ElementInspector } from "./inspector/ElementInspector";
 import { VariantInspector } from "./inspector/VariantInspector";
-import { StyleInspector } from "./inspector/StyleInspector";
+import { StyleInspector } from "./inspector/style/StyleInspector";
 
 const RightSideBarWrap = styled.div`
   position: relative;
@@ -30,7 +31,7 @@ const TabArea = styled.div`
   display: flex;
   flex-direction: column;
 
-  > :last-child {
+  > :not(:first-child) {
     flex: 1;
   }
 `;
@@ -117,16 +118,16 @@ export const RightSideBar: React.FC = observer(() => {
               Style
             </InspectorTabBarItem>
           </InspectorTabBar>
-          <div hidden={editorState.currentInspectorTab !== "element"}>
+          <Scrollable hidden={editorState.currentInspectorTab !== "element"}>
             {editorState.variantInspectorState.isVisible ? (
               <VariantInspector />
             ) : editorState.elementInspectorState.isVisible ? (
               <ElementInspector />
             ) : null}
-          </div>
-          <div hidden={editorState.currentInspectorTab !== "style"}>
+          </Scrollable>
+          <Scrollable hidden={editorState.currentInspectorTab !== "style"}>
             <StyleInspector />
-          </div>
+          </Scrollable>
         </TabArea>
       </VSplitter>
       <WidthResizeHandle

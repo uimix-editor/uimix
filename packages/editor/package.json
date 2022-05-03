@@ -11,7 +11,9 @@
   },
   "dependencies": {
     "@iconify-icons/ic": "^1.2.3",
+    "@iconify/types": "^1.1.0",
     "@seanchas116/paintkit": "*",
+    "@tippyjs/react": "^4.2.6",
     "@types/hast": "^2.3.4",
     "@types/lodash-es": "^4.17.6",
     "css-what": "^6.1.0",
