@@ -35,7 +35,6 @@ export const PointerOverlay: React.FC<{
       const isDoubleClick = interval < doubleClickInterval;
 
       const pickResult = picker.pick(e.nativeEvent);
-      console.log(pickResult);
 
       editorState.hoveredItem = undefined;
       // editorState.endTextEdit();
