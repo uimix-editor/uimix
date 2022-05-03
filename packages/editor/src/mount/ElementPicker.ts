@@ -3,13 +3,13 @@ import { Document } from "../models/Document";
 import { ElementInstance } from "../models/ElementInstance";
 import { ElementMount } from "./ElementMount";
 
-function elementsFromPointRecursive(
+export function elementsFromPointRecursive(
   root: DocumentOrShadowRoot,
   clientX: number,
   clientY: number
 ): Element[] {
   return root.elementsFromPoint(clientX, clientY).flatMap((element) => {
-    if (element.shadowRoot) {
+    if (element.shadowRoot && element.shadowRoot !== root) {
       return [
         ...elementsFromPointRecursive(element.shadowRoot, clientX, clientY),
         element,
@@ -60,7 +60,7 @@ export class ElementPicker {
 
   root?: DocumentOrShadowRoot;
 
-  pick(event: MouseEvent | DragEvent): ElementPickResult {
+  pick(event: MouseLikeEvent): ElementPickResult {
     if (!this.root) {
       throw new Error("root not set");
     }
@@ -78,10 +78,17 @@ export class ElementPicker {
   }
 }
 
+interface MouseLikeEvent {
+  clientX: number;
+  clientY: number;
+  metaKey: boolean;
+  ctrlKey: boolean;
+}
+
 export class ElementPickResult {
   constructor(
     document: Document,
-    event: MouseEvent | DragEvent,
+    event: MouseLikeEvent,
     all: readonly ElementInstance[]
   ) {
     this.document = document;
@@ -90,7 +97,7 @@ export class ElementPickResult {
   }
 
   readonly document: Document;
-  readonly event: MouseEvent | DragEvent;
+  readonly event: MouseLikeEvent;
   readonly all: readonly ElementInstance[];
 
   get clickable(): ElementInstance | undefined {

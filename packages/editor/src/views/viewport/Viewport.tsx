@@ -1,12 +1,13 @@
 import { colors } from "@seanchas116/paintkit/src/components/Palette";
 import { Rect, Vec2 } from "paintvec";
 import { action, reaction, runInAction } from "mobx";
-import React, { useCallback, useEffect } from "react";
+import React, { useCallback, useEffect, useMemo } from "react";
 import styled from "styled-components";
 import { DocumentMount } from "../../mount/DocumentMount";
 import { useEditorState } from "../EditorStateContext";
 import { PanOverlay } from "./PanOverlay";
 import { Indicators } from "./indicators/Indicators";
+import { ElementPicker } from "../../mount/ElementPicker";
 
 const ViewportWrap = styled.div`
   background-color: ${colors.uiBackground};
@@ -33,6 +34,11 @@ const ViewportOverlay = styled.div`
 
 export const Viewport: React.FC<{ className?: string }> = ({ className }) => {
   const editorState = useEditorState();
+
+  const elementPicker = useMemo(
+    () => new ElementPicker(editorState.document),
+    [editorState]
+  );
 
   const ref = React.createRef<HTMLDivElement>();
   const iframeRef = React.createRef<HTMLIFrameElement>();
@@ -124,10 +130,28 @@ export const Viewport: React.FC<{ className?: string }> = ({ className }) => {
     [editorState]
   );
 
+  const onClick = (e: React.MouseEvent) => {
+    const pos = new Vec2(e.clientX, e.clientY).sub(
+      editorState.scroll.viewportClientRect.topLeft
+    );
+
+    const document = iframeRef.current!.contentDocument!;
+    elementPicker.root = document;
+
+    console.log(
+      elementPicker.pick({
+        clientX: pos.x,
+        clientY: pos.y,
+        ctrlKey: e.ctrlKey,
+        metaKey: e.metaKey,
+      })
+    );
+  };
+
   return (
     <ViewportWrap className={className} ref={ref} onWheel={onWheel}>
       <ViewportIFrame ref={iframeRef} />
-      <ViewportOverlay />
+      <ViewportOverlay onClick={onClick} />
       <PanOverlay />
       <Indicators />
     </ViewportWrap>
