@@ -36,6 +36,11 @@ export class StylePropertyState {
     return true;
   });
 
+  readonly onChangeCommit = action((value?: string) => {
+    this.state.editorState.history.commit(`Change ${startCase(this.key)}`);
+    return true;
+  });
+
   readonly onChange = action((value?: string) => {
     for (const style of this.state.styles) {
       style[this.key] = value || undefined;

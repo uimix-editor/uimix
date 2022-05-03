@@ -47,6 +47,7 @@ export const styleKeys = [
   "textDecorationLine",
   "textAlign",
 
+  "backgroundImage",
   "backgroundColor",
 
   "borderTopWidth",
