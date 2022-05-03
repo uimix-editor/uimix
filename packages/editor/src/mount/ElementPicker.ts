@@ -3,6 +3,22 @@ import { Document } from "../models/Document";
 import { ElementInstance } from "../models/ElementInstance";
 import { ElementMount } from "./ElementMount";
 
+function elementsFromPointRecursive(
+  root: DocumentOrShadowRoot,
+  clientX: number,
+  clientY: number
+): Element[] {
+  return root.elementsFromPoint(clientX, clientY).flatMap((element) => {
+    if (element.shadowRoot) {
+      return [
+        ...elementsFromPointRecursive(element.shadowRoot, clientX, clientY),
+        element,
+      ];
+    }
+    return [element];
+  });
+}
+
 function clickableAncestor(
   document: Document,
   instanceAtPos: ElementInstance,
@@ -49,7 +65,11 @@ export class ElementPicker {
       throw new Error("root not set");
     }
 
-    const doms = this.root.elementsFromPoint(event.clientX, event.clientY);
+    const doms = elementsFromPointRecursive(
+      this.root,
+      event.clientX,
+      event.clientY
+    );
     return new ElementPickResult(
       this.document,
       event,
