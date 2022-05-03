@@ -4,6 +4,7 @@ import React, { useRef } from "react";
 import styled from "styled-components";
 import { ElementPicker } from "../../../mount/ElementPicker";
 import { useEditorState } from "../../EditorStateContext";
+import { doubleClickInterval } from "../Constants";
 import { DragHandler } from "./DragHandler";
 import { ElementClickMoveDragHandler } from "./ElementClickMoveDragHandler";
 import { ElementInsertDragHandler } from "./ElementInsertDragHandler";
@@ -31,7 +32,7 @@ export const PointerOverlay: React.FC<{
     onBegin: action((e: React.PointerEvent) => {
       const interval = e.timeStamp - lastClickTimestampRef.current;
       lastClickTimestampRef.current = e.timeStamp;
-      const isDoubleClick = interval < 300;
+      const isDoubleClick = interval < doubleClickInterval;
 
       const pickResult = picker.pick(e.nativeEvent);
       console.log(pickResult);
