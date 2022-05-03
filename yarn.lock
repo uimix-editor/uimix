@@ -1729,6 +1729,14 @@
     estree-walker "^2.0.1"
     picomatch "^2.2.2"
 
+"@seanchas116/cssvalue@^0.0.1":
+  version "0.0.1"
+  resolved "https://registry.yarnpkg.com/@seanchas116/cssvalue/-/cssvalue-0.0.1.tgz#c1886afea26dc6c8429eebac66776fadcec6c15a"
+  integrity sha512-6+XyjMTL6nniO7JcAABSVTwPeKdaBqBSzlIWL7QxuqTnqtVQVCzt5v9fOhKhoWzg+tQGOE7Qs19XBX1P7jLkWw==
+  dependencies:
+    bread-n-butter "^0.6.0"
+    lodash "^4.17.21"
+
 "@sinonjs/commons@^1.7.0":
   version "1.8.3"
   resolved "https://registry.yarnpkg.com/@sinonjs/commons/-/commons-1.8.3.tgz#3802ddd21a50a949b6721ddd72da36e67e7f1b2d"
@@ -4387,6 +4395,11 @@ braces@^3.0.2, braces@~3.0.2:
   integrity sha512-b8um+L1RzM3WDSzvhm6gIz1yfTbBt6YTlcEKAvsmqCZZFw46z626lVj9j1yEPW33H5H+lBQpZMP1k8l+78Ha0A==
   dependencies:
     fill-range "^7.0.1"
+
+bread-n-butter@^0.6.0:
+  version "0.6.0"
+  resolved "https://registry.yarnpkg.com/bread-n-butter/-/bread-n-butter-0.6.0.tgz#e81379deebeb65df1981e86776fd38d6e2b9215e"
+  integrity sha512-ATCbBoEdO7LPmFPCfO1dz8jgFEsOIlMx4hDPd4NtX42gJXNC7er8vK45jHlUmC1Ok/1I+VuZ6VZNbU+WipxR6Q==
 
 brorand@^1.0.1, brorand@^1.1.0:
   version "1.1.0"

@@ -6,12 +6,12 @@ import {
   IconRadioOption,
 } from "@seanchas116/paintkit/src/components/IconRadio";
 import { Input } from "@seanchas116/paintkit/src/components/Input";
+import { CSSColorInput } from "@seanchas116/paintkit/src/components/css/CSSColorInput";
 import { SelectItem } from "@seanchas116/paintkit/src/components/Select";
 import { kebabCase } from "lodash-es";
 import { observer } from "mobx-react-lite";
 import React from "react";
 import { StylePropertyState } from "../../../../state/StyleInspectorState";
-import { CSSColorInput } from "../CSSColorInput";
 
 export const StyleDimensionInput: React.FC<{
   className?: string;
