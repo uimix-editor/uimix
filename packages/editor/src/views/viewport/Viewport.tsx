@@ -5,9 +5,9 @@ import React, { useCallback, useEffect, useMemo } from "react";
 import styled from "styled-components";
 import { DocumentMount } from "../../mount/DocumentMount";
 import { useEditorState } from "../EditorStateContext";
+import { ElementPicker } from "../../mount/ElementPicker";
 import { PanOverlay } from "./PanOverlay";
 import { Indicators } from "./indicators/Indicators";
-import { ElementPicker } from "../../mount/ElementPicker";
 
 const ViewportWrap = styled.div`
   background-color: ${colors.uiBackground};
