@@ -61,6 +61,8 @@ export class ElementPicker {
   readonly document: Document;
 
   root?: globalThis.Document;
+  rootXOffset = 0;
+  rootYOffset = 0;
 
   private instancesFromPoint(
     clientX: number,
@@ -94,7 +96,10 @@ export class ElementPicker {
     return new ElementPickResult(
       this.document,
       event,
-      this.instancesFromPoint(event.clientX, event.clientY)
+      this.instancesFromPoint(
+        event.clientX - this.rootXOffset,
+        event.clientY - this.rootYOffset
+      )
     );
   }
 }

@@ -45,12 +45,16 @@ export const Viewport: React.FC<{ className?: string }> = ({ className }) => {
       editorState.scroll.viewportClientRect = Rect.from(
         elem.getBoundingClientRect()
       );
+      picker.rootXOffset = editorState.scroll.viewportClientRect.left;
+      picker.rootYOffset = editorState.scroll.viewportClientRect.top;
     });
     const resizeObserver = new ResizeObserver(
       action(() => {
         editorState.scroll.viewportClientRect = Rect.from(
           elem.getBoundingClientRect()
         );
+        picker.rootXOffset = editorState.scroll.viewportClientRect.left;
+        picker.rootYOffset = editorState.scroll.viewportClientRect.top;
       })
     );
     resizeObserver.observe(elem);

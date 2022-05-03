@@ -14,6 +14,7 @@ import { Variant } from "../models/Variant";
 import { parseFragment, stringifyFragment } from "../models/FileFormat";
 import { ElementInspectorState } from "./ElementInspectorState";
 import { VariantInspectorState } from "./VariantInspectorState";
+import { InsertMode } from "./InsertMode";
 
 export class EditorState {
   constructor(getHistory: () => JSONUndoHistory<DocumentJSON, Document>) {
@@ -46,6 +47,10 @@ export class EditorState {
 
   @observable measureMode = false;
   @observable panMode = false;
+
+  @observable insertMode: InsertMode | undefined = undefined;
+
+  @observable resizeBoxVisible = true;
 
   getBasicEditMenu(): MenuItem[] {
     return [
