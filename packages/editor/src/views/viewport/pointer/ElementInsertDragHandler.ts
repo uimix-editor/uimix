@@ -1,14 +1,9 @@
 import { ElementPickResult } from "../../../mount/ElementPicker";
 import { EditorState } from "../../../state/EditorState";
-import { InsertMode } from "../../../state/InsertMode";
 import { DragHandler } from "./DragHandler";
 
 export class ElementInsertDragHandler implements DragHandler {
-  constructor(
-    editorState: EditorState,
-    mode: InsertMode,
-    pickResult: ElementPickResult
-  ) {
+  constructor(editorState: EditorState, pickResult: ElementPickResult) {
     // TODO
   }
 

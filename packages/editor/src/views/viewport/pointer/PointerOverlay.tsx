@@ -40,11 +40,7 @@ export const PointerOverlay: React.FC<{}> = () => {
       // editorState.endTextEdit();
 
       if (editorState.insertMode) {
-        return new ElementInsertDragHandler(
-          editorState,
-          editorState.insertMode,
-          pickResult
-        );
+        return new ElementInsertDragHandler(editorState, pickResult);
       }
 
       // if (isDoubleClick) {
