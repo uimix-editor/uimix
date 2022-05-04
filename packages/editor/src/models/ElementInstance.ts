@@ -131,6 +131,28 @@ export class ElementInstance {
 
   @observable.ref boundingBox: Rect = new Rect();
 
+  @computed get offsetBoundingBox(): Rect {
+    const { offsetParent } = this;
+    if (offsetParent) {
+      return this.boundingBox.translate(offsetParent.boundingBox.topLeft.neg);
+    }
+    return this.boundingBox;
+  }
+
+  @computed get computedPaddings(): {
+    top: number;
+    right: number;
+    bottom: number;
+    left: number;
+  } {
+    return {
+      top: Number.parseFloat(this.computedStyle.paddingTop ?? "0"),
+      right: Number.parseFloat(this.computedStyle.paddingRight ?? "0"),
+      bottom: Number.parseFloat(this.computedStyle.paddingBottom ?? "0"),
+      left: Number.parseFloat(this.computedStyle.paddingLeft ?? "0"),
+    };
+  }
+
   @computed get allDescendants(): (ElementInstance | TextInstance)[] {
     return [this, ...this.children.flatMap((child) => child.allDescendants)];
   }
