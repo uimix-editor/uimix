@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useCallback } from "react";
 import menuIcon from "@iconify-icons/ic/outline-menu";
 import paragraphIcon from "@seanchas116/paintkit/src/icon/Paragraph";
 import frameIcon from "@seanchas116/paintkit/src/icon/Frame";
@@ -16,6 +16,34 @@ import { useEditorState } from "./EditorStateContext";
 export const ToolBar: React.FC = observer(() => {
   const editorState = useEditorState();
 
+  const onFrameToolClick = useCallback(
+    action(() => {
+      editorState.insertMode = "frame";
+    }),
+    []
+  );
+  const onTextToolClick = useCallback(
+    action(() => {
+      editorState.insertMode = "text";
+    }),
+    []
+  );
+
+  const onZoomOut = useCallback(
+    action(() => editorState.scroll.zoomOut()),
+    [editorState]
+  );
+  const onZoomIn = useCallback(
+    action(() => editorState.scroll.zoomIn()),
+    [editorState]
+  );
+  const onChangeZoomPercent = useCallback(
+    action((percent: number) =>
+      editorState.scroll.zoomAroundCenter(percent / 100)
+    ),
+    [editorState]
+  );
+
   return (
     <ToolBarWrap>
       <Dropdown
@@ -30,17 +58,25 @@ export const ToolBar: React.FC = observer(() => {
         )}
       />
       <ToolButtonArray>
-        <ToolButton label="Frame" icon={frameIcon} />
-        <ToolButton label="Text" icon={paragraphIcon} />
+        <ToolButton
+          selected={editorState.insertMode === "frame"}
+          label="Frame"
+          icon={frameIcon}
+          onClick={onFrameToolClick}
+        />
+        <ToolButton
+          selected={editorState.insertMode === "text"}
+          label="Text"
+          icon={paragraphIcon}
+          onClick={onTextToolClick}
+        />
       </ToolButtonArray>
 
       <ZoomControl
         percentage={Math.round(editorState.scroll.scale * 100)}
-        onZoomOut={action(() => editorState.scroll.zoomOut())}
-        onZoomIn={action(() => editorState.scroll.zoomIn())}
-        onChangePercentage={action((percentage) => {
-          editorState.scroll.zoomAroundCenter(percentage / 100);
-        })}
+        onZoomOut={onZoomOut}
+        onZoomIn={onZoomIn}
+        onChangePercentage={onChangeZoomPercent}
       />
     </ToolBarWrap>
   );

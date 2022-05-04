@@ -285,7 +285,7 @@ export class EditorState {
   handleGlobalKeyDown(e: KeyboardEvent): boolean {
     switch (e.key) {
       case "Escape":
-        // TODO
+        this.insertMode = undefined;
         break;
       case "Alt":
         this.measureMode = true;
