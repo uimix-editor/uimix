@@ -60,6 +60,16 @@ class ElementResizeBoxState {
       if (this.heightChanged) {
         instance.style.height = `${newBoundingBox.height}px`;
       }
+
+      if (!instance.parent) {
+        instance.variant.x = newBoundingBox.left;
+        instance.variant.y = newBoundingBox.top;
+      } else if (instance.style.position === "absolute") {
+        const offsetParent = instance.offsetParent;
+        const offset = offsetParent?.boundingBox.topLeft ?? new Vec2();
+        instance.style.left = `${newBoundingBox.left - offset.x}px`;
+        instance.style.top = `${newBoundingBox.top - offset.y}px`;
+      }
     }
   }
 
