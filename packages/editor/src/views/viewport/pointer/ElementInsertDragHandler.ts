@@ -87,8 +87,6 @@ export class ElementInsertDragHandler implements DragHandler {
   }
 
   end(event: MouseEvent | DragEvent): void {
-    // TODO
-
     this.editorState.insertMode = undefined;
     this.editorState.history.commit("Insert component");
   }
