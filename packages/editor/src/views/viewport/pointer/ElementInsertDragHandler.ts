@@ -3,13 +3,21 @@ import { Rect, Vec2 } from "paintvec";
 import { Component } from "../../../models/Component";
 import { Element } from "../../../models/Element";
 import { ElementInstance } from "../../../models/ElementInstance";
+import { Text } from "../../../models/Text";
 import { ElementPickResult } from "../../../mount/ElementPicker";
 import { EditorState } from "../../../state/EditorState";
+import { InsertMode } from "../../../state/InsertMode";
 import { DragHandler } from "./DragHandler";
 
 export class ElementInsertDragHandler implements DragHandler {
-  constructor(editorState: EditorState, pickResult: ElementPickResult) {
+  constructor(
+    editorState: EditorState,
+    mode: InsertMode,
+    pickResult: ElementPickResult
+  ) {
     this.editorState = editorState;
+    this.mode = mode;
+
     const documentPos = editorState.scroll.documentPosForEvent(
       pickResult.event
     );
@@ -20,6 +28,12 @@ export class ElementInsertDragHandler implements DragHandler {
       this.component.rename("my-component");
       this.editorState.document.components.append(this.component);
 
+      if (mode === "text") {
+        this.component.rootElement.append(
+          new Text({ content: "Type something" })
+        );
+      }
+
       this.instance = assertNonNull(this.component.defaultVariant.rootInstance);
       this.parentOffset = new Vec2();
       this.initPos = documentPos;
@@ -29,6 +43,11 @@ export class ElementInsertDragHandler implements DragHandler {
     } else {
       const element = new Element({ tagName: "div" });
       element.rename("div");
+
+      if (mode === "text") {
+        element.append(new Text({ content: "Type something" }));
+      }
+
       parent.element.append(element);
       this.instance = assertNonNull(
         ElementInstance.get(parent.variant, element)
@@ -40,7 +59,10 @@ export class ElementInsertDragHandler implements DragHandler {
       this.instance.style.position = "absolute";
       this.instance.style.left = `${this.initPos.x}px`;
       this.instance.style.top = `${this.initPos.y}px`;
-      this.instance.style.backgroundColor = "#cccccc";
+
+      if (mode !== "text") {
+        this.instance.style.backgroundColor = "#cccccc";
+      }
     }
 
     this.editorState.document.deselect();
@@ -72,6 +94,7 @@ export class ElementInsertDragHandler implements DragHandler {
   }
 
   private readonly editorState: EditorState;
+  private readonly mode: InsertMode;
   private readonly component: Component | undefined;
   private readonly instance: ElementInstance;
   private readonly parentOffset: Vec2;
