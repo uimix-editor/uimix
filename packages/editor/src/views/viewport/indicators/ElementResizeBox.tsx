@@ -16,7 +16,9 @@ class ElementResizeBoxState {
 
   readonly editorState: EditorState;
 
-  private originalRect: Rect = new Rect();
+  private initBoundingBox: Rect = new Rect();
+  private widthChanged = false;
+  private heightChanged = false;
 
   get selectedInstances(): ElementInstance[] {
     return this.editorState.document.selectedElementInstances;
@@ -37,15 +39,36 @@ class ElementResizeBoxState {
   }
 
   begin() {
-    // TODO
+    this.initBoundingBox = this.boundingBox ?? new Rect();
+    this.widthChanged = false;
+    this.heightChanged = false;
   }
 
   change(p0: Vec2, p1: Vec2) {
-    // TODO
+    const newBoundingBox = Rect.boundingRect([p0, p1])!;
+    if (newBoundingBox.width !== this.initBoundingBox.width) {
+      this.widthChanged = true;
+    }
+    if (newBoundingBox.height !== this.initBoundingBox.height) {
+      this.heightChanged = true;
+    }
+
+    for (const instance of this.selectedInstances) {
+      if (this.widthChanged) {
+        instance.style.width = `${newBoundingBox.width}px`;
+      }
+      if (this.heightChanged) {
+        instance.style.height = `${newBoundingBox.height}px`;
+      }
+    }
   }
 
   end() {
-    // TODO
+    if (!this.widthChanged && !this.heightChanged) {
+      return;
+    }
+
+    this.editorState.history.commit("Resize");
   }
 }
 
