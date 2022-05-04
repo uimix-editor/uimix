@@ -1,4 +1,4 @@
-import { MenuItem } from "@seanchas116/paintkit/dist/components/menu/Menu";
+import { MenuItem } from "@seanchas116/paintkit/src/components/menu/Menu";
 import { KeyGesture } from "@seanchas116/paintkit/src/util/KeyGesture";
 import { action, computed } from "mobx";
 import { File } from "./File";

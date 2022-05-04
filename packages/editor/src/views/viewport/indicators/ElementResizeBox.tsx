@@ -2,7 +2,7 @@ import { action, computed, makeObservable } from "mobx";
 import React, { useMemo } from "react";
 import { Vec2, Rect } from "paintvec";
 import { observer } from "mobx-react-lite";
-import { ResizeBox } from "@seanchas116/paintkit/dist/components/ResizeBox";
+import { ResizeBox } from "@seanchas116/paintkit/src/components/ResizeBox";
 import { colors } from "@seanchas116/paintkit/src/components/Palette";
 import { EditorState } from "../../../state/EditorState";
 import { ElementInstance } from "../../../models/ElementInstance";
