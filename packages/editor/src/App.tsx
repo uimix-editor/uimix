@@ -3,7 +3,7 @@ import {
   ColorSchemeProvider,
   PaintkitProvider,
 } from "@seanchas116/paintkit/src/components/GlobalStyle";
-import { ContextMenuProvider } from "@seanchas116/paintkit/dist/components/menu/ContextMenuProvider";
+import { ContextMenuProvider } from "@seanchas116/paintkit/src/components/menu/ContextMenuProvider";
 import { reaction } from "mobx";
 import { createGlobalStyle } from "styled-components";
 import { fontFamily } from "@seanchas116/paintkit/src/components/Common";

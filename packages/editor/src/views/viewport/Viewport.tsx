@@ -8,10 +8,13 @@ import { useEditorState } from "../EditorStateContext";
 import { PanOverlay } from "./PanOverlay";
 import { Indicators } from "./indicators/Indicators";
 import { PointerOverlay } from "./pointer/PointerOverlay";
+import { FrameLabels } from "./VariantLabels";
 
 const ViewportWrap = styled.div`
   background-color: ${colors.uiBackground};
   position: relative;
+  overflow: hidden;
+  contain: strict;
 `;
 
 const ViewportIFrame = styled.iframe`
@@ -121,8 +124,9 @@ export const Viewport: React.FC<{ className?: string }> = ({ className }) => {
     <ViewportWrap className={className} ref={ref} onWheel={onWheel}>
       <ViewportIFrame ref={iframeRef} />
       <PointerOverlay />
-      <PanOverlay />
+      <FrameLabels />
       <Indicators />
+      <PanOverlay />
     </ViewportWrap>
   );
 };

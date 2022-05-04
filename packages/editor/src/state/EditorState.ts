@@ -1,4 +1,4 @@
-import { MenuItem } from "@seanchas116/paintkit/dist/components/menu/Menu";
+import { MenuItem } from "@seanchas116/paintkit/src/components/menu/Menu";
 import { JSONUndoHistory } from "@seanchas116/paintkit/src/util/JSONUndoHistory";
 import { KeyGesture } from "@seanchas116/paintkit/src/util/KeyGesture";
 import { isTextInputFocused } from "@seanchas116/paintkit/src/util/CurrentFocus";

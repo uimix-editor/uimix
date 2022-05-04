@@ -6,21 +6,21 @@ import {
   LeafTreeViewItem,
   RootTreeViewItem,
   TreeViewItem,
-} from "@seanchas116/paintkit/dist/components/treeview/TreeViewItem";
+} from "@seanchas116/paintkit/src/components/treeview/TreeViewItem";
 import {
   TreeRow,
   TreeRowIcon,
   TreeRowLabel,
   TreeRowNameEdit,
-} from "@seanchas116/paintkit/dist/components/treeview/TreeRow";
-import { TreeView } from "@seanchas116/paintkit/dist/components/treeview/TreeView";
+} from "@seanchas116/paintkit/src/components/treeview/TreeRow";
+import { TreeView } from "@seanchas116/paintkit/src/components/treeview/TreeView";
 import {
   ContextMenuController,
   useContextMenu,
-} from "@seanchas116/paintkit/dist/components/menu/ContextMenuProvider";
+} from "@seanchas116/paintkit/src/components/menu/ContextMenuProvider";
 import widgetsFilledIcon from "@iconify-icons/ic/baseline-widgets";
-import switchIcon from "@seanchas116/paintkit/dist/icon/Switch";
-import chevronsIcon from "@seanchas116/paintkit/dist/icon/Chevrons";
+import switchIcon from "@seanchas116/paintkit/src/icon/Switch";
+import chevronsIcon from "@seanchas116/paintkit/src/icon/Chevrons";
 import { action, computed, makeObservable, reaction } from "mobx";
 import { colors } from "@seanchas116/paintkit/src/components/Palette";
 import { filterInstance } from "@seanchas116/paintkit/src/util/Collection";
