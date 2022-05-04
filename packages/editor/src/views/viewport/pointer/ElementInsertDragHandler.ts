@@ -19,7 +19,9 @@ export class ElementInsertDragHandler implements DragHandler {
       this.component = new Component();
       this.component.rename("my-component");
       this.editorState.document.components.append(this.component);
+
       this.instance = assertNonNull(this.component.defaultVariant.rootInstance);
+      this.parentOffset = new Vec2();
       this.initPos = documentPos;
 
       this.component.defaultVariant.x = this.initPos.x;
@@ -31,8 +33,10 @@ export class ElementInsertDragHandler implements DragHandler {
       this.instance = assertNonNull(
         ElementInstance.get(parent.variant, element)
       );
+
       this.parentOffset = parent.boundingBox.topLeft; // TODO: use offsetParent
       this.initPos = documentPos.sub(this.parentOffset);
+
       this.instance.style.position = "absolute";
       this.instance.style.left = `${this.initPos.x}px`;
       this.instance.style.top = `${this.initPos.y}px`;
@@ -68,8 +72,8 @@ export class ElementInsertDragHandler implements DragHandler {
   }
 
   private readonly editorState: EditorState;
-  private readonly initPos: Vec2;
-  private readonly parentOffset = new Vec2();
   private readonly component: Component | undefined;
   private readonly instance: ElementInstance;
+  private readonly parentOffset: Vec2;
+  private readonly initPos: Vec2;
 }
