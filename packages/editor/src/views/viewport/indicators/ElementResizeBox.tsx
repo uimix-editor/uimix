@@ -65,13 +65,12 @@ export const ElementResizeBox: React.FC = observer(function LayerResizeBox() {
     <ResizeBox
       p0={boundingBox.topLeft}
       p1={boundingBox.bottomRight}
-      snap={(p: Vec2) => p}
-      // snap={action((p: Vec2) => {
-      //   // TODO: avoid transform
-      //   let pos = p.transform(editorState.scroll.viewportToDocument).round;
-      //   pos = editorState.snapper.snapResizePoint(pos);
-      //   return pos.transform(editorState.scroll.documentToViewport);
-      // })}
+      snap={action((p: Vec2) => {
+        // TODO: avoid transform
+        let pos = p.transform(editorState.scroll.viewportToDocument).round;
+        pos = editorState.snapper.snapResizePoint(pos);
+        return pos.transform(editorState.scroll.documentToViewport);
+      })}
       onChangeBegin={action(state.begin.bind(state))}
       onChange={action(state.change.bind(state))}
       onChangeEnd={action(state.end.bind(state))}

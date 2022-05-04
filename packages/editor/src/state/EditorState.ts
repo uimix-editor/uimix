@@ -23,6 +23,7 @@ import { ElementPicker } from "../mount/ElementPicker";
 import { ElementInspectorState } from "./ElementInspectorState";
 import { VariantInspectorState } from "./VariantInspectorState";
 import { InsertMode } from "./InsertMode";
+import { Snapper } from "./Snapper";
 
 export class EditorState {
   constructor(getHistory: () => JSONUndoHistory<DocumentJSON, Document>) {
@@ -73,6 +74,8 @@ export class EditorState {
   @observable resizeBoxVisible = true;
 
   elementPicker = new ElementPicker(this);
+
+  snapper = new Snapper(this);
 
   getBasicEditMenu(): MenuItem[] {
     return [
