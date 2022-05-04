@@ -29,15 +29,27 @@ export class ElementSnapper {
     siblings?: boolean;
     children?: boolean;
   }): Set<ElementInstance> {
+    const topLevels = new Set(
+      this.editorState.document.components.children.flatMap((c) =>
+        compact(c.allVariants.map((v) => v.rootInstance))
+      )
+    );
+
     const selection = new Set(
       this.editorState.document.selectedElementInstances
     );
     if (!selection.size) {
-      return new Set(
-        this.editorState.document.components.children.flatMap((c) =>
-          compact(c.allVariants.map((v) => v.rootInstance))
-        )
-      );
+      return topLevels;
+    }
+
+    const children = new Set<ElementInstance>();
+
+    for (const selected of selection) {
+      for (const child of selected.children) {
+        if (child.type === "element") {
+          children.add(child);
+        }
+      }
     }
 
     const parents = new Set<ElementInstance>();
@@ -47,33 +59,41 @@ export class ElementSnapper {
       }
     }
 
-    const result = new Set<ElementInstance>();
+    const siblings = new Set<ElementInstance>();
 
-    for (const selected of selection) {
-      if (options.selection) {
-        result.add(selected);
-      }
-      if (options.children) {
-        for (const child of selected.children) {
-          if (child.type === "element") {
-            result.add(child);
-          }
+    for (const parent of parents) {
+      for (const child of parent.children) {
+        if (child.type === "element" && !child.ancestorSelected) {
+          siblings.add(child);
         }
       }
     }
 
-    for (const parent of parents) {
-      if (options.parents) {
+    const topLevelSelected = [...selection].some(
+      (selected) => !selected.parent
+    );
+    if (topLevelSelected) {
+      for (const topLevel of topLevels) {
+        if (!selection.has(topLevel)) {
+          siblings.add(topLevel);
+        }
+      }
+    }
+
+    const result = new Set<ElementInstance>();
+    if (options.selection) {
+      for (const selected of selection) {
+        result.add(selected);
+      }
+    }
+    if (options.parents) {
+      for (const parent of parents) {
         result.add(parent);
       }
-      for (const child of parent.children) {
-        if (
-          child.type === "element" &&
-          !child.ancestorSelected &&
-          options.siblings
-        ) {
-          result.add(child);
-        }
+    }
+    if (options.siblings) {
+      for (const sibling of siblings) {
+        result.add(sibling);
       }
     }
 
