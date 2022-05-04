@@ -10,7 +10,7 @@ import {
   observable,
   runInAction,
 } from "mobx";
-import { Rect } from "paintvec";
+import { Rect, Vec2 } from "paintvec";
 import { Component } from "../models/Component";
 import { Document, DocumentJSON } from "../models/Document";
 import { Element } from "../models/Element";
@@ -72,6 +72,11 @@ export class EditorState {
   @observable insertMode: InsertMode | undefined = undefined;
 
   @observable resizeBoxVisible = true;
+
+  @observable.ref dragPreviewRects: readonly Rect[] = [];
+  @observable.ref dropTargetPreviewRect: Rect | undefined = undefined;
+  @observable.ref dropIndexIndicator: readonly [Vec2, Vec2] | undefined =
+    undefined;
 
   readonly elementPicker = new ElementPicker(this);
   readonly snapper = new ElementSnapper(this);
