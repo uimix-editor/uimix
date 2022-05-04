@@ -280,6 +280,13 @@ class ElementItem extends TreeViewItem {
       copy ? "Duplicate Layers" : "Move Layers"
     );
   }
+
+  handleMouseEnter(): void {
+    this.context.editorState.hoveredItem = this.instance;
+  }
+  handleMouseLeave(): void {
+    this.context.editorState.hoveredItem = undefined;
+  }
 }
 
 class TextItem extends LeafTreeViewItem {
@@ -358,6 +365,13 @@ class TextItem extends LeafTreeViewItem {
   handleDragStart(e: React.DragEvent) {
     e.dataTransfer.effectAllowed = "copyMove";
     e.dataTransfer.setData(NODE_DRAG_MIME, "drag");
+  }
+
+  handleMouseEnter(): void {
+    this.context.editorState.hoveredItem = this.instance;
+  }
+  handleMouseLeave(): void {
+    this.context.editorState.hoveredItem = undefined;
   }
 }
 
