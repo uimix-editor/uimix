@@ -6,22 +6,6 @@ import { EditorState } from "../state/EditorState";
 import { ElementMount } from "./ElementMount";
 import { VariantMount } from "./VariantMount";
 
-export function elementsFromPointRecursive(
-  root: DocumentOrShadowRoot,
-  clientX: number,
-  clientY: number
-): Element[] {
-  return root.elementsFromPoint(clientX, clientY).flatMap((element) => {
-    if (element.shadowRoot && element.shadowRoot !== root) {
-      return [
-        ...elementsFromPointRecursive(element.shadowRoot, clientX, clientY),
-        element,
-      ];
-    }
-    return [element];
-  });
-}
-
 function clickableAncestor(
   document: Document,
   instanceAtPos: ElementInstance,
