@@ -27,12 +27,9 @@ export const Indicators: React.VFC<{
 }> = observer(function Indicators({ className }) {
   const editorState = useEditorState();
 
-  const hoverRect =
-    editorState.hoveredItem?.type === "element"
-      ? editorState.hoveredItem.boundingBox.transform(
-          editorState.scroll.documentToViewport
-        )
-      : undefined;
+  const hoverRect = editorState.hoveredRect?.transform(
+    editorState.scroll.documentToViewport
+  );
 
   return (
     <IndicatorsWrap className={className}>

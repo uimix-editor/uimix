@@ -3,7 +3,13 @@ import { JSONUndoHistory } from "@seanchas116/paintkit/src/util/JSONUndoHistory"
 import { KeyGesture } from "@seanchas116/paintkit/src/util/KeyGesture";
 import { isTextInputFocused } from "@seanchas116/paintkit/src/util/CurrentFocus";
 import { Scroll } from "@seanchas116/paintkit/src/util/Scroll";
-import { action, makeObservable, observable, runInAction } from "mobx";
+import {
+  action,
+  computed,
+  makeObservable,
+  observable,
+  runInAction,
+} from "mobx";
 import { Component } from "../models/Component";
 import { Document, DocumentJSON } from "../models/Document";
 import { Element } from "../models/Element";
@@ -16,6 +22,7 @@ import { ElementPicker } from "../mount/ElementPicker";
 import { ElementInspectorState } from "./ElementInspectorState";
 import { VariantInspectorState } from "./VariantInspectorState";
 import { InsertMode } from "./InsertMode";
+import { Rect } from "paintvec";
 
 export class EditorState {
   constructor(getHistory: () => JSONUndoHistory<DocumentJSON, Document>) {
@@ -45,6 +52,18 @@ export class EditorState {
 
   @observable hoveredItem: ElementInstance | TextInstance | undefined =
     undefined;
+
+  @computed get hoveredRect(): Rect | undefined {
+    if (!this.hoveredItem) {
+      return;
+    }
+    switch (this.hoveredItem.type) {
+      case "element":
+        return this.hoveredItem.boundingBox;
+      case "text":
+        return this.hoveredItem.parent?.boundingBox;
+    }
+  }
 
   @observable measureMode = false;
   @observable panMode = false;
