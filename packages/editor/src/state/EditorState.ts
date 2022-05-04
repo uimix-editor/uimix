@@ -10,6 +10,7 @@ import {
   observable,
   runInAction,
 } from "mobx";
+import { Rect } from "paintvec";
 import { Component } from "../models/Component";
 import { Document, DocumentJSON } from "../models/Document";
 import { Element } from "../models/Element";
@@ -22,7 +23,6 @@ import { ElementPicker } from "../mount/ElementPicker";
 import { ElementInspectorState } from "./ElementInspectorState";
 import { VariantInspectorState } from "./VariantInspectorState";
 import { InsertMode } from "./InsertMode";
-import { Rect } from "paintvec";
 
 export class EditorState {
   constructor(getHistory: () => JSONUndoHistory<DocumentJSON, Document>) {
