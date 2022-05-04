@@ -49,7 +49,9 @@ class ElementResizeBoxState {
   }
 
   change(p0: Vec2, p1: Vec2) {
-    const newWholeBBox = Rect.boundingRect([p0, p1])!;
+    const newWholeBBox = Rect.boundingRect([p0, p1])!.transform(
+      this.editorState.scroll.viewportToDocument
+    );
     if (newWholeBBox.width !== this.initWholeBoundingBox.width) {
       this.widthChanged = true;
     }
