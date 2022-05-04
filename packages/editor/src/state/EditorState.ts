@@ -73,9 +73,8 @@ export class EditorState {
 
   @observable resizeBoxVisible = true;
 
-  elementPicker = new ElementPicker(this);
-
-  snapper = new ElementSnapper(this);
+  readonly elementPicker = new ElementPicker(this);
+  readonly snapper = new ElementSnapper(this);
 
   getBasicEditMenu(): MenuItem[] {
     return [
