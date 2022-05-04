@@ -1,4 +1,5 @@
 import { computed, makeObservable, observable } from "mobx";
+import { Rect } from "paintvec";
 import shortUUID from "short-uuid";
 import { ElementInstance } from "./ElementInstance";
 import { Text } from "./Text";
@@ -75,4 +76,6 @@ export class TextInstance {
   @computed get allDescendants(): (ElementInstance | TextInstance)[] {
     return [this];
   }
+
+  @observable.ref boundingBox: Rect = new Rect();
 }
