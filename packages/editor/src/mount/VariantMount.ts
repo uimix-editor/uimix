@@ -6,10 +6,13 @@ import { ChildMountSync, fetchComputedValues } from "./ElementMount";
 import { MountContext } from "./MountContext";
 
 export class VariantMount {
-  private static domToMount = new WeakMap<globalThis.Element, VariantMount>();
+  private static hostDOMToMount = new WeakMap<
+    globalThis.Element,
+    VariantMount
+  >();
 
-  static forDOM(dom: globalThis.Element): VariantMount | undefined {
-    return this.domToMount.get(dom);
+  static forHostDOM(dom: globalThis.Element): VariantMount | undefined {
+    return this.hostDOMToMount.get(dom);
   }
 
   constructor(
@@ -23,11 +26,11 @@ export class VariantMount {
     this.context = context;
 
     this.dom = context.domDocument.createElement("div");
-    VariantMount.domToMount.set(this.dom, this);
     this.host = context.domDocument.createElement("div");
-    this.shadowRoot = this.host.attachShadow({ mode: "open" });
+    VariantMount.hostDOMToMount.set(this.host, this);
+    this.shadow = this.host.attachShadow({ mode: "open" });
     // @ts-ignore
-    this.shadowRoot.adoptedStyleSheets = [styleSheet];
+    this.shadow.adoptedStyleSheets = [styleSheet];
     this.dom.append(this.host);
 
     if (this.variant.type === "variant") {
@@ -43,7 +46,7 @@ export class VariantMount {
     this.childMountSync = new ChildMountSync(
       ElementInstance.get(variant, component.rootElement),
       context,
-      this.shadowRoot,
+      this.shadow,
       () => this.updateBoundingBoxLater()
     );
     context.registry.setVariantMount(this);
@@ -90,8 +93,8 @@ export class VariantMount {
   readonly context: MountContext;
 
   readonly dom: HTMLDivElement;
-  readonly host: HTMLDivElement;
-  readonly shadowRoot: ShadowRoot;
+  private readonly host: HTMLDivElement;
+  private readonly shadow: ShadowRoot;
 
   private readonly childMountSync: ChildMountSync;
 

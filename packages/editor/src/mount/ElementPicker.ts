@@ -59,19 +59,19 @@ export class ElementPicker {
       throw new Error("root not set");
     }
 
-    const variantDOMs = this.root.elementsFromPoint(clientX, clientY);
-    let variantMount: VariantMount | undefined;
-    for (const dom of variantDOMs) {
-      variantMount = VariantMount.forDOM(dom);
-      if (variantMount) {
-        break;
-      }
+    const variantDOM = this.root.elementFromPoint(clientX, clientY);
+    if (!variantDOM) {
+      return [];
     }
+    const variantMount = VariantMount.forHostDOM(variantDOM);
     if (!variantMount) {
       return [];
     }
+    if (!variantDOM.shadowRoot) {
+      return [];
+    }
 
-    const doms = variantMount.shadowRoot.elementsFromPoint(clientX, clientY);
+    const doms = variantDOM.shadowRoot.elementsFromPoint(clientX, clientY);
 
     return [
       ...compact(doms.map((dom) => ElementMount.forDOM(dom)?.instance)),
