@@ -6,7 +6,7 @@ import {
   SameMarginSnapping,
   snapPointToRects,
   snapRectToRects,
-} from "@seanchas116/paintkit/dist/util/Snapping";
+} from "@seanchas116/paintkit/src/util/Snapping";
 import { snapThreshold } from "../views/viewport/Constants";
 import { ElementInstance } from "../models/ElementInstance";
 import { EditorState } from "./EditorState";
