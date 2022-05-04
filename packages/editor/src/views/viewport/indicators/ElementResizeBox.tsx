@@ -1,9 +1,10 @@
 import { action, computed, makeObservable } from "mobx";
 import React, { useMemo } from "react";
-import { Vec2, Rect } from "paintvec";
+import { Vec2, Rect, Transform } from "paintvec";
 import { observer } from "mobx-react-lite";
 import { ResizeBox } from "@seanchas116/paintkit/src/components/ResizeBox";
 import { colors } from "@seanchas116/paintkit/src/components/Palette";
+import { roundRectXYWH } from "@seanchas116/paintkit/src/util/Geometry";
 import { EditorState } from "../../../state/EditorState";
 import { ElementInstance } from "../../../models/ElementInstance";
 import { useEditorState } from "../../EditorStateContext";
@@ -15,8 +16,8 @@ class ElementResizeBoxState {
   }
 
   readonly editorState: EditorState;
-
-  private initBoundingBox: Rect = new Rect();
+  private initWholeBoundingBox = new Rect();
+  private initBoundingBoxes = new Map<ElementInstance, Rect>();
   private widthChanged = false;
   private heightChanged = false;
 
@@ -39,41 +40,52 @@ class ElementResizeBoxState {
   }
 
   begin() {
-    this.initBoundingBox = this.boundingBox ?? new Rect();
+    for (const instance of this.selectedInstances) {
+      this.initBoundingBoxes.set(instance, instance.boundingBox);
+    }
+    this.initWholeBoundingBox = this.boundingBox ?? new Rect();
     this.widthChanged = false;
     this.heightChanged = false;
   }
 
   change(p0: Vec2, p1: Vec2) {
-    const newBoundingBox = Rect.boundingRect([p0, p1])!;
-    if (newBoundingBox.width !== this.initBoundingBox.width) {
+    const newWholeBBox = Rect.boundingRect([p0, p1])!;
+    if (newWholeBBox.width !== this.initWholeBoundingBox.width) {
       this.widthChanged = true;
     }
-    if (newBoundingBox.height !== this.initBoundingBox.height) {
+    if (newWholeBBox.height !== this.initWholeBoundingBox.height) {
       this.heightChanged = true;
     }
+    const transform = Transform.rectToRect(
+      this.initWholeBoundingBox,
+      newWholeBBox
+    );
 
-    for (const instance of this.selectedInstances) {
+    for (const [instance, originalBBox] of this.initBoundingBoxes) {
+      const newBBox = roundRectXYWH(originalBBox.transform(transform));
+
       if (this.widthChanged) {
-        instance.style.width = `${newBoundingBox.width}px`;
+        instance.style.width = `${newBBox.width}px`;
       }
       if (this.heightChanged) {
-        instance.style.height = `${newBoundingBox.height}px`;
+        instance.style.height = `${newBBox.height}px`;
       }
 
       if (!instance.parent) {
-        instance.variant.x = newBoundingBox.left;
-        instance.variant.y = newBoundingBox.top;
+        instance.variant.x = newBBox.left;
+        instance.variant.y = newBBox.top;
       } else if (instance.style.position === "absolute") {
         const offsetParent = instance.offsetParent;
         const offset = offsetParent?.boundingBox.topLeft ?? new Vec2();
-        instance.style.left = `${newBoundingBox.left - offset.x}px`;
-        instance.style.top = `${newBoundingBox.top - offset.y}px`;
+        instance.style.left = `${newBBox.left - offset.x}px`;
+        instance.style.top = `${newBBox.top - offset.y}px`;
       }
     }
   }
 
   end() {
+    this.initBoundingBoxes.clear();
+
     if (!this.widthChanged && !this.heightChanged) {
       return;
     }
