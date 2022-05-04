@@ -11,7 +11,7 @@ import { snapThreshold } from "../views/viewport/Constants";
 import { ElementInstance } from "../models/ElementInstance";
 import { EditorState } from "./EditorState";
 
-export class Snapper {
+export class ElementSnapper {
   constructor(editorState: EditorState) {
     this.editorState = editorState;
     makeObservable(this);
