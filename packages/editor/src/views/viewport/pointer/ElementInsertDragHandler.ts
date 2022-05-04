@@ -27,8 +27,8 @@ export class ElementInsertDragHandler implements DragHandler {
 
     this.component.defaultVariant.x = rect.left;
     this.component.defaultVariant.y = rect.top;
-    this.component.defaultVariant.width = rect.width;
-    this.component.defaultVariant.height = rect.height;
+    this.instance.style.width = `${rect.width}px`;
+    this.instance.style.height = `${rect.height}px`;
   }
   end(event: MouseEvent | DragEvent): void {
     // TODO
