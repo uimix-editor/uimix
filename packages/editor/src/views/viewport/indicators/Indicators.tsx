@@ -4,6 +4,7 @@ import { observer } from "mobx-react-lite";
 import { colors } from "@seanchas116/paintkit/src/components/Palette";
 import { useEditorState } from "../../EditorStateContext";
 import { ElementResizeBox } from "./ElementResizeBox";
+import { SnapIndicators } from "./SnapIndicators";
 
 const IndicatorsWrap = styled.div`
   position: absolute;
@@ -45,6 +46,7 @@ export const Indicators: React.VFC<{
           />
         )}
         <ElementResizeBox />
+        <SnapIndicators />
       </IndicatorsSVG>
     </IndicatorsWrap>
   );

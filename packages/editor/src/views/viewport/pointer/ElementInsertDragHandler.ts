@@ -18,8 +18,8 @@ export class ElementInsertDragHandler implements DragHandler {
     this.editorState = editorState;
     this.mode = mode;
 
-    const documentPos = editorState.scroll.documentPosForEvent(
-      pickResult.event
+    const documentPos = editorState.snapper.snapInsertPoint(
+      editorState.scroll.documentPosForEvent(pickResult.event)
     );
 
     const parent = pickResult.default;
@@ -53,7 +53,7 @@ export class ElementInsertDragHandler implements DragHandler {
         ElementInstance.get(parent.variant, element)
       );
 
-      this.parentOffset = parent.boundingBox.topLeft; // TODO: use offsetParent
+      this.parentOffset = parent.offsetParentOfChildren.boundingBox.topLeft;
       this.initPos = documentPos.sub(this.parentOffset);
 
       this.instance.style.position = "absolute";
@@ -70,8 +70,8 @@ export class ElementInsertDragHandler implements DragHandler {
   }
 
   move(event: MouseEvent | DragEvent): void {
-    const pos = this.editorState.scroll
-      .documentPosForEvent(event)
+    const pos = this.editorState.snapper
+      .snapResizePoint(this.editorState.scroll.documentPosForEvent(event))
       .sub(this.parentOffset);
     const rect = Rect.boundingRect([pos, this.initPos]);
 

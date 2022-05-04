@@ -82,13 +82,12 @@ export const PointerOverlay: React.FC<{}> = () => {
       ).default;
       editorState.resizeBoxVisible = true;
 
-      // TODO: snapping
-      // editorState.snapper.clear();
-      // if (editorState.insertMode) {
-      //   editorState.snapper.snapInsertPoint(
-      //     editorState.scroll.documentPosForEvent(e)
-      //   );
-      // }
+      editorState.snapper.clear();
+      if (editorState.insertMode) {
+        editorState.snapper.snapInsertPoint(
+          editorState.scroll.documentPosForEvent(e)
+        );
+      }
     }),
   });
 

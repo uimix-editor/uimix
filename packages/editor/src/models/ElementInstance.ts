@@ -56,6 +56,17 @@ export class ElementInstance {
       : undefined;
   }
 
+  get offsetParentOfChildren(): ElementInstance {
+    if (!this.parent || this.computedStyle.position !== "static") {
+      return this;
+    }
+    return this.parent.offsetParentOfChildren;
+  }
+
+  get offsetParent(): ElementInstance | undefined {
+    return this.parent?.offsetParentOfChildren;
+  }
+
   get ancestors(): readonly ElementInstance[] {
     const result: ElementInstance[] = [];
     let current: ElementInstance | undefined = this;
