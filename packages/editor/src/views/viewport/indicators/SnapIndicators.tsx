@@ -6,7 +6,6 @@ import {
   SameMarginSnapping,
 } from "@seanchas116/paintkit/src/util/Snapping";
 import { colors } from "@seanchas116/paintkit/src/components/Palette";
-import { Scroll } from "@seanchas116/paintkit/src/util/Scroll";
 import { useEditorState } from "../../EditorStateContext";
 import { XDistanceIndicator, YDistanceIndicator } from "./DistanceIndicator";
 
@@ -84,7 +83,7 @@ const SameMarginIndicator = ({
   );
 };
 
-export const SnapIndicator = observer(function SnapIndicator() {
+export const SnapIndicators = observer(function SnapIndicator() {
   const editorState = useEditorState();
 
   const transform = editorState.scroll.documentToViewport;
