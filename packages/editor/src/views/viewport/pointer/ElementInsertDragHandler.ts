@@ -53,7 +53,7 @@ export class ElementInsertDragHandler implements DragHandler {
         ElementInstance.get(parent.variant, element)
       );
 
-      this.parentOffset = parent.boundingBox.topLeft; // TODO: use offsetParent
+      this.parentOffset = parent.offsetParentOfChildren.boundingBox.topLeft;
       this.initPos = documentPos.sub(this.parentOffset);
 
       this.instance.style.position = "absolute";

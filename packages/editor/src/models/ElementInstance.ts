@@ -56,15 +56,15 @@ export class ElementInstance {
       : undefined;
   }
 
+  get offsetParentOfChildren(): ElementInstance {
+    if (!this.parent || this.computedStyle.position !== "static") {
+      return this;
+    }
+    return this.parent.offsetParentOfChildren;
+  }
+
   get offsetParent(): ElementInstance | undefined {
-    const parent = this.parent;
-    if (!parent) {
-      return;
-    }
-    if (!parent.parent || parent.computedStyle.position !== "static") {
-      return parent;
-    }
-    return parent.offsetParent;
+    return this.parent?.offsetParentOfChildren;
   }
 
   get ancestors(): readonly ElementInstance[] {
