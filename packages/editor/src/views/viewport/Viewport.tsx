@@ -7,6 +7,7 @@ import { DocumentMount } from "../../mount/DocumentMount";
 import { useEditorState } from "../EditorStateContext";
 import { PanOverlay } from "./PanOverlay";
 import { Indicators } from "./indicators/Indicators";
+import { PointerOverlay } from "./pointer/PointerOverlay";
 
 const ViewportWrap = styled.div`
   background-color: ${colors.uiBackground};
@@ -14,15 +15,6 @@ const ViewportWrap = styled.div`
 `;
 
 const ViewportIFrame = styled.iframe`
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  border: none;
-`;
-
-const ViewportOverlay = styled.div`
   position: absolute;
   top: 0;
   left: 0;
@@ -68,6 +60,7 @@ export const Viewport: React.FC<{ className?: string }> = ({ className }) => {
     if (!document) {
       return;
     }
+    editorState.elementPicker.root = document;
 
     document.body.style.margin = "0";
 
@@ -127,7 +120,7 @@ export const Viewport: React.FC<{ className?: string }> = ({ className }) => {
   return (
     <ViewportWrap className={className} ref={ref} onWheel={onWheel}>
       <ViewportIFrame ref={iframeRef} />
-      <ViewportOverlay />
+      <PointerOverlay />
       <PanOverlay />
       <Indicators />
     </ViewportWrap>

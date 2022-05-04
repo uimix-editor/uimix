@@ -112,6 +112,12 @@ export class ChildMountSync {
 }
 
 export class ElementMount {
+  private static domToMount = new WeakMap<globalThis.Element, ElementMount>();
+
+  static forDOM(dom: globalThis.Element): ElementMount | undefined {
+    return this.domToMount.get(dom);
+  }
+
   constructor(
     instance: ElementInstance,
     context: MountContext,
@@ -121,6 +127,7 @@ export class ElementMount {
     // TODO: support reference to other component
     // TODO: support SVG elements
     this.dom = domDocument.createElement(instance.element.tagName);
+    ElementMount.domToMount.set(this.dom, this);
     this.context = context;
     this.context.registry.setElementMount(this);
     this.domDocument = domDocument;
