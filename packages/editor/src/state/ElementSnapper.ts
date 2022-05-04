@@ -23,7 +23,7 @@ export class ElementSnapper {
     return snapThreshold / this.editorState.scroll.scale;
   }
 
-  private getTargetOverrides(options: {
+  private getTargetInstances(options: {
     selection?: boolean;
     parents?: boolean;
     siblings?: boolean;
@@ -100,23 +100,23 @@ export class ElementSnapper {
     return result;
   }
 
-  private getResizeTargetOverrides(): Set<ElementInstance> {
-    return this.getTargetOverrides({
+  private getResizeTargetInstances(): Set<ElementInstance> {
+    return this.getTargetInstances({
       parents: true,
       siblings: true,
       children: true,
     });
   }
 
-  private getMoveTargetOverrides(): Set<ElementInstance> {
-    return this.getTargetOverrides({
+  private getMoveTargetInstances(): Set<ElementInstance> {
+    return this.getTargetInstances({
       parents: true,
       siblings: true,
     });
   }
 
-  private getInsertTargetOverrides(): Set<ElementInstance> {
-    return this.getTargetOverrides({
+  private getInsertTargetInstances(): Set<ElementInstance> {
+    return this.getTargetInstances({
       selection: true,
       parents: true,
       siblings: true,
@@ -164,7 +164,7 @@ export class ElementSnapper {
 
   snapInsertPoint(point: Vec2): Vec2 {
     return this.snapPoint(
-      this.rectsForOverrides(this.getInsertTargetOverrides()),
+      this.rectsForInstances(this.getInsertTargetInstances()),
       point
     );
   }
@@ -174,7 +174,7 @@ export class ElementSnapper {
     axes: { x?: boolean; y?: boolean } = { x: true, y: true }
   ): Vec2 {
     return this.snapPoint(
-      this.rectsForOverrides(this.getResizeTargetOverrides()),
+      this.rectsForInstances(this.getResizeTargetInstances()),
       point,
       axes
     );
@@ -182,14 +182,14 @@ export class ElementSnapper {
 
   snapMoveRect(rect: Rect): Rect {
     return this.snapRect(
-      this.rectsForOverrides(this.getMoveTargetOverrides()),
+      this.rectsForInstances(this.getMoveTargetInstances()),
       rect
     );
   }
 
   exactSnapMoveRect(rect: Rect): void {
     this.exactSnapRect(
-      this.rectsForOverrides(this.getMoveTargetOverrides()),
+      this.rectsForInstances(this.getMoveTargetInstances()),
       rect
     );
   }
@@ -207,9 +207,9 @@ export class ElementSnapper {
     1000
   );
 
-  private rectsForOverrides(overrides: Set<ElementInstance>): Rect[] {
+  private rectsForInstances(instances: Set<ElementInstance>): Rect[] {
     const viewportRect = this.editorState.scroll.viewportRectInDocument;
-    return [...overrides]
+    return [...instances]
       .map((p) => p.boundingBox)
       .filter((rect) => !!viewportRect.intersection(rect));
   }
