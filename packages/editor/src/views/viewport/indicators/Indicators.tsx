@@ -42,6 +42,7 @@ export const Indicators: React.VFC<{
             width={hoverRect.width}
             height={hoverRect.height}
             fill="none"
+            strokeWidth={2}
             stroke={colors.active}
           />
         )}

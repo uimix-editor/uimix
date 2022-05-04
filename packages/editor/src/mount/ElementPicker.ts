@@ -27,7 +27,7 @@ function clickableAncestor(
   let instance = instanceAtPos;
   let innerInstance = instanceAtPos;
 
-  while (1 < instance.ancestors.length && !clickables.has(instance)) {
+  while (2 < instance.ancestors.length && !clickables.has(instance)) {
     innerInstance = instance;
     instance = instance.parent!;
   }
