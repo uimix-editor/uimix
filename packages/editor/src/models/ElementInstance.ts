@@ -85,6 +85,10 @@ export class ElementInstance {
     );
   }
 
+  @computed get allDescendants(): (ElementInstance | TextInstance)[] {
+    return [this, ...this.children.flatMap((child) => child.allDescendants)];
+  }
+
   readonly style = new Style();
   readonly computedStyle = new Style();
 
@@ -153,7 +157,42 @@ export class ElementInstance {
     };
   }
 
-  @computed get allDescendants(): (ElementInstance | TextInstance)[] {
-    return [this, ...this.children.flatMap((child) => child.allDescendants)];
+  resizeWithBoundingBox(
+    boundingBox: Rect,
+    options: {
+      x?: boolean;
+      y?: boolean;
+      width?: boolean;
+      height?: boolean;
+    }
+  ): void {
+    if (!this.parent) {
+      // resize variant
+
+      if (options.x) {
+        this.variant.x = boundingBox.left;
+      }
+      if (options.y) {
+        this.variant.y = boundingBox.top;
+      }
+    } else if (
+      this.computedStyle.position === "absolute" ||
+      this.style.position === "absolute"
+    ) {
+      const offset = this.parent.offsetParentOfChildren.boundingBox.topLeft;
+      if (options.x) {
+        this.style.left = `${boundingBox.left - offset.x}px`;
+      }
+      if (options.y) {
+        this.style.top = `${boundingBox.top - offset.y}px`;
+      }
+    }
+
+    if (options.width) {
+      this.style.width = `${boundingBox.width}px`;
+    }
+    if (options.height) {
+      this.style.height = `${boundingBox.height}px`;
+    }
   }
 }

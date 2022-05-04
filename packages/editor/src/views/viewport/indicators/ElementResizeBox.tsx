@@ -66,22 +66,12 @@ class ElementResizeBoxState {
     for (const [instance, originalBBox] of this.initBoundingBoxes) {
       const newBBox = roundRectXYWH(originalBBox.transform(transform));
 
-      if (this.widthChanged) {
-        instance.style.width = `${newBBox.width}px`;
-      }
-      if (this.heightChanged) {
-        instance.style.height = `${newBBox.height}px`;
-      }
-
-      if (!instance.parent) {
-        instance.variant.x = newBBox.left;
-        instance.variant.y = newBBox.top;
-      } else if (instance.style.position === "absolute") {
-        const offsetParent = instance.offsetParent;
-        const offset = offsetParent?.boundingBox.topLeft ?? new Vec2();
-        instance.style.left = `${newBBox.left - offset.x}px`;
-        instance.style.top = `${newBBox.top - offset.y}px`;
-      }
+      instance.resizeWithBoundingBox(newBBox, {
+        x: true,
+        y: true,
+        width: this.widthChanged,
+        height: this.heightChanged,
+      });
     }
   }
 

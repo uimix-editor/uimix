@@ -56,18 +56,12 @@ export class ElementMoveDragHandler implements DragHandler {
       );
 
       for (const instance of this.absoluteTargets) {
-        const newPos =
-          this.initData(instance).absoluteRect.topLeft.add(snappedOffset);
-
-        if (!instance.parent) {
-          instance.variant.x = newPos.x;
-          instance.variant.y = newPos.y;
-        } else if (instance.style.position === "absolute") {
-          const offsetParent = instance.offsetParent;
-          const offset = offsetParent?.boundingBox.topLeft ?? new Vec2();
-          instance.style.left = `${newPos.x - offset.x}px`;
-          instance.style.top = `${newPos.y - offset.y}px`;
-        }
+        const newRect =
+          this.initData(instance).absoluteRect.translate(snappedOffset);
+        instance.resizeWithBoundingBox(newRect, {
+          x: true,
+          y: true,
+        });
       }
     }
 
