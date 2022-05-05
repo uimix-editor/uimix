@@ -51,6 +51,9 @@ export const SelectionInfo: React.FC = observer(function SelectionInfo() {
   const tagName =
     sameOrNone(instances.map((i) => i.element.tagName)) || "Multiple";
 
+  const width = Number.parseFloat(bbox.width.toFixed(2));
+  const height = Number.parseFloat(bbox.height.toFixed(2));
+
   return (
     <SelectionInfoWrap
       style={{
@@ -61,7 +64,7 @@ export const SelectionInfo: React.FC = observer(function SelectionInfo() {
       <Text>{tagName}</Text>
       <Separator />
       <Text>
-        {bbox.width} × {bbox.height}
+        {width} × {height}
       </Text>
     </SelectionInfoWrap>
   );
