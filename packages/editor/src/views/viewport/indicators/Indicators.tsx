@@ -1,10 +1,10 @@
 import React from "react";
 import styled from "styled-components";
 import { observer } from "mobx-react-lite";
-import { colors } from "@seanchas116/paintkit/src/components/Palette";
-import { useEditorState } from "../../EditorStateContext";
 import { ElementResizeBox } from "./ElementResizeBox";
 import { SnapIndicators } from "./SnapIndicators";
+import { DragIndicators } from "./DragIndicators";
+import { HoverIndicator } from "./HoverIndicator";
 
 const IndicatorsWrap = styled.div`
   position: absolute;
@@ -26,69 +26,11 @@ const IndicatorsSVG = styled.svg`
 export const Indicators: React.VFC<{
   className?: string;
 }> = observer(function Indicators({ className }) {
-  const editorState = useEditorState();
-
-  const hoverRect = editorState.hoveredRect?.transform(
-    editorState.scroll.documentToViewport
-  );
-
-  const dragPreviewRects = editorState.dragPreviewRects.map((rect) =>
-    rect.transform(editorState.scroll.documentToViewport)
-  );
-  const dropTargetPreviewRect = editorState.dropTargetPreviewRect?.transform(
-    editorState.scroll.documentToViewport
-  );
-  const dropIndexIndicator = editorState.dropIndexIndicator?.map((p) =>
-    p.transform(editorState.scroll.documentToViewport)
-  );
-
   return (
     <IndicatorsWrap className={className}>
       <IndicatorsSVG>
-        {dragPreviewRects.map((rect, i) => (
-          <rect
-            key={i}
-            x={rect.left}
-            y={rect.top}
-            width={rect.width}
-            height={rect.height}
-            fill="none"
-            strokeDasharray="2 2"
-            stroke={colors.active}
-          />
-        ))}
-        {dropTargetPreviewRect && (
-          <rect
-            x={dropTargetPreviewRect.left}
-            y={dropTargetPreviewRect.top}
-            width={dropTargetPreviewRect.width}
-            height={dropTargetPreviewRect.height}
-            fill="none"
-            strokeDasharray="2 2"
-            stroke={colors.active}
-          />
-        )}
-        {dropIndexIndicator && (
-          <line
-            x1={dropIndexIndicator[0].x}
-            y1={dropIndexIndicator[0].y}
-            x2={dropIndexIndicator[1].x}
-            y2={dropIndexIndicator[1].y}
-            strokeWidth={2}
-            stroke={colors.active}
-          />
-        )}
-        {hoverRect && (
-          <rect
-            x={hoverRect.left}
-            y={hoverRect.top}
-            width={hoverRect.width}
-            height={hoverRect.height}
-            fill="none"
-            strokeWidth={2}
-            stroke={colors.active}
-          />
-        )}
+        <DragIndicators />
+        <HoverIndicator />
         <ElementResizeBox />
         <SnapIndicators />
       </IndicatorsSVG>
