@@ -49,10 +49,13 @@ export class ElementClickMoveDragHandler implements DragHandler {
       const staticTargets: ElementInstance[] = [];
       for (const override of this.editorState.document
         .selectedElementInstances) {
-        if (override.computedStyle.position !== "absolute") {
-          staticTargets.push(override);
-        } else {
+        if (
+          override.computedStyle.position === "absolute" ||
+          !override.parent
+        ) {
           absoluteTargets.push(override);
+        } else {
+          staticTargets.push(override);
         }
       }
 
