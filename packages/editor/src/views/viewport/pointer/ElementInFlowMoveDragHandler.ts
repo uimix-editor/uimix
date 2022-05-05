@@ -92,34 +92,20 @@ export class ElementInFlowMoveDragHandler implements DragHandler {
         const bbox = dst.boundingBox;
         const parentBBox = dst.parent.boundingBox;
 
+        const parentCloseThresh = this.editorState.snapThreshold;
         const threshold = this.editorState.snapThreshold * 2;
 
-        if (
-          Math.abs(bbox.left - parentBBox.left) < 1 &&
-          Math.abs(bbox.left - pos.x) < threshold
-        ) {
-          return false;
-        }
+        // do not drop near the edge when the parent edge is close
 
-        if (
-          Math.abs(bbox.top - parentBBox.top) < 1 &&
-          Math.abs(bbox.top - pos.y) < threshold
-        ) {
-          return false;
-        }
-
-        if (
-          Math.abs(bbox.right - parentBBox.right) < 1 &&
-          Math.abs(bbox.right - pos.x) < threshold
-        ) {
-          return false;
-        }
-
-        if (
-          Math.abs(bbox.bottom - parentBBox.bottom) < 1 &&
-          Math.abs(bbox.bottom - pos.y) < threshold
-        ) {
-          return false;
+        for (const edge of ["left", "top", "right", "bottom"] as const) {
+          if (
+            Math.abs(bbox[edge] - parentBBox[edge]) < parentCloseThresh &&
+            Math.abs(
+              bbox[edge] - pos[edge === "left" || edge === "right" ? "x" : "y"]
+            ) < threshold
+          ) {
+            return false;
+          }
         }
       }
 
