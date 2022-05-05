@@ -66,6 +66,7 @@ export class VariantMount {
             width === undefined ? `fit-content` : `${width}px`;
           this.dom.style.height =
             height === undefined ? `fit-content` : `${height}px`;
+          this.updateBoundingBoxLater();
         },
         { fireImmediately: true }
       )
