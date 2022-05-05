@@ -5,7 +5,7 @@ import { TextInstance } from "../../../models/TextInstance";
 import { EditorState } from "../../../state/EditorState";
 import { DragHandler } from "./DragHandler";
 
-export class ElementStaticMoveDragHandler implements DragHandler {
+export class ElementInFlowMoveDragHandler implements DragHandler {
   constructor(
     editorState: EditorState,
     overrides: ElementInstance[],
@@ -108,15 +108,15 @@ export class ElementStaticMoveDragHandler implements DragHandler {
     }
 
     const direction = layoutDirection(parent);
-    const staticChildren = getStaticChildren(parent);
-    const centers = staticChildren.map((c) => c.boundingBox.center);
+    const inFlowChildren = getInFlowChildren(parent);
+    const centers = inFlowChildren.map((c) => c.boundingBox.center);
     const index = centers.findIndex((c) => c[direction] > pos[direction]);
     if (index < 0) {
       return { parent };
     }
     return {
       parent,
-      ref: staticChildren[index],
+      ref: inFlowChildren[index],
     };
   }
 
@@ -136,14 +136,10 @@ function layoutDirection(parent: ElementInstance): "x" | "y" {
   }
 }
 
-function getStaticChildren(
+function getInFlowChildren(
   parent: ElementInstance
 ): (ElementInstance | TextInstance)[] {
-  return parent.children.filter((o) =>
-    o.type === "element"
-      ? ["relative", "static"].includes(o.computedStyle.position ?? "")
-      : true
-  );
+  return parent.children.filter((o) => o.inFlow);
 }
 
 function dropIndexIndicator(
@@ -151,11 +147,11 @@ function dropIndexIndicator(
   ref: ElementInstance | TextInstance | undefined
 ): [Vec2, Vec2] | undefined {
   const direction = layoutDirection(parent);
-  const staticChildren = getStaticChildren(parent);
+  const inFlowChildren = getInFlowChildren(parent);
 
-  let index = staticChildren.findIndex((o) => o === ref);
+  let index = inFlowChildren.findIndex((o) => o === ref);
   if (index < 0) {
-    index = staticChildren.length;
+    index = inFlowChildren.length;
   }
 
   const parentRect = parent.boundingBox;
@@ -166,11 +162,11 @@ function dropIndexIndicator(
 
     if (index === 0) {
       x = parentRect.left + parentPaddings.left;
-    } else if (index === staticChildren.length) {
+    } else if (index === inFlowChildren.length) {
       x = parentRect.right - parentPaddings.right;
     } else {
-      const prev = staticChildren[index - 1];
-      const next = staticChildren[index];
+      const prev = inFlowChildren[index - 1];
+      const next = inFlowChildren[index];
       x = (prev.boundingBox.right + next.boundingBox.left) / 2;
     }
 
@@ -183,11 +179,11 @@ function dropIndexIndicator(
 
     if (index === 0) {
       y = parentRect.top + parentPaddings.top;
-    } else if (index === staticChildren.length) {
+    } else if (index === inFlowChildren.length) {
       y = parentRect.bottom - parentPaddings.bottom;
     } else {
-      const prev = staticChildren[index - 1];
-      const next = staticChildren[index];
+      const prev = inFlowChildren[index - 1];
+      const next = inFlowChildren[index];
       y = (prev.boundingBox.bottom + next.boundingBox.top) / 2;
     }
 

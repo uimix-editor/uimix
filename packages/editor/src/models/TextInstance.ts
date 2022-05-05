@@ -78,4 +78,8 @@ export class TextInstance {
   }
 
   @observable.ref boundingBox: Rect = new Rect();
+
+  get inFlow(): boolean {
+    return true;
+  }
 }

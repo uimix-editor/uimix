@@ -4,7 +4,7 @@ import { ElementPickResult } from "../../../mount/ElementPicker";
 import { EditorState } from "../../../state/EditorState";
 import { dragStartThreshold } from "../Constants";
 import { DragHandler } from "./DragHandler";
-import { ElementStaticMoveDragHandler } from "./ElementStaticMoveDragHandler";
+import { ElementInFlowMoveDragHandler } from "./ElementInFlowMoveDragHandler";
 import { ElementAbsoluteMoveDragHandler } from "./ElementAbsoluteMoveDragHandler";
 
 export class ElementClickMoveDragHandler implements DragHandler {
@@ -46,16 +46,13 @@ export class ElementClickMoveDragHandler implements DragHandler {
       }
 
       const absoluteTargets: ElementInstance[] = [];
-      const staticTargets: ElementInstance[] = [];
+      const inFlowTargets: ElementInstance[] = [];
       for (const override of this.editorState.document
         .selectedElementInstances) {
-        if (
-          override.computedStyle.position === "absolute" ||
-          !override.parent
-        ) {
-          absoluteTargets.push(override);
+        if (override.inFlow) {
+          inFlowTargets.push(override);
         } else {
-          staticTargets.push(override);
+          absoluteTargets.push(override);
         }
       }
 
@@ -65,10 +62,10 @@ export class ElementClickMoveDragHandler implements DragHandler {
           absoluteTargets,
           this.initPos
         );
-      } else if (staticTargets.length) {
-        this.handler = new ElementStaticMoveDragHandler(
+      } else if (inFlowTargets.length) {
+        this.handler = new ElementInFlowMoveDragHandler(
           this.editorState,
-          staticTargets,
+          inFlowTargets,
           this.initPos
         );
       }

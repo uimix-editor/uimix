@@ -195,4 +195,15 @@ export class ElementInstance {
       this.style.height = `${boundingBox.height}px`;
     }
   }
+
+  get inFlow(): boolean {
+    // TODO: handle position: fixed
+    if (
+      this.computedStyle.position === "absolute" ||
+      this.style.position === "absolute"
+    ) {
+      return false;
+    }
+    return true;
+  }
 }
