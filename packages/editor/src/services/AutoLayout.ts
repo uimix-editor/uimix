@@ -1,6 +1,5 @@
 import { assertNonNull } from "@seanchas116/paintkit/src/util/Assert";
 import { sum } from "lodash-es";
-import { override } from "mobx";
 import { Rect } from "paintvec";
 import { Element } from "../models/Element";
 import { ElementInstance } from "../models/ElementInstance";
@@ -75,6 +74,9 @@ export class AutoLayout {
     instance.style.paddingRight = `${paddingRight}px`;
     instance.style.paddingTop = `${paddingTop}px`;
     instance.style.paddingBottom = `${paddingBottom}px`;
+
+    instance.style.width = undefined;
+    instance.style.height = undefined;
 
     instance.element.replaceChildren(layout.elements.map((i) => i.element));
     for (const child of layout.elements) {
