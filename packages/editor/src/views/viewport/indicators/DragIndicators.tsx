@@ -39,6 +39,7 @@ export const DragIndicators: React.FC = observer(function DragIndicators() {
           fill="none"
           strokeDasharray="2 2"
           stroke={colors.active}
+          strokeWidth={2}
         />
       )}
       {dropIndexIndicator && (
@@ -47,8 +48,8 @@ export const DragIndicators: React.FC = observer(function DragIndicators() {
           y1={dropIndexIndicator[0].y}
           x2={dropIndexIndicator[1].x}
           y2={dropIndexIndicator[1].y}
-          strokeWidth={2}
           stroke={colors.active}
+          strokeWidth={2}
         />
       )}
     </>

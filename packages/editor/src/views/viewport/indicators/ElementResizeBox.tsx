@@ -93,6 +93,11 @@ export const ElementResizeBox: React.FC = observer(function LayerResizeBox() {
     () => new ElementResizeBoxState(editorState),
     [editorState]
   );
+
+  if (editorState.dragPreviewRects.length) {
+    return null;
+  }
+
   const boundingBox = state.viewportBoundingBox;
   if (!boundingBox) {
     return null;
