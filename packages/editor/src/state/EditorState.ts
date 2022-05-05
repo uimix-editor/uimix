@@ -256,6 +256,7 @@ export class EditorState {
       {
         text: "Group into Flex Container",
         shortcut: [new KeyGesture(["Command"], "KeyG")],
+        disabled: this.document.selectedElementInstances.length < 2,
         run: action(() => {
           const flexbox = AutoLayout.groupElementsIntoFlex(
             this.document.selectedElementInstances
