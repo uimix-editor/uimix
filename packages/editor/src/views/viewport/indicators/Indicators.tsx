@@ -5,6 +5,7 @@ import { ElementResizeBox } from "./ElementResizeBox";
 import { SnapIndicators } from "./SnapIndicators";
 import { DragIndicators } from "./DragIndicators";
 import { HoverIndicator } from "./HoverIndicator";
+import { MarginPaddingIndicator } from "./MarginPaddingIndicator";
 
 const IndicatorsWrap = styled.div`
   position: absolute;
@@ -29,6 +30,7 @@ export const Indicators: React.VFC<{
   return (
     <IndicatorsWrap className={className}>
       <IndicatorsSVG>
+        <MarginPaddingIndicator />
         <DragIndicators />
         <HoverIndicator />
         <ElementResizeBox />

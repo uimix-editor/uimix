@@ -1,5 +1,5 @@
 import { computed, makeObservable, observable } from "mobx";
-import { Rect } from "paintvec";
+import { EdgeOffsets, Rect } from "paintvec";
 import shortUUID from "short-uuid";
 import { Element } from "./Element";
 import { RootElement } from "./RootElement";
@@ -143,18 +143,31 @@ export class ElementInstance {
     return this.boundingBox;
   }
 
-  @computed get computedPaddings(): {
-    top: number;
-    right: number;
-    bottom: number;
-    left: number;
-  } {
-    return {
+  @computed get computedPaddings(): EdgeOffsets {
+    return EdgeOffsets.from({
       top: Number.parseFloat(this.computedStyle.paddingTop ?? "0"),
       right: Number.parseFloat(this.computedStyle.paddingRight ?? "0"),
       bottom: Number.parseFloat(this.computedStyle.paddingBottom ?? "0"),
       left: Number.parseFloat(this.computedStyle.paddingLeft ?? "0"),
-    };
+    });
+  }
+
+  @computed get computedMargins(): EdgeOffsets {
+    return EdgeOffsets.from({
+      top: Number.parseFloat(this.computedStyle.marginTop ?? "0"),
+      right: Number.parseFloat(this.computedStyle.marginRight ?? "0"),
+      bottom: Number.parseFloat(this.computedStyle.marginBottom ?? "0"),
+      left: Number.parseFloat(this.computedStyle.marginLeft ?? "0"),
+    });
+  }
+
+  @computed get computedBorderWidths(): EdgeOffsets {
+    return EdgeOffsets.from({
+      top: Number.parseFloat(this.computedStyle.borderTopWidth ?? "0"),
+      right: Number.parseFloat(this.computedStyle.borderRightWidth ?? "0"),
+      bottom: Number.parseFloat(this.computedStyle.borderBottomWidth ?? "0"),
+      left: Number.parseFloat(this.computedStyle.borderLeftWidth ?? "0"),
+    });
   }
 
   resizeWithBoundingBox(
