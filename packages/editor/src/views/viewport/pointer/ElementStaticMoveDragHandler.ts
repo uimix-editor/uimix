@@ -41,7 +41,6 @@ export class ElementStaticMoveDragHandler implements DragHandler {
       this.editorState.dropTargetPreviewRect = newParent.boundingBox;
 
       if (
-        newRef !== false &&
         [...this.targets.keys()].some((layer) => layer.parent !== newParent)
       ) {
         this.editorState.dropIndexIndicator = dropIndexIndicator(
@@ -84,8 +83,8 @@ export class ElementStaticMoveDragHandler implements DragHandler {
     pos: Vec2,
     overridesAtPos: readonly ElementInstance[]
   ): {
-    parent: ElementInstance | undefined;
-    ref: ElementInstance | TextInstance | undefined | false; // false if the parent is not a stack
+    parent?: ElementInstance | undefined;
+    ref?: ElementInstance | TextInstance | undefined;
   } {
     const parent = overridesAtPos.find((dst) => {
       // cannot move inside itself
@@ -101,7 +100,7 @@ export class ElementStaticMoveDragHandler implements DragHandler {
     });
 
     if (!parent) {
-      return { parent, ref: false };
+      return {};
     }
 
     const direction = layoutDirection(parent);
@@ -109,7 +108,7 @@ export class ElementStaticMoveDragHandler implements DragHandler {
     const centers = staticChildren.map((c) => c.boundingBox.center);
     const index = centers.findIndex((c) => c[direction] > pos[direction]);
     if (index < 0) {
-      return { parent, ref: undefined };
+      return { parent };
     }
     return {
       parent,
