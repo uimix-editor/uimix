@@ -4,7 +4,7 @@ import { ElementPickResult } from "../../../mount/ElementPicker";
 import { EditorState } from "../../../state/EditorState";
 import { dragStartThreshold } from "../Constants";
 import { DragHandler } from "./DragHandler";
-import { ElementMoveDragHandler } from "./ElementMoveDragHandler";
+import { ElementStaticMoveDragHandler } from "./ElementStaticMoveDragHandler";
 import { ElementAbsoluteMoveDragHandler } from "./ElementAbsoluteMoveDragHandler";
 
 export class ElementClickMoveDragHandler implements DragHandler {
@@ -62,8 +62,8 @@ export class ElementClickMoveDragHandler implements DragHandler {
           absoluteTargets,
           this.initPos
         );
-      } else {
-        this.handler = new ElementMoveDragHandler(
+      } else if (staticTargets.length) {
+        this.handler = new ElementStaticMoveDragHandler(
           this.editorState,
           staticTargets,
           this.initPos
@@ -71,7 +71,7 @@ export class ElementClickMoveDragHandler implements DragHandler {
       }
     }
 
-    this.handler.move(event);
+    this.handler?.move(event);
   }
 
   end(event: MouseEvent | DragEvent): void {

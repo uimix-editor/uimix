@@ -73,6 +73,8 @@ export class ElementAbsoluteMoveDragHandler implements DragHandler {
       if (instance.parent !== parent) {
         parent?.element.append(instance.element);
       }
+
+      // TODO: adjust position based on new offset parent
     }
     this.editorState.history.commit("Move Layers");
   }
