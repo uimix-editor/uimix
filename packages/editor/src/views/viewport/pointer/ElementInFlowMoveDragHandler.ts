@@ -163,7 +163,8 @@ function dropIndexIndicator(
     if (index === 0) {
       x = parentRect.left + parentPaddings.left;
     } else if (index === inFlowChildren.length) {
-      x = parentRect.right - parentPaddings.right;
+      const prev = inFlowChildren[index - 1];
+      x = prev.boundingBox.right;
     } else {
       const prev = inFlowChildren[index - 1];
       const next = inFlowChildren[index];
@@ -180,7 +181,8 @@ function dropIndexIndicator(
     if (index === 0) {
       y = parentRect.top + parentPaddings.top;
     } else if (index === inFlowChildren.length) {
-      y = parentRect.bottom - parentPaddings.bottom;
+      const prev = inFlowChildren[index - 1];
+      y = prev.boundingBox.bottom;
     } else {
       const prev = inFlowChildren[index - 1];
       const next = inFlowChildren[index];
