@@ -95,7 +95,7 @@ export class ElementInFlowMoveDragHandler implements DragHandler {
           Math.abs(dst.boundingBox.left - pos.x),
           Math.abs(dst.boundingBox.right - pos.x)
         );
-        if (distanceFroEdge < this.editorState.snapThreshold) {
+        if (distanceFroEdge < this.editorState.snapThreshold * 2) {
           return false;
         }
       }
