@@ -255,11 +255,17 @@ export class EditorState {
   }
 
   get autoLayoutChildrenCommand(): Command {
+    const selection = this.document.selectedElementInstances;
+
     return {
       text: "Auto-layout Children",
-      disabled: this.document.selectedElementInstances.length < 1,
+      disabled:
+        selection.length < 1 ||
+        selection.some(
+          (instance) => !AutoLayout.canAutoLayoutChildren(instance)
+        ),
       run: action(() => {
-        for (const instance of this.document.selectedElementInstances) {
+        for (const instance of selection) {
           AutoLayout.autoLayoutChildren(instance);
         }
         this.history.commit("Auto-layout Children");

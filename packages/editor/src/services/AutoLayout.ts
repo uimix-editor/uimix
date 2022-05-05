@@ -48,6 +48,23 @@ export class AutoLayout {
     return stack;
   }
 
+  static canAutoLayoutChildren(instance: ElementInstance): boolean {
+    const { children } = instance;
+    if (children.length === 0) {
+      return false;
+    }
+
+    for (const child of children) {
+      if (child.type === "text") {
+        return false;
+      }
+      if (child.inFlow) {
+        return false;
+      }
+    }
+    return true;
+  }
+
   static autoLayoutChildren(instance: ElementInstance): void {
     const layout = this.detectFlex(
       instance.children.filter(
