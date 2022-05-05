@@ -1,4 +1,7 @@
-import { MenuItem } from "@seanchas116/paintkit/src/components/menu/Menu";
+import {
+  Command,
+  MenuItem,
+} from "@seanchas116/paintkit/src/components/menu/Menu";
 import { JSONUndoHistory } from "@seanchas116/paintkit/src/util/JSONUndoHistory";
 import { KeyGesture } from "@seanchas116/paintkit/src/util/KeyGesture";
 import { isTextInputFocused } from "@seanchas116/paintkit/src/util/CurrentFocus";
@@ -251,6 +254,20 @@ export class EditorState {
     ];
   }
 
+  get autoLayoutChildrenCommand(): Command {
+    return {
+      text: "Auto-layout Children",
+      disabled: this.document.selectedElementInstances.length < 1,
+      run: action(() => {
+        for (const instance of this.document.selectedElementInstances) {
+          AutoLayout.autoLayoutChildren(instance);
+        }
+        this.history.commit("Auto-layout Children");
+        return true;
+      }),
+    };
+  }
+
   getElementMenu(): MenuItem[] {
     return [
       {
@@ -269,6 +286,7 @@ export class EditorState {
           return true;
         }),
       },
+      this.autoLayoutChildrenCommand,
     ];
   }
 

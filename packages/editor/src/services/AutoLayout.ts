@@ -1,5 +1,6 @@
 import { assertNonNull } from "@seanchas116/paintkit/src/util/Assert";
 import { sum } from "lodash-es";
+import { override } from "mobx";
 import { Rect } from "paintvec";
 import { Element } from "../models/Element";
 import { ElementInstance } from "../models/ElementInstance";
@@ -46,6 +47,43 @@ export class AutoLayout {
     }
 
     return stack;
+  }
+
+  static autoLayoutChildren(instance: ElementInstance): void {
+    const layout = this.detectFlex(
+      instance.children.filter(
+        (o): o is ElementInstance => o.type === "element"
+      )
+    );
+
+    instance.style.display = "flex";
+    instance.style.flexDirection = layout.direction;
+    instance.style.rowGap = `${layout.gap}px`;
+    instance.style.columnGap = `${layout.gap}px`;
+
+    const bbox = layout.bbox.translate(
+      instance.offsetParentOfChildren.boundingBox.topLeft.neg
+    );
+    const size = instance.boundingBox.size;
+
+    const paddingLeft = bbox.left;
+    const paddingRight = Math.max(0, size.x - bbox.width - bbox.left);
+    const paddingTop = bbox.top;
+    const paddingBottom = Math.max(0, size.y - bbox.height - bbox.top);
+
+    instance.style.paddingLeft = `${paddingLeft}px`;
+    instance.style.paddingRight = `${paddingRight}px`;
+    instance.style.paddingTop = `${paddingTop}px`;
+    instance.style.paddingBottom = `${paddingBottom}px`;
+
+    instance.element.replaceChildren(layout.elements.map((i) => i.element));
+    for (const child of layout.elements) {
+      child.style.position = undefined;
+      child.style.left = undefined;
+      child.style.top = undefined;
+      child.style.right = undefined;
+      child.style.bottom = undefined;
+    }
   }
 
   static detectFlex(elements: readonly ElementInstance[]): {
