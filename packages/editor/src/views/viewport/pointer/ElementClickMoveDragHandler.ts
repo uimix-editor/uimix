@@ -4,7 +4,8 @@ import { ElementPickResult } from "../../../mount/ElementPicker";
 import { EditorState } from "../../../state/EditorState";
 import { dragStartThreshold } from "../Constants";
 import { DragHandler } from "./DragHandler";
-import { ElementMoveDragHandler } from "./ElementMoveDragHandler";
+import { ElementInFlowMoveDragHandler } from "./ElementInFlowMoveDragHandler";
+import { ElementAbsoluteMoveDragHandler } from "./ElementAbsoluteMoveDragHandler";
 
 export class ElementClickMoveDragHandler implements DragHandler {
   static create(
@@ -44,14 +45,33 @@ export class ElementClickMoveDragHandler implements DragHandler {
         return;
       }
 
-      this.handler = new ElementMoveDragHandler(
-        this.editorState,
-        this.editorState.document.selectedElementInstances,
-        this.initPos
-      );
+      const absoluteTargets: ElementInstance[] = [];
+      const inFlowTargets: ElementInstance[] = [];
+      for (const override of this.editorState.document
+        .selectedElementInstances) {
+        if (override.inFlow) {
+          inFlowTargets.push(override);
+        } else {
+          absoluteTargets.push(override);
+        }
+      }
+
+      if (absoluteTargets.length) {
+        this.handler = new ElementAbsoluteMoveDragHandler(
+          this.editorState,
+          absoluteTargets,
+          this.initPos
+        );
+      } else if (inFlowTargets.length) {
+        this.handler = new ElementInFlowMoveDragHandler(
+          this.editorState,
+          inFlowTargets,
+          this.initPos
+        );
+      }
     }
 
-    this.handler.move(event);
+    this.handler?.move(event);
   }
 
   end(event: MouseEvent | DragEvent): void {
@@ -69,5 +89,5 @@ export class ElementClickMoveDragHandler implements DragHandler {
   private readonly initPos: Vec2;
   private readonly override: ElementInstance;
   private readonly additive: boolean;
-  private handler: ElementMoveDragHandler | undefined;
+  private handler: DragHandler | undefined;
 }

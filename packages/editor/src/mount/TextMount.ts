@@ -1,4 +1,5 @@
 import { reaction } from "mobx";
+import { Rect } from "paintvec";
 import { TextInstance } from "../models/TextInstance";
 import { MountContext } from "./MountContext";
 
@@ -46,7 +47,13 @@ export class TextMount {
   }
 
   updateBoundingBox(): void {
-    // do nothing
+    const range = this.domDocument.createRange();
+    range.selectNodeContents(this.dom);
+    const rect = range.getBoundingClientRect();
+
+    const viewportToDocument =
+      this.context.editorState.scroll.viewportToDocument;
+    this.instance.boundingBox = Rect.from(rect).transform(viewportToDocument);
   }
 
   private isDisposed = false;

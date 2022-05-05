@@ -85,6 +85,10 @@ export class ElementInstance {
     );
   }
 
+  @computed get allDescendants(): (ElementInstance | TextInstance)[] {
+    return [this, ...this.children.flatMap((child) => child.allDescendants)];
+  }
+
   readonly style = new Style();
   readonly computedStyle = new Style();
 
@@ -131,7 +135,76 @@ export class ElementInstance {
 
   @observable.ref boundingBox: Rect = new Rect();
 
-  @computed get allDescendants(): (ElementInstance | TextInstance)[] {
-    return [this, ...this.children.flatMap((child) => child.allDescendants)];
+  @computed get offsetBoundingBox(): Rect {
+    const { offsetParent } = this;
+    if (offsetParent) {
+      return this.boundingBox.translate(offsetParent.boundingBox.topLeft.neg);
+    }
+    return this.boundingBox;
+  }
+
+  @computed get computedPaddings(): {
+    top: number;
+    right: number;
+    bottom: number;
+    left: number;
+  } {
+    return {
+      top: Number.parseFloat(this.computedStyle.paddingTop ?? "0"),
+      right: Number.parseFloat(this.computedStyle.paddingRight ?? "0"),
+      bottom: Number.parseFloat(this.computedStyle.paddingBottom ?? "0"),
+      left: Number.parseFloat(this.computedStyle.paddingLeft ?? "0"),
+    };
+  }
+
+  resizeWithBoundingBox(
+    boundingBox: Rect,
+    options: {
+      x?: boolean;
+      y?: boolean;
+      width?: boolean;
+      height?: boolean;
+    }
+  ): void {
+    if (!this.parent) {
+      // resize variant
+
+      if (options.x) {
+        this.variant.x = boundingBox.left;
+      }
+      if (options.y) {
+        this.variant.y = boundingBox.top;
+      }
+    } else if (
+      this.computedStyle.position === "absolute" ||
+      this.style.position === "absolute"
+    ) {
+      const offset = this.parent.offsetParentOfChildren.boundingBox.topLeft;
+      if (options.x) {
+        this.style.left = `${boundingBox.left - offset.x}px`;
+      }
+      if (options.y) {
+        this.style.top = `${boundingBox.top - offset.y}px`;
+      }
+    }
+
+    if (options.width) {
+      this.style.width = `${boundingBox.width}px`;
+    }
+    if (options.height) {
+      this.style.height = `${boundingBox.height}px`;
+    }
+  }
+
+  get inFlow(): boolean {
+    // TODO: handle position: fixed
+    if (
+      this.computedStyle.position === "absolute" ||
+      this.style.position === "absolute" ||
+      !this.parent
+    ) {
+      return false;
+    }
+    return true;
   }
 }

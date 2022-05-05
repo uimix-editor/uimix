@@ -18,7 +18,7 @@ export class ElementInsertDragHandler implements DragHandler {
     this.editorState = editorState;
     this.mode = mode;
 
-    const documentPos = editorState.snapper.snapInsertPoint(
+    this.initPos = editorState.snapper.snapInsertPoint(
       editorState.scroll.documentPosForEvent(pickResult.event)
     );
 
@@ -35,11 +35,6 @@ export class ElementInsertDragHandler implements DragHandler {
       }
 
       this.instance = assertNonNull(this.component.defaultVariant.rootInstance);
-      this.parentOffset = new Vec2();
-      this.initPos = documentPos;
-
-      this.component.defaultVariant.x = this.initPos.x;
-      this.component.defaultVariant.y = this.initPos.y;
     } else {
       const element = new Element({ tagName: "div" });
       element.rename("div");
@@ -52,38 +47,36 @@ export class ElementInsertDragHandler implements DragHandler {
       this.instance = assertNonNull(
         ElementInstance.get(parent.variant, element)
       );
-
-      this.parentOffset = parent.offsetParentOfChildren.boundingBox.topLeft;
-      this.initPos = documentPos.sub(this.parentOffset);
-
       this.instance.style.position = "absolute";
-      this.instance.style.left = `${this.initPos.x}px`;
-      this.instance.style.top = `${this.initPos.y}px`;
-
       if (mode !== "text") {
         this.instance.style.backgroundColor = "#cccccc";
       }
     }
+
+    this.instance.resizeWithBoundingBox(
+      Rect.boundingRect([this.initPos, this.initPos]),
+      {
+        x: true,
+        y: true,
+      }
+    );
 
     this.editorState.document.deselect();
     this.instance.select();
   }
 
   move(event: MouseEvent | DragEvent): void {
-    const pos = this.editorState.snapper
-      .snapResizePoint(this.editorState.scroll.documentPosForEvent(event))
-      .sub(this.parentOffset);
+    const pos = this.editorState.snapper.snapResizePoint(
+      this.editorState.scroll.documentPosForEvent(event)
+    );
     const rect = Rect.boundingRect([pos, this.initPos]);
 
-    if (this.component) {
-      this.component.defaultVariant.x = rect.left;
-      this.component.defaultVariant.y = rect.top;
-    } else {
-      this.instance.style.left = `${rect.left}px`;
-      this.instance.style.top = `${rect.top}px`;
-    }
-    this.instance.style.width = `${rect.width}px`;
-    this.instance.style.height = `${rect.height}px`;
+    this.instance.resizeWithBoundingBox(rect, {
+      x: true,
+      y: true,
+      width: true,
+      height: true,
+    });
   }
 
   end(event: MouseEvent | DragEvent): void {
@@ -95,6 +88,5 @@ export class ElementInsertDragHandler implements DragHandler {
   private readonly mode: InsertMode;
   private readonly component: Component | undefined;
   private readonly instance: ElementInstance;
-  private readonly parentOffset: Vec2;
   private readonly initPos: Vec2;
 }

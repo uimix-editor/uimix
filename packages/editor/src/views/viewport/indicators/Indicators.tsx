@@ -1,10 +1,10 @@
 import React from "react";
 import styled from "styled-components";
 import { observer } from "mobx-react-lite";
-import { colors } from "@seanchas116/paintkit/src/components/Palette";
-import { useEditorState } from "../../EditorStateContext";
 import { ElementResizeBox } from "./ElementResizeBox";
 import { SnapIndicators } from "./SnapIndicators";
+import { DragIndicators } from "./DragIndicators";
+import { HoverIndicator } from "./HoverIndicator";
 
 const IndicatorsWrap = styled.div`
   position: absolute;
@@ -26,26 +26,11 @@ const IndicatorsSVG = styled.svg`
 export const Indicators: React.VFC<{
   className?: string;
 }> = observer(function Indicators({ className }) {
-  const editorState = useEditorState();
-
-  const hoverRect = editorState.hoveredRect?.transform(
-    editorState.scroll.documentToViewport
-  );
-
   return (
     <IndicatorsWrap className={className}>
       <IndicatorsSVG>
-        {hoverRect && (
-          <rect
-            x={hoverRect.left}
-            y={hoverRect.top}
-            width={hoverRect.width}
-            height={hoverRect.height}
-            fill="none"
-            strokeWidth={2}
-            stroke={colors.active}
-          />
-        )}
+        <DragIndicators />
+        <HoverIndicator />
         <ElementResizeBox />
         <SnapIndicators />
       </IndicatorsSVG>
