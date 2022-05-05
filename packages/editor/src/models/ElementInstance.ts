@@ -200,7 +200,8 @@ export class ElementInstance {
     // TODO: handle position: fixed
     if (
       this.computedStyle.position === "absolute" ||
-      this.style.position === "absolute"
+      this.style.position === "absolute" ||
+      !this.parent
     ) {
       return false;
     }
