@@ -209,6 +209,10 @@ export class EditorState {
       {
         type: "separator",
       },
+      ...this.getElementMenu(),
+      {
+        type: "separator",
+      },
       ...this.getBasicEditMenu(),
     ];
   }
