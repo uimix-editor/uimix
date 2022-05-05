@@ -11,7 +11,7 @@ export class BoundingBoxUpdateScheduler {
 
     if (!this.scheduled) {
       this.scheduled = true;
-      setTimeout(() => this.updateAll(), 0);
+      queueMicrotask(() => this.updateAll());
     }
   }
 
