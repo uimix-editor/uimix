@@ -1,34 +1,68 @@
 import { assertNonNull } from "@seanchas116/paintkit/src/util/Assert";
 import { sum } from "lodash-es";
 import { Rect } from "paintvec";
+import { Element } from "../models/Element";
 import { ElementInstance } from "../models/ElementInstance";
 
-export type StackAlign = "start" | "center" | "end";
+export type FlexAlign = "flex-start" | "center" | "flex-end";
 
 export class AutoLayout {
-  static detectLayout(elements: readonly ElementInstance[]): {
+  static groupElementsIntoFlex(
+    layers: readonly ElementInstance[]
+  ): ElementInstance | undefined {
+    if (layers.length === 0) {
+      return;
+    }
+
+    const layout = this.detectFlex(layers);
+    const parent = layers[0].parent;
+    const offsetParent = layers[0].offsetParent;
+    if (!parent || !offsetParent) {
+      return;
+    }
+
+    const stackElement = new Element({ tagName: "div" });
+    const stack = ElementInstance.get(layers[0].variant, stackElement);
+
+    stack.style.position = "absolute";
+    stack.style.left = `${layout.bbox.left - offsetParent.boundingBox.left}px`;
+    stack.style.top = `${layout.bbox.top - offsetParent.boundingBox.top}px`;
+    stack.style.display = "flex";
+    stack.style.flexDirection = layout.direction;
+    stack.style.rowGap = `${layout.gap}px`;
+    stack.style.columnGap = `${layout.gap}px`;
+    stack.style.alignItems = layout.align;
+
+    parent.element.append(stackElement);
+
+    stackElement.append(...layout.elements.map((i) => i.element));
+
+    return stack;
+  }
+
+  static detectFlex(elements: readonly ElementInstance[]): {
     elements: readonly ElementInstance[];
     bbox: Rect;
-    direction: "x" | "y";
+    direction: "column" | "row";
     gap: number;
-    align: StackAlign;
+    align: FlexAlign;
   } {
     if (!elements.length) {
       return {
         elements,
         bbox: new Rect(),
-        direction: "x",
+        direction: "row",
         gap: 0,
-        align: "start",
+        align: "flex-start",
       };
     }
     if (elements.length === 1) {
       return {
         elements,
         bbox: elements[0].offsetBoundingBox,
-        direction: "x",
+        direction: "row",
         gap: 0,
-        align: "start",
+        align: "flex-start",
       };
     }
 
@@ -64,15 +98,15 @@ export class AutoLayout {
       );
       const align =
         startError < centerError && startError < endError
-          ? "start"
+          ? "flex-start"
           : centerError < endError
           ? "center"
-          : "end";
+          : "flex-end";
 
       return {
         elements: leftSorted,
         bbox,
-        direction: "x",
+        direction: "row",
         gap: Math.max(Math.round(sum(xGaps) / xGaps.length), 0),
         align,
       };
@@ -88,15 +122,15 @@ export class AutoLayout {
       );
       const align =
         startError < centerError && startError < endError
-          ? "start"
+          ? "flex-start"
           : centerError < endError
           ? "center"
-          : "end";
+          : "flex-end";
 
       return {
         elements: topSorted,
         bbox,
-        direction: "y",
+        direction: "column",
         gap: Math.max(Math.round(sum(yGaps) / yGaps.length), 0),
         align,
       };
