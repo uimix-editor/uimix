@@ -22,6 +22,7 @@ export class AutoLayout {
     }
 
     const stackElement = new Element({ tagName: "div" });
+    stackElement.rename("flex-stack");
     const stack = ElementInstance.get(layers[0].variant, stackElement);
 
     stack.style.position = "absolute";
@@ -36,6 +37,13 @@ export class AutoLayout {
     parent.element.append(stackElement);
 
     stackElement.append(...layout.elements.map((i) => i.element));
+    for (const i of layout.elements) {
+      i.style.position = undefined;
+      i.style.left = undefined;
+      i.style.top = undefined;
+      i.style.right = undefined;
+      i.style.bottom = undefined;
+    }
 
     return stack;
   }

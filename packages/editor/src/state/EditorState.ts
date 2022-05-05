@@ -21,6 +21,7 @@ import { Variant } from "../models/Variant";
 import { parseFragment, stringifyFragment } from "../models/FileFormat";
 import { ElementPicker } from "../mount/ElementPicker";
 import { snapThreshold } from "../views/viewport/Constants";
+import { AutoLayout } from "../services/AutoLayout";
 import { ElementInspectorState } from "./ElementInspectorState";
 import { VariantInspectorState } from "./VariantInspectorState";
 import { InsertMode } from "./InsertMode";
@@ -246,6 +247,25 @@ export class EditorState {
     ];
   }
 
+  getElementMenu(): MenuItem[] {
+    return [
+      {
+        text: "Group into Flexbox",
+        run: action(() => {
+          const flexbox = AutoLayout.groupElementsIntoFlex(
+            this.document.selectedElementInstances
+          );
+          if (flexbox) {
+            this.document.deselect();
+            flexbox.select();
+            this.history.commit("Group into Flexbox");
+          }
+          return true;
+        }),
+      },
+    ];
+  }
+
   getViewMenu(): MenuItem[] {
     return [
       {
@@ -286,6 +306,10 @@ export class EditorState {
       {
         text: "Edit",
         children: this.getEditMenu(),
+      },
+      {
+        text: "Element",
+        children: this.getElementMenu(),
       },
       {
         text: "View",
