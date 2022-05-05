@@ -6,6 +6,7 @@ import { SnapIndicators } from "./SnapIndicators";
 import { DragIndicators } from "./DragIndicators";
 import { HoverIndicator } from "./HoverIndicator";
 import { MarginPaddingIndicator } from "./MarginPaddingIndicator";
+import { SelectionInfo } from "./SelectionInfo";
 
 const IndicatorsWrap = styled.div`
   position: absolute;
@@ -36,6 +37,7 @@ export const Indicators: React.VFC<{
         <ElementResizeBox />
         <SnapIndicators />
       </IndicatorsSVG>
+      <SelectionInfo />
     </IndicatorsWrap>
   );
 });
