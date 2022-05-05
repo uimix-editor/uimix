@@ -250,7 +250,8 @@ export class EditorState {
   getElementMenu(): MenuItem[] {
     return [
       {
-        text: "Group into Flexbox",
+        text: "Group into Flex Container",
+        shortcut: [new KeyGesture(["Command"], "KeyG")],
         run: action(() => {
           const flexbox = AutoLayout.groupElementsIntoFlex(
             this.document.selectedElementInstances
@@ -258,7 +259,7 @@ export class EditorState {
           if (flexbox) {
             this.document.deselect();
             flexbox.select();
-            this.history.commit("Group into Flexbox");
+            this.history.commit("Group into Flex Container");
           }
           return true;
         }),

@@ -22,7 +22,7 @@ export class AutoLayout {
     }
 
     const stackElement = new Element({ tagName: "div" });
-    stackElement.rename("flex-stack");
+    stackElement.rename("flex-container");
     const stack = ElementInstance.get(layers[0].variant, stackElement);
 
     stack.style.position = "absolute";
