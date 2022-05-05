@@ -20,6 +20,7 @@ import { TextInstance } from "../models/TextInstance";
 import { Variant } from "../models/Variant";
 import { parseFragment, stringifyFragment } from "../models/FileFormat";
 import { ElementPicker } from "../mount/ElementPicker";
+import { snapThreshold } from "../views/viewport/Constants";
 import { ElementInspectorState } from "./ElementInspectorState";
 import { VariantInspectorState } from "./VariantInspectorState";
 import { InsertMode } from "./InsertMode";
@@ -80,6 +81,10 @@ export class EditorState {
 
   readonly elementPicker = new ElementPicker(this);
   readonly snapper = new ElementSnapper(this);
+
+  get snapThreshold(): number {
+    return snapThreshold / this.scroll.scale;
+  }
 
   getBasicEditMenu(): MenuItem[] {
     return [

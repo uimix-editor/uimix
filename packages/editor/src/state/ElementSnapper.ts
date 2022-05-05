@@ -7,7 +7,6 @@ import {
   snapPointToRects,
   snapRectToRects,
 } from "@seanchas116/paintkit/src/util/Snapping";
-import { snapThreshold } from "../views/viewport/Constants";
 import { ElementInstance } from "../models/ElementInstance";
 import { EditorState } from "./EditorState";
 
@@ -20,7 +19,7 @@ export class ElementSnapper {
   readonly editorState: EditorState;
 
   private get threshold(): number {
-    return snapThreshold / this.editorState.scroll.scale;
+    return this.editorState.snapThreshold;
   }
 
   private getTargetInstances(options: {

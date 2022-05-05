@@ -88,6 +88,18 @@ export class ElementStaticMoveDragHandler implements DragHandler {
         return false;
       }
 
+      if (dst.parent) {
+        const distanceFroEdge = Math.min(
+          Math.abs(dst.boundingBox.top - pos.y),
+          Math.abs(dst.boundingBox.bottom - pos.y),
+          Math.abs(dst.boundingBox.left - pos.x),
+          Math.abs(dst.boundingBox.right - pos.x)
+        );
+        if (distanceFroEdge < this.editorState.snapThreshold) {
+          return false;
+        }
+      }
+
       return true;
     });
 
