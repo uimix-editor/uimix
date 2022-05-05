@@ -39,18 +39,10 @@ export class ElementStaticMoveDragHandler implements DragHandler {
 
     if (newParent) {
       this.editorState.dropTargetPreviewRect = newParent.boundingBox;
-
-      if (
-        [...this.targets.keys()].some((layer) => layer.parent !== newParent)
-      ) {
-        this.editorState.dropIndexIndicator = dropIndexIndicator(
-          newParent,
-          newRef
-        );
-        this.editorState.snapper.clear();
-      } else {
-        this.editorState.dropIndexIndicator = undefined;
-      }
+      this.editorState.dropIndexIndicator = dropIndexIndicator(
+        newParent,
+        newRef
+      );
     }
   }
 
