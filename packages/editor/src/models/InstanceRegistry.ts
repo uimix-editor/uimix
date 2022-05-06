@@ -4,7 +4,7 @@ import { Text } from "./Text";
 import { TextInstance } from "./TextInstance";
 import { DefaultVariant, Variant } from "./Variant";
 
-export class InstanceRegistry {
+class InstanceRegistry {
   private instances = new WeakMap<
     Variant | DefaultVariant,
     WeakMap<Element | Text, ElementInstance | TextInstance>
