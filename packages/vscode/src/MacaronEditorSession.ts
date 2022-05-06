@@ -56,9 +56,8 @@ export class MacaronEditorSession {
         webviewPanel.webview.postMessage(message);
       },
     });
-    api.updateSavePoint();
 
-    // TODO: connect to the webview
+    api.setContent(document.initialContent);
   }
 
   dispose(): void {

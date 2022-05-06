@@ -13,7 +13,6 @@ export class API implements APIInterface {
     return this.file.getContent();
   }
   updateSavePoint(): void {
-    console.log("updateSavePoint");
     this.file.updateSavePoint();
   }
   onDirtyChange(callback: (isDirty: boolean) => void): void {
