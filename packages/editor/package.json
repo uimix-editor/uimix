@@ -3,10 +3,11 @@
   "version": "0.0.0",
   "private": true,
   "scripts": {
-    "build": "webpack --mode production",
-    "dev": "webpack serve --mode development",
+    "build": "tsc && vite build",
+    "dev": "vite",
     "format": "prettier --write src",
     "lint": "eslint src",
+    "preview": "vite preview",
     "test": "cross-env NODE_OPTIONS=--experimental-vm-modules jest"
   },
   "dependencies": {
