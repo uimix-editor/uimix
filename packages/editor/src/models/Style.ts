@@ -74,6 +74,8 @@ export const extraStyleKeys = [
   "borderColor",
 ] as const;
 
+const extraStyleKeySet = new Set(extraStyleKeys);
+
 export type StyleKey = typeof styleKeys[number];
 
 export type ExtraStyleKey = typeof extraStyleKeys[number];
@@ -128,7 +130,7 @@ export class Style extends StyleBase {
     for (const child of root.nodes) {
       if (
         child.type === "decl" &&
-        extraStyleKeys.includes(child.prop as ExtraStyleKey)
+        extraStyleKeySet.has(child.prop as ExtraStyleKey)
       ) {
         this[child.prop as ExtraStyleKey] = child.value;
       }
