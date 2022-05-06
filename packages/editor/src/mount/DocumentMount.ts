@@ -1,14 +1,34 @@
 import { reaction } from "mobx";
+import dedent from "dedent";
 import { Component } from "../models/Component";
 import { EditorState } from "../state/EditorState";
 import { BoundingBoxUpdateScheduler } from "./BoundingBoxUpdateScheduler";
 import { ComponentMount } from "./ComponentMount";
 import { MountRegistry } from "./MountRegistry";
 
+// minimal CSS reset
+const resetCSS = dedent`
+  :host {
+    box-sizing: border-box;
+  }
+  :host *,
+  :host *::before,
+  :host *::after {
+    box-sizing: inherit;
+  }
+  [hidden] {
+    display: none !important;
+  }
+`;
+
 export class DocumentMount {
   constructor(editorState: EditorState, domDocument: globalThis.Document) {
     this.editorState = editorState;
     this.dom = domDocument.createElement("div");
+    this.resetStyleSheet = new domDocument.defaultView!.CSSStyleSheet();
+    //@ts-ignore
+    // eslint-disable-next-line @typescript-eslint/no-unsafe-call
+    this.resetStyleSheet.replaceSync(resetCSS);
 
     this.disposers = [
       reaction(
@@ -45,6 +65,7 @@ export class DocumentMount {
         oldMounts.get(component) ||
         new ComponentMount(component, {
           domDocument: this.dom.ownerDocument,
+          resetStyleSheet: this.resetStyleSheet,
           editorState: this.editorState,
           registry: this.registry,
           boundingBoxUpdateScheduler: this.boundingBoxUpdateScheduler,
@@ -72,5 +93,6 @@ export class DocumentMount {
   readonly dom: HTMLDivElement;
   readonly registry = new MountRegistry();
   readonly boundingBoxUpdateScheduler = new BoundingBoxUpdateScheduler();
+  private resetStyleSheet: CSSStyleSheet;
   private componentMounts: ComponentMount[] = [];
 }

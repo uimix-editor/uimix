@@ -30,7 +30,7 @@ export class VariantMount {
     VariantMount.hostDOMToMount.set(this.host, this);
     this.shadow = this.host.attachShadow({ mode: "open" });
     // @ts-ignore
-    this.shadow.adoptedStyleSheets = [styleSheet];
+    this.shadow.adoptedStyleSheets = [context.resetStyleSheet, styleSheet];
     this.dom.append(this.host);
 
     if (this.variant.type === "variant") {
