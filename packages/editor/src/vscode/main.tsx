@@ -26,3 +26,5 @@ root.render(
     <VSCodeApp file={file} />
   </React.StrictMode>
 );
+
+vscode.postMessage("ready");

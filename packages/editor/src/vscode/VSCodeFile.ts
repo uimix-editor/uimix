@@ -32,6 +32,7 @@ export class VSCodeFile {
   }
 
   onDirtyChange(callback: (isDirty: boolean) => void): void {
+    console.log(callback);
     // TODO: dispose
     reaction(
       () => this.history.isModified,
