@@ -4,8 +4,8 @@ import { kebabCase } from "lodash-es";
 import { Element } from "../models/Element";
 import { Text } from "../models/Text";
 import { ElementInstance } from "../models/ElementInstance";
-import { TextInstance } from "../models/TextInstance";
 import { styleKeys } from "../models/Style";
+import { getInstance } from "../models/InstanceRegistry";
 import { TextMount } from "./TextMount";
 import { MountContext } from "./MountContext";
 
@@ -53,7 +53,7 @@ export class ChildMountSync {
         } else {
           newChildMounts.push(
             new ElementMount(
-              ElementInstance.get(this.instance.variant, child),
+              getInstance(this.instance.variant, child),
               this.context,
               this.dom.ownerDocument
             )
@@ -67,7 +67,7 @@ export class ChildMountSync {
         } else {
           newChildMounts.push(
             new TextMount(
-              TextInstance.get(this.instance.variant, child),
+              getInstance(this.instance.variant, child),
               this.context,
               this.dom.ownerDocument
             )

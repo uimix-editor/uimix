@@ -5,21 +5,10 @@ import type * as hast from "hast";
 import { ElementInstance } from "./ElementInstance";
 import { Text } from "./Text";
 import { DefaultVariant, Variant } from "./Variant";
-import { InstanceRegistry } from "./InstanceRegistry";
+import { getInstance } from "./InstanceRegistry";
 
 // Variant × Text
 export class TextInstance {
-  private static instances = new InstanceRegistry<Text, TextInstance>(
-    (variant, element) => new TextInstance(variant, element)
-  );
-
-  static get(
-    variant: Variant | DefaultVariant | undefined,
-    text: Text
-  ): TextInstance {
-    return this.instances.get(variant, text);
-  }
-
   private constructor(variant: Variant | undefined, text: Text) {
     this._variant = variant;
     this.text = text;
@@ -53,7 +42,7 @@ export class TextInstance {
 
   get parent(): ElementInstance | undefined {
     return this.text.parent
-      ? ElementInstance.get(this.variant, this.text.parent)
+      ? getInstance(this.variant, this.text.parent)
       : undefined;
   }
 

@@ -7,6 +7,7 @@ import { Component, ComponentJSON } from "./Component";
 import { Element } from "./Element";
 import { ElementInstance } from "./ElementInstance";
 import { Fragment } from "./Fragment";
+import { getInstance } from "./InstanceRegistry";
 import { RootElement } from "./RootElement";
 import { Text } from "./Text";
 import { TextInstance } from "./TextInstance";
@@ -208,12 +209,7 @@ export class Document {
 
     for (const node of nodes) {
       parent.insertBefore(node, next);
-
-      if (node.type === "element") {
-        ElementInstance.get(variantToSelect, node).select();
-      } else {
-        TextInstance.get(variantToSelect, node).select();
-      }
+      getInstance(variantToSelect, node).select();
     }
   }
 

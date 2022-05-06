@@ -1,30 +1,27 @@
+import { Element } from "./Element";
+import { ElementInstance } from "./ElementInstance";
+import { Text } from "./Text";
+import { TextInstance } from "./TextInstance";
 import { DefaultVariant, Variant } from "./Variant";
 
-export class InstanceRegistry<TNode extends object, TInstance> {
-  constructor(
-    factory: (variant: Variant | undefined, node: TNode) => TInstance
-  ) {
-    this.factory = factory;
-  }
-  private readonly factory: (
-    variant: Variant | undefined,
-    node: TNode
-  ) => TInstance;
-
+export class InstanceRegistry {
   private instances = new WeakMap<
     Variant | DefaultVariant,
-    WeakMap<TNode, TInstance>
+    WeakMap<Element | Text, ElementInstance | TextInstance>
   >();
-  private defaultInstances = new WeakMap<TNode, TInstance>();
+  private defaultInstances = new WeakMap<
+    Element | Text,
+    ElementInstance | TextInstance
+  >();
 
   get(
     variant: Variant | DefaultVariant | undefined,
-    element: TNode
-  ): TInstance {
+    element: Element | Text
+  ): ElementInstance | TextInstance {
     if (!variant || variant.type === "defaultVariant") {
       let instance = this.defaultInstances.get(element);
       if (!instance) {
-        instance = this.factory(undefined, element);
+        instance = this.createInstance(undefined, element);
         this.defaultInstances.set(element, instance);
       }
       return instance;
@@ -37,9 +34,45 @@ export class InstanceRegistry<TNode extends object, TInstance> {
     }
     let instance = instances.get(element);
     if (!instance) {
-      instance = this.factory(variant, element);
+      instance = this.createInstance(variant, element);
       instances.set(element, instance);
     }
     return instance;
   }
+
+  private createInstance(
+    variant: Variant | undefined,
+    node: Element | Text
+  ): ElementInstance | TextInstance {
+    if (node.type === "element") {
+      // @ts-ignore
+      // eslint-disable-next-line @typescript-eslint/no-unsafe-return
+      return new ElementInstance(variant, node);
+    } else {
+      // @ts-ignore
+      // eslint-disable-next-line @typescript-eslint/no-unsafe-return
+      return new TextInstance(variant, node);
+    }
+  }
+}
+
+const instanceRegistry = new InstanceRegistry();
+
+export function getInstance(
+  variant: Variant | DefaultVariant | undefined,
+  node: Element
+): ElementInstance;
+export function getInstance(
+  variant: Variant | DefaultVariant | undefined,
+  node: Text
+): TextInstance;
+export function getInstance(
+  variant: Variant | DefaultVariant | undefined,
+  node: Element | Text
+): ElementInstance | TextInstance;
+export function getInstance(
+  variant: Variant | DefaultVariant | undefined,
+  node: Element | Text
+): ElementInstance | TextInstance {
+  return instanceRegistry.get(variant, node);
 }

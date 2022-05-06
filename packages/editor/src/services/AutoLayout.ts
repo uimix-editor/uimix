@@ -3,6 +3,7 @@ import { sum } from "lodash-es";
 import { Rect } from "paintvec";
 import { Element } from "../models/Element";
 import { ElementInstance } from "../models/ElementInstance";
+import { getInstance } from "../models/InstanceRegistry";
 
 export type FlexAlign = "flex-start" | "center" | "flex-end";
 
@@ -23,7 +24,7 @@ export class AutoLayout {
 
     const stackElement = new Element({ tagName: "div" });
     stackElement.rename("flex-container");
-    const stack = ElementInstance.get(layers[0].variant, stackElement);
+    const stack = getInstance(layers[0].variant, stackElement);
 
     if (!layers[0].inFlow) {
       stack.style.position = "absolute";

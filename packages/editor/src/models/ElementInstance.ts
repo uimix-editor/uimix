@@ -8,21 +8,10 @@ import { RootElement } from "./RootElement";
 import { Style } from "./Style";
 import { TextInstance } from "./TextInstance";
 import { DefaultVariant, Variant } from "./Variant";
-import { InstanceRegistry } from "./InstanceRegistry";
+import { getInstance } from "./InstanceRegistry";
 
 // Variant × Element
 export class ElementInstance {
-  private static instances = new InstanceRegistry<Element, ElementInstance>(
-    (variant, element) => new ElementInstance(variant, element)
-  );
-
-  static get(
-    variant: Variant | DefaultVariant | undefined,
-    element: Element
-  ): ElementInstance {
-    return this.instances.get(variant, element);
-  }
-
   private constructor(variant: Variant | undefined, element: Element) {
     this._variant = variant;
     this.element = element;
@@ -56,7 +45,7 @@ export class ElementInstance {
 
   get parent(): ElementInstance | undefined {
     return this.element.parent
-      ? ElementInstance.get(this.variant, this.element.parent)
+      ? getInstance(this.variant, this.element.parent)
       : undefined;
   }
 
@@ -83,9 +72,7 @@ export class ElementInstance {
 
   get children(): readonly (ElementInstance | TextInstance)[] {
     return this.element.children.map((child) =>
-      child.type === "element"
-        ? ElementInstance.get(this.variant, child)
-        : TextInstance.get(this.variant, child)
+      getInstance(this.variant, child)
     );
   }
 

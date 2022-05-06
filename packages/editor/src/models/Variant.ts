@@ -3,6 +3,7 @@ import { computed, makeObservable, observable } from "mobx";
 import shortUUID from "short-uuid";
 import { Component, VariantList } from "./Component";
 import { ElementInstance } from "./ElementInstance";
+import { getInstance } from "./InstanceRegistry";
 
 export interface BaseVariantJSON {
   x: number;
@@ -22,7 +23,7 @@ abstract class BaseVariant extends TreeNode<VariantList, BaseVariant, never> {
   get rootInstance(): ElementInstance | undefined {
     return (
       this.component &&
-      ElementInstance.get(
+      getInstance(
         this as BaseVariant as Variant | DefaultVariant,
         this.component.rootElement
       )

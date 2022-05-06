@@ -15,7 +15,7 @@ import { Document } from "./Document";
 import { DefaultVariant, Variant } from "./Variant";
 import { nodesFromHTML } from "./Element";
 import { Fragment } from "./Fragment";
-import { ElementInstance } from "./ElementInstance";
+import { getInstance } from "./InstanceRegistry";
 
 function dumpComponentStyles(component: Component): postcss.Root {
   const root = new postcss.Root();
@@ -361,8 +361,7 @@ export function stringifyFragment(fragment: Fragment): string {
         if (node.type === "element") {
           const component = node.component;
           if (component) {
-            return ElementInstance.get(component.defaultVariant, node)
-              .outerHTML;
+            return getInstance(component.defaultVariant, node).outerHTML;
           }
         }
         return node.outerHTML;
