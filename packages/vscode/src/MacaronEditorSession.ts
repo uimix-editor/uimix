@@ -37,45 +37,53 @@ export class MacaronEditorSession {
     };
     webviewPanel.webview.html = this.getHTMLForWebview(webviewPanel.webview);
 
-    webviewPanel.webview.onDidReceiveMessage((msg) => {
-      if (msg === "ready") {
-        const api = Comlink.wrap<APIInterface>({
-          addEventListener: (
-            type: string,
-            listener: (evt: Event) => void,
-            options?: {}
-          ) => {
-            webviewPanel.webview.onDidReceiveMessage(listener);
-          },
-          removeEventListener: (
-            type: string,
-            listener: (evt: Event) => void,
-            options?: {}
-          ) => {
-            // TODO
-          },
-          postMessage: (message: any) => {
-            void webviewPanel.webview.postMessage(message);
-          },
-        });
+    void this.setupComlink();
+  }
 
-        void api.setContent(document.initialContent);
-
-        // void api.onDirtyChange(
-        //   Comlink.proxy((dirty) => {
-        //     console.log("dirty", dirty);
-        //     if (dirty || this.document.isRestoredFromBackup) {
-        //       this._onDidChange.fire({
-        //         document: this.document,
-        //       });
-        //     } else {
-        //       // FIXME: this is a workaround for clearing the dirty state
-        //       void vscode.commands.executeCommand("workbench.action.files.revert");
-        //     }
-        //   })
-        // );
-      }
+  private async setupComlink() {
+    await new Promise<void>((resolve) => {
+      this.webviewPanel.webview.onDidReceiveMessage((msg) => {
+        if (msg === "ready") {
+          resolve();
+        }
+      });
     });
+
+    const api = Comlink.wrap<APIInterface>({
+      addEventListener: (
+        type: string,
+        listener: (evt: Event) => void,
+        options?: {}
+      ) => {
+        this.webviewPanel.webview.onDidReceiveMessage(listener);
+      },
+      removeEventListener: (
+        type: string,
+        listener: (evt: Event) => void,
+        options?: {}
+      ) => {
+        // TODO
+      },
+      postMessage: (message: any) => {
+        void this.webviewPanel.webview.postMessage(message);
+      },
+    });
+
+    void api.setContent(this.document.initialContent);
+
+    // void api.onDirtyChange(
+    //   Comlink.proxy((dirty) => {
+    //     console.log("dirty", dirty);
+    //     if (dirty || this.document.isRestoredFromBackup) {
+    //       this._onDidChange.fire({
+    //         document: this.document,
+    //       });
+    //     } else {
+    //       // FIXME: this is a workaround for clearing the dirty state
+    //       void vscode.commands.executeCommand("workbench.action.files.revert");
+    //     }
+    //   })
+    // );
   }
 
   dispose(): void {
