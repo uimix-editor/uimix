@@ -1,6 +1,6 @@
 import { Component } from "./Component";
-import { Element } from "./Element";
-import { Text } from "./Text";
+import { ElementInstance } from "./ElementInstance";
+import { TextInstance } from "./TextInstance";
 import { Variant } from "./Variant";
 
 export type Fragment =
@@ -13,6 +13,6 @@ export type Fragment =
       variants: Variant[];
     }
   | {
-      type: "nodes";
-      nodes: (Element | Text)[];
+      type: "instances";
+      instances: (ElementInstance | TextInstance)[];
     };

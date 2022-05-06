@@ -1,49 +1,43 @@
 import { computed, makeObservable, observable } from "mobx";
 import { EdgeOffsets, Rect } from "paintvec";
 import shortUUID from "short-uuid";
+import type * as hast from "hast";
+import { h } from "hastscript";
 import { Element } from "./Element";
 import { RootElement } from "./RootElement";
 import { Style } from "./Style";
 import { TextInstance } from "./TextInstance";
 import { DefaultVariant, Variant } from "./Variant";
+import { getInstance } from "./InstanceRegistry";
+import { Text } from "./Text";
 
 // Variant × Element
 export class ElementInstance {
-  private static instances = new WeakMap<
-    Variant | DefaultVariant,
-    WeakMap<Element, ElementInstance>
-  >();
-
-  readonly key = shortUUID.generate();
-
-  static get(
-    variant: Variant | DefaultVariant,
-    element: Element
-  ): ElementInstance {
-    let instances = this.instances.get(variant);
-    if (!instances) {
-      instances = new WeakMap();
-      ElementInstance.instances.set(variant, instances);
-    }
-    let instance = instances.get(element);
-    if (!instance) {
-      instance = new ElementInstance(variant, element);
-      instances.set(element, instance);
-    }
-    return instance;
-  }
-
-  private constructor(variant: Variant | DefaultVariant, element: Element) {
-    this.variant = variant;
+  private constructor(variant: Variant | undefined, element: Element) {
+    this._variant = variant;
     this.element = element;
     makeObservable(this);
   }
+
+  readonly key = shortUUID.generate();
 
   get type(): "element" {
     return "element";
   }
 
-  readonly variant: Variant | DefaultVariant;
+  readonly _variant: Variant | undefined;
+
+  get variant(): Variant | DefaultVariant | undefined {
+    if (this._variant) {
+      return this._variant;
+    }
+
+    const component = this.element.component;
+    if (component) {
+      return component.defaultVariant;
+    }
+  }
+
   readonly element: Element;
 
   get node(): Element {
@@ -52,7 +46,7 @@ export class ElementInstance {
 
   get parent(): ElementInstance | undefined {
     return this.element.parent
-      ? ElementInstance.get(this.variant, this.element.parent)
+      ? getInstance(this.variant, this.element.parent)
       : undefined;
   }
 
@@ -79,9 +73,7 @@ export class ElementInstance {
 
   get children(): readonly (ElementInstance | TextInstance)[] {
     return this.element.children.map((child) =>
-      child.type === "element"
-        ? ElementInstance.get(this.variant, child)
-        : TextInstance.get(this.variant, child)
+      getInstance(this.variant, child)
     );
   }
 
@@ -180,13 +172,14 @@ export class ElementInstance {
     }
   ): void {
     if (!this.parent) {
-      // resize variant
-
-      if (options.x) {
-        this.variant.x = boundingBox.left;
-      }
-      if (options.y) {
-        this.variant.y = boundingBox.top;
+      const variant = this.variant;
+      if (variant) {
+        if (options.x) {
+          variant.x = boundingBox.left;
+        }
+        if (options.y) {
+          variant.y = boundingBox.top;
+        }
       }
     } else if (
       this.computedStyle.position === "absolute" ||
@@ -220,4 +213,61 @@ export class ElementInstance {
     }
     return true;
   }
+
+  @computed get innerHTML(): hast.ElementContent[] {
+    return this.children.map((child) => child.outerHTML);
+  }
+
+  @computed get outerHTML(): hast.Element {
+    return h(
+      this.element.tagName,
+      {
+        ...Object.fromEntries(this.element.attrs),
+        id: this.element.id,
+        style: this.style.toString(), // TODO: include styles of super variants
+      },
+      this.innerHTML
+    );
+  }
+
+  setInnerHTML(innerHTML: hast.Content[]): void {
+    // TODO: reuse existing elements
+    const children = instancesFromHTML(innerHTML);
+    this.element.replaceChildren(children.map((i) => i.node));
+  }
+}
+
+export function instancesFromHTML(
+  html: hast.Content[]
+): (ElementInstance | TextInstance)[] {
+  const result: (ElementInstance | TextInstance)[] = [];
+
+  for (const child of html) {
+    if (child.type === "text") {
+      result.push(getInstance(undefined, new Text({ content: child.value })));
+    } else if (child.type === "element") {
+      const element = new Element({
+        tagName: child.tagName,
+      });
+
+      for (const [key, value] of Object.entries(child.properties ?? {})) {
+        if (key === "id") {
+          element.rename(String(value));
+        } else {
+          element.attrs.set(key, String(value));
+        }
+      }
+
+      const instance = getInstance(undefined, element);
+      instance.setInnerHTML(child.children);
+
+      if (child.properties?.style) {
+        instance.style.loadString(String(child.properties.style));
+      }
+
+      result.push(instance);
+    }
+  }
+
+  return result;
 }

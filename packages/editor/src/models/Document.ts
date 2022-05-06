@@ -7,6 +7,7 @@ import { Component, ComponentJSON } from "./Component";
 import { Element } from "./Element";
 import { ElementInstance } from "./ElementInstance";
 import { Fragment } from "./Fragment";
+import { getInstance } from "./InstanceRegistry";
 import { RootElement } from "./RootElement";
 import { Text } from "./Text";
 import { TextInstance } from "./TextInstance";
@@ -80,21 +81,21 @@ export class Document {
     if (components.length) {
       return {
         type: "components",
-        components: components,
+        components,
       };
     }
     const variants = filterInstance(this.selectedVariants, [Variant]);
     if (variants.length) {
       return {
         type: "variants",
-        variants: variants,
+        variants,
       };
     }
-    const nodes = this.selectedNodes;
-    if (nodes.length) {
+    const instances = this.selectedInstances;
+    if (instances.length) {
       return {
-        type: "nodes",
-        nodes: nodes,
+        type: "instances",
+        instances,
       };
     }
   }
@@ -118,8 +119,8 @@ export class Document {
         this.appendVariantsBeforeSelection(fragment.variants);
         return;
       }
-      case "nodes": {
-        this.appendNodesBeforeSelection(fragment.nodes);
+      case "instances": {
+        this.appendNodesBeforeSelection(fragment.instances.map((i) => i.node));
         return;
       }
     }
@@ -144,7 +145,7 @@ export class Document {
     );
 
     if (selectedVariants.length) {
-      const last = selectedVariants[selectedVariants.length - 1];
+      const last = assertNonNull(selectedVariants[selectedVariants.length - 1]);
       component = assertNonNull(last.component);
       next =
         last.type === "defaultVariant"
@@ -201,19 +202,14 @@ export class Document {
       [...this.selectedInstances]
         .map((instance) => instance.variant)
         .reverse()
-        .find((variant) => variant.component === component) ||
+        .find((variant) => variant?.component === component) ||
       component.defaultVariant;
 
     this.deselect();
 
     for (const node of nodes) {
       parent.insertBefore(node, next);
-
-      if (node.type === "element") {
-        ElementInstance.get(variantToSelect, node).select();
-      } else {
-        TextInstance.get(variantToSelect, node).select();
-      }
+      getInstance(variantToSelect, node).select();
     }
   }
 

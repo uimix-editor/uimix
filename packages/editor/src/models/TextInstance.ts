@@ -1,42 +1,40 @@
 import { computed, makeObservable, observable } from "mobx";
 import { Rect } from "paintvec";
 import shortUUID from "short-uuid";
+import type * as hast from "hast";
 import { ElementInstance } from "./ElementInstance";
 import { Text } from "./Text";
 import { DefaultVariant, Variant } from "./Variant";
+import { getInstance } from "./InstanceRegistry";
 
 // Variant × Text
 export class TextInstance {
-  private static instances = new WeakMap<
-    Variant | DefaultVariant,
-    WeakMap<Text, TextInstance>
-  >();
-
-  readonly key = shortUUID.generate();
-
-  static get(variant: Variant | DefaultVariant, text: Text): TextInstance {
-    let instances = this.instances.get(variant);
-    if (!instances) {
-      instances = new WeakMap();
-      TextInstance.instances.set(variant, instances);
-    }
-    let instance = instances.get(text);
-    if (!instance) {
-      instance = new TextInstance(variant, text);
-      instances.set(text, instance);
-    }
-    return instance;
-  }
-
-  private constructor(variant: Variant | DefaultVariant, text: Text) {
-    this.variant = variant;
+  private constructor(variant: Variant | undefined, text: Text) {
+    this._variant = variant;
     this.text = text;
     makeObservable(this);
   }
 
+  readonly key = shortUUID.generate();
+
   get type(): "text" {
     return "text";
   }
+
+  readonly _variant: Variant | undefined;
+
+  get variant(): Variant | DefaultVariant | undefined {
+    if (this._variant) {
+      return this._variant;
+    }
+
+    const component = this.text.component;
+    if (component) {
+      return component.defaultVariant;
+    }
+  }
+
+  readonly text: Text;
 
   get node(): Text {
     return this.text;
@@ -44,12 +42,9 @@ export class TextInstance {
 
   get parent(): ElementInstance | undefined {
     return this.text.parent
-      ? ElementInstance.get(this.variant, this.text.parent)
+      ? getInstance(this.variant, this.text.parent)
       : undefined;
   }
-
-  readonly variant: Variant | DefaultVariant;
-  readonly text: Text;
 
   @observable selected = false;
 
@@ -81,5 +76,9 @@ export class TextInstance {
 
   get inFlow(): boolean {
     return true;
+  }
+
+  get outerHTML(): hast.Text {
+    return this.text.outerHTML;
   }
 }

@@ -13,8 +13,9 @@ import { formatHTML } from "../util/Format";
 import { Component } from "./Component";
 import { Document } from "./Document";
 import { DefaultVariant, Variant } from "./Variant";
-import { nodesFromHTML } from "./Element";
 import { Fragment } from "./Fragment";
+import { getInstance } from "./InstanceRegistry";
+import { instancesFromHTML } from "./ElementInstance";
 
 function dumpComponentStyles(component: Component): postcss.Root {
   const root = new postcss.Root();
@@ -244,7 +245,9 @@ function loadComponent(node: hast.Element): Component {
         .use(rehypeMinifyWhitespace)
         .runSync(child.content);
 
-      component.rootElement.setInnerHTML(newContent.children);
+      getInstance(undefined, component.rootElement).setInnerHTML(
+        newContent.children
+      );
     }
 
     if (child.tagName === "macaron-variant") {
@@ -355,8 +358,8 @@ export function stringifyFragment(fragment: Fragment): string {
       const hastNodes = fragment.variants.map(dumpVariant);
       return toHtml(hastNodes);
     }
-    case "nodes": {
-      const hastNodes = fragment.nodes.map((node) => node.outerHTML);
+    case "instances": {
+      const hastNodes = fragment.instances.map((i) => i.outerHTML);
       return toHtml(hastNodes);
     }
   }
@@ -395,7 +398,7 @@ export function parseFragment(data: string): Fragment | undefined {
   });
 
   return {
-    type: "nodes",
-    nodes: nodesFromHTML(visualNodes),
+    type: "instances",
+    instances: instancesFromHTML(visualNodes),
   };
 }

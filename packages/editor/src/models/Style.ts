@@ -1,5 +1,5 @@
 import { MIXED, sameOrMixed } from "@seanchas116/paintkit/src/util/Mixed";
-import { kebabCase } from "lodash-es";
+import { camelCase, kebabCase } from "lodash-es";
 import { makeObservable, observable } from "mobx";
 import * as postcss from "postcss";
 
@@ -74,6 +74,8 @@ export const extraStyleKeys = [
   "borderColor",
 ] as const;
 
+const extraStyleKeySet = new Set(extraStyleKeys);
+
 export type StyleKey = typeof styleKeys[number];
 
 export type ExtraStyleKey = typeof extraStyleKeys[number];
@@ -108,6 +110,30 @@ export class Style extends StyleBase {
   loadJSON(json: StyleJSON): void {
     for (const key of styleKeys) {
       this[key] = json[key];
+    }
+  }
+
+  toString(): string {
+    const rules: string[] = [];
+
+    for (const key of styleKeys) {
+      const value = this[key];
+      if (value !== undefined) {
+        rules.push(`${kebabCase(key)}:${value};`);
+      }
+    }
+    return rules.join("");
+  }
+
+  loadString(styleString: string): void {
+    const root = postcss.parse(styleString);
+    for (const child of root.nodes) {
+      if (child.type === "decl") {
+        const key = camelCase(child.prop) as ExtraStyleKey;
+        if (extraStyleKeySet.has(key)) {
+          this[key] = child.value;
+        }
+      }
     }
   }
 

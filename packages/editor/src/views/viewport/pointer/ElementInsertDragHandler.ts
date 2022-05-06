@@ -3,6 +3,7 @@ import { Rect, Vec2 } from "paintvec";
 import { Component } from "../../../models/Component";
 import { Element } from "../../../models/Element";
 import { ElementInstance } from "../../../models/ElementInstance";
+import { getInstance } from "../../../models/InstanceRegistry";
 import { Text } from "../../../models/Text";
 import { ElementPickResult } from "../../../mount/ElementPicker";
 import { EditorState } from "../../../state/EditorState";
@@ -44,9 +45,7 @@ export class ElementInsertDragHandler implements DragHandler {
       }
 
       parent.element.append(element);
-      this.instance = assertNonNull(
-        ElementInstance.get(parent.variant, element)
-      );
+      this.instance = getInstance(parent.variant, element);
       this.instance.style.position = "absolute";
       if (mode !== "text") {
         this.instance.style.backgroundColor = "#cccccc";

@@ -5,6 +5,7 @@ import {
 import { makeObservable, observable } from "mobx";
 import type * as hast from "hast";
 import { Element } from "./Element";
+import { Component } from "./Component";
 
 export interface TextJSON {
   type: "text";
@@ -28,6 +29,10 @@ export class Text extends TreeNode<Element, Text, never> {
   }
 
   @observable content: string;
+
+  get component(): Component | undefined {
+    return this.parent?.component;
+  }
 
   get outerHTML(): hast.Text {
     return {

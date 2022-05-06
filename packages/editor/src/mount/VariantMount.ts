@@ -1,6 +1,6 @@
 import { reaction } from "mobx";
 import { Component } from "../models/Component";
-import { ElementInstance } from "../models/ElementInstance";
+import { getInstance } from "../models/InstanceRegistry";
 import { DefaultVariant, Variant } from "../models/Variant";
 import { ChildMountSync, fetchComputedValues } from "./ElementMount";
 import { MountContext } from "./MountContext";
@@ -44,7 +44,7 @@ export class VariantMount {
     // TODO: add style
 
     this.childMountSync = new ChildMountSync(
-      ElementInstance.get(variant, component.rootElement),
+      getInstance(variant, component.rootElement),
       context,
       this.shadow,
       () => this.updateBoundingBoxLater()
