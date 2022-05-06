@@ -1,6 +1,7 @@
+import type { APIInterface } from "../../../vscode/src/APIInterface";
 import { VSCodeFile } from "./VSCodeFile";
 
-export class API {
+export class API implements APIInterface {
   constructor(file: VSCodeFile) {
     this.file = file;
   }
@@ -12,6 +13,7 @@ export class API {
     return this.file.getContent();
   }
   updateSavePoint(): void {
+    console.log("updateSavePoint");
     this.file.updateSavePoint();
   }
   onDirtyChange(callback: (isDirty: boolean) => void): void {

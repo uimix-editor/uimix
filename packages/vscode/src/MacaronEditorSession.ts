@@ -1,5 +1,8 @@
 import * as vscode from "vscode";
+import * as Comlink from "comlink";
+//import type { API } from "../../editor/src/vscode/API";
 import { MacaronEditorDocument } from "./MacaronEditorDocument";
+import { APIInterface } from "./APIInterface";
 
 export class MacaronEditorSession {
   private static instanceForPath = new Map<string, MacaronEditorSession>();
@@ -33,6 +36,27 @@ export class MacaronEditorSession {
       enableScripts: true,
     };
     webviewPanel.webview.html = this.getHTMLForWebview(webviewPanel.webview);
+
+    const api = Comlink.wrap<APIInterface>({
+      addEventListener: (
+        type: string,
+        listener: (evt: Event) => void,
+        options?: {}
+      ) => {
+        webviewPanel.webview.onDidReceiveMessage(listener);
+      },
+      removeEventListener: (
+        type: string,
+        listener: (evt: Event) => void,
+        options?: {}
+      ) => {
+        // TODO
+      },
+      postMessage: (message: any) => {
+        webviewPanel.webview.postMessage(message);
+      },
+    });
+    api.updateSavePoint();
 
     // TODO: connect to the webview
   }
