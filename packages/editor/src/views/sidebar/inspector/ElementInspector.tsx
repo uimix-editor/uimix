@@ -53,6 +53,9 @@ export const ElementInspector: React.FC = observer(() => {
           <TextArea
             value={typeof innerHTML === "string" ? innerHTML : undefined}
             placeholder={innerHTML === MIXED ? "Mixed" : undefined}
+            onChange={() => {
+              // TODO
+            }}
           />
         </TopLabelArea>
       </Pane>
