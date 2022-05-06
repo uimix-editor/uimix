@@ -15,7 +15,6 @@ import { Document } from "./Document";
 import { DefaultVariant, Variant } from "./Variant";
 import { nodesFromHTML } from "./Element";
 import { Fragment } from "./Fragment";
-import { getInstance } from "./InstanceRegistry";
 
 function dumpComponentStyles(component: Component): postcss.Root {
   const root = new postcss.Root();
