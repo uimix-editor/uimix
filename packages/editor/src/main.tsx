@@ -1,3 +1,5 @@
+/// <reference types="vite/client" />
+
 import React from "react";
 import ReactDOM from "react-dom/client";
 import { App } from "./App";
@@ -23,8 +25,8 @@ root.render(
   </React.StrictMode>
 );
 
-if (module.hot) {
-  module.hot.accept("./App", async () => {
+if (import.meta.hot) {
+  import.meta.hot.accept("./App", async () => {
     root.unmount();
     root = ReactDOM.createRoot(rootElem);
 
