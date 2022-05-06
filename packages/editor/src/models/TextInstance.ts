@@ -2,31 +2,18 @@ import { computed, makeObservable, observable } from "mobx";
 import { Rect } from "paintvec";
 import shortUUID from "short-uuid";
 import type * as hast from "hast";
-import { ElementInstance } from "./ElementInstance";
+import { ElementInstance, InstanceRegistry } from "./ElementInstance";
 import { Text } from "./Text";
 import { DefaultVariant, Variant } from "./Variant";
 
 // Variant × Text
 export class TextInstance {
-  private static instances = new WeakMap<
-    Variant | DefaultVariant,
-    WeakMap<Text, TextInstance>
-  >();
-
-  readonly key = shortUUID.generate();
+  private static instances = new InstanceRegistry<Text, TextInstance>(
+    (variant, element) => new TextInstance(variant, element)
+  );
 
   static get(variant: Variant | DefaultVariant, text: Text): TextInstance {
-    let instances = this.instances.get(variant);
-    if (!instances) {
-      instances = new WeakMap();
-      TextInstance.instances.set(variant, instances);
-    }
-    let instance = instances.get(text);
-    if (!instance) {
-      instance = new TextInstance(variant, text);
-      instances.set(text, instance);
-    }
-    return instance;
+    return this.instances.get(variant, text);
   }
 
   private constructor(variant: Variant | DefaultVariant, text: Text) {
@@ -34,6 +21,8 @@ export class TextInstance {
     this.text = text;
     makeObservable(this);
   }
+
+  readonly key = shortUUID.generate();
 
   get type(): "text" {
     return "text";

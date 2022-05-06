@@ -9,30 +9,48 @@ import { Style } from "./Style";
 import { TextInstance } from "./TextInstance";
 import { DefaultVariant, Variant } from "./Variant";
 
-// Variant × Element
-export class ElementInstance {
-  private static instances = new WeakMap<
+export class InstanceRegistry<TNode extends object, TInstance> {
+  constructor(
+    factory: (variant: Variant | DefaultVariant, node: TNode) => TInstance
+  ) {
+    this.factory = factory;
+  }
+  private readonly factory: (
+    variant: Variant | DefaultVariant,
+    node: TNode
+  ) => TInstance;
+
+  private instances = new WeakMap<
     Variant | DefaultVariant,
-    WeakMap<Element, ElementInstance>
+    WeakMap<TNode, TInstance>
   >();
 
-  readonly key = shortUUID.generate();
+  get(variant: Variant | DefaultVariant, element: TNode): TInstance {
+    let instances = this.instances.get(variant);
+    if (!instances) {
+      instances = new WeakMap();
+      this.instances.set(variant, instances);
+    }
+    let instance = instances.get(element);
+    if (!instance) {
+      instance = this.factory(variant, element);
+      instances.set(element, instance);
+    }
+    return instance;
+  }
+}
+
+// Variant × Element
+export class ElementInstance {
+  private static instances = new InstanceRegistry<Element, ElementInstance>(
+    (variant, element) => new ElementInstance(variant, element)
+  );
 
   static get(
     variant: Variant | DefaultVariant,
     element: Element
   ): ElementInstance {
-    let instances = this.instances.get(variant);
-    if (!instances) {
-      instances = new WeakMap();
-      ElementInstance.instances.set(variant, instances);
-    }
-    let instance = instances.get(element);
-    if (!instance) {
-      instance = new ElementInstance(variant, element);
-      instances.set(element, instance);
-    }
-    return instance;
+    return this.instances.get(variant, element);
   }
 
   private constructor(variant: Variant | DefaultVariant, element: Element) {
@@ -40,6 +58,8 @@ export class ElementInstance {
     this.element = element;
     makeObservable(this);
   }
+
+  readonly key = shortUUID.generate();
 
   get type(): "element" {
     return "element";
