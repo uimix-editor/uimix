@@ -53,11 +53,11 @@ export class MacaronEditorSession {
         // TODO
       },
       postMessage: (message: any) => {
-        webviewPanel.webview.postMessage(message);
+        void webviewPanel.webview.postMessage(message);
       },
     });
 
-    api.setContent(document.initialContent);
+    void api.setContent(document.initialContent);
   }
 
   dispose(): void {
