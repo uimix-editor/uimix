@@ -166,7 +166,8 @@ export class AutoLayout {
         elements.map((o) => bbox.bottom - o.boundingBox.bottom)
       );
       const align =
-        startError < centerError && startError < endError
+        (startError === 0 && endError === 0) ||
+        (startError < centerError && startError < endError)
           ? "flex-start"
           : centerError < endError
           ? "center"
@@ -190,7 +191,8 @@ export class AutoLayout {
         elements.map((o) => bbox.right - o.boundingBox.right)
       );
       const align =
-        startError < centerError && startError < endError
+        (startError === 0 && endError === 0) ||
+        (startError < centerError && startError < endError)
           ? "flex-start"
           : centerError < endError
           ? "center"
