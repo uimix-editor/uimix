@@ -8,6 +8,7 @@ import {
   RowGroup,
   RowPackLeft,
 } from "@seanchas116/paintkit/src/components/sidebar/Inspector";
+import { Button } from "@seanchas116/paintkit/src/components/Button";
 import staticPositionIcon from "@seanchas116/paintkit/src/icon/StaticPosition";
 import hStackIcon from "@seanchas116/paintkit/src/icon/HStack";
 import textIcon from "@seanchas116/paintkit/src/icon/Text";
@@ -253,6 +254,14 @@ export const LayoutPane: React.FC<{
         />
         {paddingInputs}
         {flexInputs}
+        {!state.editorState.commands.autoLayoutChildren.disabled && (
+          <Button
+            primary
+            onClick={state.editorState.commands.autoLayoutChildren.onClick}
+          >
+            Auto-layout children
+          </Button>
+        )}
       </RowGroup>
     </Pane>
   );

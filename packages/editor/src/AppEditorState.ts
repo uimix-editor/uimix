@@ -23,7 +23,7 @@ export class AppEditorState extends EditorState {
       {
         text: "New",
         shortcut: [new KeyGesture(["Command"], "KeyN")],
-        run: action(() => {
+        onClick: action(() => {
           void this.file.clear();
           return true;
         }),
@@ -34,7 +34,7 @@ export class AppEditorState extends EditorState {
       {
         text: "Open...",
         shortcut: [new KeyGesture(["Command"], "KeyO")],
-        run: action(() => {
+        onClick: action(() => {
           void this.file.open();
           return true;
         }),
@@ -45,7 +45,7 @@ export class AppEditorState extends EditorState {
       {
         text: "Save",
         shortcut: [new KeyGesture(["Command"], "KeyS")],
-        run: action(() => {
+        onClick: action(() => {
           void this.file.save();
           return true;
         }),
@@ -53,7 +53,7 @@ export class AppEditorState extends EditorState {
       {
         text: "Save As...",
         shortcut: [new KeyGesture(["Shift", "Command"], "KeyS")],
-        run: action(() => {
+        onClick: action(() => {
           void this.file.saveAs();
           return true;
         }),
