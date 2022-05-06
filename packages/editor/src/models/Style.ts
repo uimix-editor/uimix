@@ -111,6 +111,18 @@ export class Style extends StyleBase {
     }
   }
 
+  toString(): string {
+    const rules: string[] = [];
+
+    for (const key of styleKeys) {
+      const value = this[key];
+      if (value !== undefined) {
+        rules.push(`${kebabCase(key)}:${value};`);
+      }
+    }
+    return rules.join("");
+  }
+
   toPostCSS(defaults?: postcss.RuleProps): postcss.Rule {
     const rule = new postcss.Rule(defaults);
 

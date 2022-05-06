@@ -1,6 +1,8 @@
 import { computed, makeObservable, observable } from "mobx";
 import { EdgeOffsets, Rect } from "paintvec";
 import shortUUID from "short-uuid";
+import type * as hast from "hast";
+import { h } from "hastscript";
 import { Element } from "./Element";
 import { RootElement } from "./RootElement";
 import { Style } from "./Style";
@@ -219,5 +221,21 @@ export class ElementInstance {
       return false;
     }
     return true;
+  }
+
+  @computed get innerHTML(): hast.ElementContent[] {
+    return this.children.map((child) => child.outerHTML);
+  }
+
+  @computed get outerHTML(): hast.Element {
+    return h(
+      this.element.tagName,
+      {
+        ...Object.fromEntries(this.element.attrs),
+        id: this.element.id,
+        style: this.style.toString(),
+      },
+      this.innerHTML
+    );
   }
 }

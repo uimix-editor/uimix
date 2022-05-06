@@ -1,6 +1,7 @@
 import { computed, makeObservable, observable } from "mobx";
 import { Rect } from "paintvec";
 import shortUUID from "short-uuid";
+import type * as hast from "hast";
 import { ElementInstance } from "./ElementInstance";
 import { Text } from "./Text";
 import { DefaultVariant, Variant } from "./Variant";
@@ -81,5 +82,9 @@ export class TextInstance {
 
   get inFlow(): boolean {
     return true;
+  }
+
+  get outerHTML(): hast.Text {
+    return this.text.outerHTML;
   }
 }
