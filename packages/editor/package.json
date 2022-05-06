@@ -18,6 +18,7 @@
     "@tippyjs/react": "^4.2.6",
     "@types/hast": "^2.3.4",
     "@types/lodash-es": "^4.17.6",
+    "comlink": "^4.3.1",
     "css-what": "^6.1.0",
     "dedent": "^0.7.0",
     "hast-util-from-parse5": "^7.1.0",

@@ -53,5 +53,8 @@
   },
   "engines": {
     "vscode": "^1.67.0"
+  },
+  "dependencies": {
+    "comlink": "^4.3.1"
   }
 }
