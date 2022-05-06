@@ -21,10 +21,22 @@
         "command": "macaron-vscode.helloWorld",
         "title": "Hello World"
       }
+    ],
+    "customEditors": [
+      {
+        "viewType": "macaron.macaronFile",
+        "displayName": "Macaron",
+        "selector": [
+          {
+            "filenamePattern": "*.macaron"
+          }
+        ]
+      }
     ]
   },
   "activationEvents": [
-    "onCommand:macaron-vscode.helloWorld"
+    "onCommand:macaron-vscode.helloWorld",
+    "onCustomEditor:macaron.macaronFile"
   ],
   "devDependencies": {
     "@types/glob": "^7.2.0",
