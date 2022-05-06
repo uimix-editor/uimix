@@ -357,15 +357,9 @@ export function stringifyFragment(fragment: Fragment): string {
       return toHtml(hastNodes);
     }
     case "nodes": {
-      const hastNodes = fragment.nodes.map((node) => {
-        if (node.type === "element") {
-          const component = node.component;
-          if (component) {
-            return getInstance(component.defaultVariant, node).outerHTML;
-          }
-        }
-        return node.outerHTML;
-      });
+      const hastNodes = fragment.nodes.map(
+        (node) => getInstance(undefined, node).outerHTML
+      );
       return toHtml(hastNodes);
     }
   }
