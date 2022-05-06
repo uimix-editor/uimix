@@ -15,6 +15,7 @@ import { Document } from "./Document";
 import { DefaultVariant, Variant } from "./Variant";
 import { nodesFromHTML } from "./Element";
 import { Fragment } from "./Fragment";
+import { ElementInstance } from "./ElementInstance";
 
 function dumpComponentStyles(component: Component): postcss.Root {
   const root = new postcss.Root();
@@ -356,7 +357,16 @@ export function stringifyFragment(fragment: Fragment): string {
       return toHtml(hastNodes);
     }
     case "nodes": {
-      const hastNodes = fragment.nodes.map((node) => node.outerHTML);
+      const hastNodes = fragment.nodes.map((node) => {
+        if (node.type === "element") {
+          const component = node.component;
+          if (component) {
+            return ElementInstance.get(component.defaultVariant, node)
+              .outerHTML;
+          }
+        }
+        return node.outerHTML;
+      });
       return toHtml(hastNodes);
     }
   }

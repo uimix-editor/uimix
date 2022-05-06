@@ -233,7 +233,7 @@ export class ElementInstance {
       {
         ...Object.fromEntries(this.element.attrs),
         id: this.element.id,
-        style: this.style.toString(),
+        style: this.style.toString(), // TODO: include styles of super variants
       },
       this.innerHTML
     );
