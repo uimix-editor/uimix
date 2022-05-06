@@ -17,14 +17,14 @@ export class ElementInstance {
   );
 
   static get(
-    variant: Variant | DefaultVariant,
+    variant: Variant | DefaultVariant | undefined,
     element: Element
   ): ElementInstance {
     return this.instances.get(variant, element);
   }
 
-  private constructor(variant: Variant | DefaultVariant, element: Element) {
-    this.variant = variant;
+  private constructor(variant: Variant | undefined, element: Element) {
+    this._variant = variant;
     this.element = element;
     makeObservable(this);
   }
@@ -35,7 +35,19 @@ export class ElementInstance {
     return "element";
   }
 
-  readonly variant: Variant | DefaultVariant;
+  readonly _variant: Variant | undefined;
+
+  get variant(): Variant | DefaultVariant | undefined {
+    if (this._variant) {
+      return this._variant;
+    }
+
+    const component = this.element.component;
+    if (component) {
+      return component.defaultVariant;
+    }
+  }
+
   readonly element: Element;
 
   get node(): Element {
@@ -172,13 +184,14 @@ export class ElementInstance {
     }
   ): void {
     if (!this.parent) {
-      // resize variant
-
-      if (options.x) {
-        this.variant.x = boundingBox.left;
-      }
-      if (options.y) {
-        this.variant.y = boundingBox.top;
+      const variant = this.variant;
+      if (variant) {
+        if (options.x) {
+          variant.x = boundingBox.left;
+        }
+        if (options.y) {
+          variant.y = boundingBox.top;
+        }
       }
     } else if (
       this.computedStyle.position === "absolute" ||

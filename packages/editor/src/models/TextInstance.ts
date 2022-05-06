@@ -13,12 +13,15 @@ export class TextInstance {
     (variant, element) => new TextInstance(variant, element)
   );
 
-  static get(variant: Variant | DefaultVariant, text: Text): TextInstance {
+  static get(
+    variant: Variant | DefaultVariant | undefined,
+    text: Text
+  ): TextInstance {
     return this.instances.get(variant, text);
   }
 
-  private constructor(variant: Variant | DefaultVariant, text: Text) {
-    this.variant = variant;
+  private constructor(variant: Variant | undefined, text: Text) {
+    this._variant = variant;
     this.text = text;
     makeObservable(this);
   }
@@ -29,6 +32,21 @@ export class TextInstance {
     return "text";
   }
 
+  readonly _variant: Variant | undefined;
+
+  get variant(): Variant | DefaultVariant | undefined {
+    if (this._variant) {
+      return this._variant;
+    }
+
+    const component = this.text.component;
+    if (component) {
+      return component.defaultVariant;
+    }
+  }
+
+  readonly text: Text;
+
   get node(): Text {
     return this.text;
   }
@@ -38,9 +56,6 @@ export class TextInstance {
       ? ElementInstance.get(this.variant, this.text.parent)
       : undefined;
   }
-
-  readonly variant: Variant | DefaultVariant;
-  readonly text: Text;
 
   @observable selected = false;
 

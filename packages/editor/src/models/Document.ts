@@ -144,7 +144,7 @@ export class Document {
     );
 
     if (selectedVariants.length) {
-      const last = selectedVariants[selectedVariants.length - 1];
+      const last = assertNonNull(selectedVariants[selectedVariants.length - 1]);
       component = assertNonNull(last.component);
       next =
         last.type === "defaultVariant"
@@ -201,7 +201,7 @@ export class Document {
       [...this.selectedInstances]
         .map((instance) => instance.variant)
         .reverse()
-        .find((variant) => variant.component === component) ||
+        .find((variant) => variant?.component === component) ||
       component.defaultVariant;
 
     this.deselect();
