@@ -1,3 +1,5 @@
+/// <reference types="vite/client" />
+
 import React from "react";
 import ReactDOM from "react-dom/client";
 import { App } from "./App";
@@ -23,16 +25,16 @@ root.render(
   </React.StrictMode>
 );
 
-// if (module.hot) {
-//   module.hot.accept("./App", async () => {
-//     root.unmount();
-//     root = ReactDOM.createRoot(rootElem);
+if (import.meta.hot) {
+  import.meta.hot.accept("./App", async () => {
+    root.unmount();
+    root = ReactDOM.createRoot(rootElem);
 
-//     const NextApp = (await import("./App")).App;
-//     root.render(
-//       <React.StrictMode>
-//         <NextApp file={file} />
-//       </React.StrictMode>
-//     );
-//   });
-// }
+    const NextApp = (await import("./App")).App;
+    root.render(
+      <React.StrictMode>
+        <NextApp file={file} />
+      </React.StrictMode>
+    );
+  });
+}
