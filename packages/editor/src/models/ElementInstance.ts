@@ -9,6 +9,7 @@ import { Style } from "./Style";
 import { TextInstance } from "./TextInstance";
 import { DefaultVariant, Variant } from "./Variant";
 import { getInstance } from "./InstanceRegistry";
+import { Text } from "./Text";
 
 // Variant × Element
 export class ElementInstance {
@@ -228,4 +229,45 @@ export class ElementInstance {
       this.innerHTML
     );
   }
+
+  setInnerHTML(innerHTML: hast.Content[]): void {
+    // TODO: reuse existing elements
+    const children = instancesFromHTML(innerHTML);
+    this.element.replaceChildren(children.map((i) => i.node));
+  }
+}
+
+export function instancesFromHTML(
+  html: hast.Content[]
+): (ElementInstance | TextInstance)[] {
+  const result: (ElementInstance | TextInstance)[] = [];
+
+  for (const child of html) {
+    if (child.type === "text") {
+      result.push(getInstance(undefined, new Text({ content: child.value })));
+    } else if (child.type === "element") {
+      const element = new Element({
+        tagName: child.tagName,
+      });
+
+      for (const [key, value] of Object.entries(child.properties ?? {})) {
+        if (key === "id") {
+          element.rename(String(value));
+        } else {
+          element.attrs.set(key, String(value));
+        }
+      }
+
+      const instance = getInstance(undefined, element);
+      instance.setInnerHTML(child.children);
+
+      if (child.properties?.style) {
+        instance.style.loadString(String(child.properties.style));
+      }
+
+      result.push(instance);
+    }
+  }
+
+  return result;
 }

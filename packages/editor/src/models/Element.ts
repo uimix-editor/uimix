@@ -7,9 +7,6 @@ import type * as hast from "hast";
 import { h } from "hastscript";
 import { Component } from "./Component";
 import { Text, TextJSON } from "./Text";
-import { ElementInstance } from "./ElementInstance";
-import { TextInstance } from "./TextInstance";
-import { getInstance } from "./InstanceRegistry";
 
 export interface ElementJSON {
   type: "element";
@@ -70,11 +67,6 @@ export class Element extends TreeNode<Element, Element, Element | Text> {
     );
   }
 
-  setInnerHTML(innerHTML: hast.Content[]): void {
-    // TODO: reuse existing elements
-    this.replaceChildren(nodesFromHTML(innerHTML).map((i) => i.node));
-  }
-
   toJSON(): ElementJSON {
     return {
       type: "element",
@@ -132,40 +124,4 @@ export class Element extends TreeNode<Element, Element, Element | Text> {
       }
     }
   }
-}
-
-export function nodesFromHTML(
-  html: hast.Content[]
-): (ElementInstance | TextInstance)[] {
-  const result: (ElementInstance | TextInstance)[] = [];
-
-  for (const child of html) {
-    if (child.type === "text") {
-      result.push(getInstance(undefined, new Text({ content: child.value })));
-    } else if (child.type === "element") {
-      const element = new Element({
-        tagName: child.tagName,
-      });
-
-      for (const [key, value] of Object.entries(child.properties ?? {})) {
-        if (key === "id") {
-          element.rename(String(value));
-        } else {
-          element.attrs.set(key, String(value));
-        }
-      }
-
-      element.setInnerHTML(child.children);
-
-      const instance = getInstance(undefined, element);
-
-      if (child.properties?.style) {
-        instance.style.loadString(String(child.properties.style));
-      }
-
-      result.push(instance);
-    }
-  }
-
-  return result;
 }
