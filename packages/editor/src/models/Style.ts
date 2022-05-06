@@ -1,5 +1,5 @@
 import { MIXED, sameOrMixed } from "@seanchas116/paintkit/src/util/Mixed";
-import { kebabCase } from "lodash-es";
+import { camelCase, kebabCase } from "lodash-es";
 import { makeObservable, observable } from "mobx";
 import * as postcss from "postcss";
 
@@ -128,11 +128,11 @@ export class Style extends StyleBase {
   loadString(styleString: string): void {
     const root = postcss.parse(styleString);
     for (const child of root.nodes) {
-      if (
-        child.type === "decl" &&
-        extraStyleKeySet.has(child.prop as ExtraStyleKey)
-      ) {
-        this[child.prop as ExtraStyleKey] = child.value;
+      if (child.type === "decl") {
+        const key = camelCase(child.prop) as ExtraStyleKey;
+        if (extraStyleKeySet.has(key)) {
+          this[key] = child.value;
+        }
       }
     }
   }
