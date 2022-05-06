@@ -25,9 +25,13 @@ export class AutoLayout {
     stackElement.rename("flex-container");
     const stack = ElementInstance.get(layers[0].variant, stackElement);
 
-    stack.style.position = "absolute";
-    stack.style.left = `${layout.bbox.left - offsetParent.boundingBox.left}px`;
-    stack.style.top = `${layout.bbox.top - offsetParent.boundingBox.top}px`;
+    if (!layers[0].inFlow) {
+      stack.style.position = "absolute";
+      stack.style.left = `${
+        layout.bbox.left - offsetParent.boundingBox.left
+      }px`;
+      stack.style.top = `${layout.bbox.top - offsetParent.boundingBox.top}px`;
+    }
     stack.style.display = "flex";
     stack.style.flexDirection = layout.direction;
     stack.style.rowGap = `${layout.gap}px`;
