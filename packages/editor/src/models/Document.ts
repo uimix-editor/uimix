@@ -81,21 +81,21 @@ export class Document {
     if (components.length) {
       return {
         type: "components",
-        components: components,
+        components,
       };
     }
     const variants = filterInstance(this.selectedVariants, [Variant]);
     if (variants.length) {
       return {
         type: "variants",
-        variants: variants,
+        variants,
       };
     }
-    const nodes = this.selectedNodes;
-    if (nodes.length) {
+    const instances = this.selectedInstances;
+    if (instances.length) {
       return {
-        type: "nodes",
-        nodes: nodes,
+        type: "instances",
+        instances,
       };
     }
   }
@@ -119,8 +119,8 @@ export class Document {
         this.appendVariantsBeforeSelection(fragment.variants);
         return;
       }
-      case "nodes": {
-        this.appendNodesBeforeSelection(fragment.nodes);
+      case "instances": {
+        this.appendNodesBeforeSelection(fragment.instances.map((i) => i.node));
         return;
       }
     }

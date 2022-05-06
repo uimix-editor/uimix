@@ -356,10 +356,8 @@ export function stringifyFragment(fragment: Fragment): string {
       const hastNodes = fragment.variants.map(dumpVariant);
       return toHtml(hastNodes);
     }
-    case "nodes": {
-      const hastNodes = fragment.nodes.map(
-        (node) => getInstance(undefined, node).outerHTML
-      );
+    case "instances": {
+      const hastNodes = fragment.instances.map((i) => i.outerHTML);
       return toHtml(hastNodes);
     }
   }
@@ -398,7 +396,9 @@ export function parseFragment(data: string): Fragment | undefined {
   });
 
   return {
-    type: "nodes",
-    nodes: nodesFromHTML(visualNodes),
+    type: "instances",
+    instances: nodesFromHTML(visualNodes).map((node) =>
+      getInstance(undefined, node)
+    ),
   };
 }
