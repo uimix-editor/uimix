@@ -254,10 +254,12 @@ export const LayoutPane: React.FC<{
         />
         {paddingInputs}
         {flexInputs}
-        {!state.editorState.autoLayoutChildrenCommand.disabled && (
+        {!state.editorState.commands.autoLayoutChildren.disabled && (
           <Button
             primary
-            onClick={() => state.editorState.autoLayoutChildrenCommand.run?.()}
+            onClick={() =>
+              state.editorState.commands.autoLayoutChildren.run?.()
+            }
           >
             Auto-layout children
           </Button>

@@ -1,7 +1,4 @@
-import {
-  Command,
-  MenuItem,
-} from "@seanchas116/paintkit/src/components/menu/Menu";
+import { MenuItem } from "@seanchas116/paintkit/src/components/menu/Menu";
 import { JSONUndoHistory } from "@seanchas116/paintkit/src/util/JSONUndoHistory";
 import { KeyGesture } from "@seanchas116/paintkit/src/util/KeyGesture";
 import { isTextInputFocused } from "@seanchas116/paintkit/src/util/CurrentFocus";
@@ -24,11 +21,11 @@ import { Variant } from "../models/Variant";
 import { parseFragment, stringifyFragment } from "../models/FileFormat";
 import { ElementPicker } from "../mount/ElementPicker";
 import { snapThreshold } from "../views/viewport/Constants";
-import { AutoLayout } from "../services/AutoLayout";
 import { ElementInspectorState } from "./ElementInspectorState";
 import { VariantInspectorState } from "./VariantInspectorState";
 import { InsertMode } from "./InsertMode";
 import { ElementSnapper } from "./ElementSnapper";
+import { Commands } from "./Commands";
 
 export class EditorState {
   constructor(getHistory: () => JSONUndoHistory<DocumentJSON, Document>) {
@@ -85,6 +82,8 @@ export class EditorState {
 
   readonly elementPicker = new ElementPicker(this);
   readonly snapper = new ElementSnapper(this);
+
+  readonly commands = new Commands(this);
 
   get snapThreshold(): number {
     return snapThreshold / this.scroll.scale;
@@ -254,46 +253,8 @@ export class EditorState {
     ];
   }
 
-  get autoLayoutChildrenCommand(): Command {
-    const selection = this.document.selectedElementInstances;
-
-    return {
-      text: "Auto-layout Children",
-      disabled:
-        selection.length < 1 ||
-        selection.some(
-          (instance) => !AutoLayout.canAutoLayoutChildren(instance)
-        ),
-      run: action(() => {
-        for (const instance of selection) {
-          AutoLayout.autoLayoutChildren(instance);
-        }
-        this.history.commit("Auto-layout Children");
-        return true;
-      }),
-    };
-  }
-
   getElementMenu(): MenuItem[] {
-    return [
-      {
-        text: "Group into Flex Container",
-        shortcut: [new KeyGesture(["Command"], "KeyG")],
-        disabled: this.document.selectedElementInstances.length < 2,
-        run: action(() => {
-          const flexbox = AutoLayout.groupElementsIntoFlex(
-            this.document.selectedElementInstances
-          );
-          if (flexbox) {
-            this.document.deselect();
-            flexbox.select();
-            this.history.commit("Group into Flex Container");
-          }
-          return true;
-        }),
-      },
-      this.autoLayoutChildrenCommand,
-    ];
+    return [this.commands.groupIntoFlex, this.commands.autoLayoutChildren];
   }
 
   getViewMenu(): MenuItem[] {
