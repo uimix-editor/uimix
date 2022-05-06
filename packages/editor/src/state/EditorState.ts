@@ -1,15 +1,8 @@
 import { MenuItem } from "@seanchas116/paintkit/src/components/menu/Menu";
 import { JSONUndoHistory } from "@seanchas116/paintkit/src/util/JSONUndoHistory";
-import { KeyGesture } from "@seanchas116/paintkit/src/util/KeyGesture";
 import { isTextInputFocused } from "@seanchas116/paintkit/src/util/CurrentFocus";
 import { Scroll } from "@seanchas116/paintkit/src/util/Scroll";
-import {
-  action,
-  computed,
-  makeObservable,
-  observable,
-  runInAction,
-} from "mobx";
+import { action, computed, makeObservable, observable } from "mobx";
 import { Rect, Vec2 } from "paintvec";
 import { Component } from "../models/Component";
 import { Document, DocumentJSON } from "../models/Document";
@@ -18,7 +11,6 @@ import { ElementInstance } from "../models/ElementInstance";
 import { Text } from "../models/Text";
 import { TextInstance } from "../models/TextInstance";
 import { Variant } from "../models/Variant";
-import { parseFragment, stringifyFragment } from "../models/FileFormat";
 import { ElementPicker } from "../mount/ElementPicker";
 import { snapThreshold } from "../views/viewport/Constants";
 import { ElementInspectorState } from "./ElementInspectorState";
@@ -91,63 +83,10 @@ export class EditorState {
 
   getBasicEditMenu(): MenuItem[] {
     return [
-      {
-        text: "Cut",
-        shortcut: [new KeyGesture(["Command"], "KeyX")],
-        // TODO
-      },
-      {
-        text: "Copy",
-        shortcut: [new KeyGesture(["Command"], "KeyC")],
-        onClick: action(() => {
-          const fragment = this.document.selectedFragment;
-          if (fragment) {
-            const html = stringifyFragment(fragment);
-            console.log(html);
-
-            const type = "text/html";
-            const blob = new Blob([html], { type });
-            const data = [new ClipboardItem({ [type]: blob })];
-
-            void navigator.clipboard.write(data);
-          }
-
-          return true;
-        }),
-      },
-      {
-        text: "Paste",
-        shortcut: [new KeyGesture(["Command"], "KeyV")],
-        onClick: action(() => {
-          void navigator.clipboard.read().then(async (contents) => {
-            for (const item of contents) {
-              if (item.types.includes("text/html")) {
-                const html = await (await item.getType("text/html")).text();
-                const fragment = parseFragment(html);
-                if (fragment) {
-                  runInAction(() => {
-                    this.document.appendFragmentBeforeSelection(fragment);
-                    this.history.commit("Paste");
-                  });
-                }
-
-                break;
-              }
-            }
-          });
-
-          return true;
-        }),
-      },
-      {
-        text: "Delete",
-        shortcut: [new KeyGesture([], "Backspace")],
-        onClick: action(() => {
-          this.document.deleteSelected();
-          this.history.commit("Delete Element");
-          return true;
-        }),
-      },
+      this.commands.cut,
+      this.commands.copy,
+      this.commands.paste,
+      this.commands.delete,
     ];
   }
 
@@ -225,27 +164,8 @@ export class EditorState {
 
   getEditMenu(): MenuItem[] {
     return [
-      {
-        text: "Undo",
-        disabled: !this.history.undoStack.canUndo,
-        shortcut: [new KeyGesture(["Command"], "KeyZ")],
-        onClick: action(() => {
-          this.history.undoStack.undo();
-          return true;
-        }),
-      },
-      {
-        text: "Redo",
-        disabled: !this.history.undoStack.canRedo,
-        shortcut: [
-          new KeyGesture(["Command", "Shift"], "KeyZ"),
-          new KeyGesture(["Command"], "KeyY"),
-        ],
-        onClick: action(() => {
-          this.history.undoStack.redo();
-          return true;
-        }),
-      },
+      this.commands.undo,
+      this.commands.redo,
       {
         type: "separator",
       },
@@ -258,38 +178,7 @@ export class EditorState {
   }
 
   getViewMenu(): MenuItem[] {
-    return [
-      {
-        text: "Zoom In",
-        shortcut: [
-          new KeyGesture([], "Equal"),
-          new KeyGesture([], "NumpadAdd"),
-          new KeyGesture(["Command"], "Equal"),
-          new KeyGesture(["Command"], "NumpadAdd"),
-          new KeyGesture(["Shift"], "Equal"),
-          new KeyGesture(["Shift", "Command"], "Equal"),
-        ],
-        onClick: action(() => {
-          this.scroll.zoomIn();
-          return true;
-        }),
-      },
-      {
-        text: "Zoom Out",
-        shortcut: [
-          new KeyGesture([], "Minus"),
-          new KeyGesture([], "NumpadSubtract"),
-          new KeyGesture(["Command"], "Minus"),
-          new KeyGesture(["Command"], "NumpadSubtract"),
-          new KeyGesture(["Shift"], "Minus"),
-          new KeyGesture(["Shift", "Command"], "Minus"),
-        ],
-        onClick: action(() => {
-          this.scroll.zoomOut();
-          return true;
-        }),
-      },
-    ];
+    return [this.commands.zoomIn, this.commands.zoomOut];
   }
 
   getMainMenu(): MenuItem[] {
