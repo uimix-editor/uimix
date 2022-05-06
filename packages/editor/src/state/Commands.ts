@@ -24,7 +24,7 @@ export class Commands {
       text: "Group into Flex Container",
       shortcut: [new KeyGesture(["Command"], "KeyG")],
       disabled: this.document.selectedElementInstances.length < 2,
-      run: action(() => {
+      onClick: action(() => {
         const flexbox = AutoLayout.groupElementsIntoFlex(
           this.document.selectedElementInstances
         );
@@ -48,7 +48,7 @@ export class Commands {
         selection.some(
           (instance) => !AutoLayout.canAutoLayoutChildren(instance)
         ),
-      run: action(() => {
+      onClick: action(() => {
         for (const instance of selection) {
           AutoLayout.autoLayoutChildren(instance);
         }

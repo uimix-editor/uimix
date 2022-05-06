@@ -257,9 +257,7 @@ export const LayoutPane: React.FC<{
         {!state.editorState.commands.autoLayoutChildren.disabled && (
           <Button
             primary
-            onClick={() =>
-              state.editorState.commands.autoLayoutChildren.run?.()
-            }
+            onClick={state.editorState.commands.autoLayoutChildren.onClick}
           >
             Auto-layout children
           </Button>

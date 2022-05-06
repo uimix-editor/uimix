@@ -99,7 +99,7 @@ export class EditorState {
       {
         text: "Copy",
         shortcut: [new KeyGesture(["Command"], "KeyC")],
-        run: action(() => {
+        onClick: action(() => {
           const fragment = this.document.selectedFragment;
           if (fragment) {
             const html = stringifyFragment(fragment);
@@ -118,7 +118,7 @@ export class EditorState {
       {
         text: "Paste",
         shortcut: [new KeyGesture(["Command"], "KeyV")],
-        run: action(() => {
+        onClick: action(() => {
           void navigator.clipboard.read().then(async (contents) => {
             for (const item of contents) {
               if (item.types.includes("text/html")) {
@@ -142,7 +142,7 @@ export class EditorState {
       {
         text: "Delete",
         shortcut: [new KeyGesture([], "Backspace")],
-        run: action(() => {
+        onClick: action(() => {
           this.document.deleteSelected();
           this.history.commit("Delete Element");
           return true;
@@ -155,7 +155,7 @@ export class EditorState {
     return [
       {
         text: "Add Component",
-        run: action(() => {
+        onClick: action(() => {
           const component = new Component();
           this.document.components.append(component);
           this.history.commit("Add Component");
@@ -173,7 +173,7 @@ export class EditorState {
     return [
       {
         text: "Add Variant",
-        run: action(() => {
+        onClick: action(() => {
           const variant = new Variant();
           variant.selector = ":hover";
           component.variants.append(variant);
@@ -191,7 +191,7 @@ export class EditorState {
     return [
       {
         text: "Add Element",
-        run: action(() => {
+        onClick: action(() => {
           const element = new Element({ tagName: "div" });
           element.rename("div");
           instance.element.append(element);
@@ -201,7 +201,7 @@ export class EditorState {
       },
       {
         text: "Add Text",
-        run: action(() => {
+        onClick: action(() => {
           const text = new Text({ content: "Text" });
           instance.element.append(text);
           this.history.commit("Add Text");
@@ -229,7 +229,7 @@ export class EditorState {
         text: "Undo",
         disabled: !this.history.undoStack.canUndo,
         shortcut: [new KeyGesture(["Command"], "KeyZ")],
-        run: action(() => {
+        onClick: action(() => {
           this.history.undoStack.undo();
           return true;
         }),
@@ -241,7 +241,7 @@ export class EditorState {
           new KeyGesture(["Command", "Shift"], "KeyZ"),
           new KeyGesture(["Command"], "KeyY"),
         ],
-        run: action(() => {
+        onClick: action(() => {
           this.history.undoStack.redo();
           return true;
         }),
@@ -269,7 +269,7 @@ export class EditorState {
           new KeyGesture(["Shift"], "Equal"),
           new KeyGesture(["Shift", "Command"], "Equal"),
         ],
-        run: action(() => {
+        onClick: action(() => {
           this.scroll.zoomIn();
           return true;
         }),
@@ -284,7 +284,7 @@ export class EditorState {
           new KeyGesture(["Shift"], "Minus"),
           new KeyGesture(["Shift", "Command"], "Minus"),
         ],
-        run: action(() => {
+        onClick: action(() => {
           this.scroll.zoomOut();
           return true;
         }),
