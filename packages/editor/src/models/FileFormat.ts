@@ -397,8 +397,6 @@ export function parseFragment(data: string): Fragment | undefined {
 
   return {
     type: "instances",
-    instances: nodesFromHTML(visualNodes).map((node) =>
-      getInstance(undefined, node)
-    ),
+    instances: nodesFromHTML(visualNodes),
   };
 }

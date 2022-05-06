@@ -7,6 +7,9 @@ import type * as hast from "hast";
 import { h } from "hastscript";
 import { Component } from "./Component";
 import { Text, TextJSON } from "./Text";
+import { ElementInstance } from "./ElementInstance";
+import { TextInstance } from "./TextInstance";
+import { getInstance } from "./InstanceRegistry";
 
 export interface ElementJSON {
   type: "element";
@@ -69,7 +72,7 @@ export class Element extends TreeNode<Element, Element, Element | Text> {
 
   setInnerHTML(innerHTML: hast.Content[]): void {
     // TODO: reuse existing elements
-    this.replaceChildren(nodesFromHTML(innerHTML));
+    this.replaceChildren(nodesFromHTML(innerHTML).map((i) => i.node));
   }
 
   toJSON(): ElementJSON {
@@ -131,12 +134,14 @@ export class Element extends TreeNode<Element, Element, Element | Text> {
   }
 }
 
-export function nodesFromHTML(html: hast.Content[]): (Element | Text)[] {
-  const result: (Element | Text)[] = [];
+export function nodesFromHTML(
+  html: hast.Content[]
+): (ElementInstance | TextInstance)[] {
+  const result: (ElementInstance | TextInstance)[] = [];
 
   for (const child of html) {
     if (child.type === "text") {
-      result.push(new Text({ content: child.value }));
+      result.push(getInstance(undefined, new Text({ content: child.value })));
     } else if (child.type === "element") {
       const element = new Element({
         tagName: child.tagName,
@@ -151,7 +156,14 @@ export function nodesFromHTML(html: hast.Content[]): (Element | Text)[] {
       }
 
       element.setInnerHTML(child.children);
-      result.push(element);
+
+      const instance = getInstance(undefined, element);
+
+      if (child.properties?.style) {
+        instance.style.loadString(String(child.properties.style));
+      }
+
+      result.push(instance);
     }
   }
 

@@ -123,6 +123,18 @@ export class Style extends StyleBase {
     return rules.join("");
   }
 
+  loadString(styleString: string): void {
+    const root = postcss.parse(styleString);
+    for (const child of root.nodes) {
+      if (
+        child.type === "decl" &&
+        extraStyleKeys.includes(child.prop as ExtraStyleKey)
+      ) {
+        this[child.prop as ExtraStyleKey] = child.value;
+      }
+    }
+  }
+
   toPostCSS(defaults?: postcss.RuleProps): postcss.Rule {
     const rule = new postcss.Rule(defaults);
 
