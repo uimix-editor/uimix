@@ -2,9 +2,10 @@ import { computed, makeObservable, observable } from "mobx";
 import { Rect } from "paintvec";
 import shortUUID from "short-uuid";
 import type * as hast from "hast";
-import { ElementInstance, InstanceRegistry } from "./ElementInstance";
+import { ElementInstance } from "./ElementInstance";
 import { Text } from "./Text";
 import { DefaultVariant, Variant } from "./Variant";
+import { InstanceRegistry } from "./InstanceRegistry";
 
 // Variant × Text
 export class TextInstance {
