@@ -23,16 +23,16 @@ root.render(
   </React.StrictMode>
 );
 
-if (module.hot) {
-  module.hot.accept("./App", async () => {
-    root.unmount();
-    root = ReactDOM.createRoot(rootElem);
+// if (module.hot) {
+//   module.hot.accept("./App", async () => {
+//     root.unmount();
+//     root = ReactDOM.createRoot(rootElem);
 
-    const NextApp = (await import("./App")).App;
-    root.render(
-      <React.StrictMode>
-        <NextApp file={file} />
-      </React.StrictMode>
-    );
-  });
-}
+//     const NextApp = (await import("./App")).App;
+//     root.render(
+//       <React.StrictMode>
+//         <NextApp file={file} />
+//       </React.StrictMode>
+//     );
+//   });
+// }
