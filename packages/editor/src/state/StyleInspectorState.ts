@@ -63,7 +63,9 @@ export class StyleInspectorState {
   readonly editorState: EditorState;
 
   @computed get selectedInstances(): ElementInstance[] {
-    return this.editorState.document.selectedElementInstances;
+    return this.editorState.document.selectedElementInstances.filter(
+      (instance) => instance.element.id
+    );
   }
 
   @computed get styles(): Style[] {
