@@ -23,17 +23,19 @@ export const StyleInspector: React.FC = observer(function StyleInspector() {
     [editorState]
   );
 
-  if (state.styles.length === 0) {
-    if (editorState.document.selectedElementInstances.length) {
-      return (
-        <StyleInspectorWrap>
-          <Pane>
-            <Button primary>Set ID to edit style</Button>
-          </Pane>
-        </StyleInspectorWrap>
-      );
-    }
+  if (state.mustAssignID) {
+    return (
+      <StyleInspectorWrap>
+        <Pane>
+          <Button primary onClick={state.onAssignID}>
+            Assign ID to edit style
+          </Button>
+        </Pane>
+      </StyleInspectorWrap>
+    );
+  }
 
+  if (state.styles.length === 0) {
     return null;
   }
 
