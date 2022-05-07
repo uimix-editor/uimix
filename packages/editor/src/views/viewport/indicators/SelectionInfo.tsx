@@ -49,7 +49,14 @@ export const SelectionInfo: React.FC = observer(function SelectionInfo() {
   const bboxInViewport = bbox.transform(editorState.scroll.documentToViewport);
 
   const tagName =
-    sameOrNone(instances.map((i) => i.element.tagName)) || "Multiple";
+    sameOrNone(
+      instances.map((i) => {
+        if (i.element.id) {
+          return "#" + i.element.id;
+        }
+        return i.element.tagName;
+      })
+    ) || "Multiple";
 
   const width = Number.parseFloat(bbox.width.toFixed(2));
   const height = Number.parseFloat(bbox.height.toFixed(2));
