@@ -14,6 +14,10 @@ export class VSCodeFile {
 
   setContent(content: string): void {
     try {
+      const currentContent = stringifyDocument(this.history.target);
+      if (currentContent === content) {
+        return;
+      }
       const document = parseDocument(content);
       runInAction(() => {
         this.history = new JSONUndoHistory<DocumentJSON, Document>(document);

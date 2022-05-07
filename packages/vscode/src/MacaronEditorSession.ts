@@ -56,10 +56,7 @@ export class MacaronEditorSession {
       this.fileWatcher.onDidChange(async () => {
         const data = await vscode.workspace.fs.readFile(document.uri);
         const content = Buffer.from(data).toString();
-        if (this.document.content !== content) {
-          this.document.content = content;
-          await this.webviewAPI?.setContent(content);
-        }
+        await this.webviewAPI?.setContent(content);
       })
     );
   }
@@ -108,7 +105,7 @@ export class MacaronEditorSession {
 
     this.webviewAPI = Comlink.wrap<IWebviewAPI>(comlinkEndpoint);
 
-    void this.webviewAPI.setContent(this.document.content);
+    void this.webviewAPI.setContent(this.document.initialContent);
   }
 
   dispose(): void {
@@ -157,12 +154,9 @@ export class MacaronEditorSession {
     cancellation?: vscode.CancellationToken,
     updateSavePoint = false
   ): Promise<void> {
-    this.document.content =
-      (await this.webviewAPI?.getContent()) || this.document.content;
-    await vscode.workspace.fs.writeFile(
-      targetResource,
-      Buffer.from(this.document.content)
-    );
+    const content =
+      (await this.webviewAPI?.getContent()) || this.document.initialContent;
+    await vscode.workspace.fs.writeFile(targetResource, Buffer.from(content));
     if (updateSavePoint) {
       await this.webviewAPI?.updateSavePoint();
     }
