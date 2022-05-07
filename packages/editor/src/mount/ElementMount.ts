@@ -186,7 +186,6 @@ export class ElementMount {
   ) {
     this.instance = instance;
     // TODO: support reference to other component
-    // TODO: support SVG elements
     if (svgTagNames.includes(instance.element.tagName)) {
       this.dom = domDocument.createElementNS(
         "http://www.w3.org/2000/svg",
