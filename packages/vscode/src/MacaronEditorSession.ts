@@ -49,20 +49,28 @@ export class MacaronEditorSession {
       });
     });
 
+    const disposables = new WeakMap<(evt: Event) => void, vscode.Disposable>();
+
     const api = Comlink.wrap<APIInterface>({
       addEventListener: (
         type: string,
         listener: (evt: Event) => void,
         options?: {}
       ) => {
-        this.webviewPanel.webview.onDidReceiveMessage(listener);
+        const disposable = this.webviewPanel.webview.onDidReceiveMessage(
+          (message) => {
+            // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
+            listener({ data: message });
+          }
+        );
+        disposables.set(listener, disposable);
       },
       removeEventListener: (
         type: string,
         listener: (evt: Event) => void,
         options?: {}
       ) => {
-        // TODO
+        disposables.get(listener)?.dispose();
       },
       postMessage: (message: any) => {
         void this.webviewPanel.webview.postMessage(message);
@@ -71,19 +79,19 @@ export class MacaronEditorSession {
 
     void api.setContent(this.document.initialContent);
 
-    // void api.onDirtyChange(
-    //   Comlink.proxy((dirty) => {
-    //     console.log("dirty", dirty);
-    //     if (dirty || this.document.isRestoredFromBackup) {
-    //       this._onDidChange.fire({
-    //         document: this.document,
-    //       });
-    //     } else {
-    //       // FIXME: this is a workaround for clearing the dirty state
-    //       void vscode.commands.executeCommand("workbench.action.files.revert");
-    //     }
-    //   })
-    // );
+    void api.onDirtyChange(
+      Comlink.proxy((dirty) => {
+        console.log("dirty", dirty);
+        if (dirty || this.document.isRestoredFromBackup) {
+          this._onDidChange.fire({
+            document: this.document,
+          });
+        } else {
+          // FIXME: this is a workaround for clearing the dirty state
+          void vscode.commands.executeCommand("workbench.action.files.revert");
+        }
+      })
+    );
   }
 
   dispose(): void {
