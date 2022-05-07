@@ -18,6 +18,7 @@ import { NumberInput } from "@seanchas116/paintkit/src/components/NumberInput";
 import { Scrollable } from "@seanchas116/paintkit/src/components/Scrollable";
 import { IconButton } from "@seanchas116/paintkit/src/components/IconButton";
 import { useContextMenu } from "@seanchas116/paintkit/src/components/menu/ContextMenuProvider";
+import { iconToSVGString } from "@seanchas116/paintkit/src/util/Image";
 import { useEditorState } from "../../EditorStateContext";
 import { IconItem, IconSet } from "./IconSet";
 import { IconBrowserState } from "./IconBrowserState";
@@ -34,20 +35,8 @@ const IconThumbnailBody: React.VFC<{
   const editorState = useEditorState();
 
   const getSVGText = () => {
-    const baseSize = 24;
     const { size, rotation, flipX } = editorState.iconBrowserState;
-
-    const transform = [
-      `translate(${baseSize / 2} ${baseSize / 2})`,
-      `scale(${flipX ? -1 : 1} 1)`,
-      `rotate(${rotation})`,
-      `translate(${-baseSize / 2} ${-baseSize / 2})`,
-    ].join(" ");
-
-    //const body = item.body.replace("currentColor", color.color.toHex());
-    const body = item.body;
-
-    return `<svg width="${size}" height="${size}" viewBox="0 0 ${baseSize} ${baseSize}" xmlns="http://www.w3.org/2000/svg"><g transform="${transform}">${body}</g></svg>`;
+    return iconToSVGString({ ...item, rotate: rotation, hFlip: flipX }, size);
   };
 
   const contextMenu = useContextMenu();
@@ -71,9 +60,24 @@ const IconThumbnailBody: React.VFC<{
 
           contextMenu.show(e.clientX, e.clientY, [
             {
-              text: "Copy as SVG",
+              text: "Copy SVG as HTML",
               onClick: action(() => {
-                void navigator.clipboard.writeText(getSVGText());
+                const svgText = getSVGText();
+                const htmlBlob = new Blob([svgText], { type: "text/html" });
+                void navigator.clipboard.write([
+                  new ClipboardItem({ [htmlBlob.type]: htmlBlob }),
+                ]);
+                return true;
+              }),
+            },
+            {
+              text: "Copy SVG as Text",
+              onClick: action(() => {
+                const svgText = getSVGText();
+                const textBlob = new Blob([svgText], { type: "text/plain" });
+                void navigator.clipboard.write([
+                  new ClipboardItem({ [textBlob.type]: textBlob }),
+                ]);
                 return true;
               }),
             },
