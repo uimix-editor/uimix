@@ -9,13 +9,16 @@ const vscode = acquireVsCodeApi();
 
 const file = new VSCodeFile();
 
-Comlink.expose(new API(file), {
+const comlinkEndpoint: Comlink.Endpoint = {
   addEventListener: window.addEventListener.bind(window),
   removeEventListener: window.removeEventListener.bind(window),
-  postMessage: vscode.postMessage.bind(vscode),
-});
+  postMessage: (message: unknown) => {
+    console.log(message);
+    vscode.postMessage(message);
+  },
+};
 
-// TODO: expose Comlink
+Comlink.expose(new API(file), comlinkEndpoint);
 
 const rootElem = document.createElement("div");
 document.body.append(rootElem);

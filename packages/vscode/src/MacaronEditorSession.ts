@@ -51,7 +51,7 @@ export class MacaronEditorSession {
 
     const disposables = new WeakMap<(evt: Event) => void, vscode.Disposable>();
 
-    const api = Comlink.wrap<APIInterface>({
+    const comlinkEndpoint: Comlink.Endpoint = {
       addEventListener: (
         type: string,
         listener: (evt: Event) => void,
@@ -75,7 +75,9 @@ export class MacaronEditorSession {
       postMessage: (message: any) => {
         void this.webviewPanel.webview.postMessage(message);
       },
-    });
+    };
+
+    const api = Comlink.wrap<APIInterface>(comlinkEndpoint);
 
     void api.setContent(this.document.initialContent);
 
