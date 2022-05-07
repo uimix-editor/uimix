@@ -4,6 +4,7 @@ import React from "react";
 import styled from "styled-components";
 import { colors } from "@seanchas116/paintkit/src/components/Palette";
 import { useEditorState } from "../../EditorStateContext";
+import { ComponentBrowser } from "./ComponentBrowser";
 
 const AssetTabItem = styled.div`
   color: ${(p) => (p["aria-selected"] ? colors.text : colors.disabledText)};
@@ -60,7 +61,7 @@ export const AssetBrowser: React.VFC<React.HTMLAttributes<HTMLDivElement>> =
           </AssetTabItem>
         </AssetTab>
         {editorState.assetTab === "components" ? (
-          <div />
+          <ComponentBrowser />
         ) : editorState.assetTab === "images" ? (
           <div />
         ) : editorState.assetTab === "icons" ? (
