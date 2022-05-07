@@ -60,23 +60,16 @@ const IconThumbnailBody: React.VFC<{
 
           contextMenu.show(e.clientX, e.clientY, [
             {
-              text: "Copy SVG as HTML",
+              text: "Copy SVG",
               onClick: action(() => {
                 const svgText = getSVGText();
                 const htmlBlob = new Blob([svgText], { type: "text/html" });
-                void navigator.clipboard.write([
-                  new ClipboardItem({ [htmlBlob.type]: htmlBlob }),
-                ]);
-                return true;
-              }),
-            },
-            {
-              text: "Copy SVG as Text",
-              onClick: action(() => {
-                const svgText = getSVGText();
                 const textBlob = new Blob([svgText], { type: "text/plain" });
                 void navigator.clipboard.write([
-                  new ClipboardItem({ [textBlob.type]: textBlob }),
+                  new ClipboardItem({
+                    [htmlBlob.type]: htmlBlob,
+                    [textBlob.type]: textBlob,
+                  }),
                 ]);
                 return true;
               }),
