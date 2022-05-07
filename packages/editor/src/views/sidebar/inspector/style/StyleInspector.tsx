@@ -1,3 +1,5 @@
+import { Button } from "@seanchas116/paintkit/src/components/Button";
+import { Pane } from "@seanchas116/paintkit/src/components/sidebar/Inspector";
 import { observer } from "mobx-react-lite";
 import React, { useMemo } from "react";
 import styled from "styled-components";
@@ -20,6 +22,18 @@ export const StyleInspector: React.FC = observer(function StyleInspector() {
     () => new StyleInspectorState(editorState),
     [editorState]
   );
+
+  if (state.mustAssignID) {
+    return (
+      <StyleInspectorWrap>
+        <Pane>
+          <Button primary onClick={state.onAssignID}>
+            Assign ID to edit style
+          </Button>
+        </Pane>
+      </StyleInspectorWrap>
+    );
+  }
 
   if (state.styles.length === 0) {
     return null;

@@ -63,7 +63,9 @@ export class StyleInspectorState {
   readonly editorState: EditorState;
 
   @computed get selectedInstances(): ElementInstance[] {
-    return this.editorState.document.selectedElementInstances;
+    return this.editorState.document.selectedElementInstances.filter(
+      (instance) => instance.element.id
+    );
   }
 
   @computed get styles(): Style[] {
@@ -104,5 +106,21 @@ export class StyleInspectorState {
   });
   readonly setBorderEdgeModeToLeft = action(() => {
     this.borderEdgeMode = "left";
+  });
+
+  @computed get mustAssignID(): boolean {
+    return (
+      this.styles.length === 0 &&
+      this.editorState.document.selectedElementInstances.length > 0
+    );
+  }
+
+  readonly onAssignID = action(() => {
+    for (const instance of this.editorState.document.selectedElementInstances) {
+      if (!instance.element.id) {
+        instance.element.setID(instance.element.tagName);
+      }
+    }
+    this.editorState.history.commit("Assign ID");
   });
 }
