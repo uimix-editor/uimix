@@ -163,6 +163,9 @@ export class MacaronEditorSession {
       targetResource,
       Buffer.from(this.document.content)
     );
+    if (updateSavePoint) {
+      await this.webviewAPI?.updateSavePoint();
+    }
   }
 
   async save(cancellation?: vscode.CancellationToken): Promise<void> {
