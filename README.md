@@ -118,3 +118,9 @@ yarn dev
 
 - http://localhost:8080 : [Demo editor](/packages/editor/src/index.tsx)
 - http://localhost:7007 : Storybook for paintkit
+
+## Launch VS Code extension
+
+- Make sure `yarn dev` is running
+- Open the root directory in VS Code
+- Press `F5` (or menu **Run** → **Start Debugging**)
