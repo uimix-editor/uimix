@@ -99,8 +99,9 @@ Emit React wrappers and TypeScript definitions for the output Web components.
 
 ## Project Structure
 
-- `/editor` - The Macaron Editor
-- `/paintkit` - The submodule for the [paintkit](https://github.com/seanchas116/paintkit) library
+- `/packages/editor` - The Macaron Editor
+- `/packages/paintkit` - The submodule for the [paintkit](https://github.com/seanchas116/paintkit) library
+- `/packages/vscode` - The VS Code extension that provides Macaron as a custom editor
 
 The project uses the Yarn workspaces.
 
