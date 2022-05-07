@@ -21,6 +21,8 @@ export class MacaronEditorSession {
 
   readonly onDidChange = this._onDidChange.event;
 
+  private webviewAPI: Comlink.Remote<IWebviewAPI> | undefined;
+
   constructor(
     context: vscode.ExtensionContext,
     document: MacaronEditorDocument,
@@ -82,9 +84,9 @@ export class MacaronEditorSession {
     };
     Comlink.expose(extensionAPI, comlinkEndpoint);
 
-    const webviewAPI = Comlink.wrap<IWebviewAPI>(comlinkEndpoint);
+    this.webviewAPI = Comlink.wrap<IWebviewAPI>(comlinkEndpoint);
 
-    void webviewAPI.setContent(this.document.initialContent);
+    void this.webviewAPI.setContent(this.document.initialContent);
   }
 
   dispose(): void {
@@ -133,17 +135,31 @@ export class MacaronEditorSession {
     cancellation?: vscode.CancellationToken,
     updateSavePoint = false
   ): Promise<void> {
-    throw new Error("TODO");
+    const content =
+      (await this.webviewAPI?.getContent()) || this.document.initialContent;
+    await vscode.workspace.fs.writeFile(targetResource, Buffer.from(content));
   }
 
   async save(cancellation?: vscode.CancellationToken): Promise<void> {
-    throw new Error("TODO");
+    await this.saveAs(this.document.uri, cancellation, true);
+    this.document.isRestoredFromBackup = false;
   }
 
   async backup(
     destination: vscode.Uri,
     cancellation?: vscode.CancellationToken
   ): Promise<vscode.CustomDocumentBackup> {
-    throw new Error("TODO");
+    await this.saveAs(destination, cancellation, false);
+
+    return {
+      id: destination.toString(),
+      delete: async () => {
+        try {
+          await vscode.workspace.fs.delete(destination);
+        } catch {
+          // noop
+        }
+      },
+    };
   }
 }
