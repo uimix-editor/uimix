@@ -30,6 +30,7 @@ export class MacaronEditorSession {
   ) {
     this.context = context;
     this.document = document;
+    document.session = this;
     this.webviewPanel = webviewPanel;
 
     MacaronEditorSession.instanceForPath.set(document.uri.path, this);
