@@ -1,10 +1,9 @@
 import React from "react";
 import ReactDOM from "react-dom/client";
 import * as Comlink from "comlink";
-import { IExtensionAPI } from "../../../vscode/src/APIInterface";
+import { IExtensionAPI, IWebviewAPI } from "../../../vscode/src/APIInterface";
 import { VSCodeApp } from "./VSCodeApp";
 import { VSCodeFile } from "./VSCodeFile";
-import { API } from "./API";
 
 const vscode = acquireVsCodeApi();
 
@@ -19,7 +18,19 @@ const comlinkEndpoint: Comlink.Endpoint = {
   },
 };
 
-Comlink.expose(new API(file), comlinkEndpoint);
+const webviewAPI: IWebviewAPI = {
+  setContent(content: string): void {
+    file.setContent(content);
+  },
+  getContent(): string {
+    return file.getContent();
+  },
+  updateSavePoint(): void {
+    file.updateSavePoint();
+  },
+};
+
+Comlink.expose(webviewAPI, comlinkEndpoint);
 
 const extensionAPI = Comlink.wrap<IExtensionAPI>(comlinkEndpoint);
 file.onDirtyChange((dirty) => extensionAPI.onDirtyChange(dirty));
