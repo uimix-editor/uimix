@@ -9,6 +9,67 @@ import { getInstance } from "../models/InstanceRegistry";
 import { TextMount } from "./TextMount";
 import { MountContext } from "./MountContext";
 
+const svgTagNames = [
+  "svg",
+  "animate",
+  "animateMotion",
+  "animateTransform",
+  "circle",
+  "clipPath",
+  "defs",
+  "desc",
+  "ellipse",
+  "feBlend",
+  "feColorMatrix",
+  "feComponentTransfer",
+  "feComposite",
+  "feConvolveMatrix",
+  "feDiffuseLighting",
+  "feDisplacementMap",
+  "feDistantLight",
+  "feDropShadow",
+  "feFlood",
+  "feFuncA",
+  "feFuncB",
+  "feFuncG",
+  "feFuncR",
+  "feGaussianBlur",
+  "feImage",
+  "feMerge",
+  "feMergeNode",
+  "feMorphology",
+  "feOffset",
+  "fePointLight",
+  "feSpecularLighting",
+  "feSpotLight",
+  "feTile",
+  "feTurbulence",
+  "filter",
+  "foreignObject",
+  "g",
+  "image",
+  "line",
+  "linearGradient",
+  "marker",
+  "mask",
+  "metadata",
+  "mpath",
+  "path",
+  "pattern",
+  "polygon",
+  "polyline",
+  "radialGradient",
+  "rect",
+  "stop",
+  "switch",
+  "symbol",
+  "text",
+  "textPath",
+  "tspan",
+  "use",
+  "view",
+];
+
 export class ChildMountSync {
   constructor(
     instance: ElementInstance,
@@ -126,7 +187,14 @@ export class ElementMount {
     this.instance = instance;
     // TODO: support reference to other component
     // TODO: support SVG elements
-    this.dom = domDocument.createElement(instance.element.tagName);
+    if (svgTagNames.includes(instance.element.tagName)) {
+      this.dom = domDocument.createElementNS(
+        "http://www.w3.org/2000/svg",
+        instance.element.tagName
+      );
+    } else {
+      this.dom = domDocument.createElement(instance.element.tagName);
+    }
     ElementMount.domToMount.set(this.dom, this);
     this.context = context;
     this.context.registry.setElementMount(this);
@@ -138,9 +206,14 @@ export class ElementMount {
 
     this.disposers.push(
       reaction(
-        () => this.instance.element.id,
-        (id) => {
-          this.dom.id = id;
+        () => this.instance.element.allAttrs,
+        (attrs) => {
+          for (const attribute of this.dom.attributes) {
+            this.dom.removeAttribute(attribute.name);
+          }
+          for (const [key, value] of Object.entries(attrs)) {
+            this.dom.setAttribute(key, value);
+          }
           this.updateBoundingBoxLater();
         },
         { fireImmediately: true }

@@ -222,8 +222,7 @@ export class ElementInstance {
     return h(
       this.element.tagName,
       {
-        ...Object.fromEntries(this.element.attrs),
-        id: this.element.id,
+        ...this.element.allAttrs,
         style: this.style.toString(), // TODO: include styles of super variants
       },
       this.innerHTML
