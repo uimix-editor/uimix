@@ -27,7 +27,7 @@ export class MacaronEditorDocument implements vscode.CustomDocument {
   }
 
   readonly uri: vscode.Uri;
-  readonly initialContent: string;
+  content: string;
   isRestoredFromBackup: boolean;
   session?: MacaronEditorSession;
 
@@ -37,7 +37,7 @@ export class MacaronEditorDocument implements vscode.CustomDocument {
     isRestoredFromBackup: boolean
   ) {
     this.uri = uri;
-    this.initialContent = initialContent;
+    this.content = initialContent;
     this.isRestoredFromBackup = isRestoredFromBackup;
   }
 

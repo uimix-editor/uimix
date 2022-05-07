@@ -1,3 +1,4 @@
+import * as path from "path";
 import * as vscode from "vscode";
 import * as Comlink from "comlink";
 //import type { API } from "../../editor/src/vscode/API";
@@ -23,6 +24,8 @@ export class MacaronEditorSession {
 
   private webviewAPI: Comlink.Remote<IWebviewAPI> | undefined;
 
+  fileWatcher: vscode.FileSystemWatcher;
+
   constructor(
     context: vscode.ExtensionContext,
     document: MacaronEditorDocument,
@@ -41,6 +44,24 @@ export class MacaronEditorSession {
     webviewPanel.webview.html = this.getHTMLForWebview(webviewPanel.webview);
 
     void this.setupComlink();
+
+    const parent = path.dirname(this.document.uri.path);
+    const name = path.basename(this.document.uri.path);
+
+    this.fileWatcher = vscode.workspace.createFileSystemWatcher(
+      new vscode.RelativePattern(vscode.Uri.file(parent), name)
+    );
+
+    this.disposables.push(
+      this.fileWatcher.onDidChange(async () => {
+        const data = await vscode.workspace.fs.readFile(document.uri);
+        const content = Buffer.from(data).toString();
+        if (this.document.content !== content) {
+          this.document.content = content;
+          await this.webviewAPI?.setContent(content);
+        }
+      })
+    );
   }
 
   private async setupComlink() {
@@ -87,7 +108,7 @@ export class MacaronEditorSession {
 
     this.webviewAPI = Comlink.wrap<IWebviewAPI>(comlinkEndpoint);
 
-    void this.webviewAPI.setContent(this.document.initialContent);
+    void this.webviewAPI.setContent(this.document.content);
   }
 
   dispose(): void {
@@ -136,9 +157,12 @@ export class MacaronEditorSession {
     cancellation?: vscode.CancellationToken,
     updateSavePoint = false
   ): Promise<void> {
-    const content =
-      (await this.webviewAPI?.getContent()) || this.document.initialContent;
-    await vscode.workspace.fs.writeFile(targetResource, Buffer.from(content));
+    this.document.content =
+      (await this.webviewAPI?.getContent()) || this.document.content;
+    await vscode.workspace.fs.writeFile(
+      targetResource,
+      Buffer.from(this.document.content)
+    );
   }
 
   async save(cancellation?: vscode.CancellationToken): Promise<void> {
