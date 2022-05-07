@@ -1,7 +1,8 @@
 import { usePointerStroke } from "@seanchas116/paintkit/src/components/hooks/usePointerStroke";
-import { action } from "mobx";
+import { action, runInAction } from "mobx";
 import React, { useRef } from "react";
 import styled from "styled-components";
+import { parseFragment } from "../../../models/FileFormat";
 import { useEditorState } from "../../EditorStateContext";
 import { doubleClickInterval } from "../Constants";
 import { DragHandler } from "./DragHandler";
@@ -91,5 +92,38 @@ export const PointerOverlay: React.FC<{}> = () => {
     }),
   });
 
-  return <PointerOverlayWrap {...pointerProps}></PointerOverlayWrap>;
+  const onDragOver = action((e: React.DragEvent) => {
+    const target = editorState.elementPicker.pick(e.nativeEvent).default;
+    editorState.hoveredItem = target;
+
+    if (e.dataTransfer.types.includes("text/html")) {
+      e.preventDefault();
+    }
+  });
+
+  const onDrop = action((e: React.DragEvent) => {
+    e.preventDefault();
+
+    const target = editorState.elementPicker.pick(e.nativeEvent).default;
+    if (!target) {
+      return;
+    }
+
+    if (e.dataTransfer.types.includes("text/html")) {
+      const html = e.dataTransfer.getData("text/html");
+      const fragment = parseFragment(html);
+      if (fragment && fragment.type === "instances") {
+        target.element.append(...fragment.instances.map((i) => i.node));
+        editorState.history.commit("Drop");
+      }
+    }
+  });
+
+  return (
+    <PointerOverlayWrap
+      {...pointerProps}
+      onDragOver={onDragOver}
+      onDrop={onDrop}
+    ></PointerOverlayWrap>
+  );
 };

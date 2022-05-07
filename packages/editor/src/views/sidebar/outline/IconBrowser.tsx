@@ -46,14 +46,9 @@ const IconThumbnailBody: React.VFC<{
       <div
         draggable
         onDragStart={(e) => {
-          // TODO
-          // const svgText = getSVGText();
-          // const data: ImageURLMimeData = {
-          //   name: item.id,
-          //   url: svgToDataURL(svgText),
-          // };
-          // e.dataTransfer.effectAllowed = "copy";
-          // e.dataTransfer.setData(imageURLMimeType, JSON.stringify(data));
+          const svgText = getSVGText();
+          e.dataTransfer.effectAllowed = "copy";
+          e.dataTransfer.setData("text/html", svgText);
         }}
         onContextMenu={(e) => {
           e.preventDefault();
