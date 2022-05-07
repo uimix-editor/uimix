@@ -7,7 +7,7 @@ import { ContextMenuProvider } from "@seanchas116/paintkit/src/components/menu/C
 import { reaction } from "mobx";
 import { createGlobalStyle } from "styled-components";
 import { fontFamily } from "@seanchas116/paintkit/src/components/Common";
-import { Editor } from "./views/Editor";
+import { Editor } from "../views/Editor";
 import { AppEditorState } from "./AppEditorState";
 import { File } from "./File";
 

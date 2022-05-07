@@ -1,7 +1,7 @@
 import { JSONUndoHistory } from "@seanchas116/paintkit/src/util/JSONUndoHistory";
 import { computed, makeObservable, observable, runInAction } from "mobx";
-import { Document, DocumentJSON } from "./models/Document";
-import { parseDocument, stringifyDocument } from "./models/FileFormat";
+import { Document, DocumentJSON } from "../models/Document";
+import { parseDocument, stringifyDocument } from "../models/FileFormat";
 
 const filePickerOptions = {
   types: [

@@ -1,8 +1,8 @@
 import { MenuItem } from "@seanchas116/paintkit/src/components/menu/Menu";
 import { KeyGesture } from "@seanchas116/paintkit/src/util/KeyGesture";
 import { action, computed } from "mobx";
+import { EditorState } from "../state/EditorState";
 import { File } from "./File";
-import { EditorState } from "./state/EditorState";
 
 export class AppEditorState extends EditorState {
   constructor(file: File) {
