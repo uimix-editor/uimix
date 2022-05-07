@@ -6,25 +6,16 @@ import { MacaronEditorDocument } from "./MacaronEditorDocument";
 import { IExtensionAPI, IWebviewAPI } from "./APIInterface";
 
 export class MacaronEditorSession {
-  private static instanceForPath = new Map<string, MacaronEditorSession>();
-
-  static instanceForUri(uri: vscode.Uri): MacaronEditorSession | undefined {
-    return this.instanceForPath.get(uri.path);
-  }
-
   private context: vscode.ExtensionContext;
   private document: MacaronEditorDocument;
   private webviewPanel: vscode.WebviewPanel;
   private disposables: vscode.Disposable[] = [];
+  private webviewAPI: Comlink.Remote<IWebviewAPI> | undefined;
+  private fileWatcher: vscode.FileSystemWatcher;
 
   private readonly _onDidChange =
     new vscode.EventEmitter<vscode.CustomDocumentContentChangeEvent>();
-
   readonly onDidChange = this._onDidChange.event;
-
-  private webviewAPI: Comlink.Remote<IWebviewAPI> | undefined;
-
-  fileWatcher: vscode.FileSystemWatcher;
 
   constructor(
     context: vscode.ExtensionContext,
@@ -35,8 +26,6 @@ export class MacaronEditorSession {
     this.document = document;
     document.session = this;
     this.webviewPanel = webviewPanel;
-
-    MacaronEditorSession.instanceForPath.set(document.uri.path, this);
 
     webviewPanel.webview.options = {
       enableScripts: true,
@@ -109,7 +98,6 @@ export class MacaronEditorSession {
   }
 
   dispose(): void {
-    MacaronEditorSession.instanceForPath.delete(this.document.uri.path);
     this.disposables.forEach((disposer) => void disposer.dispose());
   }
 
