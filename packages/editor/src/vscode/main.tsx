@@ -1,6 +1,7 @@
 import React from "react";
 import ReactDOM from "react-dom/client";
 import * as Comlink from "comlink";
+import { IExtensionAPI } from "../../../vscode/src/APIInterface";
 import { VSCodeApp } from "./VSCodeApp";
 import { VSCodeFile } from "./VSCodeFile";
 import { API } from "./API";
@@ -19,6 +20,9 @@ const comlinkEndpoint: Comlink.Endpoint = {
 };
 
 Comlink.expose(new API(file), comlinkEndpoint);
+
+const extensionAPI = Comlink.wrap<IExtensionAPI>(comlinkEndpoint);
+file.onDirtyChange((dirty) => extensionAPI.onDirtyChange(dirty));
 
 const rootElem = document.createElement("div");
 document.body.append(rootElem);

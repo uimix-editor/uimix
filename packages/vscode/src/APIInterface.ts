@@ -1,6 +1,9 @@
-export interface APIInterface {
+export interface IWebviewAPI {
   setContent(content: string): void;
   getContent(): string;
   updateSavePoint(): void;
-  onDirtyChange(callback: (isDirty: boolean) => void): void;
+}
+
+export interface IExtensionAPI {
+  onDirtyChange(isDirty: boolean): void;
 }

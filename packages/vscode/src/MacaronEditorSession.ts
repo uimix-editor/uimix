@@ -2,7 +2,7 @@ import * as vscode from "vscode";
 import * as Comlink from "comlink";
 //import type { API } from "../../editor/src/vscode/API";
 import { MacaronEditorDocument } from "./MacaronEditorDocument";
-import { APIInterface } from "./APIInterface";
+import { IExtensionAPI, IWebviewAPI } from "./APIInterface";
 
 export class MacaronEditorSession {
   private static instanceForPath = new Map<string, MacaronEditorSession>();
@@ -77,23 +77,30 @@ export class MacaronEditorSession {
       },
     };
 
-    const api = Comlink.wrap<APIInterface>(comlinkEndpoint);
+    const extensionAPI: IExtensionAPI = {
+      onDirtyChange: (isDirty: boolean) => {
+        console.log(isDirty);
+      },
+    };
+    Comlink.expose(extensionAPI, comlinkEndpoint);
 
-    void api.setContent(this.document.initialContent);
+    const webviewAPI = Comlink.wrap<IWebviewAPI>(comlinkEndpoint);
 
-    void api.onDirtyChange(
-      Comlink.proxy((dirty) => {
-        console.log("dirty", dirty);
-        if (dirty || this.document.isRestoredFromBackup) {
-          this._onDidChange.fire({
-            document: this.document,
-          });
-        } else {
-          // FIXME: this is a workaround for clearing the dirty state
-          void vscode.commands.executeCommand("workbench.action.files.revert");
-        }
-      })
-    );
+    void webviewAPI.setContent(this.document.initialContent);
+
+    // void webviewAPI.onDirtyChange(
+    //   Comlink.proxy((dirty) => {
+    //     console.log("dirty", dirty);
+    //     if (dirty || this.document.isRestoredFromBackup) {
+    //       this._onDidChange.fire({
+    //         document: this.document,
+    //       });
+    //     } else {
+    //       // FIXME: this is a workaround for clearing the dirty state
+    //       void vscode.commands.executeCommand("workbench.action.files.revert");
+    //     }
+    //   })
+    // );
   }
 
   dispose(): void {

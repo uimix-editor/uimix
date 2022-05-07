@@ -1,7 +1,7 @@
-import type { APIInterface } from "../../../vscode/src/APIInterface";
+import type { IWebviewAPI } from "../../../vscode/src/APIInterface";
 import { VSCodeFile } from "./VSCodeFile";
 
-export class API implements APIInterface {
+export class API implements IWebviewAPI {
   constructor(file: VSCodeFile) {
     this.file = file;
   }
