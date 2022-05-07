@@ -12,6 +12,7 @@
   },
   "dependencies": {
     "@iconify-icons/ic": "^1.2.4",
+    "@iconify/json": "^2.1.38",
     "@iconify/react": "^3.2.1",
     "@iconify/types": "^1.1.0",
     "@seanchas116/paintkit": "*",
