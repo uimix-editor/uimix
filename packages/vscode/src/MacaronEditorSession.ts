@@ -78,9 +78,7 @@ export class MacaronEditorSession {
     };
 
     const extensionAPI: IExtensionAPI = {
-      onDirtyChange: (isDirty: boolean) => {
-        console.log(isDirty);
-      },
+      onDirtyChange: this.onDirtyChange.bind(this),
     };
     Comlink.expose(extensionAPI, comlinkEndpoint);
 
@@ -131,6 +129,17 @@ export class MacaronEditorSession {
         <script type="module" src="http://localhost:3000/src/vscode/main.tsx"></script>
       </body>
       </html>`;
+  }
+
+  private onDirtyChange(dirty: boolean) {
+    if (dirty || this.document.isRestoredFromBackup) {
+      this._onDidChange.fire({
+        document: this.document,
+      });
+    } else {
+      // FIXME: this is a workaround for clearing the dirty state
+      void vscode.commands.executeCommand("workbench.action.files.revert");
+    }
   }
 
   async saveAs(
