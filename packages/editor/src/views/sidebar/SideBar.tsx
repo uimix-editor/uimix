@@ -15,6 +15,7 @@ import { OutlineTreeView } from "./outline/OutlineTreeView";
 import { ElementInspector } from "./inspector/ElementInspector";
 import { VariantInspector } from "./inspector/VariantInspector";
 import { StyleInspector } from "./inspector/style/StyleInspector";
+import { AssetBrowser } from "./outline/AssetBrowser";
 
 const RightSideBarWrap = styled.div`
   position: relative;
@@ -101,7 +102,10 @@ export const RightSideBar: React.FC = observer(() => {
               Assets
             </InspectorTabBarItem>
           </InspectorTabBar>
-          <OutlineTreeView />
+          <OutlineTreeView
+            hidden={editorState.currentOutlineTab !== "outline"}
+          />
+          <AssetBrowser hidden={editorState.currentOutlineTab !== "assets"} />
         </TabArea>
         <TabArea>
           <InspectorTabBar>
