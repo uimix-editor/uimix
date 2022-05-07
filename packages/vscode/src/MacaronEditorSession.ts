@@ -85,20 +85,6 @@ export class MacaronEditorSession {
     const webviewAPI = Comlink.wrap<IWebviewAPI>(comlinkEndpoint);
 
     void webviewAPI.setContent(this.document.initialContent);
-
-    // void webviewAPI.onDirtyChange(
-    //   Comlink.proxy((dirty) => {
-    //     console.log("dirty", dirty);
-    //     if (dirty || this.document.isRestoredFromBackup) {
-    //       this._onDidChange.fire({
-    //         document: this.document,
-    //       });
-    //     } else {
-    //       // FIXME: this is a workaround for clearing the dirty state
-    //       void vscode.commands.executeCommand("workbench.action.files.revert");
-    //     }
-    //   })
-    // );
   }
 
   dispose(): void {
