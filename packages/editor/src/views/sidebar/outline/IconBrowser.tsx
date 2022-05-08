@@ -163,9 +163,9 @@ const IconPropertyEdit: React.VFC<{
         />
         <NumberInput
           icon={icon_rotate_right}
-          title="Rotation"
+          title="Rotation Count"
           value={iconBrowserState.rotationCount}
-          placeholder="Rotation"
+          placeholder="0"
           onChange={action((value) => {
             if (value !== undefined) {
               iconBrowserState.rotationCount = value;
