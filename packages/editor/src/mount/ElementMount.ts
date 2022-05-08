@@ -1,6 +1,7 @@
 import { reaction } from "mobx";
 import { Rect } from "paintvec";
 import { kebabCase } from "lodash-es";
+import { isSVGTagName } from "@seanchas116/paintkit/src/util/HTMLTagCategory";
 import { Element } from "../models/Element";
 import { Text } from "../models/Text";
 import { ElementInstance } from "../models/ElementInstance";
@@ -8,67 +9,6 @@ import { styleKeys } from "../models/Style";
 import { getInstance } from "../models/InstanceRegistry";
 import { TextMount } from "./TextMount";
 import { MountContext } from "./MountContext";
-
-const svgTagNames = [
-  "svg",
-  "animate",
-  "animateMotion",
-  "animateTransform",
-  "circle",
-  "clipPath",
-  "defs",
-  "desc",
-  "ellipse",
-  "feBlend",
-  "feColorMatrix",
-  "feComponentTransfer",
-  "feComposite",
-  "feConvolveMatrix",
-  "feDiffuseLighting",
-  "feDisplacementMap",
-  "feDistantLight",
-  "feDropShadow",
-  "feFlood",
-  "feFuncA",
-  "feFuncB",
-  "feFuncG",
-  "feFuncR",
-  "feGaussianBlur",
-  "feImage",
-  "feMerge",
-  "feMergeNode",
-  "feMorphology",
-  "feOffset",
-  "fePointLight",
-  "feSpecularLighting",
-  "feSpotLight",
-  "feTile",
-  "feTurbulence",
-  "filter",
-  "foreignObject",
-  "g",
-  "image",
-  "line",
-  "linearGradient",
-  "marker",
-  "mask",
-  "metadata",
-  "mpath",
-  "path",
-  "pattern",
-  "polygon",
-  "polyline",
-  "radialGradient",
-  "rect",
-  "stop",
-  "switch",
-  "symbol",
-  "text",
-  "textPath",
-  "tspan",
-  "use",
-  "view",
-];
 
 export class ChildMountSync {
   constructor(
@@ -186,7 +126,7 @@ export class ElementMount {
   ) {
     this.instance = instance;
     // TODO: support reference to other component
-    if (svgTagNames.includes(instance.element.tagName)) {
+    if (isSVGTagName(instance.element.tagName)) {
       this.dom = domDocument.createElementNS(
         "http://www.w3.org/2000/svg",
         instance.element.tagName
