@@ -38,19 +38,26 @@ const Item: React.FC<{
   );
 });
 
-export const ImageBrowser: React.FC = observer(function IconBrowser() {
+export const ImageBrowser: React.FC = observer(function ImageBrowser() {
   const editorState = useEditorState();
 
   const [search, setSearch] = useState("");
   const imageFiles = editorState.imageAssets.filter((filePath) =>
     filePath.includes(search)
   );
-  const normalImageFiles = imageFiles.filter(
-    (filePath) => !filePath.endsWith(".svg")
-  );
-  const svgImageFiles = imageFiles.filter((filePath) =>
-    filePath.endsWith(".svg")
-  );
+
+  const imageFilesForDirectory = new Map<string, string[]>();
+  for (const filePath of imageFiles) {
+    const dir = path.dirname(filePath);
+
+    let files = imageFilesForDirectory.get(dir);
+    if (!files) {
+      files = [];
+      imageFilesForDirectory.set(dir, files);
+    }
+
+    files.push(filePath);
+  }
 
   return (
     <ImageBrowserWrap>
@@ -59,18 +66,16 @@ export const ImageBrowser: React.FC = observer(function IconBrowser() {
         <NoImageLabel>No image files in the workspace</NoImageLabel>
       ) : (
         <StyledScrollable>
-          <Heading>Images</Heading>
-          <Items>
-            {normalImageFiles.map((filePath) => (
-              <Item filePath={filePath} />
-            ))}
-          </Items>
-          <Heading>SVGs</Heading>
-          <Items>
-            {svgImageFiles.map((filePath) => (
-              <Item filePath={filePath} />
-            ))}
-          </Items>
+          {[...imageFilesForDirectory].map(([dirName, filePaths]) => (
+            <>
+              <Heading>{dirName}</Heading>
+              <Items>
+                {filePaths.map((filePath) => (
+                  <Item filePath={filePath} />
+                ))}
+              </Items>
+            </>
+          ))}
         </StyledScrollable>
       )}
     </ImageBrowserWrap>
