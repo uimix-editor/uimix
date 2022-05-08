@@ -1,3 +1,5 @@
+import { blobToDataURL } from "@seanchas116/paintkit/src/util/Blob";
+
 export class IFrameAssetURLGenerator {
   get(url: string): string | undefined {
     return this.urls.get(url);
@@ -23,8 +25,7 @@ export class IFrameAssetURLGenerator {
     const promise = (async () => {
       const response = await fetch(src);
       const blob = await response.blob();
-
-      const url = URL.createObjectURL(blob);
+      const url = await blobToDataURL(blob);
       this.urls.set(src, url);
       this.pending.delete(src);
       return url;
