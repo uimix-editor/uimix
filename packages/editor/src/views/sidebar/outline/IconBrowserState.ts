@@ -6,6 +6,6 @@ export class IconBrowserState {
   }
 
   @observable size = 24;
-  @observable rotation = 0;
-  @observable flipX = false;
+  @observable rotationCount = 0;
+  @observable hFlip = false;
 }

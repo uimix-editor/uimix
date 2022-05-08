@@ -35,8 +35,8 @@ const IconThumbnailBody: React.VFC<{
   const editorState = useEditorState();
 
   const getSVGText = () => {
-    const { size, rotation, flipX } = editorState.iconBrowserState;
-    return iconToSVGString({ ...item, rotate: rotation, hFlip: flipX }, size);
+    const { size, rotationCount: rotate, hFlip } = editorState.iconBrowserState;
+    return iconToSVGString({ ...item, rotate, hFlip }, size);
   };
 
   const contextMenu = useContextMenu();
@@ -164,11 +164,11 @@ const IconPropertyEdit: React.VFC<{
         <NumberInput
           icon={icon_rotate_right}
           title="Rotation"
-          value={iconBrowserState.rotation}
+          value={iconBrowserState.rotationCount}
           placeholder="Rotation"
           onChange={action((value) => {
             if (value !== undefined) {
-              iconBrowserState.rotation = value;
+              iconBrowserState.rotationCount = value;
               return true;
             }
             return false;
@@ -176,10 +176,10 @@ const IconPropertyEdit: React.VFC<{
         />
         <Tippy content="Flip X">
           <IconButton
-            pressed={iconBrowserState.flipX}
+            pressed={iconBrowserState.hFlip}
             icon={icon_flip}
             onClick={action(() => {
-              iconBrowserState.flipX = !iconBrowserState.flipX;
+              iconBrowserState.hFlip = !iconBrowserState.hFlip;
             })}
           />
         </Tippy>
@@ -224,10 +224,10 @@ export const IconBrowser: React.VFC<{
     return reaction(
       () =>
         [
-          editorState.iconBrowserState.rotation,
-          editorState.iconBrowserState.flipX,
+          editorState.iconBrowserState.rotationCount,
+          editorState.iconBrowserState.hFlip,
         ] as const,
-      ([rotation, flipX]) => {
+      ([rotationCount, hFlip]) => {
         thumbnails.style.setProperty(
           "--icon-background",
           //color.color.v > 0.5 ? "black" : "white"
@@ -235,7 +235,7 @@ export const IconBrowser: React.VFC<{
         );
         thumbnails.style.setProperty(
           "--icon-transform",
-          ` scaleX(${flipX ? -1 : 1}) rotate(${rotation}deg)`
+          `rotate(${rotationCount * 90}deg) scaleX(${hFlip ? -1 : 1})`
         );
       },
       { fireImmediately: true }
