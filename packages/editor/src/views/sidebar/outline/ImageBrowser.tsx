@@ -26,13 +26,10 @@ const Item: React.FC<{
           src={editorState.resolveImageAssetURL(filePath)}
           draggable
           onDragStart={(e) => {
-            // TODO
-            // const data: ImageURLMimeData = {
-            //   name: lowerFirst(toIdentifier(name)),
-            //   url: filePath,
-            // };
-            // e.dataTransfer.effectAllowed = "copy";
-            // e.dataTransfer.setData(imageURLMimeType, JSON.stringify(data));
+            const imgHtml = `<img src="${filePath}"/>`;
+
+            e.dataTransfer.effectAllowed = "copy";
+            e.dataTransfer.setData("text/html", imgHtml);
           }}
         />
         <ItemTitle>{path.basename(filePath)}</ItemTitle>
