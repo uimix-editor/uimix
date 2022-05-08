@@ -566,7 +566,7 @@ class RootItem extends RootTreeViewItem {
     this.context.contextMenu.show(
       e.clientX,
       e.clientY,
-      this.context.editorState.getOutlineContextMenu()
+      this.context.editorState.getRootContextMenu()
     );
   }
 

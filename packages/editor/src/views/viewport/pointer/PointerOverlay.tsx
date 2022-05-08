@@ -1,4 +1,5 @@
 import { usePointerStroke } from "@seanchas116/paintkit/src/components/hooks/usePointerStroke";
+import { useContextMenu } from "@seanchas116/paintkit/src/components/menu/ContextMenuProvider";
 import { action } from "mobx";
 import React, { useRef } from "react";
 import styled from "styled-components";
@@ -23,6 +24,7 @@ const PointerOverlayWrap = styled.div`
 
 export const PointerOverlay: React.FC<{}> = () => {
   const editorState = useEditorState();
+  const contextMenu = useContextMenu();
 
   const lastClickTimestampRef = useRef(0);
 
@@ -173,11 +175,33 @@ export const PointerOverlay: React.FC<{}> = () => {
     }
   });
 
+  const onContextMenu = action((e: React.MouseEvent) => {
+    e.preventDefault();
+    e.stopPropagation();
+
+    const override = editorState.elementPicker.pick(e.nativeEvent).default;
+    if (override) {
+      if (!override.selected) {
+        editorState.document.deselect();
+        override.select();
+      }
+
+      contextMenu.show(
+        e.clientX,
+        e.clientY,
+        editorState.getElementContextMenu(override)
+      );
+    } else {
+      contextMenu.show(e.clientX, e.clientY, editorState.getRootContextMenu());
+    }
+  });
+
   return (
     <PointerOverlayWrap
       {...pointerProps}
       onDragOver={onDragOver}
       onDrop={onDrop}
+      onContextMenu={onContextMenu}
     ></PointerOverlayWrap>
   );
 };

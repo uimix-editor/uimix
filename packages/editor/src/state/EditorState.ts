@@ -101,7 +101,7 @@ export abstract class EditorState {
     ];
   }
 
-  getOutlineContextMenu(): MenuItem[] {
+  getRootContextMenu(): MenuItem[] {
     return [
       {
         text: "Add Component",
@@ -115,7 +115,7 @@ export abstract class EditorState {
       {
         type: "separator",
       },
-      ...this.getBasicEditMenu(),
+      this.commands.paste,
     ];
   }
 
