@@ -7,6 +7,10 @@ export class IFrameAssetURLGenerator {
   private readonly pending = new Map<string, Promise<string>>();
 
   async generate(src: string): Promise<string> {
+    if (!src.startsWith("https://file%2B.vscode-resource.vscode-cdn.net/")) {
+      return src;
+    }
+
     const cached = this.urls.get(src);
     if (cached) {
       return cached;
@@ -17,10 +21,8 @@ export class IFrameAssetURLGenerator {
     }
 
     const promise = (async () => {
-      console.log(src);
       const response = await fetch(src);
       const blob = await response.blob();
-      console.log(blob);
 
       const url = URL.createObjectURL(blob);
       this.urls.set(src, url);
