@@ -151,7 +151,14 @@ export class ElementMount {
             this.dom.removeAttribute(attribute.name);
           }
           for (const [key, value] of Object.entries(attrs)) {
-            this.dom.setAttribute(key, value);
+            if (this.instance.element.tagName === "img" && key === "src") {
+              this.dom.setAttribute(
+                key,
+                this.context.editorState.resolveImageAssetURL(value)
+              );
+            } else {
+              this.dom.setAttribute(key, value);
+            }
           }
           this.updateBoundingBoxLater();
         },
