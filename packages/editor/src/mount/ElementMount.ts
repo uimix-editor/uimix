@@ -146,6 +146,10 @@ export class ElementMount {
       this.updateBoundingBoxLater()
     );
 
+    this.dom.addEventListener("load", () => {
+      this.updateBoundingBoxLater();
+    });
+
     this.disposers.push(
       reaction(
         () => this.instance.element.allAttrs,
