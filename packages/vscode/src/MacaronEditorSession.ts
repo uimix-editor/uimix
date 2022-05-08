@@ -139,10 +139,14 @@ export class MacaronEditorSession {
   }
 
   private getImageFiles(imageFilePaths: Set<string>): ImageAsset[] {
-    return [...imageFilePaths].sort().map((path) => {
-      const uri = vscode.Uri.file(path);
+    return [...imageFilePaths].sort().map((filePath) => {
+      const uri = vscode.Uri.file(filePath);
+      const relativePath = path.relative(
+        path.dirname(this.document.uri.path),
+        filePath
+      );
       const webviewURI = this.webviewPanel.webview.asWebviewUri(uri);
-      return { relativePath: path, url: webviewURI.toString() };
+      return { relativePath, url: webviewURI.toString() };
     });
   }
 
