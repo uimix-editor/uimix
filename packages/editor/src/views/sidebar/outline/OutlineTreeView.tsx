@@ -53,10 +53,12 @@ const TagName = styled.div<{
   margin-right: 6px;
 `;
 
-const StyledIcon = styled(TreeRowIcon)<{
-  iconColor: string;
-}>`
-  color: ${(p) => p.iconColor};
+const ElementIcon = styled(TreeRowIcon)`
+  color: ${colors.label};
+`;
+
+const ComponentIcon = styled(TreeRowIcon)`
+  color: ${colors.component};
 `;
 
 const StyledNameEdit = styled(TreeRowNameEdit)<{
@@ -232,7 +234,7 @@ class ElementItem extends TreeViewItem {
         ref={(e) => (this.rowElement = e || undefined)}
         inverted={options.inverted}
       >
-        <StyledIcon icon={chevronsIcon} iconColor={colors.label} />
+        <ElementIcon icon={chevronsIcon} />
         <TagName color={colors.text}> {this.instance.element.tagName}</TagName>
         <StyledNameEdit
           color={colors.text}
@@ -395,7 +397,7 @@ class VariantItem extends ElementItem {
         ref={(e) => (this.rowElement = e || undefined)}
         inverted={options.inverted}
       >
-        <StyledIcon icon={switchIcon} iconColor={colors.label} />
+        <ElementIcon icon={switchIcon} />
         <TreeRowLabel>{this.variant.name}</TreeRowLabel>
       </StyledRow>
     );
@@ -479,7 +481,7 @@ class ComponentItem extends TreeViewItem {
         ref={(e) => (this.rowElement = e || undefined)}
         inverted={options.inverted}
       >
-        <StyledIcon icon={widgetsFilledIcon} iconColor={colors.component} />
+        <ComponentIcon icon={widgetsFilledIcon} />
         <StyledNameEdit
           color={colors.text}
           isComponent
