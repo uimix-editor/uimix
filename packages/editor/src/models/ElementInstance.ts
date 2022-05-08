@@ -3,6 +3,8 @@ import { EdgeOffsets, Rect } from "paintvec";
 import shortUUID from "short-uuid";
 import type * as hast from "hast";
 import { h } from "hastscript";
+import { isSVGTagName } from "@seanchas116/paintkit/src/util/HTMLTagCategory";
+import * as propertyInformation from "property-information";
 import { Element } from "./Element";
 import { RootElement } from "./RootElement";
 import { Style } from "./Style";
@@ -261,7 +263,13 @@ export function instancesFromHTML(
         if (key === "id") {
           element.rename(String(value));
         } else {
-          element.attrs.set(key, String(value));
+          const info = propertyInformation.find(
+            isSVGTagName(child.tagName)
+              ? propertyInformation.svg
+              : propertyInformation.html,
+            key
+          );
+          element.attrs.set(info.attribute, String(value));
         }
       }
 

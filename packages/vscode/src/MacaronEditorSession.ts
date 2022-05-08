@@ -3,7 +3,19 @@ import * as vscode from "vscode";
 import * as Comlink from "comlink";
 //import type { API } from "../../editor/src/vscode/API";
 import { MacaronEditorDocument } from "./MacaronEditorDocument";
-import { IExtensionAPI, IWebviewAPI } from "./APIInterface";
+import { IExtensionAPI, ImageAsset, IWebviewAPI } from "./APIInterface";
+import { Project } from "./Project";
+import { getImportPath } from "./util";
+
+function getNonce(): string {
+  let text = "";
+  const possible =
+    "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+  for (let i = 0; i < 32; i++) {
+    text += possible.charAt(Math.floor(Math.random() * possible.length));
+  }
+  return text;
+}
 
 export class MacaronEditorSession {
   private context: vscode.ExtensionContext;
@@ -94,7 +106,18 @@ export class MacaronEditorSession {
 
     this.webviewAPI = Comlink.wrap<IWebviewAPI>(comlinkEndpoint);
 
-    void this.webviewAPI.setContent(this.document.initialContent);
+    if (Project.instance.imagesWatcher) {
+      this.disposables.push(
+        Project.instance.imagesWatcher.onChange((images) => {
+          void this.webviewAPI?.setImageAssets(this.getImageFiles(images));
+        })
+      );
+      await this.webviewAPI?.setImageAssets(
+        this.getImageFiles(Project.instance.imagesWatcher.paths)
+      );
+    }
+
+    await this.webviewAPI.setContent(this.document.initialContent);
   }
 
   dispose(): void {
@@ -104,26 +127,48 @@ export class MacaronEditorSession {
   private getHTMLForWebview(webview: vscode.Webview): string {
     // TODO: production
 
+    const nonce = getNonce();
+
+    const csp = `
+      default-src 'none';
+      connect-src ${webview.cspSource} data: ws://localhost:3000;
+      img-src ${webview.cspSource} data: blob:;
+      font-src https://fonts.gstatic.com;
+      style-src ${webview.cspSource} https://fonts.googleapis.com 'unsafe-inline';
+      script-src 'nonce-${nonce}' 'unsafe-inline' 'unsafe-eval' 'strict-dynamic';
+      frame-src blob:;
+    `;
+
     return `
       <!DOCTYPE html>
       <html lang="en">
       <head>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta http-equiv="Content-Security-Policy" content="${csp}">
       </head>
       <body>
         <div id="root"></div>
-        <script type="module">
+        <script nonce="${nonce}" type="module">
           import RefreshRuntime from "http://localhost:3000/@react-refresh"
           RefreshRuntime.injectIntoGlobalHook(window)
           window.$RefreshReg$ = () => {}
           window.$RefreshSig$ = () => (type) => type
           window.__vite_plugin_react_preamble_installed__ = true
         </script>
-        <script type="module" src="http://localhost:3000/@vite/client"></script>
-        <script type="module" src="http://localhost:3000/src/vscode/main.tsx"></script>
+        <script nonce="${nonce}" type="module" src="http://localhost:3000/@vite/client"></script>
+        <script nonce="${nonce}" type="module" src="http://localhost:3000/src/vscode/main.tsx"></script>
       </body>
       </html>`;
+  }
+
+  private getImageFiles(imageFilePaths: Set<string>): ImageAsset[] {
+    return [...imageFilePaths].sort().map((filePath) => {
+      const uri = vscode.Uri.file(filePath);
+      const relativePath = getImportPath(this.document.uri.path, filePath);
+      const webviewURI = this.webviewPanel.webview.asWebviewUri(uri);
+      return { relativePath, url: webviewURI.toString() };
+    });
   }
 
   private onDirtyChange(dirty: boolean) {

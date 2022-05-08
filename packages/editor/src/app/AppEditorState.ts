@@ -1,16 +1,22 @@
 import { MenuItem } from "@seanchas116/paintkit/src/components/menu/Menu";
+import { JSONUndoHistory } from "@seanchas116/paintkit/src/util/JSONUndoHistory";
 import { KeyGesture } from "@seanchas116/paintkit/src/util/KeyGesture";
 import { action, computed } from "mobx";
+import { DocumentJSON, Document } from "../models/Document";
 import { EditorState } from "../state/EditorState";
 import { File } from "./File";
 
 export class AppEditorState extends EditorState {
   constructor(file: File) {
-    super(() => file.history);
+    super();
     this.file = file;
   }
 
   readonly file: File;
+
+  get history(): JSONUndoHistory<DocumentJSON, Document> {
+    return this.file.history;
+  }
 
   @computed get windowTitle(): string {
     return `${this.file.history.isModified ? "*" : ""}${

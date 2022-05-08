@@ -33,6 +33,7 @@
     "parse5": "^7.0.0",
     "postcss": "^8.4.13",
     "prettier": "^2.6.2",
+    "property-information": "^6.1.1",
     "react": "^18.1.0",
     "react-dom": "^18.1.0",
     "rehype-minify-whitespace": "^5.0.1",

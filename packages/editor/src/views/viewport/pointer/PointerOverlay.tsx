@@ -2,8 +2,11 @@ import { usePointerStroke } from "@seanchas116/paintkit/src/components/hooks/use
 import { action } from "mobx";
 import React, { useRef } from "react";
 import styled from "styled-components";
+import { ElementInstance } from "../../../models/ElementInstance";
 import { parseFragment } from "../../../models/FileFormat";
+import { TextInstance } from "../../../models/TextInstance";
 import { useEditorState } from "../../EditorStateContext";
+import { imageAssetDragMime } from "../../sidebar/outline/ImageBrowser";
 import { doubleClickInterval } from "../Constants";
 import { DragHandler } from "./DragHandler";
 import { ElementClickMoveDragHandler } from "./ElementClickMoveDragHandler";
@@ -101,7 +104,7 @@ export const PointerOverlay: React.FC<{}> = () => {
     }
   });
 
-  const onDrop = action((e: React.DragEvent) => {
+  const onDrop = action(async (e: React.DragEvent) => {
     e.preventDefault();
 
     const target = editorState.elementPicker.pick(e.nativeEvent).default;
@@ -109,12 +112,10 @@ export const PointerOverlay: React.FC<{}> = () => {
       return;
     }
 
-    if (e.dataTransfer.types.includes("text/html")) {
-      const html = e.dataTransfer.getData("text/html");
-      const fragment = parseFragment(html);
-      if (fragment && fragment.type === "instances") {
+    const insertInstances = action(
+      (instances: (ElementInstance | TextInstance)[]) => {
         if (!target.hasLayout) {
-          for (const instance of fragment.instances) {
+          for (const instance of instances) {
             if (instance.type !== "element") {
               continue;
             }
@@ -132,15 +133,43 @@ export const PointerOverlay: React.FC<{}> = () => {
           }
         }
 
-        target.element.append(...fragment.instances.map((i) => i.node));
+        target.element.append(...instances.map((i) => i.node));
 
         editorState.document.deselect();
-        for (const instance of fragment.instances) {
+        for (const instance of instances) {
           instance.select();
         }
 
         editorState.history.commit("Drop");
       }
+    );
+
+    if (e.dataTransfer.types.includes(imageAssetDragMime)) {
+      const url = e.dataTransfer.getData(imageAssetDragMime);
+      if (url.endsWith(".svg")) {
+        const response = await fetch(editorState.resolveImageAssetURL(url));
+        const html = await response.text();
+        const fragment = parseFragment(html);
+        if (fragment && fragment.type === "instances") {
+          insertInstances(fragment.instances);
+        }
+      } else {
+        const html = `<img src="${url}"/>`;
+        const fragment = parseFragment(html);
+        if (fragment && fragment.type === "instances") {
+          insertInstances(fragment.instances);
+        }
+      }
+      return;
+    }
+
+    if (e.dataTransfer.types.includes("text/html")) {
+      const html = e.dataTransfer.getData("text/html");
+      const fragment = parseFragment(html);
+      if (fragment && fragment.type === "instances") {
+        insertInstances(fragment.instances);
+      }
+      return;
     }
   });
 

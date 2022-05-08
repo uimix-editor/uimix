@@ -1,7 +1,13 @@
+export interface ImageAsset {
+  relativePath: string;
+  url: string;
+}
+
 export interface IWebviewAPI {
   setContent(content: string): void;
   getContent(): string;
   updateSavePoint(): void;
+  setImageAssets(assets: readonly ImageAsset[]): void;
 }
 
 export interface IExtensionAPI {

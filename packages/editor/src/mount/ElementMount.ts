@@ -9,6 +9,7 @@ import { styleKeys } from "../models/Style";
 import { getInstance } from "../models/InstanceRegistry";
 import { TextMount } from "./TextMount";
 import { MountContext } from "./MountContext";
+import { VSCodeResourceURLResolver } from "./VSCodeResourceURLResolver";
 
 export class ChildMountSync {
   constructor(
@@ -112,6 +113,8 @@ export class ChildMountSync {
   private readonly disposers: (() => void)[] = [];
 }
 
+const vscodeURLResolver = new VSCodeResourceURLResolver();
+
 export class ElementMount {
   private static domToMount = new WeakMap<globalThis.Element, ElementMount>();
 
@@ -143,6 +146,10 @@ export class ElementMount {
       this.updateBoundingBoxLater()
     );
 
+    this.dom.addEventListener("load", () => {
+      this.updateBoundingBoxLater();
+    });
+
     this.disposers.push(
       reaction(
         () => this.instance.element.allAttrs,
@@ -151,7 +158,17 @@ export class ElementMount {
             this.dom.removeAttribute(attribute.name);
           }
           for (const [key, value] of Object.entries(attrs)) {
-            this.dom.setAttribute(key, value);
+            if (this.instance.element.tagName === "img" && key === "src") {
+              void vscodeURLResolver
+                .generateDataURL(
+                  this.context.editorState.resolveImageAssetURL(value)
+                )
+                .then((url) => {
+                  this.dom.setAttribute(key, url);
+                });
+            } else {
+              this.dom.setAttribute(key, value);
+            }
           }
           this.updateBoundingBoxLater();
         },
