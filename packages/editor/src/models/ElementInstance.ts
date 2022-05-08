@@ -202,7 +202,7 @@ export class ElementInstance {
     }
   }
 
-  get inFlow(): boolean {
+  get isInFlow(): boolean {
     // TODO: handle position: fixed
     if (
       this.computedStyle.position === "absolute" ||
@@ -212,6 +212,11 @@ export class ElementInstance {
       return false;
     }
     return true;
+  }
+
+  get hasLayout(): boolean {
+    const { children } = this;
+    return children.length > 0 && children.some((child) => child.isInFlow);
   }
 
   @computed get innerHTML(): hast.ElementContent[] {

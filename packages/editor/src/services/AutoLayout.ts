@@ -26,7 +26,7 @@ export class AutoLayout {
     stackElement.rename("flex-container");
     const stack = getInstance(layers[0].variant, stackElement);
 
-    if (!layers[0].inFlow) {
+    if (!layers[0].isInFlow) {
       stack.style.position = "absolute";
       stack.style.left = `${
         layout.bbox.left - offsetParent.boundingBox.left
@@ -63,7 +63,7 @@ export class AutoLayout {
       if (child.type === "text") {
         return false;
       }
-      if (child.inFlow) {
+      if (child.isInFlow) {
         return false;
       }
     }

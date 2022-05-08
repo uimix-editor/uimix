@@ -113,7 +113,32 @@ export const PointerOverlay: React.FC<{}> = () => {
       const html = e.dataTransfer.getData("text/html");
       const fragment = parseFragment(html);
       if (fragment && fragment.type === "instances") {
+        if (!target.hasLayout) {
+          for (const instance of fragment.instances) {
+            if (instance.type !== "element") {
+              continue;
+            }
+
+            if (!instance.element.id) {
+              instance.element.setID(instance.element.tagName);
+            }
+            instance.style.position = "absolute";
+
+            const pos = editorState.scroll
+              .documentPosForEvent(e)
+              .sub(target.offsetParentOfChildren.boundingBox.topLeft);
+            instance.style.left = `${pos.x}px`;
+            instance.style.top = `${pos.y}px`;
+          }
+        }
+
         target.element.append(...fragment.instances.map((i) => i.node));
+
+        editorState.document.deselect();
+        for (const instance of fragment.instances) {
+          instance.select();
+        }
+
         editorState.history.commit("Drop");
       }
     }
