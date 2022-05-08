@@ -218,7 +218,9 @@ export class Document {
       component.remove();
     }
     for (const variant of this.selectedVariants) {
-      if (variant.type === "variant") {
+      if (variant.type === "defaultVariant") {
+        variant.component.remove();
+      } else {
         variant.remove();
       }
     }
