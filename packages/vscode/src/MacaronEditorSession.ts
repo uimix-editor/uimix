@@ -5,6 +5,7 @@ import * as Comlink from "comlink";
 import { MacaronEditorDocument } from "./MacaronEditorDocument";
 import { IExtensionAPI, ImageAsset, IWebviewAPI } from "./APIInterface";
 import { Project } from "./Project";
+import { getImportPath } from "./util";
 
 export class MacaronEditorSession {
   private context: vscode.ExtensionContext;
@@ -141,10 +142,7 @@ export class MacaronEditorSession {
   private getImageFiles(imageFilePaths: Set<string>): ImageAsset[] {
     return [...imageFilePaths].sort().map((filePath) => {
       const uri = vscode.Uri.file(filePath);
-      const relativePath = path.relative(
-        path.dirname(this.document.uri.path),
-        filePath
-      );
+      const relativePath = getImportPath(this.document.uri.path, filePath);
       const webviewURI = this.webviewPanel.webview.asWebviewUri(uri);
       return { relativePath, url: webviewURI.toString() };
     });

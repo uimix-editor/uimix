@@ -2,14 +2,6 @@ import * as path from "path";
 import * as vscode from "vscode";
 import { globby, isGitIgnored } from "globby";
 
-export function getImportPath(from: string, to: string): string {
-  const relative = path.posix.relative(path.dirname(from), to);
-  if (!relative.startsWith(".")) {
-    return `./${relative}`;
-  }
-  return relative;
-}
-
 export class ImagesWatcher {
   constructor(rootUri: vscode.Uri) {
     this.rootUri = rootUri;
