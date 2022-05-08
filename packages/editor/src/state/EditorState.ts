@@ -19,7 +19,6 @@ import { VariantInspectorState } from "./VariantInspectorState";
 import { InsertMode } from "./InsertMode";
 import { ElementSnapper } from "./ElementSnapper";
 import { Commands } from "./Commands";
-import { ImageAsset } from "./ImageAsset";
 
 export abstract class EditorState {
   constructor() {
@@ -28,9 +27,16 @@ export abstract class EditorState {
 
   abstract get history(): JSONUndoHistory<DocumentJSON, Document>;
 
-  // overridable
-  get imageAssets(): ImageAsset[] {
+  /**
+   * Overridable
+   * @returns the paths of available image assets (relative from the dirname of the current file)
+   */
+  get imageAssets(): readonly string[] {
     return [];
+  }
+
+  resolveImageAssetURL(assetPath: string): string {
+    return assetPath;
   }
 
   get document(): Document {
