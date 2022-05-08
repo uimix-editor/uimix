@@ -1,17 +1,17 @@
 import { JSONUndoHistory } from "@seanchas116/paintkit/src/util/JSONUndoHistory";
 import { DocumentJSON, Document } from "../models/Document";
 import { EditorState } from "../state/EditorState";
-import { VSCodeFile } from "./VSCodeFile";
+import { VSCodeAppState } from "./VSCodeAppState";
 
 export class VSCodeEditorState extends EditorState {
-  constructor(file: VSCodeFile) {
+  constructor(appState: VSCodeAppState) {
     super();
-    this.file = file;
+    this.appState = appState;
   }
 
-  readonly file: VSCodeFile;
+  readonly appState: VSCodeAppState;
 
   get history(): JSONUndoHistory<DocumentJSON, Document> {
-    return this.file.history;
+    return this.appState.file.history;
   }
 }

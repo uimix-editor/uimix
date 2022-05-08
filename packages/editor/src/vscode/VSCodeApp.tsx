@@ -7,8 +7,8 @@ import { ContextMenuProvider } from "@seanchas116/paintkit/src/components/menu/C
 import { createGlobalStyle } from "styled-components";
 import { fontFamily } from "@seanchas116/paintkit/src/components/Common";
 import { Editor } from "../views/Editor";
-import { VSCodeFile } from "./VSCodeFile";
 import { VSCodeEditorState } from "./VSCodeEditorState";
+import { VSCodeAppState } from "./VSCodeAppState";
 
 const GlobalStyle = createGlobalStyle`
   body {
@@ -26,11 +26,11 @@ const GlobalStyle = createGlobalStyle`
 `;
 
 export const VSCodeApp: React.FC<{
-  file: VSCodeFile;
-}> = ({ file }) => {
+  appState: VSCodeAppState;
+}> = ({ appState }) => {
   const editorState = useMemo(() => {
-    return new VSCodeEditorState(file);
-  }, [file]);
+    return new VSCodeEditorState(appState);
+  }, [appState]);
 
   return (
     <ColorSchemeProvider colorScheme="auto">
