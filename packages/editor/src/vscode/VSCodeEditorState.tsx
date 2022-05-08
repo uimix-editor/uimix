@@ -14,4 +14,12 @@ export class VSCodeEditorState extends EditorState {
   get history(): JSONUndoHistory<DocumentJSON, Document> {
     return this.appState.file.history;
   }
+
+  get imageAssets(): readonly string[] {
+    return this.appState.imageAssets;
+  }
+
+  resolveImageAssetURL(assetPath: string): string {
+    return this.appState.resolveImageAssetURL(assetPath);
+  }
 }
