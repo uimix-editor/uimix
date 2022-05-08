@@ -3,7 +3,8 @@ import * as vscode from "vscode";
 import * as Comlink from "comlink";
 //import type { API } from "../../editor/src/vscode/API";
 import { MacaronEditorDocument } from "./MacaronEditorDocument";
-import { IExtensionAPI, IWebviewAPI } from "./APIInterface";
+import { IExtensionAPI, ImageAsset, IWebviewAPI } from "./APIInterface";
+import { Project } from "./Project";
 
 export class MacaronEditorSession {
   private context: vscode.ExtensionContext;
@@ -95,6 +96,17 @@ export class MacaronEditorSession {
     this.webviewAPI = Comlink.wrap<IWebviewAPI>(comlinkEndpoint);
 
     void this.webviewAPI.setContent(this.document.initialContent);
+
+    if (Project.instance.imagesWatcher) {
+      this.disposables.push(
+        Project.instance.imagesWatcher.onChange((images) => {
+          void this.webviewAPI?.setImageAssets(this.getImageFiles(images));
+        })
+      );
+      void this.webviewAPI?.setImageAssets(
+        this.getImageFiles(Project.instance.imagesWatcher.paths)
+      );
+    }
   }
 
   dispose(): void {
@@ -124,6 +136,14 @@ export class MacaronEditorSession {
         <script type="module" src="http://localhost:3000/src/vscode/main.tsx"></script>
       </body>
       </html>`;
+  }
+
+  private getImageFiles(imageFilePaths: Set<string>): ImageAsset[] {
+    return [...imageFilePaths].sort().map((path) => {
+      const uri = vscode.Uri.file(path);
+      const webviewURI = this.webviewPanel.webview.asWebviewUri(uri);
+      return { relativePath: path, url: webviewURI.toString() };
+    });
   }
 
   private onDirtyChange(dirty: boolean) {
