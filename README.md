@@ -9,39 +9,60 @@ Unlike other Web design tools, Macaron is intended to be integrated to your exis
 
 ## Goals
 
-### Freehand design
-
-Draw elements at arbitrary positions on the canvas and add auto layout later.
-
-### Import from Figma
-
-Import existing designs from Figma by copy-paste using the Macaron plugin for Figma.
-
-### Run in VS Code
-
-Macaron will be released as a custom editor extension for Visual Studio Code.  
-No need to install another app or open another browser tab.
-
-### Based on Web standards
-
-Macaron is a design tool built around Web standards (HTML, CSS, and Web Components).
-
-### Clean file format
-
-Macaron uses an HTML-based clean file format, which is easy to read, modify, and parse.  
-The files are designed to be stored in Git repositories, along with other source files.
-
-### Import Web Components
-
-Import existing Web Components and place them in the editor.
-
-### Export to Web Components
-
-Create future-proof components and use them with any frameworks (or without frameworks).
-
-### First-class support for React and TypeScript
-
-Emit React wrappers and TypeScript definitions for the output Web components.
+<table>
+  <thead>
+    <tr>
+      <th>Freehand design</th>
+      <th>Import from Figma</th>
+      <th>Run in VS Code</th>
+      <th>Clean file format</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>
+        Draw elements at arbitrary positions on the canvas and add auto layout
+        later.
+      </td>
+      <td>
+        Import existing designs from Figma by copy-paste using the Macaron
+        plugin for Figma.
+      </td>
+      <td>
+        Custom editor extension for Visual Studio
+        Code.<br />No need to install another app or open another browser tab.
+      </td>
+      <td>
+        HTML-based clean file format (easy to read, modify, parse).
+      </td>
+    </tr>
+  </tbody>
+  <thead>
+    <tr>
+      <th>Based on Web standards</th>
+      <th>Import Web Components</th>
+      <th>Export to Web Components</th>
+      <th>React and TypeScript support</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>
+        Macaron is a design tool built around Web standards (HTML, CSS, and Web
+        Components).
+      </td>
+      <td>Import existing Web Components and place them in the editor.</td>
+      <td>
+        Create future-proof components and use them with any frameworks (or
+        without frameworks).
+      </td>
+      <td>
+        Emit React wrappers and TypeScript definitions for the output Web
+        components.
+      </td>
+    </tr>
+  </tbody>
+</table>
 
 ## Roadmap
 
