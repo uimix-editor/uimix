@@ -38,6 +38,7 @@ export class VSCodeAppState {
         for (const asset of assets) {
           newMap.set(asset.relativePath, asset.url);
         }
+        console.log(newMap);
         this.imageAssetMap.replace(newMap);
       }),
     };
