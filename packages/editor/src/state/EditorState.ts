@@ -20,20 +20,15 @@ import { InsertMode } from "./InsertMode";
 import { ElementSnapper } from "./ElementSnapper";
 import { Commands } from "./Commands";
 
-export class EditorState {
-  constructor(getHistory: () => JSONUndoHistory<DocumentJSON, Document>) {
-    this.getHistory = getHistory;
+export abstract class EditorState {
+  constructor() {
     makeObservable(this);
   }
 
-  private readonly getHistory: () => JSONUndoHistory<DocumentJSON, Document>;
-
-  get history(): JSONUndoHistory<DocumentJSON, Document> {
-    return this.getHistory();
-  }
+  abstract get history(): JSONUndoHistory<DocumentJSON, Document>;
 
   get document(): Document {
-    return this.getHistory().target;
+    return this.history.target;
   }
 
   @observable currentOutlineTab: "outline" | "assets" = "outline";
