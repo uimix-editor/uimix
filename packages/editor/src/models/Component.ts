@@ -62,11 +62,14 @@ export class Component extends TreeNode<ComponentList, Component, never> {
 
       for (const instance of variant.rootInstance?.allDescendants ?? []) {
         if (instance.type === "element") {
-          variantStyles[instance.node.key] = instance.style.toJSON();
+          variantStyles[
+            instance === variant.rootInstance ? "" : instance.node.key
+          ] = instance.style.toJSON();
         }
       }
 
-      styles[variant.key] = variantStyles;
+      styles[variant.type === "defaultVariant" ? "" : variant.key] =
+        variantStyles;
     }
 
     return {
@@ -108,14 +111,18 @@ export class Component extends TreeNode<ComponentList, Component, never> {
     });
 
     for (const variant of this.allVariants) {
-      const variantStylesJSON = json.styles[variant.key];
+      const variantStylesJSON =
+        json.styles[variant.type === "defaultVariant" ? "" : variant.key];
       if (!variantStylesJSON) {
         continue;
       }
 
       for (const instance of variant.rootInstance?.allDescendants ?? []) {
         if (instance.type === "element") {
-          const styleJSON = variantStylesJSON[instance.node.key];
+          const styleJSON =
+            variantStylesJSON[
+              instance === variant.rootInstance ? "" : instance.node.key
+            ];
           if (styleJSON) {
             instance.style.loadJSON(styleJSON);
           }
