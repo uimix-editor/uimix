@@ -9,7 +9,7 @@ import { styleKeys } from "../models/Style";
 import { getInstance } from "../models/InstanceRegistry";
 import { TextMount } from "./TextMount";
 import { MountContext } from "./MountContext";
-import { IFrameAssetURLGenerator } from "./IFrameAssetURLGenerator";
+import { VSCodeResourceURLResolver } from "./VSCodeResourceURLResolver";
 
 export class ChildMountSync {
   constructor(
@@ -113,7 +113,7 @@ export class ChildMountSync {
   private readonly disposers: (() => void)[] = [];
 }
 
-const urlGenerator = new IFrameAssetURLGenerator();
+const vscodeURLResolver = new VSCodeResourceURLResolver();
 
 export class ElementMount {
   private static domToMount = new WeakMap<globalThis.Element, ElementMount>();
@@ -159,8 +159,10 @@ export class ElementMount {
           }
           for (const [key, value] of Object.entries(attrs)) {
             if (this.instance.element.tagName === "img" && key === "src") {
-              void urlGenerator
-                .generate(this.context.editorState.resolveImageAssetURL(value))
+              void vscodeURLResolver
+                .generateDataURL(
+                  this.context.editorState.resolveImageAssetURL(value)
+                )
                 .then((url) => {
                   this.dom.setAttribute(key, url);
                 });

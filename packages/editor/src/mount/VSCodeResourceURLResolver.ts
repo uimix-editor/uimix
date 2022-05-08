@@ -1,14 +1,10 @@
 import { blobToDataURL } from "@seanchas116/paintkit/src/util/Blob";
 
-export class IFrameAssetURLGenerator {
-  get(url: string): string | undefined {
-    return this.urls.get(url);
-  }
-
+export class VSCodeResourceURLResolver {
   private readonly urls = new Map<string, string>();
   private readonly pending = new Map<string, Promise<string>>();
 
-  async generate(src: string): Promise<string> {
+  async generateDataURL(src: string): Promise<string> {
     if (!src.startsWith("https://file%2B.vscode-resource.vscode-cdn.net/")) {
       return src;
     }
