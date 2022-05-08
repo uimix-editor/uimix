@@ -33,12 +33,12 @@ export class VSCodeAppState {
       updateSavePoint(): void {
         file.updateSavePoint();
       },
-      setImageAssets: action((assets: readonly ImageAsset[]) => {
+      setImageAssets: action((assets: ImageAsset[]) => {
+        assets.sort((a, b) => a.relativePath.localeCompare(b.relativePath));
         const newMap = new Map<string, string>();
         for (const asset of assets) {
           newMap.set(asset.relativePath, asset.url);
         }
-        console.log(newMap);
         this.imageAssetMap.replace(newMap);
       }),
     };
