@@ -148,7 +148,7 @@ function layoutDirection(parent: ElementInstance): "x" | "y" {
 function getInFlowChildren(
   parent: ElementInstance
 ): (ElementInstance | TextInstance)[] {
-  return parent.children.filter((o) => o.inFlow);
+  return parent.children.filter((o) => o.isInFlow);
 }
 
 function dropIndexIndicator(

@@ -15,6 +15,7 @@ import { OutlineTreeView } from "./outline/OutlineTreeView";
 import { ElementInspector } from "./inspector/ElementInspector";
 import { VariantInspector } from "./inspector/VariantInspector";
 import { StyleInspector } from "./inspector/style/StyleInspector";
+import { AssetBrowser } from "./outline/AssetBrowser";
 
 const RightSideBarWrap = styled.div`
   position: relative;
@@ -82,54 +83,56 @@ export const RightSideBar: React.FC = observer(() => {
         width: `${editorState.sideBarWidth}px`,
       }}
     >
-      <VSplitter
-        ratio={editorState.sideBarSplitRatio}
-        onChangeRatio={onChangeSplitRatio}
-      >
-        <TabArea>
-          <InspectorTabBar>
-            <InspectorTabBarItem
-              aria-selected={editorState.currentOutlineTab === "outline"}
-              onClick={onClickOutlineTab}
-            >
-              Outline
-            </InspectorTabBarItem>
-            <InspectorTabBarItem
-              aria-selected={editorState.currentOutlineTab === "assets"}
-              onClick={onClickAssetsTab}
-            >
-              Assets
-            </InspectorTabBarItem>
-          </InspectorTabBar>
+      <TabArea>
+        <InspectorTabBar>
+          <InspectorTabBarItem
+            aria-selected={editorState.currentOutlineTab === "outline"}
+            onClick={onClickOutlineTab}
+          >
+            Outline
+          </InspectorTabBarItem>
+          <InspectorTabBarItem
+            aria-selected={editorState.currentOutlineTab === "assets"}
+            onClick={onClickAssetsTab}
+          >
+            Assets
+          </InspectorTabBarItem>
+        </InspectorTabBar>
+        <VSplitter
+          ratio={editorState.sideBarSplitRatio}
+          onChangeRatio={onChangeSplitRatio}
+          hidden={editorState.currentOutlineTab !== "outline"}
+        >
           <OutlineTreeView />
-        </TabArea>
-        <TabArea>
-          <InspectorTabBar>
-            <InspectorTabBarItem
-              aria-selected={editorState.currentInspectorTab === "element"}
-              onClick={onClickElementTab}
-            >
-              Element
-            </InspectorTabBarItem>
-            <InspectorTabBarItem
-              aria-selected={editorState.currentInspectorTab === "style"}
-              onClick={onClickStyleTab}
-            >
-              Style
-            </InspectorTabBarItem>
-          </InspectorTabBar>
-          <Scrollable hidden={editorState.currentInspectorTab !== "element"}>
-            {editorState.variantInspectorState.isVisible ? (
-              <VariantInspector />
-            ) : editorState.elementInspectorState.isVisible ? (
-              <ElementInspector />
-            ) : null}
-          </Scrollable>
-          <Scrollable hidden={editorState.currentInspectorTab !== "style"}>
-            <StyleInspector />
-          </Scrollable>
-        </TabArea>
-      </VSplitter>
+          <TabArea hidden={editorState.currentOutlineTab === "assets"}>
+            <InspectorTabBar>
+              <InspectorTabBarItem
+                aria-selected={editorState.currentInspectorTab === "element"}
+                onClick={onClickElementTab}
+              >
+                Element
+              </InspectorTabBarItem>
+              <InspectorTabBarItem
+                aria-selected={editorState.currentInspectorTab === "style"}
+                onClick={onClickStyleTab}
+              >
+                Style
+              </InspectorTabBarItem>
+            </InspectorTabBar>
+            <Scrollable hidden={editorState.currentInspectorTab !== "element"}>
+              {editorState.variantInspectorState.isVisible ? (
+                <VariantInspector />
+              ) : editorState.elementInspectorState.isVisible ? (
+                <ElementInspector />
+              ) : null}
+            </Scrollable>
+            <Scrollable hidden={editorState.currentInspectorTab !== "style"}>
+              <StyleInspector />
+            </Scrollable>
+          </TabArea>
+        </VSplitter>
+        <AssetBrowser hidden={editorState.currentOutlineTab !== "assets"} />
+      </TabArea>
       <WidthResizeHandle
         position="left"
         width={editorState.sideBarWidth}

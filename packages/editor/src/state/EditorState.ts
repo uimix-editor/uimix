@@ -13,6 +13,7 @@ import { TextInstance } from "../models/TextInstance";
 import { Variant } from "../models/Variant";
 import { ElementPicker } from "../mount/ElementPicker";
 import { snapThreshold } from "../views/viewport/Constants";
+import { IconBrowserState } from "../views/sidebar/outline/IconBrowserState";
 import { ElementInspectorState } from "./ElementInspectorState";
 import { VariantInspectorState } from "./VariantInspectorState";
 import { InsertMode } from "./InsertMode";
@@ -37,6 +38,7 @@ export class EditorState {
 
   @observable currentOutlineTab: "outline" | "assets" = "outline";
   @observable currentInspectorTab: "element" | "style" = "element";
+  @observable assetTab: "components" | "images" | "icons" = "components";
   @observable sideBarSplitRatio = 0.3;
   @observable sideBarWidth = 256;
 
@@ -76,6 +78,8 @@ export class EditorState {
   readonly snapper = new ElementSnapper(this);
 
   readonly commands = new Commands(this);
+
+  readonly iconBrowserState = new IconBrowserState();
 
   get snapThreshold(): number {
     return snapThreshold / this.scroll.scale;

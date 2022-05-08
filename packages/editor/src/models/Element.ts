@@ -48,6 +48,13 @@ export class Element extends TreeNode<Element, Element, Element | Text> {
 
   readonly attrs = observable.map<string, string>();
 
+  get allAttrs(): Record<string, string> {
+    return {
+      ...Object.fromEntries(this.attrs),
+      id: this.id,
+    };
+  }
+
   get component(): Component | undefined {
     return this.parent?.component;
   }
@@ -57,14 +64,7 @@ export class Element extends TreeNode<Element, Element, Element | Text> {
   }
 
   @computed get outerHTML(): hast.Element {
-    return h(
-      this.tagName,
-      {
-        ...Object.fromEntries(this.attrs),
-        id: this.id,
-      },
-      this.innerHTML
-    );
+    return h(this.tagName, this.allAttrs, this.innerHTML);
   }
 
   toJSON(): ElementJSON {

@@ -49,7 +49,7 @@ export class ElementClickMoveDragHandler implements DragHandler {
       const inFlowTargets: ElementInstance[] = [];
       for (const override of this.editorState.document
         .selectedElementInstances) {
-        if (override.inFlow) {
+        if (override.isInFlow) {
           inFlowTargets.push(override);
         } else {
           absoluteTargets.push(override);

@@ -1,6 +1,7 @@
 import { reaction } from "mobx";
 import { Rect } from "paintvec";
 import { kebabCase } from "lodash-es";
+import { isSVGTagName } from "@seanchas116/paintkit/src/util/HTMLTagCategory";
 import { Element } from "../models/Element";
 import { Text } from "../models/Text";
 import { ElementInstance } from "../models/ElementInstance";
@@ -125,8 +126,14 @@ export class ElementMount {
   ) {
     this.instance = instance;
     // TODO: support reference to other component
-    // TODO: support SVG elements
-    this.dom = domDocument.createElement(instance.element.tagName);
+    if (isSVGTagName(instance.element.tagName)) {
+      this.dom = domDocument.createElementNS(
+        "http://www.w3.org/2000/svg",
+        instance.element.tagName
+      );
+    } else {
+      this.dom = domDocument.createElement(instance.element.tagName);
+    }
     ElementMount.domToMount.set(this.dom, this);
     this.context = context;
     this.context.registry.setElementMount(this);
@@ -138,9 +145,14 @@ export class ElementMount {
 
     this.disposers.push(
       reaction(
-        () => this.instance.element.id,
-        (id) => {
-          this.dom.id = id;
+        () => this.instance.element.allAttrs,
+        (attrs) => {
+          for (const attribute of this.dom.attributes) {
+            this.dom.removeAttribute(attribute.name);
+          }
+          for (const [key, value] of Object.entries(attrs)) {
+            this.dom.setAttribute(key, value);
+          }
           this.updateBoundingBoxLater();
         },
         { fireImmediately: true }

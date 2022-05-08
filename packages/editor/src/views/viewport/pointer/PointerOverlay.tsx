@@ -2,6 +2,7 @@ import { usePointerStroke } from "@seanchas116/paintkit/src/components/hooks/use
 import { action } from "mobx";
 import React, { useRef } from "react";
 import styled from "styled-components";
+import { parseFragment } from "../../../models/FileFormat";
 import { useEditorState } from "../../EditorStateContext";
 import { doubleClickInterval } from "../Constants";
 import { DragHandler } from "./DragHandler";
@@ -91,5 +92,63 @@ export const PointerOverlay: React.FC<{}> = () => {
     }),
   });
 
-  return <PointerOverlayWrap {...pointerProps}></PointerOverlayWrap>;
+  const onDragOver = action((e: React.DragEvent) => {
+    const target = editorState.elementPicker.pick(e.nativeEvent).default;
+    editorState.hoveredItem = target;
+
+    if (e.dataTransfer.types.includes("text/html")) {
+      e.preventDefault();
+    }
+  });
+
+  const onDrop = action((e: React.DragEvent) => {
+    e.preventDefault();
+
+    const target = editorState.elementPicker.pick(e.nativeEvent).default;
+    if (!target) {
+      return;
+    }
+
+    if (e.dataTransfer.types.includes("text/html")) {
+      const html = e.dataTransfer.getData("text/html");
+      const fragment = parseFragment(html);
+      if (fragment && fragment.type === "instances") {
+        if (!target.hasLayout) {
+          for (const instance of fragment.instances) {
+            if (instance.type !== "element") {
+              continue;
+            }
+
+            if (!instance.element.id) {
+              instance.element.setID(instance.element.tagName);
+            }
+            instance.style.position = "absolute";
+
+            const pos = editorState.scroll
+              .documentPosForEvent(e)
+              .sub(target.offsetParentOfChildren.boundingBox.topLeft);
+            instance.style.left = `${pos.x}px`;
+            instance.style.top = `${pos.y}px`;
+          }
+        }
+
+        target.element.append(...fragment.instances.map((i) => i.node));
+
+        editorState.document.deselect();
+        for (const instance of fragment.instances) {
+          instance.select();
+        }
+
+        editorState.history.commit("Drop");
+      }
+    }
+  });
+
+  return (
+    <PointerOverlayWrap
+      {...pointerProps}
+      onDragOver={onDragOver}
+      onDrop={onDrop}
+    ></PointerOverlayWrap>
+  );
 };

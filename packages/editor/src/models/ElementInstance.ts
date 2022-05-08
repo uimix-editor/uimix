@@ -202,7 +202,7 @@ export class ElementInstance {
     }
   }
 
-  get inFlow(): boolean {
+  get isInFlow(): boolean {
     // TODO: handle position: fixed
     if (
       this.computedStyle.position === "absolute" ||
@@ -214,6 +214,11 @@ export class ElementInstance {
     return true;
   }
 
+  get hasLayout(): boolean {
+    const { children } = this;
+    return children.length > 0 && children.some((child) => child.isInFlow);
+  }
+
   @computed get innerHTML(): hast.ElementContent[] {
     return this.children.map((child) => child.outerHTML);
   }
@@ -222,8 +227,7 @@ export class ElementInstance {
     return h(
       this.element.tagName,
       {
-        ...Object.fromEntries(this.element.attrs),
-        id: this.element.id,
+        ...this.element.allAttrs,
         style: this.style.toString(), // TODO: include styles of super variants
       },
       this.innerHTML
