@@ -106,18 +106,18 @@ export class MacaronEditorSession {
 
     this.webviewAPI = Comlink.wrap<IWebviewAPI>(comlinkEndpoint);
 
-    void this.webviewAPI.setContent(this.document.initialContent);
-
     if (Project.instance.imagesWatcher) {
       this.disposables.push(
         Project.instance.imagesWatcher.onChange((images) => {
           void this.webviewAPI?.setImageAssets(this.getImageFiles(images));
         })
       );
-      void this.webviewAPI?.setImageAssets(
+      await this.webviewAPI?.setImageAssets(
         this.getImageFiles(Project.instance.imagesWatcher.paths)
       );
     }
+
+    await this.webviewAPI.setContent(this.document.initialContent);
   }
 
   dispose(): void {
