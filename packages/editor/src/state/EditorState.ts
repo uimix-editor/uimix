@@ -19,6 +19,7 @@ import { VariantInspectorState } from "./VariantInspectorState";
 import { InsertMode } from "./InsertMode";
 import { ElementSnapper } from "./ElementSnapper";
 import { Commands } from "./Commands";
+import { ImageAsset } from "./ImageAsset";
 
 export abstract class EditorState {
   constructor() {
@@ -26,6 +27,11 @@ export abstract class EditorState {
   }
 
   abstract get history(): JSONUndoHistory<DocumentJSON, Document>;
+
+  // overridable
+  get imageAssets(): ImageAsset[] {
+    return [];
+  }
 
   get document(): Document {
     return this.history.target;
