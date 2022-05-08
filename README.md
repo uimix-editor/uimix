@@ -12,10 +12,10 @@ Unlike other Web design tools, Macaron is intended to be integrated to your exis
 <table>
   <thead>
     <tr>
-      <th>Freehand design</th>
-      <th>Import from Figma</th>
-      <th>Run in VS Code</th>
-      <th>Clean file format</th>
+      <th>:pen: Freehand design</th>
+      <th>:art: Import from Figma</th>
+      <th>:technologist: Run in VS Code</th>
+      <th>:spiral_notepad: Clean file format</th>
     </tr>
   </thead>
   <tbody>
@@ -39,10 +39,10 @@ Unlike other Web design tools, Macaron is intended to be integrated to your exis
   </tbody>
   <thead>
     <tr>
-      <th>Based on Web standards</th>
-      <th>Import Web Components</th>
-      <th>Export to Web Components</th>
-      <th>React and TypeScript support</th>
+      <th>:globe_with_meridians: Based on Web standards</th>
+      <th>:inbox_tray: Import Web Components</th>
+      <th>:outbox_tray: Export to Web Components</th>
+      <th>:atom_symbol: React and TypeScript support</th>
     </tr>
   </thead>
   <tbody>
