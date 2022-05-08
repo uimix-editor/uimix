@@ -224,11 +224,14 @@ export class ElementInstance {
   }
 
   @computed get outerHTML(): hast.Element {
+    // TODO: include styles of super variants
+    const style = this.style.toString();
+
     return h(
       this.element.tagName,
       {
         ...this.element.allAttrs,
-        style: this.style.toString(), // TODO: include styles of super variants
+        style: style || undefined,
       },
       this.innerHTML
     );
