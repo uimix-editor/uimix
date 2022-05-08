@@ -103,6 +103,10 @@ export class ComponentMount {
         variant.type === "defaultVariant" ? "" : ".variant-" + variant.key;
 
       for (const instance of instances) {
+        if (instance !== rootInstance && !instance.element.id) {
+          continue;
+        }
+
         let selector: string;
         if (instance === rootInstance) {
           if (scope) {
@@ -129,7 +133,6 @@ export class ComponentMount {
   }
 
   private updateCSS(css: postcss.Root): void {
-
     // @ts-ignore
     // eslint-disable-next-line @typescript-eslint/no-unsafe-call
     this.styleSheet.replaceSync(css);

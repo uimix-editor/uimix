@@ -5,6 +5,7 @@
   <template>
     <h1 title="Hover Me" id="heading">Hello, <em id="em">World!</em></h1>
     <div id="div1">Type something</div>
+    <div id="">Type something</div>
   </template>
   <style>
     :host {

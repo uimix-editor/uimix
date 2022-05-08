@@ -29,6 +29,9 @@ function dumpComponentStyles(component: Component): postcss.Root {
       if (instance.type !== "element") {
         continue;
       }
+      if (instance !== rootInstance && !instance.element.id) {
+        continue;
+      }
 
       let selector: string;
       if (variant.type === "variant" && variant.selector) {
