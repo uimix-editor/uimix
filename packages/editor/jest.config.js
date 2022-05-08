@@ -9,6 +9,6 @@ module.exports = {
     },
   },
   moduleNameMapper: {
-    "^postcss$": "postcss/lib/postcss.mjs",
+    "^postcss$": __dirname + "/node_modules/postcss/lib/postcss.mjs",
   },
 };
