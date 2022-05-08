@@ -7,6 +7,16 @@ import { IExtensionAPI, ImageAsset, IWebviewAPI } from "./APIInterface";
 import { Project } from "./Project";
 import { getImportPath } from "./util";
 
+function getNonce(): string {
+  let text = "";
+  const possible =
+    "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+  for (let i = 0; i < 32; i++) {
+    text += possible.charAt(Math.floor(Math.random() * possible.length));
+  }
+  return text;
+}
+
 export class MacaronEditorSession {
   private context: vscode.ExtensionContext;
   private document: MacaronEditorDocument;
@@ -117,24 +127,37 @@ export class MacaronEditorSession {
   private getHTMLForWebview(webview: vscode.Webview): string {
     // TODO: production
 
+    const nonce = getNonce();
+
+    const csp = `
+      default-src 'none';
+      connect-src ${webview.cspSource} data:;
+      img-src ${webview.cspSource} data: blob:;
+      font-src https://fonts.gstatic.com;
+      style-src ${webview.cspSource} https://fonts.googleapis.com 'unsafe-inline';
+      script-src 'nonce-${nonce}' 'unsafe-inline' 'unsafe-eval' 'strict-dynamic';
+      frame-src blob:;
+    `;
+
     return `
       <!DOCTYPE html>
       <html lang="en">
       <head>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta http-equiv="Content-Security-Policy" content="${csp}">
       </head>
       <body>
         <div id="root"></div>
-        <script type="module">
+        <script nonce="${nonce}" type="module">
           import RefreshRuntime from "http://localhost:3000/@react-refresh"
           RefreshRuntime.injectIntoGlobalHook(window)
           window.$RefreshReg$ = () => {}
           window.$RefreshSig$ = () => (type) => type
           window.__vite_plugin_react_preamble_installed__ = true
         </script>
-        <script type="module" src="http://localhost:3000/@vite/client"></script>
-        <script type="module" src="http://localhost:3000/src/vscode/main.tsx"></script>
+        <script nonce="${nonce}" type="module" src="http://localhost:3000/@vite/client"></script>
+        <script nonce="${nonce}" type="module" src="http://localhost:3000/src/vscode/main.tsx"></script>
       </body>
       </html>`;
   }
