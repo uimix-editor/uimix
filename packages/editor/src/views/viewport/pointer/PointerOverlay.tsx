@@ -1,5 +1,5 @@
 import { usePointerStroke } from "@seanchas116/paintkit/src/components/hooks/usePointerStroke";
-import { action, runInAction } from "mobx";
+import { action } from "mobx";
 import React, { useRef } from "react";
 import styled from "styled-components";
 import { parseFragment } from "../../../models/FileFormat";
