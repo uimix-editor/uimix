@@ -12,6 +12,8 @@ import { Scrollable } from "@seanchas116/paintkit/src/components/Scrollable";
 import { useEditorState } from "../../EditorStateContext";
 import { SearchBar } from "./SearchBar";
 
+export const imageAssetDragMime = "application/x-macaron-image-asset";
+
 const Item: React.FC<{
   filePath: string;
 }> = observer(function Item({ filePath }) {
@@ -26,10 +28,8 @@ const Item: React.FC<{
           src={editorState.resolveImageAssetURL(filePath)}
           draggable
           onDragStart={(e) => {
-            const imgHtml = `<img src="${filePath}"/>`;
-
             e.dataTransfer.effectAllowed = "copy";
-            e.dataTransfer.setData("text/html", imgHtml);
+            e.dataTransfer.setData(imageAssetDragMime, filePath);
           }}
         />
         <ItemTitle>{path.basename(filePath)}</ItemTitle>
