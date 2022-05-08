@@ -6,9 +6,9 @@ import Tippy from "@tippyjs/react";
 import {
   checkPattern,
   textTruncate,
-} from "@seanchas116/paintkit/dist/components/Common";
-import { colors } from "@seanchas116/paintkit/dist/components/Palette";
-import { Scrollable } from "@seanchas116/paintkit/dist/components/Scrollable";
+} from "@seanchas116/paintkit/src/components/Common";
+import { colors } from "@seanchas116/paintkit/src/components/Palette";
+import { Scrollable } from "@seanchas116/paintkit/src/components/Scrollable";
 import { useEditorState } from "../../EditorStateContext";
 import { SearchBar } from "./SearchBar";
 
