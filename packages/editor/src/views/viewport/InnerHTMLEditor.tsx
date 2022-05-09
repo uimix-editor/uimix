@@ -5,8 +5,10 @@ import { observer } from "mobx-react-lite";
 import { useEffect } from "react";
 import styled from "styled-components";
 import { toHtml } from "hast-util-to-html";
-import { action, computed, makeObservable, observable } from "mobx";
+import { action, computed, makeObservable, observable, reaction } from "mobx";
 import { Rect } from "paintvec";
+import type * as hast from "hast";
+import { isEqual } from "lodash-es";
 import { ElementInstance } from "../../models/ElementInstance";
 import { useEditorState } from "../EditorStateContext";
 import { formatHTML } from "../../util/Format";
@@ -50,14 +52,34 @@ const Textarea = styled.textarea`
 
 class InnerHTMLEditorState {
   constructor(editorState: EditorState, target: ElementInstance) {
+    makeObservable(this);
+
     this.editorState = editorState;
     this.target = target;
-    this.value = formatHTML(toHtml(target.element.innerHTML));
-    makeObservable(this);
+    const innerHTML = target.element.innerHTML;
+    this.lastInnerHTML = innerHTML;
+    this.value = formatHTML(toHtml(innerHTML));
+
+    this.disposers.push(
+      reaction(
+        () => target.element.innerHTML,
+        action((innerHTML) => {
+          if (isEqual(innerHTML, this.lastInnerHTML)) {
+            return;
+          }
+          this.value = formatHTML(toHtml(innerHTML));
+        })
+      )
+    );
   }
+
+  private disposers: (() => void)[] = [];
 
   readonly editorState: EditorState;
   readonly target: ElementInstance;
+
+  @observable value = "";
+  private lastInnerHTML: hast.Content[] = [];
 
   @computed get bbox(): Rect {
     return this.target.boundingBox.transform(
@@ -65,13 +87,12 @@ class InnerHTMLEditorState {
     );
   }
 
-  @observable value = "";
-
   setValue(value: string): void {
     this.value = value;
 
     const node = parseHTMLFragment(value);
     this.target.setInnerHTML(node.children);
+    this.lastInnerHTML = this.target.element.innerHTML;
 
     this.editorState.history.commitDebounced("Change Inner HTML");
   }
@@ -85,6 +106,10 @@ class InnerHTMLEditorState {
   readonly onEnd = action(() => {
     this.editorState.innerHTMLEditTarget = undefined;
   });
+
+  dispose(): void {
+    this.disposers.forEach((dispose) => dispose());
+  }
 }
 
 export const InnerHTMLEditorBody: React.FC<{
