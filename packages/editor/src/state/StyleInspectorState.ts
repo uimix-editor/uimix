@@ -62,17 +62,17 @@ export class StyleInspectorState {
 
   readonly editorState: EditorState;
 
-  @computed get selectedInstances(): ElementInstance[] {
+  @computed get instances(): ElementInstance[] {
     return this.editorState.document.selectedElementInstances.filter(
       (instance) => instance.element.id
     );
   }
 
   @computed get styles(): Style[] {
-    return this.selectedInstances.map((instance) => instance.style);
+    return this.instances.map((instance) => instance.style);
   }
   @computed get computedStyles(): Style[] {
-    return this.selectedInstances.map((instance) => instance.computedStyle);
+    return this.instances.map((instance) => instance.computedStyle);
   }
 
   readonly props: Record<ExtraStyleKey, StylePropertyState>;
