@@ -12,7 +12,7 @@ import { action } from "mobx";
 import { observer } from "mobx-react-lite";
 import { useEditorState } from "../EditorStateContext";
 import { OutlineTreeView } from "./outline/OutlineTreeView";
-import { ElementInspector } from "./inspector/ElementInspector";
+import { ElementInspector } from "./inspector/element/ElementInspector";
 import { VariantInspector } from "./inspector/VariantInspector";
 import { StyleInspector } from "./inspector/style/StyleInspector";
 import { AssetBrowser } from "./outline/AssetBrowser";
