@@ -43,7 +43,7 @@ export const PointerOverlay: React.FC<{}> = () => {
       );
 
       editorState.hoveredItem = undefined;
-      // editorState.endTextEdit();
+      editorState.innerHTMLEditTarget = undefined;
 
       if (editorState.insertMode) {
         return new ElementInsertDragHandler(
@@ -53,14 +53,12 @@ export const PointerOverlay: React.FC<{}> = () => {
         );
       }
 
-      // if (isDoubleClick) {
-      //   const override = pickResult.doubleClickable;
-      //   if (override?.selected) {
-      //     if (editorState.startTextEdit(override)) {
-      //       return;
-      //     }
-      //   }
-      // }
+      if (isDoubleClick) {
+        const override = pickResult.doubleClickable;
+        if (override?.selected) {
+          editorState.innerHTMLEditTarget = override;
+        }
+      }
 
       const clickMove = ElementClickMoveDragHandler.create(
         editorState,

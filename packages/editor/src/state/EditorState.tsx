@@ -70,6 +70,8 @@ export abstract class EditorState {
   @observable hoveredItem: ElementInstance | TextInstance | undefined =
     undefined;
 
+  @observable innerHTMLEditTarget: ElementInstance | undefined = undefined;
+
   @computed get hoveredRect(): Rect | undefined {
     if (!this.hoveredItem) {
       return;
@@ -226,6 +228,7 @@ export abstract class EditorState {
     switch (e.key) {
       case "Escape":
         this.insertMode = undefined;
+        this.innerHTMLEditTarget = undefined;
         break;
       case "Alt":
         this.measureMode = true;

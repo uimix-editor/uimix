@@ -9,6 +9,7 @@ import { PanOverlay } from "./PanOverlay";
 import { Indicators } from "./indicators/Indicators";
 import { PointerOverlay } from "./pointer/PointerOverlay";
 import { FrameLabels } from "./VariantLabels";
+import { InnerHTMLEditor } from "./InnerHTMLEditor";
 
 const ViewportWrap = styled.div`
   background-color: ${colors.uiBackground};
@@ -126,6 +127,7 @@ export const Viewport: React.FC<{ className?: string }> = ({ className }) => {
       <PointerOverlay />
       <FrameLabels />
       <Indicators />
+      <InnerHTMLEditor />
       <PanOverlay />
     </ViewportWrap>
   );
