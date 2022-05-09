@@ -33,16 +33,18 @@ export const ElementCommonPane: React.FC = observer(
           <Label>ID</Label>
           <Input value={state.id} onChange={state.onChangeID} />
         </Row12>
-        <TopLabelArea>
-          <Label>Inner HTML</Label>
-          <TextArea
-            value={typeof innerHTML === "string" ? innerHTML : undefined}
-            placeholder={innerHTML === MIXED ? "Mixed" : undefined}
-            onChange={() => {
-              // TODO
-            }}
-          />
-        </TopLabelArea>
+        {state.canEditInnerHTML && (
+          <TopLabelArea>
+            <Label>Inner HTML</Label>
+            <TextArea
+              value={typeof innerHTML === "string" ? innerHTML : undefined}
+              placeholder={innerHTML === MIXED ? "Mixed" : undefined}
+              onChange={() => {
+                // TODO
+              }}
+            />
+          </TopLabelArea>
+        )}
       </Pane>
     );
   }
