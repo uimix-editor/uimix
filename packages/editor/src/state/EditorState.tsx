@@ -44,7 +44,8 @@ export abstract class EditorState {
   }
 
   // observable
-  // (this function may return undefined if the value is not yet available)
+  // (this function may return undefined if the value is not yet available.
+  // use this function in a reaction/computed to wait for the value to be available.)
   resolveImageAssetURLForIFrame(assetPath: string): string | undefined {
     return this.vsCodeResourceURLResolver.resolve(
       this.resolveImageAssetURL(assetPath)
