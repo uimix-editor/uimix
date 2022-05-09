@@ -1,5 +1,6 @@
 import { usePointerStroke } from "@seanchas116/paintkit/src/components/hooks/usePointerStroke";
 import { useContextMenu } from "@seanchas116/paintkit/src/components/menu/ContextMenuProvider";
+import { isVoidElement } from "@seanchas116/paintkit/src/util/HTMLTagCategory";
 import { action } from "mobx";
 import React, { useRef } from "react";
 import styled from "styled-components";
@@ -54,9 +55,9 @@ export const PointerOverlay: React.FC<{}> = () => {
       }
 
       if (isDoubleClick) {
-        const override = pickResult.doubleClickable;
-        if (override?.selected) {
-          editorState.innerHTMLEditTarget = override;
+        const instance = pickResult.doubleClickable;
+        if (instance?.selected && !isVoidElement(instance.element.tagName)) {
+          editorState.innerHTMLEditTarget = instance;
         }
       }
 
