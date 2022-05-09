@@ -1,8 +1,6 @@
 import type * as hast from "hast";
 import { h } from "hastscript";
 import { toHtml } from "hast-util-to-html";
-import * as parse5 from "parse5";
-import { fromParse5 } from "hast-util-from-parse5";
 import rehypeMinifyWhitespace from "rehype-minify-whitespace";
 import { unified } from "unified";
 import * as postcss from "postcss";
@@ -10,6 +8,7 @@ import * as CSSwhat from "css-what";
 import { isNonVisualElement } from "@seanchas116/paintkit/src/util/HTMLTagCategory";
 import { getOrSetDefault } from "@seanchas116/paintkit/src/util/Collection";
 import { formatHTML } from "../util/Format";
+import { parseHTMLFragment } from "../util/Hast";
 import { Component } from "./Component";
 import { Document } from "./Document";
 import { DefaultVariant, Variant } from "./Variant";
@@ -337,13 +336,6 @@ function loadDocument(hastNodes: hast.Content[]): Document {
 export function stringifyDocument(document: Document): string {
   const html = toHtml(dumpDocument(document));
   return formatHTML(html);
-}
-
-function parseHTMLFragment(data: string): hast.Root {
-  const p5ast = parse5.parseFragment(data);
-  //@ts-ignore
-  const hast: hast.Root = fromParse5(p5ast);
-  return unified().use(rehypeMinifyWhitespace).runSync(hast);
 }
 
 export function parseDocument(data: string): Document {
