@@ -101,7 +101,7 @@ export class StyleInspectorState {
 
   @computed get instances(): ElementInstance[] {
     return this.selectedNonSVGInstances.filter(
-      (instance) => instance.element.id
+      (instance) => instance.element.id || !instance.element.parent
     );
   }
 
