@@ -4,18 +4,35 @@ import {
   Pane,
   PaneHeading,
   PaneHeadingRow,
-  Row12,
   RowGroup,
 } from "@seanchas116/paintkit/src/components/sidebar/Inspector";
 import { isReplacedElement } from "@seanchas116/paintkit/src/util/HTMLTagCategory";
-import { Label } from "@seanchas116/paintkit/src/components/Label";
-import Tippy from "@tippyjs/react";
+import sizeFillIcon from "@seanchas116/paintkit/src/icon/SizeFill";
+import sizeCoverIcon from "@seanchas116/paintkit/src/icon/SizeCover";
+import sizeContainIcon from "@seanchas116/paintkit/src/icon/SizeContain";
+import closeIcon from "@iconify-icons/ic/outline-close";
+import { IconRadioOption } from "@seanchas116/paintkit/src/components/IconRadio";
 import { StyleInspectorState } from "../../../../state/StyleInspectorState";
-import { StyleSelect } from "./Components";
+import { StyleIconRadio } from "./Components";
 
-const objectFitOptions = ["contain", "cover", "fill", "none", "scale-down"].map(
-  (value) => ({ value })
-);
+const objectFitOptions: IconRadioOption<string>[] = [
+  {
+    value: "fill",
+    icon: sizeFillIcon,
+  },
+  {
+    value: "cover",
+    icon: sizeCoverIcon,
+  },
+  {
+    value: "contain",
+    icon: sizeContainIcon,
+  },
+  {
+    value: "none",
+    icon: closeIcon,
+  },
+];
 
 export const ImagePane: React.FC<{
   state: StyleInspectorState;
@@ -35,13 +52,10 @@ export const ImagePane: React.FC<{
         <PaneHeading>Image</PaneHeading>
       </PaneHeadingRow>
       <RowGroup>
-        <Row12>
-          <Label>object-fit</Label>
-          <StyleSelect
-            property={state.props.objectFit}
-            options={objectFitOptions}
-          />
-        </Row12>
+        <StyleIconRadio
+          property={state.props.objectFit}
+          options={objectFitOptions}
+        />
       </RowGroup>
     </Pane>
   );
