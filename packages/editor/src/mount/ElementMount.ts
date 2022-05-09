@@ -113,8 +113,6 @@ export class ChildMountSync {
   private readonly disposers: (() => void)[] = [];
 }
 
-const vscodeURLResolver = new VSCodeResourceURLResolver();
-
 export class ElementMount {
   private static domToMount = new WeakMap<globalThis.Element, ElementMount>();
 
@@ -172,7 +170,7 @@ export class ElementMount {
 
     for (const [key, value] of this.instance.element.attrs) {
       if (this.instance.element.tagName === "img" && key === "src") {
-        const resolved = vscodeURLResolver.resolve(
+        const resolved = VSCodeResourceURLResolver.instance.resolve(
           this.context.editorState.resolveImageAssetURL(value)
         );
         if (resolved) {

@@ -32,4 +32,6 @@ export class VSCodeResourceURLResolver {
     })();
     this.pending.set(src, promise);
   }
+
+  static readonly instance = new VSCodeResourceURLResolver();
 }
