@@ -1,4 +1,7 @@
-import { isReplacedElement } from "@seanchas116/paintkit/src/util/HTMLTagCategory";
+import {
+  isReplacedElement,
+  isSVGTagName,
+} from "@seanchas116/paintkit/src/util/HTMLTagCategory";
 import { MIXED, sameOrMixed } from "@seanchas116/paintkit/src/util/Mixed";
 import { startCase } from "lodash-es";
 import { action, computed, makeObservable, observable } from "mobx";
@@ -82,8 +85,22 @@ export class StyleInspectorState {
 
   readonly editorState: EditorState;
 
-  @computed get instances(): ElementInstance[] {
+  @computed private get selectedNonSVGInstances(): ElementInstance[] {
     return this.editorState.document.selectedElementInstances.filter(
+      (instance) => {
+        if (!isSVGTagName(instance.element.tagName)) {
+          return true;
+        }
+        if (instance.element.tagName === "svg") {
+          return true;
+        }
+        return false;
+      }
+    );
+  }
+
+  @computed get instances(): ElementInstance[] {
+    return this.selectedNonSVGInstances.filter(
       (instance) => instance.element.id
     );
   }
@@ -139,13 +156,12 @@ export class StyleInspectorState {
 
   @computed get mustAssignID(): boolean {
     return (
-      this.instances.length === 0 &&
-      this.editorState.document.selectedElementInstances.length > 0
+      this.instances.length === 0 && this.selectedNonSVGInstances.length > 0
     );
   }
 
   readonly onAssignID = action(() => {
-    for (const instance of this.editorState.document.selectedElementInstances) {
+    for (const instance of this.selectedNonSVGInstances) {
       if (!instance.element.id) {
         instance.element.setID(instance.element.tagName);
       }
