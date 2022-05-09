@@ -159,10 +159,6 @@ const justifyContentOptionsColumnReverse = justifyContentOptionsRow.map(
 export const LayoutPane: React.FC<{
   state: StyleInspectorState;
 }> = observer(function LayoutPane({ state }) {
-  if (state.styles.length === 0) {
-    return null;
-  }
-
   const computedDisplay = state.props.display.computed;
   const computedFlexDirection = state.props.flexDirection.computed;
 

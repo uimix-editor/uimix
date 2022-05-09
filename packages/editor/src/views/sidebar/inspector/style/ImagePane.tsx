@@ -6,7 +6,6 @@ import {
   PaneHeadingRow,
   RowGroup,
 } from "@seanchas116/paintkit/src/components/sidebar/Inspector";
-import { isReplacedElement } from "@seanchas116/paintkit/src/util/HTMLTagCategory";
 import sizeFillIcon from "@seanchas116/paintkit/src/icon/SizeFill";
 import sizeCoverIcon from "@seanchas116/paintkit/src/icon/SizeCover";
 import sizeContainIcon from "@seanchas116/paintkit/src/icon/SizeContain";
@@ -37,10 +36,7 @@ const objectFitOptions: IconRadioOption<string>[] = [
 export const ImagePane: React.FC<{
   state: StyleInspectorState;
 }> = observer(function ImagePane({ state }) {
-  const imageSelected = state.selectedInstances.some((instance) =>
-    isReplacedElement(instance.element.tagName)
-  );
-  if (!imageSelected) {
+  if (!state.imageInstances.length) {
     return null;
   }
 

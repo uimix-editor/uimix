@@ -14,10 +14,6 @@ import { StyleInput } from "./Components";
 export const EffectsPane: React.FC<{
   state: StyleInspectorState;
 }> = observer(function EffectsPane({ state }) {
-  if (state.styles.length === 0) {
-    return null;
-  }
-
   return (
     <Pane>
       <PaneHeadingRow>

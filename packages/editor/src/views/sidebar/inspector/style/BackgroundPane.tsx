@@ -13,10 +13,6 @@ import { StyleColorInput } from "./Components";
 export const BackgroundPane: React.FC<{
   state: StyleInspectorState;
 }> = observer(function BackgroundPane({ state }) {
-  if (state.styles.length === 0) {
-    return null;
-  }
-
   return (
     <Pane>
       <PaneHeadingRow>

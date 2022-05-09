@@ -22,10 +22,6 @@ import { StyleDimensionInput } from "./Components";
 export const SizePane: React.FC<{
   state: StyleInspectorState;
 }> = observer(function SizePane({ state }) {
-  if (state.styles.length === 0) {
-    return null;
-  }
-
   const separateRadiusesButton = (
     <IconButton
       style={{

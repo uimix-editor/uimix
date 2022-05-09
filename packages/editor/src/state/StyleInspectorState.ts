@@ -1,8 +1,9 @@
+import { isReplacedElement } from "@seanchas116/paintkit/src/util/HTMLTagCategory";
 import { MIXED, sameOrMixed } from "@seanchas116/paintkit/src/util/Mixed";
 import { startCase } from "lodash-es";
 import { action, computed, makeObservable, observable } from "mobx";
 import { ElementInstance } from "../models/ElementInstance";
-import { ExtraStyleKey, extraStyleKeys, Style } from "../models/Style";
+import { ExtraStyleKey, extraStyleKeys } from "../models/Style";
 import { EditorState } from "./EditorState";
 
 export class StylePropertyState {
@@ -15,9 +16,28 @@ export class StylePropertyState {
   readonly state: StyleInspectorState;
   readonly key: ExtraStyleKey;
 
+  @computed get targetInstances(): ElementInstance[] {
+    switch (this.key) {
+      case "objectFit":
+        return this.state.imageInstances;
+      case "color":
+      case "fontFamily":
+      case "fontWeight":
+      case "fontStyle":
+      case "fontSize":
+      case "lineHeight":
+      case "letterSpacing":
+      case "textDecorationLine":
+      case "textAlign":
+        return this.state.nonReplacedInstances;
+      default:
+        return this.state.instances;
+    }
+  }
+
   @computed get computed(): string | undefined {
     const value = sameOrMixed(
-      this.state.computedStyles.map((style) => style[this.key])
+      this.targetInstances.map((i) => i.computedStyle[this.key])
     );
     if (value === MIXED) {
       return;
@@ -26,12 +46,12 @@ export class StylePropertyState {
   }
 
   @computed get value(): string | typeof MIXED | undefined {
-    return sameOrMixed(this.state.styles.map((style) => style[this.key]));
+    return sameOrMixed(this.targetInstances.map((i) => i.style[this.key]));
   }
 
   readonly onChangeWithoutCommit = action((value?: string) => {
-    for (const style of this.state.styles) {
-      style[this.key] = value || undefined;
+    for (const instance of this.targetInstances) {
+      instance.style[this.key] = value || undefined;
     }
     return true;
   });
@@ -42,8 +62,8 @@ export class StylePropertyState {
   });
 
   readonly onChange = action((value?: string) => {
-    for (const style of this.state.styles) {
-      style[this.key] = value || undefined;
+    for (const instance of this.targetInstances) {
+      instance.style[this.key] = value || undefined;
     }
     this.state.editorState.history.commit(`Change ${startCase(this.key)}`);
     return true;
@@ -68,11 +88,13 @@ export class StyleInspectorState {
     );
   }
 
-  @computed get styles(): Style[] {
-    return this.instances.map((instance) => instance.style);
+  @computed get imageInstances(): ElementInstance[] {
+    // TODO: include other replaced elements?
+    return this.instances.filter((i) => i.element.tagName === "img");
   }
-  @computed get computedStyles(): Style[] {
-    return this.instances.map((instance) => instance.computedStyle);
+
+  @computed get nonReplacedInstances(): ElementInstance[] {
+    return this.instances.filter((i) => !isReplacedElement(i.element.tagName));
   }
 
   readonly props: Record<ExtraStyleKey, StylePropertyState>;
@@ -110,7 +132,7 @@ export class StyleInspectorState {
 
   @computed get mustAssignID(): boolean {
     return (
-      this.styles.length === 0 &&
+      this.instances.length === 0 &&
       this.editorState.document.selectedElementInstances.length > 0
     );
   }

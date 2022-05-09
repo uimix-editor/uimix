@@ -36,7 +36,7 @@ export const StyleInspector: React.FC = observer(function StyleInspector() {
     );
   }
 
-  if (state.styles.length === 0) {
+  if (state.instances.length === 0) {
     return null;
   }
 
