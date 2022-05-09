@@ -33,8 +33,8 @@ const TextareaWrap = styled.div`
 
 const Textarea = styled.textarea`
   display: block;
-  width: 400px;
-  height: 200px;
+  width: 320px;
+  height: 80px;
   background: ${colors.uiBackground};
   border-radius: 4px;
   color: ${colors.text};
@@ -69,6 +69,7 @@ export const InnerHTMLEditorBody: React.FC<{
           left: `${bbox.left}px`,
           top: `${bbox.bottom}px`,
         }}
+        onWheel={(e) => e.stopPropagation()}
       >
         <Textarea
           value={value}
@@ -78,6 +79,8 @@ export const InnerHTMLEditorBody: React.FC<{
 
             const node = parseHTMLFragment(value);
             target.setInnerHTML(node.children);
+
+            editorState.history.commitDebounced("Change Inner HTML");
           }}
         />
       </TextareaWrap>
