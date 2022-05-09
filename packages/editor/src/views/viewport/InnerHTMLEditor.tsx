@@ -1,3 +1,5 @@
+import { popoverStyle } from "@seanchas116/paintkit/src/components/Common";
+import { colors } from "@seanchas116/paintkit/src/components/Palette";
 import { observer } from "mobx-react-lite";
 import styled from "styled-components";
 import { useEditorState } from "../EditorStateContext";
@@ -11,12 +13,48 @@ const InnerHTMLEditorWrap = styled.div`
   background: rgba(0, 0, 0, 0.1);
 `;
 
+const TextareaWrap = styled.div`
+  position: absolute;
+  ${popoverStyle}
+  padding: 4px;
+`;
+
+const Textarea = styled.textarea`
+  display: block;
+  width: 400px;
+  height: 200px;
+  background: ${colors.uiBackground};
+  border-radius: 4px;
+  color: ${colors.text};
+  padding: 6px;
+  font-size: 12px;
+  color: ${colors.text};
+  resize: both;
+`;
+
 export const InnerHTMLEditor: React.FC = observer(() => {
   const editorState = useEditorState();
 
-  if (!editorState.innerHTMLEditTarget) {
+  const target = editorState.innerHTMLEditTarget;
+
+  if (!target) {
     return null;
   }
 
-  return <InnerHTMLEditorWrap></InnerHTMLEditorWrap>;
+  const bbox = target.boundingBox.transform(
+    editorState.scroll.documentToViewport
+  );
+
+  return (
+    <InnerHTMLEditorWrap>
+      <TextareaWrap
+        style={{
+          left: `${bbox.left}px`,
+          top: `${bbox.bottom}px`,
+        }}
+      >
+        <Textarea />
+      </TextareaWrap>
+    </InnerHTMLEditorWrap>
+  );
 });
