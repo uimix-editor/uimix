@@ -83,7 +83,7 @@ function stripQuotes(value: string | undefined): string | undefined {
 export const TextPane: React.FC<{
   state: StyleInspectorState;
 }> = observer(function TextPane({ state }) {
-  if (!state.nonReplacedInstances.length) {
+  if (!state.textInstances.length) {
     return null;
   }
 

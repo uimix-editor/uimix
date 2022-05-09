@@ -12,6 +12,7 @@ import { ImagePane } from "./ImagePane";
 import { LayoutPane } from "./LayoutPane";
 import { PositionPane } from "./PositionPane";
 import { SizePane } from "./SizePane";
+import { SVGPane } from "./SVGPane";
 import { TextPane } from "./TextPane";
 
 const StyleInspectorWrap = styled.div``;
@@ -46,6 +47,7 @@ export const StyleInspector: React.FC = observer(function StyleInspector() {
       <SizePane state={state} />
       <LayoutPane state={state} />
       <TextPane state={state} />
+      <SVGPane state={state} />
       <ImagePane state={state} />
       <BackgroundPane state={state} />
       <BorderPane state={state} />

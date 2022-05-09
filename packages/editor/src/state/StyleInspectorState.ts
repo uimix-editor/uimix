@@ -22,11 +22,15 @@ export class StylePropertyState {
   readonly key: ExtraStyleKey;
 
   @computed get targetInstances(): ElementInstance[] {
+    if (this.key === "color") {
+      return [...this.state.textInstances, ...this.state.svgInstances];
+    }
+
     if (imageStyleKeys.includes(this.key as never)) {
       return this.state.imageInstances;
     }
     if (textStyleKeys.includes(this.key as never)) {
-      return this.state.nonReplacedInstances;
+      return this.state.textInstances;
     }
     return this.state.instances;
   }
@@ -89,8 +93,15 @@ export class StyleInspectorState {
     return this.instances.filter((i) => i.element.tagName === "img");
   }
 
-  @computed get nonReplacedInstances(): ElementInstance[] {
-    return this.instances.filter((i) => !isReplacedElement(i.element.tagName));
+  @computed get textInstances(): ElementInstance[] {
+    return this.instances.filter(
+      (i) =>
+        !isReplacedElement(i.element.tagName) && i.element.tagName !== "svg"
+    );
+  }
+
+  @computed get svgInstances(): ElementInstance[] {
+    return this.instances.filter((i) => i.element.tagName === "svg");
   }
 
   readonly props: Record<ExtraStyleKey, StylePropertyState>;
