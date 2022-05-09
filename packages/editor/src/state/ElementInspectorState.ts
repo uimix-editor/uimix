@@ -77,6 +77,8 @@ export class ElementInspectorState {
     return value;
   }
 
+  // attributes
+
   @observable.ref selectedAttrKeys: ReadonlySet<string> = new Set();
   readonly onChangeSelectedAttrKeys = action(
     (keys: Set<string>) => (this.selectedAttrKeys = keys)
@@ -172,4 +174,21 @@ export class ElementInspectorState {
     return true;
   }
   readonly onChangeAttrValue = action(this.changeAttrValue.bind(this));
+
+  // img
+
+  @computed get selectedImgElements(): Element[] {
+    return this.selectedElements.filter((e) => e.tagName === "img");
+  }
+
+  @computed get imgSrc(): string | typeof MIXED | undefined {
+    return sameOrMixed(this.selectedImgElements.map((e) => e.attrs.get("src")));
+  }
+
+  readonly onImgSrcChange = action((src: string) => {
+    for (const e of this.selectedImgElements) {
+      e.attrs.set("src", src);
+    }
+    return true;
+  });
 }
