@@ -7,6 +7,7 @@ import { toHtml } from "hast-util-to-html";
 import { ElementInstance } from "../../models/ElementInstance";
 import { useEditorState } from "../EditorStateContext";
 import { formatHTML } from "../../util/Format";
+import { parseHTMLFragment } from "../../util/Hast";
 
 const InnerHTMLEditorWrap = styled.div`
   position: absolute;
@@ -72,7 +73,11 @@ export const InnerHTMLEditorBody: React.FC<{
         <Textarea
           value={value}
           onChange={(e) => {
-            setValue(e.target.value);
+            const value = e.target.value;
+            setValue(value);
+
+            const node = parseHTMLFragment(value);
+            target.setInnerHTML(node.children);
           }}
         />
       </TextareaWrap>
