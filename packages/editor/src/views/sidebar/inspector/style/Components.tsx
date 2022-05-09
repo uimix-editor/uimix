@@ -7,7 +7,10 @@ import {
 } from "@seanchas116/paintkit/src/components/IconRadio";
 import { Input } from "@seanchas116/paintkit/src/components/Input";
 import { CSSColorInput } from "@seanchas116/paintkit/src/components/css/CSSColorInput";
-import { SelectItem } from "@seanchas116/paintkit/src/components/Select";
+import {
+  Select,
+  SelectItem,
+} from "@seanchas116/paintkit/src/components/Select";
 import { kebabCase } from "lodash-es";
 import { observer } from "mobx-react-lite";
 import React from "react";
@@ -98,6 +101,24 @@ export const StyleIconRadio: React.FC<{
       value={property.value}
       placeholder={property.computed}
       unsettable
+      onChange={property.onChange}
+    />
+  );
+});
+
+export const StyleSelect: React.FC<{
+  className?: string;
+  property: StylePropertyState;
+  label?: string;
+  icon?: IconifyIcon;
+  options?: SelectItem[];
+}> = observer(({ property, ...props }) => {
+  return (
+    <Select
+      {...props}
+      title={kebabCase(property.key)}
+      placeholder={property.computed}
+      value={property.value}
       onChange={property.onChange}
     />
   );

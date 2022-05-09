@@ -8,6 +8,7 @@ import { useEditorState } from "../../../EditorStateContext";
 import { BackgroundPane } from "./BackgroundPane";
 import { BorderPane } from "./BorderPane";
 import { EffectsPane } from "./EffectsPane";
+import { ImagePane } from "./ImagePane";
 import { LayoutPane } from "./LayoutPane";
 import { PositionPane } from "./PositionPane";
 import { SizePane } from "./SizePane";
@@ -45,6 +46,7 @@ export const StyleInspector: React.FC = observer(function StyleInspector() {
       <SizePane state={state} />
       <LayoutPane state={state} />
       <TextPane state={state} />
+      <ImagePane state={state} />
       <BackgroundPane state={state} />
       <BorderPane state={state} />
       <EffectsPane state={state} />
