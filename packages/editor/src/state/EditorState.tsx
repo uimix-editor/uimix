@@ -4,6 +4,7 @@ import { isTextInputFocused } from "@seanchas116/paintkit/src/util/CurrentFocus"
 import { Scroll } from "@seanchas116/paintkit/src/util/Scroll";
 import { action, computed, makeObservable, observable } from "mobx";
 import { Rect, Vec2 } from "paintvec";
+import { SelectItem } from "@seanchas116/paintkit/src/components/Select";
 import { Component } from "../models/Component";
 import { Document, DocumentJSON } from "../models/Document";
 import { Element } from "../models/Element";
@@ -14,6 +15,7 @@ import { Variant } from "../models/Variant";
 import { ElementPicker } from "../mount/ElementPicker";
 import { snapThreshold } from "../views/viewport/Constants";
 import { IconBrowserState } from "../views/sidebar/outline/IconBrowserState";
+import { VSCodeResourceURLResolver } from "../mount/VSCodeResourceURLResolver";
 import { ElementInspectorState } from "./ElementInspectorState";
 import { VariantInspectorState } from "./VariantInspectorState";
 import { InsertMode } from "./InsertMode";
@@ -35,8 +37,19 @@ export abstract class EditorState {
     return [];
   }
 
+  private readonly vsCodeResourceURLResolver = new VSCodeResourceURLResolver();
+
   resolveImageAssetURL(assetPath: string): string {
     return assetPath;
+  }
+
+  // observable
+  // (this function may return undefined if the value is not yet available.
+  // use this function in a reaction/computed to wait for the value to be available.)
+  resolveImageAssetURLForIFrame(assetPath: string): string | undefined {
+    return this.vsCodeResourceURLResolver.resolve(
+      this.resolveImageAssetURL(assetPath)
+    );
   }
 
   get document(): Document {
@@ -242,5 +255,23 @@ export abstract class EditorState {
         this.panMode = false;
         break;
     }
+  }
+
+  @computed get imageURLOptions(): SelectItem[] {
+    return this.imageAssets.map((file) => ({
+      value: file,
+      text: file,
+      icon: (
+        <img
+          style={{
+            width: "20px",
+            height: "20px",
+            objectFit: "contain",
+          }}
+          loading="lazy"
+          src={this.resolveImageAssetURL(file)}
+        />
+      ),
+    }));
   }
 }

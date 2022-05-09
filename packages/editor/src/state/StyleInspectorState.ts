@@ -1,8 +1,17 @@
+import {
+  isReplacedElement,
+  isSVGTagName,
+} from "@seanchas116/paintkit/src/util/HTMLTagCategory";
 import { MIXED, sameOrMixed } from "@seanchas116/paintkit/src/util/Mixed";
 import { startCase } from "lodash-es";
 import { action, computed, makeObservable, observable } from "mobx";
 import { ElementInstance } from "../models/ElementInstance";
-import { ExtraStyleKey, extraStyleKeys, Style } from "../models/Style";
+import {
+  ExtraStyleKey,
+  extraStyleKeys,
+  imageStyleKeys,
+  textStyleKeys,
+} from "../models/Style";
 import { EditorState } from "./EditorState";
 
 export class StylePropertyState {
@@ -15,9 +24,23 @@ export class StylePropertyState {
   readonly state: StyleInspectorState;
   readonly key: ExtraStyleKey;
 
+  @computed get targetInstances(): ElementInstance[] {
+    if (this.key === "color") {
+      return [...this.state.textInstances, ...this.state.svgInstances];
+    }
+
+    if (imageStyleKeys.includes(this.key as never)) {
+      return this.state.imageInstances;
+    }
+    if (textStyleKeys.includes(this.key as never)) {
+      return this.state.textInstances;
+    }
+    return this.state.instances;
+  }
+
   @computed get computed(): string | undefined {
     const value = sameOrMixed(
-      this.state.computedStyles.map((style) => style[this.key])
+      this.targetInstances.map((i) => i.computedStyle[this.key])
     );
     if (value === MIXED) {
       return;
@@ -26,12 +49,12 @@ export class StylePropertyState {
   }
 
   @computed get value(): string | typeof MIXED | undefined {
-    return sameOrMixed(this.state.styles.map((style) => style[this.key]));
+    return sameOrMixed(this.targetInstances.map((i) => i.style[this.key]));
   }
 
   readonly onChangeWithoutCommit = action((value?: string) => {
-    for (const style of this.state.styles) {
-      style[this.key] = value || undefined;
+    for (const instance of this.targetInstances) {
+      instance.style[this.key] = value || undefined;
     }
     return true;
   });
@@ -42,8 +65,8 @@ export class StylePropertyState {
   });
 
   readonly onChange = action((value?: string) => {
-    for (const style of this.state.styles) {
-      style[this.key] = value || undefined;
+    for (const instance of this.targetInstances) {
+      instance.style[this.key] = value || undefined;
     }
     this.state.editorState.history.commit(`Change ${startCase(this.key)}`);
     return true;
@@ -62,17 +85,40 @@ export class StyleInspectorState {
 
   readonly editorState: EditorState;
 
-  @computed get selectedInstances(): ElementInstance[] {
+  @computed private get selectedNonSVGInstances(): ElementInstance[] {
     return this.editorState.document.selectedElementInstances.filter(
+      (instance) => {
+        if (!isSVGTagName(instance.element.tagName)) {
+          return true;
+        }
+        if (instance.element.tagName === "svg") {
+          return true;
+        }
+        return false;
+      }
+    );
+  }
+
+  @computed get instances(): ElementInstance[] {
+    return this.selectedNonSVGInstances.filter(
       (instance) => instance.element.id
     );
   }
 
-  @computed get styles(): Style[] {
-    return this.selectedInstances.map((instance) => instance.style);
+  @computed get imageInstances(): ElementInstance[] {
+    // TODO: include other replaced elements?
+    return this.instances.filter((i) => i.element.tagName === "img");
   }
-  @computed get computedStyles(): Style[] {
-    return this.selectedInstances.map((instance) => instance.computedStyle);
+
+  @computed get textInstances(): ElementInstance[] {
+    return this.instances.filter(
+      (i) =>
+        !isReplacedElement(i.element.tagName) && i.element.tagName !== "svg"
+    );
+  }
+
+  @computed get svgInstances(): ElementInstance[] {
+    return this.instances.filter((i) => i.element.tagName === "svg");
   }
 
   readonly props: Record<ExtraStyleKey, StylePropertyState>;
@@ -110,13 +156,12 @@ export class StyleInspectorState {
 
   @computed get mustAssignID(): boolean {
     return (
-      this.styles.length === 0 &&
-      this.editorState.document.selectedElementInstances.length > 0
+      this.instances.length === 0 && this.selectedNonSVGInstances.length > 0
     );
   }
 
   readonly onAssignID = action(() => {
-    for (const instance of this.editorState.document.selectedElementInstances) {
+    for (const instance of this.selectedNonSVGInstances) {
       if (!instance.element.id) {
         instance.element.setID(instance.element.tagName);
       }

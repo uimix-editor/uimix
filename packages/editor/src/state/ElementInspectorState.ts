@@ -3,6 +3,7 @@ import { MIXED, sameOrMixed } from "@seanchas116/paintkit/src/util/Mixed";
 import { filterInstance } from "@seanchas116/paintkit/src/util/Collection";
 import { getIncrementalUniqueName } from "@seanchas116/paintkit/src/util/Name";
 import { toHtml } from "hast-util-to-html";
+import { isVoidElement } from "@seanchas116/paintkit/src/util/HTMLTagCategory";
 import { Element } from "../models/Element";
 import { formatHTML } from "../util/Format";
 import { EditorState } from "./EditorState";
@@ -67,6 +68,10 @@ export class ElementInspectorState {
     return true;
   });
 
+  @computed get canEditInnerHTML(): boolean {
+    return this.selectedElements.some((e) => !isVoidElement(e.tagName));
+  }
+
   @computed get innerHTML(): string | typeof MIXED | undefined {
     const value = sameOrMixed(
       this.selectedElements.map((element) => toHtml(element.innerHTML))
@@ -76,6 +81,8 @@ export class ElementInspectorState {
     }
     return value;
   }
+
+  // attributes
 
   @observable.ref selectedAttrKeys: ReadonlySet<string> = new Set();
   readonly onChangeSelectedAttrKeys = action(
@@ -172,4 +179,21 @@ export class ElementInspectorState {
     return true;
   }
   readonly onChangeAttrValue = action(this.changeAttrValue.bind(this));
+
+  // img
+
+  @computed get selectedImgElements(): Element[] {
+    return this.selectedElements.filter((e) => e.tagName === "img");
+  }
+
+  @computed get imgSrc(): string | typeof MIXED | undefined {
+    return sameOrMixed(this.selectedImgElements.map((e) => e.attrs.get("src")));
+  }
+
+  readonly onImgSrcChange = action((src: string) => {
+    for (const e of this.selectedImgElements) {
+      e.attrs.set("src", src);
+    }
+    return true;
+  });
 }

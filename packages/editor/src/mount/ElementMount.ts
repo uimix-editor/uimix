@@ -1,4 +1,4 @@
-import { reaction } from "mobx";
+import { computed, reaction } from "mobx";
 import { Rect } from "paintvec";
 import { kebabCase } from "lodash-es";
 import { isSVGTagName } from "@seanchas116/paintkit/src/util/HTMLTagCategory";
@@ -9,7 +9,6 @@ import { styleKeys } from "../models/Style";
 import { getInstance } from "../models/InstanceRegistry";
 import { TextMount } from "./TextMount";
 import { MountContext } from "./MountContext";
-import { VSCodeResourceURLResolver } from "./VSCodeResourceURLResolver";
 
 export class ChildMountSync {
   constructor(
@@ -113,8 +112,6 @@ export class ChildMountSync {
   private readonly disposers: (() => void)[] = [];
 }
 
-const vscodeURLResolver = new VSCodeResourceURLResolver();
-
 export class ElementMount {
   private static domToMount = new WeakMap<globalThis.Element, ElementMount>();
 
@@ -152,29 +149,39 @@ export class ElementMount {
 
     this.disposers.push(
       reaction(
-        () => this.instance.element.allAttrs,
+        () => this.attributes,
         (attrs) => {
           for (const attribute of this.dom.attributes) {
             this.dom.removeAttribute(attribute.name);
           }
-          for (const [key, value] of Object.entries(attrs)) {
-            if (this.instance.element.tagName === "img" && key === "src") {
-              void vscodeURLResolver
-                .generateDataURL(
-                  this.context.editorState.resolveImageAssetURL(value)
-                )
-                .then((url) => {
-                  this.dom.setAttribute(key, url);
-                });
-            } else {
-              this.dom.setAttribute(key, value);
-            }
+          for (const [key, value] of attrs) {
+            this.dom.setAttribute(key, value);
           }
           this.updateBoundingBoxLater();
         },
         { fireImmediately: true }
       )
     );
+  }
+
+  @computed get attributes(): Map<string, string> {
+    const attributes = new Map<string, string>();
+
+    for (const [key, value] of this.instance.element.attrs) {
+      if (this.instance.element.tagName === "img" && key === "src") {
+        const resolved =
+          this.context.editorState.resolveImageAssetURLForIFrame(value);
+        if (resolved) {
+          attributes.set(key, resolved);
+        }
+      } else {
+        attributes.set(key, value);
+      }
+    }
+
+    attributes.set("id", this.instance.element.id);
+
+    return attributes;
   }
 
   dispose(): void {

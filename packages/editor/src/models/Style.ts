@@ -3,6 +3,20 @@ import { camelCase, kebabCase } from "lodash-es";
 import { makeObservable, observable } from "mobx";
 import * as postcss from "postcss";
 
+export const textStyleKeys = [
+  "color",
+  "fontFamily",
+  "fontWeight",
+  "fontStyle",
+  "fontSize",
+  "lineHeight",
+  "letterSpacing",
+  "textDecorationLine",
+  "textAlign",
+] as const;
+
+export const imageStyleKeys = ["objectFit"] as const;
+
 export const styleKeys = [
   "position",
   "top",
@@ -37,15 +51,8 @@ export const styleKeys = [
   "rowGap",
   "columnGap",
 
-  "color",
-  "fontFamily",
-  "fontWeight",
-  "fontStyle",
-  "fontSize",
-  "lineHeight",
-  "letterSpacing",
-  "textDecorationLine",
-  "textAlign",
+  ...textStyleKeys,
+  ...imageStyleKeys,
 
   "backgroundImage",
   "backgroundColor",

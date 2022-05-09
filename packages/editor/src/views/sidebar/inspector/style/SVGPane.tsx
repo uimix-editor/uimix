@@ -4,26 +4,27 @@ import {
   Pane,
   PaneHeading,
   PaneHeadingRow,
-  Row111,
   RowGroup,
 } from "@seanchas116/paintkit/src/components/sidebar/Inspector";
-import opacityIcon from "@iconify-icons/ic/outline-opacity";
 import { StyleInspectorState } from "../../../../state/StyleInspectorState";
-import { StyleInput } from "./Components";
+import { StyleColorInput } from "./Components";
 
-export const EffectsPane: React.FC<{
+export const SVGPane: React.FC<{
   state: StyleInspectorState;
-}> = observer(function EffectsPane({ state }) {
+}> = observer(function SVGPane({ state }) {
+  if (state.svgInstances.length === 0 || state.textInstances.length) {
+    return null;
+  }
+
+  // TODO: better object-fit toggle group
+
   return (
     <Pane>
       <PaneHeadingRow>
-        <PaneHeading>Effects</PaneHeading>
+        <PaneHeading>SVG</PaneHeading>
       </PaneHeadingRow>
-
       <RowGroup>
-        <Row111>
-          <StyleInput icon={opacityIcon} property={state.props.opacity} />
-        </Row111>
+        <StyleColorInput property={state.props.color} />
       </RowGroup>
     </Pane>
   );

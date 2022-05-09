@@ -51,10 +51,6 @@ const borderStyleOptions = [
 export const BorderPane: React.FC<{
   state: StyleInspectorState;
 }> = observer(function BorderPane({ state }) {
-  if (state.styles.length === 0) {
-    return null;
-  }
-
   let color: StylePropertyState;
   let width: StylePropertyState;
   let style: StylePropertyState;

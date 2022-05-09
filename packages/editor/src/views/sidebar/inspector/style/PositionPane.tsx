@@ -36,10 +36,6 @@ const positionOptions = [
 export const PositionPane: React.FC<{
   state: StyleInspectorState;
 }> = observer(function PositionPane({ state }) {
-  if (state.styles.length === 0) {
-    return null;
-  }
-
   return (
     <Pane>
       <PaneHeadingRow>
