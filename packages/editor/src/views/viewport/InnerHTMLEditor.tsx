@@ -5,6 +5,7 @@ import { observer } from "mobx-react-lite";
 import { useEffect, useState } from "react";
 import styled from "styled-components";
 import { toHtml } from "hast-util-to-html";
+import { action } from "mobx";
 import { ElementInstance } from "../../models/ElementInstance";
 import { useEditorState } from "../EditorStateContext";
 import { formatHTML } from "../../util/Format";
@@ -70,9 +71,9 @@ export const InnerHTMLEditorBody: React.FC<{
   return (
     <InnerHTMLEditorWrap>
       <Background
-        onClick={() => {
+        onClick={action(() => {
           editorState.innerHTMLEditTarget = undefined;
-        }}
+        })}
       />
       <TextareaWrap
         style={{
@@ -84,7 +85,7 @@ export const InnerHTMLEditorBody: React.FC<{
         <Textarea
           ref={textareaRef}
           value={value}
-          onChange={(e) => {
+          onChange={action((e) => {
             const value = e.target.value;
             setValue(value);
 
@@ -92,7 +93,7 @@ export const InnerHTMLEditorBody: React.FC<{
             target.setInnerHTML(node.children);
 
             editorState.history.commitDebounced("Change Inner HTML");
-          }}
+          })}
         />
       </TextareaWrap>
     </InnerHTMLEditorWrap>
