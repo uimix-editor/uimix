@@ -14,7 +14,14 @@ const InnerHTMLEditorWrap = styled.div`
   left: 0;
   width: 100%;
   height: 100%;
-  background: rgba(0, 0, 0, 0.1);
+`;
+
+const Background = styled.div`
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
 `;
 
 const TextareaWrap = styled.div`
@@ -51,6 +58,11 @@ export const InnerHTMLEditorBody: React.FC<{
 
   return (
     <InnerHTMLEditorWrap>
+      <Background
+        onClick={() => {
+          editorState.innerHTMLEditTarget = undefined;
+        }}
+      />
       <TextareaWrap
         style={{
           left: `${bbox.left}px`,
