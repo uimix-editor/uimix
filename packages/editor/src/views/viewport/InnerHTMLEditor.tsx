@@ -1,15 +1,17 @@
-import React from "react";
+import React, { useMemo } from "react";
 import { popoverStyle } from "@seanchas116/paintkit/src/components/Common";
 import { colors } from "@seanchas116/paintkit/src/components/Palette";
 import { observer } from "mobx-react-lite";
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import styled from "styled-components";
 import { toHtml } from "hast-util-to-html";
-import { action } from "mobx";
+import { action, computed, makeObservable, observable } from "mobx";
+import { Rect } from "paintvec";
 import { ElementInstance } from "../../models/ElementInstance";
 import { useEditorState } from "../EditorStateContext";
 import { formatHTML } from "../../util/Format";
 import { parseHTMLFragment } from "../../util/Hast";
+import { EditorState } from "../../state/EditorState";
 
 const InnerHTMLEditorWrap = styled.div`
   position: absolute;
@@ -46,18 +48,54 @@ const Textarea = styled.textarea`
   resize: both;
 `;
 
+class InnerHTMLEditorState {
+  constructor(editorState: EditorState, target: ElementInstance) {
+    this.editorState = editorState;
+    this.target = target;
+    this.value = formatHTML(toHtml(target.element.innerHTML));
+    makeObservable(this);
+  }
+
+  readonly editorState: EditorState;
+  readonly target: ElementInstance;
+
+  @computed get bbox(): Rect {
+    return this.target.boundingBox.transform(
+      this.editorState.scroll.documentToViewport
+    );
+  }
+
+  @observable value = "";
+
+  setValue(value: string): void {
+    this.value = value;
+
+    const node = parseHTMLFragment(value);
+    this.target.setInnerHTML(node.children);
+
+    this.editorState.history.commitDebounced("Change Inner HTML");
+  }
+
+  readonly onChangeValue = action(
+    (event: React.ChangeEvent<HTMLTextAreaElement>) => {
+      this.setValue(event.currentTarget.value);
+    }
+  );
+
+  readonly onEnd = action(() => {
+    this.editorState.innerHTMLEditTarget = undefined;
+  });
+}
+
 export const InnerHTMLEditorBody: React.FC<{
   target: ElementInstance;
 }> = observer(({ target }) => {
   const editorState = useEditorState();
 
-  const bbox = target.boundingBox.transform(
-    editorState.scroll.documentToViewport
+  const state = useMemo(
+    () => new InnerHTMLEditorState(editorState, target),
+    [editorState, target]
   );
-
-  const [value, setValue] = useState(() => {
-    return formatHTML(toHtml(target.element.innerHTML));
-  });
 
   const textareaRef = React.createRef<HTMLTextAreaElement>();
 
@@ -70,30 +108,18 @@ export const InnerHTMLEditorBody: React.FC<{
 
   return (
     <InnerHTMLEditorWrap>
-      <Background
-        onClick={action(() => {
-          editorState.innerHTMLEditTarget = undefined;
-        })}
-      />
+      <Background onClick={state.onEnd} />
       <TextareaWrap
         style={{
-          left: `${bbox.left}px`,
-          top: `${bbox.bottom}px`,
+          left: `${state.bbox.left}px`,
+          top: `${state.bbox.bottom}px`,
         }}
         onWheel={(e) => e.stopPropagation()}
       >
         <Textarea
           ref={textareaRef}
-          value={value}
-          onChange={action((e) => {
-            const value = e.target.value;
-            setValue(value);
-
-            const node = parseHTMLFragment(value);
-            target.setInnerHTML(node.children);
-
-            editorState.history.commitDebounced("Change Inner HTML");
-          })}
+          value={state.value}
+          onChange={state.onChangeValue}
         />
       </TextareaWrap>
     </InnerHTMLEditorWrap>
