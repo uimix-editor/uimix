@@ -50,6 +50,10 @@ const Textarea = styled.textarea`
   resize: both;
 `;
 
+function toFormattedHTML(hastNodes: hast.Content[]): string {
+  return formatHTML(toHtml(hastNodes));
+}
+
 class InnerHTMLEditorState {
   constructor(editorState: EditorState, target: ElementInstance) {
     makeObservable(this);
@@ -58,7 +62,7 @@ class InnerHTMLEditorState {
     this.target = target;
     const innerHTML = target.element.innerHTML;
     this.lastInnerHTML = innerHTML;
-    this.value = formatHTML(toHtml(innerHTML));
+    this.value = toFormattedHTML(innerHTML);
 
     this.disposers.push(
       reaction(
@@ -67,7 +71,7 @@ class InnerHTMLEditorState {
           if (isEqual(innerHTML, this.lastInnerHTML)) {
             return;
           }
-          this.value = formatHTML(toHtml(innerHTML));
+          this.value = toFormattedHTML(innerHTML);
         })
       )
     );
