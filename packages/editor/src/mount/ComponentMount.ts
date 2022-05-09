@@ -10,7 +10,6 @@ import { ElementInstance } from "../models/ElementInstance";
 import { DefaultVariant, Variant } from "../models/Variant";
 import { MountContext } from "./MountContext";
 import { VariantMount } from "./VariantMount";
-import { VSCodeResourceURLResolver } from "./VSCodeResourceURLResolver";
 
 export class ComponentMount {
   constructor(component: Component, context: MountContext) {
@@ -133,11 +132,9 @@ export class ComponentMount {
           if (node.type === "decl" && node.prop === "background-image") {
             // TODO: resolve URL
             // eslint-disable-next-line
-            node.value = replaceCSSURL(node.value, (url: string) => {
-              return VSCodeResourceURLResolver.instance.resolve(
-                this.context.editorState.resolveImageAssetURL(url)
-              );
-            });
+            node.value = replaceCSSURL(node.value, (url: string) =>
+              this.context.editorState.resolveImageAssetURLForIFrame(url)
+            );
           }
         }
 

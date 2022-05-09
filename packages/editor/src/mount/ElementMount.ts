@@ -9,7 +9,6 @@ import { styleKeys } from "../models/Style";
 import { getInstance } from "../models/InstanceRegistry";
 import { TextMount } from "./TextMount";
 import { MountContext } from "./MountContext";
-import { VSCodeResourceURLResolver } from "./VSCodeResourceURLResolver";
 
 export class ChildMountSync {
   constructor(
@@ -170,9 +169,8 @@ export class ElementMount {
 
     for (const [key, value] of this.instance.element.attrs) {
       if (this.instance.element.tagName === "img" && key === "src") {
-        const resolved = VSCodeResourceURLResolver.instance.resolve(
-          this.context.editorState.resolveImageAssetURL(value)
-        );
+        const resolved =
+          this.context.editorState.resolveImageAssetURLForIFrame(value);
         if (resolved) {
           attributes.set(key, resolved);
         }
