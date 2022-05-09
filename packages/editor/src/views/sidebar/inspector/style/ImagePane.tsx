@@ -4,9 +4,12 @@ import {
   Pane,
   PaneHeading,
   PaneHeadingRow,
+  Row12,
   RowGroup,
 } from "@seanchas116/paintkit/src/components/sidebar/Inspector";
 import { isReplacedElement } from "@seanchas116/paintkit/src/util/HTMLTagCategory";
+import { Label } from "@seanchas116/paintkit/src/components/Label";
+import Tippy from "@tippyjs/react";
 import { StyleInspectorState } from "../../../../state/StyleInspectorState";
 import { StyleSelect } from "./Components";
 
@@ -24,16 +27,21 @@ export const ImagePane: React.FC<{
     return null;
   }
 
+  // TODO: better object-fit toggle group
+
   return (
     <Pane>
       <PaneHeadingRow>
         <PaneHeading>Image</PaneHeading>
       </PaneHeadingRow>
       <RowGroup>
-        <StyleSelect
-          property={state.props.objectFit}
-          options={objectFitOptions}
-        />
+        <Row12>
+          <Label>object-fit</Label>
+          <StyleSelect
+            property={state.props.objectFit}
+            options={objectFitOptions}
+          />
+        </Row12>
       </RowGroup>
     </Pane>
   );
