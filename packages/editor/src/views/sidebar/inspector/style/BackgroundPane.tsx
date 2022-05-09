@@ -21,6 +21,7 @@ export const BackgroundPane: React.FC<{
       <RowGroup>
         <CSSBackgroundImageInput
           title="background-image"
+          imageURLOptions={state.editorState.imageURLOptions}
           value={state.props.backgroundImage.value}
           placeholder={state.props.backgroundImage.computed}
           onChange={state.props.backgroundImage.onChangeWithoutCommit}

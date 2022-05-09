@@ -245,7 +245,7 @@ export abstract class EditorState {
     }
   }
 
-  @computed get imageInputOptions(): SelectItem[] {
+  @computed get imageURLOptions(): SelectItem[] {
     return this.imageAssets.map((file) => ({
       value: file,
       text: file,
