@@ -3,7 +3,12 @@ import { MIXED, sameOrMixed } from "@seanchas116/paintkit/src/util/Mixed";
 import { startCase } from "lodash-es";
 import { action, computed, makeObservable, observable } from "mobx";
 import { ElementInstance } from "../models/ElementInstance";
-import { ExtraStyleKey, extraStyleKeys } from "../models/Style";
+import {
+  ExtraStyleKey,
+  extraStyleKeys,
+  imageStyleKeys,
+  textStyleKeys,
+} from "../models/Style";
 import { EditorState } from "./EditorState";
 
 export class StylePropertyState {
@@ -17,22 +22,13 @@ export class StylePropertyState {
   readonly key: ExtraStyleKey;
 
   @computed get targetInstances(): ElementInstance[] {
-    switch (this.key) {
-      case "objectFit":
-        return this.state.imageInstances;
-      case "color":
-      case "fontFamily":
-      case "fontWeight":
-      case "fontStyle":
-      case "fontSize":
-      case "lineHeight":
-      case "letterSpacing":
-      case "textDecorationLine":
-      case "textAlign":
-        return this.state.nonReplacedInstances;
-      default:
-        return this.state.instances;
+    if (imageStyleKeys.includes(this.key as never)) {
+      return this.state.imageInstances;
     }
+    if (textStyleKeys.includes(this.key as never)) {
+      return this.state.nonReplacedInstances;
+    }
+    return this.state.instances;
   }
 
   @computed get computed(): string | undefined {
