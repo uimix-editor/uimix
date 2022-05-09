@@ -4,6 +4,7 @@ import { isTextInputFocused } from "@seanchas116/paintkit/src/util/CurrentFocus"
 import { Scroll } from "@seanchas116/paintkit/src/util/Scroll";
 import { action, computed, makeObservable, observable } from "mobx";
 import { Rect, Vec2 } from "paintvec";
+import { SelectItem } from "@seanchas116/paintkit/src/components/Select";
 import { Component } from "../models/Component";
 import { Document, DocumentJSON } from "../models/Document";
 import { Element } from "../models/Element";
@@ -242,5 +243,23 @@ export abstract class EditorState {
         this.panMode = false;
         break;
     }
+  }
+
+  @computed get imageInputOptions(): SelectItem[] {
+    return this.imageAssets.map((file) => ({
+      value: file,
+      text: file,
+      icon: (
+        <img
+          style={{
+            width: "20px",
+            height: "20px",
+            objectFit: "contain",
+          }}
+          loading="lazy"
+          src={this.resolveImageAssetURL(file)}
+        />
+      ),
+    }));
   }
 }

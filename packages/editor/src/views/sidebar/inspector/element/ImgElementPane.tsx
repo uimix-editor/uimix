@@ -31,6 +31,7 @@ export const ImgElementPane: React.FC = observer(function ImgElementPane() {
         value={state.imgSrc}
         onChange={state.onImgSrcChange}
         resolveURL={resolveURL}
+        urlOptions={editorState.imageInputOptions}
       />
     </Pane>
   );
