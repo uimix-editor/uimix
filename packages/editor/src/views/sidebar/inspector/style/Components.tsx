@@ -19,8 +19,7 @@ import { StylePropertyState } from "../../../../state/StyleInspectorState";
 export const StyleDimensionInput: React.FC<{
   className?: string;
   property: StylePropertyState;
-  label?: string;
-  icon?: IconifyIcon;
+  icon?: IconifyIcon | string;
   units?: readonly string[];
   keywords?: readonly string[];
 }> = observer(({ property, ...props }) => {
@@ -38,8 +37,7 @@ export const StyleDimensionInput: React.FC<{
 export const StyleInput: React.FC<{
   className?: string;
   property: StylePropertyState;
-  label?: string;
-  icon?: IconifyIcon;
+  icon?: IconifyIcon | string;
 }> = observer(({ property, ...props }) => {
   return (
     <Input
@@ -55,8 +53,7 @@ export const StyleInput: React.FC<{
 export const StyleComboBox: React.FC<{
   className?: string;
   property: StylePropertyState;
-  label?: string;
-  icon?: IconifyIcon;
+  icon?: IconifyIcon | string;
   options?: SelectItem[];
 }> = observer(({ property, ...props }) => {
   return (
@@ -109,8 +106,7 @@ export const StyleIconRadio: React.FC<{
 export const StyleSelect: React.FC<{
   className?: string;
   property: StylePropertyState;
-  label?: string;
-  icon?: IconifyIcon;
+  icon?: IconifyIcon | string;
   options?: SelectItem[];
 }> = observer(({ property, ...props }) => {
   return (

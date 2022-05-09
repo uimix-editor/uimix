@@ -51,19 +51,19 @@ export const SizePane: React.FC<{
           <>
             <Row111>
               <StyleDimensionInput
-                label="W"
+                icon="W"
                 units={lengthPercentageUnits}
                 keywords={["auto"]}
                 property={state.props.width}
               />
               <StyleDimensionInput
-                label=">"
+                icon=">"
                 units={lengthPercentageUnits}
                 keywords={["auto"]}
                 property={state.props.minWidth}
               />
               <StyleDimensionInput
-                label="<"
+                icon="<"
                 units={lengthPercentageUnits}
                 keywords={["auto"]}
                 property={state.props.maxWidth}
@@ -71,19 +71,19 @@ export const SizePane: React.FC<{
             </Row111>
             <Row111>
               <StyleDimensionInput
-                label="H"
+                icon="H"
                 units={lengthPercentageUnits}
                 keywords={["auto"]}
                 property={state.props.height}
               />
               <StyleDimensionInput
-                label=">"
+                icon=">"
                 units={lengthPercentageUnits}
                 keywords={["auto"]}
                 property={state.props.minHeight}
               />
               <StyleDimensionInput
-                label="<"
+                icon="<"
                 units={lengthPercentageUnits}
                 keywords={["auto"]}
                 property={state.props.maxHeight}
@@ -93,13 +93,13 @@ export const SizePane: React.FC<{
         ) : (
           <Row11>
             <StyleDimensionInput
-              label="W"
+              icon="W"
               units={lengthPercentageUnits}
               keywords={["auto"]}
               property={state.props.width}
             />
             <StyleDimensionInput
-              label="H"
+              icon="H"
               units={lengthPercentageUnits}
               keywords={["auto"]}
               property={state.props.height}

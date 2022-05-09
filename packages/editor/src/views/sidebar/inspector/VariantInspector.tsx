@@ -27,32 +27,20 @@ export const VariantInspector: React.FC = observer(() => {
         </PaneHeadingRow>
         <RowGroup>
           <Row111>
-            <NumberInput
-              label="X"
-              iconPosition="left"
-              value={state.x}
-              onChange={state.onXChange}
-            />
-            <NumberInput
-              label="Y"
-              iconPosition="left"
-              value={state.y}
-              onChange={state.onYChange}
-            />
+            <NumberInput icon="X" value={state.x} onChange={state.onXChange} />
+            <NumberInput icon="Y" value={state.y} onChange={state.onYChange} />
           </Row111>
           <Row111>
             <NumberInput
-              label="W"
+              icon="W"
               title="Width"
-              iconPosition="left"
               placeholder="Auto"
               value={state.width}
               onChange={state.onWidthChange}
             />
             <NumberInput
-              label="H"
+              icon="H"
               title="Height"
-              iconPosition="left"
               placeholder="Auto"
               value={state.height}
               onChange={state.onHeightChange}
