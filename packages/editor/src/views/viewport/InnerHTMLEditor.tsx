@@ -1,7 +1,8 @@
+import React from "react";
 import { popoverStyle } from "@seanchas116/paintkit/src/components/Common";
 import { colors } from "@seanchas116/paintkit/src/components/Palette";
 import { observer } from "mobx-react-lite";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import styled from "styled-components";
 import { toHtml } from "hast-util-to-html";
 import { ElementInstance } from "../../models/ElementInstance";
@@ -57,6 +58,15 @@ export const InnerHTMLEditorBody: React.FC<{
     return formatHTML(toHtml(target.element.innerHTML));
   });
 
+  const textareaRef = React.createRef<HTMLTextAreaElement>();
+
+  useEffect(() => {
+    const textarea = textareaRef.current;
+    setTimeout(() => {
+      textarea?.select();
+    }, 0);
+  }, []);
+
   return (
     <InnerHTMLEditorWrap>
       <Background
@@ -72,6 +82,7 @@ export const InnerHTMLEditorBody: React.FC<{
         onWheel={(e) => e.stopPropagation()}
       >
         <Textarea
+          ref={textareaRef}
           value={value}
           onChange={(e) => {
             const value = e.target.value;
