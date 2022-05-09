@@ -1,8 +1,12 @@
 import { popoverStyle } from "@seanchas116/paintkit/src/components/Common";
 import { colors } from "@seanchas116/paintkit/src/components/Palette";
 import { observer } from "mobx-react-lite";
+import { useState } from "react";
 import styled from "styled-components";
+import { toHtml } from "hast-util-to-html";
+import { ElementInstance } from "../../models/ElementInstance";
 import { useEditorState } from "../EditorStateContext";
+import { formatHTML } from "../../util/Format";
 
 const InnerHTMLEditorWrap = styled.div`
   position: absolute;
@@ -32,18 +36,18 @@ const Textarea = styled.textarea`
   resize: both;
 `;
 
-export const InnerHTMLEditor: React.FC = observer(() => {
+export const InnerHTMLEditorBody: React.FC<{
+  target: ElementInstance;
+}> = observer(({ target }) => {
   const editorState = useEditorState();
-
-  const target = editorState.innerHTMLEditTarget;
-
-  if (!target) {
-    return null;
-  }
 
   const bbox = target.boundingBox.transform(
     editorState.scroll.documentToViewport
   );
+
+  const [value, setValue] = useState(() => {
+    return formatHTML(toHtml(target.element.innerHTML));
+  });
 
   return (
     <InnerHTMLEditorWrap>
@@ -53,8 +57,22 @@ export const InnerHTMLEditor: React.FC = observer(() => {
           top: `${bbox.bottom}px`,
         }}
       >
-        <Textarea />
+        <Textarea
+          value={value}
+          onChange={(e) => {
+            setValue(e.target.value);
+          }}
+        />
       </TextareaWrap>
     </InnerHTMLEditorWrap>
   );
+});
+
+export const InnerHTMLEditor: React.FC = observer(() => {
+  const editorState = useEditorState();
+  const target = editorState.innerHTMLEditTarget;
+  if (!target) {
+    return null;
+  }
+  return <InnerHTMLEditorBody target={target} />;
 });
