@@ -48,7 +48,7 @@ export class ElementInsertDragHandler implements DragHandler {
       this.instance = getInstance(parent.variant, element);
       this.instance.style.position = "absolute";
       if (mode !== "text") {
-        this.instance.style.backgroundColor = "#cccccc";
+        this.instance.style.background = "#cccccc";
       }
     }
 

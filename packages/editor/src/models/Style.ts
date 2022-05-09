@@ -54,8 +54,7 @@ export const styleKeys = [
   ...textStyleKeys,
   ...imageStyleKeys,
 
-  "backgroundImage",
-  "backgroundColor",
+  "background",
 
   "borderTopWidth",
   "borderTopStyle",

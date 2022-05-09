@@ -6,9 +6,8 @@ import {
   PaneHeadingRow,
   RowGroup,
 } from "@seanchas116/paintkit/src/components/sidebar/Inspector";
-import { CSSBackgroundImageInput } from "@seanchas116/paintkit/src/components/css/CSSBackgroundImageInput";
+import { CSSBackgroundInput } from "@seanchas116/paintkit/src/components/css/CSSBackgroundInput";
 import { StyleInspectorState } from "../../../../state/StyleInspectorState";
-import { StyleColorInput } from "./Components";
 
 export const BackgroundPane: React.FC<{
   state: StyleInspectorState;
@@ -24,17 +23,16 @@ export const BackgroundPane: React.FC<{
         <PaneHeading>Background</PaneHeading>
       </PaneHeadingRow>
       <RowGroup>
-        <CSSBackgroundImageInput
-          title="background-image"
+        <CSSBackgroundInput
+          title="background"
           defaultPlacement="top"
           imageURLOptions={state.editorState.imageURLOptions}
           resolveImageURL={resolveImageURL}
-          value={state.props.backgroundImage.value}
-          placeholder={state.props.backgroundImage.computed}
-          onChange={state.props.backgroundImage.onChangeWithoutCommit}
-          onChangeEnd={state.props.backgroundImage.onChangeCommit}
+          value={state.props.background.value}
+          placeholder={state.props.background.computed}
+          onChange={state.props.background.onChangeWithoutCommit}
+          onChangeEnd={state.props.background.onChangeCommit}
         />
-        <StyleColorInput property={state.props.backgroundColor} />
       </RowGroup>
     </Pane>
   );
