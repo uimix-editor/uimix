@@ -32,6 +32,8 @@ export function compile(data: string): string {
             this.shadowRoot.innerHTML = ${"`<style>${style}</style>${template}`"};
           }
         }
+
+        customElements.define(${JSON.stringify(name)}, ${className});
       `);
     }
   }
