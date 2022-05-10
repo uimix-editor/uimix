@@ -12,7 +12,7 @@
   },
   "dependencies": {
     "@iconify-icons/ic": "^1.2.4",
-    "@iconify/json": "^2.1.38",
+    "@iconify/json": "^2.1.39",
     "@iconify/react": "^3.2.1",
     "@iconify/types": "^1.1.0",
     "@seanchas116/paintkit": "*",
@@ -28,7 +28,7 @@
     "hastscript": "^7.0.2",
     "lodash-es": "^4.17.21",
     "mobx": "^6.5.0",
-    "mobx-react-lite": "^3.3.0",
+    "mobx-react-lite": "^3.4.0",
     "paintvec": "^0.4.0",
     "parse5": "^7.0.0",
     "postcss": "^8.4.13",
@@ -47,7 +47,7 @@
   "devDependencies": {
     "@esbuild-plugins/node-globals-polyfill": "^0.1.1",
     "@esbuild-plugins/node-modules-polyfill": "^0.1.4",
-    "@types/react": "^18.0.8",
+    "@types/react": "^18.0.9",
     "@types/react-dom": "^18.0.3",
     "@types/styled-components": "^5.1.25",
     "@types/wicg-file-system-access": "^2020.9.5",
