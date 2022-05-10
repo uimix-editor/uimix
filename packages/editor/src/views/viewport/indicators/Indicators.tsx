@@ -7,6 +7,7 @@ import { DragIndicators } from "./DragIndicators";
 import { HoverIndicator } from "./HoverIndicator";
 import { MarginPaddingIndicator } from "./MarginPaddingIndicator";
 import { SelectionInfo } from "./SelectionInfo";
+import { MeasureIndicator } from "./MeasureIndicator";
 
 const IndicatorsWrap = styled.div`
   position: absolute;
@@ -36,6 +37,7 @@ export const Indicators: React.VFC<{
         <HoverIndicator />
         <ElementResizeBox />
         <SnapIndicators />
+        <MeasureIndicator />
       </IndicatorsSVG>
       <SelectionInfo />
     </IndicatorsWrap>
