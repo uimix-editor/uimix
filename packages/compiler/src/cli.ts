@@ -1,7 +1,7 @@
 import chokidar from "chokidar";
 import glob from "glob";
 import { Command } from "commander";
-import { FilesCompiler } from "./compiler/FilesCompiler";
+import { compileFile } from "./compiler";
 
 function compileFiles(
   filePathOrGlobs: string[],
@@ -17,9 +17,7 @@ function compileFiles(
 
     const onChangeAdd = (filePath: string) => {
       try {
-        filePaths.add(filePath);
-        new FilesCompiler([...filePaths], options).compile();
-        console.log(`Compiled ${filePath}`);
+        compileFile(filePath);
       } catch (e) {
         console.error(e);
       }
@@ -29,14 +27,15 @@ function compileFiles(
     watcher.on("add", onChangeAdd);
   }
 
-  new FilesCompiler([...filePaths], options).compile();
+  for (const filePath of filePaths) {
+    compileFile(filePath);
+  }
 }
 
 const program = new Command("macaron");
 program.version("0.0.1");
 
 program
-  .command("compile")
   .option("--commonjs", "Emit CommonJS modules instead of ES modules")
   .option("--watch", "Watch files for changes")
   .argument("<files...>")
