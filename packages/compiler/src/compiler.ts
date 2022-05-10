@@ -1,3 +1,3 @@
 export function compileFile(filePath: string): void {
-  // TODO
+  console.log(`TODO: build ${filePath}`);
 }
