@@ -1,4 +1,11 @@
 {
   "extends": "./tsconfig.json",
+  "compilerOptions": {
+    "outDir": "dist",
+    "declaration": true,
+    "emitDeclarationOnly": true,
+    "sourceMap": false,
+    "allowJs": true
+  },
   "exclude": ["**/*.test.ts", "**/*.test.tsx", "**/__mocks__/**"]
 }

@@ -24,8 +24,8 @@
     "README.md"
   ],
   "scripts": {
-    "build": "tsc -p tsconfig.build.json",
-    "dev": "tsc -w -p tsconfig.build.json",
+    "build": "tsc -p tsconfig.build.json && node build.js",
+    "dev": "node build.js --dev",
     "format": "prettier -w src",
     "lint": "eslint src",
     "prepare": "npm run build",
