@@ -1,4 +1,4 @@
-import React, { useEffect, useLayoutEffect } from "react";
+import React, { useEffect } from "react";
 import { popoverStyle } from "@seanchas116/paintkit/src/components/Common";
 import { colors } from "@seanchas116/paintkit/src/components/Palette";
 import { useViewModel } from "@seanchas116/paintkit/src/components/hooks/useViewModel";
