@@ -1,5 +1,6 @@
 import { usePointerStroke } from "@seanchas116/paintkit/src/components/hooks/usePointerStroke";
 import { useContextMenu } from "@seanchas116/paintkit/src/components/menu/ContextMenuProvider";
+import { isVoidElement } from "@seanchas116/paintkit/src/util/HTMLTagCategory";
 import { action } from "mobx";
 import React, { useRef } from "react";
 import styled from "styled-components";
@@ -43,7 +44,7 @@ export const PointerOverlay: React.FC<{}> = () => {
       );
 
       editorState.hoveredItem = undefined;
-      // editorState.endTextEdit();
+      editorState.innerHTMLEditTarget = undefined;
 
       if (editorState.insertMode) {
         return new ElementInsertDragHandler(
@@ -53,14 +54,12 @@ export const PointerOverlay: React.FC<{}> = () => {
         );
       }
 
-      // if (isDoubleClick) {
-      //   const override = pickResult.doubleClickable;
-      //   if (override?.selected) {
-      //     if (editorState.startTextEdit(override)) {
-      //       return;
-      //     }
-      //   }
-      // }
+      if (isDoubleClick) {
+        const instance = pickResult.doubleClickable;
+        if (instance?.selected && !isVoidElement(instance.element.tagName)) {
+          editorState.innerHTMLEditTarget = instance;
+        }
+      }
 
       const clickMove = ElementClickMoveDragHandler.create(
         editorState,

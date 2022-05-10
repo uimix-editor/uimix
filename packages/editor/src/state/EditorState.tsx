@@ -5,6 +5,7 @@ import { Scroll } from "@seanchas116/paintkit/src/util/Scroll";
 import { action, computed, makeObservable, observable } from "mobx";
 import { Rect, Vec2 } from "paintvec";
 import { SelectItem } from "@seanchas116/paintkit/src/components/Select";
+import { isVoidElement } from "@seanchas116/paintkit/src/util/HTMLTagCategory";
 import { Component } from "../models/Component";
 import { Document, DocumentJSON } from "../models/Document";
 import { Element } from "../models/Element";
@@ -69,6 +70,8 @@ export abstract class EditorState {
 
   @observable hoveredItem: ElementInstance | TextInstance | undefined =
     undefined;
+
+  @observable innerHTMLEditTarget: ElementInstance | undefined = undefined;
 
   @computed get hoveredRect(): Rect | undefined {
     if (!this.hoveredItem) {
@@ -152,6 +155,20 @@ export abstract class EditorState {
 
   getElementContextMenu(instance: ElementInstance): MenuItem[] {
     return [
+      ...(!isVoidElement(instance.element.tagName)
+        ? ([
+            {
+              text: "Edit Inner HTML",
+              onClick: action(() => {
+                this.innerHTMLEditTarget = instance;
+                return true;
+              }),
+            },
+            {
+              type: "separator",
+            },
+          ] as MenuItem[])
+        : []),
       {
         text: "Add Element",
         onClick: action(() => {
@@ -226,6 +243,7 @@ export abstract class EditorState {
     switch (e.key) {
       case "Escape":
         this.insertMode = undefined;
+        this.innerHTMLEditTarget = undefined;
         break;
       case "Alt":
         this.measureMode = true;

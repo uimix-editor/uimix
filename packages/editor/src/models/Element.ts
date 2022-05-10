@@ -49,10 +49,11 @@ export class Element extends TreeNode<Element, Element, Element | Text> {
   readonly attrs = observable.map<string, string>();
 
   get allAttrs(): Record<string, string> {
-    return {
-      ...Object.fromEntries(this.attrs),
-      id: this.id,
-    };
+    const attrs = Object.fromEntries(this.attrs);
+    if (this.id) {
+      attrs.id = this.id;
+    }
+    return attrs;
   }
 
   get component(): Component | undefined {
