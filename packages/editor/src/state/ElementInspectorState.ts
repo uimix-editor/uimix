@@ -2,10 +2,7 @@ import { action, computed, makeObservable, observable } from "mobx";
 import { MIXED, sameOrMixed } from "@seanchas116/paintkit/src/util/Mixed";
 import { filterInstance } from "@seanchas116/paintkit/src/util/Collection";
 import { getIncrementalUniqueName } from "@seanchas116/paintkit/src/util/Name";
-import { toHtml } from "hast-util-to-html";
-import { isVoidElement } from "@seanchas116/paintkit/src/util/HTMLTagCategory";
 import { Element } from "../models/Element";
-import { formatHTML } from "../util/Format";
 import { EditorState } from "./EditorState";
 
 export class ElementInspectorState {
@@ -67,20 +64,6 @@ export class ElementInspectorState {
     this.editorState.history.commit("Change ID");
     return true;
   });
-
-  @computed get canEditInnerHTML(): boolean {
-    return this.selectedElements.some((e) => !isVoidElement(e.tagName));
-  }
-
-  @computed get innerHTML(): string | typeof MIXED | undefined {
-    const value = sameOrMixed(
-      this.selectedElements.map((element) => toHtml(element.innerHTML))
-    );
-    if (typeof value === "string") {
-      return formatHTML(value);
-    }
-    return value;
-  }
 
   // attributes
 
