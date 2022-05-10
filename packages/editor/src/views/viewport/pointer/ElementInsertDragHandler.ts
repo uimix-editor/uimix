@@ -8,6 +8,7 @@ import { Text } from "../../../models/Text";
 import { ElementPickResult } from "../../../mount/ElementPicker";
 import { EditorState } from "../../../state/EditorState";
 import { InsertMode } from "../../../state/InsertMode";
+import { dragStartThreshold } from "../Constants";
 import { DragHandler } from "./DragHandler";
 
 export class ElementInsertDragHandler implements DragHandler {
@@ -19,6 +20,10 @@ export class ElementInsertDragHandler implements DragHandler {
     this.editorState = editorState;
     this.mode = mode;
 
+    this.initClientPos = new Vec2(
+      pickResult.event.clientX,
+      pickResult.event.clientY
+    );
     this.initPos = editorState.snapper.snapInsertPoint(
       editorState.scroll.documentPosForEvent(pickResult.event)
     );
@@ -65,6 +70,15 @@ export class ElementInsertDragHandler implements DragHandler {
   }
 
   move(event: MouseEvent | DragEvent): void {
+    const clientPos = new Vec2(event.clientX, event.clientY);
+    if (
+      !this.dragStarted &&
+      clientPos.sub(this.initClientPos).length < dragStartThreshold
+    ) {
+      return;
+    }
+    this.dragStarted = true;
+
     const pos = this.editorState.snapper.snapResizePoint(
       this.editorState.scroll.documentPosForEvent(event)
     );
@@ -88,4 +102,6 @@ export class ElementInsertDragHandler implements DragHandler {
   private readonly component: Component | undefined;
   private readonly instance: ElementInstance;
   private readonly initPos: Vec2;
+  private readonly initClientPos: Vec2;
+  private dragStarted = false;
 }

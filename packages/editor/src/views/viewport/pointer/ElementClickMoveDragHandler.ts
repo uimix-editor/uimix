@@ -24,6 +24,10 @@ export class ElementClickMoveDragHandler implements DragHandler {
     pickResult: ElementPickResult
   ) {
     this.editorState = editorState;
+    this.initClientPos = new Vec2(
+      pickResult.event.clientX,
+      pickResult.event.clientY
+    );
     this.initPos = editorState.scroll.documentPosForEvent(pickResult.event);
     this.override = override;
     this.additive = pickResult.event.shiftKey;
@@ -37,11 +41,9 @@ export class ElementClickMoveDragHandler implements DragHandler {
   }
 
   move(event: MouseEvent | DragEvent): void {
-    const pos = this.editorState.scroll.documentPosForEvent(event);
-
-    const offset = pos.sub(this.initPos);
     if (!this.handler) {
-      if (offset.length < dragStartThreshold) {
+      const clientPos = new Vec2(event.clientX, event.clientY);
+      if (clientPos.sub(this.initClientPos).length < dragStartThreshold) {
         return;
       }
 
@@ -87,6 +89,7 @@ export class ElementClickMoveDragHandler implements DragHandler {
 
   private readonly editorState: EditorState;
   private readonly initPos: Vec2;
+  private readonly initClientPos: Vec2;
   private readonly override: ElementInstance;
   private readonly additive: boolean;
   private handler: DragHandler | undefined;
