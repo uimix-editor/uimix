@@ -1,4 +1,4 @@
-import React, { useMemo } from "react";
+import React, { useLayoutEffect, useState } from "react";
 import { popoverStyle } from "@seanchas116/paintkit/src/components/Common";
 import { colors } from "@seanchas116/paintkit/src/components/Palette";
 import { observer } from "mobx-react-lite";
@@ -120,20 +120,25 @@ export const InnerHTMLEditorBody: React.FC<{
   target: ElementInstance;
 }> = observer(({ target }) => {
   const editorState = useEditorState();
-
-  const state = useMemo(
-    () => new InnerHTMLEditorState(editorState, target),
-    [editorState, target]
-  );
-
+  const [state, setState] = useState<InnerHTMLEditorState | undefined>();
   const textareaRef = React.createRef<HTMLTextAreaElement>();
 
   useEffect(() => {
+    const state = new InnerHTMLEditorState(editorState, target);
+    setState(state);
+    return () => {
+      state.dispose();
+    };
+  }, [editorState, target]);
+
+  useLayoutEffect(() => {
     const textarea = textareaRef.current;
-    setTimeout(() => {
-      textarea?.select();
-    }, 0);
-  }, []);
+    textarea?.select();
+  }, [state]);
+
+  if (!state) {
+    return null;
+  }
 
   return (
     <InnerHTMLEditorWrap>
