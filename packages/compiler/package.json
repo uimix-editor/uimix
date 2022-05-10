@@ -42,6 +42,7 @@
     "commander": "^9.1.0",
     "glob": "^8.0.1",
     "hast-util-from-parse5": "^7.1.0",
+    "hast-util-to-html": "^8.0.3",
     "jest": "^27.5.1",
     "parse5": "^7.0.0",
     "prettier": "^2.6.2",
