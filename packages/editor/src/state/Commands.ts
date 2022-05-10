@@ -39,7 +39,6 @@ export class Commands {
         const fragment = this.document.selectedFragment;
         if (fragment) {
           const html = stringifyFragment(fragment);
-          console.log(html);
 
           const type = "text/html";
           const blob = new Blob([html], { type });

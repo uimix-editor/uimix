@@ -18,7 +18,6 @@ export class VSCodeAppState {
       addEventListener: window.addEventListener.bind(window),
       removeEventListener: window.removeEventListener.bind(window),
       postMessage: (message: unknown) => {
-        console.log(message);
         vscode.postMessage(message);
       },
     };
