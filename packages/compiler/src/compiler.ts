@@ -36,8 +36,8 @@ function compileComponent(ast: hast.Element): string {
       constructor() {
         super();
 
-        const style = ${JSON.stringify(style)};
-        const template = ${JSON.stringify(template)};
+        const style = \`${style}\`;
+        const template = \`${template}\`;
 
         this.attachShadow({ mode: "open" });
         this.shadowRoot.innerHTML = ${"`<style>${style}</style>${template}`"};
