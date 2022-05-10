@@ -71,6 +71,10 @@ Unlike other Web design tools, Macaron is intended to be integrated into your ex
 ## File format (`*.macaron`)
 
 ```html
+<!-- imports to external Web Components -->
+<script type="module" src="./external-web-components.js"></script>
+<script type="module" src="./another-external-web-components.js"></script>
+
 <macaron-component name="my-card">
   <!-- Variants -->
 
