@@ -3,6 +3,7 @@ import { MIXED, sameOrMixed } from "@seanchas116/paintkit/src/util/Mixed";
 import { filterInstance } from "@seanchas116/paintkit/src/util/Collection";
 import { getIncrementalUniqueName } from "@seanchas116/paintkit/src/util/Name";
 import { Element } from "../models/Element";
+import { getInstance } from "../models/InstanceRegistry";
 import { EditorState } from "./EditorState";
 
 export class ElementInspectorState {
@@ -40,6 +41,16 @@ export class ElementInspectorState {
 
       for (const child of element.children) {
         newElement.append(child);
+      }
+
+      for (const variant of element.component?.allVariants ?? []) {
+        const instance = getInstance(variant, element);
+        const newInstance = getInstance(variant, newElement);
+        if (instance.selected) {
+          newInstance.select();
+        }
+        newInstance.collapsed = instance.collapsed;
+        newInstance.style.loadJSON(instance.style.toJSON());
       }
 
       const next = element.nextSibling;
