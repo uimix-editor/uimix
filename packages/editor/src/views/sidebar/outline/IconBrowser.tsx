@@ -25,6 +25,7 @@ import { IconBrowserState } from "./IconBrowserState";
 import { SearchBar } from "./SearchBar";
 
 const IconThumbnailSVG = styled.svg`
+  color: #333;
   background: var(--icon-background);
   transform: var(--icon-transform);
 `;
