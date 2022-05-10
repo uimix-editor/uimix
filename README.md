@@ -122,10 +122,10 @@ Unlike other Web design tools, Macaron is intended to be integrated into your ex
 </macaron-component>
 ```
 
-## Load `.macaron` file
+## Use Macaron components
 
 ```bash
-macaron compile components.macaron #=> components.js
+macaron components.macaron #=> components.js
 ```
 
 ```html
