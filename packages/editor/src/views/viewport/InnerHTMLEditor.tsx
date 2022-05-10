@@ -1,8 +1,8 @@
-import React, { useLayoutEffect, useState } from "react";
+import React, { useEffect, useLayoutEffect } from "react";
 import { popoverStyle } from "@seanchas116/paintkit/src/components/Common";
 import { colors } from "@seanchas116/paintkit/src/components/Palette";
+import { useViewModel } from "@seanchas116/paintkit/src/components/hooks/useViewModel";
 import { observer } from "mobx-react-lite";
-import { useEffect } from "react";
 import styled from "styled-components";
 import { toHtml } from "hast-util-to-html";
 import { action, computed, makeObservable, observable, reaction } from "mobx";
@@ -120,25 +120,19 @@ export const InnerHTMLEditorBody: React.FC<{
   target: ElementInstance;
 }> = observer(({ target }) => {
   const editorState = useEditorState();
-  const [state, setState] = useState<InnerHTMLEditorState | undefined>();
   const textareaRef = React.createRef<HTMLTextAreaElement>();
 
+  const state = useViewModel(
+    () => new InnerHTMLEditorState(editorState, target),
+    [editorState, target]
+  );
+
   useEffect(() => {
-    const state = new InnerHTMLEditorState(editorState, target);
-    setState(state);
-    return () => {
-      state.dispose();
-    };
-  }, [editorState, target]);
-
-  useLayoutEffect(() => {
     const textarea = textareaRef.current;
-    textarea?.select();
-  }, [state]);
-
-  if (!state) {
-    return null;
-  }
+    setTimeout(() => {
+      textarea?.select();
+    }, 0);
+  }, []);
 
   return (
     <InnerHTMLEditorWrap>
