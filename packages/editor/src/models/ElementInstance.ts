@@ -260,17 +260,20 @@ export function instancesFromHTML(
       });
 
       for (const [key, value] of Object.entries(child.properties ?? {})) {
+        if (key === "style") {
+          continue;
+        }
         if (key === "id") {
           element.rename(String(value));
-        } else {
-          const info = propertyInformation.find(
-            isSVGTagName(child.tagName)
-              ? propertyInformation.svg
-              : propertyInformation.html,
-            key
-          );
-          element.attrs.set(info.attribute, String(value));
+          continue;
         }
+        const info = propertyInformation.find(
+          isSVGTagName(child.tagName)
+            ? propertyInformation.svg
+            : propertyInformation.html,
+          key
+        );
+        element.attrs.set(info.attribute, String(value));
       }
 
       const instance = getInstance(undefined, element);
