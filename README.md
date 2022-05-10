@@ -118,7 +118,23 @@ Unlike other Web design tools, Macaron is intended to be integrated into your ex
 </macaron-component>
 ```
 
-## Project Structure
+## Load `.macaron` file
+
+```bash
+macaron compile components.macaron #=> components.js
+```
+
+```html
+<!-- Load the component -->
+<script type="module" src="components.js"></script>
+
+<!-- Use the component -->
+<my-card>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</my-card>
+```
+
+## Development
+
+### Project Structure
 
 - `/packages/editor` - The Macaron Editor
 - `/packages/paintkit` - The submodule for the [paintkit](https://github.com/seanchas116/paintkit) library
@@ -126,7 +142,7 @@ Unlike other Web design tools, Macaron is intended to be integrated into your ex
 
 The project uses the Yarn workspaces.
 
-## Start devservers
+### Start devservers
 
 ```bash
 git submodule update --init
@@ -141,7 +157,7 @@ yarn dev
 - http://localhost:8080 : [Demo editor](/packages/editor/src/index.tsx)
 - http://localhost:7007 : Storybook for paintkit
 
-## Launch VS Code extension
+### Launch VS Code extension
 
 - Make sure `yarn dev` is running
 - Open the root directory in VS Code
