@@ -1,6 +1,4 @@
 import * as fs from "fs";
-import * as path from "path";
-import slash from "slash";
 import type * as hast from "hast";
 import * as prettier from "prettier";
 import { upperFirst, camelCase } from "lodash-es";
