@@ -53,7 +53,7 @@ export function fixAssetPathInCSS(
   css: string,
   filePath: string,
   publicPath: string
-): void {
+): string {
   const newCSS = replaceCSSURL(css, (url: string) => {
     return fixAssetPath(url, filePath, publicPath);
   });

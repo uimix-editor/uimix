@@ -6,7 +6,7 @@ import * as prettier from "prettier";
 import { upperFirst, camelCase } from "lodash-es";
 import { toHtml } from "hast-util-to-html";
 import { parseHTMLFragment } from "./util";
-import { fixAssetPathInHTMLTree } from "./fix-asset-path";
+import { fixAssetPathInCSS, fixAssetPathInHTMLTree } from "./fix-asset-path";
 
 export interface CompileOptions {
   publicPath: string;
@@ -41,6 +41,7 @@ function compileComponent(
     }
     if (child.type === "element" && child.tagName === "style") {
       style = (child.children[0] as hast.Text).value;
+      style = fixAssetPathInCSS(style, filePath, options.publicPath);
     }
   }
 
