@@ -7,17 +7,22 @@ export function fixAssetPath(
   filePath: string,
   publicPath: string
 ): string {
-  filePath = slash(path.resolve(filePath));
-  publicPath = slash(path.resolve(publicPath));
+  try {
+    new URL(assetPath);
+    return assetPath;
+  } catch {
+    filePath = slash(path.resolve(filePath));
+    publicPath = slash(path.resolve(publicPath));
 
-  const absolutePath = path.posix.resolve(
-    path.posix.dirname(filePath),
-    assetPath
-  );
+    const absolutePath = path.posix.resolve(
+      path.posix.dirname(filePath),
+      assetPath
+    );
 
-  const relativePath = path.posix.relative(publicPath, absolutePath);
+    const relativePath = path.posix.relative(publicPath, absolutePath);
 
-  return relativePath;
+    return relativePath;
+  }
 }
 
 export function fixAssetPathInHTMLTree(
