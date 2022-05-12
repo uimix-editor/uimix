@@ -14,6 +14,7 @@ export function fixAssetPath(assetPath: string): string {
   }
 }
 
+// From @vue/compiler-sfc/src https://github.com/vuejs/core/blob/9309b044bd4f9d0a34e0d702ed4690a529443a41/packages/compiler-sfc/src/templateTransformAssetUrl.ts#L40
 const assetAttributes = {
   video: ["src", "poster"],
   source: ["src"],
