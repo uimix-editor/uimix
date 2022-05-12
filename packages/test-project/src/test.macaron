@@ -31,7 +31,7 @@
         r="2.5"
         fill="#333333"
       ></circle></svg
-    ><img src="./images/user1.png" id="img" />
+    ><img src="../images/user1.png" id="img" />
   </template>
   <style>
     :host {

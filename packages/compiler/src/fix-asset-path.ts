@@ -25,18 +25,19 @@ export function fixAssetPathInHTMLTree(
   filePath: string,
   publicPath: string
 ): void {
-  if (node.type !== "element") {
-    return;
+  if ("children" in node) {
+    for (const child of node.children) {
+      fixAssetPathInHTMLTree(child, filePath, publicPath);
+    }
   }
 
-  // TODO: make customizable
-  if (node.tagName === "img" && node.properties?.src) {
-    const src = String(node.properties.src);
-    const newSrc = fixAssetPath(src, filePath, publicPath);
-    node.properties.src = newSrc;
-  }
-
-  for (const child of node.children) {
-    fixAssetPathInHTMLTree(child, filePath, publicPath);
+  if (node.type === "element") {
+    // TODO: make customizable
+    if (node.tagName === "img" && node.properties?.src) {
+      const src = String(node.properties.src);
+      const newSrc = fixAssetPath(src, filePath, publicPath);
+      console.log(src, newSrc);
+      node.properties.src = newSrc;
+    }
   }
 }
