@@ -1,32 +1,63 @@
 # The Macaron compiler library and command-line interface
 
-Macaron is a visual React component editor, which is now in [beta testing](https://twitter.com/seanchas_t/status/1486980041674469380).
-
-This library / CLI is the compiler that converts Macaron files to React components.
+This library / CLI is the compiler that converts Macaron files to Web Components.
 
 ## Installation
 
-    $ npm install -g @macaron-app/tools
+    $ npm install -g @macaron-app/compiler
 
 ## Usage
 
-### Compile Macaron files to React components
+```bash
+# generates src/*.macaron.js
+macaron src/*.macaron
 
-    $ macaron compile src/*.macaron
-    # => generates src/*.macaron.js
+# generates src/*.macaron.js and watches for changes
+macaron --watch src/*.macaron
 
-### Help
+# Image paths in the output will be relative to ./public
+# (the default value of publicPath is ".")
+macaron --publicPath=./public src/*.macaron
+```
 
-    $ macaron help
+### `publicPath` option
+
+`.macaron` files stores image paths (`<img src="...">` and CSS `url(...)`) relative to the containing directory.
+
+If you want the image paths in the output to be relative to some other directory, use the `publicPath` option.
+
+#### src/test.macaron
+
+```html
+...
+<!-- relative from the directory (same as in import statements of ES modules) -->
+<img src="../public/image.png" />
+...
+```
+
+#### Command
+
+```bash
+macaron --publicPath=./public src/test.macaron
+```
+
+#### The output
+
+```js
+const template = `
+...
+<!-- relative from publicPath -->
+<img src="image.png" />
+...
+`;
+```
+
+## Help
+
+```bash
+macaron help
+```
 
 ### API
 
-```js
-import { compileFile, compilePage } from "@macaron-app/tools";
-
-compileFile("src/components.macaron");
-
-const contents = fs.readFileSync("src/components.macaron", "utf8");
-const json = JSON.parse(contents) as unknown;
-compilePage(json); // => { ".macaron.js": ..., ".macaron.d.ts": ... }
-```
+TBD
