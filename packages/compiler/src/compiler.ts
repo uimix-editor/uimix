@@ -20,8 +20,8 @@ function compileComponent(ast: hast.Element): string {
 
   const className = upperFirst(camelCase(name));
 
-  let style: string = "";
-  let template: string = "";
+  let style = "";
+  let template = "";
 
   for (const child of ast.children) {
     if (child.type === "element" && child.tagName === "template") {

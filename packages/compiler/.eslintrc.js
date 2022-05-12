@@ -1,5 +1,5 @@
 module.exports = {
-  extends: "../.eslintrc.js",
+  extends: "../paintkit/.eslintrc.cjs",
   parserOptions: {
     tsconfigRootDir: __dirname,
     project: ["./tsconfig.json"],

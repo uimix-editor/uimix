@@ -1,5 +1,3 @@
-import * as path from "path";
-import slash from "slash";
 import type * as hast from "hast";
 // @ts-ignore
 import replaceCSSURL from "replace-css-url";
@@ -47,7 +45,8 @@ export function fixAssetPathInHTMLTree(node: hast.Content | hast.Root): void {
 
 export function fixAssetPathInCSS(css: string): string {
   console.log("fixAssetPathInCSS");
-  const newCSS = replaceCSSURL(css, (url: string) => {
+  // eslint-disable-next-line
+  const newCSS: string = replaceCSSURL(css, (url: string) => {
     return fixAssetPath(url);
   });
   return newCSS;
