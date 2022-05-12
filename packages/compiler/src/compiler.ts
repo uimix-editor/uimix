@@ -68,8 +68,7 @@ export function compile(data: string, filePath: string): string {
 
   const output = outputs.join("");
 
-  // return prettier.format(output, {
-  //   parser: "babel",
-  // });
-  return output;
+  return prettier.format(output, {
+    parser: "babel",
+  });
 }
