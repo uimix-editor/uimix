@@ -5,13 +5,17 @@ import { upperFirst, camelCase } from "lodash-es";
 import { toHtml } from "hast-util-to-html";
 import { parseHTMLFragment } from "./util";
 
-export function compileFile(filePath: string): void {
+export interface CompileOptions {
+  publicPath: string;
+}
+
+export function compileFile(filePath: string, options: CompileOptions): void {
   const data = fs.readFileSync(filePath, "utf8");
-  const out = compile(data);
+  const out = compile(data, options);
   fs.writeFileSync(filePath.replace(/\.macaron$/, ".js"), out);
 }
 
-function compileComponent(ast: hast.Element): string {
+function compileComponent(ast: hast.Element, options: CompileOptions): string {
   const name = ast.properties?.name?.toString();
   if (!name) {
     throw new Error("macaron-component must have a name");
@@ -21,6 +25,8 @@ function compileComponent(ast: hast.Element): string {
 
   let style: string = "";
   let template: string = "";
+
+  // TODO: fix asset URL based on publicPath
 
   for (const child of ast.children) {
     if (child.type === "element" && child.tagName === "template") {
@@ -48,7 +54,7 @@ function compileComponent(ast: hast.Element): string {
   `;
 }
 
-export function compile(data: string): string {
+export function compile(data: string, options: CompileOptions): string {
   const ast = parseHTMLFragment(data);
   console.log(ast);
 
@@ -56,7 +62,7 @@ export function compile(data: string): string {
 
   for (const child of ast.children) {
     if (child.type === "element" && child.tagName === "macaron-component") {
-      outputs.push(compileComponent(child));
+      outputs.push(compileComponent(child, options));
     }
   }
 

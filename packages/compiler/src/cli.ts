@@ -1,12 +1,11 @@
 import chokidar from "chokidar";
 import glob from "glob";
 import { Command } from "commander";
-import { compileFile } from "./compiler";
+import { compileFile, CompileOptions } from "./compiler";
 
 function compileFiles(
   filePathOrGlobs: string[],
-  options: {
-    commonjs?: boolean;
+  options: CompileOptions & {
     watch?: boolean;
   }
 ): void {
@@ -17,7 +16,7 @@ function compileFiles(
 
     const onChangeAdd = (filePath: string) => {
       try {
-        compileFile(filePath);
+        compileFile(filePath, options);
       } catch (e) {
         console.error(e);
       }
@@ -28,7 +27,7 @@ function compileFiles(
   }
 
   for (const filePath of filePaths) {
-    compileFile(filePath);
+    compileFile(filePath, options);
   }
 }
 
@@ -36,11 +35,11 @@ const program = new Command("macaron");
 program.version("0.0.1");
 
 program
-  .option("--commonjs", "Emit CommonJS modules instead of ES modules")
+  .option("--publicPath", "The public path to use for assets", ".")
   .option("--watch", "Watch files for changes")
   .argument("<files...>")
   .action(
-    (files: string[], options: { commonjs?: boolean; watch?: boolean }) => {
+    (files: string[], options: { publicPath: string; watch?: boolean }) => {
       compileFiles(files, options);
     }
   );
