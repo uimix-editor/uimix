@@ -4,7 +4,9 @@ This library / CLI is the compiler that converts Macaron files to Web Components
 
 ## Installation
 
-    $ npm install -g @macaron-app/compiler
+```bash
+npm install -g @macaron-app/compiler
+```
 
 ## Usage
 
@@ -22,6 +24,6 @@ macaron --watch src/*.macaron
 macaron help
 ```
 
-### API
+## API
 
 TBD
