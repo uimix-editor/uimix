@@ -39,8 +39,6 @@ describe(fixAssetPathInHTMLTree, () => {
 
     fixAssetPathInHTMLTree(ast);
 
-    console.log(ast.children);
-
     expect((ast.children[0] as hast.Element).properties!.src).toBe(
       '${new URL("./images/logo.png", import.meta.url)}'
     );

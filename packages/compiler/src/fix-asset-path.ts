@@ -7,7 +7,6 @@ export function fixAssetPath(assetPath: string): string {
     new URL(assetPath);
     return assetPath;
   } catch {
-    console.log(assetPath);
     return `\${new URL("${assetPath}", import.meta.url)}`;
   }
 }
@@ -44,7 +43,6 @@ export function fixAssetPathInHTMLTree(node: hast.Content | hast.Root): void {
 }
 
 export function fixAssetPathInCSS(css: string): string {
-  console.log("fixAssetPathInCSS");
   // eslint-disable-next-line
   const newCSS: string = replaceCSSURL(css, (url: string) => {
     return fixAssetPath(url);

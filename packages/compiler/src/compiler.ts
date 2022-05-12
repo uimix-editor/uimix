@@ -54,7 +54,6 @@ function compileComponent(ast: hast.Element): string {
 
 export function compile(data: string): string {
   const ast = parseHTMLFragment(data);
-  console.log(ast);
 
   const outputs: string[] = [];
 
