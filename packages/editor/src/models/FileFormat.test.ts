@@ -6,7 +6,7 @@ import { parseDocument, stringifyDocument } from "./FileFormat";
 const __filename = url.fileURLToPath(import.meta.url);
 const fixtureFilePath = path.resolve(
   __filename,
-  "../../../../test-project/test.macaron"
+  "../../../../test-project/src/test.macaron"
 );
 
 describe("File format", () => {
