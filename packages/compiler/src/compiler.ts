@@ -8,13 +8,9 @@ import { toHtml } from "hast-util-to-html";
 import { parseHTMLFragment } from "./util";
 import { fixAssetPathInCSS, fixAssetPathInHTMLTree } from "./fix-asset-path";
 
-export interface CompileOptions {
-  publicPath: string;
-}
-
-export function compileFile(filePath: string, options: CompileOptions): void {
+export function compileFile(filePath: string): void {
   const data = fs.readFileSync(filePath, "utf8");
-  const out = compile(data, filePath, options);
+  const out = compile(data, filePath);
   fs.writeFileSync(filePath.replace(/\.macaron$/, ".js"), out);
 }
 
@@ -58,11 +54,7 @@ function compileComponent(ast: hast.Element): string {
   `;
 }
 
-export function compile(
-  data: string,
-  filePath: string,
-  options: CompileOptions
-): string {
+export function compile(data: string, filePath: string): string {
   const ast = parseHTMLFragment(data);
   console.log(ast);
 

@@ -1,11 +1,11 @@
 import chokidar from "chokidar";
 import glob from "glob";
 import { Command } from "commander";
-import { compileFile, CompileOptions } from "./compiler";
+import { compileFile } from "./compiler";
 
 function compileFiles(
   filePathOrGlobs: string[],
-  options: CompileOptions & {
+  options: {
     watch?: boolean;
   }
 ): void {
@@ -16,7 +16,7 @@ function compileFiles(
 
     const onChangeAdd = (filePath: string) => {
       try {
-        compileFile(filePath, options);
+        compileFile(filePath);
       } catch (e) {
         console.error(e);
       }
@@ -27,7 +27,7 @@ function compileFiles(
   }
 
   for (const filePath of filePaths) {
-    compileFile(filePath, options);
+    compileFile(filePath);
   }
 }
 
@@ -35,13 +35,10 @@ const program = new Command("macaron");
 program.version("0.0.1");
 
 program
-  .option("--publicPath", "The public path to use for assets", ".")
   .option("--watch", "Watch files for changes")
   .argument("<files...>")
-  .action(
-    (files: string[], options: { publicPath: string; watch?: boolean }) => {
-      compileFiles(files, options);
-    }
-  );
+  .action((files: string[], options: { watch?: boolean }) => {
+    compileFiles(files, options);
+  });
 
 program.parse(process.argv);
