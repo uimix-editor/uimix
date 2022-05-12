@@ -18,11 +18,7 @@ export function compileFile(filePath: string, options: CompileOptions): void {
   fs.writeFileSync(filePath.replace(/\.macaron$/, ".js"), out);
 }
 
-function compileComponent(
-  ast: hast.Element,
-  filePath: string,
-  options: CompileOptions
-): string {
+function compileComponent(ast: hast.Element): string {
   const name = ast.properties?.name?.toString();
   if (!name) {
     throw new Error("macaron-component must have a name");
@@ -36,12 +32,12 @@ function compileComponent(
   for (const child of ast.children) {
     if (child.type === "element" && child.tagName === "template") {
       const content = child.content!;
-      fixAssetPathInHTMLTree(content, filePath, options.publicPath);
-      template = toHtml(child.content!);
+      fixAssetPathInHTMLTree(content);
+      template = toHtml(child.content!).replace(/&#x22;/g, '"');
     }
     if (child.type === "element" && child.tagName === "style") {
       style = (child.children[0] as hast.Text).value;
-      style = fixAssetPathInCSS(style, filePath, options.publicPath);
+      style = fixAssetPathInCSS(style);
     }
   }
 
@@ -74,13 +70,14 @@ export function compile(
 
   for (const child of ast.children) {
     if (child.type === "element" && child.tagName === "macaron-component") {
-      outputs.push(compileComponent(child, filePath, options));
+      outputs.push(compileComponent(child));
     }
   }
 
   const output = outputs.join("");
 
-  return prettier.format(output, {
-    parser: "babel",
-  });
+  // return prettier.format(output, {
+  //   parser: "babel",
+  // });
+  return output;
 }

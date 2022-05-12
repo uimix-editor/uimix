@@ -4,37 +4,20 @@ import type * as hast from "hast";
 // @ts-ignore
 import replaceCSSURL from "replace-css-url";
 
-export function fixAssetPath(
-  assetPath: string,
-  filePath: string,
-  publicPath: string
-): string {
+export function fixAssetPath(assetPath: string): string {
   try {
     new URL(assetPath);
     return assetPath;
   } catch {
-    filePath = slash(path.resolve(filePath));
-    publicPath = slash(path.resolve(publicPath));
-
-    const absolutePath = path.posix.resolve(
-      path.posix.dirname(filePath),
-      assetPath
-    );
-
-    const relativePath = path.posix.relative(publicPath, absolutePath);
-
-    return relativePath;
+    console.log(assetPath);
+    return `\${new URL("${assetPath}", import.meta.url)}`;
   }
 }
 
-export function fixAssetPathInHTMLTree(
-  node: hast.Content | hast.Root,
-  filePath: string,
-  publicPath: string
-): void {
+export function fixAssetPathInHTMLTree(node: hast.Content | hast.Root): void {
   if ("children" in node) {
     for (const child of node.children) {
-      fixAssetPathInHTMLTree(child, filePath, publicPath);
+      fixAssetPathInHTMLTree(child);
     }
   }
 
@@ -42,20 +25,16 @@ export function fixAssetPathInHTMLTree(
     // TODO: make customizable
     if (node.tagName === "img" && node.properties?.src) {
       const src = String(node.properties.src);
-      const newSrc = fixAssetPath(src, filePath, publicPath);
-      console.log(src, newSrc);
+      const newSrc = fixAssetPath(src);
       node.properties.src = newSrc;
     }
   }
 }
 
-export function fixAssetPathInCSS(
-  css: string,
-  filePath: string,
-  publicPath: string
-): string {
+export function fixAssetPathInCSS(css: string): string {
+  console.log("fixAssetPathInCSS");
   const newCSS = replaceCSSURL(css, (url: string) => {
-    return fixAssetPath(url, filePath, publicPath);
+    return fixAssetPath(url);
   });
   return newCSS;
 }
