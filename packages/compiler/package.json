@@ -33,10 +33,11 @@
     "format": "prettier -w src",
     "lint": "eslint src",
     "prepare": "npm run build",
-    "test": "jest"
+    "test": "cross-env NODE_OPTIONS=--experimental-vm-modules jest"
   },
   "dependencies": {
-    "chokidar": "^3.5.3"
+    "chokidar": "^3.5.3",
+    "slash": "^4.0.0"
   },
   "devDependencies": {
     "@types/chokidar": "^2.1.3",

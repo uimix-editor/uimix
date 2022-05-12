@@ -1,9 +1,12 @@
 import * as fs from "fs";
+import * as path from "path";
+import slash from "slash";
 import type * as hast from "hast";
 import * as prettier from "prettier";
 import { upperFirst, camelCase } from "lodash-es";
 import { toHtml } from "hast-util-to-html";
 import { parseHTMLFragment } from "./util";
+import { fixAssetPathInHTMLTree } from "./fix-asset-path";
 
 export interface CompileOptions {
   publicPath: string;
@@ -11,11 +14,15 @@ export interface CompileOptions {
 
 export function compileFile(filePath: string, options: CompileOptions): void {
   const data = fs.readFileSync(filePath, "utf8");
-  const out = compile(data, options);
+  const out = compile(data, filePath, options);
   fs.writeFileSync(filePath.replace(/\.macaron$/, ".js"), out);
 }
 
-function compileComponent(ast: hast.Element, options: CompileOptions): string {
+function compileComponent(
+  ast: hast.Element,
+  filePath: string,
+  options: CompileOptions
+): string {
   const name = ast.properties?.name?.toString();
   if (!name) {
     throw new Error("macaron-component must have a name");
@@ -26,10 +33,10 @@ function compileComponent(ast: hast.Element, options: CompileOptions): string {
   let style: string = "";
   let template: string = "";
 
-  // TODO: fix asset URL based on publicPath
-
   for (const child of ast.children) {
     if (child.type === "element" && child.tagName === "template") {
+      const content = child.content!;
+      fixAssetPathInHTMLTree(content, filePath, options.publicPath);
       template = toHtml(child.content!);
     }
     if (child.type === "element" && child.tagName === "style") {
@@ -54,7 +61,11 @@ function compileComponent(ast: hast.Element, options: CompileOptions): string {
   `;
 }
 
-export function compile(data: string, options: CompileOptions): string {
+export function compile(
+  data: string,
+  filePath: string,
+  options: CompileOptions
+): string {
   const ast = parseHTMLFragment(data);
   console.log(ast);
 
@@ -62,7 +73,7 @@ export function compile(data: string, options: CompileOptions): string {
 
   for (const child of ast.children) {
     if (child.type === "element" && child.tagName === "macaron-component") {
-      outputs.push(compileComponent(child, options));
+      outputs.push(compileComponent(child, filePath, options));
     }
   }
 
