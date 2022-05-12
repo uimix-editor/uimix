@@ -14,6 +14,14 @@ export function fixAssetPath(assetPath: string): string {
   }
 }
 
+const assetAttributes = {
+  video: ["src", "poster"],
+  source: ["src"],
+  img: ["src"],
+  image: ["xLinkHref", "href"],
+  use: ["xLinkHref", "href"],
+};
+
 export function fixAssetPathInHTMLTree(node: hast.Content | hast.Root): void {
   if ("children" in node) {
     for (const child of node.children) {
@@ -21,12 +29,17 @@ export function fixAssetPathInHTMLTree(node: hast.Content | hast.Root): void {
     }
   }
 
-  if (node.type === "element") {
-    // TODO: make customizable
-    if (node.tagName === "img" && node.properties?.src) {
-      const src = String(node.properties.src);
-      const newSrc = fixAssetPath(src);
-      node.properties.src = newSrc;
+  if (node.type === "element" && node.properties) {
+    const tagName = node.tagName.toLowerCase();
+    if (tagName in assetAttributes) {
+      for (const attribute of assetAttributes[
+        tagName as keyof typeof assetAttributes
+      ]) {
+        const value = node.properties?.[attribute];
+        if (typeof value === "string") {
+          node.properties[attribute] = fixAssetPath(value);
+        }
+      }
     }
   }
 }
