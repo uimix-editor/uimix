@@ -1,6 +1,8 @@
 import * as path from "path";
 import slash from "slash";
 import type * as hast from "hast";
+// @ts-ignore
+import replaceCSSURL from "replace-css-url";
 
 export function fixAssetPath(
   assetPath: string,
@@ -45,4 +47,15 @@ export function fixAssetPathInHTMLTree(
       node.properties.src = newSrc;
     }
   }
+}
+
+export function fixAssetPathInCSS(
+  css: string,
+  filePath: string,
+  publicPath: string
+): void {
+  const newCSS = replaceCSSURL(css, (url: string) => {
+    return fixAssetPath(url, filePath, publicPath);
+  });
+  return newCSS;
 }

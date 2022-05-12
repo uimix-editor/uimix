@@ -37,6 +37,7 @@
   },
   "dependencies": {
     "chokidar": "^3.5.3",
+    "replace-css-url": "^1.2.6",
     "slash": "^4.0.0"
   },
   "devDependencies": {
