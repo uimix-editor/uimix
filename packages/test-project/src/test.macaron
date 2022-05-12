@@ -6,7 +6,7 @@
     <h1 title="Hover Me" id="heading">Hello, <em id="em">World!</em></h1>
     <div id="div1">Type something</div>
     <div>Type something</div>
-    <div id="flex-container">
+    <div id="images">
       <svg
         width="24"
         height="24"
@@ -43,7 +43,7 @@
     #heading {
       color: #ff0000;
     }
-    #flex-container {
+    #images {
       display: flex;
       flex-direction: row;
       align-items: center;
