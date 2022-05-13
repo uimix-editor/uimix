@@ -38,4 +38,9 @@ macaron help
 
 ## API
 
-TBD
+```js
+import { compile } from "@macaron-app/compiler";
+
+const data = fs.readFileSync("src/test.macaron", "utf-8");
+const out = compile(data, "src/test.macaron", "src/test.js");
+```
