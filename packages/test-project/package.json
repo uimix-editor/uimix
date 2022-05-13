@@ -5,6 +5,7 @@
   "license": "MIT",
   "private": true,
   "scripts": {
+    "build": "macaron test.macaron",
     "dev:macaron": "macaron --watch test.macaron",
     "dev:serve": "serve -l 1234",
     "dev": "run-p dev:*"
