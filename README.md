@@ -24,7 +24,7 @@ Unlike other Web design tools, Macaron is intended to be integrated into your ex
         Draw elements at arbitrary positions on the canvas and add layout later.
       </td>
       <td>
-        Import existing designs from Figma by copy-paste using the Macaron
+        :construction: Import existing designs from Figma by copy-paste using the Macaron
         plugin for Figma.
       </td>
       <td>
@@ -51,18 +51,20 @@ Unlike other Web design tools, Macaron is intended to be integrated into your ex
         Macaron is a design tool built around Web standards (HTML, CSS, and Web
         Components).
       </td>
-      <td>Import existing Web Components and place them in the editor.</td>
+      <td>:construction: Import existing Web Components and place them in the editor.</td>
       <td>
         Create future-proof components and use them with any frameworks (or
         without frameworks).
       </td>
       <td>
-        Emit React wrappers and TypeScript definitions for the output Web
+        :construction: Emit React wrappers and TypeScript definitions for the output Web
         components.
       </td>
     </tr>
   </tbody>
 </table>
+
+_:construction: - Not yet implemented_
 
 ## Roadmap
 
