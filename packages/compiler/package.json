@@ -45,6 +45,7 @@
     "@types/glob": "^7.2.0",
     "@types/hast": "^2.3.4",
     "@types/jest": "^27.4.1",
+    "@types/shelljs": "^0.8.11",
     "commander": "^9.1.0",
     "glob": "^8.0.1",
     "hast-util-from-parse5": "^7.1.0",
@@ -53,6 +54,8 @@
     "lodash-es": "^4.17.21",
     "parse5": "^7.0.0",
     "prettier": "^2.6.2",
+    "shelljs": "^0.8.5",
+    "tmp-promise": "^3.0.3",
     "ts-jest": "^27.1.4"
   },
   "publishConfig": {
