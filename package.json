@@ -4,6 +4,7 @@
   "version": "0.1.0",
   "description": "Visual component editor for Web development",
   "scripts": {
+    "build": "wsrun -m build",
     "dev": "wsrun -m dev",
     "test": "wsrun -m test",
     "lint": "wsrun -m lint"
