@@ -1,6 +1,7 @@
 import chokidar from "chokidar";
 import glob from "glob";
 import { Command } from "commander";
+import slash from "slash";
 import { compileFile } from "./compiler";
 
 function compileFiles(
@@ -41,7 +42,7 @@ program
   .argument("<files...>")
   .action((files: string[], options: { watch?: boolean; output?: string }) => {
     console.log(options);
-    compileFiles(files, options);
+    compileFiles(files.map(slash), options);
   });
 
 program.parse(process.argv);

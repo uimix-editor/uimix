@@ -27,9 +27,9 @@ describe("cli", () => {
     const tmpDir = await tmp.dir();
 
     shell.cp(fixtureFilePath, tmpDir.path);
-    shell.exec(`node ${cliFilePath} ${tmpDir.path}/test.macaron`);
+    shell.exec(`node ${cliFilePath} ${path.join(tmpDir.path, "test.macaron")}`);
 
-    const out = fs.readFileSync(`${tmpDir.path}/test.js`, "utf-8");
+    const out = fs.readFileSync(path.join(tmpDir.path, "test.js"), "utf-8");
     expect(out).toMatchSnapshot();
   });
 
