@@ -11,7 +11,7 @@
     "build": "node build.js ",
     "dev": "node build.js --dev",
     "lint": "eslint src --ext ts",
-    "pretest": "yarn run compile && yarn run lint",
+    "pretest": "run-s build lint",
     "test": "node ./out/test/runTest.js",
     "vscode:prepublish": "yarn run compile"
   },

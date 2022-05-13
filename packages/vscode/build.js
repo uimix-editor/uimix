@@ -2,10 +2,14 @@ const dev = process.argv.includes("--dev");
 
 require("esbuild")
   .build({
-    entryPoints: ["src/extension.ts"],
+    entryPoints: [
+      "src/extension.ts",
+      "src/test/runTest.ts",
+      "src/test/suite/index.ts",
+    ],
     bundle: true,
-    outfile: "out/extension.js",
-    external: ["vscode"],
+    outdir: "./out",
+    external: ["vscode", "mocha"],
     format: "cjs",
     platform: "node",
     target: "node12",
