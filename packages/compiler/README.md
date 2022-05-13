@@ -11,12 +11,24 @@ npm install -g @macaron-app/compiler
 ## Usage
 
 ```bash
-# generates src/*.macaron.js
+# compile to src/*.js
 macaron src/*.macaron
 
-# generates src/*.macaron.js and watches for changes
+# compile to src/*.js and watches for changes
 macaron --watch src/*.macaron
+
+# compile to dist/*.js
+macaron --output=dist src/*.macaron
 ```
+
+```
+macaron [options] <file paths or glob pattern>
+```
+
+| Option       | Description                                                     |
+| ------------ | --------------------------------------------------------------- |
+| --watch      | Watch for changes and re-generate the component.                |
+| -o, --output | Output directory. Defaults to the parent directory of the input |
 
 ## Help
 
