@@ -1,0 +1,61 @@
+{
+  "name": "@macaron-app/compiler",
+  "version": "0.2.0",
+  "description": "Macaron compiler",
+  "homepage": "https://github.com/macaronapp/macaron#readme",
+  "bugs": {
+    "url": "https://github.com/macaronapp/macaron/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/macaronapp/macaron.git"
+  },
+  "license": "MIT",
+  "author": "Ryohei Ikegami <iofg2100@gmail.com>",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "bin": {
+    "macaron": "./bin/cli.js"
+  },
+  "files": [
+    "dist",
+    "bin",
+    "lib",
+    "README.md"
+  ],
+  "scripts": {
+    "build:ts": "tsc -p tsconfig.build.json",
+    "build:bundle": "node build.js",
+    "build": "run-p build:*",
+    "dev:ts": "tsc -p tsconfig.build.json -w",
+    "dev:bundle": "node build.js --dev",
+    "dev": "run-p dev:*",
+    "format": "prettier -w src",
+    "lint": "eslint src",
+    "prepare": "npm run build",
+    "test": "cross-env NODE_OPTIONS=--experimental-vm-modules jest"
+  },
+  "dependencies": {
+    "chokidar": "^3.5.3",
+    "replace-css-url": "^1.2.6",
+    "slash": "^4.0.0"
+  },
+  "devDependencies": {
+    "@types/chokidar": "^2.1.3",
+    "@types/glob": "^7.2.0",
+    "@types/hast": "^2.3.4",
+    "@types/jest": "^27.4.1",
+    "commander": "^9.1.0",
+    "glob": "^8.0.1",
+    "hast-util-from-parse5": "^7.1.0",
+    "hast-util-to-html": "^8.0.3",
+    "jest": "^27.5.1",
+    "lodash-es": "^4.17.21",
+    "parse5": "^7.0.0",
+    "prettier": "^2.6.2",
+    "ts-jest": "^27.1.4"
+  },
+  "publishConfig": {
+    "access": "public"
+  }
+}

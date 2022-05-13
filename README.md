@@ -122,11 +122,17 @@ Unlike other Web design tools, Macaron is intended to be integrated into your ex
 </macaron-component>
 ```
 
-## Load `.macaron` file
+## Usage
+
+### Compile
+
+[Detailed instructions](packages/compiler/README.md)
 
 ```bash
-macaron compile components.macaron #=> components.js
+macaron components.macaron #=> components.js
 ```
+
+### Import in HTML
 
 ```html
 <!-- Load the component -->
@@ -143,8 +149,9 @@ macaron compile components.macaron #=> components.js
 - `/packages/editor` - The Macaron Editor
 - `/packages/paintkit` - The submodule for the [paintkit](https://github.com/seanchas116/paintkit) library
 - `/packages/vscode` - The VS Code extension that provides Macaron as a custom editor
+- `/packages/compiler` - The compiler that converts Macaron files to Web Components
 
-The project uses the Yarn workspaces.
+This project uses Yarn Workspaces.
 
 ### Start devservers
 
