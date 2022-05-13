@@ -32,4 +32,14 @@ describe("cli", () => {
     const out = fs.readFileSync(`${tmpDir.path}/test.js`, "utf-8");
     expect(out).toMatchSnapshot();
   });
+
+  it("compiles glob", async () => {
+    const tmpDir = await tmp.dir();
+
+    shell.cp(fixtureFilePath, tmpDir.path);
+    shell.exec(`node ${cliFilePath} ${tmpDir.path}/*.macaron`);
+
+    const out = fs.readFileSync(`${tmpDir.path}/test.js`, "utf-8");
+    expect(out).toMatchSnapshot();
+  });
 });
