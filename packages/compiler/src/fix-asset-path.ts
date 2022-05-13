@@ -6,6 +6,8 @@ import slash from "slash";
 
 export function fixAssetPath(
   assetPath: string,
+
+  // used to adjust relative paths
   filePath = ".",
   outFilePath = "."
 ): string {
