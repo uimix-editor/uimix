@@ -16,15 +16,11 @@ export function compileFile(filePath: string, outputDir?: string): void {
     outFileName
   );
 
-  const out = compile(data, filePath, outFilePath);
+  const out = compile(data);
   fs.writeFileSync(outFilePath, out);
 }
 
-function compileComponent(
-  ast: hast.Element,
-  filePath: string,
-  outFilePath: string
-): string {
+function compileComponent(ast: hast.Element): string {
   const name = ast.properties?.name?.toString();
   if (!name) {
     throw new Error("macaron-component must have a name");
@@ -38,12 +34,12 @@ function compileComponent(
   for (const child of ast.children) {
     if (child.type === "element" && child.tagName === "template") {
       const content = child.content!;
-      fixAssetPathInHTMLTree(content, filePath, outFilePath);
+      fixAssetPathInHTMLTree(content);
       template = toHtml(child.content!).replace(/&#x22;/g, '"');
     }
     if (child.type === "element" && child.tagName === "style") {
       style = (child.children[0] as hast.Text).value;
-      style = fixAssetPathInCSS(style, filePath, outFilePath);
+      style = fixAssetPathInCSS(style);
     }
   }
 
@@ -64,18 +60,14 @@ function compileComponent(
   `;
 }
 
-export function compile(
-  data: string,
-  filePath: string,
-  outFilePath: string
-): string {
+export function compile(data: string): string {
   const ast = parseHTMLFragment(data);
 
   const outputs: string[] = [];
 
   for (const child of ast.children) {
     if (child.type === "element" && child.tagName === "macaron-component") {
-      outputs.push(compileComponent(child, filePath, outFilePath));
+      outputs.push(compileComponent(child));
     }
   }
 

@@ -6,8 +6,8 @@ import slash from "slash";
 
 export function fixAssetPath(
   assetPath: string,
-  filePath: string,
-  outFilePath: string
+  filePath = ".",
+  outFilePath = "."
 ): string {
   try {
     new URL(assetPath);
@@ -40,8 +40,8 @@ const assetAttributes = {
 
 export function fixAssetPathInHTMLTree(
   node: hast.Content | hast.Root,
-  filePath: string,
-  outFilePath: string
+  filePath = ".",
+  outFilePath = "."
 ): void {
   if ("children" in node) {
     for (const child of node.children) {
@@ -70,8 +70,8 @@ export function fixAssetPathInHTMLTree(
 
 export function fixAssetPathInCSS(
   css: string,
-  filePath: string,
-  outFilePath: string
+  filePath = ".",
+  outFilePath = "."
 ): string {
   // eslint-disable-next-line
   const newCSS: string = replaceCSSURL(css, (url: string) => {
