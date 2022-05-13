@@ -7,6 +7,7 @@ function compileFiles(
   filePathOrGlobs: string[],
   options: {
     watch?: boolean;
+    output?: string;
   }
 ): void {
   const filePaths = new Set(filePathOrGlobs.flatMap((f) => glob.sync(f)));
@@ -36,8 +37,10 @@ program.version("0.0.1");
 
 program
   .option("--watch", "Watch files for changes")
+  .option("-o, --output <directory>", "Output directory")
   .argument("<files...>")
-  .action((files: string[], options: { watch?: boolean }) => {
+  .action((files: string[], options: { watch?: boolean; output?: string }) => {
+    console.log(options);
     compileFiles(files, options);
   });
 

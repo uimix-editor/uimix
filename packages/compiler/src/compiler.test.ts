@@ -12,7 +12,7 @@ const fixtureFilePath = path.resolve(
 describe(compile, () => {
   it("compiles", () => {
     const data = fs.readFileSync(fixtureFilePath, "utf-8");
-    const out = compile(data);
+    const out = compile(data, "src/test.macaron", "test.js");
     expect(out).toMatchSnapshot();
   });
 });

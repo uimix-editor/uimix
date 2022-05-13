@@ -1,4 +1,5 @@
-import * as fs from "fs";
+import path from "path";
+import fs from "fs";
 import type * as hast from "hast";
 import * as prettier from "prettier";
 import { upperFirst, camelCase } from "lodash-es";
@@ -6,13 +7,24 @@ import { toHtml } from "hast-util-to-html";
 import { parseHTMLFragment } from "./util";
 import { fixAssetPathInCSS, fixAssetPathInHTMLTree } from "./fix-asset-path";
 
-export function compileFile(filePath: string): void {
+export function compileFile(filePath: string, outputDir?: string): void {
   const data = fs.readFileSync(filePath, "utf8");
-  const out = compile(data);
-  fs.writeFileSync(filePath.replace(/\.macaron$/, ".js"), out);
+
+  const outFileName = path.basename(filePath).replace(/\.macaron$/, ".js");
+  const outFilePath = path.join(
+    outputDir ?? path.dirname(filePath),
+    outFileName
+  );
+
+  const out = compile(data, filePath, outFilePath);
+  fs.writeFileSync(outFilePath, out);
 }
 
-function compileComponent(ast: hast.Element): string {
+function compileComponent(
+  ast: hast.Element,
+  filePath: string,
+  outFilePath: string
+): string {
   const name = ast.properties?.name?.toString();
   if (!name) {
     throw new Error("macaron-component must have a name");
@@ -26,12 +38,12 @@ function compileComponent(ast: hast.Element): string {
   for (const child of ast.children) {
     if (child.type === "element" && child.tagName === "template") {
       const content = child.content!;
-      fixAssetPathInHTMLTree(content);
+      fixAssetPathInHTMLTree(content, filePath, outFilePath);
       template = toHtml(child.content!).replace(/&#x22;/g, '"');
     }
     if (child.type === "element" && child.tagName === "style") {
       style = (child.children[0] as hast.Text).value;
-      style = fixAssetPathInCSS(style);
+      style = fixAssetPathInCSS(style, filePath, outFilePath);
     }
   }
 
@@ -52,14 +64,18 @@ function compileComponent(ast: hast.Element): string {
   `;
 }
 
-export function compile(data: string): string {
+export function compile(
+  data: string,
+  filePath: string,
+  outFilePath: string
+): string {
   const ast = parseHTMLFragment(data);
 
   const outputs: string[] = [];
 
   for (const child of ast.children) {
     if (child.type === "element" && child.tagName === "macaron-component") {
-      outputs.push(compileComponent(child));
+      outputs.push(compileComponent(child, filePath, outFilePath));
     }
   }
 
