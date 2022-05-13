@@ -3,7 +3,7 @@
 Macaron is an open-source Web design tool to create and maintain components visually
 where you can create production components just like in vector design tools.
 
-It primarily emits Web Components (which can be used from most frameworks) and generates React wrappers.
+It primarily emits Web Components ([which can be used from most frameworks](https://custom-elements-everywhere.com/)) and optionally generates React wrappers.
 
 Unlike other Web design tools, Macaron is intended to be integrated into your existing codebase and development workflow.
 
@@ -68,7 +68,24 @@ _:construction: - Not yet implemented_
 
 ## Roadmap
 
-- [Roadmap](https://github.com/macaronapp/macaron-next/projects/1)
+- Editing
+  - [x] Basic HTML/CSS editing
+  - [ ] CSS grids
+- Exporting
+  - [x] Export Web Components
+    - [ ] Expose inner elements' properties and events
+  - [ ] Export React wrappers
+  - [ ] Export TypeScript definitions
+- Importing
+  - [ ] Use components in the same file
+  - [ ] Import third-party Web Components
+- VS Code integration
+  - [x] Macaron as a custom editor
+- Figma integration
+  - [ ] Import existing designs from Figma
+- Loaders for build tools
+  - [ ] Webpack
+  - [ ] Vite
 
 ## File format (`*.macaron`)
 
