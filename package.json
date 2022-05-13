@@ -5,7 +5,8 @@
   "description": "Visual component editor for Web development",
   "scripts": {
     "dev": "wsrun -m dev",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "wsrun -m test",
+    "lint": "wsrun -m lint"
   },
   "repository": {
     "type": "git",
