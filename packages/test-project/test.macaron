@@ -32,7 +32,7 @@
           r="2.5"
           fill="#333333"
         ></circle></svg
-      ><img src="../images/user1.png" id="img" />
+      ><img src="./images/user1.png" id="img" />
       <div id="div"></div>
     </div>
   </template>
@@ -58,7 +58,7 @@
       left: 69px;
       width: 32px;
       height: 32px;
-      background: url("../images/user2.jpg") left top / cover;
+      background: url("./images/user2.jpg") left top / cover;
     }
     :host(:hover) {
       font-family: Menlo;
