@@ -4,12 +4,21 @@ import { AddressInfo } from "net";
 import handler from "serve-handler";
 import * as vscode from "vscode";
 
+const excludedFiles = [".env", ".env.*", "*.{pem,crt}"];
+
 export class FileServer {
   constructor(rootUri: vscode.Uri) {
     this.publicPathUri = rootUri;
     this._server = http.createServer((request, response) => {
       return handler(request, response, {
         public: rootUri.path,
+        directoryListing: false,
+        rewrites: excludedFiles.map((excludedFile) => {
+          return {
+            source: `**/${excludedFile}`,
+            destination: "",
+          };
+        }),
       });
     });
   }
