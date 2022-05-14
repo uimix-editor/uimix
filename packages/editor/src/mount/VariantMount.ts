@@ -1,4 +1,4 @@
-import { reaction } from "mobx";
+import { action, reaction } from "mobx";
 import { Component } from "../models/Component";
 import { getInstance } from "../models/InstanceRegistry";
 import { DefaultVariant, Variant } from "../models/Variant";
@@ -114,6 +114,12 @@ export class VariantMount {
       childMount.updateBoundingBox();
     }
 
-    captureDOM(this.host);
+    if (this.variant.type === "defaultVariant") {
+      void captureDOM(this.host).then(
+        action((thumb) => {
+          this.component.thumbnail = thumb;
+        })
+      );
+    }
   }
 }

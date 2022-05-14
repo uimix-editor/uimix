@@ -2,8 +2,9 @@ import type * as hast from "hast";
 import { h, s } from "hastscript";
 import { compact } from "lodash-es";
 import { toHtml } from "hast-util-to-html";
+import { svgToDataURL } from "@seanchas116/paintkit/src/util/Image";
 
-export function captureDOM(element: HTMLElement): void {
+export async function captureDOM(element: HTMLElement): Promise<string> {
   const ast = getRenderableAST(element);
 
   const width = element.offsetWidth;
@@ -37,6 +38,24 @@ export function captureDOM(element: HTMLElement): void {
 
   const svgText = toHtml(svg);
   console.log(svgText);
+
+  const img = new Image();
+
+  img.src = svgToDataURL(svgText);
+
+  await new Promise((resolve, reject) => {
+    img.onload = resolve;
+    img.onerror = reject;
+  });
+
+  const canvas = document.createElement("canvas");
+  canvas.width = width;
+  canvas.height = height;
+
+  const ctx = canvas.getContext("2d")!;
+  ctx.drawImage(img, 0, 0);
+
+  return canvas.toDataURL("image/png");
 }
 
 function getRenderableAST(node: Node): hast.Element | hast.Text | undefined {

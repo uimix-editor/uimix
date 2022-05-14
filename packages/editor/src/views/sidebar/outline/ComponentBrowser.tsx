@@ -54,6 +54,7 @@ const Item: React.FC<{
   return (
     <AssetGridItem>
       <AssetGridItemThumbnail
+        src={component.thumbnail}
         loading="lazy"
         draggable
         onDragStart={(e) => {
