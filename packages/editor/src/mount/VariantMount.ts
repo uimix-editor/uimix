@@ -70,6 +70,14 @@ export class VariantMount {
           this.updateBoundingBoxLater();
         },
         { fireImmediately: true }
+      ),
+      // update thumbnail on commit
+      reaction(
+        () => this.context.editorState.history.undoStack.commandToUndo,
+        () => {
+          this.updateThumbnail();
+        },
+        { fireImmediately: true }
       )
     );
   }
@@ -113,13 +121,17 @@ export class VariantMount {
     for (const childMount of this.childMountSync.childMounts) {
       childMount.updateBoundingBox();
     }
+  }
 
+  updateThumbnail(): void {
     if (this.variant.type === "defaultVariant") {
-      void captureDOM(this.host, 128).then(
-        action((thumb) => {
-          this.component.thumbnail = thumb;
-        })
-      );
+      setTimeout(() => {
+        void captureDOM(this.host, 128).then(
+          action((thumb) => {
+            this.component.thumbnail = thumb;
+          })
+        );
+      }, 0);
     }
   }
 }
