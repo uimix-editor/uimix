@@ -74,13 +74,15 @@ export class VariantMount {
     );
 
     if (this.variant.type === "defaultVariant") {
-      // update thumbnail on commit
-      reaction(
-        () => this.context.editorState.history.undoStack.commandToUndo,
-        () => {
-          this.updateThumbnail();
-        },
-        { fireImmediately: true }
+      this.disposers.push(
+        // update thumbnail on commit
+        reaction(
+          () => this.context.editorState.history.undoStack.commandToUndo,
+          () => {
+            this.updateThumbnail();
+          },
+          { fireImmediately: true }
+        )
       );
     }
   }
