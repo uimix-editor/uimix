@@ -39,7 +39,7 @@ export const ComponentBrowser: React.FC<React.HTMLAttributes<HTMLDivElement>> =
         <StyledScrollable>
           <AssetGrid>
             {components.map((component) => (
-              <Item component={component} />
+              <Item component={component} key={component.key} />
             ))}
           </AssetGrid>
         </StyledScrollable>

@@ -126,7 +126,7 @@ export class VariantMount {
   updateThumbnail(): void {
     if (this.variant.type === "defaultVariant") {
       setTimeout(() => {
-        void captureDOM(this.host, 128).then(
+        void captureDOM(this.host, 512).then(
           action((thumb) => {
             this.component.thumbnail = thumb;
           })
