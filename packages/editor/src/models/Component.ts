@@ -163,6 +163,8 @@ export class Component extends TreeNode<ComponentList, Component, never> {
     }
     return [];
   }
+
+  @observable thumbnail?: string = undefined;
 }
 
 export interface ComponentJSON {

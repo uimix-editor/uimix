@@ -2,6 +2,7 @@ import { reaction } from "mobx";
 import { Component } from "../models/Component";
 import { getInstance } from "../models/InstanceRegistry";
 import { DefaultVariant, Variant } from "../models/Variant";
+import { captureDOM } from "../util/CaptureDOM";
 import { ChildMountSync, fetchComputedValues } from "./ElementMount";
 import { MountContext } from "./MountContext";
 
@@ -112,5 +113,7 @@ export class VariantMount {
     for (const childMount of this.childMountSync.childMounts) {
       childMount.updateBoundingBox();
     }
+
+    captureDOM(this.host);
   }
 }
