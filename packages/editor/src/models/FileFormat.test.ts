@@ -1,6 +1,7 @@
 import path from "path";
 import fs from "fs";
 import url from "url";
+import { describe, it, expect } from "vitest";
 import { parseDocument, stringifyDocument } from "./FileFormat";
 
 const __filename = url.fileURLToPath(import.meta.url);
