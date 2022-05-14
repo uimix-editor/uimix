@@ -23,8 +23,8 @@ export class VSCodeAppState {
     };
 
     const webviewAPI: IWebviewAPI = {
-      setContent(content: string): void {
-        file.setContent(content);
+      setContent(content: string, url: string | undefined): void {
+        file.setContent(content, url);
       },
       getContent(): string {
         return file.getContent();

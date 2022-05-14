@@ -57,7 +57,10 @@ export class MacaronEditorSession {
       this.fileWatcher.onDidChange(async () => {
         const data = await vscode.workspace.fs.readFile(document.uri);
         const content = Buffer.from(data).toString();
-        await this.webviewAPI?.setContent(content);
+        await this.webviewAPI?.setContent(
+          content,
+          this.document.serverUri?.toString()
+        );
       })
     );
   }
@@ -117,7 +120,10 @@ export class MacaronEditorSession {
       );
     }
 
-    await this.webviewAPI.setContent(this.document.initialContent);
+    await this.webviewAPI.setContent(
+      this.document.initialContent,
+      this.document.serverUri?.toString()
+    );
   }
 
   dispose(): void {

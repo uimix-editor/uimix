@@ -4,7 +4,7 @@ export interface ImageAsset {
 }
 
 export interface IWebviewAPI {
-  setContent(content: string): void;
+  setContent(content: string, url: string | undefined): void;
   getContent(): string;
   updateSavePoint(): void;
   setImageAssets(assets: readonly ImageAsset[]): void;

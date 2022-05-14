@@ -11,8 +11,9 @@ export class VSCodeFile {
   @observable.ref history = new JSONUndoHistory<DocumentJSON, Document>(
     new Document()
   );
+  @observable url?: string = undefined;
 
-  setContent(content: string): void {
+  setContent(content: string, url: string | undefined): void {
     try {
       const currentContent = stringifyDocument(this.history.target);
       if (currentContent === content) {
@@ -21,6 +22,8 @@ export class VSCodeFile {
       const document = parseDocument(content);
       runInAction(() => {
         this.history = new JSONUndoHistory<DocumentJSON, Document>(document);
+        this.url = url;
+        console.log(url);
       });
     } catch (e) {
       console.error(e);
