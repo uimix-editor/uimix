@@ -23,30 +23,29 @@ const ComponentBrowserWrap = styled.div`
   }
 `;
 
-export const ComponentBrowser: React.FC<
-  React.HTMLAttributes<HTMLDivElement>
-> = ({ ...props }) => {
-  const [search, setSearch] = useState("");
+export const ComponentBrowser: React.FC<React.HTMLAttributes<HTMLDivElement>> =
+  observer(function ComponentBrowser({ ...props }) {
+    const [search, setSearch] = useState("");
 
-  const editorState = useEditorState();
+    const editorState = useEditorState();
 
-  const components = editorState.document.components.children.filter(
-    (component) => component.name.includes(search)
-  );
+    const components = editorState.document.components.children.filter(
+      (component) => component.name.includes(search)
+    );
 
-  return (
-    <ComponentBrowserWrap>
-      <SearchBar value={search} onChange={setSearch} />
-      <StyledScrollable>
-        <AssetGrid>
-          {components.map((component) => (
-            <Item component={component} />
-          ))}
-        </AssetGrid>
-      </StyledScrollable>
-    </ComponentBrowserWrap>
-  );
-};
+    return (
+      <ComponentBrowserWrap>
+        <SearchBar value={search} onChange={setSearch} />
+        <StyledScrollable>
+          <AssetGrid>
+            {components.map((component) => (
+              <Item component={component} />
+            ))}
+          </AssetGrid>
+        </StyledScrollable>
+      </ComponentBrowserWrap>
+    );
+  });
 
 const Item: React.FC<{
   component: Component;
