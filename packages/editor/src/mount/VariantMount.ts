@@ -115,7 +115,7 @@ export class VariantMount {
     }
 
     if (this.variant.type === "defaultVariant") {
-      void captureDOM(this.host).then(
+      void captureDOM(this.host, 128).then(
         action((thumb) => {
           this.component.thumbnail = thumb;
         })

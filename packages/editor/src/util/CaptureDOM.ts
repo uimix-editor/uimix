@@ -4,7 +4,10 @@ import { compact } from "lodash-es";
 import { toHtml } from "hast-util-to-html";
 import { svgToDataURL } from "@seanchas116/paintkit/src/util/Image";
 
-export async function captureDOM(element: HTMLElement): Promise<string> {
+export async function captureDOM(
+  element: HTMLElement,
+  size: number
+): Promise<string> {
   const ast = getRenderableAST(element);
 
   const width = element.offsetWidth;
@@ -49,10 +52,16 @@ export async function captureDOM(element: HTMLElement): Promise<string> {
   });
 
   const canvas = document.createElement("canvas");
-  canvas.width = width;
-  canvas.height = height;
+  canvas.width = size;
+  canvas.height = size;
+
+  const scale = size / Math.max(width, height);
+  const offsetX = (size - width * scale) / 2;
+  const offsetY = (size - height * scale) / 2;
 
   const ctx = canvas.getContext("2d")!;
+  ctx.translate(offsetX, offsetY);
+  ctx.scale(scale, scale);
   ctx.drawImage(img, 0, 0);
 
   return canvas.toDataURL("image/png");
