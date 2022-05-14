@@ -135,10 +135,12 @@ export class MacaronEditorSession {
 
     const nonce = getNonce();
 
+    const fileServerOrigin = Project.instance.fileServer?.origin ?? "";
+
     const csp = `
       default-src 'none';
       connect-src ${webview.cspSource} data: ws://localhost:3000;
-      img-src ${webview.cspSource} data: blob:;
+      img-src ${webview.cspSource} ${fileServerOrigin} data: blob:;
       font-src https://fonts.gstatic.com;
       style-src ${webview.cspSource} https://fonts.googleapis.com 'unsafe-inline';
       script-src 'nonce-${nonce}' 'unsafe-inline' 'unsafe-eval' 'strict-dynamic';

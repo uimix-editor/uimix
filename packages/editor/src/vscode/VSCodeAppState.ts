@@ -58,6 +58,10 @@ export class VSCodeAppState {
   }
 
   resolveImageAssetURL(assetPath: string): string {
-    return this.imageAssetMap.get(assetPath) ?? assetPath;
+    const base = this.file.url;
+    if (!base) {
+      return assetPath;
+    }
+    return new URL(assetPath, base).toString();
   }
 }

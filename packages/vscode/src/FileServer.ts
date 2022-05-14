@@ -6,7 +6,7 @@ import * as vscode from "vscode";
 
 export class FileServer {
   constructor(rootUri: vscode.Uri) {
-    this.rootUri = rootUri;
+    this.publicPathUri = rootUri;
     this._server = http.createServer((request, response) => {
       return handler(request, response, {
         public: rootUri.path,
@@ -14,12 +14,16 @@ export class FileServer {
     });
   }
 
-  readonly rootUri: vscode.Uri;
+  readonly publicPathUri: vscode.Uri;
   private _server: http.Server;
   private _port = 0;
 
   get port(): number {
     return this._port;
+  }
+
+  get origin(): string {
+    return `http://localhost:${this.port}`;
   }
 
   listen(): Promise<void> {
@@ -32,7 +36,7 @@ export class FileServer {
   }
 
   toServerUri(uri: vscode.Uri): vscode.Uri {
-    const relativePath = path.posix.relative(this.rootUri.path, uri.path);
+    const relativePath = path.posix.relative(this.publicPathUri.path, uri.path);
     if (relativePath.startsWith("..")) {
       throw new Error("Invalid path");
     }
