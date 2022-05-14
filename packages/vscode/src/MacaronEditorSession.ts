@@ -140,11 +140,10 @@ export class MacaronEditorSession {
     const csp = `
       default-src 'none';
       connect-src ${webview.cspSource} data: ws://localhost:3000;
-      img-src ${webview.cspSource} ${fileServerOrigin} data: blob:;
+      img-src ${webview.cspSource} ${fileServerOrigin} data:;
       font-src https://fonts.gstatic.com;
       style-src ${webview.cspSource} https://fonts.googleapis.com 'unsafe-inline';
       script-src 'nonce-${nonce}' 'unsafe-inline' 'unsafe-eval' 'strict-dynamic';
-      frame-src blob:;
     `;
 
     return `
