@@ -73,17 +73,16 @@ function getRenderableAST(node: Node): hast.Element | hast.Text | undefined {
     );
 
     const computedStyle = getComputedStyle(element);
-    const computedStyleData: { [key: string]: string } = {};
+    const styleLines: string[] = [];
     for (let i = 0; i < computedStyle.length; i++) {
       const name = computedStyle.item(i);
       if (name) {
-        computedStyleData[name] = computedStyle.getPropertyValue(name);
+        styleLines.push(
+          name + ":" + computedStyle.getPropertyValue(name) + ";"
+        );
       }
     }
-    const style = Object.entries(computedStyleData)
-      .map(([key, value]) => key + ":" + value)
-      .join(";");
-    attributes.style = style;
+    attributes.style = styleLines.join("");
 
     const children = element.shadowRoot
       ? compact(Array.from(element.shadowRoot.childNodes).map(getRenderableAST))
