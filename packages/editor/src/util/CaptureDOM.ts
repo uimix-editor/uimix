@@ -4,6 +4,7 @@ import { compact } from "lodash-es";
 import { toHtml } from "hast-util-to-html";
 import { svgToDataURL } from "@seanchas116/paintkit/src/util/Image";
 
+// TODO: use https://github.com/bubkoo/html-to-image
 export async function captureDOM(
   element: HTMLElement,
   size: number
@@ -40,7 +41,6 @@ export async function captureDOM(
   );
 
   const svgText = toHtml(svg);
-  console.log(svgText);
 
   const img = new Image();
 
