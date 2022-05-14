@@ -3,7 +3,7 @@ import * as vscode from "vscode";
 import * as Comlink from "comlink";
 //import type { API } from "../../editor/src/vscode/API";
 import { MacaronEditorDocument } from "./MacaronEditorDocument";
-import { IExtensionAPI, ImageAsset, IWebviewAPI } from "./APIInterface";
+import { IExtensionAPI, IWebviewAPI } from "./APIInterface";
 import { Project } from "./Project";
 import { getImportPath } from "./util";
 
@@ -170,13 +170,10 @@ export class MacaronEditorSession {
       </html>`;
   }
 
-  private getImageFiles(imageFilePaths: Set<string>): ImageAsset[] {
-    return [...imageFilePaths].sort().map((filePath) => {
-      const uri = vscode.Uri.file(filePath);
-      const relativePath = getImportPath(this.document.uri.path, filePath);
-      const webviewURI = this.webviewPanel.webview.asWebviewUri(uri);
-      return { relativePath, url: webviewURI.toString() };
-    });
+  private getImageFiles(imageFilePaths: Set<string>): string[] {
+    return [...imageFilePaths]
+      .sort()
+      .map((filePath) => getImportPath(this.document.uri.path, filePath));
   }
 
   private onDirtyChange(dirty: boolean) {
