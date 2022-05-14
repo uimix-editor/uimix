@@ -4,6 +4,7 @@ import { AddressInfo } from "net";
 import handler from "serve-handler";
 import * as vscode from "vscode";
 
+// https://vitejs.dev/config/#server-fs-deny
 const excludedFiles = [".env", ".env.*", "*.{pem,crt}"];
 
 export class FileServer {
