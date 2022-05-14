@@ -169,8 +169,7 @@ export class ElementMount {
 
     for (const [key, value] of this.instance.element.attrs) {
       if (this.instance.element.tagName === "img" && key === "src") {
-        const resolved =
-          this.context.editorState.resolveImageAssetURLForIFrame(value);
+        const resolved = this.context.editorState.resolveImageAssetURL(value);
         if (resolved) {
           attributes.set(key, resolved);
         }

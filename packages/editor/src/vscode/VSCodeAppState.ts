@@ -1,10 +1,6 @@
 import * as Comlink from "comlink";
-import { action, computed, makeObservable, observable } from "mobx";
-import {
-  IExtensionAPI,
-  ImageAsset,
-  IWebviewAPI,
-} from "../../../vscode/src/APIInterface";
+import { action, makeObservable, observable } from "mobx";
+import { IExtensionAPI, IWebviewAPI } from "../../../vscode/src/APIInterface";
 import { VSCodeFile } from "./VSCodeFile";
 
 const vscode = acquireVsCodeApi();
@@ -23,8 +19,8 @@ export class VSCodeAppState {
     };
 
     const webviewAPI: IWebviewAPI = {
-      setContent(content: string): void {
-        file.setContent(content);
+      setContent(content: string, url: string | undefined): void {
+        file.setContent(content, url);
       },
       getContent(): string {
         return file.getContent();
@@ -32,13 +28,9 @@ export class VSCodeAppState {
       updateSavePoint(): void {
         file.updateSavePoint();
       },
-      setImageAssets: action((assets: ImageAsset[]) => {
-        assets.sort((a, b) => a.relativePath.localeCompare(b.relativePath));
-        const newMap = new Map<string, string>();
-        for (const asset of assets) {
-          newMap.set(asset.relativePath, asset.url);
-        }
-        this.imageAssetMap.replace(newMap);
+      setImageAssets: action((assets: string[]) => {
+        assets.sort((a, b) => a.localeCompare(b));
+        this.imageAssets = assets;
       }),
     };
 
@@ -53,11 +45,13 @@ export class VSCodeAppState {
   readonly file: VSCodeFile;
   private readonly imageAssetMap = observable.map<string, string>();
 
-  @computed get imageAssets(): readonly string[] {
-    return Array.from(this.imageAssetMap.keys());
-  }
+  @observable.ref imageAssets: readonly string[] = [];
 
   resolveImageAssetURL(assetPath: string): string {
-    return this.imageAssetMap.get(assetPath) ?? assetPath;
+    const base = this.file.url;
+    if (!base) {
+      return assetPath;
+    }
+    return new URL(assetPath, base).toString();
   }
 }

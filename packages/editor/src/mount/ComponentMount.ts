@@ -129,11 +129,10 @@ export class ComponentMount {
         const props = instance.style.toPostCSS({ selector });
 
         for (const node of props.nodes) {
-          if (node.type === "decl" && node.prop === "background-image") {
-            // TODO: resolve URL
+          if (node.type === "decl" && node.prop === "background") {
             // eslint-disable-next-line
             node.value = replaceCSSURL(node.value, (url: string) =>
-              this.context.editorState.resolveImageAssetURLForIFrame(url)
+              this.context.editorState.resolveImageAssetURL(url)
             );
           }
         }

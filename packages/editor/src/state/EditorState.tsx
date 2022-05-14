@@ -16,7 +16,6 @@ import { Variant } from "../models/Variant";
 import { ElementPicker } from "../mount/ElementPicker";
 import { snapThreshold } from "../views/viewport/Constants";
 import { IconBrowserState } from "../views/sidebar/outline/IconBrowserState";
-import { VSCodeResourceURLResolver } from "../mount/VSCodeResourceURLResolver";
 import { ElementInspectorState } from "./ElementInspectorState";
 import { VariantInspectorState } from "./VariantInspectorState";
 import { InsertMode } from "./InsertMode";
@@ -38,19 +37,8 @@ export abstract class EditorState {
     return [];
   }
 
-  private readonly vsCodeResourceURLResolver = new VSCodeResourceURLResolver();
-
   resolveImageAssetURL(assetPath: string): string {
     return assetPath;
-  }
-
-  // observable
-  // (this function may return undefined if the value is not yet available.
-  // use this function in a reaction/computed to wait for the value to be available.)
-  resolveImageAssetURLForIFrame(assetPath: string): string | undefined {
-    return this.vsCodeResourceURLResolver.resolve(
-      this.resolveImageAssetURL(assetPath)
-    );
   }
 
   get document(): Document {

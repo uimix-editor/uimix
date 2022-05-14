@@ -3,7 +3,7 @@ import * as vscode from "vscode";
 import * as Comlink from "comlink";
 //import type { API } from "../../editor/src/vscode/API";
 import { MacaronEditorDocument } from "./MacaronEditorDocument";
-import { IExtensionAPI, ImageAsset, IWebviewAPI } from "./APIInterface";
+import { IExtensionAPI, IWebviewAPI } from "./APIInterface";
 import { Project } from "./Project";
 import { getImportPath } from "./util";
 
@@ -57,7 +57,10 @@ export class MacaronEditorSession {
       this.fileWatcher.onDidChange(async () => {
         const data = await vscode.workspace.fs.readFile(document.uri);
         const content = Buffer.from(data).toString();
-        await this.webviewAPI?.setContent(content);
+        await this.webviewAPI?.setContent(
+          content,
+          this.document.serverUri?.toString()
+        );
       })
     );
   }
@@ -117,7 +120,10 @@ export class MacaronEditorSession {
       );
     }
 
-    await this.webviewAPI.setContent(this.document.initialContent);
+    await this.webviewAPI.setContent(
+      this.document.initialContent,
+      this.document.serverUri?.toString()
+    );
   }
 
   dispose(): void {
@@ -129,14 +135,15 @@ export class MacaronEditorSession {
 
     const nonce = getNonce();
 
+    const fileServerOrigin = Project.instance.fileServer?.origin ?? "";
+
     const csp = `
       default-src 'none';
       connect-src ${webview.cspSource} data: ws://localhost:3000;
-      img-src ${webview.cspSource} data: blob:;
+      img-src ${webview.cspSource} ${fileServerOrigin} data:;
       font-src https://fonts.gstatic.com;
       style-src ${webview.cspSource} https://fonts.googleapis.com 'unsafe-inline';
       script-src 'nonce-${nonce}' 'unsafe-inline' 'unsafe-eval' 'strict-dynamic';
-      frame-src blob:;
     `;
 
     return `
@@ -162,13 +169,10 @@ export class MacaronEditorSession {
       </html>`;
   }
 
-  private getImageFiles(imageFilePaths: Set<string>): ImageAsset[] {
-    return [...imageFilePaths].sort().map((filePath) => {
-      const uri = vscode.Uri.file(filePath);
-      const relativePath = getImportPath(this.document.uri.path, filePath);
-      const webviewURI = this.webviewPanel.webview.asWebviewUri(uri);
-      return { relativePath, url: webviewURI.toString() };
-    });
+  private getImageFiles(imageFilePaths: Set<string>): string[] {
+    return [...imageFilePaths]
+      .sort()
+      .map((filePath) => getImportPath(this.document.uri.path, filePath));
   }
 
   private onDirtyChange(dirty: boolean) {

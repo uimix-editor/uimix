@@ -1,5 +1,6 @@
 import * as vscode from "vscode";
 import { MacaronEditorSession } from "./MacaronEditorSession";
+import { Project } from "./Project";
 
 export class MacaronEditorDocument implements vscode.CustomDocument {
   static async create(
@@ -42,4 +43,8 @@ export class MacaronEditorDocument implements vscode.CustomDocument {
   }
 
   dispose(): void {}
+
+  get serverUri(): vscode.Uri | undefined {
+    return Project.instance.fileServer?.toServerUri(this.uri);
+  }
 }
