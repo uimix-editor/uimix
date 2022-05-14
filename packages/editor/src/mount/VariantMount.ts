@@ -70,7 +70,10 @@ export class VariantMount {
           this.updateBoundingBoxLater();
         },
         { fireImmediately: true }
-      ),
+      )
+    );
+
+    if (this.variant.type === "defaultVariant") {
       // update thumbnail on commit
       reaction(
         () => this.context.editorState.history.undoStack.commandToUndo,
@@ -78,8 +81,8 @@ export class VariantMount {
           this.updateThumbnail();
         },
         { fireImmediately: true }
-      )
-    );
+      );
+    }
   }
 
   dispose(): void {
@@ -124,14 +127,12 @@ export class VariantMount {
   }
 
   updateThumbnail(): void {
-    if (this.variant.type === "defaultVariant") {
-      setTimeout(() => {
-        void captureDOM(this.host, 512).then(
-          action((thumb) => {
-            this.component.thumbnail = thumb;
-          })
-        );
-      }, 0);
-    }
+    setTimeout(() => {
+      void captureDOM(this.host, 512).then(
+        action((thumb) => {
+          this.component.thumbnail = thumb;
+        })
+      );
+    }, 0);
   }
 }
