@@ -1,6 +1,7 @@
 import url from "url";
 import path from "path";
 import fs from "fs";
+import { describe, it, expect, beforeEach, afterEach } from "vitest";
 import tmp from "tmp-promise";
 import shell from "shelljs";
 

@@ -1,3 +1,4 @@
+import { describe, it, expect } from "vitest";
 import type * as hast from "hast";
 import {
   fixAssetPath,
@@ -9,7 +10,7 @@ import { parseHTMLFragment } from "./util";
 const filePath = "./src/file.macaron";
 const outFilePath = "file.js";
 
-describe(fixAssetPath, () => {
+describe(fixAssetPath.name, () => {
   it("fixes asset path based on filePath and publicPath", () => {
     const assetPath = "../images/logo.png";
     const filePath = "./src/file.macaron";
@@ -34,7 +35,7 @@ describe(fixAssetPath, () => {
   });
 });
 
-describe(fixAssetPathInHTMLTree, () => {
+describe(fixAssetPathInHTMLTree.name, () => {
   it("fixes asset path based on filePath and publicPath", () => {
     const ast = parseHTMLFragment(
       `<img src="../images/logo.png"><img src="https://example.com/images/logo.png">`
@@ -51,7 +52,7 @@ describe(fixAssetPathInHTMLTree, () => {
   });
 });
 
-describe(fixAssetPathInCSS, () => {
+describe(fixAssetPathInCSS.name, () => {
   it("fixes asset path based on filePath and publicPath", () => {
     const css = `
       background-image: url(../images/logo.png);
