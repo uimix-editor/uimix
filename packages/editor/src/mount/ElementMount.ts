@@ -139,11 +139,11 @@ export class ElementMount {
     this.context.registry.setElementMount(this);
 
     this.childMountSync = new ChildMountSync(this, this.dom, () =>
-      this.updateBoundingBoxLater()
+      this.root.updateBoundingBoxLater()
     );
 
     this.dom.addEventListener("load", () => {
-      this.updateBoundingBoxLater();
+      this.root.updateBoundingBoxLater();
     });
 
     this.disposers.push(
@@ -156,7 +156,7 @@ export class ElementMount {
           for (const [key, value] of attrs) {
             this.dom.setAttribute(key, value);
           }
-          this.updateBoundingBoxLater();
+          this.root.updateBoundingBoxLater();
         },
         { fireImmediately: true }
       ),
@@ -208,15 +208,6 @@ export class ElementMount {
 
   get root(): RootElementMount {
     return this.parent.root;
-  }
-
-  updateBoundingBoxLater(): void {
-    const variant = this.instance.variant;
-    if (variant) {
-      this.context.registry
-        .getVariantMount(variant)
-        ?.rootMount.updateBoundingBoxLater();
-    }
   }
 
   updateBoundingBox(): void {
