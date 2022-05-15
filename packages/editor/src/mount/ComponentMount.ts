@@ -90,7 +90,7 @@ export class ComponentMount {
 
   private onStyleChange(): void {
     for (const mount of this.variantMounts) {
-      mount.updateBoundingBoxLater();
+      mount.rootMount.updateBoundingBoxLater();
     }
   }
 }

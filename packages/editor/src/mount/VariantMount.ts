@@ -1,11 +1,9 @@
-import { assertNonNull } from "@seanchas116/paintkit/src/util/Assert";
 import { action, reaction } from "mobx";
 import { Component } from "../models/Component";
-import { getInstance } from "../models/InstanceRegistry";
 import { DefaultVariant, Variant } from "../models/Variant";
 import { captureDOM } from "../util/CaptureDOM";
-import { ChildMountSync, fetchComputedValues } from "./ElementMount";
 import { MountContext } from "./MountContext";
+import { RootElementMount } from "./RootElementMount";
 
 export class VariantMount {
   private static hostDOMToMount = new WeakMap<
@@ -26,34 +24,16 @@ export class VariantMount {
     this.variant = variant;
     this.context = context;
 
-    const styleSheet = assertNonNull(
-      this.context.componentStyleMounts.get(component)
-    ).styleSheet;
+    this.rootMount = new RootElementMount(component, variant, context);
+    VariantMount.hostDOMToMount.set(this.rootMount.dom, this);
 
     this.dom = context.domDocument.createElement("div");
-    this.host = context.domDocument.createElement("div");
-    VariantMount.hostDOMToMount.set(this.host, this);
-    this.shadow = this.host.attachShadow({ mode: "open" });
-    // @ts-ignore
-    this.shadow.adoptedStyleSheets = [context.resetStyleSheet, styleSheet];
-    this.dom.append(this.host);
-
-    if (this.variant.type === "variant") {
-      this.host.classList.add("variant-" + this.variant.key);
-    }
+    this.dom.append(this.rootMount.dom);
 
     this.dom.style.position = "absolute";
     this.dom.style.background = "white";
     this.dom.style.display = "flex";
 
-    // TODO: add style
-
-    this.childMountSync = new ChildMountSync(
-      getInstance(variant, component.rootElement),
-      context,
-      this.shadow,
-      () => this.updateBoundingBoxLater()
-    );
     context.registry.setVariantMount(this);
 
     this.disposers.push(
@@ -71,7 +51,7 @@ export class VariantMount {
             width === undefined ? `fit-content` : `${width}px`;
           this.dom.style.height =
             height === undefined ? `fit-content` : `${height}px`;
-          this.updateBoundingBoxLater();
+          this.rootMount.updateBoundingBoxLater();
         },
         { fireImmediately: true }
       )
@@ -96,9 +76,10 @@ export class VariantMount {
       throw new Error("VariantMount is already disposed");
     }
 
+    this.rootMount.dispose();
+
     this.disposers.forEach((disposer) => disposer());
 
-    this.childMountSync.dispose();
     this.context.registry.deleteVariantMount(this);
 
     this.isDisposed = true;
@@ -112,29 +93,12 @@ export class VariantMount {
   readonly context: MountContext;
 
   readonly dom: HTMLDivElement;
-  private readonly host: HTMLDivElement;
-  private readonly shadow: ShadowRoot;
 
-  private readonly childMountSync: ChildMountSync;
-
-  updateBoundingBoxLater(): void {
-    this.context.boundingBoxUpdateScheduler.schedule(this);
-  }
-
-  updateBoundingBox(): void {
-    const { rootInstance } = this.variant;
-    if (rootInstance) {
-      fetchComputedValues(rootInstance, this.host, this.context);
-    }
-
-    for (const childMount of this.childMountSync.childMounts) {
-      childMount.updateBoundingBox();
-    }
-  }
+  readonly rootMount: RootElementMount;
 
   updateThumbnail(): void {
     setTimeout(() => {
-      void captureDOM(this.host, 512).then(
+      void captureDOM(this.rootMount.dom, 512).then(
         action((thumb) => {
           this.component.thumbnail = thumb;
         })

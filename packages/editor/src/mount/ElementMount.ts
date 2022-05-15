@@ -211,7 +211,9 @@ export class ElementMount {
   updateBoundingBoxLater(): void {
     const variant = this.instance.variant;
     if (variant) {
-      this.context.registry.getVariantMount(variant)?.updateBoundingBoxLater();
+      this.context.registry
+        .getVariantMount(variant)
+        ?.rootMount.updateBoundingBoxLater();
     }
   }
 
