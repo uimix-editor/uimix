@@ -1,3 +1,4 @@
+<script type="module" src="./shoelace.js"></script>
 <macaron-component name="my-component">
   <macaron-variant x="0" y="0"></macaron-variant>
   <macaron-variant x="200" y="0" selector=":hover"></macaron-variant>
