@@ -83,7 +83,7 @@ export class RootElementMount {
   }
 
   updateBoundingBoxLater(): void {
-    this.context.boundingBoxUpdateScheduler.schedule(this);
+    this.context.boundingBoxUpdateScheduler?.schedule(this);
   }
 
   updateBoundingBox(): void {

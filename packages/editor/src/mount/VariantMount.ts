@@ -24,7 +24,7 @@ export class VariantMount {
     this.dom.style.background = "white";
     this.dom.style.display = "flex";
 
-    context.registry.setVariantMount(this);
+    context.registry?.setVariantMount(this);
 
     this.disposers.push(
       reaction(
@@ -70,7 +70,7 @@ export class VariantMount {
 
     this.disposers.forEach((disposer) => disposer());
 
-    this.context.registry.deleteVariantMount(this);
+    this.context.registry?.deleteVariantMount(this);
 
     this.isDisposed = true;
   }

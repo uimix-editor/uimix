@@ -136,7 +136,7 @@ export class ElementMount {
     }
     ElementMount.domToMount.set(this.dom, this);
     this.context = context;
-    this.context.registry.setElementMount(this);
+    this.context.registry?.setElementMount(this);
 
     this.childMountSync = new ChildMountSync(this, this.dom, () =>
       this.root.updateBoundingBoxLater()
@@ -197,7 +197,7 @@ export class ElementMount {
 
     this.disposers.forEach((disposer) => disposer());
     this.childMountSync.dispose();
-    this.context.registry.deleteElementMount(this);
+    this.context.registry?.deleteElementMount(this);
 
     this.isDisposed = true;
   }

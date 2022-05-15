@@ -8,7 +8,7 @@ export interface MountContext {
   readonly editorState: EditorState;
   readonly domDocument: globalThis.Document;
   readonly resetStyleSheet: CSSStyleSheet;
-  readonly registry: MountRegistry;
-  readonly boundingBoxUpdateScheduler: BoundingBoxUpdateScheduler;
   readonly componentStyleMounts: Map<Component, ComponentStyleMount>;
+  readonly registry?: MountRegistry;
+  readonly boundingBoxUpdateScheduler?: BoundingBoxUpdateScheduler;
 }

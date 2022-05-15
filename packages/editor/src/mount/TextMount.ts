@@ -15,7 +15,7 @@ export class TextMount {
     this.instance = instance;
     this.dom = context.domDocument.createTextNode(instance.text.content);
     this.context = context;
-    this.context.registry.setTextMount(this);
+    this.context.registry?.setTextMount(this);
 
     this.disposers = [
       reaction(
@@ -34,7 +34,7 @@ export class TextMount {
     }
 
     this.disposers.forEach((disposer) => disposer());
-    this.context.registry.deleteTextMount(this);
+    this.context.registry?.deleteTextMount(this);
 
     this.isDisposed = true;
   }
