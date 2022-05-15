@@ -62,11 +62,6 @@ export const Viewport: React.FC<{ className?: string }> = observer(
         editorState.document,
         iframeWrapRef.current!
       );
-      mount.iframe.style.position = "absolute";
-      mount.iframe.style.top = "0";
-      mount.iframe.style.left = "0";
-      mount.iframe.style.width = "100%";
-      mount.iframe.style.height = "100%";
 
       return () => {
         mount.dispose();

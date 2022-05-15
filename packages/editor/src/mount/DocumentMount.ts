@@ -29,7 +29,13 @@ export class DocumentMount {
   constructor(editorState: EditorState, document: Document, parent: Element) {
     this.editorState = editorState;
     this.document = document;
+
     this.iframe = globalThis.document.createElement("iframe");
+    this.iframe.style.position = "absolute";
+    this.iframe.style.top = "0";
+    this.iframe.style.left = "0";
+    this.iframe.style.width = "100%";
+    this.iframe.style.height = "100%";
     parent.append(this.iframe);
 
     const domDocument = assertNonNull(this.iframe.contentDocument);
