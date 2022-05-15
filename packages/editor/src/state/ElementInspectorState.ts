@@ -3,7 +3,7 @@ import { MIXED, sameOrMixed } from "@seanchas116/paintkit/src/util/Mixed";
 import { filterInstance } from "@seanchas116/paintkit/src/util/Collection";
 import { getIncrementalUniqueName } from "@seanchas116/paintkit/src/util/Name";
 import { Element } from "../models/Element";
-import { getInstance } from "../models/InstanceRegistry";
+import { changeTagName } from "../services/ChangeTagName";
 import { EditorState } from "./EditorState";
 
 export class ElementInspectorState {
@@ -28,39 +28,9 @@ export class ElementInspectorState {
 
   readonly onChangeTagName = action((tagName: string) => {
     for (const element of this.selectedElements) {
-      if (!element.parent) {
-        continue;
-      }
-
-      // TODO: keep selection
-      // TODO: keep treeview collapsed/expanded state
-
-      const newElement = new Element({ tagName });
-      newElement.setID(element.id);
-      newElement.attrs.replace(element.attrs);
-
-      for (const child of element.children) {
-        newElement.append(child);
-      }
-
-      for (const variant of element.component?.allVariants ?? []) {
-        const instance = getInstance(variant, element);
-        const newInstance = getInstance(variant, newElement);
-        if (instance.selected) {
-          newInstance.select();
-        }
-        newInstance.collapsed = instance.collapsed;
-        newInstance.style.loadJSON(instance.style.toJSON());
-      }
-
-      const next = element.nextSibling;
-      const parent = element.parent;
-      element.remove();
-      parent.insertBefore(newElement, next);
+      changeTagName(element, tagName);
     }
-
     this.editorState.history.commit("Change Tag Name");
-
     return true;
   });
 
