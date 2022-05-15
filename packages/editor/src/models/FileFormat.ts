@@ -7,6 +7,7 @@ import * as postcss from "postcss";
 import * as CSSwhat from "css-what";
 import { isNonVisualElement } from "@seanchas116/paintkit/src/util/HTMLTagCategory";
 import { getOrSetDefault } from "@seanchas116/paintkit/src/util/Collection";
+import { isEqual } from "lodash-es";
 import { formatHTML } from "../util/Format";
 import { parseHTMLFragment } from "../util/Hast";
 import { Component } from "./Component";
@@ -15,7 +16,6 @@ import { DefaultVariant, Variant } from "./Variant";
 import { Fragment } from "./Fragment";
 import { getInstance } from "./InstanceRegistry";
 import { instancesFromHTML } from "./ElementInstance";
-import { isEqual } from "lodash-es";
 
 function dumpComponentStyles(component: Component): postcss.Root {
   const root = new postcss.Root();
