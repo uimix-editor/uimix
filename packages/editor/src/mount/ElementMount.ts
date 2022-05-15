@@ -164,7 +164,7 @@ export class ElementMount {
       ),
       reaction(
         () =>
-          this.context.editorState.document.components.forName(
+          this.instance.element.component?.document?.components.forName(
             this.instance.element.tagName
           ),
         this.attachComponent.bind(this),
@@ -223,7 +223,10 @@ export class ElementMount {
     }
   }
 
-  attachComponent(component: Component | undefined): void {}
+  attachComponent(component: Component | undefined): void {
+    // TODO
+    console.log(component);
+  }
 
   private isDisposed = false;
   private readonly disposers: (() => void)[] = [];
