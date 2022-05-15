@@ -21,11 +21,10 @@ Unlike other Web design tools, Macaron is intended to be integrated into your ex
   <tbody>
     <tr>
       <td>
-        Draw elements at arbitrary positions on the canvas and add layout later.
+        Create components in the same experience as popular design tools. Draw elements at arbitrary positions and auto-layout them later.
       </td>
       <td>
-        :construction: Import existing designs from Figma by copy-paste using the Macaron
-        plugin for Figma.
+        :construction: Copy layers in Figma and paste them in Macaron (preserving auto layouts) with our Figma plugin for Macaron.
       </td>
       <td>
         Custom editor extension for Visual Studio
@@ -33,7 +32,8 @@ Unlike other Web design tools, Macaron is intended to be integrated into your ex
         No need to install another app or open another browser tab.
       </td>
       <td>
-        HTML-based clean file format (easy to read, modify, parse).
+        HTML-based clean file format.
+        Easy to read and edit for humans, and easy to be parsed in tools.
       </td>
     </tr>
   </tbody>
