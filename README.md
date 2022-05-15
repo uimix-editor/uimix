@@ -21,18 +21,18 @@ Unlike other Web design tools, Macaron is intended to be integrated into your ex
   <tbody>
     <tr>
       <td>
-        Create components in the same experience as popular design tools. Draw elements at arbitrary positions and auto-layout them later.
+        Create components in the same experience as popular design tools. <br>
+        Draw elements at arbitrary positions and auto-layout them later.
       </td>
       <td>
         :construction: Copy layers in Figma and paste them in Macaron (preserving auto layouts) with our Figma plugin for Macaron.
       </td>
       <td>
-        Custom editor extension for Visual Studio
-        Code.<br />
+        Custom editor extension for Visual Studio Code.<br />
         No need to install another app or open another browser tab.
       </td>
       <td>
-        HTML-based clean file format.
+        HTML-based clean file format.<br>
         Easy to read and edit for humans, and easy to be parsed in tools.
       </td>
     </tr>
