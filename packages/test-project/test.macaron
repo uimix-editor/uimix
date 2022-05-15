@@ -85,6 +85,7 @@
       position: relative;
       width: 240px;
       height: 240px;
+      display: block;
     }
     #my-component {
       position: absolute;
