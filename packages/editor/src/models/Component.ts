@@ -40,6 +40,13 @@ export class Component extends TreeNode<ComponentList, Component, never> {
     return true;
   }
 
+  rename(name: string): void {
+    const oldName = this.name;
+    super.rename(name);
+    const newName = this.name;
+    this.document?.renameComponentUsages(oldName, newName);
+  }
+
   @observable selected = false;
 
   select(): void {

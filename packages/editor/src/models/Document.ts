@@ -3,6 +3,7 @@ import { filterInstance } from "@seanchas116/paintkit/src/util/Collection";
 import { TreeNode } from "@seanchas116/paintkit/src/util/TreeNode";
 import { last } from "lodash-es";
 import { computed, makeObservable } from "mobx";
+import { changeTagName } from "../services/RenameTagName";
 import { Component, ComponentJSON } from "./Component";
 import { Element } from "./Element";
 import { ElementInstance } from "./ElementInstance";
@@ -240,6 +241,29 @@ export class Document {
         continue;
       }
       node.remove();
+    }
+  }
+
+  renameComponentUsages(oldName: string, newName: string): void {
+    const elementsToRename: Element[] = [];
+
+    const findElements = (element: Element) => {
+      if (element.parent && element.tagName === oldName) {
+        elementsToRename.push(element);
+      }
+      for (const child of element.children) {
+        if (child.type === "element") {
+          findElements(child);
+        }
+      }
+    };
+
+    for (const component of this.components.children) {
+      findElements(component.rootElement);
+    }
+
+    for (const element of elementsToRename) {
+      changeTagName(element, newName);
     }
   }
 }
