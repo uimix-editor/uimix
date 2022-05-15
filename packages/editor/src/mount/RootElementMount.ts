@@ -1,11 +1,21 @@
 import { assertNonNull } from "@seanchas116/paintkit/src/util/Assert";
 import { Component } from "../models/Component";
+import { ElementInstance } from "../models/ElementInstance";
 import { getInstance } from "../models/InstanceRegistry";
 import { DefaultVariant, Variant } from "../models/Variant";
 import { ChildMountSync, fetchComputedValues } from "./ElementMount";
 import { MountContext } from "./MountContext";
 
 export class RootElementMount {
+  private static domToMount = new WeakMap<
+    globalThis.Element,
+    RootElementMount
+  >();
+
+  static forDOM(dom: globalThis.Element): RootElementMount | undefined {
+    return this.domToMount.get(dom);
+  }
+
   constructor(
     component: Component,
     variant: Variant | DefaultVariant,
@@ -14,12 +24,15 @@ export class RootElementMount {
     this.component = component;
     this.variant = variant;
     this.context = context;
+    this.instance = variant.rootInstance!;
 
     const styleSheet = assertNonNull(
       this.context.componentStyleMounts.get(component)
     ).styleSheet;
 
     this.dom = context.domDocument.createElement("div");
+    RootElementMount.domToMount.set(this.dom, this);
+
     this.shadow = this.dom.attachShadow({ mode: "open" });
     // @ts-ignore
     this.shadow.adoptedStyleSheets = [context.resetStyleSheet, styleSheet];
@@ -53,6 +66,7 @@ export class RootElementMount {
 
   readonly component: Component;
   readonly variant: Variant | DefaultVariant;
+  readonly instance: ElementInstance;
   readonly context: MountContext;
 
   readonly dom: HTMLDivElement;

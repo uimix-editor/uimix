@@ -1,10 +1,9 @@
-import { assertNonNull } from "@seanchas116/paintkit/src/util/Assert";
 import { compact } from "lodash-es";
 import { Document } from "../models/Document";
 import { ElementInstance } from "../models/ElementInstance";
 import { EditorState } from "../state/EditorState";
 import { ElementMount } from "./ElementMount";
-import { VariantMount } from "./VariantMount";
+import { RootElementMount } from "./RootElementMount";
 
 function clickableAncestor(
   document: Document,
@@ -59,23 +58,23 @@ export class ElementPicker {
       throw new Error("root not set");
     }
 
-    const variantDOM = this.root.elementFromPoint(clientX, clientY);
-    if (!variantDOM) {
+    const hostDOM = this.root.elementFromPoint(clientX, clientY);
+    if (!hostDOM) {
       return [];
     }
-    const variantMount = VariantMount.forHostDOM(variantDOM);
-    if (!variantMount) {
+    const rootMount = RootElementMount.forDOM(hostDOM);
+    if (!rootMount) {
       return [];
     }
-    if (!variantDOM.shadowRoot) {
+    if (!hostDOM.shadowRoot) {
       return [];
     }
 
-    const doms = variantDOM.shadowRoot.elementsFromPoint(clientX, clientY);
+    const doms = hostDOM.shadowRoot.elementsFromPoint(clientX, clientY);
 
     return [
       ...compact(doms.map((dom) => ElementMount.forDOM(dom)?.instance)),
-      assertNonNull(variantMount.variant.rootInstance),
+      rootMount.instance,
     ];
   }
 

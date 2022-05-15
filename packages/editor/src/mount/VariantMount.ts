@@ -6,15 +6,6 @@ import { MountContext } from "./MountContext";
 import { RootElementMount } from "./RootElementMount";
 
 export class VariantMount {
-  private static hostDOMToMount = new WeakMap<
-    globalThis.Element,
-    VariantMount
-  >();
-
-  static forHostDOM(dom: globalThis.Element): VariantMount | undefined {
-    return this.hostDOMToMount.get(dom);
-  }
-
   constructor(
     component: Component,
     variant: Variant | DefaultVariant,
@@ -25,7 +16,6 @@ export class VariantMount {
     this.context = context;
 
     this.rootMount = new RootElementMount(component, variant, context);
-    VariantMount.hostDOMToMount.set(this.rootMount.dom, this);
 
     this.dom = context.domDocument.createElement("div");
     this.dom.append(this.rootMount.dom);
