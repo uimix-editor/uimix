@@ -1,9 +1,10 @@
-import { action, reaction } from "mobx";
+import { reaction, runInAction } from "mobx";
 import dedent from "dedent";
 import { assertNonNull } from "@seanchas116/paintkit/src/util/Assert";
 import { Component } from "../models/Component";
 import { EditorState } from "../state/EditorState";
-import { Document } from "../models/Document";
+import { Document, LoadedCustomElement } from "../models/Document";
+import { captureDOM } from "../util/CaptureDOM";
 import { BoundingBoxUpdateScheduler } from "./BoundingBoxUpdateScheduler";
 import { ComponentMount } from "./ComponentMount";
 import { MountRegistry } from "./MountRegistry";
@@ -79,11 +80,9 @@ export class DocumentMount {
 
     void Promise.all(
       document.preludeScripts.map((src) => loadPreludeScript(src))
-    ).then(
-      action(() => {
-        this.updateCustomElementThumbnails(customElementTagNames);
-      })
-    );
+    ).then(() => {
+      void this.updateCustomElementThumbnails(customElementTagNames);
+    });
 
     this.disposers = [
       reaction(
@@ -184,9 +183,47 @@ export class DocumentMount {
   private componentMounts: ComponentMount[] = [];
   private componentStyleMounts = new Map<Component, ComponentStyleMount>();
 
-  private updateCustomElementThumbnails(tagNames: string[]): void {
-    this.document.loadedCustomElements.replace(
-      tagNames.map((tagName) => ({ tagName }))
-    );
+  private async updateCustomElementThumbnails(
+    tagNames: string[]
+  ): Promise<void> {
+    const renderThumbnail = async (
+      tagName: string
+    ): Promise<LoadedCustomElement> => {
+      const doc = this.container.ownerDocument;
+      const elem = doc.createElement(tagName);
+      elem.append("Content");
+
+      const container = doc.createElement("div");
+      container.style.position = "absolute";
+      container.style.top = "-10000px";
+      container.style.left = "-10000px";
+      container.style.display = "flex";
+      container.append(elem);
+
+      doc.body.append(container);
+
+      await new Promise((resolve) => setTimeout(resolve, 100));
+
+      try {
+        const thumbnail = await captureDOM(elem, 256);
+        container.remove();
+        return {
+          tagName,
+          thumbnail,
+        };
+      } catch (e) {
+        console.error(e);
+        container.remove();
+        return {
+          tagName,
+        };
+      }
+    };
+
+    const elements = await Promise.all(tagNames.map(renderThumbnail));
+
+    runInAction(() => {
+      this.document.loadedCustomElements.replace(elements);
+    });
   }
 }
