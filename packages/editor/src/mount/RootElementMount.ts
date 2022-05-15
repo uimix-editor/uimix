@@ -18,7 +18,8 @@ export class RootElementMount {
   constructor(
     component: Component,
     variant: Variant | DefaultVariant,
-    context: MountContext
+    context: MountContext,
+    dom?: HTMLElement
   ) {
     this.component = component;
     this.variant = variant;
@@ -29,7 +30,7 @@ export class RootElementMount {
       this.context.componentStyleMounts.get(component)
     ).styleSheet;
 
-    this.dom = context.domDocument.createElement("div");
+    this.dom = dom ?? context.domDocument.createElement("div");
     RootElementMount.domToMount.set(this.dom, this);
 
     this.shadow = this.dom.attachShadow({ mode: "open" });
@@ -65,7 +66,7 @@ export class RootElementMount {
   readonly instance: ElementInstance;
   readonly context: MountContext;
 
-  readonly dom: HTMLDivElement;
+  readonly dom: HTMLElement;
   readonly shadow: ShadowRoot;
 
   private readonly childMountSync: ChildMountSync;

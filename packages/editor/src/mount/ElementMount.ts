@@ -219,8 +219,21 @@ export class ElementMount {
   }
 
   attachComponent(component: Component | undefined): void {
-    // TODO
-    console.log(component);
+    this.attachedMount?.dispose();
+    this.attachedMount = undefined;
+
+    if (component) {
+      this.attachedMount = new RootElementMount(
+        component,
+        component?.defaultVariant,
+        {
+          ...this.context,
+          boundingBoxUpdateScheduler: undefined,
+          registry: undefined,
+        },
+        this.dom as HTMLElement
+      );
+    }
   }
 
   private isDisposed = false;
@@ -230,6 +243,7 @@ export class ElementMount {
   readonly context: MountContext;
   readonly dom: HTMLElement | SVGElement;
   private readonly childMountSync: ChildMountSync;
+  private attachedMount: RootElementMount | undefined;
 }
 
 export function fetchComputedValues(
