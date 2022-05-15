@@ -83,6 +83,10 @@ export class RootElementMount {
     return undefined;
   }
 
+  get root(): RootElementMount {
+    return this;
+  }
+
   updateBoundingBoxLater(): void {
     this.context.boundingBoxUpdateScheduler.schedule(this);
   }

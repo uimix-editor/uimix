@@ -129,6 +129,7 @@ export class ElementMount {
     instance: ElementInstance,
     context: MountContext
   ) {
+    this.parent = parent;
     this.instance = instance;
     // TODO: support reference to other component
     if (isSVGTagName(instance.element.tagName)) {
@@ -215,6 +216,10 @@ export class ElementMount {
     return "element";
   }
 
+  get root(): RootElementMount {
+    return this.parent.root;
+  }
+
   updateBoundingBoxLater(): void {
     const variant = this.instance.variant;
     if (variant) {
@@ -239,6 +244,7 @@ export class ElementMount {
 
   private isDisposed = false;
   private readonly disposers: (() => void)[] = [];
+  readonly parent: RootElementMount | ElementMount;
   readonly instance: ElementInstance;
   readonly context: MountContext;
   readonly dom: HTMLElement | SVGElement;

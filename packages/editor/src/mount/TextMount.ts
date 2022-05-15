@@ -48,6 +48,10 @@ export class TextMount {
     return "text";
   }
 
+  get root(): RootElementMount {
+    return this.parent.root;
+  }
+
   updateBoundingBox(): void {
     const range = this.context.domDocument.createRange();
     range.selectNodeContents(this.dom);
