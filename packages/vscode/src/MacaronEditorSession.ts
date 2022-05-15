@@ -139,7 +139,7 @@ export class MacaronEditorSession {
 
     const csp = `
       default-src 'none';
-      connect-src ${webview.cspSource} data: ws://localhost:3000;
+      connect-src ${webview.cspSource} ${fileServerOrigin} https: data: ws://localhost:3000;
       img-src ${webview.cspSource} ${fileServerOrigin} https: data:;
       font-src ${webview.cspSource} ${fileServerOrigin} https: data:;
       style-src ${webview.cspSource} ${fileServerOrigin} https: data: 'unsafe-inline';

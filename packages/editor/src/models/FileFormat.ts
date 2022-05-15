@@ -15,6 +15,7 @@ import { DefaultVariant, Variant } from "./Variant";
 import { Fragment } from "./Fragment";
 import { getInstance } from "./InstanceRegistry";
 import { instancesFromHTML } from "./ElementInstance";
+import { isEqual } from "lodash-es";
 
 function dumpComponentStyles(component: Component): postcss.Root {
   const root = new postcss.Root();
@@ -325,8 +326,14 @@ function dumpDocument(document: Document): hast.Element[] {
       src,
     })
   );
+  const preludeStyleSheets = document.preludeStyleSheets.map((href) =>
+    h("link", {
+      rel: "stylesheet",
+      href,
+    })
+  );
 
-  return [...preludeScripts, ...components];
+  return [...preludeStyleSheets, ...preludeScripts, ...components];
 }
 
 function loadDocument(hastNodes: hast.Content[]): Document {
@@ -349,6 +356,16 @@ function loadDocument(hastNodes: hast.Content[]): Document {
       child.properties?.src
     ) {
       document.preludeScripts.push(String(child.properties.src));
+      continue;
+    }
+
+    if (
+      child.tagName === "link" &&
+      isEqual(child.properties?.rel, ["stylesheet"]) &&
+      child.properties?.href
+    ) {
+      document.preludeStyleSheets.push(String(child.properties.href));
+      continue;
     }
   }
 

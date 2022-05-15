@@ -267,6 +267,7 @@ export class Document {
     }
   }
 
+  readonly preludeStyleSheets = observable.array<string>([]);
   readonly preludeScripts = observable.array<string>([]);
   readonly loadedCustomElements = observable.array<LoadedCustomElement>();
 }

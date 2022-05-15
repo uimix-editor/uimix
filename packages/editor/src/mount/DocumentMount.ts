@@ -181,9 +181,23 @@ export class DocumentMount {
       }).catch((e) => console.error(e));
     };
 
-    await Promise.all(
-      this.document.preludeScripts.map((src) => loadPreludeScript(src))
-    );
+    const loadPreludeStyleSheet = (href: string): Promise<void> => {
+      return new Promise<void>((resolve, reject) => {
+        const link = this.domDocument.createElement("link");
+        link.rel = "stylesheet";
+        link.href = this.editorState.resolveImageAssetURL(href);
+        link.addEventListener("load", () => resolve());
+        link.addEventListener("error", (e) => reject(e));
+        this.domDocument.head.append(link);
+      }).catch((e) => console.error(e));
+    };
+
+    await Promise.all([
+      ...this.document.preludeStyleSheets.map((href) =>
+        loadPreludeStyleSheet(href)
+      ),
+      ...this.document.preludeScripts.map((src) => loadPreludeScript(src)),
+    ]);
     await this.updateCustomElementThumbnails(customElementTagNames);
   }
 
