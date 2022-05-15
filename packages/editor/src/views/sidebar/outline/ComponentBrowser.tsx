@@ -34,7 +34,7 @@ export const ComponentBrowser: React.FC<React.HTMLAttributes<HTMLDivElement>> =
     const components = editorState.document.components.children.filter(
       (component) => component.name.includes(search)
     );
-    const externalComponents = [
+    const customElements = [
       ...editorState.document.loadedCustomElements,
     ].filter((c) => c.tagName.includes(search));
 
@@ -50,8 +50,11 @@ export const ComponentBrowser: React.FC<React.HTMLAttributes<HTMLDivElement>> =
           </AssetGrid>
           <AssetGridHeading>External</AssetGridHeading>
           <AssetGrid>
-            {externalComponents.map((tagName) => (
-              <ExternalItem component={tagName} key={tagName.tagName} />
+            {customElements.map((customElement) => (
+              <ExternalItem
+                customElement={customElement}
+                key={customElement.tagName}
+              />
             ))}
           </AssetGrid>
         </StyledScrollable>
@@ -80,23 +83,23 @@ const Item: React.FC<{
 });
 
 const ExternalItem: React.FC<{
-  component: LoadedCustomElement;
-}> = observer(function Item({ component }) {
+  customElement: LoadedCustomElement;
+}> = observer(function Item({ customElement }) {
   return (
     <AssetGridItem>
       <AssetGridItemThumbnail
-        src={component.thumbnail}
+        src={customElement.thumbnail}
         loading="lazy"
         draggable
         onDragStart={(e) => {
           e.dataTransfer.effectAllowed = "copy";
           e.dataTransfer.setData(
             "text/html",
-            `<${component.tagName}>Content</${component.tagName}>`
+            `<${customElement.tagName}>Content</${customElement.tagName}>`
           );
         }}
       />
-      <AssetGridItemTitle>{component.tagName}</AssetGridItemTitle>
+      <AssetGridItemTitle>{customElement.tagName}</AssetGridItemTitle>
     </AssetGridItem>
   );
 });
