@@ -95,9 +95,13 @@ function getRenderableAST(node: Node): hast.Element | hast.Text | undefined {
     }
     attributes.style = styleLines.join("");
 
-    const children = element.shadowRoot
-      ? compact(Array.from(element.shadowRoot.childNodes).map(getRenderableAST))
-      : compact(Array.from(element.childNodes).map(getRenderableAST));
+    const childNodes = element.shadowRoot
+      ? element.shadowRoot.childNodes
+      : element.tagName === "SLOT"
+      ? (element as HTMLSlotElement).assignedNodes()
+      : element.childNodes;
+
+    const children = compact(Array.from(childNodes).map(getRenderableAST));
     const isSVG = element.namespaceURI === "http://www.w3.org/2000/svg";
 
     return (isSVG ? s : h)(element.tagName.toLowerCase(), attributes, children);
