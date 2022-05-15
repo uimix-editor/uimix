@@ -44,7 +44,7 @@ export class Component extends TreeNode<ComponentList, Component, never> {
     const oldName = this.name;
     super.rename(name);
     const newName = this.name;
-    this.document?.renameComponentUsages(oldName, newName);
+    this.document?.renameTagNameUsages(oldName, newName);
   }
 
   @observable selected = false;

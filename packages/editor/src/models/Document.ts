@@ -244,11 +244,11 @@ export class Document {
     }
   }
 
-  renameComponentUsages(oldName: string, newName: string): void {
+  renameTagNameUsages(oldTagName: string, newTagName: string): void {
     const elementsToRename: Element[] = [];
 
     const findElements = (element: Element) => {
-      if (element.parent && element.tagName === oldName) {
+      if (element.parent && element.tagName === oldTagName) {
         elementsToRename.push(element);
       }
       for (const child of element.children) {
@@ -263,7 +263,7 @@ export class Document {
     }
 
     for (const element of elementsToRename) {
-      changeTagName(element, newName);
+      changeTagName(element, newTagName);
     }
   }
 }
