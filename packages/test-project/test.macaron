@@ -1,4 +1,3 @@
-<script type="module" src="./shoelace.js"></script>
 <macaron-component name="my-component">
   <macaron-variant x="0" y="0"></macaron-variant>
   <macaron-variant x="200" y="0" selector=":hover"></macaron-variant>
@@ -91,6 +90,28 @@
       position: absolute;
       top: 24px;
       left: 12px;
+    }
+  </style> </macaron-component
+><macaron-component name="use-shoelace">
+  <macaron-variant x="0" y="572"></macaron-variant>
+  <template>
+    <sl-input id="input"></sl-input
+    ><sl-checkbox id="input1">Check Box</sl-checkbox
+    ><sl-checkbox id="input3">Check Box</sl-checkbox
+    ><sl-button id="input2">Button</sl-button>
+  </template>
+  <style>
+    :host {
+      width: 269px;
+      height: 251px;
+      display: flex;
+      padding-top: 20px;
+      padding-right: 20px;
+      padding-bottom: 20px;
+      padding-left: 29px;
+      flex-direction: column;
+      align-items: flex-start;
+      row-gap: 20px;
     }
   </style>
 </macaron-component>
