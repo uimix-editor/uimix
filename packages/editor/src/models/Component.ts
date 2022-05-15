@@ -1,6 +1,6 @@
 import { TreeNode } from "@seanchas116/paintkit/src/util/TreeNode";
 import { computed, makeObservable, observable } from "mobx";
-import { ComponentList } from "./Document";
+import { ComponentList, Document } from "./Document";
 import { Element, ElementJSON } from "./Element";
 import { ElementInstance } from "./ElementInstance";
 import { RootElement } from "./RootElement";
@@ -22,6 +22,10 @@ export class Component extends TreeNode<ComponentList, Component, never> {
     super({ key });
     this.rename("my-component");
     makeObservable(this);
+  }
+
+  get document(): Document | undefined {
+    return this.parent?.document;
   }
 
   readonly rootElement = new RootElement(this);

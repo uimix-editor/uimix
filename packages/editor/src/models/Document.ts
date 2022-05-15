@@ -14,8 +14,19 @@ import { TextInstance } from "./TextInstance";
 import { DefaultVariant, Variant } from "./Variant";
 
 export class ComponentList extends TreeNode<never, ComponentList, Component> {
+  constructor(document: Document) {
+    super();
+    this.document = document;
+  }
+
+  readonly document: Document;
+
   get isUniqueNameRoot(): boolean {
     return true;
+  }
+
+  forName(name: string): Component {
+    return this.getDescendantByName(name) as Component;
   }
 }
 
@@ -24,7 +35,7 @@ export class Document {
     makeObservable(this);
   }
 
-  readonly components = new ComponentList();
+  readonly components = new ComponentList(this);
 
   toJSON(): DocumentJSON {
     return {

@@ -1,12 +1,12 @@
 import { action, makeObservable } from "mobx";
-import { VariantMount } from "./VariantMount";
+import { RootElementMount } from "./RootElementMount";
 
 export class BoundingBoxUpdateScheduler {
   constructor() {
     makeObservable(this);
   }
 
-  schedule(mount: VariantMount): void {
+  schedule(mount: RootElementMount): void {
     this.mounts.add(mount);
 
     if (!this.scheduled) {
@@ -23,6 +23,6 @@ export class BoundingBoxUpdateScheduler {
     this.scheduled = false;
   }
 
-  private readonly mounts = new Set<VariantMount>();
+  private readonly mounts = new Set<RootElementMount>();
   private scheduled = false;
 }

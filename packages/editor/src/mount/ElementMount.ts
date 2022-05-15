@@ -7,24 +7,24 @@ import { Text } from "../models/Text";
 import { ElementInstance } from "../models/ElementInstance";
 import { styleKeys } from "../models/Style";
 import { getInstance } from "../models/InstanceRegistry";
+import { Component } from "../models/Component";
 import { TextMount } from "./TextMount";
 import { MountContext } from "./MountContext";
+import { RootElementMount } from "./RootElementMount";
 
 export class ChildMountSync {
   constructor(
-    instance: ElementInstance,
-    context: MountContext,
+    mount: ElementMount | RootElementMount,
     dom: HTMLElement | SVGElement | ShadowRoot,
     onUpdateChildren?: () => void
   ) {
-    this.instance = instance;
+    this.mount = mount;
     this.dom = dom;
-    this.context = context;
     this.onUpdateChildren = onUpdateChildren;
-    this.updateChildren(instance.element.children);
+    this.updateChildren(mount.instance.element.children);
     this.disposers = [
       reaction(
-        () => instance.element.children,
+        () => mount.instance.element.children,
         (children) => {
           this.updateChildren(children);
         }
@@ -54,9 +54,9 @@ export class ChildMountSync {
         } else {
           newChildMounts.push(
             new ElementMount(
-              getInstance(this.instance.variant, child),
-              this.context,
-              this.dom.ownerDocument
+              this.mount,
+              getInstance(this.mount.instance.variant, child),
+              this.mount.context
             )
           );
         }
@@ -68,9 +68,9 @@ export class ChildMountSync {
         } else {
           newChildMounts.push(
             new TextMount(
-              getInstance(this.instance.variant, child),
-              this.context,
-              this.dom.ownerDocument
+              this.mount,
+              getInstance(this.mount.instance.variant, child),
+              this.mount.context
             )
           );
         }
@@ -104,9 +104,8 @@ export class ChildMountSync {
     return this._childMounts;
   }
 
-  private readonly instance: ElementInstance;
+  private readonly mount: ElementMount | RootElementMount;
   private readonly dom: HTMLElement | SVGElement | ShadowRoot;
-  private readonly context: MountContext;
   private readonly onUpdateChildren?: () => void;
   private _childMounts: (ElementMount | TextMount)[] = [];
   private readonly disposers: (() => void)[] = [];
@@ -120,31 +119,31 @@ export class ElementMount {
   }
 
   constructor(
+    parent: RootElementMount | ElementMount,
     instance: ElementInstance,
-    context: MountContext,
-    domDocument: globalThis.Document
+    context: MountContext
   ) {
+    this.parent = parent;
     this.instance = instance;
     // TODO: support reference to other component
     if (isSVGTagName(instance.element.tagName)) {
-      this.dom = domDocument.createElementNS(
+      this.dom = context.domDocument.createElementNS(
         "http://www.w3.org/2000/svg",
         instance.element.tagName
       );
     } else {
-      this.dom = domDocument.createElement(instance.element.tagName);
+      this.dom = context.domDocument.createElement(instance.element.tagName);
     }
     ElementMount.domToMount.set(this.dom, this);
     this.context = context;
-    this.context.registry.setElementMount(this);
-    this.domDocument = domDocument;
+    this.context.registry?.setElementMount(this);
 
-    this.childMountSync = new ChildMountSync(instance, context, this.dom, () =>
-      this.updateBoundingBoxLater()
+    this.childMountSync = new ChildMountSync(this, this.dom, () =>
+      this.root.updateBoundingBoxLater()
     );
 
     this.dom.addEventListener("load", () => {
-      this.updateBoundingBoxLater();
+      this.root.updateBoundingBoxLater();
     });
 
     this.disposers.push(
@@ -157,8 +156,16 @@ export class ElementMount {
           for (const [key, value] of attrs) {
             this.dom.setAttribute(key, value);
           }
-          this.updateBoundingBoxLater();
+          this.root.updateBoundingBoxLater();
         },
+        { fireImmediately: true }
+      ),
+      reaction(
+        () =>
+          this.instance.element.component?.document?.components.forName(
+            this.instance.element.tagName
+          ),
+        this.attachComponent.bind(this),
         { fireImmediately: true }
       )
     );
@@ -190,7 +197,7 @@ export class ElementMount {
 
     this.disposers.forEach((disposer) => disposer());
     this.childMountSync.dispose();
-    this.context.registry.deleteElementMount(this);
+    this.context.registry?.deleteElementMount(this);
 
     this.isDisposed = true;
   }
@@ -199,11 +206,8 @@ export class ElementMount {
     return "element";
   }
 
-  updateBoundingBoxLater(): void {
-    const variant = this.instance.variant;
-    if (variant) {
-      this.context.registry.getVariantMount(variant)?.updateBoundingBoxLater();
-    }
+  get root(): RootElementMount {
+    return this.parent.root;
   }
 
   updateBoundingBox(): void {
@@ -214,13 +218,32 @@ export class ElementMount {
     }
   }
 
+  attachComponent(component: Component | undefined): void {
+    this.attachedMount?.dispose();
+    this.attachedMount = undefined;
+
+    if (component) {
+      this.attachedMount = new RootElementMount(
+        component,
+        component?.defaultVariant,
+        {
+          ...this.context,
+          boundingBoxUpdateScheduler: undefined,
+          registry: undefined,
+        },
+        this.dom as HTMLElement
+      );
+    }
+  }
+
   private isDisposed = false;
   private readonly disposers: (() => void)[] = [];
+  readonly parent: RootElementMount | ElementMount;
   readonly instance: ElementInstance;
   readonly context: MountContext;
-  readonly domDocument: globalThis.Document;
   readonly dom: HTMLElement | SVGElement;
   private readonly childMountSync: ChildMountSync;
+  private attachedMount: RootElementMount | undefined;
 }
 
 export function fetchComputedValues(

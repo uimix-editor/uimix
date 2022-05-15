@@ -5,6 +5,8 @@ import { EditorState } from "../state/EditorState";
 import { BoundingBoxUpdateScheduler } from "./BoundingBoxUpdateScheduler";
 import { ComponentMount } from "./ComponentMount";
 import { MountRegistry } from "./MountRegistry";
+import { ComponentStyleMount } from "./ComponentStyleMount";
+import { MountContext } from "./MountContext";
 
 // minimal CSS reset
 const resetCSS = dedent`
@@ -53,6 +55,25 @@ export class DocumentMount {
   }
 
   private updateComponents(components: readonly Component[]): void {
+    const context = this.context;
+
+    {
+      const oldStyleMounts = new Map(this.componentStyleMounts);
+      this.componentStyleMounts.clear();
+      for (const component of components) {
+        const styleMount =
+          oldStyleMounts.get(component) ||
+          new ComponentStyleMount(component, context);
+        this.componentStyleMounts.set(component, styleMount);
+
+        oldStyleMounts.delete(component);
+      }
+
+      for (const styleMount of oldStyleMounts.values()) {
+        styleMount.dispose();
+      }
+    }
+
     const oldMounts = new Map<Component, ComponentMount>();
 
     for (const mount of this.componentMounts) {
@@ -62,14 +83,7 @@ export class DocumentMount {
 
     for (const component of components) {
       const variantMount =
-        oldMounts.get(component) ||
-        new ComponentMount(component, {
-          domDocument: this.dom.ownerDocument,
-          resetStyleSheet: this.resetStyleSheet,
-          editorState: this.editorState,
-          registry: this.registry,
-          boundingBoxUpdateScheduler: this.boundingBoxUpdateScheduler,
-        });
+        oldMounts.get(component) || new ComponentMount(component, context);
       oldMounts.delete(component);
       this.componentMounts.push(variantMount);
     }
@@ -86,6 +100,17 @@ export class DocumentMount {
     }
   }
 
+  private get context(): MountContext {
+    return {
+      domDocument: this.dom.ownerDocument,
+      resetStyleSheet: this.resetStyleSheet,
+      editorState: this.editorState,
+      registry: this.registry,
+      boundingBoxUpdateScheduler: this.boundingBoxUpdateScheduler,
+      componentStyleMounts: this.componentStyleMounts,
+    };
+  }
+
   private isDisposed = false;
   private readonly disposers: (() => void)[] = [];
 
@@ -95,4 +120,5 @@ export class DocumentMount {
   readonly boundingBoxUpdateScheduler = new BoundingBoxUpdateScheduler();
   private resetStyleSheet: CSSStyleSheet;
   private componentMounts: ComponentMount[] = [];
+  private componentStyleMounts = new Map<Component, ComponentStyleMount>();
 }
