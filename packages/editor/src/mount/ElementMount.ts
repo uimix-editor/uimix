@@ -7,6 +7,7 @@ import { Text } from "../models/Text";
 import { ElementInstance } from "../models/ElementInstance";
 import { styleKeys } from "../models/Style";
 import { getInstance } from "../models/InstanceRegistry";
+import { Component } from "../models/Component";
 import { TextMount } from "./TextMount";
 import { MountContext } from "./MountContext";
 
@@ -166,9 +167,7 @@ export class ElementMount {
           this.context.editorState.document.components.forName(
             this.instance.element.tagName
           ),
-        (component) => {
-          console.log(component);
-        },
+        this.attachComponent.bind(this),
         { fireImmediately: true }
       )
     );
@@ -223,6 +222,8 @@ export class ElementMount {
       childMount.updateBoundingBox();
     }
   }
+
+  attachComponent(component: Component | undefined): void {}
 
   private isDisposed = false;
   private readonly disposers: (() => void)[] = [];
