@@ -198,6 +198,7 @@ export class DocumentMount {
       container.style.top = "-10000px";
       container.style.left = "-10000px";
       container.style.display = "flex";
+      container.style.fontFamily = "sans-serif";
       container.append(elem);
 
       doc.body.append(container);
@@ -205,7 +206,7 @@ export class DocumentMount {
       await new Promise((resolve) => setTimeout(resolve, 100));
 
       try {
-        const thumbnail = await captureDOM(elem, 256);
+        const thumbnail = await captureDOM(elem, 512);
         container.remove();
         return {
           tagName,
