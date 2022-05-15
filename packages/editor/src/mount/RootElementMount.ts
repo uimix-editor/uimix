@@ -1,7 +1,6 @@
 import { assertNonNull } from "@seanchas116/paintkit/src/util/Assert";
 import { Component } from "../models/Component";
 import { ElementInstance } from "../models/ElementInstance";
-import { getInstance } from "../models/InstanceRegistry";
 import { DefaultVariant, Variant } from "../models/Variant";
 import { ChildMountSync, fetchComputedValues } from "./ElementMount";
 import { MountContext } from "./MountContext";
@@ -41,12 +40,8 @@ export class RootElementMount {
       this.dom.classList.add("variant-" + this.variant.key);
     }
 
-    this.childMountSync = new ChildMountSync(
-      this,
-      getInstance(variant, component.rootElement),
-      context,
-      this.shadow,
-      () => this.updateBoundingBoxLater()
+    this.childMountSync = new ChildMountSync(this, this.shadow, () =>
+      this.updateBoundingBoxLater()
     );
   }
 

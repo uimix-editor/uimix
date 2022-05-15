@@ -14,21 +14,17 @@ import { RootElementMount } from "./RootElementMount";
 
 export class ChildMountSync {
   constructor(
-    parent: ElementMount | RootElementMount,
-    instance: ElementInstance,
-    context: MountContext,
+    mount: ElementMount | RootElementMount,
     dom: HTMLElement | SVGElement | ShadowRoot,
     onUpdateChildren?: () => void
   ) {
-    this.parent = parent;
-    this.instance = instance;
+    this.mount = mount;
     this.dom = dom;
-    this.context = context;
     this.onUpdateChildren = onUpdateChildren;
-    this.updateChildren(instance.element.children);
+    this.updateChildren(mount.instance.element.children);
     this.disposers = [
       reaction(
-        () => instance.element.children,
+        () => mount.instance.element.children,
         (children) => {
           this.updateChildren(children);
         }
@@ -58,9 +54,9 @@ export class ChildMountSync {
         } else {
           newChildMounts.push(
             new ElementMount(
-              this.parent,
-              getInstance(this.instance.variant, child),
-              this.context
+              this.mount,
+              getInstance(this.mount.instance.variant, child),
+              this.mount.context
             )
           );
         }
@@ -72,9 +68,9 @@ export class ChildMountSync {
         } else {
           newChildMounts.push(
             new TextMount(
-              this.parent,
-              getInstance(this.instance.variant, child),
-              this.context
+              this.mount,
+              getInstance(this.mount.instance.variant, child),
+              this.mount.context
             )
           );
         }
@@ -108,10 +104,8 @@ export class ChildMountSync {
     return this._childMounts;
   }
 
-  private readonly parent: ElementMount | RootElementMount;
-  private readonly instance: ElementInstance;
+  private readonly mount: ElementMount | RootElementMount;
   private readonly dom: HTMLElement | SVGElement | ShadowRoot;
-  private readonly context: MountContext;
   private readonly onUpdateChildren?: () => void;
   private _childMounts: (ElementMount | TextMount)[] = [];
   private readonly disposers: (() => void)[] = [];
@@ -144,12 +138,8 @@ export class ElementMount {
     this.context = context;
     this.context.registry.setElementMount(this);
 
-    this.childMountSync = new ChildMountSync(
-      this,
-      instance,
-      context,
-      this.dom,
-      () => this.updateBoundingBoxLater()
+    this.childMountSync = new ChildMountSync(this, this.dom, () =>
+      this.updateBoundingBoxLater()
     );
 
     this.dom.addEventListener("load", () => {
