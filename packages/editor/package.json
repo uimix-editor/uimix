@@ -41,6 +41,7 @@
     "scroll-into-view-if-needed": "^2.2.29",
     "short-uuid": "^4.2.0",
     "styled-components": "^5.3.5",
+    "tiny-typed-emitter": "^2.1.0",
     "unified": "^10.1.2",
     "unist-util-inspect": "^7.0.0"
   },
