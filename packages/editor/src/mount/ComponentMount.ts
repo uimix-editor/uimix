@@ -1,10 +1,6 @@
 import { assertNonNull } from "@seanchas116/paintkit/src/util/Assert";
-import { filterInstance } from "@seanchas116/paintkit/src/util/Collection";
 import { reaction } from "mobx";
-import * as postcss from "postcss";
-import replaceCSSURL from "replace-css-url";
 import { Component } from "../models/Component";
-import { ElementInstance } from "../models/ElementInstance";
 import { DefaultVariant, Variant } from "../models/Variant";
 import { MountContext } from "./MountContext";
 import { VariantMount } from "./VariantMount";
@@ -14,20 +10,24 @@ export class ComponentMount {
     this.component = component;
     this.context = context;
     this.dom = context.domDocument.createElement("div");
-    this.styleSheet = new context.domDocument.defaultView!.CSSStyleSheet();
 
     const getAllVariants = () => [
       component.defaultVariant,
       ...component.variants.children,
     ];
 
+    const styleMount = assertNonNull(
+      context.componentStyleMounts.get(component)
+    );
+
+    const onStyleChange = this.onStyleChange.bind(this);
+    styleMount.addListener("change", onStyleChange);
+
     this.disposers = [
-      reaction(this.getCSSTexts.bind(this), this.updateCSS.bind(this), {
-        fireImmediately: true,
-      }),
       reaction(getAllVariants, (variants) => {
         this.updateVariants(variants);
       }),
+      () => styleMount.removeListener("change", onStyleChange),
     ];
     this.updateVariants(getAllVariants());
   }
@@ -62,7 +62,6 @@ export class ComponentMount {
         new VariantMount(
           assertNonNull(variant.component),
           variant,
-          this.styleSheet,
           this.context
         );
       existingVariantMounts.delete(variant);
@@ -88,65 +87,8 @@ export class ComponentMount {
   readonly context: MountContext;
   readonly dom: HTMLDivElement;
   private variantMounts: VariantMount[] = [];
-  private readonly styleSheet: CSSStyleSheet;
 
-  private getCSSTexts(): postcss.Root {
-    const root = new postcss.Root();
-
-    for (const variant of this.component.allVariants) {
-      const rootInstance = variant.rootInstance!;
-
-      const instances = filterInstance(rootInstance.allDescendants, [
-        ElementInstance,
-      ]);
-
-      const scope =
-        variant.type === "defaultVariant" ? "" : ".variant-" + variant.key;
-
-      for (const instance of instances) {
-        if (instance !== rootInstance && !instance.element.id) {
-          continue;
-        }
-
-        let selector: string;
-        if (instance === rootInstance) {
-          if (scope) {
-            selector = `:host(${scope})`;
-          } else {
-            selector = `:host`;
-          }
-        } else {
-          const id = instance.element.id;
-          if (scope) {
-            selector = `:host(${scope}) #${id}`;
-          } else {
-            selector = `#${id}`;
-          }
-        }
-
-        const props = instance.style.toPostCSS({ selector });
-
-        for (const node of props.nodes) {
-          if (node.type === "decl" && node.prop === "background") {
-            node.value = replaceCSSURL(node.value, (url: string) =>
-              this.context.editorState.resolveImageAssetURL(url)
-            );
-          }
-        }
-
-        if (props.nodes.length) {
-          root.append(props);
-        }
-      }
-    }
-    return root;
-  }
-
-  private updateCSS(css: postcss.Root): void {
-    // @ts-ignore
-    // eslint-disable-next-line @typescript-eslint/no-unsafe-call
-    this.styleSheet.replaceSync(css);
-
+  private onStyleChange(): void {
     for (const mount of this.variantMounts) {
       mount.updateBoundingBoxLater();
     }

@@ -1,3 +1,4 @@
+import { assertNonNull } from "@seanchas116/paintkit/src/util/Assert";
 import { action, reaction } from "mobx";
 import { Component } from "../models/Component";
 import { getInstance } from "../models/InstanceRegistry";
@@ -19,12 +20,15 @@ export class VariantMount {
   constructor(
     component: Component,
     variant: Variant | DefaultVariant,
-    styleSheet: CSSStyleSheet,
     context: MountContext
   ) {
     this.component = component;
     this.variant = variant;
     this.context = context;
+
+    const styleSheet = assertNonNull(
+      this.context.componentStyleMounts.get(component)
+    ).styleSheet;
 
     this.dom = context.domDocument.createElement("div");
     this.host = context.domDocument.createElement("div");
