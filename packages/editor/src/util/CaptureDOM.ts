@@ -9,43 +9,10 @@ export async function captureDOM(
   element: HTMLElement,
   size: number
 ): Promise<string> {
-  const ast = getRenderableAST(element);
-
-  const width = element.offsetWidth;
-  const height = element.offsetHeight;
-
-  const svg = s(
-    "svg",
-    {
-      width,
-      height,
-      viewBox: `0 0 ${width} ${height}`,
-      xmlns: "http://www.w3.org/2000/svg",
-    },
-    s(
-      "foreignObject",
-      {
-        x: 0,
-        y: 0,
-        width,
-        height,
-      },
-      h(
-        "div",
-        {
-          xmlns: "http://www.w3.org/1999/xhtml",
-        },
-        ast
-      )
-    )
-  );
-
-  const svgText = toHtml(svg);
+  const svgText = toHtml(generateSVG(element));
 
   const img = new Image();
-
   img.src = svgToDataURL(svgText);
-
   await new Promise((resolve, reject) => {
     img.onload = resolve;
     img.onerror = reject;
@@ -55,16 +22,49 @@ export async function captureDOM(
   canvas.width = size;
   canvas.height = size;
 
-  const scale = size / Math.max(width, height);
-  const offsetX = (size - width * scale) / 2;
-  const offsetY = (size - height * scale) / 2;
-
   const ctx = canvas.getContext("2d")!;
-  ctx.translate(offsetX, offsetY);
+  const scale = size / Math.max(img.width, img.height);
   ctx.scale(scale, scale);
   ctx.drawImage(img, 0, 0);
 
   return canvas.toDataURL("image/png");
+}
+
+function generateSVG(element: HTMLElement): hast.Element {
+  const ast = getRenderableAST(element);
+
+  const width = element.offsetWidth;
+  const height = element.offsetHeight;
+  const maxSize = Math.max(width, height);
+  const xOffset = (maxSize - width) / 2;
+  const yOffset = (maxSize - height) / 2;
+
+  return s(
+    "svg",
+    {
+      width: maxSize,
+      height: maxSize,
+      viewBox: `0 0 ${maxSize} ${maxSize}`,
+      xmlns: "http://www.w3.org/2000/svg",
+    },
+    s(
+      "foreignObject",
+      {
+        x: 0,
+        y: 0,
+        width: maxSize,
+        height: maxSize,
+      },
+      h(
+        "div",
+        {
+          xmlns: "http://www.w3.org/1999/xhtml",
+          style: `position: absolute; left: ${xOffset}px; top: ${yOffset}px;`,
+        },
+        ast
+      )
+    )
+  );
 }
 
 function getRenderableAST(node: Node): hast.Element | hast.Text | undefined {
