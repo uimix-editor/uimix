@@ -3,14 +3,16 @@ import { observer } from "mobx-react-lite";
 import React, { useState } from "react";
 import styled from "styled-components";
 import Tippy from "@tippyjs/react";
-import {
-  checkPattern,
-  textTruncate,
-} from "@seanchas116/paintkit/src/components/Common";
 import { colors } from "@seanchas116/paintkit/src/components/Palette";
 import { Scrollable } from "@seanchas116/paintkit/src/components/Scrollable";
 import { useEditorState } from "../../EditorStateContext";
 import { SearchBar } from "./SearchBar";
+import {
+  AssetGrid,
+  AssetGridItem,
+  AssetGridItemThumbnail,
+  AssetGridItemTitle,
+} from "./AssetGrid";
 
 export const imageAssetDragMime = "application/x-macaron-image-asset";
 
@@ -22,8 +24,8 @@ const Item: React.FC<{
 
   return (
     <Tippy content={filePath}>
-      <ItemWrap>
-        <Thumbnail
+      <AssetGridItem>
+        <AssetGridItemThumbnail
           loading="lazy"
           src={editorState.resolveImageAssetURL(filePath)}
           draggable
@@ -32,8 +34,8 @@ const Item: React.FC<{
             e.dataTransfer.setData(imageAssetDragMime, filePath);
           }}
         />
-        <ItemTitle>{path.basename(filePath)}</ItemTitle>
-      </ItemWrap>
+        <AssetGridItemTitle>{path.basename(filePath)}</AssetGridItemTitle>
+      </AssetGridItem>
     </Tippy>
   );
 });
@@ -69,11 +71,11 @@ export const ImageBrowser: React.FC = observer(function ImageBrowser() {
           {[...imageFilesForDirectory].map(([dirName, filePaths]) => (
             <>
               <Heading>{dirName}</Heading>
-              <Items>
+              <AssetGrid>
                 {filePaths.map((filePath) => (
                   <Item filePath={filePath} />
                 ))}
-              </Items>
+              </AssetGrid>
             </>
           ))}
         </StyledScrollable>
@@ -81,32 +83,6 @@ export const ImageBrowser: React.FC = observer(function ImageBrowser() {
     </ImageBrowserWrap>
   );
 });
-
-const Items = styled.div`
-  margin: 12px;
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(56px, 1fr));
-  gap: 12px;
-`;
-
-const ItemWrap = styled.div`
-  display: flex;
-  flex-direction: column;
-  gap: 4px;
-`;
-
-const ItemTitle = styled.div`
-  text-align: center;
-  font-size: 12px;
-  color: ${colors.text};
-  ${textTruncate}
-`;
-
-const Thumbnail = styled.img`
-  aspect-ratio: 1;
-  object-fit: contain;
-  ${checkPattern("white", "rgba(0,0,0,0.1)", "16px")}
-`;
 
 const StyledScrollable = styled(Scrollable)``;
 

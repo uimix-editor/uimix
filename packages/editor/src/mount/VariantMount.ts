@@ -1,7 +1,8 @@
-import { reaction } from "mobx";
+import { action, reaction } from "mobx";
 import { Component } from "../models/Component";
 import { getInstance } from "../models/InstanceRegistry";
 import { DefaultVariant, Variant } from "../models/Variant";
+import { captureDOM } from "../util/CaptureDOM";
 import { ChildMountSync, fetchComputedValues } from "./ElementMount";
 import { MountContext } from "./MountContext";
 
@@ -71,6 +72,19 @@ export class VariantMount {
         { fireImmediately: true }
       )
     );
+
+    if (this.variant.type === "defaultVariant") {
+      this.disposers.push(
+        // update thumbnail on commit
+        reaction(
+          () => this.context.editorState.history.undoStack.commandToUndo,
+          () => {
+            this.updateThumbnail();
+          },
+          { fireImmediately: true }
+        )
+      );
+    }
   }
 
   dispose(): void {
@@ -112,5 +126,15 @@ export class VariantMount {
     for (const childMount of this.childMountSync.childMounts) {
       childMount.updateBoundingBox();
     }
+  }
+
+  updateThumbnail(): void {
+    setTimeout(() => {
+      void captureDOM(this.host, 512).then(
+        action((thumb) => {
+          this.component.thumbnail = thumb;
+        })
+      );
+    }, 0);
   }
 }
