@@ -6,9 +6,6 @@ export function changeTagName(element: Element, newTagName: string): void {
     return;
   }
 
-  // TODO: keep selection
-  // TODO: keep treeview collapsed/expanded state
-
   const newElement = new Element({ tagName: newTagName });
   newElement.setID(element.id);
   newElement.attrs.replace(element.attrs);
