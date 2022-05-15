@@ -2,8 +2,6 @@ import { assertNonNull } from "@seanchas116/paintkit/src/util/Assert";
 import { filterInstance } from "@seanchas116/paintkit/src/util/Collection";
 import { reaction } from "mobx";
 import * as postcss from "postcss";
-// @ts-ignore
-// eslint-disable-next-line import/no-extraneous-dependencies
 import replaceCSSURL from "replace-css-url";
 import { Component } from "../models/Component";
 import { ElementInstance } from "../models/ElementInstance";
@@ -130,7 +128,6 @@ export class ComponentMount {
 
         for (const node of props.nodes) {
           if (node.type === "decl" && node.prop === "background") {
-            // eslint-disable-next-line
             node.value = replaceCSSURL(node.value, (url: string) =>
               this.context.editorState.resolveImageAssetURL(url)
             );
