@@ -82,6 +82,8 @@ function getRenderableAST(node: Node): hast.Element | hast.Text | undefined {
     );
 
     const computedStyle = getComputedStyle(element);
+    // TODO: ::before/::after
+
     const styleLines: string[] = [];
     for (let i = 0; i < computedStyle.length; i++) {
       const name = computedStyle.item(i);
