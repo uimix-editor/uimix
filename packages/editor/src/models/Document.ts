@@ -268,9 +268,14 @@ export class Document {
   }
 
   readonly preludeScripts = observable.array<string>([]);
-  readonly loadedCustomElements = observable.set<string>();
+  readonly loadedCustomElements = observable.array<LoadedCustomElement>();
 }
 
 export interface DocumentJSON {
   components: ComponentJSON[];
+}
+
+export interface LoadedCustomElement {
+  tagName: string;
+  thumbnail?: string;
 }

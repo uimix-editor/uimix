@@ -1,4 +1,4 @@
-import { reaction, runInAction } from "mobx";
+import { action, reaction } from "mobx";
 import dedent from "dedent";
 import { assertNonNull } from "@seanchas116/paintkit/src/util/Assert";
 import { Component } from "../models/Component";
@@ -56,22 +56,34 @@ export class DocumentMount {
     // eslint-disable-next-line @typescript-eslint/no-unsafe-call
     this.resetStyleSheet.replaceSync(resetCSS);
 
+    const customElementTagNames: string[] = [];
+
     // eslint-disable-next-line @typescript-eslint/unbound-method
     const originalDefine = domWindow.customElements.define;
     domWindow.customElements.define = function (...args) {
-      runInAction(() => {
-        document.loadedCustomElements.add(args[0]);
-      });
+      customElementTagNames.push(args[0]);
       console.log("define", args);
       originalDefine.apply(this, args);
     };
 
-    for (const prelude of document.preludeScripts) {
-      const script = domDocument.createElement("script");
-      script.type = "module";
-      script.src = editorState.resolveImageAssetURL(prelude);
-      domDocument.head.append(script);
-    }
+    const loadPreludeScript = (src: string): Promise<void> => {
+      return new Promise<void>((resolve, reject) => {
+        const script = domDocument.createElement("script");
+        script.type = "module";
+        script.src = editorState.resolveImageAssetURL(src);
+        script.addEventListener("load", () => resolve());
+        script.addEventListener("error", (e) => reject(e));
+        domDocument.head.append(script);
+      }).catch((e) => console.error(e));
+    };
+
+    void Promise.all(
+      document.preludeScripts.map((src) => loadPreludeScript(src))
+    ).then(
+      action(() => {
+        this.updateCustomElementThumbnails(customElementTagNames);
+      })
+    );
 
     this.disposers = [
       reaction(
@@ -171,4 +183,10 @@ export class DocumentMount {
   private resetStyleSheet: CSSStyleSheet;
   private componentMounts: ComponentMount[] = [];
   private componentStyleMounts = new Map<Component, ComponentStyleMount>();
+
+  private updateCustomElementThumbnails(tagNames: string[]): void {
+    this.document.loadedCustomElements.replace(
+      tagNames.map((tagName) => ({ tagName }))
+    );
+  }
 }

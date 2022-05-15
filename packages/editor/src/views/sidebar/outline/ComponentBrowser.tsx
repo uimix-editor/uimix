@@ -3,6 +3,7 @@ import { observer } from "mobx-react-lite";
 import { useState } from "react";
 import styled from "styled-components";
 import { Component } from "../../../models/Component";
+import { LoadedCustomElement } from "../../../models/Document";
 import { useEditorState } from "../../EditorStateContext";
 import {
   AssetGrid,
@@ -35,7 +36,7 @@ export const ComponentBrowser: React.FC<React.HTMLAttributes<HTMLDivElement>> =
     );
     const externalComponents = [
       ...editorState.document.loadedCustomElements,
-    ].filter((tagName) => tagName.includes(search));
+    ].filter((c) => c.tagName.includes(search));
 
     return (
       <ComponentBrowserWrap>
@@ -50,7 +51,7 @@ export const ComponentBrowser: React.FC<React.HTMLAttributes<HTMLDivElement>> =
           <AssetGridHeading>External</AssetGridHeading>
           <AssetGrid>
             {externalComponents.map((tagName) => (
-              <ExternalItem tagName={tagName} key={tagName} />
+              <ExternalItem component={tagName} key={tagName.tagName} />
             ))}
           </AssetGrid>
         </StyledScrollable>
@@ -79,23 +80,23 @@ const Item: React.FC<{
 });
 
 const ExternalItem: React.FC<{
-  tagName: string;
-}> = observer(function Item({ tagName }) {
+  component: LoadedCustomElement;
+}> = observer(function Item({ component }) {
   return (
     <AssetGridItem>
       <AssetGridItemThumbnail
-        src=""
+        src={component.thumbnail}
         loading="lazy"
         draggable
         onDragStart={(e) => {
           e.dataTransfer.effectAllowed = "copy";
           e.dataTransfer.setData(
             "text/html",
-            `<${tagName}>Content</${tagName}>`
+            `<${component.tagName}>Content</${component.tagName}>`
           );
         }}
       />
-      <AssetGridItemTitle>{tagName}</AssetGridItemTitle>
+      <AssetGridItemTitle>{component.tagName}</AssetGridItemTitle>
     </AssetGridItem>
   );
 });
