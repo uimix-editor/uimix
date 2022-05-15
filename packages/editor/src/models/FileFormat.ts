@@ -317,16 +317,38 @@ function loadVariant(node: hast.Element): Variant {
 }
 
 function dumpDocument(document: Document): hast.Element[] {
-  return document.components.children.map(dumpComponent);
+  const components = document.components.children.map(dumpComponent);
+
+  const preludeScripts = document.preludeScripts.map((src) =>
+    h("script", {
+      type: "module",
+      src,
+    })
+  );
+
+  return [...preludeScripts, ...components];
 }
 
 function loadDocument(hastNodes: hast.Content[]): Document {
   const document = new Document();
 
   for (const child of hastNodes) {
-    if (child.type === "element" && child.tagName === "macaron-component") {
+    if (child.type !== "element") {
+      continue;
+    }
+
+    if (child.tagName === "macaron-component") {
       const component = loadComponent(child);
       document.components.append(component);
+      continue;
+    }
+
+    if (
+      child.tagName === "script" &&
+      child.properties?.type === "module" &&
+      child.properties?.src
+    ) {
+      document.preludeScripts.push(String(child.properties.src));
     }
   }
 

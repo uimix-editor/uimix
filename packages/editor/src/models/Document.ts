@@ -267,10 +267,7 @@ export class Document {
     }
   }
 
-  readonly preludeScripts = observable.array<string>([
-    "./shoelace.js",
-    "https://unpkg.com/xy-ui",
-  ]);
+  readonly preludeScripts = observable.array<string>([]);
   readonly loadedCustomElements = observable.set<string>();
 }
 
