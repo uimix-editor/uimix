@@ -32,12 +32,34 @@ export class DocumentMount {
     // eslint-disable-next-line @typescript-eslint/no-unsafe-call
     this.resetStyleSheet.replaceSync(resetCSS);
 
+    for (const prelude of editorState.document.preludeScripts) {
+      const script = domDocument.createElement("script");
+      script.type = "module";
+      script.src = editorState.resolveImageAssetURL(prelude);
+      domDocument.head.append(script);
+    }
+
     this.disposers = [
       reaction(
         () => editorState.document.components.children,
         (components) => {
           this.updateComponents(components);
         }
+      ),
+      reaction(
+        () =>
+          editorState.document.preludeScripts.map((url) =>
+            editorState.resolveImageAssetURL(url)
+          ),
+        (preludeScripts) => {
+          for (const prelude of preludeScripts) {
+            const script = domDocument.createElement("script");
+            script.type = "module";
+            script.src = editorState.resolveImageAssetURL(prelude);
+            domDocument.head.append(script);
+          }
+        },
+        { fireImmediately: true }
       ),
     ];
     this.updateComponents(editorState.document.components.children);

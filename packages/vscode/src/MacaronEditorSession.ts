@@ -142,7 +142,7 @@ export class MacaronEditorSession {
       connect-src ${webview.cspSource} data: ws://localhost:3000;
       img-src ${webview.cspSource} ${fileServerOrigin} data:;
       font-src https://fonts.gstatic.com;
-      style-src ${webview.cspSource} https://fonts.googleapis.com 'unsafe-inline';
+      style-src ${webview.cspSource} * https://fonts.googleapis.com 'unsafe-inline';
       script-src 'nonce-${nonce}' 'unsafe-inline' 'unsafe-eval' 'strict-dynamic';
     `;
 

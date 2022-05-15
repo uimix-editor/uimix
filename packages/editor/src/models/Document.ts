@@ -2,7 +2,7 @@ import { assertNonNull } from "@seanchas116/paintkit/src/util/Assert";
 import { filterInstance } from "@seanchas116/paintkit/src/util/Collection";
 import { TreeNode } from "@seanchas116/paintkit/src/util/TreeNode";
 import { last } from "lodash-es";
-import { computed, makeObservable } from "mobx";
+import { computed, makeObservable, observable } from "mobx";
 import { changeTagName } from "../services/ChangeTagName";
 import { Component, ComponentJSON } from "./Component";
 import { Element } from "./Element";
@@ -266,6 +266,8 @@ export class Document {
       changeTagName(element, newTagName);
     }
   }
+
+  readonly preludeScripts = observable.array<string>(["./shoelace.js"]);
 }
 
 export interface DocumentJSON {

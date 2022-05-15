@@ -20,6 +20,17 @@ export class FileServer {
             destination: "",
           };
         }),
+        headers: [
+          {
+            source: "**",
+            headers: [
+              {
+                key: "Access-Control-Allow-Origin",
+                value: "*",
+              },
+            ],
+          },
+        ],
       });
     });
   }
