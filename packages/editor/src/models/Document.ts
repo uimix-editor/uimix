@@ -17,6 +17,10 @@ export class ComponentList extends TreeNode<never, ComponentList, Component> {
   get isUniqueNameRoot(): boolean {
     return true;
   }
+
+  forName(name: string): Component {
+    return this.getDescendantByName(name) as Component;
+  }
 }
 
 export class Document {

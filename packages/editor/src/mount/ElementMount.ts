@@ -160,6 +160,16 @@ export class ElementMount {
           this.updateBoundingBoxLater();
         },
         { fireImmediately: true }
+      ),
+      reaction(
+        () =>
+          this.context.editorState.document.components.forName(
+            this.instance.element.tagName
+          ),
+        (component) => {
+          console.log(component);
+        },
+        { fireImmediately: true }
       )
     );
   }
