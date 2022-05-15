@@ -10,14 +10,17 @@ import { getInstance } from "../models/InstanceRegistry";
 import { Component } from "../models/Component";
 import { TextMount } from "./TextMount";
 import { MountContext } from "./MountContext";
+import { RootElementMount } from "./RootElementMount";
 
 export class ChildMountSync {
   constructor(
+    parent: ElementMount | RootElementMount,
     instance: ElementInstance,
     context: MountContext,
     dom: HTMLElement | SVGElement | ShadowRoot,
     onUpdateChildren?: () => void
   ) {
+    this.parent = parent;
     this.instance = instance;
     this.dom = dom;
     this.context = context;
@@ -55,9 +58,9 @@ export class ChildMountSync {
         } else {
           newChildMounts.push(
             new ElementMount(
+              this.parent,
               getInstance(this.instance.variant, child),
-              this.context,
-              this.dom.ownerDocument
+              this.context
             )
           );
         }
@@ -69,9 +72,9 @@ export class ChildMountSync {
         } else {
           newChildMounts.push(
             new TextMount(
+              this.parent,
               getInstance(this.instance.variant, child),
-              this.context,
-              this.dom.ownerDocument
+              this.context
             )
           );
         }
@@ -105,6 +108,7 @@ export class ChildMountSync {
     return this._childMounts;
   }
 
+  private readonly parent: ElementMount | RootElementMount;
   private readonly instance: ElementInstance;
   private readonly dom: HTMLElement | SVGElement | ShadowRoot;
   private readonly context: MountContext;
@@ -121,27 +125,30 @@ export class ElementMount {
   }
 
   constructor(
+    parent: RootElementMount | ElementMount,
     instance: ElementInstance,
-    context: MountContext,
-    domDocument: globalThis.Document
+    context: MountContext
   ) {
     this.instance = instance;
     // TODO: support reference to other component
     if (isSVGTagName(instance.element.tagName)) {
-      this.dom = domDocument.createElementNS(
+      this.dom = context.domDocument.createElementNS(
         "http://www.w3.org/2000/svg",
         instance.element.tagName
       );
     } else {
-      this.dom = domDocument.createElement(instance.element.tagName);
+      this.dom = context.domDocument.createElement(instance.element.tagName);
     }
     ElementMount.domToMount.set(this.dom, this);
     this.context = context;
     this.context.registry.setElementMount(this);
-    this.domDocument = domDocument;
 
-    this.childMountSync = new ChildMountSync(instance, context, this.dom, () =>
-      this.updateBoundingBoxLater()
+    this.childMountSync = new ChildMountSync(
+      this,
+      instance,
+      context,
+      this.dom,
+      () => this.updateBoundingBoxLater()
     );
 
     this.dom.addEventListener("load", () => {
@@ -234,7 +241,6 @@ export class ElementMount {
   private readonly disposers: (() => void)[] = [];
   readonly instance: ElementInstance;
   readonly context: MountContext;
-  readonly domDocument: globalThis.Document;
   readonly dom: HTMLElement | SVGElement;
   private readonly childMountSync: ChildMountSync;
 }

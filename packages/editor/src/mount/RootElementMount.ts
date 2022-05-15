@@ -42,6 +42,7 @@ export class RootElementMount {
     }
 
     this.childMountSync = new ChildMountSync(
+      this,
       getInstance(variant, component.rootElement),
       context,
       this.shadow,
@@ -73,6 +74,14 @@ export class RootElementMount {
   readonly shadow: ShadowRoot;
 
   private readonly childMountSync: ChildMountSync;
+
+  get type(): "rootElement" {
+    return "rootElement";
+  }
+
+  get parent(): undefined {
+    return undefined;
+  }
 
   updateBoundingBoxLater(): void {
     this.context.boundingBoxUpdateScheduler.schedule(this);
