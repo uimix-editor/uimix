@@ -2,6 +2,7 @@ import { reaction } from "mobx";
 import dedent from "dedent";
 import { Component } from "../models/Component";
 import { EditorState } from "../state/EditorState";
+import { Document } from "../models/Document";
 import { BoundingBoxUpdateScheduler } from "./BoundingBoxUpdateScheduler";
 import { ComponentMount } from "./ComponentMount";
 import { MountRegistry } from "./MountRegistry";
@@ -24,15 +25,20 @@ const resetCSS = dedent`
 `;
 
 export class DocumentMount {
-  constructor(editorState: EditorState, domDocument: globalThis.Document) {
+  constructor(
+    editorState: EditorState,
+    document: Document,
+    domDocument: globalThis.Document
+  ) {
     this.editorState = editorState;
+    this.document = document;
     this.dom = domDocument.createElement("div");
     this.resetStyleSheet = new domDocument.defaultView!.CSSStyleSheet();
     //@ts-ignore
     // eslint-disable-next-line @typescript-eslint/no-unsafe-call
     this.resetStyleSheet.replaceSync(resetCSS);
 
-    for (const prelude of editorState.document.preludeScripts) {
+    for (const prelude of document.preludeScripts) {
       const script = domDocument.createElement("script");
       script.type = "module";
       script.src = editorState.resolveImageAssetURL(prelude);
@@ -41,14 +47,14 @@ export class DocumentMount {
 
     this.disposers = [
       reaction(
-        () => editorState.document.components.children,
+        () => document.components.children,
         (components) => {
           this.updateComponents(components);
         }
       ),
       reaction(
         () =>
-          editorState.document.preludeScripts.map((url) =>
+          document.preludeScripts.map((url) =>
             editorState.resolveImageAssetURL(url)
           ),
         (preludeScripts) => {
@@ -62,7 +68,7 @@ export class DocumentMount {
         { fireImmediately: true }
       ),
     ];
-    this.updateComponents(editorState.document.components.children);
+    this.updateComponents(document.components.children);
   }
 
   dispose(): void {
@@ -137,6 +143,7 @@ export class DocumentMount {
   private readonly disposers: (() => void)[] = [];
 
   readonly editorState: EditorState;
+  readonly document: Document;
   readonly dom: HTMLDivElement;
   readonly registry = new MountRegistry();
   readonly boundingBoxUpdateScheduler = new BoundingBoxUpdateScheduler();

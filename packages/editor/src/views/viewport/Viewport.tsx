@@ -3,6 +3,7 @@ import { Rect, Vec2 } from "paintvec";
 import { action, reaction, runInAction } from "mobx";
 import React, { useCallback, useEffect } from "react";
 import styled from "styled-components";
+import { observer } from "mobx-react-lite";
 import { DocumentMount } from "../../mount/DocumentMount";
 import { useEditorState } from "../EditorStateContext";
 import { PanOverlay } from "./PanOverlay";
@@ -27,108 +28,126 @@ const ViewportIFrame = styled.iframe`
   border: none;
 `;
 
-export const Viewport: React.FC<{ className?: string }> = ({ className }) => {
-  const editorState = useEditorState();
+export const Viewport: React.FC<{ className?: string }> = observer(
+  ({ className }) => {
+    const editorState = useEditorState();
 
-  const ref = React.createRef<HTMLDivElement>();
-  const iframeRef = React.createRef<HTMLIFrameElement>();
+    const ref = React.createRef<HTMLDivElement>();
+    const iframeRef = React.createRef<HTMLIFrameElement>();
 
-  useEffect(() => {
-    const elem = ref.current;
-    if (!elem) {
-      return;
-    }
+    useEffect(() => {
+      const elem = ref.current;
+      if (!elem) {
+        return;
+      }
 
-    runInAction(() => {
-      editorState.scroll.viewportClientRect = Rect.from(
-        elem.getBoundingClientRect()
-      );
-    });
-    const resizeObserver = new ResizeObserver(
-      action(() => {
+      runInAction(() => {
         editorState.scroll.viewportClientRect = Rect.from(
           elem.getBoundingClientRect()
         );
-      })
-    );
-    resizeObserver.observe(elem);
-    return () => resizeObserver.disconnect();
-  }, [ref]);
+      });
+      const resizeObserver = new ResizeObserver(
+        action(() => {
+          editorState.scroll.viewportClientRect = Rect.from(
+            elem.getBoundingClientRect()
+          );
+        })
+      );
+      resizeObserver.observe(elem);
+      return () => resizeObserver.disconnect();
+    }, [ref]);
 
-  useEffect(() => {
-    const iframe = iframeRef.current;
-    if (!iframe) {
-      return;
-    }
-    const document = iframe.contentDocument;
-    if (!document) {
-      return;
-    }
-    editorState.elementPicker.root = document;
-
-    document.body.style.margin = "0";
-
-    const mount = new DocumentMount(editorState, document);
-    mount.dom.style.position = "absolute";
-    mount.dom.style.top = "0";
-    mount.dom.style.left = "0";
-    mount.dom.style.transformOrigin = "left top";
-
-    const disposer = reaction(
-      () => editorState.scroll.documentToViewport,
-      (transform) => {
-        mount.dom.style.transform = transform.toCSSMatrixString();
+    useEffect(() => {
+      const iframe = iframeRef.current;
+      if (!iframe) {
+        return;
       }
+      const document = iframe.contentDocument;
+      if (!document) {
+        return;
+      }
+      editorState.elementPicker.root = document;
+      document.body.style.margin = "0";
+    }, [iframeRef]);
+
+    useEffect(() => {
+      const iframe = iframeRef.current;
+      if (!iframe) {
+        return;
+      }
+      const document = iframe.contentDocument;
+      if (!document) {
+        return;
+      }
+
+      const mount = new DocumentMount(
+        editorState,
+        editorState.document,
+        document
+      );
+      mount.dom.style.position = "absolute";
+      mount.dom.style.top = "0";
+      mount.dom.style.left = "0";
+      mount.dom.style.transformOrigin = "left top";
+
+      const disposer = reaction(
+        () => editorState.scroll.documentToViewport,
+        (transform) => {
+          mount.dom.style.transform = transform.toCSSMatrixString();
+        }
+      );
+
+      document.body.append(mount.dom);
+      console.log("append");
+
+      return () => {
+        console.log("dispose");
+        disposer();
+        mount.dom.remove();
+        mount.dispose();
+      };
+    }, [iframeRef, editorState.document]);
+
+    const onWheel = useCallback(
+      action((e: React.WheelEvent) => {
+        // if (!editorState.wheelScrollEnabled) {
+        //   return;
+        // }
+
+        if (e.ctrlKey || e.metaKey) {
+          const factor = Math.pow(2, e.deltaY / 100);
+          const pos = new Vec2(e.clientX, e.clientY).sub(
+            editorState.scroll.viewportClientRect.topLeft
+          );
+          editorState.scroll.zoomAround(pos, editorState.scroll.scale * factor);
+
+          if (!editorState.document.components.firstChild) {
+            // No layers in page
+            editorState.scroll.translation = new Vec2(0);
+          }
+        } else {
+          if (!editorState.document.components.firstChild) {
+            // No layers in page
+            return;
+          }
+          const { scroll } = editorState;
+          scroll.translation = scroll.translation.sub(
+            new Vec2(e.deltaX, e.deltaY).round
+          );
+        }
+      }),
+      [editorState]
     );
 
-    document.body.append(mount.dom);
-
-    return () => {
-      disposer();
-      mount.dom.remove();
-      mount.dispose();
-    };
-  }, [iframeRef]);
-
-  const onWheel = useCallback(
-    action((e: React.WheelEvent) => {
-      // if (!editorState.wheelScrollEnabled) {
-      //   return;
-      // }
-
-      if (e.ctrlKey || e.metaKey) {
-        const factor = Math.pow(2, e.deltaY / 100);
-        const pos = new Vec2(e.clientX, e.clientY).sub(
-          editorState.scroll.viewportClientRect.topLeft
-        );
-        editorState.scroll.zoomAround(pos, editorState.scroll.scale * factor);
-
-        if (!editorState.document.components.firstChild) {
-          // No layers in page
-          editorState.scroll.translation = new Vec2(0);
-        }
-      } else {
-        if (!editorState.document.components.firstChild) {
-          // No layers in page
-          return;
-        }
-        const { scroll } = editorState;
-        scroll.translation = scroll.translation.sub(
-          new Vec2(e.deltaX, e.deltaY).round
-        );
-      }
-    }),
-    [editorState]
-  );
-
-  return (
-    <ViewportWrap className={className} ref={ref} onWheel={onWheel}>
-      <ViewportIFrame ref={iframeRef} />
-      <PointerOverlay />
-      <FrameLabels />
-      <Indicators />
-      <InnerHTMLEditor />
-      <PanOverlay />
-    </ViewportWrap>
-  );
-};
+    return (
+      <ViewportWrap className={className} ref={ref} onWheel={onWheel}>
+        <ViewportIFrame ref={iframeRef} />
+        <PointerOverlay />
+        <FrameLabels />
+        <Indicators />
+        <InnerHTMLEditor />
+        <PanOverlay />
+      </ViewportWrap>
+    );
+  }
+);
