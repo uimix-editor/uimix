@@ -3,7 +3,7 @@ import { MIXED, sameOrMixed } from "@seanchas116/paintkit/src/util/Mixed";
 import { filterInstance } from "@seanchas116/paintkit/src/util/Collection";
 import { getIncrementalUniqueName } from "@seanchas116/paintkit/src/util/Name";
 import { Element } from "../models/Element";
-import { changeTagName } from "../services/RenameTagName";
+import { changeTagName } from "../services/ChangeTagName";
 import { EditorState } from "./EditorState";
 
 export class ElementInspectorState {

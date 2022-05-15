@@ -3,7 +3,7 @@ import { filterInstance } from "@seanchas116/paintkit/src/util/Collection";
 import { TreeNode } from "@seanchas116/paintkit/src/util/TreeNode";
 import { last } from "lodash-es";
 import { computed, makeObservable } from "mobx";
-import { changeTagName } from "../services/RenameTagName";
+import { changeTagName } from "../services/ChangeTagName";
 import { Component, ComponentJSON } from "./Component";
 import { Element } from "./Element";
 import { ElementInstance } from "./ElementInstance";
