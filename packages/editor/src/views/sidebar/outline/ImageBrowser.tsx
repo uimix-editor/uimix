@@ -9,6 +9,7 @@ import { useEditorState } from "../../EditorStateContext";
 import { SearchBar } from "./SearchBar";
 import {
   AssetGrid,
+  AssetGridHeading,
   AssetGridItem,
   AssetGridItemThumbnail,
   AssetGridItemTitle,
@@ -70,7 +71,7 @@ export const ImageBrowser: React.FC = observer(function ImageBrowser() {
         <StyledScrollable>
           {[...imageFilesForDirectory].map(([dirName, filePaths]) => (
             <>
-              <Heading>{dirName}</Heading>
+              <AssetGridHeading>{dirName}</AssetGridHeading>
               <AssetGrid>
                 {filePaths.map((filePath) => (
                   <Item filePath={filePath} />
@@ -101,12 +102,4 @@ const ImageBrowserWrap = styled.div`
   ${StyledScrollable}, ${NoImageLabel} {
     flex: 1;
   }
-`;
-
-const Heading = styled.div`
-  margin: 12px;
-  font-size: 12px;
-  font-weight: 600;
-  line-height: 12px;
-  color: ${colors.disabledText};
 `;

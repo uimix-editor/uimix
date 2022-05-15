@@ -6,6 +6,7 @@ import { Component } from "../../../models/Component";
 import { useEditorState } from "../../EditorStateContext";
 import {
   AssetGrid,
+  AssetGridHeading,
   AssetGridItem,
   AssetGridItemThumbnail,
   AssetGridItemTitle,
@@ -40,14 +41,16 @@ export const ComponentBrowser: React.FC<React.HTMLAttributes<HTMLDivElement>> =
       <ComponentBrowserWrap>
         <SearchBar value={search} onChange={setSearch} />
         <StyledScrollable>
+          <AssetGridHeading>This File</AssetGridHeading>
           <AssetGrid>
             {components.map((component) => (
               <Item component={component} key={component.key} />
             ))}
           </AssetGrid>
+          <AssetGridHeading>External</AssetGridHeading>
           <AssetGrid>
             {externalComponents.map((tagName) => (
-              <TagNameItem tagName={tagName} key={tagName} />
+              <ExternalItem tagName={tagName} key={tagName} />
             ))}
           </AssetGrid>
         </StyledScrollable>
@@ -75,7 +78,7 @@ const Item: React.FC<{
   );
 });
 
-const TagNameItem: React.FC<{
+const ExternalItem: React.FC<{
   tagName: string;
 }> = observer(function Item({ tagName }) {
   return (

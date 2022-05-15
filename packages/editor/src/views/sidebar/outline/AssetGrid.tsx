@@ -30,3 +30,11 @@ export const AssetGridItemThumbnail = styled.img`
   object-fit: contain;
   ${checkPattern("white", "rgba(0,0,0,0.1)", "16px")}
 `;
+
+export const AssetGridHeading = styled.div`
+  margin: 12px;
+  font-size: 12px;
+  font-weight: 600;
+  line-height: 12px;
+  color: ${colors.disabledText};
+`;
