@@ -57,8 +57,9 @@ const Item: React.FC<{
         loading="lazy"
         draggable
         onDragStart={(e) => {
-          //e.dataTransfer.effectAllowed = "copy";
-          //e.dataTransfer.setData(imageAssetDragMime, filePath);
+          const tagName = component.name;
+          e.dataTransfer.effectAllowed = "copy";
+          e.dataTransfer.setData("text/html", `<${tagName}></${tagName}>`);
         }}
       />
       <AssetGridItemTitle>{component.name}</AssetGridItemTitle>
