@@ -39,50 +39,23 @@ export class DocumentMount {
     this.iframe.style.height = "100%";
     parent.append(this.iframe);
 
-    const domDocument = assertNonNull(this.iframe.contentDocument);
-    editorState.elementPicker.root = domDocument;
-    domDocument.body.style.margin = "0";
+    this.domDocument = assertNonNull(this.iframe.contentDocument);
+    editorState.elementPicker.root = this.domDocument;
+    this.domDocument.body.style.margin = "0";
 
-    this.container = domDocument.createElement("div");
+    this.container = this.domDocument.createElement("div");
     this.container.style.position = "absolute";
     this.container.style.top = "0";
     this.container.style.left = "0";
     this.container.style.transformOrigin = "left top";
-    domDocument.body.append(this.container);
+    this.domDocument.body.append(this.container);
 
-    const domWindow = domDocument.defaultView!;
-
-    this.resetStyleSheet = new domDocument.defaultView!.CSSStyleSheet();
+    this.resetStyleSheet = new this.domDocument.defaultView!.CSSStyleSheet();
     //@ts-ignore
     // eslint-disable-next-line @typescript-eslint/no-unsafe-call
     this.resetStyleSheet.replaceSync(resetCSS);
 
-    const customElementTagNames: string[] = [];
-
-    // eslint-disable-next-line @typescript-eslint/unbound-method
-    const originalDefine = domWindow.customElements.define;
-    domWindow.customElements.define = function (...args) {
-      customElementTagNames.push(args[0]);
-      console.log("define", args);
-      originalDefine.apply(this, args);
-    };
-
-    const loadPreludeScript = (src: string): Promise<void> => {
-      return new Promise<void>((resolve, reject) => {
-        const script = domDocument.createElement("script");
-        script.type = "module";
-        script.src = editorState.resolveImageAssetURL(src);
-        script.addEventListener("load", () => resolve());
-        script.addEventListener("error", (e) => reject(e));
-        domDocument.head.append(script);
-      }).catch((e) => console.error(e));
-    };
-
-    void Promise.all(
-      document.preludeScripts.map((src) => loadPreludeScript(src))
-    ).then(() => {
-      void this.updateCustomElementThumbnails(customElementTagNames);
-    });
+    void this.loadPreludeScripts();
 
     this.disposers = [
       reaction(
@@ -161,7 +134,7 @@ export class DocumentMount {
 
   private get context(): MountContext {
     return {
-      domDocument: this.container.ownerDocument,
+      domDocument: this.domDocument,
       resetStyleSheet: this.resetStyleSheet,
       editorState: this.editorState,
       registry: this.registry,
@@ -176,6 +149,7 @@ export class DocumentMount {
   readonly editorState: EditorState;
   readonly document: Document;
   readonly iframe: HTMLIFrameElement;
+  readonly domDocument: globalThis.Document;
   readonly container: HTMLDivElement;
   readonly registry = new MountRegistry();
   readonly boundingBoxUpdateScheduler = new BoundingBoxUpdateScheduler();
@@ -183,17 +157,46 @@ export class DocumentMount {
   private componentMounts: ComponentMount[] = [];
   private componentStyleMounts = new Map<Component, ComponentStyleMount>();
 
+  private async loadPreludeScripts(): Promise<void> {
+    const customElementTagNames: string[] = [];
+
+    const domWindow = this.domDocument.defaultView!;
+
+    // eslint-disable-next-line @typescript-eslint/unbound-method
+    const originalDefine = domWindow.customElements.define;
+    domWindow.customElements.define = function (...args) {
+      customElementTagNames.push(args[0]);
+      console.log("define", args);
+      originalDefine.apply(this, args);
+    };
+
+    const loadPreludeScript = (src: string): Promise<void> => {
+      return new Promise<void>((resolve, reject) => {
+        const script = this.domDocument.createElement("script");
+        script.type = "module";
+        script.src = this.editorState.resolveImageAssetURL(src);
+        script.addEventListener("load", () => resolve());
+        script.addEventListener("error", (e) => reject(e));
+        this.domDocument.head.append(script);
+      }).catch((e) => console.error(e));
+    };
+
+    await Promise.all(
+      this.document.preludeScripts.map((src) => loadPreludeScript(src))
+    );
+    await this.updateCustomElementThumbnails(customElementTagNames);
+  }
+
   private async updateCustomElementThumbnails(
     tagNames: string[]
   ): Promise<void> {
     const renderThumbnail = async (
       tagName: string
     ): Promise<LoadedCustomElement> => {
-      const doc = this.container.ownerDocument;
-      const elem = doc.createElement(tagName);
+      const elem = this.domDocument.createElement(tagName);
       elem.append("Content");
 
-      const container = doc.createElement("div");
+      const container = this.domDocument.createElement("div");
       container.style.position = "absolute";
       container.style.top = "-10000px";
       container.style.left = "-10000px";
@@ -201,7 +204,7 @@ export class DocumentMount {
       container.style.fontFamily = "sans-serif";
       container.append(elem);
 
-      doc.body.append(container);
+      this.domDocument.body.append(container);
 
       await new Promise((resolve) => setTimeout(resolve, 100));
 
