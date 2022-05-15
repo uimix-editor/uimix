@@ -1,5 +1,6 @@
 import { reaction } from "mobx";
 import dedent from "dedent";
+import { assertNonNull } from "@seanchas116/paintkit/src/util/Assert";
 import { Component } from "../models/Component";
 import { EditorState } from "../state/EditorState";
 import { Document } from "../models/Document";
@@ -25,14 +26,23 @@ const resetCSS = dedent`
 `;
 
 export class DocumentMount {
-  constructor(
-    editorState: EditorState,
-    document: Document,
-    domDocument: globalThis.Document
-  ) {
+  constructor(editorState: EditorState, document: Document, parent: Element) {
     this.editorState = editorState;
     this.document = document;
-    this.dom = domDocument.createElement("div");
+    this.iframe = globalThis.document.createElement("iframe");
+    parent.append(this.iframe);
+
+    const domDocument = assertNonNull(this.iframe.contentDocument);
+    editorState.elementPicker.root = domDocument;
+    domDocument.body.style.margin = "0";
+
+    this.container = domDocument.createElement("div");
+    this.container.style.position = "absolute";
+    this.container.style.top = "0";
+    this.container.style.left = "0";
+    this.container.style.transformOrigin = "left top";
+    domDocument.body.append(this.container);
+
     this.resetStyleSheet = new domDocument.defaultView!.CSSStyleSheet();
     //@ts-ignore
     // eslint-disable-next-line @typescript-eslint/no-unsafe-call
@@ -47,25 +57,16 @@ export class DocumentMount {
 
     this.disposers = [
       reaction(
+        () => editorState.scroll.documentToViewport,
+        (transform) => {
+          this.container.style.transform = transform.toCSSMatrixString();
+        }
+      ),
+      reaction(
         () => document.components.children,
         (components) => {
           this.updateComponents(components);
         }
-      ),
-      reaction(
-        () =>
-          document.preludeScripts.map((url) =>
-            editorState.resolveImageAssetURL(url)
-          ),
-        (preludeScripts) => {
-          for (const prelude of preludeScripts) {
-            const script = domDocument.createElement("script");
-            script.type = "module";
-            script.src = editorState.resolveImageAssetURL(prelude);
-            domDocument.head.append(script);
-          }
-        },
-        { fireImmediately: true }
       ),
     ];
     this.updateComponents(document.components.children);
@@ -78,6 +79,7 @@ export class DocumentMount {
 
     this.componentMounts.forEach((mount) => mount.dispose());
     this.disposers.forEach((disposer) => disposer());
+    this.iframe.remove();
 
     this.isDisposed = true;
   }
@@ -120,17 +122,17 @@ export class DocumentMount {
       variantMount.dispose();
     }
 
-    while (this.dom.firstChild) {
-      this.dom.firstChild.remove();
+    while (this.container.firstChild) {
+      this.container.firstChild.remove();
     }
     for (const mount of this.componentMounts) {
-      this.dom.append(mount.dom);
+      this.container.append(mount.dom);
     }
   }
 
   private get context(): MountContext {
     return {
-      domDocument: this.dom.ownerDocument,
+      domDocument: this.container.ownerDocument,
       resetStyleSheet: this.resetStyleSheet,
       editorState: this.editorState,
       registry: this.registry,
@@ -144,7 +146,8 @@ export class DocumentMount {
 
   readonly editorState: EditorState;
   readonly document: Document;
-  readonly dom: HTMLDivElement;
+  readonly iframe: HTMLIFrameElement;
+  readonly container: HTMLDivElement;
   readonly registry = new MountRegistry();
   readonly boundingBoxUpdateScheduler = new BoundingBoxUpdateScheduler();
   private resetStyleSheet: CSSStyleSheet;

@@ -1,6 +1,6 @@
 import { colors } from "@seanchas116/paintkit/src/components/Palette";
 import { Rect, Vec2 } from "paintvec";
-import { action, reaction, runInAction } from "mobx";
+import { action, runInAction } from "mobx";
 import React, { useCallback, useEffect } from "react";
 import styled from "styled-components";
 import { observer } from "mobx-react-lite";
@@ -19,13 +19,12 @@ const ViewportWrap = styled.div`
   contain: strict;
 `;
 
-const ViewportIFrame = styled.iframe`
+const ViewportIFrameWrap = styled.div`
   position: absolute;
   top: 0;
   left: 0;
   width: 100%;
   height: 100%;
-  border: none;
 `;
 
 export const Viewport: React.FC<{ className?: string }> = observer(
@@ -33,7 +32,7 @@ export const Viewport: React.FC<{ className?: string }> = observer(
     const editorState = useEditorState();
 
     const ref = React.createRef<HTMLDivElement>();
-    const iframeRef = React.createRef<HTMLIFrameElement>();
+    const iframeWrapRef = React.createRef<HTMLDivElement>();
 
     useEffect(() => {
       const elem = ref.current;
@@ -58,55 +57,21 @@ export const Viewport: React.FC<{ className?: string }> = observer(
     }, [ref]);
 
     useEffect(() => {
-      const iframe = iframeRef.current;
-      if (!iframe) {
-        return;
-      }
-      const document = iframe.contentDocument;
-      if (!document) {
-        return;
-      }
-      editorState.elementPicker.root = document;
-      document.body.style.margin = "0";
-    }, [iframeRef]);
-
-    useEffect(() => {
-      const iframe = iframeRef.current;
-      if (!iframe) {
-        return;
-      }
-      const document = iframe.contentDocument;
-      if (!document) {
-        return;
-      }
-
       const mount = new DocumentMount(
         editorState,
         editorState.document,
-        document
+        iframeWrapRef.current!
       );
-      mount.dom.style.position = "absolute";
-      mount.dom.style.top = "0";
-      mount.dom.style.left = "0";
-      mount.dom.style.transformOrigin = "left top";
-
-      const disposer = reaction(
-        () => editorState.scroll.documentToViewport,
-        (transform) => {
-          mount.dom.style.transform = transform.toCSSMatrixString();
-        }
-      );
-
-      document.body.append(mount.dom);
-      console.log("append");
+      mount.iframe.style.position = "absolute";
+      mount.iframe.style.top = "0";
+      mount.iframe.style.left = "0";
+      mount.iframe.style.width = "100%";
+      mount.iframe.style.height = "100%";
 
       return () => {
-        console.log("dispose");
-        disposer();
-        mount.dom.remove();
         mount.dispose();
       };
-    }, [iframeRef, editorState.document]);
+    }, [iframeWrapRef, editorState.document]);
 
     const onWheel = useCallback(
       action((e: React.WheelEvent) => {
@@ -141,7 +106,7 @@ export const Viewport: React.FC<{ className?: string }> = observer(
 
     return (
       <ViewportWrap className={className} ref={ref} onWheel={onWheel}>
-        <ViewportIFrame ref={iframeRef} />
+        <ViewportIFrameWrap ref={iframeWrapRef} />
         <PointerOverlay />
         <FrameLabels />
         <Indicators />
