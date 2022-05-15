@@ -1,4 +1,4 @@
-import { reaction } from "mobx";
+import { reaction, runInAction } from "mobx";
 import dedent from "dedent";
 import { assertNonNull } from "@seanchas116/paintkit/src/util/Assert";
 import { Component } from "../models/Component";
@@ -49,10 +49,22 @@ export class DocumentMount {
     this.container.style.transformOrigin = "left top";
     domDocument.body.append(this.container);
 
+    const domWindow = domDocument.defaultView!;
+
     this.resetStyleSheet = new domDocument.defaultView!.CSSStyleSheet();
     //@ts-ignore
     // eslint-disable-next-line @typescript-eslint/no-unsafe-call
     this.resetStyleSheet.replaceSync(resetCSS);
+
+    // eslint-disable-next-line @typescript-eslint/unbound-method
+    const originalDefine = domWindow.customElements.define;
+    domWindow.customElements.define = function (...args) {
+      runInAction(() => {
+        document.loadedCustomElements.add(args[0]);
+      });
+      console.log("define", args);
+      originalDefine.apply(this, args);
+    };
 
     for (const prelude of document.preludeScripts) {
       const script = domDocument.createElement("script");

@@ -32,6 +32,9 @@ export const ComponentBrowser: React.FC<React.HTMLAttributes<HTMLDivElement>> =
     const components = editorState.document.components.children.filter(
       (component) => component.name.includes(search)
     );
+    const externalComponents = [
+      ...editorState.document.loadedCustomElements,
+    ].filter((tagName) => tagName.includes(search));
 
     return (
       <ComponentBrowserWrap>
@@ -40,6 +43,11 @@ export const ComponentBrowser: React.FC<React.HTMLAttributes<HTMLDivElement>> =
           <AssetGrid>
             {components.map((component) => (
               <Item component={component} key={component.key} />
+            ))}
+          </AssetGrid>
+          <AssetGrid>
+            {externalComponents.map((tagName) => (
+              <TagNameItem tagName={tagName} key={tagName} />
             ))}
           </AssetGrid>
         </StyledScrollable>
@@ -63,6 +71,28 @@ const Item: React.FC<{
         }}
       />
       <AssetGridItemTitle>{component.name}</AssetGridItemTitle>
+    </AssetGridItem>
+  );
+});
+
+const TagNameItem: React.FC<{
+  tagName: string;
+}> = observer(function Item({ tagName }) {
+  return (
+    <AssetGridItem>
+      <AssetGridItemThumbnail
+        src=""
+        loading="lazy"
+        draggable
+        onDragStart={(e) => {
+          e.dataTransfer.effectAllowed = "copy";
+          e.dataTransfer.setData(
+            "text/html",
+            `<${tagName}>Content</${tagName}>`
+          );
+        }}
+      />
+      <AssetGridItemTitle>{tagName}</AssetGridItemTitle>
     </AssetGridItem>
   );
 });

@@ -268,6 +268,7 @@ export class Document {
   }
 
   readonly preludeScripts = observable.array<string>(["./shoelace.js"]);
+  readonly loadedCustomElements = observable.set<string>();
 }
 
 export interface DocumentJSON {
