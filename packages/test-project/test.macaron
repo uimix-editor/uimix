@@ -74,5 +74,22 @@
         color: #008000;
       }
     }
+  </style> </macaron-component
+><macaron-component name="component-wrapper">
+  <macaron-variant x="0" y="295"></macaron-variant>
+  <template>
+    <my-component id="my-component"></my-component>
+  </template>
+  <style>
+    :host {
+      position: relative;
+      width: 240px;
+      height: 240px;
+    }
+    #my-component {
+      position: absolute;
+      top: 24px;
+      left: 12px;
+    }
   </style>
 </macaron-component>
