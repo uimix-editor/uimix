@@ -30,7 +30,7 @@ export class RootElementMount {
       this.context.componentStyleMounts.get(component)
     ).styleSheet;
 
-    this.dom = dom ?? context.domDocument.createElement("div");
+    this.dom = dom ?? context.domDocument.createElement("span");
     RootElementMount.domToMount.set(this.dom, this);
 
     this.shadow = this.dom.attachShadow({ mode: "open" });
