@@ -19,13 +19,20 @@ import {
   useContextMenu,
 } from "@seanchas116/paintkit/src/components/menu/ContextMenuProvider";
 import widgetsFilledIcon from "@iconify-icons/ic/baseline-widgets";
+import widgetsOutlineIcon from "@iconify-icons/ic/outline-widgets";
+import formatBoldIcon from "@iconify-icons/ic/outline-format-bold";
+import formatItalicIcon from "@iconify-icons/ic/outline-format-italic";
+import interestsIcon from "@iconify-icons/ic/outline-interests";
 import switchIcon from "@seanchas116/paintkit/src/icon/Switch";
 import chevronsIcon from "@seanchas116/paintkit/src/icon/Chevrons";
+import headingIcon from "@seanchas116/paintkit/src/icon/Heading";
+import imageIcon from "@seanchas116/paintkit/src/icon/Image";
 import { action, computed, makeObservable, reaction } from "mobx";
 import { colors } from "@seanchas116/paintkit/src/components/Palette";
 import { filterInstance } from "@seanchas116/paintkit/src/util/Collection";
 import { compact } from "lodash-es";
 import { assertNonNull } from "@seanchas116/paintkit/src/util/Assert";
+import { IconifyIcon } from "@iconify/react/dist/offline";
 import { EditorState } from "../../../state/EditorState";
 import { Component } from "../../../models/Component";
 import { DefaultVariant, Variant } from "../../../models/Variant";
@@ -33,6 +40,28 @@ import { ElementInstance } from "../../../models/ElementInstance";
 import { TextInstance } from "../../../models/TextInstance";
 import { Document } from "../../../models/Document";
 import { useEditorState } from "../../EditorStateContext";
+
+function iconForTagName(tagName: string): IconifyIcon {
+  if (tagName === "b" || tagName === "strong") {
+    return formatBoldIcon;
+  }
+  if (tagName === "i" || tagName === "em") {
+    return formatItalicIcon;
+  }
+  if (tagName === "img") {
+    return imageIcon;
+  }
+  if (tagName === "svg") {
+    return interestsIcon;
+  }
+  if (/^h\d$/.test(tagName)) {
+    return headingIcon;
+  }
+  if (tagName.includes("-")) {
+    return widgetsOutlineIcon;
+  }
+  return chevronsIcon;
+}
 
 const NODE_DRAG_MIME = "application/x.macaron-tree-drag-node";
 const COMPONENT_DRAG_MIME = "application/x.macaron-tree-drag-component";
@@ -42,19 +71,18 @@ const TreeViewPadding = styled.div`
   height: 8px;
 `;
 
-const TagName = styled.div<{
-  color: string;
-}>`
+const TagName = styled.div`
   font-size: 8px;
   font-weight: 600;
   text-transform: uppercase;
-  color: ${(p) => p.color};
+  color: ${colors.text};
   opacity: 0.5;
-  margin-right: 6px;
+  margin-right: 8px;
 `;
 
 const ElementIcon = styled(TreeRowIcon)`
-  color: ${colors.label};
+  color: ${colors.text};
+  opacity: 0.5;
 `;
 
 const ComponentIcon = styled(TreeRowIcon)`
@@ -228,14 +256,18 @@ class ElementItem extends TreeViewItem {
 
   rowElement: HTMLElement | undefined;
 
+  @computed get icon(): IconifyIcon {
+    return iconForTagName(this.instance.element.tagName);
+  }
+
   renderRow(options: { inverted: boolean }): React.ReactNode {
     return (
       <StyledRow
         ref={(e) => (this.rowElement = e || undefined)}
         inverted={options.inverted}
       >
-        <ElementIcon icon={chevronsIcon} />
-        <TagName color={colors.text}> {this.instance.element.tagName}</TagName>
+        <ElementIcon icon={this.icon} />
+        <TagName> {this.instance.element.tagName}</TagName>
         <StyledNameEdit
           color={colors.text}
           value={this.instance.element.id}
