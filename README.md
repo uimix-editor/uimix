@@ -3,7 +3,7 @@
 Macaron is an open-source Web design tool to create and maintain components visually
 where you can create production components just like in vector design tools.
 
-It primarily emits Web Components ([which can be used from most frameworks](https://custom-elements-everywhere.com/)) and optionally generates React wrappers.
+It primarily emits Web Components, [which can be used from most frameworks](https://custom-elements-everywhere.com/).
 
 Unlike other Web design tools, Macaron is intended to be integrated into your existing codebase and development workflow.
 
