@@ -15,8 +15,8 @@ import alignVerticalCenterIcon from "@iconify-icons/ic/outline-align-vertical-ce
 import alignVerticalBottomIcon from "@iconify-icons/ic/outline-align-vertical-bottom";
 import alignStretchIcon from "@seanchas116/paintkit/src/icon/AlignStretch";
 import { StyleInspectorState } from "../../../../state/StyleInspectorState";
-import { StyleDimensionInput, StyleIconRadio } from "./Components";
-import { lengthPercentageEmptyUnits, lengthPercentageUnits } from "./Units";
+import { StyleDimensionInput, StyleIconRadio, StyleInput } from "./Components";
+import { lengthPercentageUnits } from "./Units";
 
 const alignSelfOptionsRow = [
   {
@@ -69,16 +69,8 @@ export const FlexItemPane: React.FC<{
           property={state.props.alignSelf}
         />
         <Row111>
-          <StyleDimensionInput
-            icon={unfoldMoreIcon}
-            units={lengthPercentageEmptyUnits}
-            property={state.props.flexGrow}
-          />
-          <StyleDimensionInput
-            icon={unfoldLessIcon}
-            units={lengthPercentageEmptyUnits}
-            property={state.props.flexShrink}
-          />
+          <StyleInput icon={unfoldMoreIcon} property={state.props.flexGrow} />
+          <StyleInput icon={unfoldLessIcon} property={state.props.flexShrink} />
           <StyleDimensionInput
             icon={fullscreenIcon}
             units={lengthPercentageUnits}
