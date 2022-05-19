@@ -5,6 +5,7 @@ import { Rect } from "paintvec";
 import { colors } from "@seanchas116/paintkit/src/components/Palette";
 import { sameOrNone } from "@seanchas116/paintkit/src/util/Collection";
 import { useEditorState } from "../../EditorStateContext";
+import { RootElement } from "../../../models/RootElement";
 
 const SelectionInfoWrap = styled.div`
   position: absolute;
@@ -51,6 +52,10 @@ export const SelectionInfo: React.FC = observer(function SelectionInfo() {
   const tagName =
     sameOrNone(
       instances.map((i) => {
+        if (i.element instanceof RootElement) {
+          return i.element.component.name;
+        }
+
         if (i.element.id) {
           return "#" + i.element.id;
         }
