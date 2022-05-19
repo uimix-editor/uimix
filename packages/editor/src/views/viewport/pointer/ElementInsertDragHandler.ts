@@ -34,13 +34,14 @@ export class ElementInsertDragHandler implements DragHandler {
       this.component.rename("my-component");
       this.editorState.document.components.append(this.component);
 
+      this.instance = assertNonNull(this.component.defaultVariant.rootInstance);
+      this.instance.style.display = "block";
+
       if (mode === "text") {
         this.component.rootElement.append(
           new Text({ content: "Type something" })
         );
       }
-
-      this.instance = assertNonNull(this.component.defaultVariant.rootInstance);
     } else {
       const element = new Element({ tagName: "div" });
       element.rename("div");
