@@ -42,6 +42,11 @@ const alignSelfOptionsColumn = alignSelfOptionsRow.map((option) => ({
   icon: { ...option.icon, rotate: (option.icon.rotate ?? 0) - 1 },
 }));
 
+const flexGrowColumnIcon = unfoldMoreIcon;
+const flexGrowRowIcon = { ...unfoldMoreIcon, rotate: 1 };
+const flexShrinkColumnIcon = unfoldLessIcon;
+const flexShrinkRowIcon = { ...unfoldLessIcon, rotate: 1 };
+
 export const FlexItemPane: React.FC<{
   state: StyleInspectorState;
 }> = observer(function LayoutPane({ state }) {
@@ -54,6 +59,8 @@ export const FlexItemPane: React.FC<{
     return null;
   }
 
+  const direction = computedParentFlexDirection === "column" ? "column" : "row";
+
   return (
     <Pane>
       <PaneHeadingRow>
@@ -62,15 +69,23 @@ export const FlexItemPane: React.FC<{
       <RowGroup>
         <StyleIconRadio
           options={
-            computedParentFlexDirection === "column"
+            direction === "column"
               ? alignSelfOptionsColumn
               : alignSelfOptionsRow
           }
           property={state.props.alignSelf}
         />
         <Row111>
-          <StyleInput icon={unfoldMoreIcon} property={state.props.flexGrow} />
-          <StyleInput icon={unfoldLessIcon} property={state.props.flexShrink} />
+          <StyleInput
+            icon={direction === "column" ? flexGrowColumnIcon : flexGrowRowIcon}
+            property={state.props.flexGrow}
+          />
+          <StyleInput
+            icon={
+              direction === "column" ? flexShrinkColumnIcon : flexShrinkRowIcon
+            }
+            property={state.props.flexShrink}
+          />
           <StyleDimensionInput
             icon={fullscreenIcon}
             units={lengthPercentageUnits}
