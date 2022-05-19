@@ -26,6 +26,18 @@ const resetCSS = dedent`
   }
 `;
 
+function getGoogleFontLink(fontFamilies: string[]): string {
+  const query = fontFamilies
+    .map((family) => {
+      return `family=${family
+        .split(/\s/)
+        .join("+")}:wght@100;200;300;400;500;600;700;800;900`;
+    })
+    .join("&");
+
+  return `https://fonts.googleapis.com/css2?${query}`;
+}
+
 export class DocumentMount {
   constructor(editorState: EditorState, document: Document, parent: Element) {
     this.editorState = editorState;
@@ -57,6 +69,10 @@ export class DocumentMount {
 
     void this.loadPreludeScripts();
 
+    const fontLink = this.domDocument.createElement("link");
+    fontLink.rel = "stylesheet";
+    this.domDocument.head.append(fontLink);
+
     this.disposers = [
       reaction(
         () => editorState.scroll.documentToViewport,
@@ -69,6 +85,13 @@ export class DocumentMount {
         (components) => {
           this.updateComponents(components);
         }
+      ),
+      reaction(
+        () => editorState.usedGoogleFonts,
+        (googleFonts) => {
+          fontLink.href = getGoogleFontLink(googleFonts);
+        },
+        { fireImmediately: true }
       ),
     ];
     this.updateComponents(document.components.children);
