@@ -169,6 +169,12 @@ export class ElementMount {
         { fireImmediately: true }
       )
     );
+
+    const resizeObserver = new ResizeObserver(() => {
+      this.root.updateBoundingBoxLater();
+    });
+    resizeObserver.observe(this.dom);
+    this.disposers.push(() => resizeObserver.disconnect());
   }
 
   @computed get attributes(): Map<string, string> {

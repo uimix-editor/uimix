@@ -3,9 +3,11 @@ import { observer } from "mobx-react-lite";
 import { useState } from "react";
 import styled from "styled-components";
 import { Component } from "../../../models/Component";
+import { LoadedCustomElement } from "../../../models/Document";
 import { useEditorState } from "../../EditorStateContext";
 import {
   AssetGrid,
+  AssetGridHeading,
   AssetGridItem,
   AssetGridItemThumbnail,
   AssetGridItemTitle,
@@ -32,14 +34,27 @@ export const ComponentBrowser: React.FC<React.HTMLAttributes<HTMLDivElement>> =
     const components = editorState.document.components.children.filter(
       (component) => component.name.includes(search)
     );
+    const customElements = [
+      ...editorState.document.loadedCustomElements,
+    ].filter((c) => c.tagName.includes(search));
 
     return (
       <ComponentBrowserWrap>
         <SearchBar value={search} onChange={setSearch} />
         <StyledScrollable>
+          <AssetGridHeading>This File</AssetGridHeading>
           <AssetGrid>
             {components.map((component) => (
               <Item component={component} key={component.key} />
+            ))}
+          </AssetGrid>
+          <AssetGridHeading>External</AssetGridHeading>
+          <AssetGrid>
+            {customElements.map((customElement) => (
+              <ExternalItem
+                customElement={customElement}
+                key={customElement.tagName}
+              />
             ))}
           </AssetGrid>
         </StyledScrollable>
@@ -63,6 +78,28 @@ const Item: React.FC<{
         }}
       />
       <AssetGridItemTitle>{component.name}</AssetGridItemTitle>
+    </AssetGridItem>
+  );
+});
+
+const ExternalItem: React.FC<{
+  customElement: LoadedCustomElement;
+}> = observer(function Item({ customElement }) {
+  return (
+    <AssetGridItem>
+      <AssetGridItemThumbnail
+        src={customElement.thumbnail}
+        loading="lazy"
+        draggable
+        onDragStart={(e) => {
+          e.dataTransfer.effectAllowed = "copy";
+          e.dataTransfer.setData(
+            "text/html",
+            `<${customElement.tagName}>Content</${customElement.tagName}>`
+          );
+        }}
+      />
+      <AssetGridItemTitle>{customElement.tagName}</AssetGridItemTitle>
     </AssetGridItem>
   );
 });

@@ -7,6 +7,7 @@ import * as postcss from "postcss";
 import * as CSSwhat from "css-what";
 import { isNonVisualElement } from "@seanchas116/paintkit/src/util/HTMLTagCategory";
 import { getOrSetDefault } from "@seanchas116/paintkit/src/util/Collection";
+import { isEqual } from "lodash-es";
 import { formatHTML } from "../util/Format";
 import { parseHTMLFragment } from "../util/Hast";
 import { Component } from "./Component";
@@ -317,16 +318,54 @@ function loadVariant(node: hast.Element): Variant {
 }
 
 function dumpDocument(document: Document): hast.Element[] {
-  return document.components.children.map(dumpComponent);
+  const components = document.components.children.map(dumpComponent);
+
+  const preludeScripts = document.preludeScripts.map((src) =>
+    h("script", {
+      type: "module",
+      src,
+    })
+  );
+  const preludeStyleSheets = document.preludeStyleSheets.map((href) =>
+    h("link", {
+      rel: "stylesheet",
+      href,
+    })
+  );
+
+  return [...preludeStyleSheets, ...preludeScripts, ...components];
 }
 
 function loadDocument(hastNodes: hast.Content[]): Document {
   const document = new Document();
 
   for (const child of hastNodes) {
-    if (child.type === "element" && child.tagName === "macaron-component") {
+    if (child.type !== "element") {
+      continue;
+    }
+
+    if (child.tagName === "macaron-component") {
       const component = loadComponent(child);
       document.components.append(component);
+      continue;
+    }
+
+    if (
+      child.tagName === "script" &&
+      child.properties?.type === "module" &&
+      child.properties?.src
+    ) {
+      document.preludeScripts.push(String(child.properties.src));
+      continue;
+    }
+
+    if (
+      child.tagName === "link" &&
+      isEqual(child.properties?.rel, ["stylesheet"]) &&
+      child.properties?.href
+    ) {
+      document.preludeStyleSheets.push(String(child.properties.href));
+      continue;
     }
   }
 

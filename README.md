@@ -90,9 +90,9 @@ _:construction: - Not yet implemented_
 ## File format (`*.macaron`)
 
 ```html
-<!-- imports to external Web Components -->
+<!-- imports to external Web Components: -->
+<link rel="stylesheet" href="./external-web-components-styles.css" />
 <script type="module" src="./external-web-components.js"></script>
-<script type="module" src="./another-external-web-components.js"></script>
 
 <macaron-component name="my-card">
   <!-- Variants -->

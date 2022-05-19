@@ -1,7 +1,10 @@
-import { reaction } from "mobx";
+import { reaction, runInAction } from "mobx";
 import dedent from "dedent";
+import { assertNonNull } from "@seanchas116/paintkit/src/util/Assert";
 import { Component } from "../models/Component";
 import { EditorState } from "../state/EditorState";
+import { Document, LoadedCustomElement } from "../models/Document";
+import { captureDOM } from "../util/CaptureDOM";
 import { BoundingBoxUpdateScheduler } from "./BoundingBoxUpdateScheduler";
 import { ComponentMount } from "./ComponentMount";
 import { MountRegistry } from "./MountRegistry";
@@ -24,23 +27,51 @@ const resetCSS = dedent`
 `;
 
 export class DocumentMount {
-  constructor(editorState: EditorState, domDocument: globalThis.Document) {
+  constructor(editorState: EditorState, document: Document, parent: Element) {
     this.editorState = editorState;
-    this.dom = domDocument.createElement("div");
-    this.resetStyleSheet = new domDocument.defaultView!.CSSStyleSheet();
+    this.document = document;
+
+    this.iframe = globalThis.document.createElement("iframe");
+    this.iframe.style.position = "absolute";
+    this.iframe.style.top = "0";
+    this.iframe.style.left = "0";
+    this.iframe.style.width = "100%";
+    this.iframe.style.height = "100%";
+    parent.append(this.iframe);
+
+    this.domDocument = assertNonNull(this.iframe.contentDocument);
+    editorState.elementPicker.root = this.domDocument;
+    this.domDocument.body.style.margin = "0";
+
+    this.container = this.domDocument.createElement("div");
+    this.container.style.position = "absolute";
+    this.container.style.top = "0";
+    this.container.style.left = "0";
+    this.container.style.transformOrigin = "left top";
+    this.domDocument.body.append(this.container);
+
+    this.resetStyleSheet = new this.domDocument.defaultView!.CSSStyleSheet();
     //@ts-ignore
     // eslint-disable-next-line @typescript-eslint/no-unsafe-call
     this.resetStyleSheet.replaceSync(resetCSS);
 
+    void this.loadPreludeScripts();
+
     this.disposers = [
       reaction(
-        () => editorState.document.components.children,
+        () => editorState.scroll.documentToViewport,
+        (transform) => {
+          this.container.style.transform = transform.toCSSMatrixString();
+        }
+      ),
+      reaction(
+        () => document.components.children,
         (components) => {
           this.updateComponents(components);
         }
       ),
     ];
-    this.updateComponents(editorState.document.components.children);
+    this.updateComponents(document.components.children);
   }
 
   dispose(): void {
@@ -50,6 +81,7 @@ export class DocumentMount {
 
     this.componentMounts.forEach((mount) => mount.dispose());
     this.disposers.forEach((disposer) => disposer());
+    this.iframe.remove();
 
     this.isDisposed = true;
   }
@@ -92,17 +124,17 @@ export class DocumentMount {
       variantMount.dispose();
     }
 
-    while (this.dom.firstChild) {
-      this.dom.firstChild.remove();
+    while (this.container.firstChild) {
+      this.container.firstChild.remove();
     }
     for (const mount of this.componentMounts) {
-      this.dom.append(mount.dom);
+      this.container.append(mount.dom);
     }
   }
 
   private get context(): MountContext {
     return {
-      domDocument: this.dom.ownerDocument,
+      domDocument: this.domDocument,
       resetStyleSheet: this.resetStyleSheet,
       editorState: this.editorState,
       registry: this.registry,
@@ -115,10 +147,101 @@ export class DocumentMount {
   private readonly disposers: (() => void)[] = [];
 
   readonly editorState: EditorState;
-  readonly dom: HTMLDivElement;
+  readonly document: Document;
+  readonly iframe: HTMLIFrameElement;
+  readonly domDocument: globalThis.Document;
+  readonly container: HTMLDivElement;
   readonly registry = new MountRegistry();
   readonly boundingBoxUpdateScheduler = new BoundingBoxUpdateScheduler();
   private resetStyleSheet: CSSStyleSheet;
   private componentMounts: ComponentMount[] = [];
   private componentStyleMounts = new Map<Component, ComponentStyleMount>();
+
+  private async loadPreludeScripts(): Promise<void> {
+    const customElementTagNames: string[] = [];
+
+    const domWindow = this.domDocument.defaultView!;
+
+    // eslint-disable-next-line @typescript-eslint/unbound-method
+    const originalDefine = domWindow.customElements.define;
+    domWindow.customElements.define = function (...args) {
+      customElementTagNames.push(args[0]);
+      console.log("define", args);
+      originalDefine.apply(this, args);
+    };
+
+    const loadPreludeScript = (src: string): Promise<void> => {
+      return new Promise<void>((resolve, reject) => {
+        const script = this.domDocument.createElement("script");
+        script.type = "module";
+        script.src = this.editorState.resolveImageAssetURL(src);
+        script.addEventListener("load", () => resolve());
+        script.addEventListener("error", (e) => reject(e));
+        this.domDocument.head.append(script);
+      }).catch((e) => console.error(e));
+    };
+
+    const loadPreludeStyleSheet = (href: string): Promise<void> => {
+      return new Promise<void>((resolve, reject) => {
+        const link = this.domDocument.createElement("link");
+        link.rel = "stylesheet";
+        link.href = this.editorState.resolveImageAssetURL(href);
+        link.addEventListener("load", () => resolve());
+        link.addEventListener("error", (e) => reject(e));
+        this.domDocument.head.append(link);
+      }).catch((e) => console.error(e));
+    };
+
+    await Promise.all([
+      ...this.document.preludeStyleSheets.map((href) =>
+        loadPreludeStyleSheet(href)
+      ),
+      ...this.document.preludeScripts.map((src) => loadPreludeScript(src)),
+    ]);
+    await this.updateCustomElementThumbnails(customElementTagNames);
+  }
+
+  private async updateCustomElementThumbnails(
+    tagNames: string[]
+  ): Promise<void> {
+    const renderThumbnail = async (
+      tagName: string
+    ): Promise<LoadedCustomElement> => {
+      const elem = this.domDocument.createElement(tagName);
+      elem.append("Content");
+
+      const container = this.domDocument.createElement("div");
+      container.style.position = "absolute";
+      container.style.top = "-10000px";
+      container.style.left = "-10000px";
+      container.style.display = "flex";
+      container.style.fontFamily = "sans-serif";
+      container.append(elem);
+
+      this.domDocument.body.append(container);
+
+      await new Promise((resolve) => setTimeout(resolve, 100));
+
+      try {
+        const thumbnail = await captureDOM(elem, 512);
+        container.remove();
+        return {
+          tagName,
+          thumbnail,
+        };
+      } catch (e) {
+        console.error(e);
+        container.remove();
+        return {
+          tagName,
+        };
+      }
+    };
+
+    const elements = await Promise.all(tagNames.map(renderThumbnail));
+
+    runInAction(() => {
+      this.document.loadedCustomElements.replace(elements);
+    });
+  }
 }
