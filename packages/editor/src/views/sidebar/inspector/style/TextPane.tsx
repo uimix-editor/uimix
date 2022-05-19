@@ -24,6 +24,7 @@ import strikethroughIcon from "@iconify-icons/ic/outline-strikethrough-s";
 import underlineIcon from "@iconify-icons/ic/outline-format-underlined";
 import closeIcon from "@iconify-icons/ic/outline-close";
 import { StyleInspectorState } from "../../../../state/StyleInspectorState";
+import { useEditorState } from "../../../EditorStateContext";
 import { lengthPercentageEmptyUnits, lengthPercentageUnits } from "./Units";
 import {
   StyleColorInput,
@@ -83,6 +84,8 @@ function stripQuotes(value: string | undefined): string | undefined {
 export const TextPane: React.FC<{
   state: StyleInspectorState;
 }> = observer(function TextPane({ state }) {
+  const editorState = useEditorState();
+
   if (!state.textInstances.length) {
     return null;
   }
@@ -98,7 +101,7 @@ export const TextPane: React.FC<{
           title="font-family"
           value={state.props.fontFamily.value}
           placeholder={stripQuotes(state.props.fontFamily.computed)}
-          options={["Times", "Helvetica"].map((value) => ({ value }))}
+          options={editorState.fontFamilyOptions}
           onChange={state.props.fontFamily.onChange}
         />
         <Row11>

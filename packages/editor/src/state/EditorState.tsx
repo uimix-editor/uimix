@@ -48,6 +48,9 @@ export abstract class EditorState {
   }
 
   readonly googleFontFamilies = googleFonts.items.map((item) => item.family);
+  readonly fontFamilyOptions = this.googleFontFamilies.map((value) => ({
+    value,
+  }));
 
   @observable currentOutlineTab: "outline" | "assets" = "outline";
   @observable currentInspectorTab: "element" | "style" = "element";
