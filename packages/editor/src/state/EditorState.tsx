@@ -47,10 +47,18 @@ export abstract class EditorState {
     return assetPath;
   }
 
-  readonly googleFontFamilies = googleFonts.items.map((item) => item.family);
-  readonly fontFamilyOptions = this.googleFontFamilies.map((value) => ({
-    value,
+  readonly googleFontFamilies = new Set(
+    googleFonts.items.map((item) => item.family)
+  );
+  readonly fontFamilyOptions = googleFonts.items.map((item) => ({
+    value: item.family,
   }));
+
+  @computed get usedGoogleFonts(): string[] {
+    return [...this.document.usedFontFamilies].filter((font) =>
+      this.googleFontFamilies.has(font)
+    );
+  }
 
   @observable currentOutlineTab: "outline" | "assets" = "outline";
   @observable currentInspectorTab: "element" | "style" = "element";
