@@ -7,7 +7,12 @@ import { RootElement } from "./RootElement";
 import { StyleJSON } from "./Style";
 import { Text, TextJSON } from "./Text";
 import { TextInstance } from "./TextInstance";
-import { DefaultVariant, Variant, VariantJSON } from "./Variant";
+import {
+  BaseVariantJSON,
+  DefaultVariant,
+  Variant,
+  VariantJSON,
+} from "./Variant";
 
 export class VariantList extends TreeNode<never, VariantList, Variant> {
   constructor(component: Component) {
@@ -86,6 +91,7 @@ export class Component extends TreeNode<ComponentList, Component, never> {
     return {
       key: this.key,
       name: this.name,
+      defaultVariant: this.defaultVariant.toJSON(),
       variants: this.variants.children.map((variant) => variant.toJSON()),
       children: this.rootElement.children.map((child) => child.toJSON()),
       styles,
@@ -103,6 +109,8 @@ export class Component extends TreeNode<ComponentList, Component, never> {
     for (const variant of this.variants.children) {
       oldVariants.set(variant.key, variant);
     }
+
+    this.defaultVariant.loadJSON(json.defaultVariant);
 
     this.variants.clear();
     for (const variantJSON of json.variants) {
@@ -181,6 +189,7 @@ export class Component extends TreeNode<ComponentList, Component, never> {
 export interface ComponentJSON {
   key: string;
   name: string;
+  defaultVariant: BaseVariantJSON;
   variants: VariantJSON[];
   children: (ElementJSON | TextJSON)[];
   styles: Record<
