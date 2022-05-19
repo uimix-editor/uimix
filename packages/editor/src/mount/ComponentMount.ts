@@ -86,7 +86,7 @@ export class ComponentMount {
   readonly component: Component;
   readonly context: MountContext;
   readonly dom: HTMLDivElement;
-  private variantMounts: VariantMount[] = [];
+  variantMounts: VariantMount[] = [];
 
   private onStyleChange(): void {
     for (const mount of this.variantMounts) {

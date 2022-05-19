@@ -73,6 +73,14 @@ export class DocumentMount {
     fontLink.rel = "stylesheet";
     this.domDocument.head.append(fontLink);
 
+    this.domDocument.fonts.addEventListener("loadingdone", () => {
+      for (const componentMount of this.componentMounts) {
+        for (const variantMount of componentMount.variantMounts) {
+          variantMount.rootMount.updateBoundingBoxLater();
+        }
+      }
+    });
+
     this.disposers = [
       reaction(
         () => editorState.scroll.documentToViewport,
