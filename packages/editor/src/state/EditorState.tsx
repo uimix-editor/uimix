@@ -16,6 +16,7 @@ import { Variant } from "../models/Variant";
 import { ElementPicker } from "../mount/ElementPicker";
 import { snapThreshold } from "../views/viewport/Constants";
 import { IconBrowserState } from "../views/sidebar/outline/IconBrowserState";
+import { moveByPixels } from "../services/MoveByPixels";
 import { ElementInspectorState } from "./ElementInspectorState";
 import { VariantInspectorState } from "./VariantInspectorState";
 import { InsertMode } from "./InsertMode";
@@ -241,7 +242,29 @@ export abstract class EditorState {
         break;
     }
 
-    // TODO: arrow key movement
+    if (!isTextInputFocused()) {
+      const moveInstancesByPixels = (offset: Vec2) => {
+        for (const instance of this.document.selectedElementInstances) {
+          moveByPixels(instance, offset);
+        }
+        this.history.commitDebounced("Move Elements");
+      };
+
+      switch (e.key) {
+        case "ArrowLeft":
+          moveInstancesByPixels(new Vec2(-1, 0));
+          return true;
+        case "ArrowRight":
+          moveInstancesByPixels(new Vec2(1, 0));
+          return true;
+        case "ArrowUp":
+          moveInstancesByPixels(new Vec2(0, -1));
+          return true;
+        case "ArrowDown":
+          moveInstancesByPixels(new Vec2(0, 1));
+          return true;
+      }
+    }
 
     if (e.ctrlKey || e.metaKey || !isTextInputFocused()) {
       if (MenuItem.handleShortcut(this.getMainMenu(), e)) {
