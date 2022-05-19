@@ -147,6 +147,7 @@ export const InnerHTMLEditorBody: React.FC<{
         <Textarea
           ref={textareaRef}
           value={state.value}
+          placeholder="Inner HTML"
           onChange={state.onChangeValue}
         />
       </TextareaWrap>
