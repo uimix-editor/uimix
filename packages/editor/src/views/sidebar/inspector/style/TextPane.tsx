@@ -24,7 +24,7 @@ import strikethroughIcon from "@iconify-icons/ic/outline-strikethrough-s";
 import underlineIcon from "@iconify-icons/ic/outline-format-underlined";
 import closeIcon from "@iconify-icons/ic/outline-close";
 import { StyleInspectorState } from "../../../../state/StyleInspectorState";
-import { lengthPercentageUnits } from "./Units";
+import { lengthPercentageEmptyUnits, lengthPercentageUnits } from "./Units";
 import {
   StyleColorInput,
   StyleComboBox,
@@ -127,12 +127,12 @@ export const TextPane: React.FC<{
           />
           <StyleDimensionInput
             icon={lineSpacingIcon}
-            units={["", ...lengthPercentageUnits]}
+            units={lengthPercentageEmptyUnits}
             property={state.props.lineHeight}
           />
           <StyleDimensionInput
             icon={spaceBarIcon}
-            units={["", ...lengthPercentageUnits]}
+            units={lengthPercentageEmptyUnits}
             property={state.props.letterSpacing}
           />
         </Row111>

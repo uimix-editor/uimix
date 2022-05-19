@@ -39,6 +39,11 @@ export const styleKeys = [
   "borderBottomRightRadius",
   "borderBottomLeftRadius",
 
+  "alignSelf",
+  "flexGrow",
+  "flexShrink",
+  "flexBasis",
+
   "display",
   "paddingTop",
   "paddingRight",

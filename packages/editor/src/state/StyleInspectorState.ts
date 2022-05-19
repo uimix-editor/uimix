@@ -168,4 +168,19 @@ export class StyleInspectorState {
     }
     this.editorState.history.commit("Assign ID");
   });
+
+  @computed get computedParentDisplay(): string | undefined | typeof MIXED {
+    return sameOrMixed(
+      this.instances.map((i) => i.parent?.computedStyle.display)
+    );
+  }
+
+  @computed get computedParentFlexDirection():
+    | string
+    | undefined
+    | typeof MIXED {
+    return sameOrMixed(
+      this.instances.map((i) => i.parent?.computedStyle.flexDirection)
+    );
+  }
 }
