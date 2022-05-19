@@ -77,8 +77,8 @@ _:construction: - Not yet implemented_
   - [ ] Export React wrappers
   - [ ] Export TypeScript definitions
 - Importing
-  - [ ] Use components in the same file
-  - [ ] Import third-party Web Components
+  - [x] Use components in the same file
+  - [x] Import third-party Web Components
 - VS Code integration
   - [x] Macaron as a custom editor
 - Figma integration
