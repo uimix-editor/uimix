@@ -24,7 +24,7 @@ export interface ElementOptions extends TreeNodeOptions {
 export class Element extends TreeNode<Element, Element, Element | Text> {
   constructor(options: ElementOptions) {
     super(options);
-    this.tagName = options.tagName;
+    this._tagName = options.tagName;
     makeObservable(this);
   }
 
@@ -32,7 +32,11 @@ export class Element extends TreeNode<Element, Element, Element | Text> {
     return "element";
   }
 
-  readonly tagName: string;
+  get tagName(): string {
+    return this._tagName;
+  }
+
+  private readonly _tagName: string;
 
   get id(): string {
     return this.name;

@@ -13,6 +13,10 @@ export class RootElement extends Element {
     return true;
   }
 
+  get tagName(): string {
+    return this.component.name;
+  }
+
   private readonly _component: Component;
 
   get component(): Component {
