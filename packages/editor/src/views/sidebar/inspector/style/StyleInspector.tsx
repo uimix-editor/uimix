@@ -8,6 +8,7 @@ import { useEditorState } from "../../../EditorStateContext";
 import { BackgroundPane } from "./BackgroundPane";
 import { BorderPane } from "./BorderPane";
 import { EffectsPane } from "./EffectsPane";
+import { FlexItemPane } from "./FlexItemPane";
 import { ImagePane } from "./ImagePane";
 import { LayoutPane } from "./LayoutPane";
 import { PositionPane } from "./PositionPane";
@@ -43,6 +44,7 @@ export const StyleInspector: React.FC = observer(function StyleInspector() {
 
   return (
     <StyleInspectorWrap>
+      <FlexItemPane state={state} />
       <PositionPane state={state} />
       <SizePane state={state} />
       <LayoutPane state={state} />
