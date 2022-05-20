@@ -13,6 +13,7 @@ import {
   stringifyStyle,
   IDGenerator,
   layoutStyle,
+  effectStyle,
 } from "./util";
 
 export async function figmaToMacaron(
@@ -42,6 +43,7 @@ export async function figmaToMacaron(
         src: svgToDataURL(svgText),
         style: stringifyStyle({
           ...positionStyle(node, parentLayout, groupTopLeft),
+          ...effectStyle(node as BlendMixin),
         }),
       });
     } catch (error) {
@@ -65,6 +67,7 @@ export async function figmaToMacaron(
             src: dataURL,
             style: stringifyStyle({
               ...positionStyle(node, parentLayout, groupTopLeft),
+              ...effectStyle(node),
             }),
           });
         }
@@ -75,6 +78,7 @@ export async function figmaToMacaron(
         style: stringifyStyle({
           ...fillBorderStyle(node),
           ...positionStyle(node, parentLayout, groupTopLeft),
+          ...effectStyle(node),
         }),
       });
     }
@@ -86,6 +90,7 @@ export async function figmaToMacaron(
           style: stringifyStyle({
             ...positionStyle(node, parentLayout, groupTopLeft),
             ...textStyle(node),
+            ...effectStyle(node),
           }),
         },
         ...processCharacters(node.characters)
@@ -103,6 +108,7 @@ export async function figmaToMacaron(
             ...fillBorderStyle(node),
             ...layoutStyle(node),
             ...positionStyle(node, parentLayout, groupTopLeft),
+            ...effectStyle(node),
           }),
         },
         ...compact(

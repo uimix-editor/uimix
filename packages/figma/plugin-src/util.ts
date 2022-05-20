@@ -274,6 +274,12 @@ export function textStyle(node: TextNode): Style {
   return style;
 }
 
+export function effectStyle(node: BlendMixin): Style {
+  return {
+    opacity: node.opacity.toString(),
+  };
+}
+
 const vectorLikeTypes: SceneNode["type"][] = [
   "LINE",
   "ELLIPSE",
