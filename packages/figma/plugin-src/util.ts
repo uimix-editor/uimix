@@ -243,9 +243,10 @@ export function incrementAlphanumeric(str: string): string {
 
 export class IDGenerator {
   private ids = new Set<string>();
+  maxLength = 20;
 
   generate(text: string): string {
-    let id = generateIDFromText(text);
+    let id = generateIDFromText(text.slice(0, this.maxLength));
     while (this.ids.has(id)) {
       id = incrementAlphanumeric(id);
     }
