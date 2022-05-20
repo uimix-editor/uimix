@@ -1,5 +1,6 @@
 import { figmaToMacaron } from "./traverse";
 import { compact } from "lodash-es";
+import { toHtml } from "hast-util-to-html";
 
 figma.showUI(__html__, { themeColors: true, height: 300 });
 
@@ -17,6 +18,14 @@ figma.ui.onmessage = async (msg) => {
         )
       )
     );
-    console.log(macaronLayers);
+
+    const html = toHtml(macaronLayers);
+
+    console.log(html);
+
+    figma.ui.postMessage({
+      type: "copy",
+      html,
+    });
   }
 };

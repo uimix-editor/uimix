@@ -4,6 +4,26 @@ import logoSvg from "./logo.svg?raw";
 import Logo from "./Logo";
 import "./App.css";
 
+let htmlToCopy: string | undefined;
+
+document.addEventListener("copy", (e) => {
+  if (htmlToCopy) {
+    e.preventDefault();
+    e.clipboardData?.setData("text/html", htmlToCopy);
+    htmlToCopy = undefined;
+  }
+});
+
+window.addEventListener("message", (e) => {
+  const msg = e.data.pluginMessage;
+  if (msg.type === "copy") {
+    const html: string = msg.html;
+    console.log(html);
+    htmlToCopy = html;
+    document.execCommand("copy");
+  }
+});
+
 function App() {
   const onCopy = () => {
     parent.postMessage({ pluginMessage: { type: "copy" } }, "*");
