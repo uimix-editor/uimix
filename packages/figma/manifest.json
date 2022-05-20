@@ -1,9 +1,8 @@
 {
-  "name": "React Sample",
-  "id": "",
+  "name": "Macaron",
+  "id": "1109350946242254432",
   "api": "1.0.0",
-  "editorType": ["figma", "figjam"],
-  "permissions": [],
   "main": "dist/code.js",
+  "editorType": ["figma"],
   "ui": "dist/index.html"
 }
