@@ -11,13 +11,17 @@ import {
   svgToDataURL,
   textStyle,
   stringifyStyle,
+  IDGenerator,
 } from "./util";
 
 export async function figmaToMacaron(
   node: SceneNode,
+  idGenerator: IDGenerator,
   groupTopLeft: Vector = { x: 0, y: 0 }
 ): Promise<hast.Content | undefined> {
   // TODO: id from layer name
+
+  const id = idGenerator.generate(node.name);
 
   if (!node.visible) {
     // TODO: support visibility
@@ -32,6 +36,7 @@ export async function figmaToMacaron(
       // TODO: parse SVG and return svg tag
 
       return h("img", {
+        id,
         src: svgToDataURL(svgText),
         style: stringifyStyle({
           ...layoutStyle(node, groupTopLeft),
@@ -54,6 +59,7 @@ export async function figmaToMacaron(
             : undefined;
 
           return h("img", {
+            id,
             src: dataURL,
             style: stringifyStyle({
               ...layoutStyle(node, groupTopLeft),
@@ -63,6 +69,7 @@ export async function figmaToMacaron(
       }
 
       return h("div", {
+        id,
         style: stringifyStyle({
           ...fillBorderStyle(node),
           ...layoutStyle(node, groupTopLeft),
@@ -73,6 +80,7 @@ export async function figmaToMacaron(
       return h(
         "p",
         {
+          id,
           style: stringifyStyle({
             ...layoutStyle(node, groupTopLeft),
             ...textStyle(node),
@@ -85,13 +93,16 @@ export async function figmaToMacaron(
       return h(
         "div",
         {
+          id,
           style: stringifyStyle({
             ...fillBorderStyle(node),
             ...layoutStyle(node, groupTopLeft),
           }),
         },
         ...compact(
-          await Promise.all(node.children.map((child) => figmaToMacaron(child)))
+          await Promise.all(
+            node.children.map((child) => figmaToMacaron(child, idGenerator))
+          )
         )
       );
     }
@@ -99,7 +110,7 @@ export async function figmaToMacaron(
       return h(
         "div",
         {
-          tag: "div",
+          id,
           style: stringifyStyle({
             ...layoutStyle(node, groupTopLeft),
           }),
@@ -107,7 +118,7 @@ export async function figmaToMacaron(
         ...compact(
           await Promise.all(
             node.children.map((child) =>
-              figmaToMacaron(child, {
+              figmaToMacaron(child, idGenerator, {
                 x: node.x,
                 y: node.y,
               })

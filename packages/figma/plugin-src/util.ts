@@ -291,3 +291,36 @@ export function stringifyStyle(style: Style): string {
 
   return styleString;
 }
+
+export function generateIDFromText(name: string): string {
+  let id = name.replace(/[^a-zA-Z0-9]/g, "");
+  if (/^[0-9]/.exec(id)) {
+    id = `_${id}`;
+  }
+  return id;
+}
+
+export function incrementAlphanumeric(str: string): string {
+  const numMatches = /[1-9][0-9]*$/.exec(str);
+  if (numMatches) {
+    const numPart = numMatches[0];
+    const strPart = str.slice(0, str.length - numPart.length);
+
+    return `${strPart}${Number.parseInt(numPart) + 1}`;
+  }
+
+  return str + "1";
+}
+
+export class IDGenerator {
+  private ids = new Set<string>();
+
+  generate(text: string): string {
+    let id = generateIDFromText(text);
+    while (this.ids.has(id)) {
+      id = incrementAlphanumeric(id);
+    }
+    this.ids.add(id);
+    return id;
+  }
+}

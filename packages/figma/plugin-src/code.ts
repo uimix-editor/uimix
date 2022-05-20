@@ -1,6 +1,7 @@
 import { figmaToMacaron } from "./traverse";
 import { compact } from "lodash-es";
 import { toHtml } from "hast-util-to-html";
+import { IDGenerator } from "./util";
 
 figma.showUI(__html__, { themeColors: true, height: 300 });
 
@@ -11,10 +12,12 @@ figma.ui.onmessage = async (msg) => {
       return;
     }
 
+    const idGenerator = new IDGenerator();
+
     const macaronLayers = compact(
       await Promise.all(
         figma.currentPage.selection.map((node) =>
-          figmaToMacaron(node, { x: 0, y: 0 })
+          figmaToMacaron(node, idGenerator, { x: 0, y: 0 })
         )
       )
     );
