@@ -6,17 +6,17 @@
   "license": "MIT License",
   "author": "Figma",
   "scripts": {
-    "build": "npm run build:ui && npm run build:main -- --minify",
+    "build": "yarn run build:ui && yarn run build:main -- --minify",
     "build:main": "esbuild plugin-src/code.ts --bundle --outfile=dist/code.js",
     "build:ui": "npx vite build --minify esbuild --emptyOutDir=false",
-    "build:watch": "concurrently -n widget,iframe \"npm run build:main -- --watch\" \"npm run build:ui -- --watch\"",
-    "dev": "concurrently -n tsc,build,vite 'npm:tsc:watch' 'npm:build:watch' 'vite'",
+    "build:watch": "concurrently -n widget,iframe \"yarn run build:main -- --watch\" \"yarn run build:ui -- --watch\"",
+    "dev": "concurrently -n tsc,build,vite 'yarn:tsc:watch' 'yarn:build:watch' 'vite'",
     "format": "prettier --write .",
-    "test": "npm run tsc && npm run build",
-    "tsc": "npm run tsc:main && npm run tsc:ui",
+    "test": "yarn run tsc && yarn run build",
+    "tsc": "yarn run tsc:main && yarn run tsc:ui",
     "tsc:main": "tsc --noEmit -p plugin-src",
     "tsc:ui": "tsc --noEmit -p ui-src",
-    "tsc:watch": "concurrently -n widget,iframe \"npm run tsc:main -- --watch --preserveWatchOutput\" \"npm run tsc:ui -- --watch --preserveWatchOutput\""
+    "tsc:watch": "concurrently -n widget,iframe \"yarn run tsc:main -- --watch --preserveWatchOutput\" \"npm run tsc:ui -- --watch --preserveWatchOutput\""
   },
   "dependencies": {
     "react": "^18.1.0",
