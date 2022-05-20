@@ -19,20 +19,20 @@ window.addEventListener("message", (e) => {
     htmlToCopy = html;
     document.execCommand("copy");
 
-    postMesssageToPlugin({
+    postMessageToPlugin({
       type: "notify",
       data: "Copied to clipboard",
     });
   }
 });
 
-function postMesssageToPlugin(data: MessageToPlugin): void {
+function postMessageToPlugin(data: MessageToPlugin): void {
   parent.postMessage({ pluginMessage: data }, "*");
 }
 
 function App() {
   const onCopy = () => {
-    postMesssageToPlugin({ type: "copy" });
+    postMessageToPlugin({ type: "copy" });
   };
 
   return (
