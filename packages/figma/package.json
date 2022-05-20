@@ -18,6 +18,9 @@
     "tsc:watch": "concurrently -n widget,iframe \"yarn run tsc:main -- --watch --preserveWatchOutput\" \"npm run tsc:ui -- --watch --preserveWatchOutput\""
   },
   "dependencies": {
+    "@types/hast": "^2.3.4",
+    "csstype": "^3.1.0",
+    "hastscript": "^7.0.2",
     "react": "^18.1.0",
     "react-dom": "^18.1.0"
   },
