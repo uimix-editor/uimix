@@ -80,105 +80,32 @@ export function textAlign(align: TextNode["textAlignHorizontal"]): string {
   }
 }
 
+const fontWeightForName: Record<string, number> = {
+  thin: 100,
+  extralight: 200,
+  light: 300,
+  regular: 400,
+  medium: 500,
+  semibold: 600,
+  bold: 700,
+  extrabold: 800,
+  black: 900,
+};
+
 export function fontNameStyle(font: FontName): Style {
   const fontFamily = font.family;
-  let fontWeight = "400";
-  let fontStyle = "normal";
 
-  switch (font.style.toLowerCase()) {
-    case "black": {
-      fontWeight = "900";
-      break;
-    }
-    case "heavy": {
-      fontWeight = "800";
-      break;
-    }
-    case "bold": {
-      fontWeight = "700";
-      break;
-    }
-    case "semibold": {
-      fontWeight = "600";
-      break;
-    }
-    case "medium": {
-      fontWeight = "500";
-      break;
-    }
-    case "regular": {
-      fontWeight = "400";
-      break;
-    }
-    case "thin": {
-      fontWeight = "300";
-      break;
-    }
-    case "light": {
-      fontWeight = "200";
-      break;
-    }
-    case "ultralight": {
-      fontWeight = "100";
-      break;
-    }
-    case "extralight": {
-      fontWeight = "100";
-      break;
-    }
-    case "italic": {
-      fontWeight = "400";
-      fontStyle = "italic";
-      break;
-    }
-    case "ultralight italic": {
-      fontWeight = "100";
-      fontStyle = "italic";
-      break;
-    }
-    case "light italic": {
-      fontWeight = "200";
-      fontStyle = "italic";
-      break;
-    }
-    case "thin italic": {
-      fontWeight = "300";
-      fontStyle = "italic";
-      break;
-    }
-    case "regular italic": {
-      fontWeight = "400";
-      fontStyle = "italic";
-      break;
-    }
-    case "medium italic": {
-      fontWeight = "500";
-      fontStyle = "italic";
-      break;
-    }
-    case "semibold italic": {
-      fontWeight = "600";
-      fontStyle = "italic";
-      break;
-    }
-    case "bold italic": {
-      fontWeight = "700";
-      fontStyle = "italic";
-      break;
-    }
-    case "heavy italic": {
-      fontWeight = "800";
-      fontStyle = "italic";
-      break;
-    }
-    case "black italic": {
-      fontWeight = "900";
-      fontStyle = "italic";
-      break;
-    }
-  }
+  const style = font.style.toLowerCase();
+  const styleWithoutItalic = style.replace("italic", "").replace(/\s+/g, "");
 
-  return { fontFamily, fontWeight, fontStyle };
+  const fontWeight = fontWeightForName[styleWithoutItalic] ?? 400;
+  const italic = style.includes("italic");
+
+  return {
+    fontFamily,
+    fontWeight: fontWeight.toString(),
+    fontStyle: italic ? "italic" : undefined,
+  };
 }
 
 export function solidPaintToHex(solidPaint: SolidPaint): string {
