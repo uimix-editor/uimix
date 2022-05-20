@@ -4,7 +4,6 @@
   "private": true,
   "description": "Figma plugin for Macaron",
   "license": "MIT License",
-  "author": "Figma",
   "scripts": {
     "build": "yarn run build:ui && yarn run build:main -- --minify",
     "build:main": "esbuild plugin-src/code.ts --bundle --outfile=dist/code.js",
