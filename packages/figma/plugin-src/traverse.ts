@@ -101,10 +101,7 @@ export async function figmaToMacaron(
           id,
           style: stringifyStyle({
             ...fillBorderStyle(node),
-            ...layoutStyle(
-              node,
-              0 // TODO: border width
-            ),
+            ...layoutStyle(node),
             ...positionStyle(node, parentLayout, groupTopLeft),
           }),
         },

@@ -80,7 +80,7 @@ export function positionStyle(
   return style;
 }
 
-export function layoutStyle(node: BaseFrameMixin, borderWidth: number): Style {
+export function layoutStyle(node: BaseFrameMixin): Style {
   const style: Style = {};
 
   if (node.layoutMode === "NONE") {
@@ -90,10 +90,12 @@ export function layoutStyle(node: BaseFrameMixin, borderWidth: number): Style {
   style.display = "flex";
   style.flexDirection = node.layoutMode === "VERTICAL" ? "column" : "row";
   style.columnGap = style.rowGap = node.itemSpacing + "px";
-  style.paddingLeft = Math.max(0, node.paddingLeft - borderWidth) + "px";
-  style.paddingRight = Math.max(0, node.paddingRight - borderWidth) + "px";
-  style.paddingTop = Math.max(0, node.paddingTop - borderWidth) + "px";
-  style.paddingBottom = Math.max(0, node.paddingBottom - borderWidth) + "px";
+  style.paddingLeft = Math.max(0, node.paddingLeft - node.strokeWeight) + "px";
+  style.paddingRight =
+    Math.max(0, node.paddingRight - node.strokeWeight) + "px";
+  style.paddingTop = Math.max(0, node.paddingTop - node.strokeWeight) + "px";
+  style.paddingBottom =
+    Math.max(0, node.paddingBottom - node.strokeWeight) + "px";
 
   style.justifyContent = (() => {
     switch (node.primaryAxisAlignItems) {
