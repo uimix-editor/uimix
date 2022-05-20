@@ -5,6 +5,8 @@ import {
 import { computed, makeObservable, observable } from "mobx";
 import type * as hast from "hast";
 import { h } from "hastscript";
+import { isVoidElement } from "@seanchas116/paintkit/src/util/HTMLTagCategory";
+import { ValidationResult } from "@seanchas116/paintkit/src/util/ValidationResult";
 import { Component } from "./Component";
 import { Text, TextJSON } from "./Text";
 
@@ -33,6 +35,20 @@ export class Element extends TreeNode<Element, Element, Element | Text> {
   }
 
   readonly tagName: string;
+
+  get canHaveChildren(): ValidationResult {
+    const superResult = super.canHaveChildren;
+    if (!superResult.value) {
+      return superResult;
+    }
+    if (isVoidElement(this.tagName)) {
+      return {
+        value: false,
+        error: "void element cannot have children",
+      };
+    }
+    return { value: true };
+  }
 
   get id(): string {
     return this.name;

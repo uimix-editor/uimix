@@ -5,13 +5,21 @@ export function changeTagName(element: Element, newTagName: string): void {
   if (!element.parent) {
     return;
   }
+  const next = element.nextSibling;
+  const parent = element.parent;
 
   const newElement = new Element({ tagName: newTagName });
   newElement.setID(element.id);
   newElement.attrs.replace(element.attrs);
 
-  for (const child of element.children) {
-    newElement.append(child);
+  if (newElement.canHaveChildren.value) {
+    for (const child of element.children) {
+      newElement.append(child);
+    }
+  } else {
+    for (const child of element.children) {
+      parent.insertBefore(child, next);
+    }
   }
 
   for (const variant of element.component?.allVariants ?? []) {
@@ -24,8 +32,6 @@ export function changeTagName(element: Element, newTagName: string): void {
     newInstance.style.loadJSON(instance.style.toJSON());
   }
 
-  const next = element.nextSibling;
-  const parent = element.parent;
   element.remove();
   parent.insertBefore(newElement, next);
 }

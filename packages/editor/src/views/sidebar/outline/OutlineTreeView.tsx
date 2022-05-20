@@ -235,7 +235,7 @@ class ElementItem extends TreeViewItem {
     return this.instance.collapsed;
   }
   get showsCollapseButton(): boolean {
-    return true;
+    return this.instance.element.canHaveChildren.value;
   }
 
   deselect(): void {
@@ -297,7 +297,10 @@ class ElementItem extends TreeViewItem {
   }
 
   canDropData(dataTransfer: DataTransfer) {
-    return dataTransfer.types.includes(NODE_DRAG_MIME);
+    return (
+      this.instance.element.canHaveChildren.value &&
+      dataTransfer.types.includes(NODE_DRAG_MIME)
+    );
   }
 
   handleDrop(event: React.DragEvent, before: TreeViewItem | undefined) {
