@@ -1,4 +1,3 @@
-import { assertNonNull } from "@seanchas116/paintkit/src/util/Assert";
 import { Rect, Vec2 } from "paintvec";
 import { Component } from "../../../models/Component";
 import { Element } from "../../../models/Element";
