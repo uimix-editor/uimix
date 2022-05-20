@@ -23,6 +23,7 @@ import { ComboBox } from "@seanchas116/paintkit/src/components/ComboBox";
 import strikethroughIcon from "@iconify-icons/ic/outline-strikethrough-s";
 import underlineIcon from "@iconify-icons/ic/outline-format-underlined";
 import closeIcon from "@iconify-icons/ic/outline-close";
+import { stripQuotes } from "@seanchas116/paintkit/src/util/String";
 import { StyleInspectorState } from "../../../../state/StyleInspectorState";
 import { useEditorState } from "../../../EditorStateContext";
 import { lengthPercentageEmptyUnits, lengthPercentageUnits } from "./Units";
@@ -86,13 +87,6 @@ const fontWeightOptions = [
   { value: "900", text: "900" },
 ];
 
-function stripQuotes(value: string | undefined): string | undefined {
-  if (value) {
-    return value.replace(/^['"]|['"]$/g, "");
-  }
-  return value;
-}
-
 export const TextPane: React.FC<{
   state: StyleInspectorState;
 }> = observer(function TextPane({ state }) {
@@ -112,7 +106,7 @@ export const TextPane: React.FC<{
           icon={fontDownloadIcon}
           title="font-family"
           value={state.props.fontFamily.value}
-          placeholder={stripQuotes(state.props.fontFamily.computed)}
+          placeholder={stripQuotes(state.props.fontFamily.computed ?? "")}
           options={editorState.fontFamilyOptions}
           onChange={state.props.fontFamily.onChange}
         />

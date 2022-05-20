@@ -247,16 +247,9 @@ export class ElementInstance {
 
   @computed get usedFontFamilies(): Set<string> {
     const result = new Set<string>();
-
-    const fontFamily = this.computedStyle.fontFamily;
-    if (fontFamily) {
-      const families = fontFamily.split(",");
-      for (const family of families) {
-        const unquoted = family.trim().replace(/^['"]|['"]$/g, "");
-        result.add(unquoted);
-      }
+    for (const family of this.computedStyle.usedFontFamilies) {
+      result.add(family);
     }
-
     for (const child of this.children) {
       if (child.type === "element") {
         for (const family of child.usedFontFamilies) {
@@ -264,7 +257,6 @@ export class ElementInstance {
         }
       }
     }
-
     return result;
   }
 }
