@@ -246,7 +246,7 @@ export class IDGenerator {
   maxLength = 20;
 
   generate(text: string): string {
-    let id = generateIDFromText(text.slice(0, this.maxLength));
+    let id = generateIDFromText(text).slice(0, this.maxLength);
     while (this.ids.has(id)) {
       id = incrementAlphanumeric(id);
     }
