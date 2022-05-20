@@ -1,7 +1,4 @@
 import React, { useRef } from "react";
-import logoPng from "./logo.png";
-import logoSvg from "./logo.svg?raw";
-import Logo from "./Logo";
 import "./App.css";
 
 let htmlToCopy: string | undefined;
@@ -18,7 +15,6 @@ window.addEventListener("message", (e) => {
   const msg = e.data.pluginMessage;
   if (msg.type === "copy") {
     const html: string = msg.html;
-    console.log(html);
     htmlToCopy = html;
     document.execCommand("copy");
   }

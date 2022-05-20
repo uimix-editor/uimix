@@ -21,8 +21,6 @@ figma.ui.onmessage = async (msg) => {
 
     const html = toHtml(macaronLayers);
 
-    console.log(html);
-
     figma.ui.postMessage({
       type: "copy",
       html,
