@@ -74,6 +74,18 @@ const textDecorationOptions = [
   },
 ];
 
+const fontWeightOptions = [
+  { value: "100", text: "100" },
+  { value: "200", text: "200" },
+  { value: "300", text: "300" },
+  { value: "400", text: "400 (normal)" },
+  { value: "500", text: "500" },
+  { value: "600", text: "600" },
+  { value: "700", text: "700 (bold)" },
+  { value: "800", text: "800" },
+  { value: "900", text: "900" },
+];
+
 function stripQuotes(value: string | undefined): string | undefined {
   if (value) {
     return value.replace(/^['"]|['"]$/g, "");
@@ -107,17 +119,7 @@ export const TextPane: React.FC<{
         <Row11>
           <StyleComboBox
             icon={lineWeightIcon}
-            options={[
-              { value: "100", text: "100" },
-              { value: "200", text: "200" },
-              { value: "300", text: "300" },
-              { value: "400", text: "400 (normal)" },
-              { value: "500", text: "500" },
-              { value: "600", text: "600" },
-              { value: "700", text: "700 (bold)" },
-              { value: "800", text: "800" },
-              { value: "900", text: "900" },
-            ]}
+            options={fontWeightOptions}
             property={state.props.fontWeight}
           />
           <StyleColorInput property={state.props.color} />
