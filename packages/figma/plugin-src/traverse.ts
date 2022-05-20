@@ -20,7 +20,7 @@ import {
 export async function figmaToMacaron(
   idGenerator: IDGenerator,
   node: SceneNode,
-  parentLayout: BaseFrameMixin["layoutMode"],
+  parentLayout: BaseFrameMixin["layoutMode"] | undefined,
   groupTopLeft: Vector = { x: 0, y: 0 }
 ): Promise<hast.Content | undefined> {
   // TODO: id from layer name

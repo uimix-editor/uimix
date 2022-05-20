@@ -5,7 +5,7 @@ export type Style = Partial<Record<keyof CSS.Properties, string>>;
 
 export function positionStyle(
   node: SceneNode,
-  parentLayout: BaseFrameMixin["layoutMode"],
+  parentLayout: BaseFrameMixin["layoutMode"] | undefined,
   groupTopLeft: { x: number; y: number } = { x: 0, y: 0 }
 ): Style {
   const style: Style = {};
