@@ -10,6 +10,7 @@ import {
   processCharacters,
   svgToDataURL,
   textStyle,
+  stringifyStyle,
 } from "./util";
 
 export async function figmaToMacaron(
@@ -27,9 +28,9 @@ export async function figmaToMacaron(
 
       return h("img", {
         src: svgToDataURL(svgText),
-        style: {
+        style: stringifyStyle({
           ...layoutStyle(node, groupTopLeft),
-        },
+        }),
       });
     } catch (error) {
       console.error(`error exporting ${node.name} to SVG`);
@@ -49,28 +50,28 @@ export async function figmaToMacaron(
 
           return h("img", {
             src: dataURL,
-            style: {
+            style: stringifyStyle({
               ...layoutStyle(node, groupTopLeft),
-            },
+            }),
           });
         }
       }
 
       return h("div", {
-        style: {
+        style: stringifyStyle({
           ...fillBorderStyle(node),
           ...layoutStyle(node, groupTopLeft),
-        },
+        }),
       });
     }
     case "TEXT": {
       return h(
         "p",
         {
-          style: {
+          style: stringifyStyle({
             ...layoutStyle(node, groupTopLeft),
             ...textStyle(node),
-          },
+          }),
         },
         ...processCharacters(node.characters)
       );
@@ -79,10 +80,10 @@ export async function figmaToMacaron(
       return h(
         "div",
         {
-          style: {
+          style: stringifyStyle({
             ...fillBorderStyle(node),
             ...layoutStyle(node, groupTopLeft),
-          },
+          }),
         },
         ...compact(
           await Promise.all(node.children.map((child) => figmaToMacaron(child)))
@@ -94,9 +95,9 @@ export async function figmaToMacaron(
         "div",
         {
           tag: "div",
-          style: {
+          style: stringifyStyle({
             ...layoutStyle(node, groupTopLeft),
-          },
+          }),
         },
         ...compact(
           await Promise.all(

@@ -282,3 +282,11 @@ export function imageToDataURL(data: Uint8Array): string | undefined {
     return undefined;
   }
 }
+
+export function stringifyStyle(style: Style): string {
+  const styleString = Object.entries(style)
+    .map(([key, value]) => (value != null ? `${key}: ${value};` : ""))
+    .join("");
+
+  return styleString;
+}
