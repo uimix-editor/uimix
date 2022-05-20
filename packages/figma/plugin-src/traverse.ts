@@ -1,20 +1,21 @@
 import { compact } from "lodash";
-import type * as CSS from "csstype";
 import type * as hast from "hast";
 import { h } from "hastscript";
 import {
-  fillBorderStyle,
   imageToDataURL,
   isVectorLikeNode,
-  positionStyle,
   processCharacters,
   svgToDataURL,
-  textStyle,
-  stringifyStyle,
   IDGenerator,
-  layoutStyle,
-  effectStyle,
 } from "./util";
+import {
+  stringifyStyle,
+  positionStyle,
+  effectStyle,
+  fillBorderStyle,
+  textStyle,
+  layoutStyle,
+} from "./style";
 
 export async function figmaToMacaron(
   idGenerator: IDGenerator,
