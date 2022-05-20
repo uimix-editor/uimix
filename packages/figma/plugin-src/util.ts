@@ -297,7 +297,7 @@ export function generateIDFromText(name: string): string {
   if (/^[0-9]/.exec(id)) {
     id = `_${id}`;
   }
-  return id;
+  return id.toLowerCase();
 }
 
 export function incrementAlphanumeric(str: string): string {
