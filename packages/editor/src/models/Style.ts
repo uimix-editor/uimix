@@ -1,7 +1,7 @@
 import { MIXED, sameOrMixed } from "@seanchas116/paintkit/src/util/Mixed";
 import { stripQuotes } from "@seanchas116/paintkit/src/util/String";
 import { camelCase, kebabCase } from "lodash-es";
-import { computed, makeObservable, observable } from "mobx";
+import { makeObservable, observable } from "mobx";
 import * as postcss from "postcss";
 
 export const textStyleKeys = [
