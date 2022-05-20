@@ -19,6 +19,11 @@ export async function figmaToMacaron(
 ): Promise<hast.Content | undefined> {
   // TODO: id from layer name
 
+  if (!node.visible) {
+    // TODO: support visibility
+    return undefined;
+  }
+
   if (isVectorLikeNode(node)) {
     try {
       const svg = await node.exportAsync({ format: "SVG" });

@@ -1,6 +1,7 @@
 import type * as CSS from "csstype";
 import type * as hast from "hast";
 import { h } from "hastscript";
+import { Buffer } from "buffer";
 
 const lineBreakRegExp = /\r\n|[\n\r\u2028\u2029\u0085]/;
 
