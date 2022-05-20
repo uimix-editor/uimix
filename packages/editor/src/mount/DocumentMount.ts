@@ -189,6 +189,12 @@ export class DocumentMount {
   private componentMounts: ComponentMount[] = [];
   private componentStyleMounts = new Map<Component, ComponentStyleMount>();
 
+  @computed get usedGoogleFonts(): string[] {
+    return [...this.document.usedFontFamilies].filter((font) =>
+      this.editorState.googleFontFamilies.has(font)
+    );
+  }
+
   private async loadPreludeScripts(): Promise<void> {
     const customElementTagNames: string[] = [];
 
@@ -275,11 +281,5 @@ export class DocumentMount {
     runInAction(() => {
       this.document.loadedCustomElements.replace(elements);
     });
-  }
-
-  @computed get usedGoogleFonts(): string[] {
-    return [...this.document.usedFontFamilies].filter((font) =>
-      this.editorState.googleFontFamilies.has(font)
-    );
   }
 }
