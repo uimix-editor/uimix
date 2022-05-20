@@ -148,9 +148,11 @@ export function textStyle(node: TextNode): Style {
   }
 
   if (node.lineHeight !== figma.mixed && node.lineHeight.unit !== "AUTO") {
-    style.lineHeight = `${node.lineHeight.value}${
-      node.lineHeight.unit === "PERCENT" ? "%" : "px"
-    }`;
+    if (node.lineHeight.unit === "PERCENT") {
+      style.lineHeight = `${node.lineHeight.value / 100}`;
+    } else {
+      style.lineHeight = `${node.lineHeight.value}px`;
+    }
   }
 
   const { letterSpacing } = node;
