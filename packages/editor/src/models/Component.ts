@@ -25,8 +25,9 @@ export class VariantList extends TreeNode<never, VariantList, Variant> {
 export class Component extends TreeNode<ComponentList, Component, never> {
   constructor(key?: string) {
     super({ key });
-    this.rename("my-component");
     makeObservable(this);
+    this.rename("my-component");
+    this.defaultVariant.rootInstance.style.display = "block";
   }
 
   get document(): Document | undefined {

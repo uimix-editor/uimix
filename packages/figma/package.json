@@ -1,0 +1,41 @@
+{
+  "name": "@macaron-app/figma-plugin",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Figma plugin for Macaron",
+  "license": "MIT License",
+  "scripts": {
+    "build": "yarn run build:ui && yarn run build:main -- --minify",
+    "build:main": "esbuild plugin-src/code.ts --bundle --outfile=dist/code.js",
+    "build:ui": "npx vite build --minify esbuild --emptyOutDir=false",
+    "build:watch": "concurrently -n widget,iframe \"yarn run build:main -- --watch\" \"yarn run build:ui -- --watch\"",
+    "dev": "concurrently -n tsc,build,vite 'yarn:tsc:watch' 'yarn:build:watch' 'vite'",
+    "format": "prettier --write .",
+    "test": "yarn run tsc && yarn run build",
+    "tsc": "yarn run tsc:main && yarn run tsc:ui",
+    "tsc:main": "tsc --noEmit -p plugin-src",
+    "tsc:ui": "tsc --noEmit -p ui-src",
+    "tsc:watch": "concurrently -n widget,iframe \"yarn run tsc:main -- --watch --preserveWatchOutput\" \"npm run tsc:ui -- --watch --preserveWatchOutput\""
+  },
+  "dependencies": {
+    "@types/hast": "^2.3.4",
+    "buffer": "^6.0.3",
+    "csstype": "^3.1.0",
+    "hastscript": "^7.0.2",
+    "react": "^18.1.0",
+    "react-dom": "^18.1.0"
+  },
+  "devDependencies": {
+    "@figma/plugin-typings": "*",
+    "@types/react": "^18.0.9",
+    "@types/react-dom": "^18.0.4",
+    "@vitejs/plugin-react-refresh": "^1.3.1",
+    "concurrently": "^7.2.0",
+    "esbuild": "^0.14.39",
+    "prettier": "^2.6.2",
+    "typescript": "^4.6.4",
+    "vite": "^2.9.9",
+    "vite-plugin-singlefile": "^0.9.0",
+    "vite-svg-loader": "^3.3.0"
+  }
+}

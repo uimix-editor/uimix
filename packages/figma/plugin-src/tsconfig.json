@@ -1,0 +1,13 @@
+{
+  "compilerOptions": {
+    "target": "es6",
+    "lib": ["es6"],
+    "strict": true,
+    "moduleResolution": "node",
+    "skipLibCheck": true,
+    "typeRoots": [
+      "../../../node_modules/@figma",
+      "../../../node_modules/@types"
+    ]
+  }
+}
