@@ -1,0 +1,9 @@
+{
+  "name": "React Sample",
+  "id": "",
+  "api": "1.0.0",
+  "editorType": ["figma", "figjam"],
+  "permissions": [],
+  "main": "dist/code.js",
+  "ui": "dist/index.html"
+}
