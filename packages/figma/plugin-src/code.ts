@@ -17,7 +17,7 @@ figma.ui.onmessage = async (msg) => {
     const macaronLayers = compact(
       await Promise.all(
         figma.currentPage.selection.map((node) =>
-          figmaToMacaron(node, idGenerator, { x: 0, y: 0 })
+          figmaToMacaron(idGenerator, node, "NONE", { x: 0, y: 0 })
         )
       )
     );

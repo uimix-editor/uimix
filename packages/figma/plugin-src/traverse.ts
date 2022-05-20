@@ -6,17 +6,19 @@ import {
   fillBorderStyle,
   imageToDataURL,
   isVectorLikeNode,
-  layoutStyle,
+  positionStyle,
   processCharacters,
   svgToDataURL,
   textStyle,
   stringifyStyle,
   IDGenerator,
+  layoutStyle,
 } from "./util";
 
 export async function figmaToMacaron(
-  node: SceneNode,
   idGenerator: IDGenerator,
+  node: SceneNode,
+  parentLayout: BaseFrameMixin["layoutMode"],
   groupTopLeft: Vector = { x: 0, y: 0 }
 ): Promise<hast.Content | undefined> {
   // TODO: id from layer name
@@ -39,7 +41,7 @@ export async function figmaToMacaron(
         id,
         src: svgToDataURL(svgText),
         style: stringifyStyle({
-          ...layoutStyle(node, groupTopLeft),
+          ...positionStyle(node, parentLayout, groupTopLeft),
         }),
       });
     } catch (error) {
@@ -62,7 +64,7 @@ export async function figmaToMacaron(
             id,
             src: dataURL,
             style: stringifyStyle({
-              ...layoutStyle(node, groupTopLeft),
+              ...positionStyle(node, parentLayout, groupTopLeft),
             }),
           });
         }
@@ -72,7 +74,7 @@ export async function figmaToMacaron(
         id,
         style: stringifyStyle({
           ...fillBorderStyle(node),
-          ...layoutStyle(node, groupTopLeft),
+          ...positionStyle(node, parentLayout, groupTopLeft),
         }),
       });
     }
@@ -82,7 +84,7 @@ export async function figmaToMacaron(
         {
           id,
           style: stringifyStyle({
-            ...layoutStyle(node, groupTopLeft),
+            ...positionStyle(node, parentLayout, groupTopLeft),
             ...textStyle(node),
           }),
         },
@@ -99,12 +101,18 @@ export async function figmaToMacaron(
           id,
           style: stringifyStyle({
             ...fillBorderStyle(node),
-            ...layoutStyle(node, groupTopLeft),
+            ...layoutStyle(
+              node,
+              0 // TODO: border width
+            ),
+            ...positionStyle(node, parentLayout, groupTopLeft),
           }),
         },
         ...compact(
           await Promise.all(
-            node.children.map((child) => figmaToMacaron(child, idGenerator))
+            node.children.map((child) =>
+              figmaToMacaron(idGenerator, child, node.layoutMode)
+            )
           )
         )
       );
@@ -115,13 +123,13 @@ export async function figmaToMacaron(
         {
           id,
           style: stringifyStyle({
-            ...layoutStyle(node, groupTopLeft),
+            ...positionStyle(node, parentLayout, groupTopLeft),
           }),
         },
         ...compact(
           await Promise.all(
             node.children.map((child) =>
-              figmaToMacaron(child, idGenerator, {
+              figmaToMacaron(idGenerator, child, "NONE", {
                 x: node.x,
                 y: node.y,
               })

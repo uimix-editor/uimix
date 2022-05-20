@@ -22,14 +22,119 @@ export function processCharacters(characters: string): hast.Content[] {
 
 export type Style = Partial<Record<keyof CSS.Properties, string>>;
 
-export function layoutStyle(node: SceneNode, groupTopLeft: Vector): Style {
-  return {
-    position: "absolute",
-    left: `${node.x - groupTopLeft.x}px`,
-    top: `${node.y - groupTopLeft.y}px`,
-    width: `${node.width}px`,
-    height: `${node.height}px`,
-  };
+export function positionStyle(
+  node: SceneNode,
+  parentLayout: BaseFrameMixin["layoutMode"],
+  groupTopLeft: { x: number; y: number } = { x: 0, y: 0 }
+): Style {
+  const style: Style = {};
+
+  // TODO: more constraints
+  if (parentLayout === "NONE") {
+    style.position = "absolute";
+    style.left = `${node.x - groupTopLeft.x}px`;
+    style.top = `${node.y - groupTopLeft.y}px`;
+  } else {
+    style.position = "relative";
+  }
+
+  style.width = `${node.width}px`;
+  style.height = `${node.height}px`;
+
+  if ("layoutGrow" in node) {
+    if (parentLayout === "VERTICAL") {
+      if (node.layoutGrow) {
+        style.flexGrow = "1";
+        style.height = undefined;
+      }
+      if (node.layoutAlign === "STRETCH") {
+        style.alignSelf = "stretch";
+        style.width = undefined;
+      }
+    } else if (parentLayout === "HORIZONTAL") {
+      if (node.layoutGrow) {
+        style.flexGrow = "1";
+        style.width = undefined;
+      }
+      if (node.layoutAlign === "STRETCH") {
+        style.alignSelf = "stretch";
+        style.height = undefined;
+      }
+    }
+  }
+
+  if (node.type === "TEXT") {
+    switch (node.textAutoResize) {
+      case "WIDTH_AND_HEIGHT":
+        style.width = undefined;
+        style.height = undefined;
+        break;
+      case "HEIGHT":
+        style.height = undefined;
+        break;
+      case "NONE":
+        break;
+    }
+  }
+
+  return style;
+}
+
+export function layoutStyle(node: BaseFrameMixin, borderWidth: number): Style {
+  const style: Style = {};
+
+  if (node.layoutMode === "NONE") {
+    return {};
+  }
+
+  style.display = "flex";
+  style.flexDirection = node.layoutMode === "VERTICAL" ? "column" : "row";
+  style.columnGap = style.rowGap = node.itemSpacing + "px";
+  style.paddingLeft = Math.max(0, node.paddingLeft - borderWidth) + "px";
+  style.paddingRight = Math.max(0, node.paddingRight - borderWidth) + "px";
+  style.paddingTop = Math.max(0, node.paddingTop - borderWidth) + "px";
+  style.paddingBottom = Math.max(0, node.paddingBottom - borderWidth) + "px";
+
+  style.justifyContent = (() => {
+    switch (node.primaryAxisAlignItems) {
+      case "CENTER":
+        return "center";
+      case "MAX":
+        return "flex-end";
+      case "MIN":
+        return "flex-start";
+      case "SPACE_BETWEEN":
+        return "space-between";
+    }
+  })();
+  style.alignItems = (() => {
+    switch (node.counterAxisAlignItems) {
+      case "CENTER":
+        return "center";
+      case "MAX":
+        return "flex-end";
+      case "MIN":
+        return "flex-start";
+    }
+  })();
+
+  if (node.layoutMode === "VERTICAL") {
+    if (node.primaryAxisSizingMode == "AUTO") {
+      style.height = "fit-content";
+    }
+    if (node.counterAxisSizingMode == "AUTO") {
+      style.width = "fit-content";
+    }
+  } else {
+    if (node.primaryAxisSizingMode == "AUTO") {
+      style.width = "fit-content";
+    }
+    if (node.counterAxisSizingMode == "AUTO") {
+      style.height = "fit-content";
+    }
+  }
+
+  return style;
 }
 
 export function fillBorderStyle(
