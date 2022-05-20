@@ -7,7 +7,7 @@ exports[`cli > compiles 1`] = `
 
     const style = \`
     :host {
-      font-family: Helvetica;
+      font-family: Inter;
     }
     #heading {
       color: #ff0000;
@@ -33,14 +33,14 @@ exports[`cli > compiles 1`] = `
       )}\\") left top / cover;
     }
     :host(:hover) {
-      font-family: Menlo;
+      font-family: Inconsolata;
     }
     :host(:hover) #heading {
       color: #0000ff;
     }
     @media (max-width: 768px) {
       :host {
-        font-family: Avenir Next;
+        font-family: Montserrat;
       }
       #heading {
         color: #008000;
@@ -136,7 +136,7 @@ exports[`cli > compiles glob 1`] = `
 
     const style = \`
     :host {
-      font-family: Helvetica;
+      font-family: Inter;
     }
     #heading {
       color: #ff0000;
@@ -162,14 +162,14 @@ exports[`cli > compiles glob 1`] = `
       )}\\") left top / cover;
     }
     :host(:hover) {
-      font-family: Menlo;
+      font-family: Inconsolata;
     }
     :host(:hover) #heading {
       color: #0000ff;
     }
     @media (max-width: 768px) {
       :host {
-        font-family: Avenir Next;
+        font-family: Montserrat;
       }
       #heading {
         color: #008000;
