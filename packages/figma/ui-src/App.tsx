@@ -21,7 +21,7 @@ window.addEventListener("message", (e) => {
 
     postMessageToPlugin({
       type: "notify",
-      data: "Copied to clipboard",
+      data: "Copied to clipboard. Paste in Macaron",
     });
   }
 });
