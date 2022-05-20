@@ -23,7 +23,9 @@ import { ComboBox } from "@seanchas116/paintkit/src/components/ComboBox";
 import strikethroughIcon from "@iconify-icons/ic/outline-strikethrough-s";
 import underlineIcon from "@iconify-icons/ic/outline-format-underlined";
 import closeIcon from "@iconify-icons/ic/outline-close";
+import { stripQuotes } from "@seanchas116/paintkit/src/util/String";
 import { StyleInspectorState } from "../../../../state/StyleInspectorState";
+import { useEditorState } from "../../../EditorStateContext";
 import { lengthPercentageEmptyUnits, lengthPercentageUnits } from "./Units";
 import {
   StyleColorInput,
@@ -73,16 +75,23 @@ const textDecorationOptions = [
   },
 ];
 
-function stripQuotes(value: string | undefined): string | undefined {
-  if (value) {
-    return value.replace(/^['"]|['"]$/g, "");
-  }
-  return value;
-}
+const fontWeightOptions = [
+  { value: "100", text: "100" },
+  { value: "200", text: "200" },
+  { value: "300", text: "300" },
+  { value: "400", text: "400 (normal)" },
+  { value: "500", text: "500" },
+  { value: "600", text: "600" },
+  { value: "700", text: "700 (bold)" },
+  { value: "800", text: "800" },
+  { value: "900", text: "900" },
+];
 
 export const TextPane: React.FC<{
   state: StyleInspectorState;
 }> = observer(function TextPane({ state }) {
+  const editorState = useEditorState();
+
   if (!state.textInstances.length) {
     return null;
   }
@@ -97,24 +106,14 @@ export const TextPane: React.FC<{
           icon={fontDownloadIcon}
           title="font-family"
           value={state.props.fontFamily.value}
-          placeholder={stripQuotes(state.props.fontFamily.computed)}
-          options={["Times", "Helvetica"].map((value) => ({ value }))}
+          placeholder={stripQuotes(state.props.fontFamily.computed ?? "")}
+          options={editorState.fontFamilyOptions}
           onChange={state.props.fontFamily.onChange}
         />
         <Row11>
           <StyleComboBox
             icon={lineWeightIcon}
-            options={[
-              { value: "100", text: "100" },
-              { value: "200", text: "200" },
-              { value: "300", text: "300" },
-              { value: "400", text: "400 (normal)" },
-              { value: "500", text: "500" },
-              { value: "600", text: "600" },
-              { value: "700", text: "700 (bold)" },
-              { value: "800", text: "800" },
-              { value: "900", text: "900" },
-            ]}
+            options={fontWeightOptions}
             property={state.props.fontWeight}
           />
           <StyleColorInput property={state.props.color} />

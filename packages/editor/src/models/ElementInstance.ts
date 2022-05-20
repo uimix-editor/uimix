@@ -244,6 +244,21 @@ export class ElementInstance {
     const children = instancesFromHTML(innerHTML);
     this.element.replaceChildren(children.map((i) => i.node));
   }
+
+  @computed get usedFontFamilies(): Set<string> {
+    const result = new Set<string>();
+    for (const family of this.computedStyle.usedFontFamilies) {
+      result.add(family);
+    }
+    for (const child of this.children) {
+      if (child.type === "element") {
+        for (const family of child.usedFontFamilies) {
+          result.add(family);
+        }
+      }
+    }
+    return result;
+  }
 }
 
 export function instancesFromHTML(

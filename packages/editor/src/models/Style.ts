@@ -1,6 +1,7 @@
 import { MIXED, sameOrMixed } from "@seanchas116/paintkit/src/util/Mixed";
+import { stripQuotes } from "@seanchas116/paintkit/src/util/String";
 import { camelCase, kebabCase } from "lodash-es";
-import { makeObservable, observable } from "mobx";
+import { computed, makeObservable, observable } from "mobx";
 import * as postcss from "postcss";
 
 export const textStyleKeys = [
@@ -112,8 +113,6 @@ const StyleBase: {
 };
 
 export class Style extends StyleBase {
-  // Text
-
   toJSON(): StyleJSON {
     return Object.fromEntries(styleKeys.map((key) => [key, this[key]]));
   }
@@ -251,5 +250,19 @@ export class Style extends StyleBase {
     this.borderRightColor = value;
     this.borderBottomColor = value;
     this.borderLeftColor = value;
+  }
+
+  get usedFontFamilies(): Set<string> {
+    const result = new Set<string>();
+
+    const fontFamily = this.fontFamily;
+    if (fontFamily) {
+      const families = fontFamily.split(",");
+      for (const family of families) {
+        result.add(stripQuotes(family.trim()));
+      }
+    }
+
+    return result;
   }
 }

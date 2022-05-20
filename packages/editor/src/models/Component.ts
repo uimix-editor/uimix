@@ -184,6 +184,19 @@ export class Component extends TreeNode<ComponentList, Component, never> {
   }
 
   @observable thumbnail?: string = undefined;
+
+  @computed.struct get usedFontFamilies(): Set<string> {
+    const families = new Set<string>();
+
+    for (const variant of this.allVariants) {
+      for (const family of variant.rootInstance?.usedFontFamilies ??
+        new Set()) {
+        families.add(family);
+      }
+    }
+
+    return families;
+  }
 }
 
 export interface ComponentJSON {

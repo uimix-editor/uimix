@@ -1,4 +1,4 @@
-import { reaction, runInAction } from "mobx";
+import { computed, makeObservable, reaction, runInAction } from "mobx";
 import dedent from "dedent";
 import { assertNonNull } from "@seanchas116/paintkit/src/util/Assert";
 import { Component } from "../models/Component";
@@ -26,8 +26,21 @@ const resetCSS = dedent`
   }
 `;
 
+function getGoogleFontLink(fontFamilies: string[]): string {
+  const query = fontFamilies
+    .map((family) => {
+      return `family=${family
+        .split(/\s/)
+        .join("+")}:wght@100;200;300;400;500;600;700;800;900`;
+    })
+    .join("&");
+
+  return `https://fonts.googleapis.com/css2?${query}`;
+}
+
 export class DocumentMount {
   constructor(editorState: EditorState, document: Document, parent: Element) {
+    makeObservable(this);
     this.editorState = editorState;
     this.document = document;
 
@@ -57,6 +70,18 @@ export class DocumentMount {
 
     void this.loadPreludeScripts();
 
+    const fontLink = this.domDocument.createElement("link");
+    fontLink.rel = "stylesheet";
+    this.domDocument.head.append(fontLink);
+
+    this.domDocument.fonts.addEventListener("loadingdone", () => {
+      for (const componentMount of this.componentMounts) {
+        for (const variantMount of componentMount.variantMounts) {
+          variantMount.rootMount.updateBoundingBoxLater();
+        }
+      }
+    });
+
     this.disposers = [
       reaction(
         () => editorState.scroll.documentToViewport,
@@ -69,6 +94,13 @@ export class DocumentMount {
         (components) => {
           this.updateComponents(components);
         }
+      ),
+      reaction(
+        () => this.usedGoogleFonts,
+        (googleFonts) => {
+          fontLink.href = getGoogleFontLink(googleFonts);
+        },
+        { fireImmediately: true }
       ),
     ];
     this.updateComponents(document.components.children);
@@ -156,6 +188,12 @@ export class DocumentMount {
   private resetStyleSheet: CSSStyleSheet;
   private componentMounts: ComponentMount[] = [];
   private componentStyleMounts = new Map<Component, ComponentStyleMount>();
+
+  @computed get usedGoogleFonts(): string[] {
+    return [...this.document.usedFontFamilies].filter((font) =>
+      this.editorState.googleFontFamilies.has(font)
+    );
+  }
 
   private async loadPreludeScripts(): Promise<void> {
     const customElementTagNames: string[] = [];

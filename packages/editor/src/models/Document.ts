@@ -270,6 +270,16 @@ export class Document {
   readonly preludeStyleSheets = observable.array<string>([]);
   readonly preludeScripts = observable.array<string>([]);
   readonly loadedCustomElements = observable.array<LoadedCustomElement>();
+
+  @computed.struct get usedFontFamilies(): Set<string> {
+    const set = new Set<string>();
+    for (const component of this.components.children) {
+      for (const fontFamily of component.usedFontFamilies) {
+        set.add(fontFamily);
+      }
+    }
+    return set;
+  }
 }
 
 export interface DocumentJSON {

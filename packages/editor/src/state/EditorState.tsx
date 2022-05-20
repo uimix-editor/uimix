@@ -6,6 +6,7 @@ import { action, computed, makeObservable, observable } from "mobx";
 import { Rect, Vec2 } from "paintvec";
 import { SelectItem } from "@seanchas116/paintkit/src/components/Select";
 import { isVoidElement } from "@seanchas116/paintkit/src/util/HTMLTagCategory";
+import googleFonts from "@seanchas116/paintkit/src/util/GoogleFonts.json";
 import { Component } from "../models/Component";
 import { Document, DocumentJSON } from "../models/Document";
 import { Element } from "../models/Element";
@@ -30,6 +31,10 @@ export abstract class EditorState {
 
   abstract get history(): JSONUndoHistory<DocumentJSON, Document>;
 
+  get document(): Document {
+    return this.history.target;
+  }
+
   /**
    * Overridable
    * @returns the paths of available image assets (relative from the dirname of the current file)
@@ -42,9 +47,12 @@ export abstract class EditorState {
     return assetPath;
   }
 
-  get document(): Document {
-    return this.history.target;
-  }
+  readonly googleFontFamilies = new Set(
+    googleFonts.items.map((item) => item.family)
+  );
+  readonly fontFamilyOptions = googleFonts.items.map((item) => ({
+    value: item.family,
+  }));
 
   @observable currentOutlineTab: "outline" | "assets" = "outline";
   @observable currentInspectorTab: "element" | "style" = "element";
