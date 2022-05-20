@@ -78,7 +78,7 @@ export async function figmaToMacaron(
     }
     case "TEXT": {
       return h(
-        "p",
+        "div",
         {
           id,
           style: stringifyStyle({
