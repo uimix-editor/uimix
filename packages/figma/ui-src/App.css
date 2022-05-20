@@ -83,6 +83,7 @@ main {
   display: flex;
   flex-direction: column;
   justify-content: center;
+  gap: 24px;
 }
 
 section {
@@ -102,4 +103,8 @@ footer > * + * {
 img {
   height: auto;
   width: 2rem;
+}
+
+h2 {
+  margin: 0;
 }

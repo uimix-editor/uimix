@@ -4,7 +4,7 @@ import { toHtml } from "hast-util-to-html";
 import { IDGenerator } from "./util";
 import { MessageToPlugin, MessageToUI } from "../message";
 
-figma.showUI(__html__, { themeColors: true, height: 300 });
+figma.showUI(__html__, { themeColors: true });
 
 figma.ui.onmessage = async (msg: MessageToPlugin) => {
   switch (msg.type) {
