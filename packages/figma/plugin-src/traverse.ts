@@ -89,6 +89,9 @@ export async function figmaToMacaron(
         ...processCharacters(node.characters)
       );
     }
+    case "COMPONENT":
+    case "COMPONENT_SET":
+    case "INSTANCE":
     case "FRAME": {
       return h(
         "div",
@@ -128,6 +131,7 @@ export async function figmaToMacaron(
       );
     }
     default:
+      console.log("ignoring", node.type);
       return undefined;
   }
 }
