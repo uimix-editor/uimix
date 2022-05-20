@@ -33,9 +33,7 @@ export class ElementInsertDragHandler implements DragHandler {
       this.component = new Component();
       this.component.rename("my-component");
       this.editorState.document.components.append(this.component);
-
-      this.instance = assertNonNull(this.component.defaultVariant.rootInstance);
-      this.instance.style.display = "block";
+      this.instance = this.component.defaultVariant.rootInstance;
 
       if (mode === "text") {
         this.component.rootElement.append(

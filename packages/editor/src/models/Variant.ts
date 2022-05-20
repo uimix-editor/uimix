@@ -65,6 +65,11 @@ export class DefaultVariant extends BaseVariant {
     return this._component;
   }
 
+  get rootInstance(): ElementInstance {
+    // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+    return super.rootInstance!;
+  }
+
   get type(): "defaultVariant" {
     return "defaultVariant";
   }
