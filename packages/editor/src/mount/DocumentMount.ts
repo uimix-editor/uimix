@@ -1,4 +1,4 @@
-import { reaction, runInAction } from "mobx";
+import { computed, makeObservable, reaction, runInAction } from "mobx";
 import dedent from "dedent";
 import { assertNonNull } from "@seanchas116/paintkit/src/util/Assert";
 import { Component } from "../models/Component";
@@ -40,6 +40,7 @@ function getGoogleFontLink(fontFamilies: string[]): string {
 
 export class DocumentMount {
   constructor(editorState: EditorState, document: Document, parent: Element) {
+    makeObservable(this);
     this.editorState = editorState;
     this.document = document;
 
@@ -95,7 +96,7 @@ export class DocumentMount {
         }
       ),
       reaction(
-        () => editorState.usedGoogleFonts,
+        () => this.usedGoogleFonts,
         (googleFonts) => {
           fontLink.href = getGoogleFontLink(googleFonts);
         },
@@ -274,5 +275,11 @@ export class DocumentMount {
     runInAction(() => {
       this.document.loadedCustomElements.replace(elements);
     });
+  }
+
+  @computed get usedGoogleFonts(): string[] {
+    return [...this.document.usedFontFamilies].filter((font) =>
+      this.editorState.googleFontFamilies.has(font)
+    );
   }
 }
