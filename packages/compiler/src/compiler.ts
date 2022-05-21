@@ -60,6 +60,16 @@ function compileComponent(ast: hast.Element): string {
   `;
 }
 
+function compileGlobalStyle(ast: hast.Element): string {
+  const style = (ast.children[0] as hast.Text).value;
+  return `
+    const style = \`${style}\`;
+    const styleElement = document.createElement("style");
+    styleElement.innerHTML = style;
+    document.head.appendChild(styleElement);
+  `;
+}
+
 export function compile(data: string): string {
   const ast = parseHTMLFragment(data);
 
@@ -68,6 +78,9 @@ export function compile(data: string): string {
   for (const child of ast.children) {
     if (child.type === "element" && child.tagName === "macaron-component") {
       outputs.push(compileComponent(child));
+    }
+    if (child.type === "element" && child.tagName === "style") {
+      outputs.push(compileGlobalStyle(child));
     }
   }
 
