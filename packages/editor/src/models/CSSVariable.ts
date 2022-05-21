@@ -2,7 +2,7 @@ import { makeObservable, observable } from "mobx";
 import { Color } from "@seanchas116/paintkit/src/util/Color";
 import { TreeNode } from "@seanchas116/paintkit/src/util/TreeNode";
 import { generateUID } from "@seanchas116/paintkit/src/util/Name";
-import { ColorTokenList } from "./ColorTokenList";
+import { CSSVariableList } from "./CSSVariableList";
 
 interface ColorTokenJSON {
   uid: string;
@@ -10,10 +10,8 @@ interface ColorTokenJSON {
   color: string;
 }
 
-/**
- * A color token is a named color that can be used in the editor.
- */
-export class ColorToken extends TreeNode<ColorTokenList, ColorToken, never> {
+// TODO: support non-color css variables
+export class CSSVariable extends TreeNode<CSSVariableList, CSSVariable, never> {
   constructor(uid?: string) {
     super();
     this.uid = uid ?? generateUID();
@@ -34,8 +32,8 @@ export class ColorToken extends TreeNode<ColorTokenList, ColorToken, never> {
     };
   }
 
-  static fromJSON(json: ColorTokenJSON): ColorToken {
-    const token = new ColorToken(json.uid);
+  static fromJSON(json: ColorTokenJSON): CSSVariable {
+    const token = new CSSVariable(json.uid);
     token.rename(json.name);
     token.color = Color.from(json.color) ?? Color.fromName("white");
     return token;

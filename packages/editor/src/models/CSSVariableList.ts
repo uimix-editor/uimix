@@ -1,11 +1,11 @@
 import { TreeNode } from "@seanchas116/paintkit/src/util/TreeNode";
-import { ColorToken } from "./ColorToken";
+import { CSSVariable } from "./CSSVariable";
 import { Document } from "./Document";
 
-export class ColorTokenList extends TreeNode<
+export class CSSVariableList extends TreeNode<
   never,
-  ColorTokenList,
-  ColorToken
+  CSSVariableList,
+  CSSVariable
 > {
   constructor(document: Document) {
     super();
@@ -18,8 +18,8 @@ export class ColorTokenList extends TreeNode<
     return true;
   }
 
-  forName(name: string): ColorToken {
-    return this.getDescendantByName(name) as ColorToken;
+  forName(name: string): CSSVariable {
+    return this.getDescendantByName(name) as CSSVariable;
   }
 
   selectAll(): void {

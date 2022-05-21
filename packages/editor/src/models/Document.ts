@@ -5,6 +5,7 @@ import { last } from "lodash-es";
 import { computed, makeObservable, observable } from "mobx";
 import { changeTagName } from "../services/ChangeTagName";
 import { Component, ComponentJSON } from "./Component";
+import { CSSVariableList } from "./CSSVariableList";
 import { Element } from "./Element";
 import { ElementInstance } from "./ElementInstance";
 import { Fragment } from "./Fragment";
@@ -37,6 +38,7 @@ export class Document {
   }
 
   readonly components = new ComponentList(this);
+  readonly cssVariables = new CSSVariableList(this);
 
   toJSON(): DocumentJSON {
     return {
