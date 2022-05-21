@@ -6,7 +6,7 @@ import { formatHTML } from "../util/Format";
 import { parseHTMLFragment } from "../util/Hast";
 import { Document } from "../models/Document";
 import { dumpComponent, loadComponent } from "./component";
-import { dumpGlobalStyle } from "./globalStyle";
+import { dumpGlobalStyle, loadGlobalStyle } from "./globalStyle";
 
 function dumpDocument(document: Document): hast.Element[] {
   const components = document.components.children.map(dumpComponent);
@@ -59,6 +59,10 @@ function loadDocument(hastNodes: hast.Content[]): Document {
     ) {
       document.preludeStyleSheets.push(String(child.properties.href));
       continue;
+    }
+
+    if (child.tagName === "style") {
+      loadGlobalStyle(document, child);
     }
   }
 

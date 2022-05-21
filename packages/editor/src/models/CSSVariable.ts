@@ -10,11 +10,19 @@ interface ColorTokenJSON {
   color: string;
 }
 
+interface CSSVariableOptions {
+  uid?: string;
+  name?: string;
+  color?: Color;
+}
+
 // TODO: support non-color css variables
 export class CSSVariable extends TreeNode<CSSVariableList, CSSVariable, never> {
-  constructor(uid?: string) {
+  constructor(options: CSSVariableOptions = {}) {
     super();
-    this.uid = uid ?? generateUID();
+    this.uid = options.uid ?? generateUID();
+    this.color = options.color ?? Color.fromName("white");
+    this.rename(options.name ?? this.color.getName());
     makeObservable(this);
   }
 
@@ -24,7 +32,7 @@ export class CSSVariable extends TreeNode<CSSVariableList, CSSVariable, never> {
     return true;
   }
 
-  @observable color = Color.fromName("white");
+  @observable color: Color;
 
   @observable selected = false;
 
@@ -37,9 +45,10 @@ export class CSSVariable extends TreeNode<CSSVariableList, CSSVariable, never> {
   }
 
   static fromJSON(json: ColorTokenJSON): CSSVariable {
-    const token = new CSSVariable(json.uid);
-    token.rename(json.name);
-    token.color = Color.from(json.color) ?? Color.fromName("white");
-    return token;
+    return new CSSVariable({
+      uid: json.uid,
+      name: json.name,
+      color: Color.from(json.color),
+    });
   }
 }
