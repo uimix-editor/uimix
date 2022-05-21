@@ -1,7 +1,7 @@
 import { Command } from "@seanchas116/paintkit/src/components/menu/Menu";
 import { KeyGesture } from "@seanchas116/paintkit/src/util/KeyGesture";
 import { action, computed, makeObservable, runInAction } from "mobx";
-import { parseFragment, stringifyFragment } from "../models/FileFormat";
+import { parseFragment, stringifyFragment } from "../fileFormat/fragment";
 import { AutoLayout } from "../services/AutoLayout";
 import { EditorState } from "./EditorState";
 
