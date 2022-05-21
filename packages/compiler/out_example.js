@@ -1,3 +1,11 @@
+const globalStyle = `
+  :root {
+    --my-component--color: #ff0000;
+  }
+`;
+document.head.appendChild(document.createElement("style")).textContent =
+  globalStyle;
+
 export class MyComponent extends HTMLElement {
   constructor() {
     const style = `
@@ -15,18 +23,6 @@ export class MyComponent extends HTMLElement {
     this.attachShadow({ mode: "open" });
     this.shadowRoot.innerHTML = `<style>${style}</style>${template}`;
   }
-
-  static register() {
-    const globalStyle = `
-      :root {
-        --my-component--color: #ff0000;
-      }
-    `;
-    document.head.appendChild(document.createElement("style")).textContent =
-      globalStyle;
-
-    customElements.define("my-component", MyComponent);
-  }
 }
 
-MyComponent.register();
+customElements.define("my-component", MyComponent);
