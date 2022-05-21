@@ -23,6 +23,7 @@ import widgetsOutlineIcon from "@iconify-icons/ic/outline-widgets";
 import formatBoldIcon from "@iconify-icons/ic/outline-format-bold";
 import formatItalicIcon from "@iconify-icons/ic/outline-format-italic";
 import interestsIcon from "@iconify-icons/ic/outline-interests";
+import inputIcon from "@iconify-icons/ic/outline-login";
 import switchIcon from "@seanchas116/paintkit/src/icon/Switch";
 import chevronsIcon from "@seanchas116/paintkit/src/icon/Chevrons";
 import headingIcon from "@seanchas116/paintkit/src/icon/Heading";
@@ -53,6 +54,9 @@ function iconForTagName(tagName: string): IconifyIcon {
   }
   if (tagName === "svg") {
     return interestsIcon;
+  }
+  if (tagName === "slot") {
+    return inputIcon;
   }
   if (/^h\d$/.test(tagName)) {
     return headingIcon;
