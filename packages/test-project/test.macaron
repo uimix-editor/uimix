@@ -6,7 +6,11 @@
   type="module"
   src="https://cdn.jsdelivr.net/npm/@shoelace-style/shoelace@2.0.0-beta.73/dist/shoelace.js"
 ></script>
-<macaron-component name="my-component">
+<style>
+  :root {
+    --textColor: #333333;
+  }</style
+><macaron-component name="my-component">
   <macaron-variant x="0" y="0"></macaron-variant>
   <macaron-variant x="200" y="0" selector=":hover"></macaron-variant>
   <macaron-variant x="400" y="0" media="(max-width: 768px)"></macaron-variant>
