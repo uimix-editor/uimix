@@ -9,8 +9,9 @@
 <style>
   :root {
     --textColor: #333333;
-  }</style
-><macaron-component name="my-component">
+  }
+</style>
+<macaron-component name="my-component">
   <macaron-variant x="0" y="0"></macaron-variant>
   <macaron-variant x="200" y="0" selector=":hover"></macaron-variant>
   <macaron-variant x="400" y="0" media="(max-width: 768px)"></macaron-variant>
@@ -86,8 +87,9 @@
         color: #008000;
       }
     }
-  </style> </macaron-component
-><macaron-component name="component-wrapper">
+  </style>
+</macaron-component>
+<macaron-component name="component-wrapper">
   <macaron-variant x="0" y="295"></macaron-variant>
   <template>
     <my-component id="my-component"></my-component>
@@ -104,8 +106,9 @@
       top: 24px;
       left: 12px;
     }
-  </style> </macaron-component
-><macaron-component name="use-shoelace">
+  </style>
+</macaron-component>
+<macaron-component name="use-shoelace">
   <macaron-variant x="0" y="572"></macaron-variant>
   <template>
     <sl-input id="input"></sl-input

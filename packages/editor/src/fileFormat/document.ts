@@ -8,7 +8,7 @@ import { Document } from "../models/Document";
 import { dumpComponent, loadComponent } from "./component";
 import { dumpGlobalStyle, loadGlobalStyle } from "./globalStyle";
 
-function dumpDocument(document: Document): hast.Element[] {
+function dumpDocument(document: Document): hast.Content[] {
   const components = document.components.children.map(dumpComponent);
 
   const globalStyle = dumpGlobalStyle(document);
@@ -26,7 +26,15 @@ function dumpDocument(document: Document): hast.Element[] {
     })
   );
 
-  return [...preludeStyleSheets, ...preludeScripts, globalStyle, ...components];
+  return [
+    ...preludeStyleSheets,
+    ...preludeScripts,
+    globalStyle,
+    ...components.flatMap((c): hast.Content[] => [
+      { type: "text", value: " " },
+      c,
+    ]),
+  ];
 }
 
 function loadDocument(hastNodes: hast.Content[]): Document {
