@@ -11,6 +11,7 @@ import {
   PaneHeadingRow,
   PaneHeading,
 } from "@seanchas116/paintkit/src/components/sidebar/Inspector";
+import { Color } from "@seanchas116/paintkit/src/util/Color";
 import { useEditorState } from "../../../EditorStateContext";
 import { ColorTokenTreeView } from "./ColorTokenTreeView";
 
@@ -34,14 +35,18 @@ export const DocumentInspector: React.FC = observer(
                 (token) => !token.selected
               )}
               onClick={action(() => {
-                // ColorTokenAction.delete(editorState);
-                // editorState.commit("Delete Color Tokens");
+                document.cssVariables.deleteSelected();
+                editorState.history.commit("Delete CSS Variable");
               })}
             />
             <PlusButton
               onClick={action(() => {
-                // ColorTokenAction.add(editorState, Color.from("white"));
-                // editorState.commit("Add Color Token");
+                const variable = document.cssVariables.add(
+                  Color.fromName("white")
+                );
+                document.cssVariables.deselectAll();
+                variable.selected = true;
+                editorState.history.commit("Add CSS Variable");
               })}
             />
           </PaneHeadingRow>

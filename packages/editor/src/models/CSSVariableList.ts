@@ -1,3 +1,4 @@
+import { Color } from "@seanchas116/paintkit/src/util/Color";
 import { TreeNode } from "@seanchas116/paintkit/src/util/TreeNode";
 import { CSSVariable } from "./CSSVariable";
 import { Document } from "./Document";
@@ -32,5 +33,21 @@ export class CSSVariableList extends TreeNode<
     for (const token of this.children) {
       token.selected = false;
     }
+  }
+
+  deleteSelected(): void {
+    for (const token of this.children) {
+      if (token.selected) {
+        token.remove();
+      }
+    }
+  }
+
+  add(color: Color): CSSVariable {
+    const variable = new CSSVariable();
+    variable.color = color;
+    variable.rename(color.getName());
+    this.append(variable);
+    return variable;
   }
 }
