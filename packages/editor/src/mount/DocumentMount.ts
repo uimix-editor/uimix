@@ -82,6 +82,9 @@ export class DocumentMount {
       }
     });
 
+    const globalStyle = this.domDocument.createElement("style");
+    this.domDocument.head.append(globalStyle);
+
     this.disposers = [
       reaction(
         () => editorState.scroll.documentToViewport,
@@ -99,6 +102,13 @@ export class DocumentMount {
         () => this.usedGoogleFonts,
         (googleFonts) => {
           fontLink.href = getGoogleFontLink(googleFonts);
+        },
+        { fireImmediately: true }
+      ),
+      reaction(
+        () => document.cssVariables.toCSSRule(),
+        (globalCSS) => {
+          globalStyle.textContent = globalCSS.toString();
         },
         { fireImmediately: true }
       ),
