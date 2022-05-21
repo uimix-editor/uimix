@@ -78,7 +78,7 @@ export const StyleColorInput: React.FC<{
       value={property.value}
       placeholder={property.computed}
       onChange={property.onChangeWithoutCommit}
-      onChangeEnd={property.onChange}
+      onChangeEnd={property.onChangeCommit}
     />
   );
 });
