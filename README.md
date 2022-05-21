@@ -94,6 +94,13 @@ _:construction: - Not yet implemented_
 <link rel="stylesheet" href="./external-web-components-styles.css" />
 <script type="module" src="./external-web-components.js"></script>
 
+<!-- Global CSS variables --->
+<style global>
+  :root {
+    --my-card--color: red;
+  }
+</style>
+
 <macaron-component name="my-card">
   <!-- Variants -->
 
@@ -110,12 +117,6 @@ _:construction: - Not yet implemented_
   </template>
 
   <!-- Styles -->
-
-  <style global>
-    :root {
-      --my-card--color: red;
-    }
-  </style>
 
   <style>
     #title {
