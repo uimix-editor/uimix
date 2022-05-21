@@ -37,33 +37,33 @@ const ColorPickerWrap = styled.div`
 `;
 
 class CSSVariableItem extends LeafTreeViewItem {
-  constructor(parent: CSSVariableListViewItem, token: CSSVariable) {
+  constructor(parent: CSSVariableListItem, variable: CSSVariable) {
     super();
     this.parent = parent;
-    this.token = token;
+    this.variable = variable;
   }
 
-  readonly parent: CSSVariableListViewItem;
-  readonly token: CSSVariable;
+  readonly parent: CSSVariableListItem;
+  readonly variable: CSSVariable;
 
   get key(): string {
-    return this.token.name;
+    return this.variable.name;
   }
   get selected(): boolean {
-    return this.token.selected;
+    return this.variable.selected;
   }
   get hovered(): boolean {
     return false;
   }
 
   private onNameChange = action((name: string) => {
-    this.token.rename(name);
-    this.parent.editorState.history.commit("Change Color Token Name");
+    this.variable.rename(name);
+    this.parent.editorState.history.commit("Change CSS Variable Name");
     return true;
   });
 
   renderRow(options: { inverted: boolean }): React.ReactNode {
-    const value = this.token.color;
+    const value = this.variable.color;
 
     return (
       <TreeRow inverted={options.inverted}>
@@ -84,11 +84,11 @@ class CSSVariableItem extends LeafTreeViewItem {
                 <ColorPicker
                   color={value}
                   onChange={action((color) => {
-                    this.token.color = color;
+                    this.variable.color = color;
                   })}
                   onChangeEnd={() => {
                     this.parent.editorState.history.commit(
-                      "Change Color Token Color"
+                      "Change CSS Variable Color"
                     );
                   }}
                 />
@@ -97,7 +97,7 @@ class CSSVariableItem extends LeafTreeViewItem {
           }}
         />
         <TreeRowNameEdit
-          value={this.token.name}
+          value={this.variable.name}
           validate={(name) => {
             if (!isValidCSSIdentifier(name)) {
               return {
@@ -115,10 +115,10 @@ class CSSVariableItem extends LeafTreeViewItem {
     );
   }
   deselect(): void {
-    this.token.selected = false;
+    this.variable.selected = false;
   }
   select(): void {
-    this.token.selected = true;
+    this.variable.selected = true;
   }
 
   handleDragStart(e: React.DragEvent) {
@@ -127,7 +127,7 @@ class CSSVariableItem extends LeafTreeViewItem {
   }
 }
 
-class CSSVariableListViewItem extends RootTreeViewItem {
+class CSSVariableListItem extends RootTreeViewItem {
   constructor(editorState: EditorState, list: CSSVariableList) {
     super();
     this.editorState = editorState;
@@ -138,7 +138,7 @@ class CSSVariableListViewItem extends RootTreeViewItem {
   readonly list: CSSVariableList;
 
   get children(): readonly TreeViewItem[] {
-    return this.list.children.map((token) => new CSSVariableItem(this, token));
+    return this.list.children.map((v) => new CSSVariableItem(this, v));
   }
 
   deselect(): void {
@@ -151,7 +151,7 @@ class CSSVariableListViewItem extends RootTreeViewItem {
 
   handleDrop(event: React.DragEvent, before: TreeViewItem | undefined) {
     const copy = event.altKey || event.ctrlKey;
-    const beforeNode = (before as CSSVariableItem | undefined)?.token;
+    const beforeNode = (before as CSSVariableItem | undefined)?.variable;
 
     // TODO: copy
     for (const node of this.list.selectedVariables) {
@@ -175,10 +175,7 @@ export const CSSVariableListView: React.FC<{
 
   const rootItem = useMemo(
     () =>
-      new CSSVariableListViewItem(
-        editorState,
-        editorState.document.cssVariables
-      ),
+      new CSSVariableListItem(editorState, editorState.document.cssVariables),
     [editorState]
   );
 
