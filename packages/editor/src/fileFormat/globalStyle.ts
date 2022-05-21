@@ -7,20 +7,7 @@ import { CSSVariable } from "../models/CSSVariable";
 import { Document } from "../models/Document";
 
 export function dumpGlobalStyle(document: Document): hast.Element {
-  const root = new postcss.Rule({
-    selector: ":root",
-  });
-
-  for (const variable of document.cssVariables.children) {
-    root.append(
-      new postcss.Declaration({
-        prop: "--" + variable.name,
-        value: variable.color.toString(),
-      })
-    );
-  }
-
-  return h("style", {}, root.toString());
+  return h("style", {}, document.cssVariables.toCSSRule().toString());
 }
 
 export function loadGlobalStyle(
