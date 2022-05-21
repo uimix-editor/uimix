@@ -20,6 +20,10 @@ export class CSSVariable extends TreeNode<CSSVariableList, CSSVariable, never> {
 
   readonly uid: string;
 
+  get hasUniqueName(): boolean {
+    return true;
+  }
+
   @observable color = Color.fromName("white");
 
   @observable selected = false;
