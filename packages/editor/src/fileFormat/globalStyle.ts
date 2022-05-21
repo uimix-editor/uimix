@@ -1,7 +1,9 @@
+import type * as hast from "hast";
+import { h } from "hastscript";
 import * as postcss from "postcss";
 import { Document } from "../models/Document";
 
-export function dumpGlobalStyle(document: Document): postcss.Rule {
+export function dumpGlobalStyle(document: Document): hast.Element {
   const root = new postcss.Rule({
     selector: ":root",
   });
@@ -15,5 +17,7 @@ export function dumpGlobalStyle(document: Document): postcss.Rule {
     );
   }
 
-  return root;
+  return h("style", {}, root.toString());
 }
+
+export function loadGlobalStyle(document: Document, rule: postcss.Rule): void {}

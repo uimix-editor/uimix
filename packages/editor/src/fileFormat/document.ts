@@ -11,7 +11,7 @@ import { dumpGlobalStyle } from "./globalStyle";
 function dumpDocument(document: Document): hast.Element[] {
   const components = document.components.children.map(dumpComponent);
 
-  const globalStyle = h("style", {}, dumpGlobalStyle(document).toString());
+  const globalStyle = dumpGlobalStyle(document);
 
   const preludeScripts = document.preludeScripts.map((src) =>
     h("script", {
