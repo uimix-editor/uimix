@@ -6,9 +6,12 @@ import { formatHTML } from "../util/Format";
 import { parseHTMLFragment } from "../util/Hast";
 import { Document } from "../models/Document";
 import { dumpComponent, loadComponent } from "./component";
+import { dumpGlobalStyle } from "./globalStyle";
 
 function dumpDocument(document: Document): hast.Element[] {
   const components = document.components.children.map(dumpComponent);
+
+  const globalStyle = h("style", {}, dumpGlobalStyle(document).toString());
 
   const preludeScripts = document.preludeScripts.map((src) =>
     h("script", {
@@ -23,7 +26,7 @@ function dumpDocument(document: Document): hast.Element[] {
     })
   );
 
-  return [...preludeStyleSheets, ...preludeScripts, ...components];
+  return [...preludeStyleSheets, ...preludeScripts, globalStyle, ...components];
 }
 
 function loadDocument(hastNodes: hast.Content[]): Document {
