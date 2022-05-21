@@ -315,7 +315,7 @@ export abstract class EditorState {
   @computed get colorInputOptions(): SelectItem[] {
     const options = this.document.cssVariables.children.map((variable) => ({
       value: `var(--${variable.name})`,
-      text: `var(--${variable.name})`,
+      text: variable.name,
       icon: (
         <div
           style={{
