@@ -111,6 +111,12 @@ _:construction: - Not yet implemented_
 
   <!-- Styles -->
 
+  <style global>
+    :root {
+      --my-card--color: red;
+    }
+  </style>
+
   <style>
     #title {
       /* style */
