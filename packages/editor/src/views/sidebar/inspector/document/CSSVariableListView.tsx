@@ -32,7 +32,6 @@ const ColorIcon = styled.div`
 
 const ColorPickerWrap = styled.div`
   ${popoverStyle}
-  padding: 8px;
 `;
 
 class CSSVariableTreeViewItem extends LeafTreeViewItem {
