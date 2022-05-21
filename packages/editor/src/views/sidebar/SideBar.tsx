@@ -16,6 +16,7 @@ import { ElementInspector } from "./inspector/element/ElementInspector";
 import { VariantInspector } from "./inspector/VariantInspector";
 import { StyleInspector } from "./inspector/style/StyleInspector";
 import { AssetBrowser } from "./outline/AssetBrowser";
+import { DocumentInspector } from "./inspector/document/DocumentInspector";
 
 const RightSideBarWrap = styled.div`
   position: relative;
@@ -124,7 +125,9 @@ export const RightSideBar: React.FC = observer(() => {
                 <VariantInspector />
               ) : editorState.elementInspectorState.isVisible ? (
                 <ElementInspector />
-              ) : null}
+              ) : (
+                <DocumentInspector />
+              )}
             </Scrollable>
             <Scrollable hidden={editorState.currentInspectorTab !== "style"}>
               <StyleInspector />
