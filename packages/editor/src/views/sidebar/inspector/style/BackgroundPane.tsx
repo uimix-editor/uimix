@@ -8,10 +8,12 @@ import {
 } from "@seanchas116/paintkit/src/components/sidebar/Inspector";
 import { CSSBackgroundInput } from "@seanchas116/paintkit/src/components/css/CSSBackgroundInput";
 import { StyleInspectorState } from "../../../../state/StyleInspectorState";
+import { useEditorState } from "../../../EditorStateContext";
 
 export const BackgroundPane: React.FC<{
   state: StyleInspectorState;
 }> = observer(function BackgroundPane({ state }) {
+  const editorState = useEditorState();
   const resolveImageURL = useCallback(
     (url: string) => state.editorState.resolveImageAssetURL(url),
     [state]
@@ -25,6 +27,7 @@ export const BackgroundPane: React.FC<{
       <RowGroup>
         <CSSBackgroundInput
           title="background"
+          options={editorState.colorInputOptions}
           defaultPlacement="top"
           imageURLOptions={state.editorState.imageURLOptions}
           resolveImageURL={resolveImageURL}
