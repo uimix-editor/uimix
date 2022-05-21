@@ -43,6 +43,10 @@ export class CSSVariableList extends TreeNode<
     }
   }
 
+  get selectedVariables(): CSSVariable[] {
+    return this.children.filter((token) => token.selected);
+  }
+
   add(color: Color): CSSVariable {
     const variable = new CSSVariable();
     variable.color = color;

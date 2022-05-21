@@ -20,6 +20,8 @@ import { EditorState } from "../../../../state/EditorState";
 import { CSSVariableList } from "../../../../models/CSSVariableList";
 import { useEditorState } from "../../../EditorStateContext";
 
+const DRAG_MIME = "application/x.macaron-tree-drag-css-variable";
+
 const ColorIcon = styled.div`
   width: 16px;
   height: 16px;
@@ -34,7 +36,7 @@ const ColorPickerWrap = styled.div`
   ${popoverStyle}
 `;
 
-class CSSVariableTreeViewItem extends LeafTreeViewItem {
+class CSSVariableItem extends LeafTreeViewItem {
   constructor(parent: CSSVariableListViewItem, token: CSSVariable) {
     super();
     this.parent = parent;
@@ -118,6 +120,11 @@ class CSSVariableTreeViewItem extends LeafTreeViewItem {
   select(): void {
     this.token.selected = true;
   }
+
+  handleDragStart(e: React.DragEvent) {
+    e.dataTransfer.effectAllowed = "copyMove";
+    e.dataTransfer.setData(DRAG_MIME, "drag");
+  }
 }
 
 class CSSVariableListViewItem extends RootTreeViewItem {
@@ -131,13 +138,29 @@ class CSSVariableListViewItem extends RootTreeViewItem {
   readonly list: CSSVariableList;
 
   get children(): readonly TreeViewItem[] {
-    return this.list.children.map(
-      (token) => new CSSVariableTreeViewItem(this, token)
-    );
+    return this.list.children.map((token) => new CSSVariableItem(this, token));
   }
 
   deselect(): void {
     this.list.deselectAll();
+  }
+
+  canDropData(dataTransfer: DataTransfer) {
+    return dataTransfer.types.includes(DRAG_MIME);
+  }
+
+  handleDrop(event: React.DragEvent, before: TreeViewItem | undefined) {
+    const copy = event.altKey || event.ctrlKey;
+    const beforeNode = (before as CSSVariableItem | undefined)?.token;
+
+    // TODO: copy
+    for (const node of this.list.selectedVariables) {
+      this.list.insertBefore(node, beforeNode);
+    }
+
+    this.editorState.history.commit(
+      copy ? "Duplicate CSS Variables" : "Move CSS Variables"
+    );
   }
 }
 
