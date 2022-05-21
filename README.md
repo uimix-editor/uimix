@@ -121,6 +121,8 @@ _:construction: - Not yet implemented_
   <style>
     #title {
       /* style */
+      font-size: 24px;
+      color: var(--my-card--color);
     }
     #image {
       /* style */
