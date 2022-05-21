@@ -18,6 +18,7 @@ import { isValidJSIdentifier } from "@seanchas116/paintkit/src/util/Name";
 import { CSSVariable } from "../../../../models/CSSVariable";
 import { EditorState } from "../../../../state/EditorState";
 import { CSSVariableList } from "../../../../models/CSSVariableList";
+import { useEditorState } from "../../../EditorStateContext";
 
 const ColorIcon = styled.div`
   width: 16px;
@@ -34,14 +35,14 @@ const ColorPickerWrap = styled.div`
   padding: 8px;
 `;
 
-class ColorTokenTreeViewItem extends LeafTreeViewItem {
-  constructor(parent: ColorTokenListTreeViewItem, token: CSSVariable) {
+class CSSVariableTreeViewItem extends LeafTreeViewItem {
+  constructor(parent: CSSVariableListViewItem, token: CSSVariable) {
     super();
     this.parent = parent;
     this.token = token;
   }
 
-  readonly parent: ColorTokenListTreeViewItem;
+  readonly parent: CSSVariableListViewItem;
   readonly token: CSSVariable;
 
   get key(): string {
@@ -120,7 +121,7 @@ class ColorTokenTreeViewItem extends LeafTreeViewItem {
   }
 }
 
-class ColorTokenListTreeViewItem extends RootTreeViewItem {
+class CSSVariableListViewItem extends RootTreeViewItem {
   constructor(editorState: EditorState, list: CSSVariableList) {
     super();
     this.editorState = editorState;
@@ -132,7 +133,7 @@ class ColorTokenListTreeViewItem extends RootTreeViewItem {
 
   get children(): readonly TreeViewItem[] {
     return this.list.children.map(
-      (token) => new ColorTokenTreeViewItem(this, token)
+      (token) => new CSSVariableTreeViewItem(this, token)
     );
   }
 
@@ -145,13 +146,14 @@ const TreeViewPadding = styled.div`
   height: 8px;
 `;
 
-export const ColorTokenTreeView: React.VFC<{
+export const CSSVariableListView: React.FC<{
   className?: string;
-  editorState: EditorState;
-}> = ({ className, editorState }) => {
+}> = ({ className }) => {
+  const editorState = useEditorState();
+
   const rootItem = useMemo(
     () =>
-      new ColorTokenListTreeViewItem(
+      new CSSVariableListViewItem(
         editorState,
         editorState.document.cssVariables
       ),

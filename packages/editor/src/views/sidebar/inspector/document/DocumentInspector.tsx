@@ -13,11 +13,11 @@ import {
 } from "@seanchas116/paintkit/src/components/sidebar/Inspector";
 import { Color } from "@seanchas116/paintkit/src/util/Color";
 import { useEditorState } from "../../../EditorStateContext";
-import { ColorTokenTreeView } from "./ColorTokenTreeView";
+import { CSSVariableListView } from "./CSSVariableListView";
 
 const PageInspectorWrap = styled.div``;
 
-const StyledColorTokenTreeView = styled(ColorTokenTreeView)`
+const StyledColorTokenTreeView = styled(CSSVariableListView)`
   margin: -8px -12px;
 `;
 
@@ -50,9 +50,7 @@ export const DocumentInspector: React.FC = observer(
               })}
             />
           </PaneHeadingRow>
-          {!!document.cssVariables.firstChild && (
-            <StyledColorTokenTreeView editorState={editorState} />
-          )}
+          {!!document.cssVariables.firstChild && <StyledColorTokenTreeView />}
         </Pane>
       </PageInspectorWrap>
     );
