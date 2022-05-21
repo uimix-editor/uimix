@@ -1,5 +1,5 @@
 import { observer } from "mobx-react-lite";
-import React, { useCallback } from "react";
+import React from "react";
 import {
   Pane,
   PaneHeading,
@@ -14,10 +14,6 @@ export const BackgroundPane: React.FC<{
   state: StyleInspectorState;
 }> = observer(function BackgroundPane({ state }) {
   const editorState = useEditorState();
-  const resolveImageURL = useCallback(
-    (url: string) => state.editorState.resolveImageAssetURL(url),
-    [state]
-  );
 
   return (
     <Pane>
@@ -30,7 +26,8 @@ export const BackgroundPane: React.FC<{
           options={editorState.colorInputOptions}
           defaultPlacement="top"
           imageURLOptions={state.editorState.imageURLOptions}
-          resolveImageURL={resolveImageURL}
+          resolveImageURL={editorState.resolveImageURLCallback}
+          resolveCSSVariable={editorState.resolveCSSVariableCallback}
           value={state.props.background.value}
           placeholder={state.props.background.computed}
           onChange={state.props.background.onChangeWithoutCommit}

@@ -47,6 +47,15 @@ export abstract class EditorState {
     return assetPath;
   }
 
+  readonly resolveImageURLCallback = this.resolveImageAssetURL.bind(this);
+
+  readonly resolveCSSVariableCallback = (varName: string): string => {
+    return (
+      this.document.cssVariables.forName(varName.slice(2))?.color.toString() ??
+      "black"
+    );
+  };
+
   readonly googleFontFamilies = new Set(
     googleFonts.items.map((item) => item.family)
   );

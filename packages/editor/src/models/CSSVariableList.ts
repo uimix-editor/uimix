@@ -21,8 +21,8 @@ export class CSSVariableList extends TreeNode<
     return true;
   }
 
-  forName(name: string): CSSVariable {
-    return this.getDescendantByName(name) as CSSVariable;
+  forName(name: string): CSSVariable | undefined {
+    return this.getDescendantByName(name) as CSSVariable | undefined;
   }
 
   selectAll(): void {

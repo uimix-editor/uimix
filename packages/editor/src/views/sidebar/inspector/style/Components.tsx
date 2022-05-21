@@ -80,6 +80,7 @@ export const StyleColorInput: React.FC<{
       title={kebabCase(property.key)}
       value={property.value}
       options={editorState.colorInputOptions}
+      resolveCSSVariable={editorState.resolveCSSVariableCallback}
       placeholder={property.computed}
       onChange={property.onChangeWithoutCommit}
       onChangeEnd={property.onChangeCommit}
