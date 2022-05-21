@@ -311,4 +311,29 @@ export abstract class EditorState {
       ),
     }));
   }
+
+  @computed get colorInputOptions(): SelectItem[] {
+    const options = this.document.cssVariables.children.map((variable) => ({
+      value: `var(--${variable.name})`,
+      text: `var(--${variable.name})`,
+      icon: (
+        <div
+          style={{
+            width: "12px",
+            height: "12px",
+            borderRadius: "50%",
+            backgroundColor: variable.color.toString(),
+          }}
+        />
+      ),
+    }));
+
+    return [
+      {
+        type: "header",
+        text: "CSS Variables",
+      },
+      ...options,
+    ];
+  }
 }
