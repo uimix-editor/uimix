@@ -14,7 +14,7 @@ import {
   TreeViewItem,
 } from "@seanchas116/paintkit/src/components/treeview/TreeViewItem";
 import { ColorPicker } from "@seanchas116/paintkit/src/components/color/ColorPicker";
-import { isValidJSIdentifier } from "@seanchas116/paintkit/src/util/Name";
+import { isValidCSSIdentifier } from "@seanchas116/paintkit/src/util/Name";
 import { CSSVariable } from "../../../../models/CSSVariable";
 import { EditorState } from "../../../../state/EditorState";
 import { CSSVariableList } from "../../../../models/CSSVariableList";
@@ -99,10 +99,10 @@ class CSSVariableItem extends LeafTreeViewItem {
         <TreeRowNameEdit
           value={this.token.name}
           validate={(name) => {
-            if (!isValidJSIdentifier(name)) {
+            if (!isValidCSSIdentifier(name)) {
               return {
                 value: false,
-                error: "Name must be a valid JS identifier",
+                error: "Name must be a valid CSS identifier",
               };
             }
             return { value: true };
