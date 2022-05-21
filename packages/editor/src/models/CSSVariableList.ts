@@ -2,7 +2,7 @@ import { Color } from "@seanchas116/paintkit/src/util/Color";
 import { TreeNode } from "@seanchas116/paintkit/src/util/TreeNode";
 import { kebabCase } from "lodash-es";
 import * as postcss from "postcss";
-import { CSSVariable } from "./CSSVariable";
+import { CSSVariable, CSSVariableJSON } from "./CSSVariable";
 import { Document } from "./Document";
 
 export class CSSVariableList extends TreeNode<
@@ -72,5 +72,14 @@ export class CSSVariableList extends TreeNode<
     }
 
     return root;
+  }
+
+  toJSON(): CSSVariableJSON[] {
+    return this.children.map((token) => token.toJSON());
+  }
+
+  loadJSON(json: CSSVariableJSON[]): void {
+    const vars = json.map((json) => CSSVariable.fromJSON(json));
+    this.replaceChildren(vars);
   }
 }

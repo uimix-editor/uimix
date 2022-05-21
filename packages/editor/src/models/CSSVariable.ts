@@ -4,7 +4,7 @@ import { TreeNode } from "@seanchas116/paintkit/src/util/TreeNode";
 import { generateUID } from "@seanchas116/paintkit/src/util/Name";
 import { CSSVariableList } from "./CSSVariableList";
 
-interface ColorTokenJSON {
+export interface CSSVariableJSON {
   uid: string;
   name: string;
   color: string;
@@ -36,7 +36,7 @@ export class CSSVariable extends TreeNode<CSSVariableList, CSSVariable, never> {
 
   @observable selected = false;
 
-  toJSON(): ColorTokenJSON {
+  toJSON(): CSSVariableJSON {
     return {
       uid: this.uid,
       name: this.name,
@@ -44,7 +44,7 @@ export class CSSVariable extends TreeNode<CSSVariableList, CSSVariable, never> {
     };
   }
 
-  static fromJSON(json: ColorTokenJSON): CSSVariable {
+  static fromJSON(json: CSSVariableJSON): CSSVariable {
     return new CSSVariable({
       uid: json.uid,
       name: json.name,
