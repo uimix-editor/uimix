@@ -95,7 +95,7 @@ _:construction: - Not yet implemented_
 <script type="module" src="./external-web-components.js"></script>
 
 <!-- Global CSS variables --->
-<style global>
+<style>
   :root {
     --my-card--color: red;
   }
