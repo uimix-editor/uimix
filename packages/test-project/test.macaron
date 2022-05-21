@@ -9,6 +9,7 @@
 <style>
   :root {
     --textColor: #333333;
+    --red: #ff0000;
   }
 </style>
 <macaron-component name="my-component">
@@ -51,10 +52,11 @@
   </template>
   <style>
     :host {
+      color: var(--textColor);
       font-family: Inter;
     }
     #heading {
-      color: #ff0000;
+      color: var(--red);
     }
     #images {
       display: flex;
