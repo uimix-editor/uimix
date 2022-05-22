@@ -292,6 +292,17 @@ export class Document {
     }
     return set;
   }
+
+  getComponentMetadata(tagName: string): ComponentMetadata | undefined {
+    const component = this.components.forName(tagName);
+    if (component) {
+      return component.metadata;
+    }
+    // TODO: use map
+    return this.loadedCustomElements.find(
+      (metadata) => metadata.tagName === tagName
+    );
+  }
 }
 
 export interface DocumentJSON {
