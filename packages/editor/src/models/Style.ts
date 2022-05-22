@@ -93,12 +93,12 @@ export type StyleKey = typeof styleKeys[number];
 
 export type ExtraStyleKey = typeof extraStyleKeys[number];
 
-export type StyleJSON = {
+export type StyleProps = {
   [key in StyleKey]?: string;
 };
 
 const StyleBase: {
-  new (): StyleJSON;
+  new (): StyleProps;
 } = class {
   constructor() {
     for (const key of styleKeys) {
@@ -113,15 +113,26 @@ const StyleBase: {
   }
 };
 
+export interface StyleJSON {
+  props: StyleProps;
+  customProps: Record<string, string>;
+}
+
 export class Style extends StyleBase {
+  readonly customProps = observable.map<string, string>();
+
   toJSON(): StyleJSON {
-    return Object.fromEntries(styleKeys.map((key) => [key, this[key]]));
+    return {
+      props: Object.fromEntries(styleKeys.map((key) => [key, this[key]])),
+      customProps: Object.fromEntries(this.customProps),
+    };
   }
 
   loadJSON(json: StyleJSON): void {
     for (const key of styleKeys) {
-      this[key] = json[key];
+      this[key] = json.props[key];
     }
+    this.customProps.replace(new Map(Object.entries(json.customProps)));
   }
 
   toString(): string {
