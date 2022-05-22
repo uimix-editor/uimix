@@ -18,6 +18,7 @@ import { ElementPicker } from "../mount/ElementPicker";
 import { snapThreshold } from "../views/viewport/Constants";
 import { IconBrowserState } from "../views/sidebar/outline/IconBrowserState";
 import { moveByPixels } from "../services/MoveByPixels";
+import { getInstance } from "../models/InstanceRegistry";
 import { ElementInspectorState } from "./ElementInspectorState";
 import { VariantInspectorState } from "./VariantInspectorState";
 import { InsertMode } from "./InsertMode";
@@ -181,6 +182,11 @@ export abstract class EditorState {
           const element = new Element({ tagName: "div" });
           element.rename("div");
           instance.element.append(element);
+
+          const addedInstance = getInstance(instance.variant, element);
+          this.document.deselect();
+          addedInstance.select();
+
           this.history.commit("Add Element");
           return true;
         }),
@@ -190,6 +196,11 @@ export abstract class EditorState {
         onClick: action(() => {
           const text = new Text({ content: "Text" });
           instance.element.append(text);
+
+          const addedInstance = getInstance(instance.variant, text);
+          this.document.deselect();
+          addedInstance.select();
+
           this.history.commit("Add Text");
           return true;
         }),
