@@ -74,6 +74,49 @@ export class StylePropertyState {
   });
 }
 
+export class StyleCustomPropertyState {
+  constructor(state: StyleInspectorState, key: string) {
+    this.state = state;
+    this.key = key;
+    makeObservable(this);
+  }
+
+  readonly state: StyleInspectorState;
+  readonly key: string;
+
+  get targetInstances(): ElementInstance[] {
+    return this.state.instances;
+  }
+
+  @computed get value(): string | typeof MIXED | undefined {
+    return sameOrMixed(
+      this.targetInstances.map((i) => i.style.customProps.get(this.key))
+    );
+  }
+
+  readonly onChangeWithoutCommit = action((value: string | undefined) => {
+    for (const instance of this.targetInstances) {
+      if (value) {
+        instance.style.customProps.set(this.key, value);
+      } else {
+        instance.style.customProps.delete(this.key);
+      }
+    }
+    return true;
+  });
+
+  readonly onChangeCommit = action(() => {
+    this.state.editorState.history.commit(`Change ${startCase(this.key)}`);
+    return true;
+  });
+
+  readonly onChange = action((value: string | undefined) => {
+    this.onChangeWithoutCommit(value);
+    this.onChangeCommit();
+    return true;
+  });
+}
+
 export class StyleInspectorState {
   constructor(editorState: EditorState) {
     this.editorState = editorState;
