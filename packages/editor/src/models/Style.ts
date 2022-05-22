@@ -87,8 +87,6 @@ export const extraStyleKeys = [
   "borderColor",
 ] as const;
 
-const extraStyleKeySet = new Set(extraStyleKeys);
-
 export type StyleKey = typeof styleKeys[number];
 
 export type ExtraStyleKey = typeof extraStyleKeys[number];
@@ -177,19 +175,23 @@ export class Style extends StyleBase {
     return rule;
   }
 
-  loadPostCSS(rule: postcss.Rule | postcss.Root): void {
-    for (const child of rule.nodes) {
-      if (child.type === "decl") {
-        if (child.prop.startsWith("--")) {
-          this.customProps.set(child.prop, child.value);
+  loadPostCSS(container: postcss.Container): void {
+    const props: Record<string, string> = {};
+    const customProps: Record<string, string> = {};
+    for (const node of container.nodes) {
+      if (node.type === "decl") {
+        if (node.prop.startsWith("--")) {
+          customProps[node.prop] = node.value;
         } else {
-          const key = camelCase(child.prop) as ExtraStyleKey;
-          if (extraStyleKeySet.has(key)) {
-            this[key] = child.value;
-          }
+          props[camelCase(node.prop)] = node.value;
         }
       }
     }
+
+    for (const key of styleKeys) {
+      this[key] = props[key];
+    }
+    this.customProps.replace(new Map(Object.entries(customProps)));
   }
 
   get borderRadius(): string | typeof MIXED | undefined {
