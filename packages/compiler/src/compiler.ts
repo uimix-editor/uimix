@@ -4,8 +4,10 @@ import type * as hast from "hast";
 import * as prettier from "prettier";
 import { upperFirst, camelCase } from "lodash-es";
 import { toHtml } from "hast-util-to-html";
+import dedent from "dedent";
 import { parseHTMLFragment } from "./util";
 import { fixAssetPathInCSS, fixAssetPathInHTMLTree } from "./fix-asset-path";
+import { resetCSS } from "./resetCSS";
 
 export function compileFile(filePath: string, outputDir?: string): void {
   const data = fs.readFileSync(filePath, "utf8");
@@ -48,8 +50,8 @@ function compileComponent(ast: hast.Element): string {
       constructor() {
         super();
 
-        const style = \`${style}\`;
-        const template = \`${template}\`;
+        const style = \`\n${resetCSS}\n${dedent(style)}\`;
+        const template = \`\n${dedent(template)}\`;
 
         this.attachShadow({ mode: "open" });
         this.shadowRoot.innerHTML = ${"`<style>${style}</style>${template}`"};

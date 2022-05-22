@@ -134,3 +134,24 @@
     }
   </style>
 </macaron-component>
+<macaron-component name="box-sizing-test">
+  <macaron-variant x="680" y="0"></macaron-variant>
+  <template> Box Sizing Test </template>
+  <style>
+    :host {
+      width: 170px;
+      height: 32px;
+      display: block;
+      padding-top: 4px;
+      padding-right: 4px;
+      padding-bottom: 4px;
+      padding-left: 4px;
+      color: white;
+      font-family: Inter;
+      font-size: 20px;
+      line-height: 24px;
+      text-align: center;
+      background: #00ff7c;
+    }
+  </style>
+</macaron-component>
