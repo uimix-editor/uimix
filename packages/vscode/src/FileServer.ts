@@ -12,7 +12,7 @@ export class FileServer {
     this.publicPathUri = rootUri;
     this._server = http.createServer((request, response) => {
       return handler(request, response, {
-        public: rootUri.path,
+        public: rootUri.fsPath,
         directoryListing: false,
         rewrites: excludedFiles.map((excludedFile) => {
           return {
