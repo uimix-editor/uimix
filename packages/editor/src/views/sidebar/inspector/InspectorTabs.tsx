@@ -58,21 +58,13 @@ export const InspectorTabs: React.FC = observer(function InspectorTabs() {
     }
   }
 
-  switch (type) {
-    case "text": {
-      return (
-        <TabArea>
-          <InspectorTabBar>
-            <InspectorTabBarItem aria-selected>Text</InspectorTabBarItem>
-          </InspectorTabBar>
-        </TabArea>
-      );
-    }
-    case "variant":
-    case "element": {
-      return (
-        <TabArea>
-          <InspectorTabBar>
+  const showsStyle = type === "element" || type === "variant";
+
+  return (
+    <TabArea>
+      <InspectorTabBar>
+        {showsStyle ? (
+          <>
             <InspectorTabBarItem
               aria-selected={editorState.currentInspectorTab === "element"}
               onClick={onClickElementTab}
@@ -85,34 +77,29 @@ export const InspectorTabs: React.FC = observer(function InspectorTabs() {
             >
               Style
             </InspectorTabBarItem>
-          </InspectorTabBar>
-          <Scrollable hidden={editorState.currentInspectorTab !== "element"}>
-            {type === "variant" ? <VariantInspector /> : <ElementInspector />}
-          </Scrollable>
-          <Scrollable hidden={editorState.currentInspectorTab !== "style"}>
-            <StyleInspector />
-          </Scrollable>
-        </TabArea>
-      );
-    }
-    case "document": {
-      return (
-        <TabArea>
-          <InspectorTabBar>
-            <InspectorTabBarItem aria-selected>Document</InspectorTabBarItem>
-          </InspectorTabBar>
+          </>
+        ) : (
+          <InspectorTabBarItem aria-selected>
+            {startCase(type)}
+          </InspectorTabBarItem>
+        )}
+      </InspectorTabBar>
+      <Scrollable
+        hidden={showsStyle && editorState.currentInspectorTab !== "element"}
+      >
+        {type === "document" ? (
           <DocumentInspector />
-        </TabArea>
-      );
-    }
-    case "component": {
-      return (
-        <TabArea>
-          <InspectorTabBar>
-            <InspectorTabBarItem aria-selected>Component</InspectorTabBarItem>
-          </InspectorTabBar>
-        </TabArea>
-      );
-    }
-  }
+        ) : type === "variant" ? (
+          <VariantInspector />
+        ) : (
+          <ElementInspector />
+        )}
+      </Scrollable>
+      <Scrollable
+        hidden={!showsStyle || editorState.currentInspectorTab !== "style"}
+      >
+        <StyleInspector />
+      </Scrollable>
+    </TabArea>
+  );
 });
