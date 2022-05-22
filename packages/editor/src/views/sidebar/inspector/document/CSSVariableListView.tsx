@@ -2,7 +2,6 @@ import { action } from "mobx";
 import React, { useMemo } from "react";
 import styled from "styled-components";
 import { popoverStyle } from "@seanchas116/paintkit/src/components/Common";
-import { PopoverButton } from "@seanchas116/paintkit/src/components/PopoverButton";
 import {
   TreeRow,
   TreeRowNameEdit,
@@ -15,6 +14,7 @@ import {
 } from "@seanchas116/paintkit/src/components/treeview/TreeViewItem";
 import { ColorPicker } from "@seanchas116/paintkit/src/components/color/ColorPicker";
 import { isValidCSSIdentifier } from "@seanchas116/paintkit/src/util/Name";
+import { PopoverCaster } from "@seanchas116/paintkit/src/components/PopoverCaster";
 import { CSSVariable } from "../../../../models/CSSVariable";
 import { EditorState } from "../../../../state/EditorState";
 import { CSSVariableList } from "../../../../models/CSSVariableList";
@@ -67,10 +67,12 @@ class CSSVariableItem extends LeafTreeViewItem {
 
     return (
       <TreeRow inverted={options.inverted}>
-        <PopoverButton
-          button={(open, onClick) => (
+        <PopoverCaster
+          anchor={(open) => (
             <ColorIcon
-              onClick={onClick}
+              onClick={(e) => {
+                open(e.currentTarget.getBoundingClientRect());
+              }}
               style={
                 {
                   "--color": value.toString(),
