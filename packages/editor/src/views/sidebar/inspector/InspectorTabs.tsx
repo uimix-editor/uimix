@@ -91,9 +91,9 @@ export const InspectorTabs: React.FC = observer(function InspectorTabs() {
           <DocumentInspector />
         ) : type === "variant" ? (
           <VariantInspector />
-        ) : (
+        ) : type === "element" ? (
           <ElementInspector />
-        )}
+        ) : undefined}
       </Scrollable>
       <Scrollable
         hidden={!showsStyle || editorState.currentInspectorTab !== "style"}
