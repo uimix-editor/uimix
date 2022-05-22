@@ -7,16 +7,12 @@ import {
   InspectorTabBarItem,
 } from "@seanchas116/paintkit/src/components/sidebar/InspectorTabBar";
 import { WidthResizeHandle } from "@seanchas116/paintkit/src/components/sidebar/WidthResizeHandle";
-import { Scrollable } from "@seanchas116/paintkit/src/components/Scrollable";
 import { action } from "mobx";
 import { observer } from "mobx-react-lite";
 import { useEditorState } from "../EditorStateContext";
 import { OutlineTreeView } from "./outline/OutlineTreeView";
-import { ElementInspector } from "./inspector/element/ElementInspector";
-import { VariantInspector } from "./inspector/VariantInspector";
-import { StyleInspector } from "./inspector/style/StyleInspector";
 import { AssetBrowser } from "./outline/AssetBrowser";
-import { DocumentInspector } from "./inspector/document/DocumentInspector";
+import { InspectorTabs } from "./inspector/InspectorTabs";
 
 const RightSideBarWrap = styled.div`
   position: relative;
@@ -50,18 +46,6 @@ export const RightSideBar: React.FC = observer(() => {
   const onClickAssetsTab = useCallback(
     action(() => {
       editorState.currentOutlineTab = "assets";
-    }),
-    [editorState]
-  );
-  const onClickElementTab = useCallback(
-    action(() => {
-      editorState.currentInspectorTab = "element";
-    }),
-    [editorState]
-  );
-  const onClickStyleTab = useCallback(
-    action(() => {
-      editorState.currentInspectorTab = "style";
     }),
     [editorState]
   );
@@ -105,34 +89,7 @@ export const RightSideBar: React.FC = observer(() => {
           hidden={editorState.currentOutlineTab !== "outline"}
         >
           <OutlineTreeView />
-          <TabArea hidden={editorState.currentOutlineTab === "assets"}>
-            <InspectorTabBar>
-              <InspectorTabBarItem
-                aria-selected={editorState.currentInspectorTab === "element"}
-                onClick={onClickElementTab}
-              >
-                Element
-              </InspectorTabBarItem>
-              <InspectorTabBarItem
-                aria-selected={editorState.currentInspectorTab === "style"}
-                onClick={onClickStyleTab}
-              >
-                Style
-              </InspectorTabBarItem>
-            </InspectorTabBar>
-            <Scrollable hidden={editorState.currentInspectorTab !== "element"}>
-              {editorState.variantInspectorState.isVisible ? (
-                <VariantInspector />
-              ) : editorState.elementInspectorState.isVisible ? (
-                <ElementInspector />
-              ) : (
-                <DocumentInspector />
-              )}
-            </Scrollable>
-            <Scrollable hidden={editorState.currentInspectorTab !== "style"}>
-              <StyleInspector />
-            </Scrollable>
-          </TabArea>
+          <InspectorTabs />
         </VSplitter>
         <AssetBrowser hidden={editorState.currentOutlineTab !== "assets"} />
       </TabArea>
