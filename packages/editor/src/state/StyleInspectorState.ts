@@ -60,16 +60,14 @@ export class StylePropertyState {
     return true;
   });
 
-  readonly onChangeCommit = action(() => {
+  readonly onCommit = action(() => {
     this.state.editorState.history.commit(`Change ${startCase(this.key)}`);
     return true;
   });
 
   readonly onChange = action((value: string | undefined) => {
-    for (const instance of this.targetInstances) {
-      instance.style[this.key] = value || undefined;
-    }
-    this.state.editorState.history.commit(`Change ${startCase(this.key)}`);
+    this.onChangeWithoutCommit(value);
+    this.onCommit();
     return true;
   });
 }
