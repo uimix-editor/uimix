@@ -5,6 +5,7 @@ import {
 import { MIXED, sameOrMixed } from "@seanchas116/paintkit/src/util/Mixed";
 import { startCase } from "lodash-es";
 import { action, computed, makeObservable, observable } from "mobx";
+import { CustomElementMetadata } from "../models/CustomElementMetadata";
 import { ElementInstance } from "../models/ElementInstance";
 import {
   ExtraStyleKey,
@@ -119,6 +120,17 @@ export class StyleInspectorState {
 
   @computed get svgInstances(): ElementInstance[] {
     return this.instances.filter((i) => i.element.tagName === "svg");
+  }
+
+  @computed get tagName(): string | typeof MIXED | undefined {
+    return sameOrMixed(this.instances.map((i) => i.element.tagName));
+  }
+
+  @computed get customElementMetadata(): CustomElementMetadata | undefined {
+    const { tagName } = this;
+    if (typeof tagName === "string") {
+      return this.editorState.document.getCustomElementMetadata(tagName);
+    }
   }
 
   readonly props: Record<ExtraStyleKey, StylePropertyState>;

@@ -7,6 +7,7 @@ import { StyleInspectorState } from "../../../../state/StyleInspectorState";
 import { useEditorState } from "../../../EditorStateContext";
 import { BackgroundPane } from "./BackgroundPane";
 import { BorderPane } from "./BorderPane";
+import { CSSVariablePane } from "./CSSVariablePane";
 import { EffectsPane } from "./EffectsPane";
 import { FlexItemPane } from "./FlexItemPane";
 import { ImagePane } from "./ImagePane";
@@ -54,6 +55,7 @@ export const StyleInspector: React.FC = observer(function StyleInspector() {
       <BackgroundPane state={state} />
       <BorderPane state={state} />
       <EffectsPane state={state} />
+      <CSSVariablePane state={state} />
     </StyleInspectorWrap>
   );
 });
