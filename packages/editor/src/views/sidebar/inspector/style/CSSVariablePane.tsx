@@ -9,7 +9,10 @@ import {
 } from "@seanchas116/paintkit/src/components/sidebar/Inspector";
 import { Label } from "@seanchas116/paintkit/src/components/Label";
 import { CSSColorInput } from "@seanchas116/paintkit/src/components/css/CSSColorInput";
-import { StyleInspectorState } from "../../../../state/StyleInspectorState";
+import {
+  StyleCustomPropertyState,
+  StyleInspectorState,
+} from "../../../../state/StyleInspectorState";
 
 export const CSSVariablePane: React.FC<{
   state: StyleInspectorState;
@@ -26,10 +29,16 @@ export const CSSVariablePane: React.FC<{
       </PaneHeadingRow>
       <RowGroup>
         {customElementMetadata.cssVariables.map((cssVariable) => {
+          const propState = new StyleCustomPropertyState(state, cssVariable);
+
           return (
             <TopLabelArea key={cssVariable}>
               <Label>{cssVariable}</Label>
-              <CSSColorInput />
+              <CSSColorInput
+                value={propState.value}
+                onChange={propState.onChangeWithoutCommit}
+                onChangeEnd={propState.onCommit}
+              />
             </TopLabelArea>
           );
         })}

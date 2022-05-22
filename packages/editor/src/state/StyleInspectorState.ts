@@ -105,14 +105,14 @@ export class StyleCustomPropertyState {
     return true;
   });
 
-  readonly onChangeCommit = action(() => {
+  readonly onCommit = action(() => {
     this.state.editorState.history.commit(`Change ${startCase(this.key)}`);
     return true;
   });
 
   readonly onChange = action((value: string | undefined) => {
     this.onChangeWithoutCommit(value);
-    this.onChangeCommit();
+    this.onCommit();
     return true;
   });
 }
