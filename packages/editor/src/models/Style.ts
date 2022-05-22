@@ -144,19 +144,15 @@ export class Style extends StyleBase {
         rules.push(`${kebabCase(key)}:${value};`);
       }
     }
+    for (const [key, value] of this.customProps) {
+      rules.push(`${key}:${value};`);
+    }
     return rules.join("");
   }
 
   loadString(styleString: string): void {
     const root = postcss.parse(styleString);
-    for (const child of root.nodes) {
-      if (child.type === "decl") {
-        const key = camelCase(child.prop) as ExtraStyleKey;
-        if (extraStyleKeySet.has(key)) {
-          this[key] = child.value;
-        }
-      }
-    }
+    this.loadPostCSS(root);
   }
 
   toPostCSS(defaults?: postcss.RuleProps): postcss.Rule {
@@ -171,20 +167,28 @@ export class Style extends StyleBase {
         });
       }
     }
+    for (const [key, value] of this.customProps) {
+      rule.append({
+        prop: key,
+        value,
+      });
+    }
 
     return rule;
   }
 
-  loadPostCSS(rule: postcss.Rule): void {
-    const props: Record<string, string> = {};
-    for (const node of rule.nodes) {
-      if (node.type === "decl") {
-        props[node.prop] = node.value;
+  loadPostCSS(rule: postcss.Rule | postcss.Root): void {
+    for (const child of rule.nodes) {
+      if (child.type === "decl") {
+        if (child.prop.startsWith("--")) {
+          this.customProps.set(child.prop, child.value);
+        } else {
+          const key = camelCase(child.prop) as ExtraStyleKey;
+          if (extraStyleKeySet.has(key)) {
+            this[key] = child.value;
+          }
+        }
       }
-    }
-
-    for (const key of styleKeys) {
-      this[key] = props[kebabCase(key)];
     }
   }
 
