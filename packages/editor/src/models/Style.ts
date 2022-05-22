@@ -1,3 +1,4 @@
+import { replaceCSSVariables } from "@seanchas116/paintkit/src/util/CSS";
 import { MIXED, sameOrMixed } from "@seanchas116/paintkit/src/util/Mixed";
 import { stripQuotes } from "@seanchas116/paintkit/src/util/String";
 import { camelCase, kebabCase } from "lodash-es";
@@ -260,6 +261,22 @@ export class Style extends StyleBase {
       const families = fontFamily.split(",");
       for (const family of families) {
         result.add(stripQuotes(family.trim()));
+      }
+    }
+
+    return result;
+  }
+
+  get usedCSSVariables(): Set<string> {
+    const result = new Set<string>();
+
+    for (const key of styleKeys) {
+      const value = this[key];
+      if (value) {
+        replaceCSSVariables(value, (name) => {
+          result.add(name);
+          return ""; // return value not used
+        });
       }
     }
 
