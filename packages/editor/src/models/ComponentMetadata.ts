@@ -1,8 +1,8 @@
 export interface ComponentMetadata {
   /**
-   * The name of the component.
+   * The tag name of the component.
    */
-  name: string;
+  tagName: string;
 
   /**
    * The thumbnail data URL of the component.

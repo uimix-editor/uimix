@@ -5,6 +5,7 @@ import { last } from "lodash-es";
 import { computed, makeObservable, observable } from "mobx";
 import { changeTagName } from "../services/ChangeTagName";
 import { Component, ComponentJSON } from "./Component";
+import { ComponentMetadata } from "./ComponentMetadata";
 import { CSSVariableJSON } from "./CSSVariable";
 import { CSSVariableList } from "./CSSVariableList";
 import { Element } from "./Element";
@@ -280,7 +281,7 @@ export class Document {
 
   readonly preludeStyleSheets = observable.array<string>([]);
   readonly preludeScripts = observable.array<string>([]);
-  readonly loadedCustomElements = observable.array<LoadedCustomElement>();
+  readonly loadedCustomElements = observable.array<ComponentMetadata>();
 
   @computed.struct get usedFontFamilies(): Set<string> {
     const set = new Set<string>();
@@ -296,9 +297,4 @@ export class Document {
 export interface DocumentJSON {
   components: ComponentJSON[];
   cssVariables: CSSVariableJSON[];
-}
-
-export interface LoadedCustomElement {
-  tagName: string;
-  thumbnail?: string;
 }

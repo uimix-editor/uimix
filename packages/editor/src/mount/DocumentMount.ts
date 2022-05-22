@@ -3,8 +3,9 @@ import { assertNonNull } from "@seanchas116/paintkit/src/util/Assert";
 import { resetCSS } from "../../../compiler/src/resetCSS";
 import { Component } from "../models/Component";
 import { EditorState } from "../state/EditorState";
-import { Document, LoadedCustomElement } from "../models/Document";
+import { Document } from "../models/Document";
 import { captureDOM } from "../util/CaptureDOM";
+import { ComponentMetadata } from "../models/ComponentMetadata";
 import { BoundingBoxUpdateScheduler } from "./BoundingBoxUpdateScheduler";
 import { ComponentMount } from "./ComponentMount";
 import { MountRegistry } from "./MountRegistry";
@@ -237,9 +238,9 @@ export class DocumentMount {
   private async updateCustomElementThumbnails(
     tagNames: string[]
   ): Promise<void> {
-    const renderThumbnail = async (
+    const getComponentMetadata = async (
       tagName: string
-    ): Promise<LoadedCustomElement> => {
+    ): Promise<ComponentMetadata> => {
       const elem = this.domDocument.createElement(tagName);
       elem.append("Content");
 
@@ -261,20 +262,22 @@ export class DocumentMount {
         return {
           tagName,
           thumbnail,
+          cssVariables: [], // TODO
         };
       } catch (e) {
         console.error(e);
         container.remove();
         return {
           tagName,
+          cssVariables: [], // TODO
         };
       }
     };
 
-    const elements = await Promise.all(tagNames.map(renderThumbnail));
+    const metadatas = await Promise.all(tagNames.map(getComponentMetadata));
 
     runInAction(() => {
-      this.document.loadedCustomElements.replace(elements);
+      this.document.loadedCustomElements.replace(metadatas);
     });
   }
 }

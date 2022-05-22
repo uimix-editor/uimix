@@ -3,7 +3,7 @@ import { observer } from "mobx-react-lite";
 import { useState } from "react";
 import styled from "styled-components";
 import { Component } from "../../../models/Component";
-import { LoadedCustomElement } from "../../../models/Document";
+import { ComponentMetadata } from "../../../models/ComponentMetadata";
 import { useEditorState } from "../../EditorStateContext";
 import {
   AssetGrid,
@@ -52,7 +52,7 @@ export const ComponentBrowser: React.FC<React.HTMLAttributes<HTMLDivElement>> =
           <AssetGrid>
             {customElements.map((customElement) => (
               <ExternalItem
-                customElement={customElement}
+                metadata={customElement}
                 key={customElement.tagName}
               />
             ))}
@@ -83,23 +83,23 @@ const Item: React.FC<{
 });
 
 const ExternalItem: React.FC<{
-  customElement: LoadedCustomElement;
-}> = observer(function Item({ customElement }) {
+  metadata: ComponentMetadata;
+}> = observer(function Item({ metadata }) {
   return (
     <AssetGridItem>
       <AssetGridItemThumbnail
-        src={customElement.thumbnail}
+        src={metadata.thumbnail}
         loading="lazy"
         draggable
         onDragStart={(e) => {
           e.dataTransfer.effectAllowed = "copy";
           e.dataTransfer.setData(
             "text/html",
-            `<${customElement.tagName}>Content</${customElement.tagName}>`
+            `<${metadata.tagName}>Content</${metadata.tagName}>`
           );
         }}
       />
-      <AssetGridItemTitle>{customElement.tagName}</AssetGridItemTitle>
+      <AssetGridItemTitle>{metadata.tagName}</AssetGridItemTitle>
     </AssetGridItem>
   );
 });

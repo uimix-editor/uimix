@@ -224,7 +224,7 @@ export class Component extends TreeNode<ComponentList, Component, never> {
 
   get metadata(): ComponentMetadata {
     return {
-      name: this.name,
+      tagName: this.name,
       thumbnail: this.thumbnail,
       cssVariables: [...this.usedCSSVariables],
     };
