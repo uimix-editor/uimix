@@ -1,6 +1,6 @@
 import { TreeNode } from "@seanchas116/paintkit/src/util/TreeNode";
 import { computed, makeObservable, observable } from "mobx";
-import { ComponentMetadata } from "./ComponentMetadata";
+import { CustomElementMetadata } from "./CustomElementMetadata";
 import { ComponentList, Document } from "./Document";
 import { Element, ElementJSON } from "./Element";
 import { ElementInstance } from "./ElementInstance";
@@ -222,7 +222,7 @@ export class Component extends TreeNode<ComponentList, Component, never> {
     return usedVariables;
   }
 
-  get metadata(): ComponentMetadata {
+  get metadata(): CustomElementMetadata {
     return {
       tagName: this.name,
       thumbnail: this.thumbnail,

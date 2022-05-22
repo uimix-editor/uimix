@@ -1,4 +1,4 @@
-export interface ComponentMetadata {
+export interface CustomElementMetadata {
   /**
    * The tag name of the component.
    */

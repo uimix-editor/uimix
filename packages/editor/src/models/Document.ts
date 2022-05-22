@@ -5,7 +5,7 @@ import { last } from "lodash-es";
 import { computed, makeObservable, observable } from "mobx";
 import { changeTagName } from "../services/ChangeTagName";
 import { Component, ComponentJSON } from "./Component";
-import { ComponentMetadata } from "./ComponentMetadata";
+import { CustomElementMetadata } from "./CustomElementMetadata";
 import { CSSVariableJSON } from "./CSSVariable";
 import { CSSVariableList } from "./CSSVariableList";
 import { Element } from "./Element";
@@ -281,7 +281,7 @@ export class Document {
 
   readonly preludeStyleSheets = observable.array<string>([]);
   readonly preludeScripts = observable.array<string>([]);
-  readonly loadedCustomElements = observable.array<ComponentMetadata>();
+  readonly loadedCustomElements = observable.array<CustomElementMetadata>();
 
   @computed.struct get usedFontFamilies(): Set<string> {
     const set = new Set<string>();
@@ -293,7 +293,7 @@ export class Document {
     return set;
   }
 
-  getComponentMetadata(tagName: string): ComponentMetadata | undefined {
+  getCustomElementMetadata(tagName: string): CustomElementMetadata | undefined {
     const component = this.components.forName(tagName);
     if (component) {
       return component.metadata;

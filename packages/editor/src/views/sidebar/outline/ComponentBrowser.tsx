@@ -3,7 +3,7 @@ import { observer } from "mobx-react-lite";
 import { useState } from "react";
 import styled from "styled-components";
 import { Component } from "../../../models/Component";
-import { ComponentMetadata } from "../../../models/ComponentMetadata";
+import { CustomElementMetadata } from "../../../models/CustomElementMetadata";
 import { useEditorState } from "../../EditorStateContext";
 import {
   AssetGrid,
@@ -83,7 +83,7 @@ const Item: React.FC<{
 });
 
 const ExternalItem: React.FC<{
-  metadata: ComponentMetadata;
+  metadata: CustomElementMetadata;
 }> = observer(function Item({ metadata }) {
   return (
     <AssetGridItem>
