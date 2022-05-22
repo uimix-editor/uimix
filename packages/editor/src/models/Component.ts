@@ -200,23 +200,14 @@ export class Component extends TreeNode<ComponentList, Component, never> {
     return families;
   }
 
-  @computed get usedCSSVariables(): Set<string> {
+  @computed.struct get usedCSSVariables(): Set<string> {
     const usedVariables = new Set<string>();
 
-    const visitInstance = (instance: ElementInstance): void => {
-      for (const value of instance.style.usedCSSVariables) {
-        usedVariables.add(value);
-      }
-
-      for (const child of instance.children) {
-        if (child.type === "element") {
-          visitInstance(child);
-        }
-      }
-    };
-
     for (const variant of this.allVariants) {
-      visitInstance(variant.rootInstance!);
+      for (const variable of variant.rootInstance?.usedCSSVariables ??
+        new Set()) {
+        usedVariables.add(variable);
+      }
     }
 
     return usedVariables;
