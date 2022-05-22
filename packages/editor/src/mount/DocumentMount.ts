@@ -1,6 +1,6 @@
 import { computed, makeObservable, reaction, runInAction } from "mobx";
-import dedent from "dedent";
 import { assertNonNull } from "@seanchas116/paintkit/src/util/Assert";
+import { resetCSS } from "../../../compiler/src/resetCSS";
 import { Component } from "../models/Component";
 import { EditorState } from "../state/EditorState";
 import { Document, LoadedCustomElement } from "../models/Document";
@@ -10,21 +10,6 @@ import { ComponentMount } from "./ComponentMount";
 import { MountRegistry } from "./MountRegistry";
 import { ComponentStyleMount } from "./ComponentStyleMount";
 import { MountContext } from "./MountContext";
-
-// minimal CSS reset
-const resetCSS = dedent`
-  :host {
-    box-sizing: border-box;
-  }
-  :host *,
-  :host *::before,
-  :host *::after {
-    box-sizing: inherit;
-  }
-  [hidden] {
-    display: none !important;
-  }
-`;
 
 function getGoogleFontLink(fontFamilies: string[]): string {
   const query = fontFamilies
