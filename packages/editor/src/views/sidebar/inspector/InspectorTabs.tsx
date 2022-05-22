@@ -7,6 +7,7 @@ import {
 import { Scrollable } from "@seanchas116/paintkit/src/components/Scrollable";
 import { action } from "mobx";
 import { observer } from "mobx-react-lite";
+import { startCase } from "lodash-es";
 import { useEditorState } from "../../EditorStateContext";
 import { ElementInspector } from "./element/ElementInspector";
 import { VariantInspector } from "./VariantInspector";
@@ -57,47 +58,61 @@ export const InspectorTabs: React.FC = observer(function InspectorTabs() {
     }
   }
 
-  let content: React.ReactNode;
-
-  if (type === "variant" || type === "element") {
-    content = (
-      <>
-        <InspectorTabBar>
-          <InspectorTabBarItem
-            aria-selected={editorState.currentInspectorTab === "element"}
-            onClick={onClickElementTab}
-          >
-            Element
-          </InspectorTabBarItem>
-          <InspectorTabBarItem
-            aria-selected={editorState.currentInspectorTab === "style"}
-            onClick={onClickStyleTab}
-          >
-            Style
-          </InspectorTabBarItem>
-        </InspectorTabBar>
-        <Scrollable hidden={editorState.currentInspectorTab !== "element"}>
-          {type === "variant" ? <VariantInspector /> : <ElementInspector />}
-        </Scrollable>
-        <Scrollable hidden={editorState.currentInspectorTab !== "style"}>
-          <StyleInspector />
-        </Scrollable>
-      </>
-    );
-  } else if (type === "document") {
-    content = (
-      <>
-        <InspectorTabBar>
-          <InspectorTabBarItem aria-selected>Document</InspectorTabBarItem>
-        </InspectorTabBar>
-        <DocumentInspector />
-      </>
-    );
+  switch (type) {
+    case "text": {
+      return (
+        <TabArea>
+          <InspectorTabBar>
+            <InspectorTabBarItem aria-selected>Text</InspectorTabBarItem>
+          </InspectorTabBar>
+        </TabArea>
+      );
+    }
+    case "variant":
+    case "element": {
+      return (
+        <TabArea>
+          <InspectorTabBar>
+            <InspectorTabBarItem
+              aria-selected={editorState.currentInspectorTab === "element"}
+              onClick={onClickElementTab}
+            >
+              {startCase(type)}
+            </InspectorTabBarItem>
+            <InspectorTabBarItem
+              aria-selected={editorState.currentInspectorTab === "style"}
+              onClick={onClickStyleTab}
+            >
+              Style
+            </InspectorTabBarItem>
+          </InspectorTabBar>
+          <Scrollable hidden={editorState.currentInspectorTab !== "element"}>
+            {type === "variant" ? <VariantInspector /> : <ElementInspector />}
+          </Scrollable>
+          <Scrollable hidden={editorState.currentInspectorTab !== "style"}>
+            <StyleInspector />
+          </Scrollable>
+        </TabArea>
+      );
+    }
+    case "document": {
+      return (
+        <TabArea>
+          <InspectorTabBar>
+            <InspectorTabBarItem aria-selected>Document</InspectorTabBarItem>
+          </InspectorTabBar>
+          <DocumentInspector />
+        </TabArea>
+      );
+    }
+    case "component": {
+      return (
+        <TabArea>
+          <InspectorTabBar>
+            <InspectorTabBarItem aria-selected>Component</InspectorTabBarItem>
+          </InspectorTabBar>
+        </TabArea>
+      );
+    }
   }
-
-  return (
-    <TabArea hidden={editorState.currentOutlineTab === "assets"}>
-      {content}
-    </TabArea>
-  );
 });
