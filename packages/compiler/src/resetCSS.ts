@@ -5,9 +5,7 @@ export const resetCSS = dedent`
   :host {
     box-sizing: border-box;
   }
-  :host *,
-  :host *::before,
-  :host *::after {
+  *, *::before, *::after {
     box-sizing: inherit;
   }
   [hidden] {
