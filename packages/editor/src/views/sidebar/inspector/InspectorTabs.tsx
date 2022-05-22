@@ -38,34 +38,66 @@ export const InspectorTabs: React.FC = observer(function InspectorTabs() {
     [editorState]
   );
 
+  let type: "element" | "text" | "variant" | "component" | "document";
+
+  const selectedInstances = editorState.document.selectedInstances;
+  if (selectedInstances.length) {
+    if (selectedInstances.some((i) => !i.parent)) {
+      type = "variant";
+    } else if (selectedInstances.some((i) => i.type === "element")) {
+      type = "element";
+    } else {
+      type = "text";
+    }
+  } else {
+    if (editorState.document.selectedComponents.length) {
+      type = "component";
+    } else {
+      type = "document";
+    }
+  }
+
+  let content: React.ReactNode;
+
+  if (type === "variant" || type === "element") {
+    content = (
+      <>
+        <InspectorTabBar>
+          <InspectorTabBarItem
+            aria-selected={editorState.currentInspectorTab === "element"}
+            onClick={onClickElementTab}
+          >
+            Element
+          </InspectorTabBarItem>
+          <InspectorTabBarItem
+            aria-selected={editorState.currentInspectorTab === "style"}
+            onClick={onClickStyleTab}
+          >
+            Style
+          </InspectorTabBarItem>
+        </InspectorTabBar>
+        <Scrollable hidden={editorState.currentInspectorTab !== "element"}>
+          {type === "variant" ? <VariantInspector /> : <ElementInspector />}
+        </Scrollable>
+        <Scrollable hidden={editorState.currentInspectorTab !== "style"}>
+          <StyleInspector />
+        </Scrollable>
+      </>
+    );
+  } else if (type === "document") {
+    content = (
+      <>
+        <InspectorTabBar>
+          <InspectorTabBarItem aria-selected>Document</InspectorTabBarItem>
+        </InspectorTabBar>
+        <DocumentInspector />
+      </>
+    );
+  }
+
   return (
     <TabArea hidden={editorState.currentOutlineTab === "assets"}>
-      <InspectorTabBar>
-        <InspectorTabBarItem
-          aria-selected={editorState.currentInspectorTab === "element"}
-          onClick={onClickElementTab}
-        >
-          Element
-        </InspectorTabBarItem>
-        <InspectorTabBarItem
-          aria-selected={editorState.currentInspectorTab === "style"}
-          onClick={onClickStyleTab}
-        >
-          Style
-        </InspectorTabBarItem>
-      </InspectorTabBar>
-      <Scrollable hidden={editorState.currentInspectorTab !== "element"}>
-        {editorState.variantInspectorState.isVisible ? (
-          <VariantInspector />
-        ) : editorState.elementInspectorState.isVisible ? (
-          <ElementInspector />
-        ) : (
-          <DocumentInspector />
-        )}
-      </Scrollable>
-      <Scrollable hidden={editorState.currentInspectorTab !== "style"}>
-        <StyleInspector />
-      </Scrollable>
+      {content}
     </TabArea>
   );
 });
