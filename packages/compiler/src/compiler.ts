@@ -50,8 +50,8 @@ function compileComponent(ast: hast.Element): string {
       constructor() {
         super();
 
-        const style = \`${resetCSS}\n${dedent(style)}\`;
-        const template = \`${template}\`;
+        const style = \`\n${resetCSS}\n${dedent(style)}\`;
+        const template = \`\n${dedent(template)}\`;
 
         this.attachShadow({ mode: "open" });
         this.shadowRoot.innerHTML = ${"`<style>${style}</style>${template}`"};
