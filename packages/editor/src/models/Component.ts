@@ -222,7 +222,7 @@ export class Component extends TreeNode<ComponentList, Component, never> {
     return usedVariables;
   }
 
-  get metadata(): CustomElementMetadata {
+  @computed get metadata(): CustomElementMetadata {
     return {
       tagName: this.name,
       thumbnail: this.thumbnail,
