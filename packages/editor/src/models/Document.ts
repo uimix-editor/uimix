@@ -5,6 +5,8 @@ import { last } from "lodash-es";
 import { computed, makeObservable, observable } from "mobx";
 import { changeTagName } from "../services/ChangeTagName";
 import { Component, ComponentJSON } from "./Component";
+import { CSSVariableJSON } from "./CSSVariable";
+import { CSSVariableList } from "./CSSVariableList";
 import { Element } from "./Element";
 import { ElementInstance } from "./ElementInstance";
 import { Fragment } from "./Fragment";
@@ -29,6 +31,26 @@ export class ComponentList extends TreeNode<never, ComponentList, Component> {
   forName(name: string): Component {
     return this.getDescendantByName(name) as Component;
   }
+
+  toJSON(): ComponentJSON[] {
+    return this.children.map((component) => component.toJSON());
+  }
+
+  loadJSON(json: ComponentJSON[]): void {
+    const oldComponents = new Map<string, Component>();
+    for (const component of this.children) {
+      oldComponents.set(component.key, component);
+    }
+
+    this.clear();
+    for (const componentJSON of json) {
+      const component =
+        oldComponents.get(componentJSON.key) ||
+        new Component(componentJSON.key);
+      component.loadJSON(componentJSON);
+      this.append(component);
+    }
+  }
 }
 
 export class Document {
@@ -37,29 +59,18 @@ export class Document {
   }
 
   readonly components = new ComponentList(this);
+  readonly cssVariables = new CSSVariableList(this);
 
   toJSON(): DocumentJSON {
     return {
-      components: this.components.children.map((component) =>
-        component.toJSON()
-      ),
+      components: this.components.toJSON(),
+      cssVariables: this.cssVariables.toJSON(),
     };
   }
 
   loadJSON(json: DocumentJSON): void {
-    const oldComponents = new Map<string, Component>();
-    for (const component of this.components.children) {
-      oldComponents.set(component.key, component);
-    }
-
-    this.components.clear();
-    for (const componentJSON of json.components) {
-      const component =
-        oldComponents.get(componentJSON.key) ||
-        new Component(componentJSON.key);
-      component.loadJSON(componentJSON);
-      this.components.append(component);
-    }
+    this.components.loadJSON(json.components);
+    this.cssVariables.loadJSON(json.cssVariables);
   }
 
   @computed.struct get selectedInstances(): (ElementInstance | TextInstance)[] {
@@ -284,6 +295,7 @@ export class Document {
 
 export interface DocumentJSON {
   components: ComponentJSON[];
+  cssVariables: CSSVariableJSON[];
 }
 
 export interface LoadedCustomElement {

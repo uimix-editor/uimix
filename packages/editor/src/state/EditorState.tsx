@@ -47,6 +47,15 @@ export abstract class EditorState {
     return assetPath;
   }
 
+  readonly resolveImageURLCallback = this.resolveImageAssetURL.bind(this);
+
+  readonly resolveCSSVariableCallback = (varName: string): string => {
+    return (
+      this.document.cssVariables.forName(varName.slice(2))?.color.toString() ??
+      "black"
+    );
+  };
+
   readonly googleFontFamilies = new Set(
     googleFonts.items.map((item) => item.family)
   );
@@ -310,5 +319,30 @@ export abstract class EditorState {
         />
       ),
     }));
+  }
+
+  @computed get colorInputOptions(): SelectItem[] {
+    const options = this.document.cssVariables.children.map((variable) => ({
+      value: `var(--${variable.name})`,
+      text: variable.name,
+      icon: (
+        <div
+          style={{
+            width: "12px",
+            height: "12px",
+            borderRadius: "50%",
+            backgroundColor: variable.color.toString(),
+          }}
+        />
+      ),
+    }));
+
+    return [
+      {
+        type: "header",
+        text: "CSS Variables",
+      },
+      ...options,
+    ];
   }
 }

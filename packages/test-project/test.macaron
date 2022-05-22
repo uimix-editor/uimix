@@ -6,6 +6,12 @@
   type="module"
   src="https://cdn.jsdelivr.net/npm/@shoelace-style/shoelace@2.0.0-beta.73/dist/shoelace.js"
 ></script>
+<style>
+  :root {
+    --textColor: #333333;
+    --red: #ff0000;
+  }
+</style>
 <macaron-component name="my-component">
   <macaron-variant x="0" y="0"></macaron-variant>
   <macaron-variant x="200" y="0" selector=":hover"></macaron-variant>
@@ -46,10 +52,11 @@
   </template>
   <style>
     :host {
+      color: var(--textColor);
       font-family: Inter;
     }
     #heading {
-      color: #ff0000;
+      color: var(--red);
     }
     #images {
       display: flex;
@@ -82,8 +89,9 @@
         color: #008000;
       }
     }
-  </style> </macaron-component
-><macaron-component name="component-wrapper">
+  </style>
+</macaron-component>
+<macaron-component name="component-wrapper">
   <macaron-variant x="0" y="295"></macaron-variant>
   <template>
     <my-component id="my-component"></my-component>
@@ -100,8 +108,9 @@
       top: 24px;
       left: 12px;
     }
-  </style> </macaron-component
-><macaron-component name="use-shoelace">
+  </style>
+</macaron-component>
+<macaron-component name="use-shoelace">
   <macaron-variant x="0" y="572"></macaron-variant>
   <template>
     <sl-input id="input"></sl-input

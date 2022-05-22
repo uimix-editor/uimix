@@ -5,7 +5,7 @@ import { action } from "mobx";
 import React, { useRef } from "react";
 import styled from "styled-components";
 import { ElementInstance } from "../../../models/ElementInstance";
-import { parseFragment } from "../../../models/FileFormat";
+import { parseFragment } from "../../../fileFormat/fragment";
 import { TextInstance } from "../../../models/TextInstance";
 import { useEditorState } from "../../EditorStateContext";
 import { imageAssetDragMime } from "../../sidebar/outline/ImageBrowser";

@@ -15,6 +15,7 @@ import { kebabCase } from "lodash-es";
 import { observer } from "mobx-react-lite";
 import React from "react";
 import { StylePropertyState } from "../../../../state/StyleInspectorState";
+import { useEditorState } from "../../../EditorStateContext";
 
 export const StyleDimensionInput: React.FC<{
   className?: string;
@@ -71,14 +72,18 @@ export const StyleColorInput: React.FC<{
   className?: string;
   property: StylePropertyState;
 }> = observer(({ property, ...props }) => {
+  const editorState = useEditorState();
+
   return (
     <CSSColorInput
       {...props}
       title={kebabCase(property.key)}
       value={property.value}
+      options={editorState.colorInputOptions}
+      resolveCSSVariable={editorState.resolveCSSVariableCallback}
       placeholder={property.computed}
       onChange={property.onChangeWithoutCommit}
-      onChangeEnd={property.onChange}
+      onChangeEnd={property.onChangeCommit}
     />
   );
 });

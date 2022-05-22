@@ -1,8 +1,17 @@
+const globalStyle = `
+  :root {
+    --my-component--color: #ff0000;
+  }
+`;
+document.head.appendChild(document.createElement("style")).textContent =
+  globalStyle;
+
 export class MyComponent extends HTMLElement {
   constructor() {
     const style = `
       :host {
         display: block;
+        color: var(--my-component--color);
       }
     `;
 

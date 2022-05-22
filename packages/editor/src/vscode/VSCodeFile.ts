@@ -1,7 +1,7 @@
 import { JSONUndoHistory } from "@seanchas116/paintkit/src/util/JSONUndoHistory";
 import { makeObservable, observable, reaction, runInAction } from "mobx";
 import { Document, DocumentJSON } from "../models/Document";
-import { parseDocument, stringifyDocument } from "../models/FileFormat";
+import { parseDocument, stringifyDocument } from "../fileFormat/document";
 
 export class VSCodeFile {
   constructor() {

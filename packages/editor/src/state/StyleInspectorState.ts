@@ -52,19 +52,19 @@ export class StylePropertyState {
     return sameOrMixed(this.targetInstances.map((i) => i.style[this.key]));
   }
 
-  readonly onChangeWithoutCommit = action((value?: string) => {
+  readonly onChangeWithoutCommit = action((value: string | undefined) => {
     for (const instance of this.targetInstances) {
       instance.style[this.key] = value || undefined;
     }
     return true;
   });
 
-  readonly onChangeCommit = action((value?: string) => {
+  readonly onChangeCommit = action(() => {
     this.state.editorState.history.commit(`Change ${startCase(this.key)}`);
     return true;
   });
 
-  readonly onChange = action((value?: string) => {
+  readonly onChange = action((value: string | undefined) => {
     for (const instance of this.targetInstances) {
       instance.style[this.key] = value || undefined;
     }

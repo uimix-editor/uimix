@@ -1,5 +1,5 @@
 import { observer } from "mobx-react-lite";
-import React, { useCallback } from "react";
+import React from "react";
 import {
   Pane,
   PaneHeading,
@@ -8,14 +8,12 @@ import {
 } from "@seanchas116/paintkit/src/components/sidebar/Inspector";
 import { CSSBackgroundInput } from "@seanchas116/paintkit/src/components/css/CSSBackgroundInput";
 import { StyleInspectorState } from "../../../../state/StyleInspectorState";
+import { useEditorState } from "../../../EditorStateContext";
 
 export const BackgroundPane: React.FC<{
   state: StyleInspectorState;
 }> = observer(function BackgroundPane({ state }) {
-  const resolveImageURL = useCallback(
-    (url: string) => state.editorState.resolveImageAssetURL(url),
-    [state]
-  );
+  const editorState = useEditorState();
 
   return (
     <Pane>
@@ -25,9 +23,11 @@ export const BackgroundPane: React.FC<{
       <RowGroup>
         <CSSBackgroundInput
           title="background"
+          options={editorState.colorInputOptions}
           defaultPlacement="top"
           imageURLOptions={state.editorState.imageURLOptions}
-          resolveImageURL={resolveImageURL}
+          resolveImageURL={editorState.resolveImageURLCallback}
+          resolveCSSVariable={editorState.resolveCSSVariableCallback}
           value={state.props.background.value}
           placeholder={state.props.background.computed}
           onChange={state.props.background.onChangeWithoutCommit}
