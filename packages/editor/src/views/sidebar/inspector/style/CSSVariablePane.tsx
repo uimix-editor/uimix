@@ -8,7 +8,7 @@ import {
   TopLabelArea,
 } from "@seanchas116/paintkit/src/components/sidebar/Inspector";
 import { Label } from "@seanchas116/paintkit/src/components/Label";
-import { Input } from "@seanchas116/paintkit/src/components/Input";
+import { CSSColorInput } from "@seanchas116/paintkit/src/components/css/CSSColorInput";
 import { StyleInspectorState } from "../../../../state/StyleInspectorState";
 
 export const CSSVariablePane: React.FC<{
@@ -27,9 +27,9 @@ export const CSSVariablePane: React.FC<{
       <RowGroup>
         {customElementMetadata.cssVariables.map((cssVariable) => {
           return (
-            <TopLabelArea>
+            <TopLabelArea key={cssVariable}>
               <Label>{cssVariable}</Label>
-              <Input />
+              <CSSColorInput />
             </TopLabelArea>
           );
         })}
