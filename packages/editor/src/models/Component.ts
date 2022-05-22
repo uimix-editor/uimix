@@ -204,8 +204,8 @@ export class Component extends TreeNode<ComponentList, Component, never> {
     const usedVariables = new Set<string>();
 
     const visitInstance = (instance: ElementInstance): void => {
-      for (const key in instance.style.usedCSSVariables) {
-        usedVariables.add(key);
+      for (const value of instance.style.usedCSSVariables) {
+        usedVariables.add(value);
       }
 
       for (const child of instance.children) {
