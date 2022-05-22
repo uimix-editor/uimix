@@ -112,6 +112,7 @@ class ComponentWrapper extends HTMLElement {
   position: absolute;
   top: 24px;
   left: 12px;
+  --textColor: #8300b5;
 }\`;
     const template = \`
 <my-component id=\\"my-component\\"></my-component>\`;
@@ -312,6 +313,7 @@ class ComponentWrapper extends HTMLElement {
   position: absolute;
   top: 24px;
   left: 12px;
+  --textColor: #8300b5;
 }\`;
     const template = \`
 <my-component id=\\"my-component\\"></my-component>\`;
