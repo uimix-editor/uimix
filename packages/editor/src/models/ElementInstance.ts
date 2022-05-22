@@ -259,6 +259,24 @@ export class ElementInstance {
     }
     return result;
   }
+
+  @computed get usedCSSVariables(): Set<string> {
+    const usedVariables = new Set<string>();
+
+    for (const value of this.style.usedCSSVariables) {
+      usedVariables.add(value);
+    }
+
+    for (const child of this.children) {
+      if (child.type === "element") {
+        for (const value of child.usedCSSVariables) {
+          usedVariables.add(value);
+        }
+      }
+    }
+
+    return usedVariables;
+  }
 }
 
 export function instancesFromHTML(

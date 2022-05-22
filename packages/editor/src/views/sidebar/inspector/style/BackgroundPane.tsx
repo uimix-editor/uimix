@@ -31,7 +31,7 @@ export const BackgroundPane: React.FC<{
           value={state.props.background.value}
           placeholder={state.props.background.computed}
           onChange={state.props.background.onChangeWithoutCommit}
-          onChangeEnd={state.props.background.onChangeCommit}
+          onChangeEnd={state.props.background.onCommit}
         />
       </RowGroup>
     </Pane>

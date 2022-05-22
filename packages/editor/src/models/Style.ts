@@ -1,3 +1,4 @@
+import { replaceCSSVariables } from "@seanchas116/paintkit/src/util/CSS";
 import { MIXED, sameOrMixed } from "@seanchas116/paintkit/src/util/Mixed";
 import { stripQuotes } from "@seanchas116/paintkit/src/util/String";
 import { camelCase, kebabCase } from "lodash-es";
@@ -86,18 +87,16 @@ export const extraStyleKeys = [
   "borderColor",
 ] as const;
 
-const extraStyleKeySet = new Set(extraStyleKeys);
-
 export type StyleKey = typeof styleKeys[number];
 
 export type ExtraStyleKey = typeof extraStyleKeys[number];
 
-export type StyleJSON = {
+export type StyleProps = {
   [key in StyleKey]?: string;
 };
 
 const StyleBase: {
-  new (): StyleJSON;
+  new (): StyleProps;
 } = class {
   constructor() {
     for (const key of styleKeys) {
@@ -112,15 +111,26 @@ const StyleBase: {
   }
 };
 
+export interface StyleJSON {
+  props: StyleProps;
+  customProps: Record<string, string>;
+}
+
 export class Style extends StyleBase {
+  readonly customProps = observable.map<string, string>();
+
   toJSON(): StyleJSON {
-    return Object.fromEntries(styleKeys.map((key) => [key, this[key]]));
+    return {
+      props: Object.fromEntries(styleKeys.map((key) => [key, this[key]])),
+      customProps: Object.fromEntries(this.customProps),
+    };
   }
 
   loadJSON(json: StyleJSON): void {
     for (const key of styleKeys) {
-      this[key] = json[key];
+      this[key] = json.props[key];
     }
+    this.customProps.replace(new Map(Object.entries(json.customProps)));
   }
 
   toString(): string {
@@ -132,19 +142,15 @@ export class Style extends StyleBase {
         rules.push(`${kebabCase(key)}:${value};`);
       }
     }
+    for (const [key, value] of this.customProps) {
+      rules.push(`${key}:${value};`);
+    }
     return rules.join("");
   }
 
   loadString(styleString: string): void {
     const root = postcss.parse(styleString);
-    for (const child of root.nodes) {
-      if (child.type === "decl") {
-        const key = camelCase(child.prop) as ExtraStyleKey;
-        if (extraStyleKeySet.has(key)) {
-          this[key] = child.value;
-        }
-      }
-    }
+    this.loadPostCSS(root);
   }
 
   toPostCSS(defaults?: postcss.RuleProps): postcss.Rule {
@@ -159,21 +165,33 @@ export class Style extends StyleBase {
         });
       }
     }
+    for (const [key, value] of this.customProps) {
+      rule.append({
+        prop: key,
+        value,
+      });
+    }
 
     return rule;
   }
 
-  loadPostCSS(rule: postcss.Rule): void {
+  loadPostCSS(container: postcss.Container): void {
     const props: Record<string, string> = {};
-    for (const node of rule.nodes) {
+    const customProps: Record<string, string> = {};
+    for (const node of container.nodes) {
       if (node.type === "decl") {
-        props[node.prop] = node.value;
+        if (node.prop.startsWith("--")) {
+          customProps[node.prop] = node.value;
+        } else {
+          props[camelCase(node.prop)] = node.value;
+        }
       }
     }
 
     for (const key of styleKeys) {
-      this[key] = props[kebabCase(key)];
+      this[key] = props[key];
     }
+    this.customProps.replace(new Map(Object.entries(customProps)));
   }
 
   get borderRadius(): string | typeof MIXED | undefined {
@@ -260,6 +278,22 @@ export class Style extends StyleBase {
       const families = fontFamily.split(",");
       for (const family of families) {
         result.add(stripQuotes(family.trim()));
+      }
+    }
+
+    return result;
+  }
+
+  get usedCSSVariables(): Set<string> {
+    const result = new Set<string>();
+
+    for (const key of styleKeys) {
+      const value = this[key];
+      if (value) {
+        replaceCSSVariables(value, (name) => {
+          result.add(name);
+          return ""; // return value not used
+        });
       }
     }
 

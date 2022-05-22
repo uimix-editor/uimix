@@ -1,5 +1,6 @@
 import { TreeNode } from "@seanchas116/paintkit/src/util/TreeNode";
 import { computed, makeObservable, observable } from "mobx";
+import { CustomElementMetadata } from "./CustomElementMetadata";
 import { ComponentList, Document } from "./Document";
 import { Element, ElementJSON } from "./Element";
 import { ElementInstance } from "./ElementInstance";
@@ -197,6 +198,27 @@ export class Component extends TreeNode<ComponentList, Component, never> {
     }
 
     return families;
+  }
+
+  @computed.struct get usedCSSVariables(): Set<string> {
+    const usedVariables = new Set<string>();
+
+    for (const variant of this.allVariants) {
+      for (const variable of variant.rootInstance?.usedCSSVariables ??
+        new Set()) {
+        usedVariables.add(variable);
+      }
+    }
+
+    return usedVariables;
+  }
+
+  @computed get metadata(): CustomElementMetadata {
+    return {
+      tagName: this.name,
+      thumbnail: this.thumbnail,
+      cssVariables: [...this.usedCSSVariables],
+    };
   }
 }
 

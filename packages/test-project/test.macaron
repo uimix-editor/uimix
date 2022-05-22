@@ -107,6 +107,7 @@
       position: absolute;
       top: 24px;
       left: 12px;
+      --textColor: #8300b5;
     }
   </style>
 </macaron-component>

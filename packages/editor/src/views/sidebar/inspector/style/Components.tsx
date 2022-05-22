@@ -83,7 +83,7 @@ export const StyleColorInput: React.FC<{
       resolveCSSVariable={editorState.resolveCSSVariableCallback}
       placeholder={property.computed}
       onChange={property.onChangeWithoutCommit}
-      onChangeEnd={property.onChangeCommit}
+      onChangeEnd={property.onCommit}
     />
   );
 });
