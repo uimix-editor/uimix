@@ -11,7 +11,6 @@
     "build:watch": "concurrently -n widget,iframe \"yarn run build:main -- --watch\" \"yarn run build:ui -- --watch\"",
     "dev": "concurrently -n tsc,build,vite 'yarn:tsc:watch' 'yarn:build:watch' 'vite'",
     "format": "prettier --write .",
-    "test": "yarn run tsc && yarn run build",
     "tsc": "yarn run tsc:main && yarn run tsc:ui",
     "tsc:main": "tsc --noEmit -p plugin-src",
     "tsc:ui": "tsc --noEmit -p ui-src",
