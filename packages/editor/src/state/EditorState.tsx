@@ -2,11 +2,11 @@ import { MenuItem } from "@seanchas116/paintkit/src/components/menu/Menu";
 import { JSONUndoHistory } from "@seanchas116/paintkit/src/util/JSONUndoHistory";
 import { isTextInputFocused } from "@seanchas116/paintkit/src/util/CurrentFocus";
 import { Scroll } from "@seanchas116/paintkit/src/util/Scroll";
-import { action, computed, makeObservable, observable } from "mobx";
-import { Rect, Vec2 } from "paintvec";
 import { SelectItem } from "@seanchas116/paintkit/src/components/Select";
 import { isVoidElement } from "@seanchas116/paintkit/src/util/HTMLTagCategory";
 import googleFonts from "@seanchas116/paintkit/src/util/GoogleFonts.json";
+import { action, computed, makeObservable, observable } from "mobx";
+import { Rect, Vec2 } from "paintvec";
 import { Component } from "../models/Component";
 import { Document, DocumentJSON } from "../models/Document";
 import { Element } from "../models/Element";
@@ -202,6 +202,25 @@ export abstract class EditorState {
           addedInstance.select();
 
           this.history.commit("Add Text");
+          return true;
+        }),
+      },
+      {
+        type: "separator",
+      },
+      {
+        text: "Wrap Contents in Slot",
+        onClick: action(() => {
+          const slot = new Element({ tagName: "slot" });
+          slot.append(...instance.element.children);
+          instance.element.append(slot);
+
+          const slotInstance = getInstance(instance.variant, slot);
+          this.document.deselect();
+          slotInstance.select();
+          slotInstance.collapsed = false;
+
+          this.history.commit("Wrap Contents in Slot");
           return true;
         }),
       },
