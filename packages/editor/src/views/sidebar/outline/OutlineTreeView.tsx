@@ -264,16 +264,57 @@ class ElementItem extends TreeViewItem {
     return iconForTagName(this.instance.element.tagName);
   }
 
+  @computed get isInsideSlot(): boolean {
+    if (this.instance.element.tagName === "slot") {
+      return true;
+    }
+    if (this.parent instanceof ElementItem) {
+      return this.parent.isInsideSlot;
+    }
+    return false;
+  }
+
   renderRow(options: { inverted: boolean }): React.ReactNode {
+    if (this.instance.element.tagName === "slot") {
+      return (
+        <StyledRow
+          ref={(e) => (this.rowElement = e || undefined)}
+          inverted={options.inverted}
+        >
+          <ComponentIcon icon={this.icon} />
+          <StyledNameEdit
+            color={colors.componentText}
+            value={this.instance.element.id}
+            placeholder="(main slot)"
+            // TODO: validate
+            onChange={this.onNameChange}
+            disabled={!options.inverted}
+            trigger="click"
+          />
+        </StyledRow>
+      );
+    }
+
     return (
       <StyledRow
         ref={(e) => (this.rowElement = e || undefined)}
         inverted={options.inverted}
       >
-        <ElementIcon icon={this.icon} />
-        <TagName> {this.instance.element.tagName}</TagName>
+        <ElementIcon
+          icon={this.icon}
+          style={{
+            color: this.isInsideSlot ? colors.componentText : colors.text,
+          }}
+        />
+        <TagName
+          style={{
+            color: this.isInsideSlot ? colors.componentText : colors.text,
+          }}
+        >
+          {this.instance.element.tagName}
+        </TagName>
         <StyledNameEdit
-          color={colors.text}
+          color={this.isInsideSlot ? colors.componentText : colors.text}
           value={this.instance.element.id}
           // TODO: validate
           onChange={this.onNameChange}
@@ -374,6 +415,10 @@ class TextItem extends LeafTreeViewItem {
 
   rowElement: HTMLElement | undefined;
 
+  @computed get isInsideSlot(): boolean {
+    return this.parent.isInsideSlot;
+  }
+
   renderRow(options: { inverted: boolean }): React.ReactNode {
     return (
       <StyledRow
@@ -381,7 +426,7 @@ class TextItem extends LeafTreeViewItem {
         inverted={options.inverted}
       >
         <StyledNameEdit
-          color={colors.label}
+          color={this.isInsideSlot ? colors.componentText : colors.text}
           value={this.instance.text.content}
           // TODO: validate
           onChange={this.onNameChange}
