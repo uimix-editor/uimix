@@ -93,12 +93,14 @@ const ComponentIcon = styled(TreeRowIcon)`
   color: ${colors.component};
 `;
 
-const StyledNameEdit = styled(TreeRowNameEdit)<{
-  isComponent?: boolean;
-  color: string;
-}>`
-  color: ${(p) => p.color};
-  font-weight: ${(p) => (p.isComponent ? "700" : "400")};
+const ComponentNameEdit = styled(TreeRowNameEdit)`
+  font-weight: 700;
+`;
+
+const ElementNameEdit = styled(TreeRowNameEdit)``;
+
+const TextNameEdit = styled(TreeRowNameEdit)`
+  opacity: 0.75;
 `;
 
 const StyledRow = styled(TreeRow)`
@@ -282,8 +284,8 @@ class ElementItem extends TreeViewItem {
           inverted={options.inverted}
         >
           <ComponentIcon icon={this.icon} />
-          <StyledNameEdit
-            color={colors.componentText}
+          <ElementNameEdit
+            style={{ color: colors.componentText }}
             value={this.instance.element.id}
             placeholder="(main slot)"
             // TODO: validate
@@ -313,8 +315,10 @@ class ElementItem extends TreeViewItem {
         >
           {this.instance.element.tagName}
         </TagName>
-        <StyledNameEdit
-          color={this.isInsideSlot ? colors.componentText : colors.text}
+        <ElementNameEdit
+          style={{
+            color: this.isInsideSlot ? colors.componentText : colors.text,
+          }}
           value={this.instance.element.id}
           // TODO: validate
           onChange={this.onNameChange}
@@ -425,8 +429,10 @@ class TextItem extends LeafTreeViewItem {
         ref={(e) => (this.rowElement = e || undefined)}
         inverted={options.inverted}
       >
-        <StyledNameEdit
-          color={this.isInsideSlot ? colors.componentText : colors.text}
+        <TextNameEdit
+          style={{
+            color: this.isInsideSlot ? colors.componentText : colors.text,
+          }}
           value={this.instance.text.content}
           // TODO: validate
           onChange={this.onNameChange}
@@ -566,9 +572,7 @@ class ComponentItem extends TreeViewItem {
         inverted={options.inverted}
       >
         <ComponentIcon icon={widgetsFilledIcon} />
-        <StyledNameEdit
-          color={colors.text}
-          isComponent
+        <ComponentNameEdit
           value={this.component.name}
           // TODO: validate
           onChange={this.onNameChange}
