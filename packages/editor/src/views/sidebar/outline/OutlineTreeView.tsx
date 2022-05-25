@@ -43,7 +43,7 @@ import { TextInstance } from "../../../models/TextInstance";
 import { Document } from "../../../models/Document";
 import { useEditorState } from "../../EditorStateContext";
 
-const slotColor = "#FF4081";
+const slotColor = "#79BFFF";
 
 function colorWithOpacity(colorStr: string, opacity: number): string {
   const color = Color.from(colorStr) ?? Color.white;
@@ -439,10 +439,7 @@ class TextItem extends LeafTreeViewItem {
         inverted={options.inverted}
       >
         <NameEdit
-          color={colorWithOpacity(
-            this.isInsideSlot ? slotColor : colors.text,
-            0.6
-          )}
+          color={colorWithOpacity(this.isInsideSlot ? slotColor : "white", 0.7)}
           value={this.instance.text.content}
           // TODO: validate
           onChange={this.onNameChange}
