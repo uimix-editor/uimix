@@ -28,6 +28,7 @@ import switchIcon from "@seanchas116/paintkit/src/icon/Switch";
 import chevronsIcon from "@seanchas116/paintkit/src/icon/Chevrons";
 import headingIcon from "@seanchas116/paintkit/src/icon/Heading";
 import imageIcon from "@seanchas116/paintkit/src/icon/Image";
+import { Color } from "@seanchas116/paintkit/src/util/Color";
 import { action, computed, makeObservable, reaction } from "mobx";
 import { colors } from "@seanchas116/paintkit/src/components/Palette";
 import { filterInstance } from "@seanchas116/paintkit/src/util/Collection";
@@ -41,6 +42,13 @@ import { ElementInstance } from "../../../models/ElementInstance";
 import { TextInstance } from "../../../models/TextInstance";
 import { Document } from "../../../models/Document";
 import { useEditorState } from "../../EditorStateContext";
+
+const slotColor = "#79BFFF";
+
+function colorWithOpacity(colorStr: string, opacity: number): string {
+  const color = Color.from(colorStr) ?? Color.white;
+  return color.withAlpha(color.a * opacity).toString();
+}
 
 function iconForTagName(tagName: string): IconifyIcon {
   if (tagName === "b" || tagName === "strong") {
@@ -75,17 +83,17 @@ const TreeViewPadding = styled.div`
   height: 8px;
 `;
 
-const TagName = styled.div`
+const TagName = styled.div<{ color?: string }>`
   font-size: 8px;
   font-weight: 600;
   text-transform: uppercase;
-  color: ${colors.text};
+  color: ${(p) => p.color || colors.text};
   opacity: 0.5;
   margin-right: 8px;
 `;
 
-const ElementIcon = styled(TreeRowIcon)`
-  color: ${colors.text};
+const ElementIcon = styled(TreeRowIcon)<{ color?: string }>`
+  color: ${(p) => p.color || colors.text};
   opacity: 0.5;
 `;
 
@@ -94,13 +102,12 @@ const ComponentIcon = styled(TreeRowIcon)`
 `;
 
 const ComponentNameEdit = styled(TreeRowNameEdit)`
+  color: ${colors.componentText};
   font-weight: 700;
 `;
 
-const ElementNameEdit = styled(TreeRowNameEdit)``;
-
-const TextNameEdit = styled(TreeRowNameEdit)`
-  opacity: 0.75;
+const NameEdit = styled(TreeRowNameEdit)<{ color?: string }>`
+  color: ${(p) => p.color || colors.text};
 `;
 
 const StyledRow = styled(TreeRow)`
@@ -283,9 +290,9 @@ class ElementItem extends TreeViewItem {
           ref={(e) => (this.rowElement = e || undefined)}
           inverted={options.inverted}
         >
-          <ComponentIcon icon={this.icon} />
-          <ElementNameEdit
-            style={{ color: colors.componentText }}
+          <ElementIcon color={slotColor} icon={this.icon} />
+          <NameEdit
+            color={slotColor}
             value={this.instance.element.id}
             placeholder="(main slot)"
             // TODO: validate
@@ -305,20 +312,18 @@ class ElementItem extends TreeViewItem {
         <ElementIcon
           icon={this.icon}
           style={{
-            color: this.isInsideSlot ? colors.componentText : colors.text,
+            color: this.isInsideSlot ? slotColor : colors.text,
           }}
         />
         <TagName
           style={{
-            color: this.isInsideSlot ? colors.componentText : colors.text,
+            color: this.isInsideSlot ? slotColor : colors.text,
           }}
         >
           {this.instance.element.tagName}
         </TagName>
-        <ElementNameEdit
-          style={{
-            color: this.isInsideSlot ? colors.componentText : colors.text,
-          }}
+        <NameEdit
+          color={this.isInsideSlot ? slotColor : colors.text}
           value={this.instance.element.id}
           // TODO: validate
           onChange={this.onNameChange}
@@ -429,10 +434,11 @@ class TextItem extends LeafTreeViewItem {
         ref={(e) => (this.rowElement = e || undefined)}
         inverted={options.inverted}
       >
-        <TextNameEdit
-          style={{
-            color: this.isInsideSlot ? colors.componentText : colors.text,
-          }}
+        <NameEdit
+          color={colorWithOpacity(
+            this.isInsideSlot ? slotColor : colors.text,
+            0.6
+          )}
           value={this.instance.text.content}
           // TODO: validate
           onChange={this.onNameChange}
