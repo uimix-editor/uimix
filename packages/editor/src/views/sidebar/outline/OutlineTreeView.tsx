@@ -24,6 +24,7 @@ import formatBoldIcon from "@iconify-icons/ic/outline-format-bold";
 import formatItalicIcon from "@iconify-icons/ic/outline-format-italic";
 import interestsIcon from "@iconify-icons/ic/outline-interests";
 import inputIcon from "@iconify-icons/ic/outline-login";
+import arrowForwardIcon from "@iconify-icons/ic/outline-arrow-forward";
 import switchIcon from "@seanchas116/paintkit/src/icon/Switch";
 import chevronsIcon from "@seanchas116/paintkit/src/icon/Chevrons";
 import headingIcon from "@seanchas116/paintkit/src/icon/Heading";
@@ -34,7 +35,7 @@ import { colors } from "@seanchas116/paintkit/src/components/Palette";
 import { filterInstance } from "@seanchas116/paintkit/src/util/Collection";
 import { compact } from "lodash-es";
 import { assertNonNull } from "@seanchas116/paintkit/src/util/Assert";
-import { IconifyIcon } from "@iconify/react/dist/offline";
+import { Icon, IconifyIcon } from "@iconify/react/dist/offline";
 import { EditorState } from "../../../state/EditorState";
 import { Component } from "../../../models/Component";
 import { DefaultVariant, Variant } from "../../../models/Variant";
@@ -210,6 +211,14 @@ interface OutlineContext {
   >;
 }
 
+const SlotIndicator = styled.div`
+  color: ${slotColor};
+  margin-right: 8px;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+`;
+
 class ElementItem extends TreeViewItem {
   constructor(
     context: OutlineContext,
@@ -291,11 +300,19 @@ class ElementItem extends TreeViewItem {
   }
 
   renderRow(options: { inverted: boolean }): React.ReactNode {
+    const slot = this.instance.element.attrs.get("slot");
+
     return (
       <StyledRow
         ref={(e) => (this.rowElement = e || undefined)}
         inverted={options.inverted}
       >
+        {slot && (
+          <SlotIndicator>
+            <Icon icon={arrowForwardIcon} />
+            {slot}
+          </SlotIndicator>
+        )}
         <ElementIcon
           icon={this.icon}
           style={{
