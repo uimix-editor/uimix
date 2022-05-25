@@ -101,6 +101,10 @@ const ComponentIcon = styled(TreeRowIcon)`
   color: ${colors.component};
 `;
 
+const SlotIcon = styled(TreeRowIcon)`
+  color: ${slotColor};
+`;
+
 const ComponentNameEdit = styled(TreeRowNameEdit)`
   color: ${colors.componentText};
   font-weight: 700;
@@ -290,7 +294,7 @@ class ElementItem extends TreeViewItem {
           ref={(e) => (this.rowElement = e || undefined)}
           inverted={options.inverted}
         >
-          <ElementIcon color={slotColor} icon={this.icon} />
+          <SlotIcon color={slotColor} icon={this.icon} />
           <NameEdit
             color={slotColor}
             value={this.instance.element.id}
