@@ -25,10 +25,12 @@ export const ElementCommonPane: React.FC = observer(
           options={tagNameOptions}
           onChange={state.onChangeTagName}
         />
-        <Row12>
-          <Label>ID</Label>
-          <Input value={state.id} onChange={state.onChangeID} />
-        </Row12>
+        {state.isStyleableElementSelected && (
+          <Row12>
+            <Label>ID</Label>
+            <Input value={state.id} onChange={state.onChangeID} />
+          </Row12>
+        )}
       </Pane>
     );
   }

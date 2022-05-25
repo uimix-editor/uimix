@@ -1,6 +1,5 @@
 import { action, computed, makeObservable, observable } from "mobx";
 import { MIXED, sameOrMixed } from "@seanchas116/paintkit/src/util/Mixed";
-import { filterInstance } from "@seanchas116/paintkit/src/util/Collection";
 import { getIncrementalUniqueName } from "@seanchas116/paintkit/src/util/Name";
 import { Element } from "../models/Element";
 import { changeTagName } from "../services/ChangeTagName";
@@ -68,7 +67,13 @@ export class ElementInspectorState {
   readonly editorState: EditorState;
 
   @computed get selectedElements(): Element[] {
-    return filterInstance(this.editorState.document.selectedNodes, [Element]);
+    return this.editorState.document.selectedElementInstances.map(
+      (i) => i.element
+    );
+  }
+
+  @computed get isStyleableElementSelected(): boolean {
+    return this.selectedElements.some((element) => element.isStyleable);
   }
 
   @computed get isVisible(): boolean {
