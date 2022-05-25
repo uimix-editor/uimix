@@ -43,7 +43,7 @@ import { TextInstance } from "../../../models/TextInstance";
 import { Document } from "../../../models/Document";
 import { useEditorState } from "../../EditorStateContext";
 
-const slotColor = "#79BFFF";
+const slotColor = "#FF4081";
 
 function colorWithOpacity(colorStr: string, opacity: number): string {
   const color = Color.from(colorStr) ?? Color.white;
@@ -294,7 +294,7 @@ class ElementItem extends TreeViewItem {
           ref={(e) => (this.rowElement = e || undefined)}
           inverted={options.inverted}
         >
-          <SlotIcon color={slotColor} icon={this.icon} />
+          <SlotIcon icon={this.icon} />
           <NameEdit
             color={slotColor}
             value={this.instance.element.id}
