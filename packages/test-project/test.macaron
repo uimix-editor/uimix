@@ -10,6 +10,7 @@
   :root {
     --textColor: #333333;
     --red: #ff0000;
+    --user-card-name-color: #333333;
   }
 </style>
 <macaron-component name="my-component">
@@ -111,6 +112,7 @@
     #user-card {
       top: 32px;
       left: 11px;
+      --user-card-name-color: #ff0000;
     }
     #user-card1 {
       top: 32px;
@@ -238,7 +240,7 @@
     }
     #name {
       position: relative;
-      color: #3e4145;
+      color: var(--user-card-name-color);
       font-family: Lexend;
       font-weight: 600;
       font-size: 16px;
