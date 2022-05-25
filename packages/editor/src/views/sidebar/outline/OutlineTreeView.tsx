@@ -231,6 +231,9 @@ class ElementItem extends TreeViewItem {
   get children(): readonly TreeViewItem[] {
     return this.instance.children.map((instance) => {
       if (instance.type === "element") {
+        if (instance.element.tagName === "slot") {
+          return new SlotElementItem(this.context, this, instance);
+        }
         return new ElementItem(this.context, this, instance);
       } else {
         return new TextItem(this.context, this, instance);
@@ -265,7 +268,7 @@ class ElementItem extends TreeViewItem {
     this.instance.collapsed = !this.instance.collapsed;
   }
 
-  private onNameChange = action((id: string) => {
+  private onIDChange = action((id: string) => {
     this.instance.element.setID(id);
     this.context.editorState.history.commit("Change ID");
     return true;
@@ -288,26 +291,6 @@ class ElementItem extends TreeViewItem {
   }
 
   renderRow(options: { inverted: boolean }): React.ReactNode {
-    if (this.instance.element.tagName === "slot") {
-      return (
-        <StyledRow
-          ref={(e) => (this.rowElement = e || undefined)}
-          inverted={options.inverted}
-        >
-          <SlotIcon icon={this.icon} />
-          <NameEdit
-            color={slotColor}
-            value={this.instance.element.id}
-            placeholder="(main slot)"
-            // TODO: validate
-            onChange={this.onNameChange}
-            disabled={!options.inverted}
-            trigger="click"
-          />
-        </StyledRow>
-      );
-    }
-
     return (
       <StyledRow
         ref={(e) => (this.rowElement = e || undefined)}
@@ -330,7 +313,7 @@ class ElementItem extends TreeViewItem {
           color={this.isInsideSlot ? slotColor : colors.text}
           value={this.instance.element.id}
           // TODO: validate
-          onChange={this.onNameChange}
+          onChange={this.onIDChange}
           disabled={!options.inverted}
           trigger="click"
         />
@@ -381,6 +364,34 @@ class ElementItem extends TreeViewItem {
   }
   handleMouseLeave(): void {
     this.context.editorState.hoveredItem = undefined;
+  }
+}
+
+class SlotElementItem extends ElementItem {
+  private onNameChange = action((name: string) => {
+    this.instance.element.attrs.set("name", name);
+    this.context.editorState.history.commit("Change Name");
+    return true;
+  });
+
+  renderRow(options: { inverted: boolean }): React.ReactNode {
+    return (
+      <StyledRow
+        ref={(e) => (this.rowElement = e || undefined)}
+        inverted={options.inverted}
+      >
+        <SlotIcon icon={this.icon} />
+        <NameEdit
+          color={slotColor}
+          value={this.instance.element.attrs.get("name")}
+          placeholder="(main slot)"
+          // TODO: validate
+          onChange={this.onNameChange}
+          disabled={!options.inverted}
+          trigger="click"
+        />
+      </StyledRow>
+    );
   }
 }
 
