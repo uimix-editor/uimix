@@ -156,3 +156,123 @@
     }
   </style>
 </macaron-component>
+<macaron-component name="user-card">
+  <macaron-variant x="400" y="295"></macaron-variant>
+  <template>
+    <div id="usercard">
+      <img src="./images/user3.jpeg" id="image1" />
+      <div id="frame1">
+        <div id="zackrussell">Zack Russell</div>
+        <div id="frame2">
+          <img
+            src="data:image/svg+xml,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Cpath%20d%3D%22M8.00001%201.33334C5.42001%201.33334%203.33334%203.42%203.33334%206C3.33334%209.5%208.00001%2014.6667%208.00001%2014.6667C8.00001%2014.6667%2012.6667%209.5%2012.6667%206C12.6667%203.42%2010.58%201.33334%208.00001%201.33334ZM4.66668%206C4.66668%204.16%206.16001%202.66667%208.00001%202.66667C9.84001%202.66667%2011.3333%204.16%2011.3333%206C11.3333%207.92%209.41334%2010.7933%208.00001%2012.5867C6.61334%2010.8067%204.66668%207.9%204.66668%206Z%22%20fill%3D%22%237D8186%22%2F%3E%0A%3Cpath%20d%3D%22M8.00001%207.66667C8.92048%207.66667%209.66668%206.92048%209.66668%206C9.66668%205.07953%208.92048%204.33334%208.00001%204.33334C7.07954%204.33334%206.33334%205.07953%206.33334%206C6.33334%206.92048%207.07954%207.66667%208.00001%207.66667Z%22%20fill%3D%22%237D8186%22%2F%3E%0A%3C%2Fsvg%3E%0A"
+            id="locationon"
+          />
+          <div id="tokyojapan">Tokyo, Japan</div>
+        </div>
+      </div>
+    </div>
+  </template>
+  <style>
+    :host {
+      display: block;
+    }
+    #usercard {
+      position: relative;
+      width: 320px;
+      height: 88px;
+      border-top-left-radius: 0px;
+      border-top-right-radius: 0px;
+      border-bottom-right-radius: 0px;
+      border-bottom-left-radius: 0px;
+      display: flex;
+      padding-top: 11px;
+      padding-right: 11px;
+      padding-bottom: 11px;
+      padding-left: 11px;
+      flex-direction: row;
+      align-items: center;
+      justify-content: flex-start;
+      row-gap: 12px;
+      column-gap: 12px;
+      background: #ffffff;
+      opacity: 1;
+    }
+    #image1 {
+      position: relative;
+      width: 64px;
+      height: 64px;
+      border-top-left-radius: 32px;
+      border-top-right-radius: 32px;
+      border-bottom-right-radius: 32px;
+      border-bottom-left-radius: 32px;
+      opacity: 1;
+    }
+    #frame1 {
+      position: relative;
+      height: 44px;
+      border-top-left-radius: 0px;
+      border-top-right-radius: 0px;
+      border-bottom-right-radius: 0px;
+      border-bottom-left-radius: 0px;
+      flex-grow: 1;
+      display: flex;
+      padding-top: 0px;
+      padding-right: 0px;
+      padding-bottom: 0px;
+      padding-left: 0px;
+      flex-direction: column;
+      align-items: flex-start;
+      justify-content: flex-start;
+      row-gap: 8px;
+      column-gap: 8px;
+      opacity: 1;
+    }
+    #zackrussell {
+      position: relative;
+      color: #3e4145;
+      font-family: Lexend;
+      font-weight: 600;
+      font-size: 16px;
+      line-height: 20px;
+      text-align: left;
+      opacity: 1;
+    }
+    #frame2 {
+      position: relative;
+      width: 98px;
+      height: 16px;
+      border-top-left-radius: 0px;
+      border-top-right-radius: 0px;
+      border-bottom-right-radius: 0px;
+      border-bottom-left-radius: 0px;
+      display: flex;
+      padding-top: 0px;
+      padding-right: 0px;
+      padding-bottom: 0px;
+      padding-left: 0px;
+      flex-direction: row;
+      align-items: flex-start;
+      justify-content: flex-start;
+      row-gap: 4px;
+      column-gap: 4px;
+      opacity: 1;
+    }
+    #locationon {
+      position: relative;
+      width: 16px;
+      height: 16px;
+      opacity: 1;
+    }
+    #tokyojapan {
+      position: relative;
+      color: #7d8186;
+      font-family: Lexend;
+      font-weight: 400;
+      font-size: 12px;
+      line-height: 16px;
+      text-align: left;
+      opacity: 1;
+    }
+  </style>
+</macaron-component>
