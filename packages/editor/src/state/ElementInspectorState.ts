@@ -6,6 +6,41 @@ import { Element } from "../models/Element";
 import { changeTagName } from "../services/ChangeTagName";
 import { EditorState } from "./EditorState";
 
+export class SpecificElementInspectorState {
+  constructor(state: ElementInspectorState, tagName: string) {
+    this.state = state;
+    this.tagName = tagName;
+    makeObservable(this);
+  }
+
+  readonly state: ElementInspectorState;
+  readonly tagName: string;
+
+  @computed get elements(): Element[] {
+    return this.state.selectedElements.filter(
+      (e) => e.tagName === this.tagName
+    );
+  }
+}
+
+export class ImgElementInspectorState extends SpecificElementInspectorState {
+  constructor(state: ElementInspectorState) {
+    super(state, "img");
+    makeObservable(this);
+  }
+
+  @computed get src(): string | typeof MIXED | undefined {
+    return sameOrMixed(this.elements.map((e) => e.attrs.get("src")));
+  }
+
+  readonly onSrcChange = action((src: string) => {
+    for (const e of this.elements) {
+      e.attrs.set("src", src);
+    }
+    return true;
+  });
+}
+
 export class ElementInspectorState {
   constructor(editorState: EditorState) {
     this.editorState = editorState;
@@ -146,18 +181,5 @@ export class ElementInspectorState {
 
   // img
 
-  @computed get selectedImgElements(): Element[] {
-    return this.selectedElements.filter((e) => e.tagName === "img");
-  }
-
-  @computed get imgSrc(): string | typeof MIXED | undefined {
-    return sameOrMixed(this.selectedImgElements.map((e) => e.attrs.get("src")));
-  }
-
-  readonly onImgSrcChange = action((src: string) => {
-    for (const e of this.selectedImgElements) {
-      e.attrs.set("src", src);
-    }
-    return true;
-  });
+  readonly img = new ImgElementInspectorState(this);
 }

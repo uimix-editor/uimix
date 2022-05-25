@@ -17,7 +17,7 @@ export const ImgElementPane: React.FC = observer(function ImgElementPane() {
     [editorState]
   );
 
-  const elements = state.selectedImgElements;
+  const elements = state.img.elements;
   if (elements.length === 0) {
     return null;
   }
@@ -28,8 +28,8 @@ export const ImgElementPane: React.FC = observer(function ImgElementPane() {
         <PaneHeading>Image</PaneHeading>
       </PaneHeadingRow>
       <ImageInput
-        value={state.imgSrc}
-        onChange={state.onImgSrcChange}
+        value={state.img.src}
+        onChange={state.img.onSrcChange}
         resolveURL={resolveURL}
         options={editorState.imageURLOptions}
       />
