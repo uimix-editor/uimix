@@ -111,8 +111,11 @@ const ComponentNameEdit = styled(TreeRowNameEdit)`
   font-weight: 700;
 `;
 
-const NameEdit = styled(TreeRowNameEdit)<{ color?: string }>`
-  color: ${(p) => p.color || colors.text};
+const NameEdit = styled(TreeRowNameEdit)<{
+  color?: string;
+  rowSelected?: boolean;
+}>`
+  color: ${(p) => (p.rowSelected ? colors.text : p.color || colors.text)};
 `;
 
 const StyledRow = styled(TreeRow)`
@@ -334,6 +337,7 @@ class ElementItem extends TreeViewItem {
         </TagName>
         <NameEdit
           color={this.isInsideSlot ? slotColor : colors.text}
+          rowSelected={options.inverted}
           value={this.instance.element.id}
           // TODO: validate
           onChange={this.onIDChange}
@@ -411,6 +415,7 @@ class SlotElementItem extends ElementItem {
         <NameEdit
           color={slotColor}
           value={this.instance.element.attrs.get("name")}
+          rowSelected={options.inverted}
           placeholder="(main slot)"
           nonDimmedPlaceholder
           // TODO: validate
@@ -479,6 +484,7 @@ class TextItem extends LeafTreeViewItem {
       >
         <NameEdit
           color={colorWithOpacity(this.isInsideSlot ? slotColor : "white", 0.7)}
+          rowSelected={options.inverted}
           value={this.instance.text.content}
           // TODO: validate
           onChange={this.onNameChange}
