@@ -16,9 +16,7 @@ export class SpecificElementInspectorState {
   readonly tagName: string;
 
   @computed get elements(): Element[] {
-    return this.state.selectedElements.filter(
-      (e) => e.tagName === this.tagName
-    );
+    return this.state.elements.filter((e) => e.tagName === this.tagName);
   }
 }
 
@@ -66,26 +64,26 @@ export class ElementInspectorState {
 
   readonly editorState: EditorState;
 
-  @computed get selectedElements(): Element[] {
+  @computed get elements(): Element[] {
     return this.editorState.document.selectedElementInstances.map(
       (i) => i.element
     );
   }
 
   @computed get isStyleableElementSelected(): boolean {
-    return this.selectedElements.some((element) => element.isStyleable);
+    return this.elements.some((element) => element.isStyleable);
   }
 
   @computed get isVisible(): boolean {
-    return this.selectedElements.length > 0;
+    return this.elements.length > 0;
   }
 
   @computed get tagName(): string | typeof MIXED | undefined {
-    return sameOrMixed(this.selectedElements.map((element) => element.tagName));
+    return sameOrMixed(this.elements.map((element) => element.tagName));
   }
 
   readonly onChangeTagName = action((tagName: string) => {
-    for (const element of this.selectedElements) {
+    for (const element of this.elements) {
       changeTagName(element, tagName);
     }
     this.editorState.history.commit("Change Tag Name");
@@ -93,11 +91,11 @@ export class ElementInspectorState {
   });
 
   @computed get id(): string | typeof MIXED | undefined {
-    return sameOrMixed(this.selectedElements.map((element) => element.id));
+    return sameOrMixed(this.elements.map((element) => element.id));
   }
 
   readonly onChangeID = action((id: string) => {
-    for (const element of this.selectedElements) {
+    for (const element of this.elements) {
       element.setID(id);
     }
     this.editorState.history.commit("Change ID");
@@ -114,7 +112,7 @@ export class ElementInspectorState {
   @computed get attrs(): Map<string, string | typeof MIXED> {
     const keys = new Set<string>();
 
-    for (const element of this.selectedElements) {
+    for (const element of this.elements) {
       for (const key of element.attrs.keys()) {
         keys.add(key);
       }
@@ -123,9 +121,7 @@ export class ElementInspectorState {
     const attrs = new Map<string, string | typeof MIXED>();
 
     for (const key of keys) {
-      const values = this.selectedElements.map((element) =>
-        element.attrs.get(key)
-      );
+      const values = this.elements.map((element) => element.attrs.get(key));
       attrs.set(key, sameOrMixed(values) ?? MIXED);
     }
 
@@ -133,7 +129,7 @@ export class ElementInspectorState {
   }
 
   addAttr(key: string, value: string): void {
-    for (const element of this.selectedElements) {
+    for (const element of this.elements) {
       element.attrs.set(key, value);
     }
 
@@ -151,7 +147,7 @@ export class ElementInspectorState {
 
   deleteAttrs(): void {
     for (const key of this.selectedAttrKeys) {
-      for (const element of this.selectedElements) {
+      for (const element of this.elements) {
         element.attrs.delete(key);
       }
     }
@@ -161,7 +157,7 @@ export class ElementInspectorState {
   readonly onDeleteAttrs = action(this.deleteAttrs.bind(this));
 
   reorderAttrs(keys: string[]): void {
-    for (const element of this.selectedElements) {
+    for (const element of this.elements) {
       const newAttrs = new Map<string, string>();
 
       for (const key of keys) {
@@ -179,7 +175,7 @@ export class ElementInspectorState {
   readonly onReorderAttrs = action(this.reorderAttrs.bind(this));
 
   changeAttrKey(key: string, newKey: string): boolean {
-    for (const element of this.selectedElements) {
+    for (const element of this.elements) {
       const value = element.attrs.get(key);
       if (value) {
         element.attrs.delete(key);
@@ -193,7 +189,7 @@ export class ElementInspectorState {
   readonly onChangeAttrKey = action(this.changeAttrKey.bind(this));
 
   changeAttrValue(key: string, value: string): boolean {
-    for (const element of this.selectedElements) {
+    for (const element of this.elements) {
       element.attrs.set(key, value);
     }
 
@@ -209,4 +205,15 @@ export class ElementInspectorState {
   // slot
 
   readonly slot = new SlotElementInspectorState(this);
+
+  @computed get slotTarget(): string | typeof MIXED | undefined {
+    return sameOrMixed(this.elements.map((e) => e.attrs.get("slot")));
+  }
+
+  readonly onChangeSlotTarget = action((src: string) => {
+    for (const e of this.elements) {
+      e.attrs.set("slot", src);
+    }
+    return true;
+  });
 }

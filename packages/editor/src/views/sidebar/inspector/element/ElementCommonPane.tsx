@@ -31,6 +31,10 @@ export const ElementCommonPane: React.FC = observer(
             <Input value={state.id} onChange={state.onChangeID} />
           </Row12>
         )}
+        <Row12>
+          <Label>Slot</Label>
+          <Input value={state.slotTarget} onChange={state.onChangeSlotTarget} />
+        </Row12>
       </Pane>
     );
   }
