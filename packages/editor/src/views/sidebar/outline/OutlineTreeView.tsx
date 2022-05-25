@@ -1,6 +1,6 @@
 import { observer } from "mobx-react-lite";
 import React, { useEffect, useMemo, useState } from "react";
-import styled from "styled-components";
+import styled, { css } from "styled-components";
 import scrollIntoView from "scroll-into-view-if-needed";
 import {
   LeafTreeViewItem,
@@ -211,12 +211,18 @@ interface OutlineContext {
   >;
 }
 
-const SlotIndicator = styled.div`
+const SlotIndicator = styled.div<{ rowSelected?: boolean }>`
   color: ${slotColor};
   margin-right: 8px;
   display: flex;
   align-items: center;
   gap: 4px;
+
+  ${(p) =>
+    p.rowSelected &&
+    css`
+      color: ${colors.activeText};
+    `}
 `;
 
 class ElementItem extends TreeViewItem {
@@ -308,7 +314,7 @@ class ElementItem extends TreeViewItem {
         inverted={options.inverted}
       >
         {slot && (
-          <SlotIndicator>
+          <SlotIndicator rowSelected={options.inverted}>
             <Icon icon={arrowForwardIcon} />
             {slot}
           </SlotIndicator>
