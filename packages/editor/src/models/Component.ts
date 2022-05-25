@@ -1,6 +1,6 @@
 import { TreeNode } from "@seanchas116/paintkit/src/util/TreeNode";
-import { toHtml } from "hast-util-to-html";
 import { computed, makeObservable, observable } from "mobx";
+import type * as hast from "hast";
 import { CustomElementMetadata } from "./CustomElementMetadata";
 import { ComponentList, Document } from "./Document";
 import { Element, ElementJSON } from "./Element";
@@ -214,12 +214,12 @@ export class Component extends TreeNode<ComponentList, Component, never> {
     return usedVariables;
   }
 
-  @computed.struct get slots(): Map<string, string> {
-    const slots = new Map<string, string>();
+  @computed.struct get slots(): Map<string, hast.Content[]> {
+    const slots = new Map<string, hast.Content[]>();
 
     const visit = (element: Element) => {
       if (element.tagName === "slot") {
-        slots.set(element.attrs.get("name") || "", toHtml(element.innerHTML));
+        slots.set(element.attrs.get("name") || "", element.innerHTML);
       }
       for (const child of element.children) {
         if (child.type === "element") {

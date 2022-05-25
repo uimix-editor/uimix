@@ -1,3 +1,5 @@
+import type * as hast from "hast";
+
 export interface CustomElementMetadata {
   /**
    * The tag name of the component.
@@ -24,5 +26,5 @@ export interface CustomElementMetadata {
 
 interface Slot {
   name: string;
-  defaultHTML?: string;
+  defaultHTML?: hast.Content[];
 }
