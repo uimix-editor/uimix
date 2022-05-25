@@ -369,7 +369,11 @@ class ElementItem extends TreeViewItem {
 
 class SlotElementItem extends ElementItem {
   private onNameChange = action((name: string) => {
-    this.instance.element.attrs.set("name", name);
+    if (name) {
+      this.instance.element.attrs.set("name", name);
+    } else {
+      this.instance.element.attrs.delete("name");
+    }
     this.context.editorState.history.commit("Change Name");
     return true;
   });
