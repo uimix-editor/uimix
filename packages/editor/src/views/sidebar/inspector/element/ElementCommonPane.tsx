@@ -39,7 +39,10 @@ export const ElementCommonPane: React.FC = observer(
             <Row12>
               <Label>Slot</Label>
               <ComboBox
-                options={slotCandidates.map((slot) => ({ value: slot }))}
+                options={slotCandidates.map((slot) => ({
+                  value: slot,
+                  text: slot || "(Main Slot)",
+                }))}
                 value={state.slotTarget}
                 onChange={state.onChangeSlotTarget}
               />
