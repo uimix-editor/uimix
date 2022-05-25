@@ -41,6 +41,24 @@ export class ImgElementInspectorState extends SpecificElementInspectorState {
   });
 }
 
+export class SlotElementInspectorState extends SpecificElementInspectorState {
+  constructor(state: ElementInspectorState) {
+    super(state, "slot");
+    makeObservable(this);
+  }
+
+  @computed get name(): string | typeof MIXED | undefined {
+    return sameOrMixed(this.elements.map((e) => e.attrs.get("name")));
+  }
+
+  readonly onNameChange = action((name: string) => {
+    for (const e of this.elements) {
+      e.attrs.set("name", name);
+    }
+    return true;
+  });
+}
+
 export class ElementInspectorState {
   constructor(editorState: EditorState) {
     this.editorState = editorState;
@@ -182,4 +200,8 @@ export class ElementInspectorState {
   // img
 
   readonly img = new ImgElementInspectorState(this);
+
+  // slot
+
+  readonly slot = new SlotElementInspectorState(this);
 }
