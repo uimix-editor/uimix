@@ -25,7 +25,7 @@ export const SlotElementPane: React.FC = observer(function SlotElementPane() {
         <PaneHeading>Slot</PaneHeading>
       </PaneHeadingRow>
       <Row12>
-        <Label>ID</Label>
+        <Label>Name</Label>
         <Input value={state.slot.name} onChange={state.slot.onNameChange} />
       </Row12>
     </Pane>
