@@ -95,10 +95,12 @@
   <macaron-variant x="0" y="295" width="300"></macaron-variant>
   <template>
     <user-card id="user-card"
-      >User 1 <span slot="location">Location 2</span></user-card
+      >User 1 <span slot="location">Location 2</span
+      ><img slot="avatar" src="./images/user2.jpg" /></user-card
     ><user-card id="user-card1"
-      >User 2<span slot="location">Location 2</span></user-card
-    >
+      >User 2<span slot="location">Location 2</span
+      ><img slot="avatar" src="./images/user1.png"
+    /></user-card>
   </template>
   <style>
     :host {
@@ -165,7 +167,9 @@
   <macaron-variant x="400" y="295" width="300"></macaron-variant>
   <template>
     <div id="usercard">
-      <div id="image-area"><img src="./images/user3.jpeg" /></div>
+      <div id="image-area">
+        <slot name="avatar"><img src="./images/user3.jpeg" /></slot>
+      </div>
       <div id="info">
         <div id="name"><slot>Zack Russell</slot></div>
         <div id="location">
