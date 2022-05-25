@@ -389,6 +389,7 @@ class SlotElementItem extends ElementItem {
           color={slotColor}
           value={this.instance.element.attrs.get("name")}
           placeholder="(main slot)"
+          nonDimmedPlaceholder
           // TODO: validate
           onChange={this.onNameChange}
           disabled={!options.inverted}
