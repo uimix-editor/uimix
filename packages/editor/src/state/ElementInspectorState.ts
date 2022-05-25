@@ -1,6 +1,7 @@
 import { action, computed, makeObservable, observable } from "mobx";
 import { MIXED, sameOrMixed } from "@seanchas116/paintkit/src/util/Mixed";
 import { getIncrementalUniqueName } from "@seanchas116/paintkit/src/util/Name";
+import { sameOrNone } from "@seanchas116/paintkit/src/util/Collection";
 import { Element } from "../models/Element";
 import { changeTagName } from "../services/ChangeTagName";
 import { EditorState } from "./EditorState";
@@ -205,6 +206,22 @@ export class ElementInspectorState {
   // slot
 
   readonly slot = new SlotElementInspectorState(this);
+
+  @computed get slotTargetCandidates(): string[] {
+    const commonParent = sameOrNone(this.elements.map((e) => e.parent));
+    if (!commonParent) {
+      return [];
+    }
+
+    const component = this.editorState.document.getCustomElementMetadata(
+      commonParent.tagName
+    );
+    if (!component) {
+      return [];
+    }
+
+    return component.slots;
+  }
 
   @computed get slotTarget(): string | typeof MIXED | undefined {
     return sameOrMixed(this.elements.map((e) => e.attrs.get("slot")));

@@ -15,5 +15,9 @@ export interface CustomElementMetadata {
    */
   cssVariables: string[];
 
-  // TODO: slots
+  /**
+   * The slots used by the component.
+   * The default slot is included as `""`.
+   */
+  slots: string[];
 }

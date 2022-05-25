@@ -213,11 +213,31 @@ export class Component extends TreeNode<ComponentList, Component, never> {
     return usedVariables;
   }
 
+  @computed.struct get slots(): Set<string> {
+    const slots = new Set<string>();
+
+    const visit = (element: Element) => {
+      if (element.tagName === "slot") {
+        slots.add(element.attrs.get("name") || "");
+      }
+      for (const child of element.children) {
+        if (child.type === "element") {
+          visit(child);
+        }
+      }
+    };
+
+    visit(this.rootElement);
+
+    return slots;
+  }
+
   @computed get metadata(): CustomElementMetadata {
     return {
       tagName: this.name,
       thumbnail: this.thumbnail,
       cssVariables: [...this.usedCSSVariables],
+      slots: [...this.slots],
     };
   }
 }
