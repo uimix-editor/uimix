@@ -35,10 +35,25 @@ class ComponentInspectorState {
     return this.component?.allVariants ?? [];
   }
 
-  @action onGoToVariant(variant: Variant | DefaultVariant) {
+  onGoToVariant(variant: Variant | DefaultVariant) {
     this.editorState.document.deselect();
     variant.rootInstance?.select();
   }
+
+  addVariant(): void {
+    const { component } = this;
+    if (!component) {
+      return;
+    }
+    const variant = new Variant();
+    variant.selector = ":hover";
+    component.variants.append(variant);
+
+    this.editorState.document.deselect();
+    variant.rootInstance?.select();
+  }
+
+  readonly onAddVariant = action(this.addVariant.bind(this));
 }
 
 const ComponentInspectorWrap = styled.div``;
@@ -59,7 +74,7 @@ export const ComponentInspector: React.FC = observer(
         <Pane>
           <PaneHeadingRow>
             <PaneHeading>Variants</PaneHeading>
-            <PlusButton />
+            <PlusButton onClick={state.onAddVariant} />
           </PaneHeadingRow>
           {variants.length > 0 && (
             <VariantRows>
@@ -71,7 +86,7 @@ export const ComponentInspector: React.FC = observer(
                     <Tippy content="Go to Variant">
                       <IconButton
                         icon={arrowIcon}
-                        onClick={() => state.onGoToVariant(variant)}
+                        onClick={action(() => state.onGoToVariant(variant))}
                       />
                     </Tippy>
                   </VariantRow>

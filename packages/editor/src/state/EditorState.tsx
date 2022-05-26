@@ -150,6 +150,9 @@ export abstract class EditorState {
           const variant = new Variant();
           variant.selector = ":hover";
           component.variants.append(variant);
+
+          this.document.deselect();
+          variant.rootInstance?.select();
           return true;
         }),
       },
