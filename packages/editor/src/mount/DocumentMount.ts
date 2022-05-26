@@ -263,7 +263,16 @@ export class DocumentMount {
           tagName,
           thumbnail,
           cssVariables: [], // TODO
-          slots: [], // TODO
+          slots: [
+            {
+              defaultContent: [
+                {
+                  type: "text",
+                  value: "Content",
+                },
+              ],
+            },
+          ], // TODO
         };
       } catch (e) {
         console.error(e);
@@ -271,7 +280,16 @@ export class DocumentMount {
         return {
           tagName,
           cssVariables: [], // TODO
-          slots: [], // TODO
+          slots: [
+            {
+              defaultContent: [
+                {
+                  type: "text",
+                  value: "Content",
+                },
+              ],
+            },
+          ], // TODO
         };
       }
     };
