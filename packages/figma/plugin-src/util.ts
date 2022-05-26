@@ -1,11 +1,6 @@
-import type * as CSS from "csstype";
 import type * as hast from "hast";
 import { h } from "hastscript";
 import { Buffer } from "buffer";
-import * as parse5 from "parse5";
-import { fromParse5 } from "hast-util-from-parse5";
-import rehypeMinifyWhitespace from "rehype-minify-whitespace";
-import { unified } from "unified";
 
 const lineBreakRegExp = /\r\n|[\n\r\u2028\u2029\u0085]/;
 
@@ -121,11 +116,4 @@ export class IDGenerator {
     this.ids.add(id);
     return id;
   }
-}
-
-export function parseHTMLFragment(data: string): hast.Root {
-  const p5ast = parse5.parseFragment(data);
-  //@ts-ignore
-  const hast: hast.Root = fromParse5(p5ast);
-  return unified().use(rehypeMinifyWhitespace).runSync(hast);
 }

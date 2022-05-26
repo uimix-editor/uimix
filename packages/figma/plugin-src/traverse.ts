@@ -1,13 +1,12 @@
 import { compact } from "lodash";
 import type * as hast from "hast";
 import { h } from "hastscript";
+import * as svgParser from "svg-parser";
 import {
   imageToDataURL,
   isVectorLikeNode,
   processCharacters,
-  svgToDataURL,
   IDGenerator,
-  parseHTMLFragment,
 } from "./util";
 import {
   stringifyStyle,
@@ -38,7 +37,7 @@ export async function figmaToMacaron(
       const svg = await node.exportAsync({ format: "SVG" });
       const svgText = String.fromCharCode(...svg);
 
-      const root = parseHTMLFragment(svgText);
+      const root = svgParser.parse(svgText) as hast.Root;
       const svgElem = root.children[0];
       if (svgElem.type !== "element") {
         throw new Error("Expected element type");
@@ -48,6 +47,7 @@ export async function figmaToMacaron(
         ...svgElem,
         properties: {
           ...svgElem.properties,
+          id,
           style: stringifyStyle({
             ...positionStyle(node, parentLayout, groupTopLeft),
             ...effectStyle(node as BlendMixin),
