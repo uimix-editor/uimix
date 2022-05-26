@@ -14,6 +14,7 @@ import { useEditorState } from "../EditorStateContext";
 import { formatHTML } from "../../util/Format";
 import { parseHTMLFragment } from "../../util/Hast";
 import { EditorState } from "../../state/EditorState";
+import { CodeMirrorTextArea } from "../../util/CodeMirrorTextArea";
 
 const InnerHTMLEditorWrap = styled.div`
   position: absolute;
@@ -35,19 +36,17 @@ const TextareaWrap = styled.div`
   position: absolute;
   ${popoverStyle}
   padding: 4px;
-`;
 
-const Textarea = styled.textarea`
-  display: block;
   width: 320px;
   height: 80px;
-  background: ${colors.uiBackground};
-  border-radius: 4px;
-  color: ${colors.text};
-  padding: 6px;
-  font-size: 12px;
-  color: ${colors.text};
-  resize: both;
+`;
+
+const Textarea = styled(CodeMirrorTextArea)`
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
 `;
 
 function toFormattedHTML(hastNodes: hast.Content[]): string {
@@ -101,11 +100,9 @@ class InnerHTMLEditorState {
     this.editorState.history.commitDebounced("Change Inner HTML");
   }
 
-  readonly onChangeValue = action(
-    (event: React.ChangeEvent<HTMLTextAreaElement>) => {
-      this.setValue(event.currentTarget.value);
-    }
-  );
+  readonly onChangeValue = action((value: string) => {
+    this.setValue(value);
+  });
 
   readonly onEnd = action(() => {
     this.editorState.innerHTMLEditTarget = undefined;
@@ -120,19 +117,19 @@ export const InnerHTMLEditorBody: React.FC<{
   target: ElementInstance;
 }> = observer(({ target }) => {
   const editorState = useEditorState();
-  const textareaRef = React.createRef<HTMLTextAreaElement>();
+  // const textareaRef = React.createRef<HTMLTextAreaElement>();
 
   const state = useViewModel(
     () => new InnerHTMLEditorState(editorState, target),
     [editorState, target]
   );
 
-  useEffect(() => {
-    const textarea = textareaRef.current;
-    setTimeout(() => {
-      textarea?.select();
-    }, 0);
-  }, []);
+  // useEffect(() => {
+  //   const textarea = textareaRef.current;
+  //   setTimeout(() => {
+  //     textarea?.select();
+  //   }, 0);
+  // }, []);
 
   return (
     <InnerHTMLEditorWrap>
@@ -145,9 +142,8 @@ export const InnerHTMLEditorBody: React.FC<{
         onWheel={(e) => e.stopPropagation()}
       >
         <Textarea
-          ref={textareaRef}
+          // ref={textareaRef}
           value={state.value}
-          placeholder="Inner HTML"
           onChange={state.onChangeValue}
         />
       </TextareaWrap>
