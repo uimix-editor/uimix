@@ -42,15 +42,6 @@ class ComponentInspectorState {
     );
   }
 
-  @computed get variants(): (Variant | DefaultVariant)[] {
-    return this.component?.allVariants ?? [];
-  }
-
-  onGoToVariant(variant: Variant | DefaultVariant) {
-    this.editorState.document.deselect();
-    variant.rootInstance?.select();
-  }
-
   @computed get listViewRoot(): ComponentItem | undefined {
     const component = this.component;
     if (component) {
