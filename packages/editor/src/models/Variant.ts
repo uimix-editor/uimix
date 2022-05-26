@@ -10,6 +10,7 @@ export interface BaseVariantJSON {
   y: number;
   width?: number;
   height?: number;
+  backgroundColor?: string;
 }
 
 abstract class BaseVariant extends TreeNode<VariantList, BaseVariant, never> {
@@ -34,6 +35,7 @@ abstract class BaseVariant extends TreeNode<VariantList, BaseVariant, never> {
   @observable y = 0;
   @observable width: number | undefined = undefined;
   @observable height: number | undefined = undefined;
+  @observable backgroundColor: string | undefined = undefined;
 
   abstract get name(): string;
 
@@ -43,6 +45,7 @@ abstract class BaseVariant extends TreeNode<VariantList, BaseVariant, never> {
       y: this.y,
       width: this.width,
       height: this.height,
+      backgroundColor: this.backgroundColor,
     };
   }
 
@@ -51,6 +54,7 @@ abstract class BaseVariant extends TreeNode<VariantList, BaseVariant, never> {
     this.y = json.y;
     this.width = json.width;
     this.height = json.height;
+    this.backgroundColor = json.backgroundColor;
   }
 }
 

@@ -13,6 +13,7 @@ import { ElementInspector } from "./element/ElementInspector";
 import { VariantInspector } from "./VariantInspector";
 import { StyleInspector } from "./style/StyleInspector";
 import { DocumentInspector } from "./document/DocumentInspector";
+import { ComponentInspector } from "./ComponentInspector";
 
 const TabArea = styled.div`
   display: flex;
@@ -71,7 +72,7 @@ export const InspectorTabs: React.FC = observer(function InspectorTabs() {
               aria-selected={editorState.currentInspectorTab === "element"}
               onClick={onClickElementTab}
             >
-              {startCase(type)}
+              {type === "variant" ? "Component" : startCase(type)}
             </InspectorTabBarItem>
             <InspectorTabBarItem
               aria-selected={editorState.currentInspectorTab === "style"}
@@ -91,8 +92,15 @@ export const InspectorTabs: React.FC = observer(function InspectorTabs() {
       >
         {type === "document" ? (
           <DocumentInspector />
+        ) : type === "component" ? (
+          <>
+            <ComponentInspector />
+          </>
         ) : type === "variant" ? (
-          <VariantInspector />
+          <>
+            <ComponentInspector />
+            <VariantInspector />
+          </>
         ) : type === "element" ? (
           <ElementInspector />
         ) : undefined}

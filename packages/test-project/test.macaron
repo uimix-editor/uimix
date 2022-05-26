@@ -166,7 +166,12 @@
   </style>
 </macaron-component>
 <macaron-component name="user-card">
-  <macaron-variant x="400" y="295" width="300"></macaron-variant>
+  <macaron-variant
+    x="400"
+    y="295"
+    width="300"
+    background-color="white"
+  ></macaron-variant>
   <template>
     <div id="usercard">
       <div id="image-area">
@@ -206,7 +211,6 @@
       justify-content: flex-start;
       row-gap: 12px;
       column-gap: 12px;
-      background: #ffffff;
       opacity: 1;
     }
     #image-area {

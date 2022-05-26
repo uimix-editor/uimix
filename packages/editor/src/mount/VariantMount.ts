@@ -21,7 +21,6 @@ export class VariantMount {
     this.dom.append(this.rootMount.dom);
 
     this.dom.style.position = "absolute";
-    this.dom.style.background = "white";
     this.dom.style.display = "flex";
 
     context.registry?.setVariantMount(this);
@@ -44,6 +43,15 @@ export class VariantMount {
           this.rootMount.updateBoundingBoxLater();
         },
         { fireImmediately: true }
+      ),
+      reaction(
+        () => this.variant.backgroundColor,
+        (backgroundColor) => {
+          this.dom.style.backgroundColor = backgroundColor ?? "white";
+        },
+        {
+          fireImmediately: true,
+        }
       )
     );
 

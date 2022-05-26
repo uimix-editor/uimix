@@ -12,6 +12,7 @@ import {
 import { Label } from "@seanchas116/paintkit/src/components/Label";
 import { Input } from "@seanchas116/paintkit/src/components/Input";
 import { NumberInput } from "@seanchas116/paintkit/src/components/NumberInput";
+import { CSSColorInput } from "@seanchas116/paintkit/src/components/css/CSSColorInput";
 import { useEditorState } from "../../EditorStateContext";
 
 const VariantInspectorWrap = styled.div``;
@@ -23,7 +24,7 @@ export const VariantInspector: React.FC = observer(() => {
     <VariantInspectorWrap>
       <Pane>
         <PaneHeadingRow>
-          <PaneHeading>Variant</PaneHeading>
+          <PaneHeading>Artboard</PaneHeading>
         </PaneHeadingRow>
         <RowGroup>
           <Row111>
@@ -48,27 +49,39 @@ export const VariantInspector: React.FC = observer(() => {
           </Row111>
         </RowGroup>
 
-        {state.selectedVariants.length > 0 && (
-          <>
-            <TopLabelArea>
-              <Label>Selector</Label>
-              <Input
-                value={state.selector}
-                onChange={state.onChangeSelector}
-                placeholder='e.g. ":hover", "[type="primary"]"'
-              />
-            </TopLabelArea>
-            <TopLabelArea>
-              <Label>Media Query</Label>
-              <Input
-                value={state.mediaQuery}
-                onChange={state.onChangeMediaQuery}
-                placeholder='e.g. "(max-width: 768px)"'
-              />
-            </TopLabelArea>
-          </>
-        )}
+        <TopLabelArea>
+          <Label>Background Color</Label>
+          <CSSColorInput
+            placeholder="white"
+            value={state.backgroundColor}
+            onChange={state.onBackgroundColorChange}
+          />
+        </TopLabelArea>
       </Pane>
+
+      {state.selectedVariants.length > 0 && (
+        <Pane>
+          <PaneHeadingRow>
+            <PaneHeading>Condition</PaneHeading>
+          </PaneHeadingRow>
+          <TopLabelArea>
+            <Label>Selector</Label>
+            <Input
+              value={state.selector}
+              onChange={state.onChangeSelector}
+              placeholder='e.g. ":hover", "[type="primary"]"'
+            />
+          </TopLabelArea>
+          <TopLabelArea>
+            <Label>Media Query</Label>
+            <Input
+              value={state.mediaQuery}
+              onChange={state.onChangeMediaQuery}
+              placeholder='e.g. "(max-width: 768px)"'
+            />
+          </TopLabelArea>
+        </Pane>
+      )}
     </VariantInspectorWrap>
   );
 });

@@ -38,6 +38,9 @@ export class VariantInspectorState {
   @computed get height(): number | typeof MIXED | undefined {
     return sameOrMixed(this.selectedAllVariants.map((v) => v.height));
   }
+  @computed get backgroundColor(): string | typeof MIXED | undefined {
+    return sameOrMixed(this.selectedAllVariants.map((v) => v.backgroundColor));
+  }
 
   readonly onXChange = action((x?: number) => {
     if (x == null) {
@@ -76,6 +79,14 @@ export class VariantInspectorState {
       variant.height = height;
     }
     this.editorState.history.commit("Change Height");
+    return true;
+  });
+
+  readonly onBackgroundColorChange = action((backgroundColor?: string) => {
+    for (const variant of this.selectedAllVariants) {
+      variant.backgroundColor = backgroundColor || undefined;
+    }
+    this.editorState.history.commit("Change Background Color");
     return true;
   });
 
