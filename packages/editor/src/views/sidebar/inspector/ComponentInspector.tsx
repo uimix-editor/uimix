@@ -28,7 +28,10 @@ class ComponentInspectorState {
   readonly editorState: EditorState;
 
   @computed get component(): Component | undefined {
-    return this.editorState.document.selectedComponents[0];
+    return (
+      this.editorState.document.selectedComponents[0] ??
+      this.editorState.document.selectedVariants[0]?.component
+    );
   }
 
   @computed get variants(): (Variant | DefaultVariant)[] {
@@ -80,7 +83,10 @@ export const ComponentInspector: React.FC = observer(
             <VariantRows>
               {variants.map((variant) => {
                 return (
-                  <VariantRow key={variant.key}>
+                  <VariantRow
+                    key={variant.key}
+                    aria-selected={variant.rootInstance?.selected}
+                  >
                     <TreeRowIcon icon={switchIcon} />
                     <VariantName>{variant.name}</VariantName>
                     <Tippy content="Go to Variant">
@@ -105,6 +111,10 @@ const VariantRow = styled.div`
   display: flex;
   align-items: center;
   justify-content: space-between;
+
+  &[aria-selected="true"] {
+    background: ${colors.active};
+  }
 `;
 
 const VariantName = styled.div`

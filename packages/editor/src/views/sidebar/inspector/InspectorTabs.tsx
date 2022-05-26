@@ -93,9 +93,14 @@ export const InspectorTabs: React.FC = observer(function InspectorTabs() {
         {type === "document" ? (
           <DocumentInspector />
         ) : type === "component" ? (
-          <ComponentInspector />
+          <>
+            <ComponentInspector />
+          </>
         ) : type === "variant" ? (
-          <VariantInspector />
+          <>
+            <ComponentInspector />
+            <VariantInspector />
+          </>
         ) : type === "element" ? (
           <ElementInspector />
         ) : undefined}
