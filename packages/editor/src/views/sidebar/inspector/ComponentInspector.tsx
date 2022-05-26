@@ -78,7 +78,8 @@ export const ComponentInspector: React.FC = observer(
             <PaneHeading>Variants</PaneHeading>
             <PlusButton onClick={action(() => listViewRoot?.addVariant())} />
             <MinusButton
-              onClick={action(() => listViewRoot?.deleteSelectedVariants())}
+              disabled={!listViewRoot?.canDeleteVariants}
+              onClick={action(() => listViewRoot?.deleteVariants())}
             />
           </PaneHeadingRow>
           {listViewRoot && (
@@ -143,7 +144,7 @@ class ComponentItem extends RootTreeViewItem {
     return this.component.allVariants.filter((v) => v.rootInstance?.selected);
   }
 
-  @computed get canDelete(): boolean {
+  @computed get canDeleteVariants(): boolean {
     return this.selectedVariants.some((v) => v.type === "variant");
   }
 
@@ -160,7 +161,7 @@ class ComponentItem extends RootTreeViewItem {
     variant.rootInstance?.select();
   }
 
-  deleteSelectedVariants() {
+  deleteVariants() {
     for (const v of this.selectedVariants) {
       if (v.type !== "defaultVariant") {
         v.remove();
