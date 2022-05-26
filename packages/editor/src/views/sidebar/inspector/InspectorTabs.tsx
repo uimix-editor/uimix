@@ -13,6 +13,7 @@ import { ElementInspector } from "./element/ElementInspector";
 import { VariantInspector } from "./VariantInspector";
 import { StyleInspector } from "./style/StyleInspector";
 import { DocumentInspector } from "./document/DocumentInspector";
+import { ComponentInspector } from "./ComponentInspector";
 
 const TabArea = styled.div`
   display: flex;
@@ -91,6 +92,8 @@ export const InspectorTabs: React.FC = observer(function InspectorTabs() {
       >
         {type === "document" ? (
           <DocumentInspector />
+        ) : type === "component" ? (
+          <ComponentInspector />
         ) : type === "variant" ? (
           <VariantInspector />
         ) : type === "element" ? (
