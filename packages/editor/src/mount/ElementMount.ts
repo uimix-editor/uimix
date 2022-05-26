@@ -259,14 +259,20 @@ export function fetchComputedValues(
 ): void {
   const viewportToDocument = context.editorState.scroll.viewportToDocument;
 
-  instance.boundingBox = Rect.from(dom.getBoundingClientRect()).transform(
-    viewportToDocument
-  );
-
   const computedStyle = getComputedStyle(dom);
   for (const key of styleKeys) {
     instance.computedStyle[key] = computedStyle.getPropertyValue(
       kebabCase(key)
     );
   }
+
+  let bbox: DOMRect;
+  if (computedStyle.display === "contents") {
+    const range = document.createRange();
+    range.selectNodeContents(dom);
+    bbox = range.getBoundingClientRect();
+  } else {
+    bbox = dom.getBoundingClientRect();
+  }
+  instance.boundingBox = Rect.from(bbox).transform(viewportToDocument);
 }
