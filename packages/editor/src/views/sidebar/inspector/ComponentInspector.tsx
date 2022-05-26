@@ -59,8 +59,6 @@ class ComponentInspectorState {
   }
 }
 
-const ComponentInspectorWrap = styled.div``;
-
 export const ComponentInspector: React.FC = observer(
   function ComponentInspector() {
     const editorState = useEditorState();
@@ -73,26 +71,24 @@ export const ComponentInspector: React.FC = observer(
     const { listViewRoot } = state;
 
     return (
-      <ComponentInspectorWrap>
-        <Pane>
-          <PaneHeadingRow>
-            <PaneHeading>Variants</PaneHeading>
-            <PlusButton onClick={action(() => listViewRoot?.addVariant())} />
-            <MinusButton
-              disabled={!listViewRoot?.canDeleteVariants}
-              onClick={action(() => listViewRoot?.deleteVariants())}
-            />
-          </PaneHeadingRow>
-          {listViewRoot && (
-            <StyledTreeView
-              header={<HeaderFooter />}
-              footer={<HeaderFooter />}
-              scroll={false}
-              rootItem={listViewRoot}
-            />
-          )}
-        </Pane>
-      </ComponentInspectorWrap>
+      <Pane>
+        <PaneHeadingRow>
+          <PaneHeading>Variants</PaneHeading>
+          <PlusButton onClick={action(() => listViewRoot?.addVariant())} />
+          <MinusButton
+            disabled={!listViewRoot?.canDeleteVariants}
+            onClick={action(() => listViewRoot?.deleteVariants())}
+          />
+        </PaneHeadingRow>
+        {listViewRoot && (
+          <StyledTreeView
+            header={<HeaderFooter />}
+            footer={<HeaderFooter />}
+            scroll={false}
+            rootItem={listViewRoot}
+          />
+        )}
+      </Pane>
     );
   }
 );
