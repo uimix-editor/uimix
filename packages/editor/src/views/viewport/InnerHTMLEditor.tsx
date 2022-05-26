@@ -41,6 +41,13 @@ const TextareaWrap = styled.div`
 
   width: 320px;
   height: 80px;
+
+  resize: both;
+
+  .CodeMirror {
+    width: 100%;
+    height: 100%;
+  }
 `;
 
 function toFormattedHTML(hastNodes: hast.Content[]): string {
