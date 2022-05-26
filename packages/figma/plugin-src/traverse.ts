@@ -1,11 +1,11 @@
 import { compact } from "lodash";
 import type * as hast from "hast";
 import { h } from "hastscript";
+import * as svgParser from "svg-parser";
 import {
   imageToDataURL,
   isVectorLikeNode,
   processCharacters,
-  svgToDataURL,
   IDGenerator,
 } from "./util";
 import {
@@ -37,16 +37,23 @@ export async function figmaToMacaron(
       const svg = await node.exportAsync({ format: "SVG" });
       const svgText = String.fromCharCode(...svg);
 
-      // TODO: parse SVG and return svg tag
+      const root = svgParser.parse(svgText) as hast.Root;
+      const svgElem = root.children[0];
+      if (svgElem.type !== "element") {
+        throw new Error("Expected element type");
+      }
 
-      return h("img", {
-        id,
-        src: svgToDataURL(svgText),
-        style: stringifyStyle({
-          ...positionStyle(node, parentLayout, groupTopLeft),
-          ...effectStyle(node as BlendMixin),
-        }),
-      });
+      return {
+        ...svgElem,
+        properties: {
+          ...svgElem.properties,
+          id,
+          style: stringifyStyle({
+            ...positionStyle(node, parentLayout, groupTopLeft),
+            ...effectStyle(node as BlendMixin),
+          }),
+        },
+      };
     } catch (error) {
       console.error(`error exporting ${node.name} to SVG`);
       console.error(String(error));
