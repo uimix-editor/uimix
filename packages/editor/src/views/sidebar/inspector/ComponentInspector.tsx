@@ -74,12 +74,7 @@ export const ComponentInspector: React.FC = observer(
           />
         </PaneHeadingRow>
         {listViewRoot && (
-          <StyledTreeView
-            header={<HeaderFooter />}
-            footer={<HeaderFooter />}
-            scroll={false}
-            rootItem={listViewRoot}
-          />
+          <StyledTreeView scroll={false} rootItem={listViewRoot} />
         )}
       </Pane>
     );
@@ -229,9 +224,5 @@ class VariantItem extends LeafTreeViewItem {
 }
 
 const StyledTreeView = styled(TreeView)`
-  margin: -12px;
+  margin: 0 -12px;
 ` as typeof TreeView;
-
-const HeaderFooter = styled.div`
-  height: 12px;
-`;
