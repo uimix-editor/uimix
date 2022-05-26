@@ -32,7 +32,9 @@ import { addVariant } from "../../../services/AddVariant";
 class ComponentInspectorState {
   constructor(editorState: EditorState) {
     this.editorState = editorState;
+    makeObservable(this);
   }
+
   readonly editorState: EditorState;
 
   @computed get component(): Component | undefined {
@@ -89,9 +91,9 @@ const DRAG_MIME = "application/x.macaron-component-variant-list-drag";
 class ComponentItem extends RootTreeViewItem {
   constructor(component: Component, editorState: EditorState) {
     super();
-    makeObservable(this);
     this.component = component;
     this.editorState = editorState;
+    makeObservable(this);
   }
 
   component: Component;
