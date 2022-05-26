@@ -19,12 +19,11 @@ export interface CustomElementMetadata {
 
   /**
    * The slots used by the component.
-   * The default slot is included as `""`.
    */
   slots: Slot[];
 }
 
 interface Slot {
-  name: string;
+  name?: string;
   defaultHTML?: hast.Content[];
 }

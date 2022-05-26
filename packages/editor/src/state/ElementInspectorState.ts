@@ -220,7 +220,7 @@ export class ElementInspectorState {
       return [];
     }
 
-    return component.slots.map((s) => s.name);
+    return component.slots.map((s) => s.name ?? "");
   }
 
   @computed get slotTarget(): string | typeof MIXED | undefined {

@@ -214,12 +214,19 @@ export class Component extends TreeNode<ComponentList, Component, never> {
     return usedVariables;
   }
 
-  @computed.struct get slots(): Map<string, hast.Content[]> {
-    const slots = new Map<string, hast.Content[]>();
+  @computed.struct get slots(): Map<
+    string | undefined,
+    hast.Content[] | undefined
+  > {
+    const slots = new Map<string | undefined, hast.Content[] | undefined>();
 
     const visit = (element: Element) => {
       if (element.tagName === "slot") {
-        slots.set(element.attrs.get("name") || "", element.innerHTML);
+        const innerHTML = element.innerHTML;
+        slots.set(
+          element.attrs.get("name") || undefined,
+          innerHTML.length ? innerHTML : undefined
+        );
       }
       for (const child of element.children) {
         if (child.type === "element") {
