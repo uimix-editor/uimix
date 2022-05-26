@@ -84,7 +84,7 @@ export class VariantInspectorState {
 
   readonly onBackgroundColorChange = action((backgroundColor?: string) => {
     for (const variant of this.selectedAllVariants) {
-      variant.backgroundColor = backgroundColor;
+      variant.backgroundColor = backgroundColor || undefined;
     }
     this.editorState.history.commit("Change Background Color");
     return true;
