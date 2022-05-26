@@ -27,6 +27,7 @@ import { EditorState } from "../../../state/EditorState";
 import { useEditorState } from "../../EditorStateContext";
 import { DefaultVariant, Variant } from "../../../models/Variant";
 import { Component } from "../../../models/Component";
+import { addVariant } from "../../../services/AddVariant";
 
 class ComponentInspectorState {
   constructor(editorState: EditorState) {
@@ -153,10 +154,8 @@ class ComponentItem extends RootTreeViewItem {
     if (!component) {
       return;
     }
-    const variant = new Variant();
-    variant.selector = ":hover";
-    component.variants.append(variant);
 
+    const variant = addVariant(component);
     this.editorState.document.deselect();
     variant.rootInstance?.select();
   }

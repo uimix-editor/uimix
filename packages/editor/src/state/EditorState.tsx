@@ -13,12 +13,12 @@ import { Element } from "../models/Element";
 import { ElementInstance } from "../models/ElementInstance";
 import { Text } from "../models/Text";
 import { TextInstance } from "../models/TextInstance";
-import { Variant } from "../models/Variant";
 import { ElementPicker } from "../mount/ElementPicker";
 import { snapThreshold } from "../views/viewport/Constants";
 import { IconBrowserState } from "../views/sidebar/outline/IconBrowserState";
 import { moveByPixels } from "../services/MoveByPixels";
 import { getInstance } from "../models/InstanceRegistry";
+import { addVariant } from "../services/AddVariant";
 import { ElementInspectorState } from "./ElementInspectorState";
 import { VariantInspectorState } from "./VariantInspectorState";
 import { InsertMode } from "./InsertMode";
@@ -147,10 +147,7 @@ export abstract class EditorState {
       {
         text: "Add Variant",
         onClick: action(() => {
-          const variant = new Variant();
-          variant.selector = ":hover";
-          component.variants.append(variant);
-
+          const variant = addVariant(component);
           this.document.deselect();
           variant.rootInstance?.select();
           return true;
