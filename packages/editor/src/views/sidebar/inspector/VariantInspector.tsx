@@ -24,7 +24,7 @@ export const VariantInspector: React.FC = observer(() => {
     <VariantInspectorWrap>
       <Pane>
         <PaneHeadingRow>
-          <PaneHeading>Artboard Settings</PaneHeading>
+          <PaneHeading>Artboard</PaneHeading>
         </PaneHeadingRow>
         <RowGroup>
           <Row111>
