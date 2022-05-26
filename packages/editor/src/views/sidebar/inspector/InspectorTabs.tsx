@@ -72,7 +72,7 @@ export const InspectorTabs: React.FC = observer(function InspectorTabs() {
               aria-selected={editorState.currentInspectorTab === "element"}
               onClick={onClickElementTab}
             >
-              {startCase(type)}
+              {type === "variant" ? "Component" : startCase(type)}
             </InspectorTabBarItem>
             <InspectorTabBarItem
               aria-selected={editorState.currentInspectorTab === "style"}
