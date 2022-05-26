@@ -8,7 +8,10 @@ import {
   PaneHeadingRow,
 } from "@seanchas116/paintkit/src/components/sidebar/Inspector";
 import switchIcon from "@seanchas116/paintkit/src/icon/Switch";
-import { PlusButton } from "@seanchas116/paintkit/src/components/IconButton";
+import {
+  MinusButton,
+  PlusButton,
+} from "@seanchas116/paintkit/src/components/IconButton";
 import {
   LeafTreeViewItem,
   RootTreeViewItem,
@@ -18,6 +21,7 @@ import { TreeView } from "@seanchas116/paintkit/src/components/treeview/TreeView
 import {
   TreeRow,
   TreeRowIcon,
+  TreeRowLabel,
 } from "@seanchas116/paintkit/src/components/treeview/TreeRow";
 import { EditorState } from "../../../state/EditorState";
 import { useEditorState } from "../../EditorStateContext";
@@ -72,7 +76,10 @@ export const ComponentInspector: React.FC = observer(
         <Pane>
           <PaneHeadingRow>
             <PaneHeading>Variants</PaneHeading>
-            <PlusButton onClick={action(() => listViewRoot?.addVariant?.())} />
+            <PlusButton onClick={action(() => listViewRoot?.addVariant())} />
+            <MinusButton
+              onClick={action(() => listViewRoot?.deleteSelectedVariants())}
+            />
           </PaneHeadingRow>
           {listViewRoot && (
             <StyledTreeView
@@ -200,7 +207,7 @@ class VariantItem extends LeafTreeViewItem {
     return (
       <TreeRow inverted={inverted}>
         <TreeRowIcon icon={switchIcon} />
-        {this.variant.name}
+        <TreeRowLabel>{this.variant.name}</TreeRowLabel>
       </TreeRow>
     );
   }
