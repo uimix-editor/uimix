@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { popoverStyle } from "@seanchas116/paintkit/src/components/Common";
 import { useViewModel } from "@seanchas116/paintkit/src/components/hooks/useViewModel";
 import { observer } from "mobx-react-lite";
@@ -8,12 +8,15 @@ import { action, computed, makeObservable, observable, reaction } from "mobx";
 import { Rect } from "paintvec";
 import type * as hast from "hast";
 import { isEqual } from "lodash-es";
+import "codemirror/lib/codemirror.css";
+import "codemirror/theme/material-darker.css";
+import "codemirror/mode/xml/xml";
+import CodeMirror from "codemirror";
 import { ElementInstance } from "../../models/ElementInstance";
 import { useEditorState } from "../EditorStateContext";
 import { formatHTML } from "../../util/Format";
 import { parseHTMLFragment } from "../../util/Hast";
 import { EditorState } from "../../state/EditorState";
-import { CodeMirrorTextArea } from "../../util/CodeMirrorTextArea";
 
 const InnerHTMLEditorWrap = styled.div`
   position: absolute;
@@ -38,14 +41,6 @@ const TextareaWrap = styled.div`
 
   width: 320px;
   height: 80px;
-`;
-
-const Textarea = styled(CodeMirrorTextArea)`
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
 `;
 
 function toFormattedHTML(hastNodes: hast.Content[]): string {
@@ -116,19 +111,41 @@ export const InnerHTMLEditorBody: React.FC<{
   target: ElementInstance;
 }> = observer(({ target }) => {
   const editorState = useEditorState();
-  // const textareaRef = React.createRef<HTMLTextAreaElement>();
+  const textareaRef = React.createRef<HTMLTextAreaElement>();
+  const editorRef = React.useRef<CodeMirror.EditorFromTextArea>();
 
   const state = useViewModel(
     () => new InnerHTMLEditorState(editorState, target),
     [editorState, target]
   );
 
-  // useEffect(() => {
-  //   const textarea = textareaRef.current;
-  //   setTimeout(() => {
-  //     textarea?.select();
-  //   }, 0);
-  // }, []);
+  useEffect(() => {
+    if (!textareaRef.current) {
+      return;
+    }
+
+    console.log("InnerHTMLEditorBody");
+
+    const editor = CodeMirror.fromTextArea(textareaRef.current, {
+      theme: "material-darker",
+      mode: "xml",
+    });
+    editorRef.current = editor;
+    editor.setValue(state.value);
+
+    setTimeout(() => {
+      editor.execCommand("selectAll");
+      editor.focus();
+    }, 0);
+
+    editor.on("change", (editor) => {
+      state.onChangeValue(editor.getValue());
+    });
+
+    return () => {
+      editor.toTextArea();
+    };
+  }, []);
 
   return (
     <InnerHTMLEditorWrap>
@@ -140,11 +157,7 @@ export const InnerHTMLEditorBody: React.FC<{
         }}
         onWheel={(e) => e.stopPropagation()}
       >
-        <Textarea
-          mode="text/html"
-          value={state.value}
-          onChange={state.onChangeValue}
-        />
+        <textarea ref={textareaRef} />
       </TextareaWrap>
     </InnerHTMLEditorWrap>
   );
