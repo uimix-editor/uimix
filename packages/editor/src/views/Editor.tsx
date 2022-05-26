@@ -37,14 +37,15 @@ export const Editor: React.FC<{ editorState: EditorState }> = ({
     const onWindowKeyDown = action((e: KeyboardEvent) => {
       if (editorState.handleGlobalKeyDown(e)) {
         e.preventDefault();
+        e.stopPropagation();
       }
     });
     const onWindowKeyUp = action((e: KeyboardEvent) => {
       editorState.handleGlobalKeyUp(e);
     });
 
-    window.addEventListener("keydown", onWindowKeyDown);
-    window.addEventListener("keyup", onWindowKeyUp);
+    window.addEventListener("keydown", onWindowKeyDown, { capture: true });
+    window.addEventListener("keyup", onWindowKeyUp, { capture: true });
     return () => {
       window.removeEventListener("keydown", onWindowKeyDown);
       window.removeEventListener("keyup", onWindowKeyUp);
