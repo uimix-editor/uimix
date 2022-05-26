@@ -7,6 +7,7 @@ import {
   processCharacters,
   svgToDataURL,
   IDGenerator,
+  parseHTMLFragment,
 } from "./util";
 import {
   stringifyStyle,
@@ -37,16 +38,22 @@ export async function figmaToMacaron(
       const svg = await node.exportAsync({ format: "SVG" });
       const svgText = String.fromCharCode(...svg);
 
-      // TODO: parse SVG and return svg tag
+      const root = parseHTMLFragment(svgText);
+      const svgElem = root.children[0];
+      if (svgElem.type !== "element") {
+        throw new Error("Expected element type");
+      }
 
-      return h("img", {
-        id,
-        src: svgToDataURL(svgText),
-        style: stringifyStyle({
-          ...positionStyle(node, parentLayout, groupTopLeft),
-          ...effectStyle(node as BlendMixin),
-        }),
-      });
+      return {
+        ...svgElem,
+        properties: {
+          ...svgElem.properties,
+          style: stringifyStyle({
+            ...positionStyle(node, parentLayout, groupTopLeft),
+            ...effectStyle(node as BlendMixin),
+          }),
+        },
+      };
     } catch (error) {
       console.error(`error exporting ${node.name} to SVG`);
       console.error(String(error));
