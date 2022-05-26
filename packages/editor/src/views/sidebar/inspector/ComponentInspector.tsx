@@ -86,15 +86,12 @@ export const ComponentInspector: React.FC = observer(
                   <VariantRow
                     key={variant.key}
                     aria-selected={variant.rootInstance?.selected}
+                    onClick={action(() => {
+                      state.onGoToVariant(variant);
+                    })}
                   >
                     <TreeRowIcon icon={switchIcon} />
                     <VariantName>{variant.name}</VariantName>
-                    <Tippy content="Go to Variant">
-                      <IconButton
-                        icon={arrowIcon}
-                        onClick={action(() => state.onGoToVariant(variant))}
-                      />
-                    </Tippy>
                   </VariantRow>
                 );
               })}
