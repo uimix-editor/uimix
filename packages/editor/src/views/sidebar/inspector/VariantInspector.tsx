@@ -12,6 +12,7 @@ import {
 import { Label } from "@seanchas116/paintkit/src/components/Label";
 import { Input } from "@seanchas116/paintkit/src/components/Input";
 import { NumberInput } from "@seanchas116/paintkit/src/components/NumberInput";
+import { CSSColorInput } from "@seanchas116/paintkit/src/components/css/CSSColorInput";
 import { useEditorState } from "../../EditorStateContext";
 
 const VariantInspectorWrap = styled.div``;
@@ -47,6 +48,11 @@ export const VariantInspector: React.FC = observer(() => {
             />
           </Row111>
         </RowGroup>
+
+        <TopLabelArea>
+          <Label>Background Color</Label>
+          <CSSColorInput />
+        </TopLabelArea>
 
         {state.selectedVariants.length > 0 && (
           <>
