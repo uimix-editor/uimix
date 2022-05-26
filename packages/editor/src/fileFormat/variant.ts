@@ -8,6 +8,7 @@ export function dumpVariant(variant: Variant | DefaultVariant): hast.Element {
     y: variant.y,
     width: variant.width,
     height: variant.height,
+    ["background-color"]: variant.backgroundColor,
     ...(variant.type === "variant"
       ? {
           selector: variant.selector || undefined,
@@ -28,6 +29,9 @@ export function loadVariantDimensions(
   }
   if (node.properties?.height) {
     variant.height = Number(node.properties.height);
+  }
+  if (node.properties?.["background-color"]) {
+    variant.backgroundColor = String(node.properties["background-color"]);
   }
 }
 
