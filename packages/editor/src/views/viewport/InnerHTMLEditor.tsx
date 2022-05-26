@@ -1,5 +1,8 @@
 import React, { useEffect } from "react";
-import { popoverStyle } from "@seanchas116/paintkit/src/components/Common";
+import {
+  popoverStyle,
+  monospaceFontFamily,
+} from "@seanchas116/paintkit/src/components/Common";
 import { useViewModel } from "@seanchas116/paintkit/src/components/hooks/useViewModel";
 import { observer } from "mobx-react-lite";
 import styled from "styled-components";
@@ -47,6 +50,7 @@ const TextareaWrap = styled.div`
   .CodeMirror {
     width: 100%;
     height: 100%;
+    font-family: ${monospaceFontFamily};
   }
 `;
 
