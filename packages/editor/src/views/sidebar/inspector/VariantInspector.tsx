@@ -24,7 +24,7 @@ export const VariantInspector: React.FC = observer(() => {
     <VariantInspectorWrap>
       <Pane>
         <PaneHeadingRow>
-          <PaneHeading>Variant</PaneHeading>
+          <PaneHeading>Artboard Settings</PaneHeading>
         </PaneHeadingRow>
         <RowGroup>
           <Row111>
@@ -53,28 +53,31 @@ export const VariantInspector: React.FC = observer(() => {
           <Label>Background Color</Label>
           <CSSColorInput />
         </TopLabelArea>
-
-        {state.selectedVariants.length > 0 && (
-          <>
-            <TopLabelArea>
-              <Label>Selector</Label>
-              <Input
-                value={state.selector}
-                onChange={state.onChangeSelector}
-                placeholder='e.g. ":hover", "[type="primary"]"'
-              />
-            </TopLabelArea>
-            <TopLabelArea>
-              <Label>Media Query</Label>
-              <Input
-                value={state.mediaQuery}
-                onChange={state.onChangeMediaQuery}
-                placeholder='e.g. "(max-width: 768px)"'
-              />
-            </TopLabelArea>
-          </>
-        )}
       </Pane>
+
+      {state.selectedVariants.length > 0 && (
+        <Pane>
+          <PaneHeadingRow>
+            <PaneHeading>Condition</PaneHeading>
+          </PaneHeadingRow>
+          <TopLabelArea>
+            <Label>Selector</Label>
+            <Input
+              value={state.selector}
+              onChange={state.onChangeSelector}
+              placeholder='e.g. ":hover", "[type="primary"]"'
+            />
+          </TopLabelArea>
+          <TopLabelArea>
+            <Label>Media Query</Label>
+            <Input
+              value={state.mediaQuery}
+              onChange={state.onChangeMediaQuery}
+              placeholder='e.g. "(max-width: 768px)"'
+            />
+          </TopLabelArea>
+        </Pane>
+      )}
     </VariantInspectorWrap>
   );
 });
