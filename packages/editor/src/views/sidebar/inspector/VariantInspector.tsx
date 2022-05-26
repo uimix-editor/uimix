@@ -51,7 +51,10 @@ export const VariantInspector: React.FC = observer(() => {
 
         <TopLabelArea>
           <Label>Background Color</Label>
-          <CSSColorInput />
+          <CSSColorInput
+            value={state.backgroundColor}
+            onChange={state.onBackgroundColorChange}
+          />
         </TopLabelArea>
       </Pane>
 

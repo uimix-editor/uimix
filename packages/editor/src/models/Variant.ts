@@ -34,6 +34,7 @@ abstract class BaseVariant extends TreeNode<VariantList, BaseVariant, never> {
   @observable y = 0;
   @observable width: number | undefined = undefined;
   @observable height: number | undefined = undefined;
+  @observable backgroundColor: string | undefined = undefined;
 
   abstract get name(): string;
 
