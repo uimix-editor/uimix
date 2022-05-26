@@ -1,12 +1,15 @@
 import "codemirror/lib/codemirror.css";
+import "codemirror/theme/material-darker.css";
+import "codemirror/mode/xml/xml";
 import CodeMirror from "codemirror";
 import React, { useEffect } from "react";
 
 export const CodeMirrorTextArea: React.FC<{
   className?: string;
+  mode: string;
   value: string;
   onChange: (value: string) => void;
-}> = ({ value, onChange, ...props }) => {
+}> = ({ mode, value, onChange, ...props }) => {
   const textareaRef = React.createRef<HTMLTextAreaElement>();
   const ref = React.useRef<CodeMirror.EditorFromTextArea>();
 
@@ -16,9 +19,8 @@ export const CodeMirrorTextArea: React.FC<{
     }
 
     const editor = CodeMirror.fromTextArea(textareaRef.current, {
-      lineNumbers: true,
-      // theme: "material-darker",
-      mode: "html",
+      theme: "material-darker",
+      mode,
     });
     ref.current = editor;
     editor.setValue(value);

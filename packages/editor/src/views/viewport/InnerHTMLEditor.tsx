@@ -1,6 +1,5 @@
-import React, { useEffect } from "react";
+import React from "react";
 import { popoverStyle } from "@seanchas116/paintkit/src/components/Common";
-import { colors } from "@seanchas116/paintkit/src/components/Palette";
 import { useViewModel } from "@seanchas116/paintkit/src/components/hooks/useViewModel";
 import { observer } from "mobx-react-lite";
 import styled from "styled-components";
@@ -142,7 +141,7 @@ export const InnerHTMLEditorBody: React.FC<{
         onWheel={(e) => e.stopPropagation()}
       >
         <Textarea
-          // ref={textareaRef}
+          mode="text/html"
           value={state.value}
           onChange={state.onChangeValue}
         />
