@@ -1,21 +1,24 @@
 import { observer } from "mobx-react-lite";
 import React, { useMemo } from "react";
 import styled from "styled-components";
-import { action, computed } from "mobx";
+import { action, computed, makeObservable } from "mobx";
 import {
   Pane,
   PaneHeading,
   PaneHeadingRow,
 } from "@seanchas116/paintkit/src/components/sidebar/Inspector";
-import { colors } from "@seanchas116/paintkit/src/components/Palette";
 import switchIcon from "@seanchas116/paintkit/src/icon/Switch";
-import arrowIcon from "@iconify-icons/ic/outline-arrow-forward";
-import { TreeRowIcon } from "@seanchas116/paintkit/src/components/treeview/TreeRow";
+import { PlusButton } from "@seanchas116/paintkit/src/components/IconButton";
 import {
-  IconButton,
-  PlusButton,
-} from "@seanchas116/paintkit/src/components/IconButton";
-import Tippy from "@tippyjs/react";
+  LeafTreeViewItem,
+  RootTreeViewItem,
+  TreeViewItem,
+} from "@seanchas116/paintkit/src/components/treeview/TreeViewItem";
+import { TreeView } from "@seanchas116/paintkit/src/components/treeview/TreeView";
+import {
+  TreeRow,
+  TreeRowIcon,
+} from "@seanchas116/paintkit/src/components/treeview/TreeRow";
 import { EditorState } from "../../../state/EditorState";
 import { useEditorState } from "../../EditorStateContext";
 import { DefaultVariant, Variant } from "../../../models/Variant";
@@ -43,20 +46,12 @@ class ComponentInspectorState {
     variant.rootInstance?.select();
   }
 
-  addVariant(): void {
-    const { component } = this;
-    if (!component) {
-      return;
+  @computed get listViewRoot(): ComponentItem | undefined {
+    const component = this.component;
+    if (component) {
+      return new ComponentItem(component, this.editorState);
     }
-    const variant = new Variant();
-    variant.selector = ":hover";
-    component.variants.append(variant);
-
-    this.editorState.document.deselect();
-    variant.rootInstance?.select();
   }
-
-  readonly onAddVariant = action(this.addVariant.bind(this));
 }
 
 const ComponentInspectorWrap = styled.div``;
@@ -70,32 +65,22 @@ export const ComponentInspector: React.FC = observer(
       [editorState]
     );
 
-    const { variants } = state;
+    const { listViewRoot } = state;
 
     return (
       <ComponentInspectorWrap>
         <Pane>
           <PaneHeadingRow>
             <PaneHeading>Variants</PaneHeading>
-            <PlusButton onClick={state.onAddVariant} />
+            <PlusButton onClick={action(() => listViewRoot?.addVariant?.())} />
           </PaneHeadingRow>
-          {variants.length > 0 && (
-            <VariantRows>
-              {variants.map((variant) => {
-                return (
-                  <VariantRow
-                    key={variant.key}
-                    aria-selected={variant.rootInstance?.selected}
-                    onClick={action(() => {
-                      state.onGoToVariant(variant);
-                    })}
-                  >
-                    <TreeRowIcon icon={switchIcon} />
-                    <VariantName>{variant.name}</VariantName>
-                  </VariantRow>
-                );
-              })}
-            </VariantRows>
+          {listViewRoot && (
+            <StyledTreeView
+              header={<HeaderFooter />}
+              footer={<HeaderFooter />}
+              scroll={false}
+              rootItem={listViewRoot}
+            />
           )}
         </Pane>
       </ComponentInspectorWrap>
@@ -103,25 +88,154 @@ export const ComponentInspector: React.FC = observer(
   }
 );
 
-const VariantRow = styled.div`
-  height: 24px;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
+const DRAG_MIME = "application/x.macaron-component-variant-list-drag";
 
-  &[aria-selected="true"] {
-    background: ${colors.active};
+class ComponentItem extends RootTreeViewItem {
+  constructor(component: Component, editorState: EditorState) {
+    super();
+    makeObservable(this);
+    this.component = component;
+    this.editorState = editorState;
   }
-`;
 
-const VariantName = styled.div`
-  flex: 1;
-  font-size: 12px;
-  color: ${colors.text};
-  line-height: 24px;
-`;
+  component: Component;
+  editorState: EditorState;
 
-const VariantRows = styled.div`
-  display: flex;
-  flex-direction: column;
+  @computed get children(): TreeViewItem[] {
+    return this.component.allVariants.map((v) => new VariantItem(v, this));
+  }
+
+  deselect(): void {
+    this.component.select();
+  }
+
+  canDropData(dataTransfer: DataTransfer) {
+    return dataTransfer.types.includes(DRAG_MIME);
+  }
+
+  handleDrop(event: React.DragEvent, before: TreeViewItem | undefined): void {
+    let beforeVariant = (before as VariantItem | undefined)?.variant;
+    if (beforeVariant?.type === "defaultVariant") {
+      beforeVariant = this.component.variants.firstChild;
+    }
+
+    const { selectedVariants } = this;
+    if (selectedVariants.length === 0) {
+      return;
+    }
+
+    for (const variant of selectedVariants) {
+      if (variant.type !== "defaultVariant") {
+        this.component.variants.insertBefore(variant, beforeVariant);
+      }
+    }
+    this.editorState.history.commit("Move Variants");
+  }
+
+  @computed get selectedVariants(): readonly (Variant | DefaultVariant)[] {
+    return this.component.allVariants.filter((v) => v.rootInstance?.selected);
+  }
+
+  @computed get canDelete(): boolean {
+    return this.selectedVariants.some((v) => v.type === "variant");
+  }
+
+  addVariant(): void {
+    const { component } = this;
+    if (!component) {
+      return;
+    }
+    const variant = new Variant();
+    variant.selector = ":hover";
+    component.variants.append(variant);
+
+    this.editorState.document.deselect();
+    variant.rootInstance?.select();
+  }
+
+  deleteSelectedVariants() {
+    for (const v of this.selectedVariants) {
+      if (v.type !== "defaultVariant") {
+        v.remove();
+      }
+    }
+    this.component.select();
+    this.editorState.history.commit("Remove Variants");
+  }
+}
+
+class VariantItem extends LeafTreeViewItem {
+  constructor(variant: Variant | DefaultVariant, parent: ComponentItem) {
+    super();
+    this.variant = variant;
+    this.parent = parent;
+    makeObservable(this);
+  }
+
+  readonly parent: ComponentItem;
+  readonly variant: Variant | DefaultVariant;
+
+  get editorState(): EditorState {
+    return this.parent.editorState;
+  }
+
+  get key(): string {
+    return this.variant.key;
+  }
+  @computed get selected(): boolean {
+    return !!this.variant.rootInstance?.selected;
+  }
+  @computed get hovered(): boolean {
+    return this.editorState.hoveredItem === this.variant.rootInstance;
+  }
+
+  handleMouseEnter(): void {
+    this.editorState.hoveredItem = this.variant.rootInstance;
+  }
+  handleMouseLeave(): void {
+    this.editorState.hoveredItem = undefined;
+  }
+
+  renderRow({ inverted }: { inverted: boolean }): React.ReactNode {
+    return (
+      <TreeRow inverted={inverted}>
+        <TreeRowIcon icon={switchIcon} />
+        {this.variant.name}
+      </TreeRow>
+    );
+  }
+
+  select(): void {
+    this.editorState.document.deselect();
+    this.variant.rootInstance?.select();
+  }
+
+  deselect(): void {
+    if (2 <= this.parent.selectedVariants.length) {
+      this.variant.rootInstance?.deselect();
+    } else {
+      this.parent.component.select();
+    }
+  }
+
+  handleDragStart(e: React.DragEvent) {
+    e.dataTransfer.effectAllowed = "copyMove";
+    e.dataTransfer.setData(DRAG_MIME, "drag");
+  }
+
+  // handleContextMenu(e: React.MouseEvent) {
+  //   e.preventDefault();
+  //   this.pageState.editorState.showContextMenu(
+  //     e,
+  //     variantContextMenu(this.pageState, this.variant)
+  //   );
+  // }
+}
+
+const StyledTreeView = styled(TreeView)`
+  margin: -12px;
+` as typeof TreeView;
+
+const HeaderFooter = styled.div`
+  height: 12px;
 `;
