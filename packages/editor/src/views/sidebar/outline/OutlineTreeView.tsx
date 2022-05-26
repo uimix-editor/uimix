@@ -1,6 +1,6 @@
 import { observer } from "mobx-react-lite";
 import React, { useEffect, useMemo, useState } from "react";
-import styled from "styled-components";
+import styled, { css } from "styled-components";
 import scrollIntoView from "scroll-into-view-if-needed";
 import {
   LeafTreeViewItem,
@@ -24,16 +24,18 @@ import formatBoldIcon from "@iconify-icons/ic/outline-format-bold";
 import formatItalicIcon from "@iconify-icons/ic/outline-format-italic";
 import interestsIcon from "@iconify-icons/ic/outline-interests";
 import inputIcon from "@iconify-icons/ic/outline-login";
+import arrowForwardIcon from "@iconify-icons/ic/outline-arrow-forward";
 import switchIcon from "@seanchas116/paintkit/src/icon/Switch";
 import chevronsIcon from "@seanchas116/paintkit/src/icon/Chevrons";
 import headingIcon from "@seanchas116/paintkit/src/icon/Heading";
 import imageIcon from "@seanchas116/paintkit/src/icon/Image";
+import { Color } from "@seanchas116/paintkit/src/util/Color";
 import { action, computed, makeObservable, reaction } from "mobx";
 import { colors } from "@seanchas116/paintkit/src/components/Palette";
 import { filterInstance } from "@seanchas116/paintkit/src/util/Collection";
 import { compact } from "lodash-es";
 import { assertNonNull } from "@seanchas116/paintkit/src/util/Assert";
-import { IconifyIcon } from "@iconify/react/dist/offline";
+import { Icon, IconifyIcon } from "@iconify/react/dist/offline";
 import { EditorState } from "../../../state/EditorState";
 import { Component } from "../../../models/Component";
 import { DefaultVariant, Variant } from "../../../models/Variant";
@@ -41,6 +43,13 @@ import { ElementInstance } from "../../../models/ElementInstance";
 import { TextInstance } from "../../../models/TextInstance";
 import { Document } from "../../../models/Document";
 import { useEditorState } from "../../EditorStateContext";
+
+const slotColor = "#79BFFF";
+
+function colorWithOpacity(colorStr: string, opacity: number): string {
+  const color = Color.from(colorStr) ?? Color.white;
+  return color.withAlpha(color.a * opacity).toString();
+}
 
 function iconForTagName(tagName: string): IconifyIcon {
   if (tagName === "b" || tagName === "strong") {
@@ -75,17 +84,17 @@ const TreeViewPadding = styled.div`
   height: 8px;
 `;
 
-const TagName = styled.div`
+const TagName = styled.div<{ color?: string }>`
   font-size: 8px;
   font-weight: 600;
   text-transform: uppercase;
-  color: ${colors.text};
+  color: ${(p) => p.color || colors.text};
   opacity: 0.5;
   margin-right: 8px;
 `;
 
-const ElementIcon = styled(TreeRowIcon)`
-  color: ${colors.text};
+const ElementIcon = styled(TreeRowIcon)<{ color?: string }>`
+  color: ${(p) => p.color || colors.text};
   opacity: 0.5;
 `;
 
@@ -93,12 +102,20 @@ const ComponentIcon = styled(TreeRowIcon)`
   color: ${colors.component};
 `;
 
-const StyledNameEdit = styled(TreeRowNameEdit)<{
-  isComponent?: boolean;
-  color: string;
+const SlotIcon = styled(TreeRowIcon)`
+  color: ${slotColor};
+`;
+
+const ComponentNameEdit = styled(TreeRowNameEdit)`
+  color: ${colors.componentText};
+  font-weight: 700;
+`;
+
+const NameEdit = styled(TreeRowNameEdit)<{
+  color?: string;
+  rowSelected?: boolean;
 }>`
-  color: ${(p) => p.color};
-  font-weight: ${(p) => (p.isComponent ? "700" : "400")};
+  color: ${(p) => (p.rowSelected ? colors.text : p.color || colors.text)};
 `;
 
 const StyledRow = styled(TreeRow)`
@@ -197,6 +214,20 @@ interface OutlineContext {
   >;
 }
 
+const SlotIndicator = styled.div<{ rowSelected?: boolean }>`
+  color: ${slotColor};
+  margin-right: 8px;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+
+  ${(p) =>
+    p.rowSelected &&
+    css`
+      color: ${colors.activeText};
+    `}
+`;
+
 class ElementItem extends TreeViewItem {
   constructor(
     context: OutlineContext,
@@ -218,6 +249,9 @@ class ElementItem extends TreeViewItem {
   get children(): readonly TreeViewItem[] {
     return this.instance.children.map((instance) => {
       if (instance.type === "element") {
+        if (instance.element.tagName === "slot") {
+          return new SlotElementItem(this.context, this, instance);
+        }
         return new ElementItem(this.context, this, instance);
       } else {
         return new TextItem(this.context, this, instance);
@@ -252,7 +286,7 @@ class ElementItem extends TreeViewItem {
     this.instance.collapsed = !this.instance.collapsed;
   }
 
-  private onNameChange = action((id: string) => {
+  private onIDChange = action((id: string) => {
     this.instance.element.setID(id);
     this.context.editorState.history.commit("Change ID");
     return true;
@@ -264,19 +298,49 @@ class ElementItem extends TreeViewItem {
     return iconForTagName(this.instance.element.tagName);
   }
 
+  @computed get isInsideSlot(): boolean {
+    if (this.instance.element.tagName === "slot") {
+      return true;
+    }
+    if (this.parent instanceof ElementItem) {
+      return this.parent.isInsideSlot;
+    }
+    return false;
+  }
+
   renderRow(options: { inverted: boolean }): React.ReactNode {
+    const slot = this.instance.element.attrs.get("slot");
+
     return (
       <StyledRow
         ref={(e) => (this.rowElement = e || undefined)}
         inverted={options.inverted}
       >
-        <ElementIcon icon={this.icon} />
-        <TagName> {this.instance.element.tagName}</TagName>
-        <StyledNameEdit
-          color={colors.text}
+        {slot && (
+          <SlotIndicator rowSelected={options.inverted}>
+            <Icon icon={arrowForwardIcon} />
+            {slot}
+          </SlotIndicator>
+        )}
+        <ElementIcon
+          icon={this.icon}
+          style={{
+            color: this.isInsideSlot ? slotColor : colors.text,
+          }}
+        />
+        <TagName
+          style={{
+            color: this.isInsideSlot ? slotColor : colors.text,
+          }}
+        >
+          {this.instance.element.tagName}
+        </TagName>
+        <NameEdit
+          color={this.isInsideSlot ? slotColor : colors.text}
+          rowSelected={options.inverted}
           value={this.instance.element.id}
           // TODO: validate
-          onChange={this.onNameChange}
+          onChange={this.onIDChange}
           disabled={!options.inverted}
           trigger="click"
         />
@@ -330,6 +394,40 @@ class ElementItem extends TreeViewItem {
   }
 }
 
+class SlotElementItem extends ElementItem {
+  private onNameChange = action((name: string) => {
+    if (name) {
+      this.instance.element.attrs.set("name", name);
+    } else {
+      this.instance.element.attrs.delete("name");
+    }
+    this.context.editorState.history.commit("Change Name");
+    return true;
+  });
+
+  renderRow(options: { inverted: boolean }): React.ReactNode {
+    return (
+      <StyledRow
+        ref={(e) => (this.rowElement = e || undefined)}
+        inverted={options.inverted}
+      >
+        <SlotIcon icon={this.icon} />
+        <NameEdit
+          color={slotColor}
+          value={this.instance.element.attrs.get("name")}
+          rowSelected={options.inverted}
+          placeholder="(main slot)"
+          nonDimmedPlaceholder
+          // TODO: validate
+          onChange={this.onNameChange}
+          disabled={!options.inverted}
+          trigger="click"
+        />
+      </StyledRow>
+    );
+  }
+}
+
 class TextItem extends LeafTreeViewItem {
   constructor(
     context: OutlineContext,
@@ -374,14 +472,19 @@ class TextItem extends LeafTreeViewItem {
 
   rowElement: HTMLElement | undefined;
 
+  @computed get isInsideSlot(): boolean {
+    return this.parent.isInsideSlot;
+  }
+
   renderRow(options: { inverted: boolean }): React.ReactNode {
     return (
       <StyledRow
         ref={(e) => (this.rowElement = e || undefined)}
         inverted={options.inverted}
       >
-        <StyledNameEdit
-          color={colors.label}
+        <NameEdit
+          color={colorWithOpacity(this.isInsideSlot ? slotColor : "white", 0.7)}
+          rowSelected={options.inverted}
           value={this.instance.text.content}
           // TODO: validate
           onChange={this.onNameChange}
@@ -521,9 +624,7 @@ class ComponentItem extends TreeViewItem {
         inverted={options.inverted}
       >
         <ComponentIcon icon={widgetsFilledIcon} />
-        <StyledNameEdit
-          color={colors.text}
-          isComponent
+        <ComponentNameEdit
           value={this.component.name}
           // TODO: validate
           onChange={this.onNameChange}

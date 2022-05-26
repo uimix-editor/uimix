@@ -1,5 +1,6 @@
 import { TreeNode } from "@seanchas116/paintkit/src/util/TreeNode";
 import { computed, makeObservable, observable } from "mobx";
+import type * as hast from "hast";
 import { CustomElementMetadata } from "./CustomElementMetadata";
 import { ComponentList, Document } from "./Document";
 import { Element, ElementJSON } from "./Element";
@@ -213,11 +214,41 @@ export class Component extends TreeNode<ComponentList, Component, never> {
     return usedVariables;
   }
 
+  @computed.struct get slots(): Map<
+    string | undefined,
+    hast.Content[] | undefined
+  > {
+    const slots = new Map<string | undefined, hast.Content[] | undefined>();
+
+    const visit = (element: Element) => {
+      if (element.tagName === "slot") {
+        const innerHTML = element.innerHTML;
+        slots.set(
+          element.attrs.get("name") || undefined,
+          innerHTML.length ? innerHTML : undefined
+        );
+      }
+      for (const child of element.children) {
+        if (child.type === "element") {
+          visit(child);
+        }
+      }
+    };
+
+    visit(this.rootElement);
+
+    return slots;
+  }
+
   @computed get metadata(): CustomElementMetadata {
     return {
       tagName: this.name,
       thumbnail: this.thumbnail,
       cssVariables: [...this.usedCSSVariables],
+      slots: [...this.slots].map(([name, content]) => ({
+        name,
+        defaultContent: content,
+      })),
     };
   }
 }

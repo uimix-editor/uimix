@@ -58,7 +58,9 @@ export const InspectorTabs: React.FC = observer(function InspectorTabs() {
     }
   }
 
-  const showsStyle = type === "element" || type === "variant";
+  const showsStyle =
+    (type === "element" || type === "variant") &&
+    editorState.elementInspectorState.isStyleableElementSelected;
 
   return (
     <TabArea>

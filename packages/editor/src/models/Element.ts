@@ -141,4 +141,8 @@ export class Element extends TreeNode<Element, Element, Element | Text> {
       }
     }
   }
+
+  get isStyleable(): boolean {
+    return this.tagName !== "slot" && this.tagName !== "br";
+  }
 }

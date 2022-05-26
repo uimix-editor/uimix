@@ -1,10 +1,61 @@
 import { action, computed, makeObservable, observable } from "mobx";
 import { MIXED, sameOrMixed } from "@seanchas116/paintkit/src/util/Mixed";
-import { filterInstance } from "@seanchas116/paintkit/src/util/Collection";
 import { getIncrementalUniqueName } from "@seanchas116/paintkit/src/util/Name";
+import { sameOrNone } from "@seanchas116/paintkit/src/util/Collection";
 import { Element } from "../models/Element";
 import { changeTagName } from "../services/ChangeTagName";
 import { EditorState } from "./EditorState";
+
+export class SpecificElementInspectorState {
+  constructor(state: ElementInspectorState, tagName: string) {
+    this.state = state;
+    this.tagName = tagName;
+    makeObservable(this);
+  }
+
+  readonly state: ElementInspectorState;
+  readonly tagName: string;
+
+  @computed get elements(): Element[] {
+    return this.state.elements.filter((e) => e.tagName === this.tagName);
+  }
+}
+
+export class ImgElementInspectorState extends SpecificElementInspectorState {
+  constructor(state: ElementInspectorState) {
+    super(state, "img");
+    makeObservable(this);
+  }
+
+  @computed get src(): string | typeof MIXED | undefined {
+    return sameOrMixed(this.elements.map((e) => e.attrs.get("src")));
+  }
+
+  readonly onSrcChange = action((src: string) => {
+    for (const e of this.elements) {
+      e.attrs.set("src", src);
+    }
+    return true;
+  });
+}
+
+export class SlotElementInspectorState extends SpecificElementInspectorState {
+  constructor(state: ElementInspectorState) {
+    super(state, "slot");
+    makeObservable(this);
+  }
+
+  @computed get name(): string | typeof MIXED | undefined {
+    return sameOrMixed(this.elements.map((e) => e.attrs.get("name")));
+  }
+
+  readonly onNameChange = action((name: string) => {
+    for (const e of this.elements) {
+      e.attrs.set("name", name);
+    }
+    return true;
+  });
+}
 
 export class ElementInspectorState {
   constructor(editorState: EditorState) {
@@ -14,20 +65,26 @@ export class ElementInspectorState {
 
   readonly editorState: EditorState;
 
-  @computed get selectedElements(): Element[] {
-    return filterInstance(this.editorState.document.selectedNodes, [Element]);
+  @computed get elements(): Element[] {
+    return this.editorState.document.selectedElementInstances.map(
+      (i) => i.element
+    );
+  }
+
+  @computed get isStyleableElementSelected(): boolean {
+    return this.elements.some((element) => element.isStyleable);
   }
 
   @computed get isVisible(): boolean {
-    return this.selectedElements.length > 0;
+    return this.elements.length > 0;
   }
 
   @computed get tagName(): string | typeof MIXED | undefined {
-    return sameOrMixed(this.selectedElements.map((element) => element.tagName));
+    return sameOrMixed(this.elements.map((element) => element.tagName));
   }
 
   readonly onChangeTagName = action((tagName: string) => {
-    for (const element of this.selectedElements) {
+    for (const element of this.elements) {
       changeTagName(element, tagName);
     }
     this.editorState.history.commit("Change Tag Name");
@@ -35,11 +92,11 @@ export class ElementInspectorState {
   });
 
   @computed get id(): string | typeof MIXED | undefined {
-    return sameOrMixed(this.selectedElements.map((element) => element.id));
+    return sameOrMixed(this.elements.map((element) => element.id));
   }
 
   readonly onChangeID = action((id: string) => {
-    for (const element of this.selectedElements) {
+    for (const element of this.elements) {
       element.setID(id);
     }
     this.editorState.history.commit("Change ID");
@@ -56,7 +113,7 @@ export class ElementInspectorState {
   @computed get attrs(): Map<string, string | typeof MIXED> {
     const keys = new Set<string>();
 
-    for (const element of this.selectedElements) {
+    for (const element of this.elements) {
       for (const key of element.attrs.keys()) {
         keys.add(key);
       }
@@ -65,9 +122,7 @@ export class ElementInspectorState {
     const attrs = new Map<string, string | typeof MIXED>();
 
     for (const key of keys) {
-      const values = this.selectedElements.map((element) =>
-        element.attrs.get(key)
-      );
+      const values = this.elements.map((element) => element.attrs.get(key));
       attrs.set(key, sameOrMixed(values) ?? MIXED);
     }
 
@@ -75,7 +130,7 @@ export class ElementInspectorState {
   }
 
   addAttr(key: string, value: string): void {
-    for (const element of this.selectedElements) {
+    for (const element of this.elements) {
       element.attrs.set(key, value);
     }
 
@@ -93,7 +148,7 @@ export class ElementInspectorState {
 
   deleteAttrs(): void {
     for (const key of this.selectedAttrKeys) {
-      for (const element of this.selectedElements) {
+      for (const element of this.elements) {
         element.attrs.delete(key);
       }
     }
@@ -103,7 +158,7 @@ export class ElementInspectorState {
   readonly onDeleteAttrs = action(this.deleteAttrs.bind(this));
 
   reorderAttrs(keys: string[]): void {
-    for (const element of this.selectedElements) {
+    for (const element of this.elements) {
       const newAttrs = new Map<string, string>();
 
       for (const key of keys) {
@@ -121,7 +176,7 @@ export class ElementInspectorState {
   readonly onReorderAttrs = action(this.reorderAttrs.bind(this));
 
   changeAttrKey(key: string, newKey: string): boolean {
-    for (const element of this.selectedElements) {
+    for (const element of this.elements) {
       const value = element.attrs.get(key);
       if (value) {
         element.attrs.delete(key);
@@ -135,7 +190,7 @@ export class ElementInspectorState {
   readonly onChangeAttrKey = action(this.changeAttrKey.bind(this));
 
   changeAttrValue(key: string, value: string): boolean {
-    for (const element of this.selectedElements) {
+    for (const element of this.elements) {
       element.attrs.set(key, value);
     }
 
@@ -146,17 +201,35 @@ export class ElementInspectorState {
 
   // img
 
-  @computed get selectedImgElements(): Element[] {
-    return this.selectedElements.filter((e) => e.tagName === "img");
+  readonly img = new ImgElementInspectorState(this);
+
+  // slot
+
+  readonly slot = new SlotElementInspectorState(this);
+
+  @computed get slotTargetCandidates(): string[] {
+    const commonParent = sameOrNone(this.elements.map((e) => e.parent));
+    if (!commonParent) {
+      return [];
+    }
+
+    const component = this.editorState.document.getCustomElementMetadata(
+      commonParent.tagName
+    );
+    if (!component) {
+      return [];
+    }
+
+    return component.slots.map((s) => s.name ?? "");
   }
 
-  @computed get imgSrc(): string | typeof MIXED | undefined {
-    return sameOrMixed(this.selectedImgElements.map((e) => e.attrs.get("src")));
+  @computed get slotTarget(): string | typeof MIXED | undefined {
+    return sameOrMixed(this.elements.map((e) => e.attrs.get("slot")));
   }
 
-  readonly onImgSrcChange = action((src: string) => {
-    for (const e of this.selectedImgElements) {
-      e.attrs.set("src", src);
+  readonly onChangeSlotTarget = action((src: string) => {
+    for (const e of this.elements) {
+      e.attrs.set("slot", src);
     }
     return true;
   });
