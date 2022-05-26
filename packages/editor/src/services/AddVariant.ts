@@ -10,8 +10,8 @@ export function addVariant(component: Component): Variant {
   variant.selector = ":hover";
 
   if (lastVariantRect) {
-    variant.x = lastVariantRect.left + lastVariantRect.width + 24;
-    variant.y = lastVariantRect.top;
+    variant.x = Math.round(lastVariantRect.left + lastVariantRect.width + 24);
+    variant.y = Math.round(lastVariantRect.top);
   }
 
   component.variants.append(variant);
