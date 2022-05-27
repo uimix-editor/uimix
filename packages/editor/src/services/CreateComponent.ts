@@ -27,7 +27,7 @@ export function createEmptyComponent(editorState: EditorState): Component {
   component.defaultVariant.rootInstance.style.height = "100px";
   editorState.document.components.append(component);
 
-  const pos = editorState.findInsertionPosition(new Vec2(100, 100));
+  const pos = editorState.findNewComponentPosition(new Vec2(100, 100));
   component.defaultVariant.x = pos.x;
   component.defaultVariant.y = pos.y;
 
@@ -57,7 +57,7 @@ export function createComponentFromInstance(
 
   component.defaultVariant.rootInstance.setInnerHTML([html]);
 
-  const pos = editorState.findInsertionPosition(size);
+  const pos = editorState.findNewComponentPosition(size);
   component.defaultVariant.x = pos.x;
   component.defaultVariant.y = pos.y;
 
