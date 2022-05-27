@@ -8,22 +8,22 @@ import { action, computed, makeObservable, observable } from "mobx";
 import { CustomElementMetadata } from "../models/CustomElementMetadata";
 import { ElementInstance } from "../models/ElementInstance";
 import {
-  ExtraStyleKey,
-  extraStyleKeys,
+  AllStyleKey,
+  allStyleKeys,
   imageStyleKeys,
   textStyleKeys,
 } from "../models/Style";
 import { EditorState } from "./EditorState";
 
 export class StylePropertyState {
-  constructor(state: StyleInspectorState, key: ExtraStyleKey) {
+  constructor(state: StyleInspectorState, key: AllStyleKey) {
     this.state = state;
     this.key = key;
     makeObservable(this);
   }
 
   readonly state: StyleInspectorState;
-  readonly key: ExtraStyleKey;
+  readonly key: AllStyleKey;
 
   @computed get targetInstances(): ElementInstance[] {
     if (this.key === "color") {
@@ -121,8 +121,8 @@ export class StyleInspectorState {
     makeObservable(this);
 
     this.props = Object.fromEntries(
-      extraStyleKeys.map((key) => [key, new StylePropertyState(this, key)])
-    ) as Record<ExtraStyleKey, StylePropertyState>;
+      allStyleKeys.map((key) => [key, new StylePropertyState(this, key)])
+    ) as Record<AllStyleKey, StylePropertyState>;
   }
 
   readonly editorState: EditorState;
@@ -174,7 +174,7 @@ export class StyleInspectorState {
     }
   }
 
-  readonly props: Record<ExtraStyleKey, StylePropertyState>;
+  readonly props: Record<AllStyleKey, StylePropertyState>;
 
   @observable showsSizeDetails = false;
 

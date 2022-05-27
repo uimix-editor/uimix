@@ -227,7 +227,7 @@ export class ElementInstance {
 
   @computed get outerHTML(): hast.Element {
     // TODO: include styles of super variants
-    const style = this.style.toString();
+    const style = this.style.toPostCSS().toString();
 
     return h(
       this.element.tagName,

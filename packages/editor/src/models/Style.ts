@@ -2,7 +2,7 @@ import { replaceCSSVariables } from "@seanchas116/paintkit/src/util/CSS";
 import { MIXED, sameOrMixed } from "@seanchas116/paintkit/src/util/Mixed";
 import { stripQuotes } from "@seanchas116/paintkit/src/util/String";
 import { camelCase, kebabCase } from "lodash-es";
-import { makeObservable, observable } from "mobx";
+import { computed, makeObservable, observable } from "mobx";
 import * as postcss from "postcss";
 
 export const textStyleKeys = [
@@ -18,6 +18,35 @@ export const textStyleKeys = [
 ] as const;
 
 export const imageStyleKeys = ["objectFit"] as const;
+
+export const styleShorthands = {
+  margin: ["marginTop", "marginRight", "marginBottom", "marginLeft"],
+  padding: ["paddingTop", "paddingRight", "paddingBottom", "paddingLeft"],
+  borderWidth: [
+    "borderTopWidth",
+    "borderRightWidth",
+    "borderBottomWidth",
+    "borderLeftWidth",
+  ],
+  borderColor: [
+    "borderTopColor",
+    "borderRightColor",
+    "borderBottomColor",
+    "borderLeftColor",
+  ],
+  borderStyle: [
+    "borderTopStyle",
+    "borderRightStyle",
+    "borderBottomStyle",
+    "borderLeftStyle",
+  ],
+  borderRadius: [
+    "borderTopLeftRadius",
+    "borderTopRightRadius",
+    "borderBottomRightRadius",
+    "borderBottomLeftRadius",
+  ],
+} as const;
 
 export const styleKeys = [
   "position",
@@ -79,34 +108,59 @@ export const styleKeys = [
   "opacity",
 ] as const;
 
-export const extraStyleKeys = [
-  ...styleKeys,
-  "borderRadius",
-  "borderWidth",
-  "borderStyle",
-  "borderColor",
-] as const;
+const shorthandStyleKeys = Object.keys(
+  styleShorthands
+) as readonly (keyof typeof styleShorthands)[];
+
+export const allStyleKeys = [...styleKeys, ...shorthandStyleKeys] as const;
 
 export type StyleKey = typeof styleKeys[number];
-
-export type ExtraStyleKey = typeof extraStyleKeys[number];
+export type ShorthandStyleKey = typeof shorthandStyleKeys[number];
+export type AllStyleKey = typeof allStyleKeys[number];
 
 export type StyleProps = {
   [key in StyleKey]?: string;
 };
+export type ShorthandStyleProps = {
+  [key in ShorthandStyleKey]?: string | typeof MIXED;
+};
+export type AllStyleProps = StyleProps & ShorthandStyleProps;
 
 const StyleBase: {
-  new (): StyleProps;
+  new (): AllStyleProps;
 } = class {
   constructor() {
     for (const key of styleKeys) {
       // @ts-ignore
       this[key] = undefined;
     }
+
+    for (const [shorthandKey, keys] of Object.entries(styleShorthands)) {
+      Object.defineProperty(this, shorthandKey, {
+        configurable: true,
+        get() {
+          // eslint-disable-next-line
+          return sameOrMixed(keys.map((key) => this[key]));
+        },
+        set(value: string | typeof MIXED | undefined) {
+          if (value === MIXED) {
+            return;
+          }
+          for (const key of keys) {
+            // eslint-disable-next-line
+            this[key] = value;
+          }
+        },
+      });
+    }
+
     makeObservable(
       this,
       // @ts-ignore
-      Object.fromEntries(styleKeys.map((key) => [key, observable]))
+      {
+        ...Object.fromEntries(styleKeys.map((key) => [key, observable])),
+        ...Object.fromEntries(shorthandStyleKeys.map((key) => [key, computed])),
+      }
     );
   }
 };
@@ -133,46 +187,31 @@ export class Style extends StyleBase {
     this.customProps.replace(new Map(Object.entries(json.customProps)));
   }
 
-  toString(): string {
-    const rules: string[] = [];
-
-    for (const key of styleKeys) {
-      const value = this[key];
-      if (value !== undefined) {
-        rules.push(`${kebabCase(key)}:${value};`);
-      }
-    }
-    for (const [key, value] of this.customProps) {
-      rules.push(`${key}:${value};`);
-    }
-    return rules.join("");
-  }
-
   loadString(styleString: string): void {
     const root = postcss.parse(styleString);
     this.loadPostCSS(root);
   }
 
-  toPostCSS(defaults?: postcss.RuleProps): postcss.Rule {
-    const rule = new postcss.Rule(defaults);
+  toPostCSS(): postcss.Root {
+    const root = new postcss.Root();
 
     for (const key of styleKeys) {
       const value = this[key];
       if (value !== undefined) {
-        rule.append({
+        root.append({
           prop: kebabCase(key),
           value: value,
         });
       }
     }
     for (const [key, value] of this.customProps) {
-      rule.append({
+      root.append({
         prop: key,
         value,
       });
     }
 
-    return rule;
+    return root;
   }
 
   loadPostCSS(container: postcss.Container): void {
@@ -192,82 +231,6 @@ export class Style extends StyleBase {
       this[key] = props[key];
     }
     this.customProps.replace(new Map(Object.entries(customProps)));
-  }
-
-  get borderRadius(): string | typeof MIXED | undefined {
-    return sameOrMixed([
-      this.borderTopLeftRadius,
-      this.borderTopRightRadius,
-      this.borderBottomRightRadius,
-      this.borderBottomLeftRadius,
-    ]);
-  }
-
-  set borderRadius(value: string | typeof MIXED | undefined) {
-    if (value === MIXED) {
-      return;
-    }
-    this.borderTopLeftRadius = value;
-    this.borderTopRightRadius = value;
-    this.borderBottomRightRadius = value;
-    this.borderBottomLeftRadius = value;
-  }
-
-  get borderWidth(): string | typeof MIXED | undefined {
-    return sameOrMixed([
-      this.borderTopWidth,
-      this.borderRightWidth,
-      this.borderBottomWidth,
-      this.borderLeftWidth,
-    ]);
-  }
-
-  set borderWidth(value: string | typeof MIXED | undefined) {
-    if (value === MIXED) {
-      return;
-    }
-    this.borderTopWidth = value;
-    this.borderRightWidth = value;
-    this.borderBottomWidth = value;
-    this.borderLeftWidth = value;
-  }
-
-  get borderStyle(): string | typeof MIXED | undefined {
-    return sameOrMixed([
-      this.borderTopStyle,
-      this.borderRightStyle,
-      this.borderBottomStyle,
-      this.borderLeftStyle,
-    ]);
-  }
-
-  set borderStyle(value: string | typeof MIXED | undefined) {
-    if (value === MIXED) {
-      return;
-    }
-    this.borderTopStyle = value;
-    this.borderRightStyle = value;
-    this.borderBottomStyle = value;
-    this.borderLeftStyle = value;
-  }
-
-  get borderColor(): string | typeof MIXED | undefined {
-    return sameOrMixed([
-      this.borderTopColor,
-      this.borderRightColor,
-      this.borderBottomColor,
-      this.borderLeftColor,
-    ]);
-  }
-
-  set borderColor(value: string | typeof MIXED | undefined) {
-    if (value === MIXED) {
-      return;
-    }
-    this.borderTopColor = value;
-    this.borderRightColor = value;
-    this.borderBottomColor = value;
-    this.borderLeftColor = value;
   }
 
   get usedFontFamilies(): Set<string> {
