@@ -38,14 +38,14 @@ export function createComponentFromInstance(
   editorState: EditorState,
   instance: ElementInstance
 ): Component {
-  const parent = instance.element.parent!;
+  const parent = instance.element.parent;
   if (!parent) {
-    throw new Error("Cannot create component without a parent");
+    return createEmptyComponent(editorState);
   }
 
   const document = instance.element.component?.document;
   if (!document) {
-    throw new Error("Instance belongs to no document");
+    return createEmptyComponent(editorState);
   }
 
   const size = instance.boundingBox.size;
