@@ -7,6 +7,7 @@ import { isVoidElement } from "@seanchas116/paintkit/src/util/HTMLTagCategory";
 import googleFonts from "@seanchas116/paintkit/src/util/GoogleFonts.json";
 import { action, computed, makeObservable, observable } from "mobx";
 import { Rect, Vec2 } from "paintvec";
+import { compact } from "lodash-es";
 import { Component } from "../models/Component";
 import { Document, DocumentJSON } from "../models/Document";
 import { Element } from "../models/Element";
@@ -19,6 +20,7 @@ import { IconBrowserState } from "../views/sidebar/outline/IconBrowserState";
 import { moveByPixels } from "../services/MoveByPixels";
 import { getInstance } from "../models/InstanceRegistry";
 import { addVariant } from "../services/AddVariant";
+import { findPositionForNewRect } from "../util/findPositionForNewRect";
 import { ElementInspectorState } from "./ElementInspectorState";
 import { VariantInspectorState } from "./VariantInspectorState";
 import { InsertMode } from "./InsertMode";
@@ -115,6 +117,16 @@ export abstract class EditorState {
     return snapThreshold / this.scroll.scale;
   }
 
+  findNewComponentPosition(size: Vec2): Vec2 {
+    return findPositionForNewRect(
+      this.scroll.viewportRectInDocument,
+      this.document.components.children.flatMap((c) =>
+        compact(c.allVariants.map((v) => v.rootInstance?.boundingBox))
+      ),
+      size
+    );
+  }
+
   getBasicEditMenu(): MenuItem[] {
     return [
       this.commands.cut,
@@ -126,15 +138,7 @@ export abstract class EditorState {
 
   getRootContextMenu(): MenuItem[] {
     return [
-      {
-        text: "Add Component",
-        onClick: action(() => {
-          const component = new Component();
-          this.document.components.append(component);
-          this.history.commit("Add Component");
-          return true;
-        }),
-      },
+      this.commands.createComponent,
       {
         type: "separator",
       },
@@ -251,7 +255,14 @@ export abstract class EditorState {
   }
 
   getElementMenu(): MenuItem[] {
-    return [this.commands.groupIntoFlex, this.commands.autoLayoutChildren];
+    return [
+      this.commands.groupIntoFlex,
+      this.commands.autoLayoutChildren,
+      {
+        type: "separator",
+      },
+      this.commands.createComponent,
+    ];
   }
 
   getViewMenu(): MenuItem[] {

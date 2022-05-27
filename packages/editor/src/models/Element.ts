@@ -38,16 +38,16 @@ export class Element extends TreeNode<Element, Element, Element | Text> {
 
   get canHaveChildren(): ValidationResult {
     const superResult = super.canHaveChildren;
-    if (!superResult.value) {
+    if (!superResult.isValid) {
       return superResult;
     }
     if (isVoidElement(this.tagName)) {
       return {
-        value: false,
-        error: "void element cannot have children",
+        isValid: false,
+        message: "void element cannot have children",
       };
     }
-    return { value: true };
+    return { isValid: true };
   }
 
   get id(): string {

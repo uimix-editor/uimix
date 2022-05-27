@@ -12,7 +12,7 @@ export function changeTagName(element: Element, newTagName: string): void {
   newElement.setID(element.id);
   newElement.attrs.replace(element.attrs);
 
-  if (newElement.canHaveChildren.value) {
+  if (newElement.canHaveChildren.isValid) {
     for (const child of element.children) {
       newElement.append(child);
     }

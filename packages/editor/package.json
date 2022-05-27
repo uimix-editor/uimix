@@ -16,6 +16,7 @@
     "@iconify/react": "^3.2.1",
     "@iconify/types": "^1.1.0",
     "@seanchas116/paintkit": "*",
+    "@timohausmann/quadtree-ts": "^2.0.0-beta.1",
     "@tippyjs/react": "^4.2.6",
     "@types/codemirror": "^5.60.5",
     "@types/hast": "^2.3.4",
@@ -45,7 +46,8 @@
     "styled-components": "^5.3.5",
     "tiny-typed-emitter": "^2.1.0",
     "unified": "^10.1.2",
-    "unist-util-inspect": "^7.0.0"
+    "unist-util-inspect": "^7.0.0",
+    "validate-element-name": "^3.0.0"
   },
   "devDependencies": {
     "@esbuild-plugins/node-globals-polyfill": "^0.1.1",

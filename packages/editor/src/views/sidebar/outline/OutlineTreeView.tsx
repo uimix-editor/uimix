@@ -36,6 +36,7 @@ import { filterInstance } from "@seanchas116/paintkit/src/util/Collection";
 import { compact } from "lodash-es";
 import { assertNonNull } from "@seanchas116/paintkit/src/util/Assert";
 import { Icon, IconifyIcon } from "@iconify/react/dist/offline";
+import validateElementName from "validate-element-name";
 import { EditorState } from "../../../state/EditorState";
 import { Component } from "../../../models/Component";
 import { DefaultVariant, Variant } from "../../../models/Variant";
@@ -153,7 +154,7 @@ export const OutlineTreeView: React.FC<{
         () => editorState.document.selectedInstances,
         async (instances) => {
           for (const instance of instances) {
-            instance.parent?.expandAncestors();
+            instance.expandAncestors();
           }
 
           // wait for render
@@ -273,7 +274,7 @@ class ElementItem extends TreeViewItem {
     return this.instance.collapsed;
   }
   get showsCollapseButton(): boolean {
-    return this.instance.element.canHaveChildren.value;
+    return this.instance.element.canHaveChildren.isValid;
   }
 
   deselect(): void {
@@ -366,7 +367,7 @@ class ElementItem extends TreeViewItem {
 
   canDropData(dataTransfer: DataTransfer) {
     return (
-      this.instance.element.canHaveChildren.value &&
+      this.instance.element.canHaveChildren.isValid &&
       dataTransfer.types.includes(NODE_DRAG_MIME)
     );
   }
@@ -626,7 +627,7 @@ class ComponentItem extends TreeViewItem {
         <ComponentIcon icon={widgetsFilledIcon} />
         <ComponentNameEdit
           value={this.component.name}
-          // TODO: validate
+          validate={(value) => validateElementName(value)}
           onChange={this.onNameChange}
           disabled={!options.inverted}
           trigger="click"

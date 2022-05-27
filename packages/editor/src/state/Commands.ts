@@ -2,7 +2,12 @@ import { Command } from "@seanchas116/paintkit/src/components/menu/Menu";
 import { KeyGesture } from "@seanchas116/paintkit/src/util/KeyGesture";
 import { action, computed, makeObservable, runInAction } from "mobx";
 import { parseFragment, stringifyFragment } from "../fileFormat/fragment";
+import { Component } from "../models/Component";
 import { AutoLayout } from "../services/AutoLayout";
+import {
+  createComponentFromInstance,
+  createEmptyComponent,
+} from "../services/CreateComponent";
 import { EditorState } from "./EditorState";
 
 export class Commands {
@@ -152,6 +157,36 @@ export class Commands {
           AutoLayout.autoLayoutChildren(instance);
         }
         this.history.commit("Auto-layout Children");
+        return true;
+      }),
+    };
+  }
+
+  @computed get createComponent(): Command {
+    const selection = this.document.selectedElementInstances;
+
+    return {
+      text: "Create Component",
+      shortcut: [new KeyGesture(["Command", "Alt"], "KeyK")],
+      onClick: action(() => {
+        const components: Component[] = [];
+
+        if (selection.length) {
+          for (const instance of selection) {
+            components.push(
+              createComponentFromInstance(this.editorState, instance)
+            );
+          }
+        } else {
+          components.push(createEmptyComponent(this.editorState));
+        }
+
+        this.document.deselect();
+        for (const component of components) {
+          component.defaultVariant.rootInstance.select();
+        }
+
+        this.history.commit("Create Component");
         return true;
       }),
     };

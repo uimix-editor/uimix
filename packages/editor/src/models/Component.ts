@@ -1,6 +1,7 @@
 import { TreeNode } from "@seanchas116/paintkit/src/util/TreeNode";
 import { computed, makeObservable, observable } from "mobx";
 import type * as hast from "hast";
+import validateElementName from "validate-element-name";
 import { CustomElementMetadata } from "./CustomElementMetadata";
 import { ComponentList, Document } from "./Document";
 import { Element, ElementJSON } from "./Element";
@@ -49,6 +50,9 @@ export class Component extends TreeNode<ComponentList, Component, never> {
   }
 
   rename(name: string): void {
+    if (!validateElementName(name)) {
+      throw new Error(`Invalid custom element name: ${name}`);
+    }
     const oldName = this.name;
     super.rename(name);
     const newName = this.name;
