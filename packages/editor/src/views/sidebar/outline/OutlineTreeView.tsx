@@ -274,7 +274,7 @@ class ElementItem extends TreeViewItem {
     return this.instance.collapsed;
   }
   get showsCollapseButton(): boolean {
-    return this.instance.element.canHaveChildren.value;
+    return this.instance.element.canHaveChildren.isValid;
   }
 
   deselect(): void {
@@ -367,7 +367,7 @@ class ElementItem extends TreeViewItem {
 
   canDropData(dataTransfer: DataTransfer) {
     return (
-      this.instance.element.canHaveChildren.value &&
+      this.instance.element.canHaveChildren.isValid &&
       dataTransfer.types.includes(NODE_DRAG_MIME)
     );
   }
@@ -632,11 +632,11 @@ class ComponentItem extends TreeViewItem {
 
             if (!result.isValid) {
               return {
-                value: false,
-                error: result.message,
+                isValid: false,
+                message: result.message,
               };
             }
-            return { value: true };
+            return { isValid: true };
           }}
           onChange={this.onNameChange}
           disabled={!options.inverted}

@@ -103,11 +103,11 @@ class CSSVariableItem extends LeafTreeViewItem {
           validate={(name) => {
             if (!isValidCSSIdentifier(name)) {
               return {
-                value: false,
-                error: "Name must be a valid CSS identifier",
+                isValid: false,
+                message: "Name must be a valid CSS identifier",
               };
             }
-            return { value: true };
+            return { isValid: true };
           }}
           onChange={this.onNameChange}
           disabled={!options.inverted}
