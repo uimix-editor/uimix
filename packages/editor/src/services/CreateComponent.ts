@@ -55,6 +55,8 @@ export function createComponentFromInstance(
   const component = new Component();
   document.components.append(component);
 
+  // TODO: generate component name
+
   component.defaultVariant.rootInstance.setInnerHTML([html]);
 
   const pos = editorState.findNewComponentPosition(size);
