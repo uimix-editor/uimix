@@ -15,19 +15,12 @@ import "codemirror/lib/codemirror.css";
 import "codemirror/theme/material-darker.css";
 import "codemirror/mode/xml/xml";
 import CodeMirror from "codemirror";
+import { RootPortal } from "@seanchas116/paintkit/src/components/RootPortal";
 import { ElementInstance } from "../../models/ElementInstance";
 import { useEditorState } from "../EditorStateContext";
 import { formatHTML } from "../../util/Format";
 import { parseHTMLFragment } from "../../util/Hast";
 import { EditorState } from "../../state/EditorState";
-
-const InnerHTMLEditorWrap = styled.div`
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-`;
 
 const Background = styled.div`
   position: absolute;
@@ -91,9 +84,9 @@ class InnerHTMLEditorState {
   private lastInnerHTML: hast.Content[] = [];
 
   @computed get bbox(): Rect {
-    return this.target.boundingBox.transform(
-      this.editorState.scroll.documentToViewport
-    );
+    return this.target.boundingBox
+      .transform(this.editorState.scroll.documentToViewport)
+      .translate(this.editorState.scroll.viewportClientRect.topLeft);
   }
 
   setValue(value: string): void {
@@ -136,8 +129,6 @@ export const InnerHTMLEditorBody: React.FC<{
       return;
     }
 
-    console.log("InnerHTMLEditorBody");
-
     const editor = CodeMirror.fromTextArea(textareaRef.current, {
       theme: "material-darker",
       mode: "xml",
@@ -160,7 +151,7 @@ export const InnerHTMLEditorBody: React.FC<{
   }, []);
 
   return (
-    <InnerHTMLEditorWrap>
+    <RootPortal>
       <Background onClick={state.onEnd} />
       <TextareaWrap
         style={{
@@ -171,7 +162,7 @@ export const InnerHTMLEditorBody: React.FC<{
       >
         <textarea ref={textareaRef} />
       </TextareaWrap>
-    </InnerHTMLEditorWrap>
+    </RootPortal>
   );
 });
 
