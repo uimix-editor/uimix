@@ -4,6 +4,7 @@ import { action, runInAction } from "mobx";
 import React, { useCallback, useEffect } from "react";
 import styled from "styled-components";
 import { observer } from "mobx-react-lite";
+import { checkPattern } from "@seanchas116/paintkit/src/components/Common";
 import { DocumentMount } from "../../mount/DocumentMount";
 import { useEditorState } from "../EditorStateContext";
 import { PanOverlay } from "./PanOverlay";
@@ -13,7 +14,14 @@ import { FrameLabels } from "./VariantLabels";
 import { InnerHTMLEditor } from "./InnerHTMLEditor";
 
 const ViewportWrap = styled.div`
-  background-color: ${colors.uiBackground};
+  ${checkPattern(
+    colors.background,
+    colors.uiBackground,
+    "16px",
+    "var(--checkOffsetX)",
+    "var(--checkOffsetY)"
+  )}
+
   position: relative;
   overflow: hidden;
   contain: strict;
@@ -54,7 +62,7 @@ export const Viewport: React.FC<{ className?: string }> = observer(
       );
       resizeObserver.observe(elem);
       return () => resizeObserver.disconnect();
-    }, [ref]);
+    }, []);
 
     useEffect(() => {
       const mount = new DocumentMount(
@@ -66,7 +74,7 @@ export const Viewport: React.FC<{ className?: string }> = observer(
       return () => {
         mount.dispose();
       };
-    }, [iframeWrapRef, editorState.document]);
+    }, [editorState.document]);
 
     const onWheel = useCallback(
       action((e: React.WheelEvent) => {
@@ -100,7 +108,15 @@ export const Viewport: React.FC<{ className?: string }> = observer(
     );
 
     return (
-      <ViewportWrap className={className} ref={ref} onWheel={onWheel}>
+      <ViewportWrap
+        className={className}
+        ref={ref}
+        onWheel={onWheel}
+        style={{
+          ["--checkOffsetX" as keyof React.CSSProperties]: `${editorState.scroll.translation.x}px`,
+          ["--checkOffsetY" as keyof React.CSSProperties]: `${editorState.scroll.translation.y}px`,
+        }}
+      >
         <ViewportIFrameWrap ref={iframeWrapRef} />
         <PointerOverlay />
         <FrameLabels />
