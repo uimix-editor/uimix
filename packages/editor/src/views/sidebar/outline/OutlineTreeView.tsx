@@ -37,6 +37,7 @@ import { compact } from "lodash-es";
 import { assertNonNull } from "@seanchas116/paintkit/src/util/Assert";
 import { Icon, IconifyIcon } from "@iconify/react/dist/offline";
 import validateElementName from "validate-element-name";
+import { isValidCSSIdentifier } from "@seanchas116/paintkit/src/util/Name";
 import { EditorState } from "../../../state/EditorState";
 import { Component } from "../../../models/Component";
 import { DefaultVariant, Variant } from "../../../models/Variant";
@@ -340,7 +341,15 @@ class ElementItem extends TreeViewItem {
           color={this.isInsideSlot ? slotColor : colors.text}
           rowSelected={options.inverted}
           value={this.instance.element.id}
-          // TODO: validate
+          validate={(name) => {
+            if (name && !isValidCSSIdentifier(name)) {
+              return {
+                isValid: false,
+                message: "Name must be a valid CSS identifier",
+              };
+            }
+            return { isValid: true };
+          }}
           onChange={this.onIDChange}
           disabled={!options.inverted}
           trigger="click"
@@ -487,7 +496,6 @@ class TextItem extends LeafTreeViewItem {
           color={colorWithOpacity(this.isInsideSlot ? slotColor : "white", 0.7)}
           rowSelected={options.inverted}
           value={this.instance.text.content}
-          // TODO: validate
           onChange={this.onNameChange}
           disabled={!options.inverted}
           trigger="click"

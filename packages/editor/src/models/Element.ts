@@ -7,6 +7,7 @@ import type * as hast from "hast";
 import { h } from "hastscript";
 import { isVoidElement } from "@seanchas116/paintkit/src/util/HTMLTagCategory";
 import { ValidationResult } from "@seanchas116/paintkit/src/util/ValidationResult";
+import { isValidCSSIdentifier } from "@seanchas116/paintkit/src/util/Name";
 import { Component } from "./Component";
 import { Text, TextJSON } from "./Text";
 
@@ -52,6 +53,13 @@ export class Element extends TreeNode<Element, Element, Element | Text> {
 
   get id(): string {
     return this.name;
+  }
+
+  rename(id: string): void {
+    if (id && !isValidCSSIdentifier(id)) {
+      throw new Error("Invalid ID");
+    }
+    super.rename(id);
   }
 
   setID(id: string): void {
