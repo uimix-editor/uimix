@@ -627,9 +627,7 @@ class ComponentItem extends TreeViewItem {
         <ComponentIcon icon={widgetsFilledIcon} />
         <ComponentNameEdit
           value={this.component.name}
-          validate={(value) => {
-            validateElementName(value);
-          }}
+          validate={(value) => validateElementName(value)}
           onChange={this.onNameChange}
           disabled={!options.inverted}
           trigger="click"
