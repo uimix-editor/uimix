@@ -36,6 +36,7 @@ import { filterInstance } from "@seanchas116/paintkit/src/util/Collection";
 import { compact } from "lodash-es";
 import { assertNonNull } from "@seanchas116/paintkit/src/util/Assert";
 import { Icon, IconifyIcon } from "@iconify/react/dist/offline";
+import validateElementName from "validate-element-name";
 import { EditorState } from "../../../state/EditorState";
 import { Component } from "../../../models/Component";
 import { DefaultVariant, Variant } from "../../../models/Variant";
@@ -626,7 +627,17 @@ class ComponentItem extends TreeViewItem {
         <ComponentIcon icon={widgetsFilledIcon} />
         <ComponentNameEdit
           value={this.component.name}
-          // TODO: validate
+          validate={(value) => {
+            const result = validateElementName(value);
+
+            if (!result.isValid) {
+              return {
+                value: false,
+                error: result.message,
+              };
+            }
+            return { value: true };
+          }}
           onChange={this.onNameChange}
           disabled={!options.inverted}
           trigger="click"

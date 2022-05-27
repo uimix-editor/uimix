@@ -46,7 +46,8 @@
     "styled-components": "^5.3.5",
     "tiny-typed-emitter": "^2.1.0",
     "unified": "^10.1.2",
-    "unist-util-inspect": "^7.0.0"
+    "unist-util-inspect": "^7.0.0",
+    "validate-element-name": "^3.0.0"
   },
   "devDependencies": {
     "@esbuild-plugins/node-globals-polyfill": "^0.1.1",
