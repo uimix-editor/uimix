@@ -137,9 +137,14 @@ export function fillBorderStyle(
     stroke?.type === "SOLID" ? solidPaintToHex(stroke) : undefined;
   const borderWidth =
     borderColor && node.strokeWeight ? String(node.strokeWeight) : undefined;
+  const borderStyle = borderColor ? "solid" : undefined;
 
   return {
     background: background,
+    borderTopStyle: borderStyle,
+    borderRightStyle: borderStyle,
+    borderBottomStyle: borderStyle,
+    borderLeftStyle: borderStyle,
     borderTopWidth: borderWidth,
     borderRightWidth: borderWidth,
     borderBottomWidth: borderWidth,
