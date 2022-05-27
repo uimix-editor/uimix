@@ -4,7 +4,6 @@ import { Element } from "../models/Element";
 import { ElementInstance } from "../models/ElementInstance";
 import { getInstance } from "../models/InstanceRegistry";
 import { EditorState } from "../state/EditorState";
-import { findPositionForNewRect } from "../util/findPositionForNewRect";
 
 const positionalProperties = [
   "position",
@@ -28,13 +27,7 @@ export function createEmptyComponent(editorState: EditorState): Component {
   component.defaultVariant.rootInstance.style.height = "100px";
   editorState.document.components.append(component);
 
-  const pos = findPositionForNewRect(
-    editorState.scroll.viewportRectInDocument,
-    editorState.document.components.children.flatMap((c) =>
-      c.allVariants.map((v) => v.rootInstance!.boundingBox)
-    ),
-    new Vec2(100, 100)
-  );
+  const pos = editorState.findInsertionPosition(new Vec2(100, 100));
   component.defaultVariant.x = pos.x;
   component.defaultVariant.y = pos.y;
 
@@ -64,13 +57,7 @@ export function createComponentFromInstance(
 
   component.defaultVariant.rootInstance.setInnerHTML([html]);
 
-  const pos = findPositionForNewRect(
-    editorState.scroll.viewportRectInDocument,
-    editorState.document.components.children.flatMap((c) =>
-      c.allVariants.map((v) => v.rootInstance!.boundingBox)
-    ),
-    size
-  );
+  const pos = editorState.findInsertionPosition(size);
   component.defaultVariant.x = pos.x;
   component.defaultVariant.y = pos.y;
 

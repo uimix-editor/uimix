@@ -7,6 +7,7 @@ import { isVoidElement } from "@seanchas116/paintkit/src/util/HTMLTagCategory";
 import googleFonts from "@seanchas116/paintkit/src/util/GoogleFonts.json";
 import { action, computed, makeObservable, observable } from "mobx";
 import { Rect, Vec2 } from "paintvec";
+import { compact } from "lodash-es";
 import { Component } from "../models/Component";
 import { Document, DocumentJSON } from "../models/Document";
 import { Element } from "../models/Element";
@@ -19,6 +20,7 @@ import { IconBrowserState } from "../views/sidebar/outline/IconBrowserState";
 import { moveByPixels } from "../services/MoveByPixels";
 import { getInstance } from "../models/InstanceRegistry";
 import { addVariant } from "../services/AddVariant";
+import { findPositionForNewRect } from "../util/findPositionForNewRect";
 import { ElementInspectorState } from "./ElementInspectorState";
 import { VariantInspectorState } from "./VariantInspectorState";
 import { InsertMode } from "./InsertMode";
@@ -113,6 +115,16 @@ export abstract class EditorState {
 
   get snapThreshold(): number {
     return snapThreshold / this.scroll.scale;
+  }
+
+  findInsertionPosition(size: Vec2): Vec2 {
+    return findPositionForNewRect(
+      this.scroll.viewportRectInDocument,
+      this.document.components.children.flatMap((c) =>
+        compact(c.allVariants.map((v) => v.rootInstance?.boundingBox))
+      ),
+      new Vec2(100, 100)
+    );
   }
 
   getBasicEditMenu(): MenuItem[] {
