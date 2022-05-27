@@ -3,7 +3,7 @@ import { KeyGesture } from "@seanchas116/paintkit/src/util/KeyGesture";
 import { action, computed, makeObservable, runInAction } from "mobx";
 import { parseFragment, stringifyFragment } from "../fileFormat/fragment";
 import { AutoLayout } from "../services/AutoLayout";
-import { createComponent } from "../services/CreateComponent";
+import { createComponentFromInstance } from "../services/CreateComponent";
 import { EditorState } from "./EditorState";
 
 export class Commands {
@@ -167,7 +167,7 @@ export class Commands {
       disabled: selection.length < 1,
       onClick: action(() => {
         for (const instance of selection) {
-          createComponent(instance);
+          createComponentFromInstance(instance);
         }
         this.history.commit("Create Component");
         return true;

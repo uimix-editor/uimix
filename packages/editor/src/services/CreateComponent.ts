@@ -1,5 +1,6 @@
 import { Component } from "../models/Component";
 import { Element } from "../models/Element";
+import { Document } from "../models/Document";
 import { ElementInstance } from "../models/ElementInstance";
 import { getInstance } from "../models/InstanceRegistry";
 
@@ -19,7 +20,15 @@ const positionalProperties = [
   "flexBasis",
 ] as const;
 
-export function createComponent(instance: ElementInstance): Component {
+export function createEmptyComponent(document: Document): Component {
+  const component = new Component();
+  document.components.append(component);
+  return component;
+}
+
+export function createComponentFromInstance(
+  instance: ElementInstance
+): Component {
   const parent = instance.element.parent!;
   if (!parent) {
     throw new Error("Cannot create component without a parent");

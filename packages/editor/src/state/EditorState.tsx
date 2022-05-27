@@ -19,6 +19,7 @@ import { IconBrowserState } from "../views/sidebar/outline/IconBrowserState";
 import { moveByPixels } from "../services/MoveByPixels";
 import { getInstance } from "../models/InstanceRegistry";
 import { addVariant } from "../services/AddVariant";
+import { createEmptyComponent } from "../services/CreateComponent";
 import { ElementInspectorState } from "./ElementInspectorState";
 import { VariantInspectorState } from "./VariantInspectorState";
 import { InsertMode } from "./InsertMode";
@@ -129,8 +130,7 @@ export abstract class EditorState {
       {
         text: "Add Component",
         onClick: action(() => {
-          const component = new Component();
-          this.document.components.append(component);
+          createEmptyComponent(this.document);
           this.history.commit("Add Component");
           return true;
         }),
