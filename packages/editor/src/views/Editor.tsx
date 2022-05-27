@@ -47,8 +47,8 @@ export const Editor: React.FC<{ editorState: EditorState }> = ({
     window.addEventListener("keydown", onWindowKeyDown, { capture: true });
     window.addEventListener("keyup", onWindowKeyUp, { capture: true });
     return () => {
-      window.removeEventListener("keydown", onWindowKeyDown);
-      window.removeEventListener("keyup", onWindowKeyUp);
+      window.removeEventListener("keydown", onWindowKeyDown, { capture: true });
+      window.removeEventListener("keyup", onWindowKeyUp, { capture: true });
     };
   }, []);
 
