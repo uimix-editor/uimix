@@ -1,3 +1,4 @@
+import { Vec2 } from "paintvec";
 import { Component } from "../models/Component";
 import { Element } from "../models/Element";
 import { ElementInstance } from "../models/ElementInstance";
@@ -26,6 +27,17 @@ export function createEmptyComponent(editorState: EditorState): Component {
   component.defaultVariant.rootInstance.style.width = "100px";
   component.defaultVariant.rootInstance.style.height = "100px";
   editorState.document.components.append(component);
+
+  const pos = findPositionForNewRect(
+    editorState.scroll.viewportRectInDocument,
+    editorState.document.components.children.flatMap((c) =>
+      c.allVariants.map((v) => v.rootInstance!.boundingBox)
+    ),
+    new Vec2(100, 100)
+  );
+  component.defaultVariant.x = pos.x;
+  component.defaultVariant.y = pos.y;
+
   return component;
 }
 
