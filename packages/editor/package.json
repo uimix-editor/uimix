@@ -16,6 +16,7 @@
     "@iconify/react": "^3.2.1",
     "@iconify/types": "^1.1.0",
     "@seanchas116/paintkit": "*",
+    "@timohausmann/quadtree-ts": "^2.0.0-beta.1",
     "@tippyjs/react": "^4.2.6",
     "@types/codemirror": "^5.60.5",
     "@types/hast": "^2.3.4",

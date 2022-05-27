@@ -173,10 +173,12 @@ export class Commands {
 
         if (selection.length) {
           for (const instance of selection) {
-            components.push(createComponentFromInstance(instance));
+            components.push(
+              createComponentFromInstance(this.editorState, instance)
+            );
           }
         } else {
-          components.push(createEmptyComponent(this.document));
+          components.push(createEmptyComponent(this.editorState));
         }
 
         this.document.deselect();
