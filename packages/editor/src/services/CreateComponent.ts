@@ -1,5 +1,7 @@
 import { Component } from "../models/Component";
+import { Element } from "../models/Element";
 import { ElementInstance } from "../models/ElementInstance";
+import { getInstance } from "../models/InstanceRegistry";
 
 const positionalProperties = [
   "position",
@@ -11,9 +13,18 @@ const positionalProperties = [
   "marginRight",
   "marginBottom",
   "marginLeft",
+  "alignSelf",
+  "flexGrow",
+  "flexShrink",
+  "flexBasis",
 ] as const;
 
 export function createComponent(instance: ElementInstance): Component {
+  const parent = instance.element.parent!;
+  if (!parent) {
+    throw new Error("Cannot create component without a parent");
+  }
+
   const document = instance.element.component?.document;
   if (!document) {
     throw new Error("Instance belongs to no document");
@@ -26,9 +37,16 @@ export function createComponent(instance: ElementInstance): Component {
 
   component.defaultVariant.rootInstance.setInnerHTML([html]);
 
+  const newElement = new Element({
+    tagName: component.name,
+  });
+  newElement.setID(instance.element.id);
+  parent.insertBefore(newElement, instance.element);
+
+  const newInstance = getInstance(undefined, newElement);
+
   for (const property of positionalProperties) {
-    component.defaultVariant.rootInstance.style[property] =
-      instance.style[property];
+    newInstance.style[property] = instance.style[property];
 
     for (const child of component.defaultVariant.rootInstance.children) {
       if (child.type === "element") {
@@ -36,6 +54,8 @@ export function createComponent(instance: ElementInstance): Component {
       }
     }
   }
+
+  instance.element.remove();
 
   return component;
 }
