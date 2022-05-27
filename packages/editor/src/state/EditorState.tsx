@@ -251,7 +251,14 @@ export abstract class EditorState {
   }
 
   getElementMenu(): MenuItem[] {
-    return [this.commands.groupIntoFlex, this.commands.autoLayoutChildren];
+    return [
+      this.commands.groupIntoFlex,
+      this.commands.autoLayoutChildren,
+      {
+        type: "separator",
+      },
+      this.commands.createComponent,
+    ];
   }
 
   getViewMenu(): MenuItem[] {

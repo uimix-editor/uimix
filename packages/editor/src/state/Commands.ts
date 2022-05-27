@@ -157,6 +157,20 @@ export class Commands {
     };
   }
 
+  @computed get createComponent(): Command {
+    const selection = this.document.selectedElementInstances;
+
+    return {
+      text: "Create Component",
+      shortcut: [new KeyGesture(["Command", "Alt"], "KeyK")],
+      disabled: selection.length < 1,
+      onClick: action(() => {
+        // TODO
+        return true;
+      }),
+    };
+  }
+
   @computed get zoomIn(): Command {
     return {
       text: "Zoom In",
