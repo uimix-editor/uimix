@@ -3,6 +3,7 @@ import { KeyGesture } from "@seanchas116/paintkit/src/util/KeyGesture";
 import { action, computed, makeObservable, runInAction } from "mobx";
 import { parseFragment, stringifyFragment } from "../fileFormat/fragment";
 import { AutoLayout } from "../services/AutoLayout";
+import { createComponent } from "../services/CreateComponent";
 import { EditorState } from "./EditorState";
 
 export class Commands {
@@ -165,7 +166,10 @@ export class Commands {
       shortcut: [new KeyGesture(["Command", "Alt"], "KeyK")],
       disabled: selection.length < 1,
       onClick: action(() => {
-        // TODO
+        for (const instance of selection) {
+          createComponent(instance);
+        }
+        this.history.commit("Create Component");
         return true;
       }),
     };
