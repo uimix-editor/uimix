@@ -22,6 +22,7 @@ export class VariantMount {
 
     this.dom.style.position = "absolute";
     this.dom.style.display = "flex";
+    this.dom.style.flexDirection = "column";
 
     context.registry?.setVariantMount(this);
 
