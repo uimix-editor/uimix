@@ -628,15 +628,7 @@ class ComponentItem extends TreeViewItem {
         <ComponentNameEdit
           value={this.component.name}
           validate={(value) => {
-            const result = validateElementName(value);
-
-            if (!result.isValid) {
-              return {
-                isValid: false,
-                message: result.message,
-              };
-            }
-            return { isValid: true };
+            validateElementName(value);
           }}
           onChange={this.onNameChange}
           disabled={!options.inverted}
