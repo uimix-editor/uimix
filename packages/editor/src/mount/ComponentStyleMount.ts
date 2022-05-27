@@ -72,9 +72,12 @@ export class ComponentStyleMount extends TypedEmitter<{
           }
         }
 
-        const props = instance.style.toPostCSS({ selector });
+        const rule = new postcss.Rule({
+          selector,
+          nodes: instance.style.toPostCSS().nodes,
+        });
 
-        for (const node of props.nodes) {
+        for (const node of rule.nodes) {
           if (node.type === "decl" && node.prop === "background") {
             node.value = replaceCSSURL(node.value, (url: string) =>
               this.context.editorState.resolveImageAssetURL(url)
@@ -82,8 +85,8 @@ export class ComponentStyleMount extends TypedEmitter<{
           }
         }
 
-        if (props.nodes.length) {
-          root.append(props);
+        if (rule.nodes.length) {
+          root.append(rule);
         }
       }
     }

@@ -207,26 +207,26 @@ export class Style extends StyleBase {
     this.loadPostCSS(root);
   }
 
-  toPostCSS(defaults?: postcss.RuleProps): postcss.Rule {
-    const rule = new postcss.Rule(defaults);
+  toPostCSS(): postcss.Root {
+    const root = new postcss.Root();
 
     for (const key of styleKeys) {
       const value = this[key];
       if (value !== undefined) {
-        rule.append({
+        root.append({
           prop: kebabCase(key),
           value: value,
         });
       }
     }
     for (const [key, value] of this.customProps) {
-      rule.append({
+      root.append({
         prop: key,
         value,
       });
     }
 
-    return rule;
+    return root;
   }
 
   loadPostCSS(container: postcss.Container): void {

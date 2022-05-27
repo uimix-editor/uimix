@@ -30,8 +30,10 @@ export function dumpComponentStyles(component: Component): postcss.Root {
           instance === rootInstance ? ":host" : `#${instance.element.id}`;
       }
 
-      const rule = instance.style.toPostCSS({ selector });
-
+      const rule = new postcss.Rule({
+        selector,
+        nodes: instance.style.toPostCSS().nodes,
+      });
       if (rule.nodes.length) {
         rules.push(rule);
       }
