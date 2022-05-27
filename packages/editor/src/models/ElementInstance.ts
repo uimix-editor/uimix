@@ -119,8 +119,8 @@ export class ElementInstance {
   @observable collapsed = true;
 
   expandAncestors(): void {
-    this.collapsed = false;
     if (this.parent) {
+      this.parent.collapsed = false;
       this.parent.expandAncestors();
     } else if (this.element instanceof RootElement) {
       this.element.component.collapsed = false;

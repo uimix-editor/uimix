@@ -153,7 +153,7 @@ export const OutlineTreeView: React.FC<{
         () => editorState.document.selectedInstances,
         async (instances) => {
           for (const instance of instances) {
-            instance.parent?.expandAncestors();
+            instance.expandAncestors();
           }
 
           // wait for render
