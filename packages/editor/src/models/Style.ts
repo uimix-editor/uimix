@@ -192,32 +192,11 @@ export class Style extends StyleBase {
     this.loadPostCSS(root);
   }
 
-  private getPropsWithShorthands(): Partial<Record<AllStyleKey, string>> {
-    const props: Partial<Record<AllStyleKey, string>> = {};
-    for (const key of styleKeys) {
-      const value = this[key];
-      if (value) {
-        props[key] = value;
-      }
-    }
-
-    for (const [shorthandKey, keys] of Object.entries(styleShorthands)) {
-      const value = this[shorthandKey as ShorthandStyleKey];
-      if (value !== MIXED) {
-        for (const key of keys) {
-          delete props[key];
-        }
-        props[shorthandKey as ShorthandStyleKey] = value;
-      }
-    }
-
-    return props;
-  }
-
   toPostCSS(): postcss.Root {
     const root = new postcss.Root();
 
-    for (const [key, value] of Object.entries(this.getPropsWithShorthands())) {
+    for (const key of styleKeys) {
+      const value = this[key];
       if (value !== undefined) {
         root.append({
           prop: kebabCase(key),
@@ -250,11 +229,6 @@ export class Style extends StyleBase {
 
     for (const key of styleKeys) {
       this[key] = props[key];
-    }
-    for (const key of shorthandStyleKeys) {
-      if (props[key] !== undefined) {
-        this[key] = props[key];
-      }
     }
     this.customProps.replace(new Map(Object.entries(customProps)));
   }
