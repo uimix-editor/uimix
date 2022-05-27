@@ -187,21 +187,6 @@ export class Style extends StyleBase {
     this.customProps.replace(new Map(Object.entries(json.customProps)));
   }
 
-  toString(): string {
-    const rules: string[] = [];
-
-    for (const key of styleKeys) {
-      const value = this[key];
-      if (value !== undefined) {
-        rules.push(`${kebabCase(key)}:${value};`);
-      }
-    }
-    for (const [key, value] of this.customProps) {
-      rules.push(`${key}:${value};`);
-    }
-    return rules.join("");
-  }
-
   loadString(styleString: string): void {
     const root = postcss.parse(styleString);
     this.loadPostCSS(root);
