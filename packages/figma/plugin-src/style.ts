@@ -148,10 +148,14 @@ export function fillBorderStyle(
     borderRightColor: borderColor,
     borderBottomColor: borderColor,
     borderLeftColor: borderColor,
-    borderTopLeftRadius: `${node.topLeftRadius}px`,
-    borderTopRightRadius: `${node.topRightRadius}px`,
-    borderBottomLeftRadius: `${node.bottomLeftRadius}px`,
-    borderBottomRightRadius: `${node.bottomRightRadius}px`,
+    borderTopLeftRadius:
+      node.topLeftRadius !== 0 ? `${node.topLeftRadius}px` : undefined,
+    borderTopRightRadius:
+      node.topRightRadius !== 0 ? `${node.topRightRadius}px` : undefined,
+    borderBottomLeftRadius:
+      node.bottomLeftRadius !== 0 ? `${node.bottomLeftRadius}px` : undefined,
+    borderBottomRightRadius:
+      node.bottomRightRadius !== 0 ? `${node.bottomRightRadius}px` : undefined,
   };
 }
 
@@ -238,7 +242,7 @@ export function textStyle(node: TextNode): Style {
 
 export function effectStyle(node: BlendMixin): Style {
   return {
-    opacity: node.opacity.toString(),
+    opacity: node.opacity !== 1 ? node.opacity.toString() : undefined,
   };
 }
 
