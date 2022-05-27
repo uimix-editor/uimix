@@ -93,7 +93,7 @@ export class Commands {
 
   @computed get undo(): Command {
     return {
-      text: "Undo",
+      text: `Undo ${this.history.undoStack.undoTitle ?? ""}`,
       disabled: !this.history.undoStack.canUndo,
       shortcut: [new KeyGesture(["Command"], "KeyZ")],
       onClick: action(() => {
@@ -105,7 +105,7 @@ export class Commands {
 
   @computed get redo(): Command {
     return {
-      text: "Redo",
+      text: `Redo ${this.history.undoStack.redoTitle ?? ""}`,
       disabled: !this.history.undoStack.canRedo,
       shortcut: [
         new KeyGesture(["Command", "Shift"], "KeyZ"),
