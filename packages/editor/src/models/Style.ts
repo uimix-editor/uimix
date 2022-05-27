@@ -52,6 +52,8 @@ const shorthandStyleKeys = Object.keys(
   styleShorthands
 ) as readonly (keyof typeof styleShorthands)[];
 
+export type ShorthandStyleKey = keyof typeof styleShorthands;
+
 export const styleKeys = [
   "position",
   "top",
@@ -123,7 +125,7 @@ export type StyleProps = {
 };
 
 export type ShorthandStyleProps = {
-  [key in StyleKey]?: string | typeof MIXED;
+  [key in ShorthandStyleKey]?: string | typeof MIXED;
 };
 
 const StyleBase: {
