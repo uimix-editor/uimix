@@ -48,12 +48,6 @@ export const styleShorthands = {
   ],
 } as const;
 
-const shorthandStyleKeys = Object.keys(
-  styleShorthands
-) as readonly (keyof typeof styleShorthands)[];
-
-export type ShorthandStyleKey = keyof typeof styleShorthands;
-
 export const styleKeys = [
   "position",
   "top",
@@ -114,22 +108,26 @@ export const styleKeys = [
   "opacity",
 ] as const;
 
-export const extraStyleKeys = [...styleKeys, ...shorthandStyleKeys] as const;
+const shorthandStyleKeys = Object.keys(
+  styleShorthands
+) as readonly (keyof typeof styleShorthands)[];
+
+export const allStyleKeys = [...styleKeys, ...shorthandStyleKeys] as const;
 
 export type StyleKey = typeof styleKeys[number];
-
-export type ExtraStyleKey = typeof extraStyleKeys[number];
+export type ShorthandStyleKey = typeof shorthandStyleKeys[number];
+export type AllStyleKey = typeof allStyleKeys[number];
 
 export type StyleProps = {
   [key in StyleKey]?: string;
 };
-
 export type ShorthandStyleProps = {
   [key in ShorthandStyleKey]?: string | typeof MIXED;
 };
+export type AllStyleProps = StyleProps & ShorthandStyleProps;
 
 const StyleBase: {
-  new (): StyleProps & ShorthandStyleProps;
+  new (): AllStyleProps;
 } = class {
   constructor() {
     for (const key of styleKeys) {
