@@ -2,6 +2,7 @@ import { Command } from "@seanchas116/paintkit/src/components/menu/Menu";
 import { KeyGesture } from "@seanchas116/paintkit/src/util/KeyGesture";
 import { action, computed, makeObservable, runInAction } from "mobx";
 import { parseFragment, stringifyFragment } from "../fileFormat/fragment";
+import { Component } from "../models/Component";
 import { AutoLayout } from "../services/AutoLayout";
 import { createComponentFromInstance } from "../services/CreateComponent";
 import { EditorState } from "./EditorState";
@@ -166,9 +167,17 @@ export class Commands {
       shortcut: [new KeyGesture(["Command", "Alt"], "KeyK")],
       disabled: selection.length < 1,
       onClick: action(() => {
+        const components: Component[] = [];
+
         for (const instance of selection) {
-          createComponentFromInstance(instance);
+          components.push(createComponentFromInstance(instance));
         }
+
+        this.document.deselect();
+        for (const component of components) {
+          component.defaultVariant.rootInstance.select();
+        }
+
         this.history.commit("Create Component");
         return true;
       }),
