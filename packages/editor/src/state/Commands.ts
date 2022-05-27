@@ -4,7 +4,10 @@ import { action, computed, makeObservable, runInAction } from "mobx";
 import { parseFragment, stringifyFragment } from "../fileFormat/fragment";
 import { Component } from "../models/Component";
 import { AutoLayout } from "../services/AutoLayout";
-import { createComponentFromInstance } from "../services/CreateComponent";
+import {
+  createComponentFromInstance,
+  createEmptyComponent,
+} from "../services/CreateComponent";
 import { EditorState } from "./EditorState";
 
 export class Commands {
@@ -165,12 +168,15 @@ export class Commands {
     return {
       text: "Create Component",
       shortcut: [new KeyGesture(["Command", "Alt"], "KeyK")],
-      disabled: selection.length < 1,
       onClick: action(() => {
         const components: Component[] = [];
 
-        for (const instance of selection) {
-          components.push(createComponentFromInstance(instance));
+        if (selection.length) {
+          for (const instance of selection) {
+            components.push(createComponentFromInstance(instance));
+          }
+        } else {
+          components.push(createEmptyComponent(this.document));
         }
 
         this.document.deselect();

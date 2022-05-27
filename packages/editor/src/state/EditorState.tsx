@@ -19,7 +19,6 @@ import { IconBrowserState } from "../views/sidebar/outline/IconBrowserState";
 import { moveByPixels } from "../services/MoveByPixels";
 import { getInstance } from "../models/InstanceRegistry";
 import { addVariant } from "../services/AddVariant";
-import { createEmptyComponent } from "../services/CreateComponent";
 import { ElementInspectorState } from "./ElementInspectorState";
 import { VariantInspectorState } from "./VariantInspectorState";
 import { InsertMode } from "./InsertMode";
@@ -127,14 +126,7 @@ export abstract class EditorState {
 
   getRootContextMenu(): MenuItem[] {
     return [
-      {
-        text: "Add Component",
-        onClick: action(() => {
-          createEmptyComponent(this.document);
-          this.history.commit("Add Component");
-          return true;
-        }),
-      },
+      this.commands.createComponent,
       {
         type: "separator",
       },

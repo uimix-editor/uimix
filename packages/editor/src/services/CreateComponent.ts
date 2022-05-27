@@ -22,6 +22,8 @@ const positionalProperties = [
 
 export function createEmptyComponent(document: Document): Component {
   const component = new Component();
+  component.defaultVariant.rootInstance.style.width = "100px";
+  component.defaultVariant.rootInstance.style.height = "100px";
   document.components.append(component);
   return component;
 }
