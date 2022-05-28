@@ -393,7 +393,7 @@
   ></macaron-variant>
   <template>
     <div id="herobutton">
-      <div id="getvscodeextension">Get VS Code extension</div>
+      <div id="getvscodeextension"><slot>Get Started</slot></div>
     </div>
   </template>
   <style>
@@ -446,7 +446,9 @@
     selector=":hover"
   ></macaron-variant>
   <template>
-    <div id="herobutton1"><div id="github1">GitHub</div></div>
+    <div id="herobutton1">
+      <div id="github1"><slot>GitHub</slot></div>
+    </div>
   </template>
   <style>
     :host {
