@@ -22,13 +22,13 @@ import "./test.macaron";
 const element = document.createElement("component-created-in-macaron");
 ```
 
-### Install
+## Install
 
 ```bash
 npm install @macaron-app/loader-vite --save-dev
 ```
 
-### Setup
+## Setup
 
 #### `vite.config.js`
 
