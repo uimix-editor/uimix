@@ -1,5 +1,27 @@
 <style>
   :root {
+    --c-brand: #0085ff;
+    --c-brand-light: #349469;
+    --c-bg: #212327;
+    --c-bg-light: #2b313a;
+    --c-bg-lighter: #262c34;
+    --c-text: #ffffff;
+    --c-text-light: #cccccc;
+    --c-text-lighter: #8b9eb0;
+    --c-text-lightest: #8094a8;
+    --c-border: #3e4c5a;
+    --c-border-dark: #34404c;
+    --c-tip: #318a62;
+    --c-warning: #ceab00;
+    --c-warning-bg: #7e755b;
+    --c-warning-title: #ceac03;
+    --c-warning-text: #362e00;
+    --c-danger: #940000;
+    --c-danger-bg: #806161;
+    --c-danger-title: #610000;
+    --c-danger-text: #3a0000;
+    --c-details-bg: #323843;
+    --code-hl-bg-color: #363b46;
   }
 </style>
 <macaron-component name="top-page">
@@ -8,9 +30,9 @@
     <div id="desktop1">
       <div id="top">
         <div id="frame153"></div>
-        <div id="designtooltocreatewe">
+        <h1 id="designtooltocreatewe">
           Design tool to create<br />Web Components directly
-        </div>
+        </h1>
         <div id="frame154"></div>
         <div id="macaronisanopensourc">
           Macaron is an open-source UI design tool to create Web Components
@@ -24,7 +46,6 @@
           </div>
           <div id="herobutton1"><div id="github1">GitHub</div></div>
         </div>
-        <div id="frame156"></div>
         <div id="frame157"></div>
         <div id="frame17">
           <div id="frame18">
@@ -264,6 +285,7 @@
   <style>
     :host {
       display: block;
+      background: var(--c-bg);
     }
     #desktop1 {
       position: relative;
@@ -277,7 +299,6 @@
       justify-content: flex-start;
       row-gap: 0px;
       column-gap: 0px;
-      background: #212327;
     }
     #top {
       position: relative;
@@ -302,7 +323,9 @@
     }
     #designtooltocreatewe {
       position: relative;
-      color: #ffffff;
+      margin-top: 0px;
+      margin-bottom: 0px;
+      color: var(--c-text);
       font-family: Inter;
       font-weight: 800;
       font-size: 96px;
@@ -317,8 +340,9 @@
     }
     #macaronisanopensourc {
       position: relative;
+      margin-bottom: 0px;
       width: 800px;
-      color: #ffffffcc;
+      color: var(--c-text-light);
       font-family: Inter;
       font-weight: 400;
       font-size: 20px;
@@ -364,11 +388,11 @@
       justify-content: flex-start;
       row-gap: 10px;
       column-gap: 10px;
-      background: #0085ff;
+      background: var(--c-brand);
     }
     #getvscodeextension {
       position: relative;
-      color: #ffffff;
+      color: var(--c-text);
       font-family: Inter;
       font-weight: 700;
       font-size: 16px;
@@ -396,31 +420,26 @@
       column-gap: 10px;
       border-top-width: 1;
       border-top-style: solid;
-      border-top-color: #ffffff;
+      border-top-color: var(--c-text);
       border-right-width: 1;
       border-right-style: solid;
-      border-right-color: #ffffff;
+      border-right-color: var(--c-text);
       border-bottom-width: 1;
       border-bottom-style: solid;
-      border-bottom-color: #ffffff;
+      border-bottom-color: var(--c-text);
       border-left-width: 1;
       border-left-style: solid;
-      border-left-color: #ffffff;
+      border-left-color: var(--c-text);
     }
     #github1 {
       position: relative;
-      color: #ffffff;
+      color: var(--c-text);
       font-family: Inter;
       font-weight: 700;
       font-size: 16px;
       line-height: 48px;
       letter-spacing: -0.02em;
       text-align: center;
-    }
-    #frame156 {
-      position: relative;
-      width: 388px;
-      height: 96px;
     }
     #frame157 {
       position: relative;
