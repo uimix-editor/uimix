@@ -61,7 +61,6 @@
             fill="none"
             xmlns="http://www.w3.org/2000/svg"
             slot="icon"
-            id="brandfigma"
           >
             <path
               d="M8.94498 22.0001C7.28006 22.013 5.78868 20.9726 5.22598 19.4056C4.66329 17.8386 5.15213 16.0871 6.44498 15.038C5.52798 14.2958 4.9952 13.1792 4.9952 11.9995C4.9952 10.8198 5.52798 9.70318 6.44498 8.961C5.15171 7.91224 4.66258 6.16063 5.22538 4.59356C5.78818 3.0265 7.27997 1.98632 8.94498 1.99987H15.055C16.72 1.98632 18.2118 3.0265 18.7746 4.59356C19.3374 6.16063 18.8482 7.91224 17.555 8.961C18.8478 10.0101 19.3367 11.7616 18.774 13.3286C18.2113 14.8956 16.7199 15.936 15.055 15.923C14.286 15.9239 13.5335 15.7001 12.89 15.279V18.079C12.8806 20.25 11.116 22.0039 8.94498 22.0001ZM8.92298 15.924C7.73851 15.9427 6.79167 16.9148 6.8041 18.0993C6.81652 19.2839 7.78354 20.2358 8.96813 20.2297C10.1527 20.2236 11.1098 19.2616 11.11 18.077V15.924H8.92198H8.92298ZM15.056 9.847C13.8684 9.85307 12.9099 10.8197 12.914 12.0073C12.918 13.1949 13.883 14.155 15.0706 14.153C16.2583 14.151 17.22 13.1876 17.22 12C17.2156 10.8081 16.2469 9.84479 15.055 9.847H15.056ZM8.94598 9.84697C8.17678 9.8429 7.46383 10.2495 7.07567 10.9135C6.68752 11.5776 6.68314 12.3984 7.06417 13.0665C7.44521 13.7347 8.15378 14.1489 8.92298 14.153H11.11V9.84697H8.94598ZM12.89 3.77V8.07703H15.054C16.2115 8.0824 17.1665 7.17242 17.217 6.016V6.451V5.923C17.212 4.73248 16.2455 3.77 15.055 3.77H12.89ZM8.94398 3.77C8.17479 3.77 7.46402 4.18036 7.07942 4.8465C6.69483 5.51265 6.69483 6.33336 7.07942 6.9995C7.46402 7.66565 8.17479 8.076 8.94398 8.076H11.11V3.77H8.94398Z"
@@ -74,76 +73,61 @@
         >
       </div>
       <div id="frame158">
-        <div id="feature2">
-          <div id="edit3">
-            <div id="rectangle9"></div>
-            <svg
-              width="24"
-              height="24"
-              viewBox="0 0 24 24"
-              fill="none"
-              xmlns="http://www.w3.org/2000/svg"
-              id="systemwindowsidebar"
-            >
-              <path
-                d="M20 21H4C2.89543 21 2 20.1046 2 19V5C2 3.89543 2.89543 3 4 3H20C21.1046 3 22 3.89543 22 5V19C22 20.1046 21.1046 21 20 21ZM10 7V19H20V7H10ZM4 7V19H8V7H4Z"
-                fill="#0091EA"
-              ></path>
-            </svg>
-          </div>
-          <div id="frame21">
-            <div id="freehandediting2">Runs in Visual Studio Code</div>
-            <div id="createcomponentsinth2">
-              Custom editor extension for Visual Studio Code.<br />No need to
-              install app or open browser tabs.
-            </div>
-          </div>
-        </div>
-        <div id="feature3">
-          <div id="edit4">
-            <div id="rectangle10"></div>
-            <svg
-              width="24"
-              height="24"
-              viewBox="0 0 24 24"
-              fill="none"
-              xmlns="http://www.w3.org/2000/svg"
-              id="branch"
-            >
-              <path
-                fill-rule="evenodd"
-                clip-rule="evenodd"
-                d="M7 6C7.55228 6 8 5.55228 8 5C8 4.44772 7.55228 4 7 4C6.44772 4 6 4.44772 6 5C6 5.55228 6.44772 6 7 6ZM7 8C8.65685 8 10 6.65685 10 5C10 3.34315 8.65685 2 7 2C5.34315 2 4 3.34315 4 5C4 6.65685 5.34315 8 7 8Z"
-                fill="#FF6D00"
-              ></path>
-              <path
-                fill-rule="evenodd"
-                clip-rule="evenodd"
-                d="M17 8C17.5523 8 18 7.55228 18 7C18 6.44772 17.5523 6 17 6C16.4477 6 16 6.44772 16 7C16 7.55228 16.4477 8 17 8ZM17 10C18.6569 10 20 8.65685 20 7C20 5.34315 18.6569 4 17 4C15.3431 4 14 5.34315 14 7C14 8.65685 15.3431 10 17 10Z"
-                fill="#FF6D00"
-              ></path>
-              <path
-                fill-rule="evenodd"
-                clip-rule="evenodd"
-                d="M7 20C7.55228 20 8 19.5523 8 19C8 18.4477 7.55228 18 7 18C6.44772 18 6 18.4477 6 19C6 19.5523 6.44772 20 7 20ZM7 22C8.65685 22 10 20.6569 10 19C10 17.3431 8.65685 16 7 16C5.34315 16 4 17.3431 4 19C4 20.6569 5.34315 22 7 22Z"
-                fill="#FF6D00"
-              ></path>
-              <path
-                fill-rule="evenodd"
-                clip-rule="evenodd"
-                d="M6 6H8V12.7802L13.5883 11.6625C14.9906 11.3821 16 10.1508 16 8.72078V8H18V8.72078C18 11.1042 16.3177 13.1563 13.9806 13.6237L8 14.8198V18H6V6Z"
-                fill="#FF6D00"
-              ></path>
-            </svg>
-          </div>
-          <div id="frame22">
-            <div id="freehandediting3">Clean file format</div>
-            <div id="createcomponentsinth3">
-              HTML-based clean file format. Easy to read and edit for humans,
-              and easy to be parsed in tools.
-            </div>
-          </div>
-        </div>
+        <feature-card id="feature-3"
+          ><svg
+            width="24"
+            height="24"
+            viewBox="0 0 24 24"
+            fill="none"
+            xmlns="http://www.w3.org/2000/svg"
+            slot="icon"
+          >
+            <path
+              d="M20 21H4C2.89543 21 2 20.1046 2 19V5C2 3.89543 2.89543 3 4 3H20C21.1046 3 22 3.89543 22 5V19C22 20.1046 21.1046 21 20 21ZM10 7V19H20V7H10ZM4 7V19H8V7H4Z"
+              fill="currentColor"
+            ></path>
+          </svg>
+          <span slot="title">Runs in Visual Studio Code</span> Custom editor
+          extension for Visual Studio Code.<br />No need to install app or open
+          browser tabs. </feature-card
+        ><feature-card id="feature-4"
+          ><svg
+            width="24"
+            height="24"
+            viewBox="0 0 24 24"
+            fill="none"
+            xmlns="http://www.w3.org/2000/svg"
+            slot="icon"
+          >
+            <path
+              fill-rule="evenodd"
+              clip-rule="evenodd"
+              d="M7 6C7.55228 6 8 5.55228 8 5C8 4.44772 7.55228 4 7 4C6.44772 4 6 4.44772 6 5C6 5.55228 6.44772 6 7 6ZM7 8C8.65685 8 10 6.65685 10 5C10 3.34315 8.65685 2 7 2C5.34315 2 4 3.34315 4 5C4 6.65685 5.34315 8 7 8Z"
+              fill="#FF6D00"
+            ></path>
+            <path
+              fill-rule="evenodd"
+              clip-rule="evenodd"
+              d="M17 8C17.5523 8 18 7.55228 18 7C18 6.44772 17.5523 6 17 6C16.4477 6 16 6.44772 16 7C16 7.55228 16.4477 8 17 8ZM17 10C18.6569 10 20 8.65685 20 7C20 5.34315 18.6569 4 17 4C15.3431 4 14 5.34315 14 7C14 8.65685 15.3431 10 17 10Z"
+              fill="#FF6D00"
+            ></path>
+            <path
+              fill-rule="evenodd"
+              clip-rule="evenodd"
+              d="M7 20C7.55228 20 8 19.5523 8 19C8 18.4477 7.55228 18 7 18C6.44772 18 6 18.4477 6 19C6 19.5523 6.44772 20 7 20ZM7 22C8.65685 22 10 20.6569 10 19C10 17.3431 8.65685 16 7 16C5.34315 16 4 17.3431 4 19C4 20.6569 5.34315 22 7 22Z"
+              fill="#FF6D00"
+            ></path>
+            <path
+              fill-rule="evenodd"
+              clip-rule="evenodd"
+              d="M6 6H8V12.7802L13.5883 11.6625C14.9906 11.3821 16 10.1508 16 8.72078V8H18V8.72078C18 11.1042 16.3177 13.1563 13.9806 13.6237L8 14.8198V18H6V6Z"
+              fill="#FF6D00"
+            ></path>
+          </svg>
+          <span slot="title">Clean File Format</span> HTML-based clean file
+          format. Easy to read and edit for humans, and easy to be parsed in
+          tools.</feature-card
+        >
       </div>
       <div id="frame151">
         <div id="feature4">
@@ -427,13 +411,6 @@
     #feature-2 {
       --feature-card-color: #aa00ff;
     }
-    #brandfigma {
-      position: absolute;
-      top: 4px;
-      left: 4px;
-      width: 24px;
-      height: 24px;
-    }
     #frame158 {
       position: relative;
       width: 1032px;
@@ -448,168 +425,6 @@
       justify-content: flex-start;
       row-gap: 24px;
       column-gap: 24px;
-    }
-    #feature2 {
-      position: relative;
-      width: 504px;
-      height: 128px;
-      border-top-left-radius: 8px;
-      border-top-right-radius: 8px;
-      border-bottom-right-radius: 8px;
-      border-bottom-left-radius: 8px;
-      display: flex;
-      padding-top: 15px;
-      padding-right: 15px;
-      padding-bottom: 15px;
-      padding-left: 15px;
-      flex-direction: row;
-      align-items: flex-start;
-      justify-content: flex-start;
-      row-gap: 16px;
-      column-gap: 16px;
-      background: #ffffff0d;
-    }
-    #edit3 {
-      position: relative;
-      width: 32px;
-      height: 32px;
-    }
-    #rectangle9 {
-      position: absolute;
-      top: 0px;
-      left: 0px;
-      width: 32px;
-      height: 32px;
-      border-top-left-radius: 8px;
-      border-top-right-radius: 8px;
-      border-bottom-right-radius: 8px;
-      border-bottom-left-radius: 8px;
-      background: #0091ea;
-      opacity: 0.20000000298023224;
-    }
-    #systemwindowsidebar {
-      position: absolute;
-      top: 4px;
-      left: 4px;
-      width: 24px;
-      height: 24px;
-    }
-    #frame21 {
-      position: relative;
-      width: 400px;
-      height: 96px;
-      display: flex;
-      padding-top: 0px;
-      padding-right: 0px;
-      padding-bottom: 0px;
-      padding-left: 0px;
-      flex-direction: column;
-      align-items: flex-start;
-      justify-content: flex-start;
-      row-gap: 8px;
-      column-gap: 8px;
-    }
-    #freehandediting2 {
-      position: relative;
-      color: #ffffff;
-      font-family: Inter;
-      font-weight: 700;
-      font-size: 18px;
-      line-height: 32px;
-      letter-spacing: -0.02em;
-      text-align: left;
-    }
-    #createcomponentsinth2 {
-      position: relative;
-      width: 400px;
-      color: #ffffffcc;
-      font-family: Inter;
-      font-weight: 400;
-      font-size: 16px;
-      line-height: 28px;
-      letter-spacing: -0.02em;
-      text-align: left;
-    }
-    #feature3 {
-      position: relative;
-      width: 504px;
-      height: 128px;
-      border-top-left-radius: 8px;
-      border-top-right-radius: 8px;
-      border-bottom-right-radius: 8px;
-      border-bottom-left-radius: 8px;
-      display: flex;
-      padding-top: 15px;
-      padding-right: 15px;
-      padding-bottom: 15px;
-      padding-left: 15px;
-      flex-direction: row;
-      align-items: flex-start;
-      justify-content: flex-start;
-      row-gap: 16px;
-      column-gap: 16px;
-      background: #ffffff0d;
-    }
-    #edit4 {
-      position: relative;
-      width: 32px;
-      height: 32px;
-    }
-    #rectangle10 {
-      position: absolute;
-      top: 0px;
-      left: 0px;
-      width: 32px;
-      height: 32px;
-      border-top-left-radius: 8px;
-      border-top-right-radius: 8px;
-      border-bottom-right-radius: 8px;
-      border-bottom-left-radius: 8px;
-      background: #ff6d00;
-      opacity: 0.20000000298023224;
-    }
-    #branch {
-      position: absolute;
-      top: 4px;
-      left: 4px;
-      width: 24px;
-      height: 24px;
-    }
-    #frame22 {
-      position: relative;
-      width: 400px;
-      height: 96px;
-      display: flex;
-      padding-top: 0px;
-      padding-right: 0px;
-      padding-bottom: 0px;
-      padding-left: 0px;
-      flex-direction: column;
-      align-items: flex-start;
-      justify-content: flex-start;
-      row-gap: 8px;
-      column-gap: 8px;
-    }
-    #freehandediting3 {
-      position: relative;
-      color: #ffffff;
-      font-family: Inter;
-      font-weight: 700;
-      font-size: 18px;
-      line-height: 32px;
-      letter-spacing: -0.02em;
-      text-align: left;
-    }
-    #createcomponentsinth3 {
-      position: relative;
-      width: 400px;
-      color: #ffffffcc;
-      font-family: Inter;
-      font-weight: 400;
-      font-size: 16px;
-      line-height: 28px;
-      letter-spacing: -0.02em;
-      text-align: left;
     }
     #frame151 {
       position: relative;
@@ -998,7 +813,7 @@
     <div id="iconarea">
       <div id="div"></div>
       <slot name="icon"
-        ><iconify-icon icon="ic:edit" id="iconify-icon1"></iconify-icon
+        ><iconify-icon icon="ic:outline-edit" id="iconify-icon1"></iconify-icon
       ></slot>
     </div>
     <div id="frame19">
@@ -1031,6 +846,9 @@
       position: relative;
       width: 32px;
       height: 32px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
       color: var(--feature-card-color);
     }
     #div {
@@ -1045,13 +863,13 @@
       opacity: 0.2;
     }
     #iconify-icon1 {
-      width: 32px;
-      height: 32px;
+      width: 24px;
+      height: 24px;
       display: flex;
-      padding-top: 4px;
-      padding-right: 4px;
-      padding-bottom: 4px;
-      padding-left: 4px;
+      padding-top: 0px;
+      padding-right: 0px;
+      padding-bottom: 0px;
+      padding-left: 0px;
       flex-direction: row;
       column-gap: 16px;
       color: var(--feature-card-color);
