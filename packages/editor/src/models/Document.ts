@@ -279,6 +279,23 @@ export class Document {
     }
   }
 
+  renameCSSVariableUsages(oldName: string, newName: string): void {
+    const visitInstance = (instance: ElementInstance) => {
+      instance.style.renameCSSVariableUsages(oldName, newName);
+      for (const child of instance.children) {
+        if (child.type === "element") {
+          visitInstance(child);
+        }
+      }
+    };
+
+    for (const component of this.components.children) {
+      for (const variant of component.allVariants) {
+        visitInstance(variant.rootInstance!);
+      }
+    }
+  }
+
   readonly preludeStyleSheets = observable.array<string>([]);
   readonly preludeScripts = observable.array<string>([]);
   readonly loadedCustomElements = observable.array<CustomElementMetadata>();
