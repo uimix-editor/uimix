@@ -16,6 +16,12 @@ A Vite plugin to load Macaron files as JavaScript modules.
 </html>
 ```
 
+```js
+import "./test.macaron";
+
+const element = document.createElement("component-created-in-macaron");
+```
+
 ### Install
 
 ```bash
