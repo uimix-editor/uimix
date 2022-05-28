@@ -22,10 +22,9 @@ export function loadGlobalStyle(
 
       for (const declaration of root.nodes) {
         if (declaration.type === "decl" && declaration.prop.startsWith("--")) {
-          const name = declaration.prop.slice(2);
           document.cssVariables.append(
             new CSSVariable({
-              name,
+              name: declaration.prop,
               color: Color.from(declaration.value),
             })
           );

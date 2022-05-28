@@ -1,6 +1,5 @@
 import { Color } from "@seanchas116/paintkit/src/util/Color";
 import { TreeNode } from "@seanchas116/paintkit/src/util/TreeNode";
-import { kebabCase } from "lodash-es";
 import * as postcss from "postcss";
 import { CSSVariable, CSSVariableJSON } from "./CSSVariable";
 import { Document } from "./Document";
@@ -52,7 +51,6 @@ export class CSSVariableList extends TreeNode<
   add(color: Color): CSSVariable {
     const variable = new CSSVariable();
     variable.color = color;
-    variable.rename(kebabCase(color.getName()));
     this.append(variable);
     return variable;
   }
@@ -65,7 +63,7 @@ export class CSSVariableList extends TreeNode<
     for (const variable of this.children) {
       root.append(
         new postcss.Declaration({
-          prop: "--" + variable.name,
+          prop: variable.name,
           value: variable.color.toString(),
         })
       );

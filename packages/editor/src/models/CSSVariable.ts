@@ -1,7 +1,11 @@
 import { makeObservable, observable } from "mobx";
 import { Color } from "@seanchas116/paintkit/src/util/Color";
 import { TreeNode } from "@seanchas116/paintkit/src/util/TreeNode";
-import { generateUID } from "@seanchas116/paintkit/src/util/Name";
+import {
+  generateUID,
+  isValidCSSIdentifier,
+} from "@seanchas116/paintkit/src/util/Name";
+import { kebabCase } from "lodash-es";
 import { CSSVariableList } from "./CSSVariableList";
 
 export interface CSSVariableJSON {
@@ -22,7 +26,7 @@ export class CSSVariable extends TreeNode<CSSVariableList, CSSVariable, never> {
     super();
     this.uid = options.uid ?? generateUID();
     this.color = options.color ?? Color.fromName("white");
-    this.rename(options.name ?? this.color.getName());
+    this.rename(options.name ?? "--" + kebabCase(this.color.getName()));
     makeObservable(this);
   }
 
@@ -30,6 +34,14 @@ export class CSSVariable extends TreeNode<CSSVariableList, CSSVariable, never> {
 
   get hasUniqueName(): boolean {
     return true;
+  }
+
+  rename(name: string): void {
+    if (!isValidCSSIdentifier(name) || !name.startsWith("--")) {
+      throw new Error("Invalid CSS Variable Name");
+    }
+
+    super.rename(name);
   }
 
   @observable color: Color;

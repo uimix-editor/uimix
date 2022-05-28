@@ -57,7 +57,7 @@ class CSSVariableItem extends LeafTreeViewItem {
   }
 
   private onNameChange = action((name: string) => {
-    this.variable.rename(name);
+    this.variable.rename(name.startsWith("--") ? name : `--${name}`);
     this.parent.editorState.history.commit("Change CSS Variable Name");
     return true;
   });
