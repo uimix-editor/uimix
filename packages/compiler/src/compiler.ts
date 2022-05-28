@@ -72,10 +72,32 @@ function compileGlobalStyle(ast: hast.Element): string {
   `;
 }
 
+function compileImports(ast: hast.Root): string[] {
+  const scriptTags = ast.children.filter(
+    (child): child is hast.Element =>
+      child.type === "element" &&
+      child.tagName === "script" &&
+      child.properties?.type === "module"
+  );
+
+  const imports = scriptTags.map((script) => {
+    const src = script.properties?.src?.toString();
+    if (!src) {
+      throw new Error("script must have a src");
+    }
+
+    return `import "${src}";`;
+  });
+
+  return imports;
+}
+
 export function compile(data: string): string {
   const ast = parseHTMLFragment(data);
 
   const outputs: string[] = [];
+
+  outputs.push(...compileImports(ast));
 
   for (const child of ast.children) {
     if (child.type === "element" && child.tagName === "macaron-component") {
