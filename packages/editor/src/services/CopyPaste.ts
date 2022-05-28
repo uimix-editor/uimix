@@ -20,17 +20,16 @@ export async function copyLayers(document: Document): Promise<void> {
 export async function pasteLayers(document: Document): Promise<void> {
   const contents = await navigator.clipboard.read();
 
-  for (const item of contents) {
-    if (item.types.includes("text/html")) {
-      const html = await (await item.getType("text/html")).text();
-      const fragment = parseFragment(html);
-      if (fragment) {
-        runInAction(() => {
-          document.appendFragmentBeforeSelection(fragment);
-        });
-      }
+  const item = contents.find((i) => i.types.includes("text/html"));
+  if (!item) {
+    return;
+  }
 
-      break;
-    }
+  const html = await (await item.getType("text/html")).text();
+  const fragment = parseFragment(html);
+  if (fragment) {
+    runInAction(() => {
+      document.appendFragmentBeforeSelection(fragment);
+    });
   }
 }
