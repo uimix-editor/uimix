@@ -1,7 +1,8 @@
 // Vitest Snapshot v1
 
 exports[`compile > compiles 1`] = `
-"const style = \`
+"import \\"https://cdn.jsdelivr.net/npm/@shoelace-style/shoelace@2.0.0-beta.73/dist/shoelace.js\\";
+const style = \`
   :root {
     --textColor: #333333;
     --red: #ff0000;
