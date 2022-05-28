@@ -5,7 +5,7 @@
 <style>
   :root {
     --c-brand: #0085ff;
-    --c-brand-light: #349469;
+    --c-brand-light: #2295ff;
     --c-bg: #212327;
     --c-bg-light: #2b313a;
     --c-bg-lighter: #262c34;
@@ -39,10 +39,13 @@
       development workflow.
     </div>
     <div id="buttons">
-      <div id="herobutton">
-        <div id="getvscodeextension">Get VS Code extension</div>
-      </div>
-      <div id="herobutton1"><div id="github1">GitHub</div></div>
+      <a href="#" id="hero-button-link"
+        ><hero-button id="herobutton2"></hero-button></a
+      ><a
+        href="vscode-webview://1on40a1bsu63fiiv3abtpci8nb8nso7a6s6a717a88umjfhkoe71/index.html?id=f9ada8a1-6770-47b0-9dcc-35bc5d348259&#x26;swVersion=4&#x26;extensionId=undefined_publisher.macaron-vscode&#x26;platform=electron&#x26;vscode-resource-base-authority=vscode-resource.vscode-cdn.net&#x26;parentOrigin=vscode-file%3A%2F%2Fvscode-app#"
+        id="hero-button-link1"
+        ><hero-button-secondary id="herobutton3"></hero-button-secondary
+      ></a>
     </div>
     <div id="features">
       <div id="feature-rows">
@@ -127,15 +130,14 @@
         <div id="feature-row3">
           <feature-card id="feature5"
             ><iconify-icon icon="ic:outline-download" slot="icon"></iconify-icon
-            ><span slot="title">Import Web Components</span>
-            Load existing Web Components and place them in the editor.
-          </feature-card>
-          <feature-card id="feature6"
+            ><span slot="title">Import Web Components</span> Load existing Web
+            Components and place them in the editor. </feature-card
+          ><feature-card id="feature6"
             ><iconify-icon icon="ic:outline-dns" slot="icon"></iconify-icon
-            ><span slot="title">React and TypeScript support</span>
-            🚧 Emit React wrappers and TypeScript definitions for the output Web
-            components.
-          </feature-card>
+            ><span slot="title">React and TypeScript support</span> 🚧 Emit
+            React wrappers and TypeScript definitions for the output Web
+            components.</feature-card
+          >
         </div>
       </div>
       <div id="workinprogress">🚧 - Work in progress</div>
@@ -174,8 +176,6 @@
     }
     #buttons {
       position: relative;
-      width: 349px;
-      height: 48px;
       display: flex;
       padding-top: 0px;
       padding-right: 0px;
@@ -187,76 +187,17 @@
       row-gap: 24px;
       column-gap: 24px;
     }
-    #herobutton {
-      position: relative;
-      width: 223px;
-      height: 48px;
-      border-top-left-radius: 24px;
-      border-top-right-radius: 24px;
-      border-bottom-right-radius: 24px;
-      border-bottom-left-radius: 24px;
-      display: flex;
-      padding-top: 0px;
-      padding-right: 23px;
-      padding-bottom: 0px;
-      padding-left: 23px;
-      flex-direction: row;
-      align-items: flex-start;
-      justify-content: flex-start;
-      row-gap: 10px;
-      column-gap: 10px;
-      background: var(--c-brand);
+    #hero-button-link {
+      text-decoration-line: none;
     }
-    #getvscodeextension {
+    #herobutton2 {
       position: relative;
-      color: var(--c-text);
-      font-family: Inter;
-      font-weight: 700;
-      font-size: 16px;
-      line-height: 48px;
-      letter-spacing: -0.02em;
-      text-align: center;
     }
-    #herobutton1 {
-      position: relative;
-      width: 102px;
-      height: 48px;
-      border-top-left-radius: 24px;
-      border-top-right-radius: 24px;
-      border-bottom-right-radius: 24px;
-      border-bottom-left-radius: 24px;
-      display: flex;
-      padding-top: 0px;
-      padding-right: 23px;
-      padding-bottom: 0px;
-      padding-left: 23px;
-      flex-direction: row;
-      align-items: flex-start;
-      justify-content: flex-start;
-      row-gap: 10px;
-      column-gap: 10px;
-      border-top-width: 1;
-      border-top-style: solid;
-      border-top-color: var(--c-text);
-      border-right-width: 1;
-      border-right-style: solid;
-      border-right-color: var(--c-text);
-      border-bottom-width: 1;
-      border-bottom-style: solid;
-      border-bottom-color: var(--c-text);
-      border-left-width: 1;
-      border-left-style: solid;
-      border-left-color: var(--c-text);
+    #hero-button-link1 {
+      text-decoration-line: none;
     }
-    #github1 {
+    #herobutton3 {
       position: relative;
-      color: var(--c-text);
-      font-family: Inter;
-      font-weight: 700;
-      font-size: 16px;
-      line-height: 48px;
-      letter-spacing: -0.02em;
-      text-align: center;
     }
     #features {
       margin-top: 96px;
@@ -437,6 +378,129 @@
       line-height: 28px;
       letter-spacing: -0.02em;
       text-align: left;
+    }
+  </style>
+</macaron-component>
+<macaron-component name="hero-button">
+  <macaron-variant
+    x="520"
+    y="-168"
+    background-color="transparent"
+  ></macaron-variant>
+  <macaron-variant
+    x="767"
+    y="-168"
+    background-color="transparent"
+    selector=":hover"
+  ></macaron-variant>
+  <template>
+    <div id="herobutton">
+      <div id="getvscodeextension">Get VS Code extension</div>
+    </div>
+  </template>
+  <style>
+    :host {
+      display: block;
+    }
+    #herobutton {
+      height: 48px;
+      border-top-left-radius: 24px;
+      border-top-right-radius: 24px;
+      border-bottom-right-radius: 24px;
+      border-bottom-left-radius: 24px;
+      display: flex;
+      padding-top: 0px;
+      padding-right: 23px;
+      padding-bottom: 0px;
+      padding-left: 23px;
+      flex-direction: row;
+      align-items: flex-start;
+      justify-content: flex-start;
+      row-gap: 10px;
+      column-gap: 10px;
+      background: var(--c-brand);
+    }
+    #getvscodeextension {
+      position: relative;
+      color: var(--c-text);
+      font-family: Inter;
+      font-weight: 700;
+      font-size: 16px;
+      line-height: 48px;
+      letter-spacing: -0.02em;
+      text-align: center;
+    }
+    :host(:hover) #herobutton {
+      background: var(--c-brand-light);
+    }
+  </style>
+</macaron-component>
+<macaron-component name="hero-button-secondary">
+  <macaron-variant
+    x="520"
+    y="-80"
+    background-color="transparent"
+  ></macaron-variant>
+  <macaron-variant
+    x="646"
+    y="-80"
+    background-color="transparent"
+    selector=":hover"
+  ></macaron-variant>
+  <template>
+    <div id="herobutton1"><div id="github1">GitHub</div></div>
+  </template>
+  <style>
+    :host {
+      display: block;
+    }
+    #herobutton1 {
+      width: 102px;
+      height: 48px;
+      border-top-left-radius: 24px;
+      border-top-right-radius: 24px;
+      border-bottom-right-radius: 24px;
+      border-bottom-left-radius: 24px;
+      display: flex;
+      padding-top: 0px;
+      padding-right: 23px;
+      padding-bottom: 0px;
+      padding-left: 23px;
+      flex-direction: row;
+      align-items: flex-start;
+      justify-content: flex-start;
+      row-gap: 10px;
+      column-gap: 10px;
+      border-top-width: 1;
+      border-top-style: solid;
+      border-top-color: var(--c-text);
+      border-right-width: 1;
+      border-right-style: solid;
+      border-right-color: var(--c-text);
+      border-bottom-width: 1;
+      border-bottom-style: solid;
+      border-bottom-color: var(--c-text);
+      border-left-width: 1;
+      border-left-style: solid;
+      border-left-color: var(--c-text);
+    }
+    #github1 {
+      position: relative;
+      color: var(--c-text);
+      font-family: Inter;
+      font-weight: 700;
+      font-size: 16px;
+      line-height: 48px;
+      letter-spacing: -0.02em;
+      text-align: center;
+    }
+    :host(:hover) #herobutton1 {
+      color: var(--c-text);
+      background: var(--c-brand-light);
+      border-top-color: var(--c-brand-light);
+      border-right-color: var(--c-brand-light);
+      border-bottom-color: var(--c-brand-light);
+      border-left-color: var(--c-brand-light);
     }
   </style>
 </macaron-component>
