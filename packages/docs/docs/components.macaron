@@ -41,9 +41,7 @@
     <div id="buttons">
       <a href="#" id="hero-button-link"
         ><hero-button id="herobutton2"></hero-button></a
-      ><a
-        href="vscode-webview://1on40a1bsu63fiiv3abtpci8nb8nso7a6s6a717a88umjfhkoe71/index.html?id=f9ada8a1-6770-47b0-9dcc-35bc5d348259&#x26;swVersion=4&#x26;extensionId=undefined_publisher.macaron-vscode&#x26;platform=electron&#x26;vscode-resource-base-authority=vscode-resource.vscode-cdn.net&#x26;parentOrigin=vscode-file%3A%2F%2Fvscode-app#"
-        id="hero-button-link1"
+      ><a href="#" id="hero-button-link1"
         ><hero-button-secondary id="herobutton3"></hero-button-secondary
       ></a>
     </div>
