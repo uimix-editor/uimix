@@ -285,9 +285,6 @@
       height: 96px;
     }
     #frame17 {
-      position: relative;
-      width: 1032px;
-      height: 584px;
       display: flex;
       padding-top: 0px;
       padding-right: 0px;
@@ -301,9 +298,6 @@
       color: #ffffffcc;
     }
     #frame18 {
-      position: relative;
-      width: 1032px;
-      height: 128px;
       display: flex;
       padding-top: 0px;
       padding-right: 0px;
@@ -322,9 +316,6 @@
       --feature-card-color: #aa00ff;
     }
     #frame158 {
-      position: relative;
-      width: 1032px;
-      height: 128px;
       display: flex;
       padding-top: 0px;
       padding-right: 0px;
@@ -343,9 +334,6 @@
       --feature-card-color: #ff6d00;
     }
     #frame151 {
-      position: relative;
-      width: 1032px;
-      height: 128px;
       display: flex;
       padding-top: 0px;
       padding-right: 0px;
@@ -426,7 +414,6 @@
       background: #ffffff0d;
     }
     #iconarea {
-      position: relative;
       width: 32px;
       height: 32px;
       display: flex;
@@ -447,7 +434,6 @@
       opacity: 0.2;
     }
     #frame19 {
-      position: relative;
       width: 400px;
       height: 96px;
       display: flex;
@@ -462,7 +448,6 @@
       column-gap: 8px;
     }
     #freehandediting {
-      position: relative;
       color: #ffffff;
       font-family: Inter;
       font-weight: 700;
@@ -472,7 +457,6 @@
       text-align: left;
     }
     #createcomponentsinth {
-      position: relative;
       width: 400px;
       color: #ffffffcc;
       font-family: Inter;
