@@ -7,3 +7,5 @@ home: true
 </script>
 
 <test-component></test-component>
+
+TODO: top page for Macaron
