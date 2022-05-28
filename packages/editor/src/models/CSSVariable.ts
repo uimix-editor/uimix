@@ -5,6 +5,7 @@ import {
   generateUID,
   isValidCSSIdentifier,
 } from "@seanchas116/paintkit/src/util/Name";
+import { kebabCase } from "lodash-es";
 import { CSSVariableList } from "./CSSVariableList";
 
 export interface CSSVariableJSON {
@@ -25,7 +26,7 @@ export class CSSVariable extends TreeNode<CSSVariableList, CSSVariable, never> {
     super();
     this.uid = options.uid ?? generateUID();
     this.color = options.color ?? Color.fromName("white");
-    this.rename(options.name ?? this.color.getName());
+    this.rename(options.name ?? "--" + kebabCase(this.color.getName()));
     makeObservable(this);
   }
 
