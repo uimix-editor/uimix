@@ -65,7 +65,7 @@ export class CSSVariableList extends TreeNode<
     for (const variable of this.children) {
       root.append(
         new postcss.Declaration({
-          prop: "--" + variable.name,
+          prop: variable.name,
           value: variable.color.toString(),
         })
       );

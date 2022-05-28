@@ -54,8 +54,7 @@ export abstract class EditorState {
 
   readonly resolveCSSVariableCallback = (varName: string): string => {
     return (
-      this.document.cssVariables.forName(varName.slice(2))?.color.toString() ??
-      "black"
+      this.document.cssVariables.forName(varName)?.color.toString() ?? "black"
     );
   };
 
