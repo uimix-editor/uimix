@@ -1,0 +1,21 @@
+<style>
+  :root {
+  }
+</style>
+<macaron-component name="test-component">
+  <macaron-variant x="243" y="66"></macaron-variant>
+  <template> Test Component </template>
+  <style>
+    :host {
+      display: block;
+      padding-top: 10px;
+      padding-right: 10px;
+      padding-bottom: 10px;
+      padding-left: 10px;
+      color: red;
+      font-family: sans-serif;
+      font-weight: 700;
+      font-size: 32px;
+    }
+  </style>
+</macaron-component>
