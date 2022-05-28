@@ -41,7 +41,10 @@
     <div id="buttons">
       <a href="/guide/" id="hero-button-link"
         ><hero-button id="herobutton2"></hero-button></a
-      ><a href="#" id="hero-button-link1"
+      ><a
+        href="https://github.com/macaronapp/macaron-next"
+        target="_blank"
+        id="hero-button-link1"
         ><hero-button-secondary id="herobutton3"></hero-button-secondary
       ></a>
     </div>
