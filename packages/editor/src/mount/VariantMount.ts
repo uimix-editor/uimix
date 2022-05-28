@@ -38,9 +38,9 @@ export class VariantMount {
           this.dom.style.left = `${x}px`;
           this.dom.style.top = `${y}px`;
           this.dom.style.width =
-            width === undefined ? `fit-content` : `${width}px`;
+            width === undefined ? `max-content` : `${width}px`;
           this.dom.style.height =
-            height === undefined ? `fit-content` : `${height}px`;
+            height === undefined ? `max-content` : `${height}px`;
           this.rootMount.updateBoundingBoxLater();
         },
         { fireImmediately: true }
