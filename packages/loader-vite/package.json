@@ -1,0 +1,7 @@
+{
+  "name": "@macaron-app/loader-vite",
+  "version": "1.0.0",
+  "description": "Vite plugin to load Macaron files",
+  "main": "index.js",
+  "license": "MIT"
+}
