@@ -1,4 +1,5 @@
 import { Command } from "@seanchas116/paintkit/src/components/menu/Menu";
+import { isTextInputFocused } from "@seanchas116/paintkit/src/util/CurrentFocus";
 import { KeyGesture } from "@seanchas116/paintkit/src/util/KeyGesture";
 import { action, computed, makeObservable, runInAction } from "mobx";
 import { parseFragment, stringifyFragment } from "../fileFormat/fragment";
@@ -41,6 +42,10 @@ export class Commands {
       text: "Copy",
       shortcut: [new KeyGesture(["Command"], "KeyC")],
       onClick: action(() => {
+        if (isTextInputFocused()) {
+          return false;
+        }
+
         const fragment = this.document.selectedFragment;
         if (fragment) {
           const html = stringifyFragment(fragment);
@@ -62,6 +67,10 @@ export class Commands {
       text: "Paste",
       shortcut: [new KeyGesture(["Command"], "KeyV")],
       onClick: action(() => {
+        if (isTextInputFocused()) {
+          return false;
+        }
+
         void navigator.clipboard.read().then(async (contents) => {
           for (const item of contents) {
             if (item.types.includes("text/html")) {
