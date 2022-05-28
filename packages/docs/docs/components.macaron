@@ -32,25 +32,23 @@
 <macaron-component name="top-page">
   <macaron-variant x="0" y="0" width="1440"></macaron-variant>
   <template>
-    <h1 id="designtooltocreatewe">
-      Design tool to create<br />Web Components directly
-    </h1>
-    <div id="macaronisanopensourc">
+    <h1 id="heroTitle">Design tool to create<br />Web Components directly</h1>
+    <div id="heroSubtitle">
       Macaron is an open-source UI design tool to create Web Components
       visually.<br />Intended to be integrated into your codebase and
       development workflow.
     </div>
-    <div id="frame6">
+    <div id="buttons">
       <div id="herobutton">
         <div id="getvscodeextension">Get VS Code extension</div>
       </div>
       <div id="herobutton1"><div id="github1">GitHub</div></div>
     </div>
-    <div id="flex-container">
-      <div id="frame17">
-        <div id="frame18">
-          <feature-card id="feature8"></feature-card
-          ><feature-card id="feature-2"
+    <div id="features">
+      <div id="feature-rows">
+        <div id="feature-row1">
+          <feature-card id="feature1"></feature-card
+          ><feature-card id="feature2"
             ><svg
               width="24"
               height="24"
@@ -69,8 +67,8 @@
             Macaron.</feature-card
           >
         </div>
-        <div id="frame158">
-          <feature-card id="feature-3"
+        <div id="feature-row2">
+          <feature-card id="feature3"
             ><svg
               width="24"
               height="24"
@@ -87,7 +85,7 @@
             <span slot="title">Runs in Visual Studio Code</span> Custom editor
             extension for Visual Studio Code.<br />No need to install app or
             open browser tabs. </feature-card
-          ><feature-card id="feature-4"
+          ><feature-card id="feature4"
             ><svg
               width="24"
               height="24"
@@ -126,13 +124,13 @@
             tools.</feature-card
           >
         </div>
-        <div id="frame151">
-          <feature-card id="feature-5"
+        <div id="feature-row3">
+          <feature-card id="feature5"
             ><iconify-icon icon="ic:outline-download" slot="icon"></iconify-icon
             ><span slot="title">Runs in Visual Studio Code</span> Custom editor
             extension for Visual Studio Code.<br />No need to install app or
             open browser tabs. </feature-card
-          ><feature-card id="feature-6"
+          ><feature-card id="feature6"
             ><iconify-icon icon="ic:outline-dns" slot="icon"></iconify-icon
             ><span slot="title">Runs in Visual Studio Code</span> Custom editor
             extension for Visual Studio Code.<br />No need to install app or
@@ -150,7 +148,7 @@
       align-items: center;
       background: var(--c-bg);
     }
-    #designtooltocreatewe {
+    #heroTitle {
       position: relative;
       margin-top: 64px;
       margin-bottom: 32px;
@@ -162,7 +160,7 @@
       letter-spacing: -0.03em;
       text-align: center;
     }
-    #macaronisanopensourc {
+    #heroSubtitle {
       position: relative;
       margin-bottom: 48px;
       width: 800px;
@@ -174,7 +172,7 @@
       letter-spacing: -0.03em;
       text-align: center;
     }
-    #frame6 {
+    #buttons {
       position: relative;
       width: 349px;
       height: 48px;
@@ -260,7 +258,7 @@
       letter-spacing: -0.02em;
       text-align: center;
     }
-    #flex-container {
+    #features {
       margin-top: 96px;
       margin-bottom: 96px;
       display: flex;
@@ -269,7 +267,7 @@
       row-gap: 32px;
       column-gap: 0px;
     }
-    #frame17 {
+    #feature-rows {
       display: flex;
       padding-top: 0px;
       padding-right: 0px;
@@ -282,7 +280,7 @@
       column-gap: 24px;
       color: #ffffffcc;
     }
-    #frame18 {
+    #feature-row1 {
       display: flex;
       padding-top: 0px;
       padding-right: 0px;
@@ -294,13 +292,13 @@
       row-gap: 24px;
       column-gap: 24px;
     }
-    #feature8 {
+    #feature1 {
       position: relative;
     }
-    #feature-2 {
+    #feature2 {
       --feature-card-color: #aa00ff;
     }
-    #frame158 {
+    #feature-row2 {
       display: flex;
       padding-top: 0px;
       padding-right: 0px;
@@ -312,13 +310,13 @@
       row-gap: 24px;
       column-gap: 24px;
     }
-    #feature-3 {
+    #feature3 {
       --feature-card-color: #0091ea;
     }
-    #feature-4 {
+    #feature4 {
       --feature-card-color: #ff6d00;
     }
-    #frame151 {
+    #feature-row3 {
       display: flex;
       padding-top: 0px;
       padding-right: 0px;
@@ -330,10 +328,10 @@
       row-gap: 24px;
       column-gap: 24px;
     }
-    #feature-5 {
+    #feature5 {
       --feature-card-color: #c51162;
     }
-    #feature-6 {
+    #feature6 {
       --feature-card-color: #00c853;
     }
     #workinprogress {
@@ -355,15 +353,15 @@
     background-color="var(--c-bg)"
   ></macaron-variant>
   <template>
-    <div id="iconarea">
-      <div id="div"></div>
+    <div id="icon-area">
+      <div id="icon-bg"></div>
       <slot name="icon"
         ><iconify-icon icon="ic:outline-edit"></iconify-icon
       ></slot>
     </div>
-    <div id="frame19">
-      <div id="freehandediting"><slot name="title">Freehand design</slot></div>
-      <div id="createcomponentsinth">
+    <div id="text">
+      <div id="title"><slot name="title">Freehand design</slot></div>
+      <div id="description">
         <slot
           >Create components in the same experience as popular design
           tools.</slot
@@ -387,7 +385,7 @@
       column-gap: 16px;
       background: #ffffff0d;
     }
-    #iconarea {
+    #icon-area {
       width: 32px;
       height: 32px;
       display: flex;
@@ -396,7 +394,7 @@
       color: var(--feature-card-color);
       font-size: 24px;
     }
-    #div {
+    #icon-bg {
       position: absolute;
       width: 32px;
       height: 32px;
@@ -407,7 +405,7 @@
       background: var(--feature-card-color);
       opacity: 0.2;
     }
-    #frame19 {
+    #text {
       width: 400px;
       height: 96px;
       display: flex;
@@ -421,7 +419,7 @@
       row-gap: 8px;
       column-gap: 8px;
     }
-    #freehandediting {
+    #title {
       color: #ffffff;
       font-family: Inter;
       font-weight: 700;
@@ -430,7 +428,7 @@
       letter-spacing: -0.02em;
       text-align: left;
     }
-    #createcomponentsinth {
+    #description {
       width: 400px;
       color: #ffffffcc;
       font-family: Inter;
