@@ -1,8 +1,8 @@
-import { compile } from "@macaron-app/compiler";
+const { compile } = require("@macaron-app/compiler");
 
 const fileRegex = /\.macaron$/;
 
-export default function myPlugin() {
+function macaronPlugin() {
   return {
     name: "macaron-loader",
 
@@ -16,3 +16,6 @@ export default function myPlugin() {
     },
   };
 }
+
+module.exports = macaronPlugin;
+module.exports.default = macaronPlugin;
