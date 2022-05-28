@@ -262,4 +262,35 @@ export class Style extends StyleBase {
 
     return result;
   }
+
+  renameCSSVariableUsages(oldName: string, newName: string): void {
+    for (const key of styleKeys) {
+      const value = this[key];
+      if (!value) {
+        continue;
+      }
+
+      this[key] = replaceCSSVariables(
+        value,
+        (name) => `var(${name === oldName ? newName : name})`
+      );
+    }
+
+    const customPropKeys = Array.from(this.customProps.keys());
+    for (const key of customPropKeys) {
+      const value = this.customProps.get(key);
+      if (!value) {
+        continue;
+      }
+
+      const newKey = key === oldName ? newName : key;
+      const newValue = replaceCSSVariables(
+        value,
+        (name) => `var(${name === oldName ? newName : name})`
+      );
+
+      this.customProps.delete(key);
+      this.customProps.set(newKey, newValue);
+    }
+  }
 }

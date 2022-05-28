@@ -7,6 +7,7 @@ import {
 } from "@seanchas116/paintkit/src/util/Name";
 import { kebabCase } from "lodash-es";
 import { CSSVariableList } from "./CSSVariableList";
+import { Document } from "./Document";
 
 export interface CSSVariableJSON {
   uid: string;
@@ -41,7 +42,14 @@ export class CSSVariable extends TreeNode<CSSVariableList, CSSVariable, never> {
       throw new Error("Invalid CSS Variable Name");
     }
 
+    const oldName = this.name;
     super.rename(name);
+    const newName = this.name;
+    this.document?.renameCSSVariableUsages(oldName, newName);
+  }
+
+  get document(): Document | undefined {
+    return this.parent?.document;
   }
 
   @observable color: Color;
