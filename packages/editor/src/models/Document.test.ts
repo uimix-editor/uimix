@@ -19,6 +19,15 @@ beforeEach(() => {
 });
 
 describe(Document.name, () => {
+  describe(Document.prototype.renameTagNameUsages.name, () => {
+    it("should rename tag name usages", () => {
+      doc.renameTagNameUsages("user-card", "user-card-new");
+      const saved = stringifyDocument(doc);
+      expect(saved).toContain("user-card-new");
+      expect(saved).toMatchSnapshot();
+    });
+  });
+
   describe(Document.prototype.renameCSSVariableUsages.name, () => {
     it("should rename CSS variable usages", () => {
       doc.renameCSSVariableUsages(
