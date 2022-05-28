@@ -127,15 +127,15 @@
         <div id="feature-row3">
           <feature-card id="feature5"
             ><iconify-icon icon="ic:outline-download" slot="icon"></iconify-icon
-            ><span slot="title">Runs in Visual Studio Code</span> Custom editor
-            extension for Visual Studio Code.<br />No need to install app or
-            open browser tabs. </feature-card
-          ><feature-card id="feature6"
+            ><span slot="title">Import Web Components</span>
+            Load existing Web Components and place them in the editor.
+          </feature-card>
+          <feature-card id="feature6"
             ><iconify-icon icon="ic:outline-dns" slot="icon"></iconify-icon
-            ><span slot="title">Runs in Visual Studio Code</span> Custom editor
-            extension for Visual Studio Code.<br />No need to install app or
-            open browser tabs.</feature-card
-          >
+            ><span slot="title">React and TypeScript support</span>
+            🚧 Emit React wrappers and TypeScript definitions for the output Web
+            components.
+          </feature-card>
         </div>
       </div>
       <div id="workinprogress">🚧 - Work in progress</div>
