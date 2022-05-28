@@ -357,6 +357,12 @@
       row-gap: 24px;
       column-gap: 24px;
     }
+    #feature-5 {
+      --feature-card-color: #c51162;
+    }
+    #feature-6 {
+      --feature-card-color: #00c853;
+    }
     #frame159 {
       position: relative;
       width: 388px;
