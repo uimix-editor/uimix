@@ -103,25 +103,25 @@
               fill-rule="evenodd"
               clip-rule="evenodd"
               d="M7 6C7.55228 6 8 5.55228 8 5C8 4.44772 7.55228 4 7 4C6.44772 4 6 4.44772 6 5C6 5.55228 6.44772 6 7 6ZM7 8C8.65685 8 10 6.65685 10 5C10 3.34315 8.65685 2 7 2C5.34315 2 4 3.34315 4 5C4 6.65685 5.34315 8 7 8Z"
-              fill="#FF6D00"
+              fill="currentColor"
             ></path>
             <path
               fill-rule="evenodd"
               clip-rule="evenodd"
               d="M17 8C17.5523 8 18 7.55228 18 7C18 6.44772 17.5523 6 17 6C16.4477 6 16 6.44772 16 7C16 7.55228 16.4477 8 17 8ZM17 10C18.6569 10 20 8.65685 20 7C20 5.34315 18.6569 4 17 4C15.3431 4 14 5.34315 14 7C14 8.65685 15.3431 10 17 10Z"
-              fill="#FF6D00"
+              fill="currentColor"
             ></path>
             <path
               fill-rule="evenodd"
               clip-rule="evenodd"
               d="M7 20C7.55228 20 8 19.5523 8 19C8 18.4477 7.55228 18 7 18C6.44772 18 6 18.4477 6 19C6 19.5523 6.44772 20 7 20ZM7 22C8.65685 22 10 20.6569 10 19C10 17.3431 8.65685 16 7 16C5.34315 16 4 17.3431 4 19C4 20.6569 5.34315 22 7 22Z"
-              fill="#FF6D00"
+              fill="currentColor"
             ></path>
             <path
               fill-rule="evenodd"
               clip-rule="evenodd"
               d="M6 6H8V12.7802L13.5883 11.6625C14.9906 11.3821 16 10.1508 16 8.72078V8H18V8.72078C18 11.1042 16.3177 13.1563 13.9806 13.6237L8 14.8198V18H6V6Z"
-              fill="#FF6D00"
+              fill="currentColor"
             ></path>
           </svg>
           <span slot="title">Clean File Format</span> HTML-based clean file
@@ -425,6 +425,12 @@
       justify-content: flex-start;
       row-gap: 24px;
       column-gap: 24px;
+    }
+    #feature-3 {
+      --feature-card-color: #0091ea;
+    }
+    #feature-4 {
+      --feature-card-color: #ff6d00;
     }
     #frame151 {
       position: relative;
