@@ -1,10 +1,10 @@
 import { Command } from "@seanchas116/paintkit/src/components/menu/Menu";
 import { isTextInputFocused } from "@seanchas116/paintkit/src/util/CurrentFocus";
 import { KeyGesture } from "@seanchas116/paintkit/src/util/KeyGesture";
-import { action, computed, makeObservable, runInAction } from "mobx";
-import { parseFragment, stringifyFragment } from "../fileFormat/fragment";
+import { action, computed, makeObservable } from "mobx";
 import { Component } from "../models/Component";
 import { AutoLayout } from "../services/AutoLayout";
+import { copyLayers, pasteLayers } from "../services/CopyPaste";
 import {
   createComponentFromInstance,
   createEmptyComponent,
@@ -33,7 +33,17 @@ export class Commands {
     return {
       text: "Cut",
       shortcut: [new KeyGesture(["Command"], "KeyX")],
-      // TODO
+      onClick: action(() => {
+        if (isTextInputFocused()) {
+          return false;
+        }
+        void copyLayers(this.document).then(
+          action(() => {
+            this.document.deleteSelected();
+          })
+        );
+        return true;
+      }),
     };
   }
 
@@ -45,18 +55,7 @@ export class Commands {
         if (isTextInputFocused()) {
           return false;
         }
-
-        const fragment = this.document.selectedFragment;
-        if (fragment) {
-          const html = stringifyFragment(fragment);
-
-          const type = "text/html";
-          const blob = new Blob([html], { type });
-          const data = [new ClipboardItem({ [type]: blob })];
-
-          void navigator.clipboard.write(data);
-        }
-
+        void copyLayers(this.document);
         return true;
       }),
     };
@@ -70,24 +69,11 @@ export class Commands {
         if (isTextInputFocused()) {
           return false;
         }
-
-        void navigator.clipboard.read().then(async (contents) => {
-          for (const item of contents) {
-            if (item.types.includes("text/html")) {
-              const html = await (await item.getType("text/html")).text();
-              const fragment = parseFragment(html);
-              if (fragment) {
-                runInAction(() => {
-                  this.document.appendFragmentBeforeSelection(fragment);
-                  this.history.commit("Paste");
-                });
-              }
-
-              break;
-            }
-          }
-        });
-
+        void pasteLayers(this.editorState.document).then(
+          action(() => {
+            this.history.commit("Paste");
+          })
+        );
         return true;
       }),
     };
