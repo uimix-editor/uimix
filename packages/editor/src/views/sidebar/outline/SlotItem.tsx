@@ -14,7 +14,7 @@ import { OutlineContext } from "./OutlineContext";
 import { createItemForInstance, ElementItem } from "./ElementItem";
 import { TextItem } from "./TextItem";
 
-const SlotIndicator = styled.div<{ rowSelected?: boolean }>`
+const SlotIndicator = styled.div<{ rowSelected?: boolean; isValid: boolean }>`
   color: ${slotColor};
   margin-right: 8px;
   margin-left: -8px;
@@ -27,20 +27,32 @@ const SlotIndicator = styled.div<{ rowSelected?: boolean }>`
     css`
       color: ${colors.activeText};
     `}
+  ${(p) =>
+    !p.isValid &&
+    css`
+      text-decoration: line-through;
+    `}
 `;
 
 export class SlotItem extends TreeViewItem {
-  constructor(context: OutlineContext, parent: ElementItem, slotName: string) {
+  constructor(
+    context: OutlineContext,
+    parent: ElementItem,
+    slotName: string,
+    isSlotValid: boolean
+  ) {
     super();
     this.context = context;
     this.parent = parent;
     this.slotName = slotName;
+    this.isSlotValid = isSlotValid;
     makeObservable(this);
   }
 
   context: OutlineContext;
   parent: ElementItem;
   slotName: string;
+  isSlotValid: boolean;
 
   get key(): string {
     return this.parent.key + ":" + this.slotName;
@@ -73,7 +85,10 @@ export class SlotItem extends TreeViewItem {
   renderRow(options: { inverted: boolean }): React.ReactNode {
     return (
       <TreeRow inverted={options.inverted}>
-        <SlotIndicator rowSelected={options.inverted}>
+        <SlotIndicator
+          rowSelected={options.inverted}
+          isValid={this.isSlotValid}
+        >
           <Icon icon={arrowForwardIcon} />
           {this.slotName || "(main slot)"}
         </SlotIndicator>
