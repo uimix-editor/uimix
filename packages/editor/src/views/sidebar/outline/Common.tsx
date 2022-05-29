@@ -1,8 +1,5 @@
 import { colors } from "@seanchas116/paintkit/src/components/Palette";
-import {
-  TreeRow,
-  TreeRowNameEdit,
-} from "@seanchas116/paintkit/src/components/treeview/TreeRow";
+import { TreeRowNameEdit } from "@seanchas116/paintkit/src/components/treeview/TreeRow";
 import { Color } from "@seanchas116/paintkit/src/util/Color";
 import styled from "styled-components";
 
@@ -11,10 +8,6 @@ export const NameEdit = styled(TreeRowNameEdit)<{
   rowSelected?: boolean;
 }>`
   color: ${(p) => (p.rowSelected ? colors.text : p.color || colors.text)};
-`;
-
-export const StyledRow = styled(TreeRow)`
-  position: relative;
 `;
 
 export const slotColor = "#79BFFF";

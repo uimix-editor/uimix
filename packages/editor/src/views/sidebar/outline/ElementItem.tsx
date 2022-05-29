@@ -1,7 +1,10 @@
 import React from "react";
 import styled from "styled-components";
 import { TreeViewItem } from "@seanchas116/paintkit/src/components/treeview/TreeViewItem";
-import { TreeRowIcon } from "@seanchas116/paintkit/src/components/treeview/TreeRow";
+import {
+  TreeRow,
+  TreeRowIcon,
+} from "@seanchas116/paintkit/src/components/treeview/TreeRow";
 import widgetsOutlineIcon from "@iconify-icons/ic/outline-widgets";
 import formatBoldIcon from "@iconify-icons/ic/outline-format-bold";
 import formatItalicIcon from "@iconify-icons/ic/outline-format-italic";
@@ -16,7 +19,7 @@ import { IconifyIcon } from "@iconify/react/dist/offline";
 import { isValidCSSIdentifier } from "@seanchas116/paintkit/src/util/Name";
 import { ElementInstance } from "../../../models/ElementInstance";
 import { TextInstance } from "../../../models/TextInstance";
-import { NameEdit, NODE_DRAG_MIME, slotColor, StyledRow } from "./Common";
+import { NameEdit, NODE_DRAG_MIME, slotColor } from "./Common";
 import { OutlineContext } from "./OutlineContext";
 import { ComponentItem } from "./ComponentItem";
 import { SlotItem } from "./SlotItem";
@@ -166,7 +169,7 @@ export class ElementItem extends TreeViewItem {
 
   renderRow(options: { inverted: boolean }): React.ReactNode {
     return (
-      <StyledRow
+      <TreeRow
         ref={(e) => (this.rowElement = e || undefined)}
         inverted={options.inverted}
       >
@@ -200,7 +203,7 @@ export class ElementItem extends TreeViewItem {
           disabled={!options.inverted}
           trigger="click"
         />
-      </StyledRow>
+      </TreeRow>
     );
   }
 
@@ -263,7 +266,7 @@ export class SlotElementItem extends ElementItem {
 
   renderRow(options: { inverted: boolean }): React.ReactNode {
     return (
-      <StyledRow
+      <TreeRow
         ref={(e) => (this.rowElement = e || undefined)}
         inverted={options.inverted}
       >
@@ -279,7 +282,7 @@ export class SlotElementItem extends ElementItem {
           disabled={!options.inverted}
           trigger="click"
         />
-      </StyledRow>
+      </TreeRow>
     );
   }
 }

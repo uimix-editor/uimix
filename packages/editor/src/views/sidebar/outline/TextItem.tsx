@@ -1,13 +1,13 @@
 import React from "react";
 import { LeafTreeViewItem } from "@seanchas116/paintkit/src/components/treeview/TreeViewItem";
 import { action, computed, makeObservable } from "mobx";
+import { TreeRow } from "@seanchas116/paintkit/src/components/treeview/TreeRow";
 import { TextInstance } from "../../../models/TextInstance";
 import {
   colorWithOpacity,
   NameEdit,
   NODE_DRAG_MIME,
   slotColor,
-  StyledRow,
 } from "./Common";
 import { OutlineContext } from "./OutlineContext";
 import { ElementItem } from "./ElementItem";
@@ -66,7 +66,7 @@ export class TextItem extends LeafTreeViewItem {
 
   renderRow(options: { inverted: boolean }): React.ReactNode {
     return (
-      <StyledRow
+      <TreeRow
         ref={(e) => (this.rowElement = e || undefined)}
         inverted={options.inverted}
       >
@@ -78,7 +78,7 @@ export class TextItem extends LeafTreeViewItem {
           disabled={!options.inverted}
           trigger="click"
         />
-      </StyledRow>
+      </TreeRow>
     );
   }
 

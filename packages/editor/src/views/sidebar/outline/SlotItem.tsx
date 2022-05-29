@@ -5,10 +5,11 @@ import { action, makeObservable } from "mobx";
 import { Icon } from "@iconify/react/dist/offline";
 import styled, { css } from "styled-components";
 import { colors } from "@seanchas116/paintkit/src/components/Palette";
+import { TreeRow } from "@seanchas116/paintkit/src/components/treeview/TreeRow";
 import { Element } from "../../../models/Element";
 import { Text } from "../../../models/Text";
 import { getInstance } from "../../../models/InstanceRegistry";
-import { slotColor, StyledRow } from "./Common";
+import { slotColor } from "./Common";
 import { OutlineContext } from "./OutlineContext";
 import { createItemForInstance, ElementItem } from "./ElementItem";
 
@@ -70,12 +71,12 @@ export class SlotItem extends TreeViewItem {
   }
   renderRow(options: { inverted: boolean }): React.ReactNode {
     return (
-      <StyledRow inverted={options.inverted}>
+      <TreeRow inverted={options.inverted}>
         <SlotIndicator rowSelected={options.inverted}>
           <Icon icon={arrowForwardIcon} />
           {this.slotName || "(main slot)"}
         </SlotIndicator>
-      </StyledRow>
+      </TreeRow>
     );
   }
   deselect(): void {}

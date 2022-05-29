@@ -2,6 +2,7 @@ import React from "react";
 import styled from "styled-components";
 import { TreeViewItem } from "@seanchas116/paintkit/src/components/treeview/TreeViewItem";
 import {
+  TreeRow,
   TreeRowIcon,
   TreeRowNameEdit,
 } from "@seanchas116/paintkit/src/components/treeview/TreeRow";
@@ -14,7 +15,7 @@ import { assertNonNull } from "@seanchas116/paintkit/src/util/Assert";
 import validateElementName from "validate-element-name";
 import { Component } from "../../../models/Component";
 import { Variant } from "../../../models/Variant";
-import { COMPONENT_DRAG_MIME, StyledRow, VARIANT_DRAG_MIME } from "./Common";
+import { COMPONENT_DRAG_MIME, VARIANT_DRAG_MIME } from "./Common";
 import { RootItem } from "./RootItem";
 import { OutlineContext } from "./OutlineContext";
 import { VariantItem } from "./VariantItem";
@@ -93,7 +94,7 @@ export class ComponentItem extends TreeViewItem {
 
   renderRow(options: { inverted: boolean }): React.ReactNode {
     return (
-      <StyledRow
+      <TreeRow
         ref={(e) => (this.rowElement = e || undefined)}
         inverted={options.inverted}
       >
@@ -105,7 +106,7 @@ export class ComponentItem extends TreeViewItem {
           disabled={!options.inverted}
           trigger="click"
         />
-      </StyledRow>
+      </TreeRow>
     );
   }
 

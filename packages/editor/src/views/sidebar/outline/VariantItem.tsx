@@ -1,10 +1,13 @@
 import React from "react";
-import { TreeRowLabel } from "@seanchas116/paintkit/src/components/treeview/TreeRow";
+import {
+  TreeRow,
+  TreeRowLabel,
+} from "@seanchas116/paintkit/src/components/treeview/TreeRow";
 import switchIcon from "@seanchas116/paintkit/src/icon/Switch";
 import { makeObservable } from "mobx";
 import { DefaultVariant, Variant } from "../../../models/Variant";
 import { ElementInstance } from "../../../models/ElementInstance";
-import { StyledRow, VARIANT_DRAG_MIME } from "./Common";
+import { VARIANT_DRAG_MIME } from "./Common";
 import { ElementIcon, ElementItem } from "./ElementItem";
 import { OutlineContext } from "./OutlineContext";
 import { ComponentItem } from "./ComponentItem";
@@ -25,13 +28,13 @@ export class VariantItem extends ElementItem {
 
   renderRow(options: { inverted: boolean }): React.ReactNode {
     return (
-      <StyledRow
+      <TreeRow
         ref={(e) => (this.rowElement = e || undefined)}
         inverted={options.inverted}
       >
         <ElementIcon icon={switchIcon} />
         <TreeRowLabel>{this.variant.name}</TreeRowLabel>
-      </StyledRow>
+      </TreeRow>
     );
   }
 
