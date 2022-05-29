@@ -9,9 +9,11 @@ import { TreeRow } from "@seanchas116/paintkit/src/components/treeview/TreeRow";
 import { Element } from "../../../models/Element";
 import { Text } from "../../../models/Text";
 import { getInstance } from "../../../models/InstanceRegistry";
-import { slotColor } from "./Common";
+import { NODE_DRAG_MIME, slotColor } from "./Common";
 import { OutlineContext } from "./OutlineContext";
 import { createItemForInstance, ElementItem } from "./ElementItem";
+import { TextItem } from "./TextItem";
+import { ElementInstance } from "../../../models/ElementInstance";
 
 const SlotIndicator = styled.div<{ rowSelected?: boolean }>`
   color: ${slotColor};
@@ -40,6 +42,10 @@ export class SlotItem extends TreeViewItem {
   context: OutlineContext;
   parent: ElementItem;
   slotName: string;
+
+  get instance(): ElementInstance {
+    return this.parent.instance;
+  }
 
   get key(): string {
     return this.parent.key + ":" + this.slotName;
@@ -124,5 +130,39 @@ export class SlotItem extends TreeViewItem {
         }),
       },
     ]);
+  }
+
+  canDropData(dataTransfer: DataTransfer): boolean {
+    return (
+      this.instance.element.canHaveChildren.isValid &&
+      dataTransfer.types.includes(NODE_DRAG_MIME)
+    );
+  }
+
+  handleDrop(event: React.DragEvent, before: TreeViewItem | undefined): void {
+    const copy = event.altKey || event.ctrlKey;
+    const beforeNode = (before as ElementItem | TextItem | undefined)?.instance
+      .node;
+
+    // TODO: copy
+    for (const node of this.context.editorState.document.selectedNodes) {
+      if (node.type === "element") {
+        node.attrs.set("slot", this.slotName);
+        this.instance.node.insertBefore(node, beforeNode);
+      } else {
+        if (this.slotName === "") {
+          this.instance.node.insertBefore(node, beforeNode);
+        } else {
+          const span = new Element({ tagName: "span" });
+          span.attrs.set("slot", this.slotName);
+          span.append(node);
+          this.instance.node.insertBefore(span, beforeNode);
+        }
+      }
+    }
+
+    this.context.editorState.history.commit(
+      copy ? "Duplicate Layers" : "Move Layers"
+    );
   }
 }
