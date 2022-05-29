@@ -21,6 +21,7 @@ import { ElementInstance } from "../../../models/ElementInstance";
 import { TextInstance } from "../../../models/TextInstance";
 import { Element } from "../../../models/Element";
 import { Text } from "../../../models/Text";
+import { CustomElementMetadata } from "../../../models/CustomElementMetadata";
 import { NameEdit, NODE_DRAG_MIME, slotColor } from "./Common";
 import { OutlineContext } from "./OutlineContext";
 import { ComponentItem } from "./ComponentItem";
@@ -103,15 +104,29 @@ export class ElementItem extends TreeViewItem {
   readonly parent: ElementItem | ComponentItem | SlotItem;
   readonly instance: ElementInstance;
 
-  get children(): readonly TreeViewItem[] {
-    const customElementMetadata =
-      this.context.editorState.document.getCustomElementMetadata(
-        this.instance.element.tagName
-      );
+  @computed get customElementMetadata(): CustomElementMetadata | undefined {
+    return this.context.editorState.document.getCustomElementMetadata(
+      this.instance.element.tagName
+    );
+  }
 
+  get children(): readonly TreeViewItem[] {
+    const { customElementMetadata } = this;
     if (customElementMetadata) {
-      return customElementMetadata.slots.map(
-        (slot) => new SlotItem(this.context, this, slot.name ?? "")
+      const allSlots = new Map<string, boolean>(
+        customElementMetadata.slots.map((s) => [s.name ?? "", true])
+      );
+      for (const childInstance of this.instance.children) {
+        if (childInstance.type === "element") {
+          const slot = childInstance.element.attrs.get("slot");
+          if (slot && !allSlots.has(slot)) {
+            allSlots.set(slot, false);
+          }
+        }
+      }
+
+      return [...allSlots].map(
+        ([slot, isValid]) => new SlotItem(this.context, this, slot, isValid)
       );
     }
 
