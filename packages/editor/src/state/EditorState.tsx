@@ -16,7 +16,7 @@ import { Text } from "../models/Text";
 import { TextInstance } from "../models/TextInstance";
 import { ElementPicker } from "../mount/ElementPicker";
 import { snapThreshold } from "../views/viewport/Constants";
-import { IconBrowserState } from "../views/sidebar/outline/IconBrowserState";
+import { IconBrowserState } from "../views/sidebar/assets/IconBrowserState";
 import { moveByPixels } from "../services/MoveByPixels";
 import { getInstance } from "../models/InstanceRegistry";
 import { addVariant } from "../services/AddVariant";
