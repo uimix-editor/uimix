@@ -222,6 +222,7 @@ interface OutlineContext {
 const SlotIndicator = styled.div<{ rowSelected?: boolean }>`
   color: ${slotColor};
   margin-right: 8px;
+  margin-left: -12px;
   display: flex;
   align-items: center;
   gap: 4px;
