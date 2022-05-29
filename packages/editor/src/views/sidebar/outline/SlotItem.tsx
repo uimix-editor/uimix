@@ -9,7 +9,6 @@ import { TreeRow } from "@seanchas116/paintkit/src/components/treeview/TreeRow";
 import { Element } from "../../../models/Element";
 import { Text } from "../../../models/Text";
 import { getInstance } from "../../../models/InstanceRegistry";
-import { ElementInstance } from "../../../models/ElementInstance";
 import { NODE_DRAG_MIME, slotColor } from "./Common";
 import { OutlineContext } from "./OutlineContext";
 import { createItemForInstance, ElementItem } from "./ElementItem";
@@ -114,12 +113,24 @@ export class SlotItem extends TreeViewItem {
       {
         text: "Add Text",
         onClick: action(() => {
-          const text = new Text({ content: "Text" });
-          instance.element.append(text);
+          if (this.slotName === "") {
+            const text = new Text({ content: "Text" });
+            instance.element.append(text);
 
-          const addedInstance = getInstance(instance.variant, text);
-          editorState.document.deselect();
-          addedInstance.select();
+            const addedInstance = getInstance(instance.variant, text);
+            editorState.document.deselect();
+            addedInstance.select();
+          } else {
+            const span = new Element({ tagName: "span" });
+            span.attrs.set("slot", this.slotName);
+            const text = new Text({ content: "Text" });
+            span.append(text);
+            instance.element.append(span);
+
+            const addedInstance = getInstance(instance.variant, text);
+            editorState.document.deselect();
+            addedInstance.select();
+          }
 
           editorState.history.commit("Add Text");
           return true;
