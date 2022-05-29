@@ -76,7 +76,8 @@ export class DocumentMount {
         () => editorState.scroll.documentToViewport,
         (transform) => {
           this.container.style.transform = transform.toCSSMatrixString();
-        }
+        },
+        { fireImmediately: true }
       ),
       reaction(
         () => document.components.children,
