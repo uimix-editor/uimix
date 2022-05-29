@@ -83,7 +83,8 @@ export class DocumentMount {
         () => document.components.children,
         (components) => {
           this.updateComponents(components);
-        }
+        },
+        { fireImmediately: true }
       ),
       reaction(
         () => this.usedGoogleFonts,
@@ -100,7 +101,6 @@ export class DocumentMount {
         { fireImmediately: true }
       ),
     ];
-    this.updateComponents(document.components.children);
   }
 
   dispose(): void {
