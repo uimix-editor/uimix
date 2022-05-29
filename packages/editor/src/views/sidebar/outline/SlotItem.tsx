@@ -43,10 +43,6 @@ export class SlotItem extends TreeViewItem {
   parent: ElementItem;
   slotName: string;
 
-  get instance(): ElementInstance {
-    return this.parent.instance;
-  }
-
   get key(): string {
     return this.parent.key + ":" + this.slotName;
   }
@@ -134,7 +130,7 @@ export class SlotItem extends TreeViewItem {
 
   canDropData(dataTransfer: DataTransfer): boolean {
     return (
-      this.instance.element.canHaveChildren.isValid &&
+      this.parent.instance.element.canHaveChildren.isValid &&
       dataTransfer.types.includes(NODE_DRAG_MIME)
     );
   }
@@ -148,15 +144,15 @@ export class SlotItem extends TreeViewItem {
     for (const node of this.context.editorState.document.selectedNodes) {
       if (node.type === "element") {
         node.attrs.set("slot", this.slotName);
-        this.instance.node.insertBefore(node, beforeNode);
+        this.parent.instance.node.insertBefore(node, beforeNode);
       } else {
         if (this.slotName === "") {
-          this.instance.node.insertBefore(node, beforeNode);
+          this.parent.instance.node.insertBefore(node, beforeNode);
         } else {
           const span = new Element({ tagName: "span" });
           span.attrs.set("slot", this.slotName);
           span.append(node);
-          this.instance.node.insertBefore(span, beforeNode);
+          this.parent.instance.node.insertBefore(span, beforeNode);
         }
       }
     }
