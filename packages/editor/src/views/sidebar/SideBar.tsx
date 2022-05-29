@@ -11,7 +11,7 @@ import { action } from "mobx";
 import { observer } from "mobx-react-lite";
 import { useEditorState } from "../EditorStateContext";
 import { OutlineTreeView } from "./outline/OutlineTreeView";
-import { AssetBrowser } from "./outline/AssetBrowser";
+import { AssetBrowser } from "./assets/AssetBrowser";
 import { InspectorTabs } from "./inspector/InspectorTabs";
 
 const RightSideBarWrap = styled.div`
