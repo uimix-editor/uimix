@@ -8,7 +8,7 @@ import { ElementInstance } from "../../../models/ElementInstance";
 import { parseFragment } from "../../../fileFormat/fragment";
 import { TextInstance } from "../../../models/TextInstance";
 import { useEditorState } from "../../EditorStateContext";
-import { imageAssetDragMime } from "../../sidebar/outline/ImageBrowser";
+import { imageAssetDragMime } from "../../sidebar/assets/ImageBrowser";
 import { doubleClickInterval } from "../Constants";
 import { DragHandler } from "./DragHandler";
 import { ElementClickMoveDragHandler } from "./ElementClickMoveDragHandler";
