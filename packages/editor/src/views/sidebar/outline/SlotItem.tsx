@@ -17,7 +17,7 @@ import { TextItem } from "./TextItem";
 const SlotIndicator = styled.div<{ rowSelected?: boolean }>`
   color: ${slotColor};
   margin-right: 8px;
-  margin-left: -12px;
+  margin-left: -8px;
   display: flex;
   align-items: center;
   gap: 4px;
