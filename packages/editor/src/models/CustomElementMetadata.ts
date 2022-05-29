@@ -70,4 +70,8 @@ export const CustomElementMetadata = {
 
     return contents;
   },
+
+  hasOnlyMainSlot(metadata: CustomElementMetadata): boolean {
+    return metadata.slots.length === 1 && !metadata.slots[0].name;
+  },
 };

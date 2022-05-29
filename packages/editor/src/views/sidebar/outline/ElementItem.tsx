@@ -112,14 +112,18 @@ export class ElementItem extends TreeViewItem {
 
   get children(): readonly TreeViewItem[] {
     const { customElementMetadata } = this;
-    if (customElementMetadata) {
+    if (
+      customElementMetadata &&
+      customElementMetadata.slots.length &&
+      !CustomElementMetadata.hasOnlyMainSlot(customElementMetadata)
+    ) {
       const allSlots = new Map<string, boolean>(
         customElementMetadata.slots.map((s) => [s.name ?? "", true])
       );
       for (const childInstance of this.instance.children) {
         if (childInstance.type === "element") {
-          const slot = childInstance.element.attrs.get("slot");
-          if (slot && !allSlots.has(slot)) {
+          const slot = childInstance.element.attrs.get("slot") ?? "";
+          if (!allSlots.has(slot)) {
             allSlots.set(slot, false);
           }
         }
