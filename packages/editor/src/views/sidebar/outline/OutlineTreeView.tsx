@@ -330,19 +330,11 @@ class ElementItem extends TreeViewItem {
   }
 
   renderRow(options: { inverted: boolean }): React.ReactNode {
-    const slot = this.instance.element.attrs.get("slot");
-
     return (
       <StyledRow
         ref={(e) => (this.rowElement = e || undefined)}
         inverted={options.inverted}
       >
-        {slot && (
-          <SlotIndicator rowSelected={options.inverted}>
-            <Icon icon={arrowForwardIcon} />
-            {slot}
-          </SlotIndicator>
-        )}
         <ElementIcon
           icon={this.icon}
           style={{
@@ -503,7 +495,7 @@ class SlotItem extends TreeViewItem {
       <StyledRow inverted={options.inverted}>
         <SlotIndicator rowSelected={options.inverted}>
           <Icon icon={arrowForwardIcon} />
-          {this.slotName}
+          {this.slotName || "(main slot)"}
         </SlotIndicator>
       </StyledRow>
     );
