@@ -26,6 +26,7 @@ import { OutlineContext } from "./OutlineContext";
 import { ComponentItem } from "./ComponentItem";
 import { SlotItem } from "./SlotItem";
 import { TextItem } from "./TextItem";
+import { CustomElementMetadata } from "../../../models/CustomElementMetadata";
 
 function iconForTagName(tagName: string): IconifyIcon {
   if (tagName === "b" || tagName === "strong") {
@@ -103,12 +104,14 @@ export class ElementItem extends TreeViewItem {
   readonly parent: ElementItem | ComponentItem | SlotItem;
   readonly instance: ElementInstance;
 
-  get children(): readonly TreeViewItem[] {
-    const customElementMetadata =
-      this.context.editorState.document.getCustomElementMetadata(
-        this.instance.element.tagName
-      );
+  @computed get customElementMetadata(): CustomElementMetadata | undefined {
+    return this.context.editorState.document.getCustomElementMetadata(
+      this.instance.element.tagName
+    );
+  }
 
+  get children(): readonly TreeViewItem[] {
+    const { customElementMetadata } = this;
     if (customElementMetadata) {
       return customElementMetadata.slots.map(
         (slot) => new SlotItem(this.context, this, slot.name ?? "")
