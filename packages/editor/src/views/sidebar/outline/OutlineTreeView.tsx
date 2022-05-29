@@ -249,6 +249,17 @@ class ElementItem extends TreeViewItem {
   readonly instance: ElementInstance;
 
   get children(): readonly TreeViewItem[] {
+    const customElementMetadata =
+      this.context.editorState.document.getCustomElementMetadata(
+        this.instance.element.tagName
+      );
+
+    if (customElementMetadata) {
+      return customElementMetadata.slots.map(
+        (slot) => new SlotItem(this.context, this, slot.name ?? "")
+      );
+    }
+
     return this.instance.children.map((instance) => {
       if (instance.type === "element") {
         if (instance.element.tagName === "slot") {
@@ -436,6 +447,54 @@ class SlotElementItem extends ElementItem {
       </StyledRow>
     );
   }
+}
+
+class SlotItem extends TreeViewItem {
+  constructor(context: OutlineContext, parent: ElementItem, slotName: string) {
+    super();
+    this.context = context;
+    this.parent = parent;
+    this.slotName = slotName;
+    makeObservable(this);
+  }
+
+  context: OutlineContext;
+  parent: ElementItem;
+  slotName: string;
+
+  get key(): string {
+    return this.parent.key + ":" + this.slotName;
+  }
+
+  get children(): readonly TreeViewItem[] {
+    // TODO
+    return [];
+  }
+  get selected(): boolean {
+    return false;
+  }
+  get hovered(): boolean {
+    return false;
+  }
+  get collapsed(): boolean {
+    return false;
+  }
+  get showsCollapseButton(): boolean {
+    return false;
+  }
+  renderRow(options: { inverted: boolean }): React.ReactNode {
+    return (
+      <StyledRow inverted={options.inverted}>
+        <SlotIndicator rowSelected={options.inverted}>
+          <Icon icon={arrowForwardIcon} />
+          {this.slotName}
+        </SlotIndicator>
+      </StyledRow>
+    );
+  }
+  deselect(): void {}
+  select(): void {}
+  toggleCollapsed(): void {}
 }
 
 class TextItem extends LeafTreeViewItem {
