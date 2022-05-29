@@ -1,0 +1,17 @@
+{
+  "name": "docs",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Docs for Macaron",
+  "license": "MIT",
+  "main": "index.js",
+  "scripts": {
+    "build": "vitepress build docs",
+    "dev": "vitepress dev docs",
+    "serve": "vitepress serve docs"
+  },
+  "devDependencies": {
+    "vitepress": "^0.22.4",
+    "@macaron-app/loader-vite": "*"
+  }
+}
