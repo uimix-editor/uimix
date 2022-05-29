@@ -45,6 +45,9 @@ import { ElementInstance } from "../../../models/ElementInstance";
 import { TextInstance } from "../../../models/TextInstance";
 import { Document } from "../../../models/Document";
 import { useEditorState } from "../../EditorStateContext";
+import { Element } from "../../../models/Element";
+import { Text } from "../../../models/Text";
+import { getInstance } from "../../../models/InstanceRegistry";
 
 const slotColor = "#79BFFF";
 
@@ -503,6 +506,49 @@ class SlotItem extends TreeViewItem {
   deselect(): void {}
   select(): void {}
   toggleCollapsed(): void {}
+
+  handleContextMenu(e: React.MouseEvent): void {
+    e.preventDefault();
+    e.stopPropagation();
+
+    const instance = this.parent.instance;
+    const editorState = this.context.editorState;
+
+    this.context.contextMenu.show(e.clientX, e.clientY, [
+      {
+        text: "Add Element",
+        onClick: action(() => {
+          const element = new Element({ tagName: "div" });
+          element.rename("div");
+          if (this.slotName) {
+            element.attrs.set("slot", this.slotName);
+          }
+          instance.element.append(element);
+
+          const addedInstance = getInstance(instance.variant, element);
+          editorState.document.deselect();
+          addedInstance.select();
+
+          editorState.history.commit("Add Element");
+          return true;
+        }),
+      },
+      {
+        text: "Add Text",
+        onClick: action(() => {
+          const text = new Text({ content: "Text" });
+          instance.element.append(text);
+
+          const addedInstance = getInstance(instance.variant, text);
+          editorState.document.deselect();
+          addedInstance.select();
+
+          editorState.history.commit("Add Text");
+          return true;
+        }),
+      },
+    ]);
+  }
 }
 
 class TextItem extends LeafTreeViewItem {
