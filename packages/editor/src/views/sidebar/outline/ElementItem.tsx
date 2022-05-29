@@ -19,6 +19,8 @@ import { IconifyIcon } from "@iconify/react/dist/offline";
 import { isValidCSSIdentifier } from "@seanchas116/paintkit/src/util/Name";
 import { ElementInstance } from "../../../models/ElementInstance";
 import { TextInstance } from "../../../models/TextInstance";
+import { Element } from "../../../models/Element";
+import { Text } from "../../../models/Text";
 import { NameEdit, NODE_DRAG_MIME, slotColor } from "./Common";
 import { OutlineContext } from "./OutlineContext";
 import { ComponentItem } from "./ComponentItem";
@@ -232,8 +234,11 @@ export class ElementItem extends TreeViewItem {
 
   handleDrop(event: React.DragEvent, before: TreeViewItem | undefined): void {
     const copy = event.altKey || event.ctrlKey;
-    const beforeNode = (before as ElementItem | TextItem | undefined)?.instance
-      .node;
+
+    let beforeNode: Element | Text | undefined;
+    if (before instanceof ElementItem || before instanceof TextItem) {
+      beforeNode = before.instance.node;
+    }
 
     // TODO: copy
     for (const node of this.context.editorState.document.selectedNodes) {

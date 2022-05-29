@@ -9,11 +9,11 @@ import { TreeRow } from "@seanchas116/paintkit/src/components/treeview/TreeRow";
 import { Element } from "../../../models/Element";
 import { Text } from "../../../models/Text";
 import { getInstance } from "../../../models/InstanceRegistry";
+import { ElementInstance } from "../../../models/ElementInstance";
 import { NODE_DRAG_MIME, slotColor } from "./Common";
 import { OutlineContext } from "./OutlineContext";
 import { createItemForInstance, ElementItem } from "./ElementItem";
 import { TextItem } from "./TextItem";
-import { ElementInstance } from "../../../models/ElementInstance";
 
 const SlotIndicator = styled.div<{ rowSelected?: boolean }>`
   color: ${slotColor};
