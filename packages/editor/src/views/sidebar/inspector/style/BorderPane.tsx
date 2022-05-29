@@ -18,6 +18,7 @@ import edgeBottomIcon from "@seanchas116/paintkit/src/icon/EdgeBottom";
 import edgeLeftIcon from "@seanchas116/paintkit/src/icon/EdgeLeft";
 import edgeRightIcon from "@seanchas116/paintkit/src/icon/EdgeRight";
 import { IconButton } from "@seanchas116/paintkit/src/components/IconButton";
+import Tippy from "@tippyjs/react";
 import {
   StyleInspectorState,
   StylePropertyState,
@@ -86,31 +87,41 @@ export const BorderPane: React.FC<{
     <Pane>
       <PaneHeadingRow>
         <PaneHeading>Border</PaneHeading>
-        <IconButton
-          icon={edgeAllIcon}
-          pressed={state.borderEdgeMode === "all"}
-          onClick={state.setBorderEdgeModeToAll}
-        />
-        <IconButton
-          icon={edgeTopIcon}
-          pressed={state.borderEdgeMode === "top"}
-          onClick={state.setBorderEdgeModeToTop}
-        />
-        <IconButton
-          icon={edgeRightIcon}
-          pressed={state.borderEdgeMode === "right"}
-          onClick={state.setBorderEdgeModeToRight}
-        />
-        <IconButton
-          icon={edgeBottomIcon}
-          pressed={state.borderEdgeMode === "bottom"}
-          onClick={state.setBorderEdgeModeToBottom}
-        />
-        <IconButton
-          icon={edgeLeftIcon}
-          pressed={state.borderEdgeMode === "left"}
-          onClick={state.setBorderEdgeModeToLeft}
-        />
+        <Tippy content="All">
+          <IconButton
+            icon={edgeAllIcon}
+            pressed={state.borderEdgeMode === "all"}
+            onClick={state.setBorderEdgeModeToAll}
+          />
+        </Tippy>
+        <Tippy content="Top">
+          <IconButton
+            icon={edgeTopIcon}
+            pressed={state.borderEdgeMode === "top"}
+            onClick={state.setBorderEdgeModeToTop}
+          />
+        </Tippy>
+        <Tippy content="Right">
+          <IconButton
+            icon={edgeRightIcon}
+            pressed={state.borderEdgeMode === "right"}
+            onClick={state.setBorderEdgeModeToRight}
+          />
+        </Tippy>
+        <Tippy content="Bottom">
+          <IconButton
+            icon={edgeBottomIcon}
+            pressed={state.borderEdgeMode === "bottom"}
+            onClick={state.setBorderEdgeModeToBottom}
+          />
+        </Tippy>
+        <Tippy content="Left">
+          <IconButton
+            icon={edgeLeftIcon}
+            pressed={state.borderEdgeMode === "left"}
+            onClick={state.setBorderEdgeModeToLeft}
+          />
+        </Tippy>
       </PaneHeadingRow>
       <RowGroup>
         <Row12>
