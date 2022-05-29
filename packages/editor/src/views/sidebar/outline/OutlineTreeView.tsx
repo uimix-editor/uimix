@@ -230,10 +230,25 @@ const SlotIndicator = styled.div<{ rowSelected?: boolean }>`
     `}
 `;
 
+function createItemForInstance(
+  context: OutlineContext,
+  parent: ElementItem | ComponentItem | SlotItem,
+  instance: ElementInstance | TextInstance
+): ElementItem | TextItem {
+  if (instance.type === "element") {
+    if (instance.element.tagName === "slot") {
+      return new SlotElementItem(context, parent, instance);
+    }
+    return new ElementItem(context, parent, instance);
+  } else {
+    return new TextItem(context, parent, instance);
+  }
+}
+
 class ElementItem extends TreeViewItem {
   constructor(
     context: OutlineContext,
-    parent: ElementItem | ComponentItem,
+    parent: ElementItem | ComponentItem | SlotItem,
     instance: ElementInstance
   ) {
     super();
@@ -245,7 +260,7 @@ class ElementItem extends TreeViewItem {
   }
 
   readonly context: OutlineContext;
-  readonly parent: ElementItem | ComponentItem;
+  readonly parent: ElementItem | ComponentItem | SlotItem;
   readonly instance: ElementInstance;
 
   get children(): readonly TreeViewItem[] {
@@ -260,16 +275,9 @@ class ElementItem extends TreeViewItem {
       );
     }
 
-    return this.instance.children.map((instance) => {
-      if (instance.type === "element") {
-        if (instance.element.tagName === "slot") {
-          return new SlotElementItem(this.context, this, instance);
-        }
-        return new ElementItem(this.context, this, instance);
-      } else {
-        return new TextItem(this.context, this, instance);
-      }
-    });
+    return this.instance.children.map((instance) =>
+      createItemForInstance(this.context, this, instance)
+    );
   }
 
   get key(): string {
@@ -467,8 +475,16 @@ class SlotItem extends TreeViewItem {
   }
 
   get children(): readonly TreeViewItem[] {
-    // TODO
-    return [];
+    const childInstances = this.parent.instance.children.filter((child) => {
+      if (child.type === "text") {
+        return this.slotName === "";
+      }
+      return (child.element.attrs.get("slot") ?? "") === this.slotName;
+    });
+
+    return childInstances.map((i) =>
+      createItemForInstance(this.context, this, i)
+    );
   }
   get selected(): boolean {
     return false;
@@ -500,7 +516,7 @@ class SlotItem extends TreeViewItem {
 class TextItem extends LeafTreeViewItem {
   constructor(
     context: OutlineContext,
-    parent: ElementItem,
+    parent: ElementItem | ComponentItem | SlotItem,
     instance: TextInstance
   ) {
     super();
@@ -512,7 +528,7 @@ class TextItem extends LeafTreeViewItem {
   }
 
   readonly context: OutlineContext;
-  readonly parent: ElementItem | VariantItem;
+  readonly parent: ElementItem | ComponentItem | SlotItem;
   readonly instance: TextInstance;
 
   get key(): string {
@@ -542,7 +558,9 @@ class TextItem extends LeafTreeViewItem {
   rowElement: HTMLElement | undefined;
 
   @computed get isInsideSlot(): boolean {
-    return this.parent.isInsideSlot;
+    return this.parent instanceof ElementItem
+      ? this.parent.isInsideSlot
+      : false;
   }
 
   renderRow(options: { inverted: boolean }): React.ReactNode {
