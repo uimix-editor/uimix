@@ -1,6 +1,6 @@
 # File Format
 
-The file format of Macaron files (`.macaron`) is based on HTML and CSS. The benefit is:
+The file format of Macaron files (`.macaron`) is based on HTML and CSS. The benefits are:
 
 - Easy to read and modify for humans.
 - Easy to parse and emit programmatically.

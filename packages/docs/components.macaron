@@ -35,8 +35,7 @@
     <h1 id="heroTitle">Design tool to create<br />Web Components directly</h1>
     <div id="heroSubtitle">
       Macaron is an open-source UI design tool to create Web Components
-      visually.<br />Intended to be integrated into your codebase and
-      development workflow.
+      visually.<br />Intended to be integrated into your development workflow.
     </div>
     <div id="buttons">
       <a href="/guide/" id="hero-button-link"
@@ -88,8 +87,8 @@
               ></path>
             </svg>
             <span slot="title">Runs in Visual Studio Code</span> Custom editor
-            extension for Visual Studio Code.<br />No need to install app or
-            open browser tabs. </feature-card
+            extension for Visual Studio Code.<br />No need to install an app or
+            open a browser tab. </feature-card
           ><feature-card id="feature4"
             ><svg
               width="24"
@@ -125,8 +124,7 @@
               ></path>
             </svg>
             <span slot="title">Clean File Format</span> HTML-based clean file
-            format. Easy to read and edit for humans, and easy to be parsed in
-            tools.</feature-card
+            format. Easy to read and modify for both humans and tools. </feature-card
           >
         </div>
         <div id="feature-row3">
