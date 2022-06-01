@@ -17,9 +17,23 @@ The extension is currently in beta and not yet published to the marketplace. Ins
 - <a href="/artifacts/macaron-vscode-extension-0.2.0.vsix" download>Download the extension</a>
 - Install the extension via **Install from VSIX...** menu in the extension workbench
 
+<img srcset="./images/install.png 2x" />
+
+## Create a Macaron file
+
+In VS Code, create an empty file with the extension `.macaron` (e.g. `components.macaron`) and open it.
+
+The editor UI of Macaron is shown in a tab instead of the normal text editor of VS Code.
+
+<img src="/screenshots/add-macaron-file.png" width="512" />
+
 ## Create a simple component
 
-TODO
+Click **Frame** button in the top toolbar and draw a frame in the viewport.
+
+<img src="/screenshots/create-component.png" width="1024" />
+
+### Add a hover state
 
 ## Compile to JS
 
