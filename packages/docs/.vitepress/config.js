@@ -30,6 +30,10 @@ const config = {
               text: "File Format",
               link: "/guide/file-format",
             },
+            {
+              text: "Examples",
+              link: "/guide/examples",
+            },
           ],
         },
       ],
