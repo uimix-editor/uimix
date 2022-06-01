@@ -38,8 +38,8 @@
       visually.<br />Intended to be integrated into your development workflow.
     </div>
     <div id="buttons">
-      <a href="/guide/" id="hero-button-link"
-        ><hero-button id="herobutton2"></hero-button></a
+      <a href="/guide/" type="secondary" id="hero-button-link"
+        ><hero-button type="secondary" id="herobutton2"></hero-button></a
       ><a
         href="https://github.com/macaronapp/macaron-next"
         target="_blank"
@@ -397,6 +397,12 @@
     background-color="transparent"
     selector=":hover"
   ></macaron-variant>
+  <macaron-variant
+    x="972"
+    y="-168"
+    background-color="transparent"
+    selector="[type=&#x22;secondary&#x22;]"
+  ></macaron-variant>
   <template>
     <div id="herobutton">
       <div id="getvscodeextension"><slot>Get Started</slot></div>
@@ -436,6 +442,21 @@
     }
     :host(:hover) #herobutton {
       background: var(--c-brand-light);
+    }
+    :host([type="secondary"]) #herobutton {
+      background: none;
+      border-top-width: 2px;
+      border-top-style: solid;
+      border-top-color: white;
+      border-right-width: 2px;
+      border-right-style: solid;
+      border-right-color: white;
+      border-bottom-width: 2px;
+      border-bottom-style: solid;
+      border-bottom-color: white;
+      border-left-width: 2px;
+      border-left-style: solid;
+      border-left-color: white;
     }
   </style>
 </macaron-component>

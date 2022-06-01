@@ -19,6 +19,10 @@ const config = {
               link: "/guide/",
             },
             {
+              text: "Create Customizable Components",
+              link: "/guide/create-customizable-components",
+            },
+            {
               text: "File Format",
               link: "/guide/file-format",
             },
