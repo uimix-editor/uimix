@@ -6,6 +6,12 @@ The file format of Macaron files (`.macaron`) is based on HTML and CSS. The bene
 - Easy to parse and emit programmatically.
 - Easy to "eject" - since the data is represented in plain HTML/CSS, you can migrate from Macaron to plain HTML/CSS or other frameworks with little effort.
 
+## Edit `.macaron` files in text editor (VS Code)
+
+If you have installed the VS Code extension for Macaron, VS Code opens `.macaron` files in the visual editor by default.
+
+When you want to edit a `.macaron` file by hand in the text editor, right-click on the file and select **Open With...** and select **Text Editor**.
+
 ## Example File
 
 ```html
@@ -141,9 +147,3 @@ Supported selector patterns are as follows (other patterns are ignored):
   - When the `media` is set, the variant will be applied when the media query is satisfied.
 
 A `<macaron-variant>` without both `selector` and `media` becomes the default variant.
-
-## Edit `.macaron` files in text editor (VS Code)
-
-If you have installed the VS Code extension for Macaron, VS Code opens `.macaron` files in the visual editor by default.
-
-When you want to edit a `.macaron` file by hand in the text editor, right-click on the file and select `Open With...` and select `Text Editor`.
