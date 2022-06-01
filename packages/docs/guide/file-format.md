@@ -80,13 +80,13 @@ Each script tag must contain the `type="module"` attribute and the `src` attribu
 
 ### `<style>` tag
 
-The global CSS declarations. The declarations are contained in the `:root` pseudo-element.
+The global CSS definitions. The definitions are contained in the `:root` pseudo-element.
 
 ### `<macaron-component>` tags
 
 The components. A .macaron file can contain multiple components.
 
-## `<macaron-component>`
+## `<macaron-component>` - Component definition
 
 ### Attributes
 
@@ -135,7 +135,7 @@ Supported selector patterns are as follows (other patterns are ignored):
 }
 ```
 
-## `<macaron-variant>`
+## `<macaron-variant>` - Component Variant
 
 #### Attributes
 
