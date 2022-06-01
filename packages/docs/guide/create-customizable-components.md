@@ -20,7 +20,7 @@ When you add a child to an instance of the component, it will be shown in place 
 
 ## CSS variables
 
-CSS variables are used to customize the appearance of a component.
+CSS variables are used to customize the appearance of a component (in addition to providing global design tokens).
 
 ### Add a CSS variable (global)
 
