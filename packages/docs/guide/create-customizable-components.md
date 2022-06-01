@@ -33,7 +33,7 @@ Please be aware that the CSS variables are global and will affect the whole web 
 
 ### Use the variable in a component
 
-Then use the CSS variable in the component.
+Then use the CSS variable in the component. Click the down arrow on a color input (`color`, `background`, `border-color` etc).
 
 <img srcset="./images/use-cssvariable.png 2x" />
 
