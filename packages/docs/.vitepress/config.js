@@ -7,7 +7,7 @@ const config = {
 
   themeConfig: {
     repo: "macaronapp/macaron-next",
-    nav: [{ text: "Guide", link: "/", activeMatch: "^/$|^/guide/" }],
+    nav: [{ text: "Guide", link: "/guide/", activeMatch: "^/guide/" }],
 
     sidebar: {
       "/guide/": [
