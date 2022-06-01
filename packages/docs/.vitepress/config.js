@@ -19,6 +19,10 @@ const config = {
               link: "/guide/",
             },
             {
+              text: "Assets",
+              link: "/guide/assets",
+            },
+            {
               text: "Create Customizable Components",
               link: "/guide/create-customizable-components",
             },
