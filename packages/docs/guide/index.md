@@ -2,12 +2,9 @@
 
 ## Overview
 
-Macaron is an open-source Web design tool to create and maintain components visually
-where you can create production components just like in vector design tools.
+Macaron is an open-source design tool to visually create Web Components, [which can be used in most frameworks](https://custom-elements-everywhere.com/).
 
-It primarily emits Web Components, [which can be used in most frameworks](https://custom-elements-everywhere.com/).
-
-Unlike other Web design tools, Macaron aims to be integrated directly into your existing codebase and development workflow.
+Unlike most Web design tools, Macaron aims to be integrated directly into your development workflow. It runs in VS Code as a custom editor and uses HTML/CSS-based file format that can be stored in a Git repository.
 
 ## Install the VS Code Extension
 
