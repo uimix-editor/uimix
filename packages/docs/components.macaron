@@ -510,12 +510,3 @@
     }
   </style>
 </macaron-component>
-<macaron-component name="my-component">
-  <macaron-variant x="0" y="0"></macaron-variant>
-  <template> Easy-to-use visual editor </template>
-  <style>
-    :host {
-      display: block;
-    }
-  </style>
-</macaron-component>
