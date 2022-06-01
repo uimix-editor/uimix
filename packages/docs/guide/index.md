@@ -31,7 +31,9 @@ The editor UI of Macaron is shown in a tab instead of the normal text editor of 
 
 Click **Frame** button in the top toolbar and draw a frame in the viewport.
 
-<img src="/screenshots/create-component.png" width="1024" />
+A component named `my-component` is created in the document.
+
+<img srcset="./images/create-component.png 2x" />
 
 ### Add a hover state
 
