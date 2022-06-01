@@ -35,7 +35,23 @@ A component named `my-component` is created in the document.
 
 <img srcset="./images/create-component.png 2x" />
 
-### Add a hover state
+### Add a text element and edit style
+
+Click **Text** button in the top toolbar and draw a text element in the component.
+
+You may want to change the font or the color of the text. Select **Style** tab in the side bar and you can edit the style of the selected element.
+
+<img srcset="./images/edit-style.png 2x" />
+
+### Create variant for `:hover`
+
+In Macaron, a **variant** is a visual state that is applied to a component. The condition for a variant can be CSS selectors (for the root element of the component) or media queries.
+
+To create a variant, select the component or the default variant, click the top-left **+** button in the **Component** tab in the side bar.
+
+A variant that triggered by the `:hover` pseudo-class will be added. You can change the selectors/media queries in the **Conditions** panel.
+
+<img srcset="./images/create-variant.png 2x" />
 
 ## Compile to JS
 
