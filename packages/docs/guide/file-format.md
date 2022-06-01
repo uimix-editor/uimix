@@ -73,12 +73,18 @@ When you want to edit a `.macaron` file by hand in the text editor, right-click 
 
 ## Top-level structure
 
-- `<script type="module">` tags
-  - links to scripts that register external Web Components
-- A `<style>` tag
-  - A `:root` rule
-    - global CSS variable declarations
-- `<macaron-component>` tags: the components
+### `<script type="module" src="...">` tags
+
+The links to scripts that register external Web Components.
+Each script tag must contain the `type="module"` attribute and the `src` attribute.
+
+### `<style>` tag
+
+The global CSS declarations. The declarations are contained in the `:root` pseudo-element.
+
+### `<macaron-component>` tags
+
+The components. A .macaron file can contain multiple components.
 
 ## `<macaron-component>`
 
