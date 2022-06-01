@@ -25,15 +25,14 @@ When you want to edit a `.macaron` file by hand in the text editor, right-click 
   }
 </style>
 
+<!-- Components --->
 <macaron-component name="my-card">
   <!-- Variants -->
-
   <macaron-variant x="0" y="0"></macaron-variant>
   <macaron-variant x="200" y="0" selector=":hover"></macaron-variant>
   <macaron-variant x="400" y="0" media="(max-width: 768px)"></macaron-variant>
 
   <!-- DOM structure -->
-
   <template>
     <h1 id="title">Hello, world!</h1>
     <img id="image" />
@@ -41,7 +40,6 @@ When you want to edit a `.macaron` file by hand in the text editor, right-click 
   </template>
 
   <!-- Styles -->
-
   <style>
     #title {
       font-size: 24px;
@@ -70,11 +68,7 @@ When you want to edit a `.macaron` file by hand in the text editor, right-click 
     }
   </style>
 </macaron-component>
-
-<macaron-component>
-  <!-- A file can contain multiple components -->
-  ...
-</macaron-component>
+<macaron-component name="my-other-component"> ... </macaron-component>
 ```
 
 ## Top-level structure
