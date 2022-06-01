@@ -19,8 +19,8 @@ const config = {
               link: "/guide/",
             },
             {
-              text: "Variants",
-              link: "/guide/variants",
+              text: "Interaction & Responsive Design",
+              link: "/guide/interaction",
             },
             {
               text: "Assets",
