@@ -44,25 +44,28 @@ When you want to edit a `.macaron` file by hand in the text editor, right-click 
 
   <style>
     #title {
-      /* style */
       font-size: 24px;
       color: var(--my-card--color);
     }
     #image {
-      /* style */
+      width: 24px;
+      width: 24px;
     }
     #text {
-      /* style */
+      font-size: 14px;
     }
 
-    /* styles for variants */
+    :host(:hover) {
+      background: #f0f0f0;
+    }
+
     :host(:hover) #title {
-      /* style */
+      color: red;
     }
 
     @media (max-width: 768px) {
       #title {
-        /* style */
+        font-size: 18px;
       }
     }
   </style>
