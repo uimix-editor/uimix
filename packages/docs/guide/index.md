@@ -51,6 +51,8 @@ To create a variant, select the component or the default variant, click the top-
 
 A variant that triggered by the `:hover` pseudo-class will be added. You can change the selectors/media queries in the **Conditions** panel.
 
+To change the style of the variant, select a content element of the variant and click the **Style** tab in the side bar.
+
 <img srcset="./images/create-variant.png 2x" />
 
 ## Compile to JS
