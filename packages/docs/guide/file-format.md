@@ -4,7 +4,7 @@ The file format of Macaron files (`.macaron`) is based on HTML and CSS. The bene
 
 - Easy to read and modify for humans.
 - Easy to parse and emit programmatically.
-- Easy to "eject" - since the data is represented in plain HTML/CSS, you can stop using Macaron and migrate to plain HTML/CSS or other frameworks with little effort.
+- Easy to "eject" - since the data is represented in plain HTML/CSS, you can migrate from Macaron to plain HTML/CSS or other frameworks with little effort.
 
 ## Example File
 
