@@ -19,6 +19,10 @@ const config = {
               link: "/guide/",
             },
             {
+              text: "Variants",
+              link: "/guide/variants",
+            },
+            {
               text: "Assets",
               link: "/guide/assets",
             },

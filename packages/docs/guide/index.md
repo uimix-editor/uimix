@@ -43,18 +43,6 @@ You may want to change the font or the color of the text. Select **Style** tab i
 
 <img srcset="./images/edit-style.png 2x" />
 
-### Create variant for `:hover`
-
-In Macaron, a **variant** is a visual state that is applied to a component. The condition for a variant can be CSS selectors (for the root element of the component) or media queries.
-
-To create a variant, select the component or the default variant, click the top-left **+** button in the **Component** tab in the side bar.
-
-A variant with the `:hover` pseudo-class will be added. You can change the selectors/media queries in the **Conditions** panel.
-
-To change the style of the variant, select a content element of the variant and click the **Style** tab in the side bar.
-
-<img srcset="./images/create-variant.png 2x" />
-
 ## Compile to JS
 
 `@macaron-app/compiler` provides a CLI that compiles Macaron files to JavaScript.
