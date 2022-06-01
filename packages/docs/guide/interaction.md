@@ -2,7 +2,7 @@
 
 In Macaron, you can make components interactive (hover effect etc) and responsive (media queries) by adding a **variant** to a component.
 
-A variant is a visual state that is applied to a component. The condition for a variant can be CSS selectors (for the root element of the component) or media queries.
+A variant is a visual state that is applied to a component. The condition for a variant can be CSS selectors (for the root element of the component), media queries, or both.
 
 ## Create a variant
 
