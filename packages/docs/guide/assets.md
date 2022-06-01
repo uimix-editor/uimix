@@ -7,7 +7,7 @@ In the **Assets** tab of the side bar, you can add assets to your component.
 In the **Components** sub-pane, you can browse the available components.
 Drag-drop a component thumbnail onto an element to add it.
 
-The components in the same `.macaron` file will be shown by default.
+The components in the same `.macaron` file will be available by default.
 
 ### External Web Components
 
