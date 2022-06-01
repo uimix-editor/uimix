@@ -25,7 +25,7 @@ In VS Code, create an empty file with the extension `.macaron` (e.g. `components
 
 The editor UI of Macaron is shown in a tab instead of the normal text editor of VS Code.
 
-<img src="/screenshots/add-macaron-file.png" width="512" />
+<img srcset="./images/create-macaron-file.png 2x" />
 
 ## Create a simple component
 
