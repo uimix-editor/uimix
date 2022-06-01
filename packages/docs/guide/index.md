@@ -29,17 +29,13 @@ The editor UI of Macaron is shown in a tab instead of the normal text editor of 
 
 ## Create a simple component
 
-Click **Frame** button in the top toolbar and draw a frame in the viewport.
+Click **Text** button in the top toolbar and draw a frame in the viewport.
 
-A component named `my-component` is created in the document.
+It creates a component named `my-component` with some text content.
 
 <img srcset="./images/create-component.png 2x" />
 
-### Add a text element and edit style
-
-Click **Text** button in the top toolbar and draw a text element in the component.
-
-You may want to change the font or the color of the text. Select **Style** tab in the side bar and you can edit the style of the selected element.
+You may want to change the font or the color of the text. Select **Style** tab in the side bar and you can edit the style.
 
 <img srcset="./images/edit-style.png 2x" />
 
