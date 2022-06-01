@@ -12,7 +12,7 @@ Macaron has a shortcut way to create a `<slot>` element. Select an element and r
 
 (Alternatively, you can instead create a `<slot>` element manually. Create an element and change the tag name to `slot`.)
 
-When you add a child to an instance of the component, it will be added in place of the `<slot>` children.
+When you add a child to an instance of the component, it will be shown in place of the `<slot>` children.
 
 <img srcset="./images/slotted-content.png 2x" />
 
