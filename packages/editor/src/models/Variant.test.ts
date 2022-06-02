@@ -12,9 +12,9 @@ describe(solveVariantDependencies.name, () => {
     const mobile = new Variant("mobile");
     mobile.mediaQuery = "(max-width: 768px)";
 
-    const tabletHoverFocus = new Variant("tabletHoverFocus");
-    tabletHoverFocus.mediaQuery = "(max-width: 1024px)";
-    tabletHoverFocus.selector = ":hover:focus";
+    const mobileHoverFocus = new Variant("mobileHoverFocus");
+    mobileHoverFocus.mediaQuery = "(max-width: 768px)";
+    mobileHoverFocus.selector = ":hover:focus";
 
     const tabletHover = new Variant("tabletHover");
     tabletHover.mediaQuery = "(max-width: 1024px)";
@@ -24,7 +24,7 @@ describe(solveVariantDependencies.name, () => {
       tablet,
       smallMobile,
       mobile,
-      tabletHoverFocus,
+      mobileHoverFocus,
       tabletHover,
     ];
 
@@ -40,17 +40,18 @@ describe(solveVariantDependencies.name, () => {
         "mobile": [
           "tablet",
         ],
-        "smallMobile": [
-          "tablet",
+        "mobileHoverFocus": [
+          "tabletHover",
           "mobile",
+          "tablet",
+        ],
+        "smallMobile": [
+          "mobile",
+          "tablet",
         ],
         "tablet": [],
         "tabletHover": [
           "tablet",
-        ],
-        "tabletHoverFocus": [
-          "tablet",
-          "tabletHover",
         ],
       }
     `);

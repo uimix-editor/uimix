@@ -234,7 +234,7 @@ export function solveVariantDependencies(
 
   variants.forEach(visit);
 
-  sorted.sort();
+  sorted.reverse();
 
   for (const key of [...depsMap.keys()]) {
     const deps = depsMap.get(key)!;
