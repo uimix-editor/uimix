@@ -8,7 +8,7 @@
   "scripts": {
     "build": "vitepress build .",
     "dev": "vitepress dev .",
-    "serve": "vitepress serve ."
+    "serve": "vitepress serve . --port 4001"
   },
   "devDependencies": {
     "vitepress": "^0.22.4",
