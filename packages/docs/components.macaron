@@ -14,6 +14,12 @@
 </style>
 <macaron-component name="top-page">
   <macaron-variant x="0" y="0" width="1440"></macaron-variant>
+  <macaron-variant
+    x="1464"
+    y="0"
+    width="1000"
+    media="(max-width: 1024px) "
+  ></macaron-variant>
   <template>
     <h1 id="heroTitle">Design tool to create<br />Web Components directly</h1>
     <div id="heroSubtitle">
@@ -188,7 +194,9 @@
     }
     #features {
       margin-top: 96px;
+      margin-right: 32px;
       margin-bottom: 96px;
+      margin-left: 32px;
       display: flex;
       flex-direction: column;
       align-items: center;
@@ -202,8 +210,6 @@
       padding-bottom: 0px;
       padding-left: 0px;
       flex-direction: column;
-      align-items: flex-start;
-      justify-content: flex-start;
       row-gap: 24px;
       column-gap: 24px;
       color: #ffffffcc;
@@ -222,8 +228,14 @@
     }
     #feature1 {
       position: relative;
+      flex-grow: 1;
+      flex-shrink: 1;
+      flex-basis: 0px;
     }
     #feature8 {
+      flex-grow: 1;
+      flex-shrink: 1;
+      flex-basis: 0px;
       --feature-card-color: #0091ea;
     }
     #feature-row3 {
@@ -239,12 +251,19 @@
       column-gap: 24px;
     }
     #feature5 {
+      flex-grow: 1;
+      flex-shrink: 1;
+      flex-basis: 0px;
       --feature-card-color: #00b8d4;
     }
     #feature10 {
+      flex-grow: 1;
+      flex-shrink: 1;
+      flex-basis: 0px;
       --feature-card-color: #c51162;
     }
     #feature-row4 {
+      flex-basis: 0px;
       display: flex;
       padding-top: 0px;
       padding-right: 0px;
@@ -257,9 +276,15 @@
       column-gap: 24px;
     }
     #feature9 {
+      flex-grow: 1;
+      flex-shrink: 1;
+      flex-basis: 0px;
       --feature-card-color: #ff6d00;
     }
     #feature7 {
+      flex-grow: 1;
+      flex-shrink: 1;
+      flex-basis: 0px;
       --feature-card-color: #aa00ff;
     }
     #workinprogress {
@@ -272,12 +297,27 @@
       letter-spacing: -0.02em;
       text-align: left;
     }
+    @media (max-width: 1024px) {
+      #feature-row1 {
+        flex-direction: column;
+        align-items: stretch;
+      }
+      #feature-row3 {
+        flex-direction: column;
+        align-items: stretch;
+      }
+      #feature-row4 {
+        flex-direction: column;
+        align-items: stretch;
+      }
+    }
   </style>
 </macaron-component>
 <macaron-component name="feature-card">
   <macaron-variant
     x="0"
     y="-168"
+    width="480"
     background-color="var(--c-white)"
   ></macaron-variant>
   <template>
@@ -299,7 +339,6 @@
   </template>
   <style>
     :host {
-      width: 480px;
       border-top-left-radius: 8px;
       border-top-right-radius: 8px;
       border-bottom-right-radius: 8px;
@@ -334,7 +373,6 @@
       opacity: 0.2;
     }
     #text {
-      width: 400px;
       height: 96px;
       display: flex;
       padding-top: 0px;
@@ -357,7 +395,6 @@
       text-align: left;
     }
     #description {
-      width: 400px;
       color: #ffffffcc;
       font-family: Inter;
       font-weight: 400;
