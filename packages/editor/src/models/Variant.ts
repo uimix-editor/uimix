@@ -151,6 +151,12 @@ export class Variant extends BaseVariant {
   }
 }
 
+export interface VariantJSON extends BaseVariantJSON {
+  key: string;
+  selector?: string;
+  mediaQuery?: string;
+}
+
 // selector ⊂ otherSelector
 function isSelectorExtendsOther(
   selector: string,
@@ -182,8 +188,29 @@ function isMediaQueryExtendsOther(
   return maxWidth < otherMaxWidth;
 }
 
-export interface VariantJSON extends BaseVariantJSON {
-  key: string;
-  selector?: string;
-  mediaQuery?: string;
+interface VariantDependencies {
+  sorted: Variant[]; // topological sort
+  dependencies: Map<Variant, Variant[]>;
+}
+
+function solveVariantDependencies(variants: Variant[]): VariantDependencies {
+  const sorted: Variant[] = [];
+  const depsMap = new Map<Variant, Variant[]>();
+
+  const visit = (variant: Variant): void => {
+    const deps = variants.filter(
+      (variant2) => variant2 !== variant && variant.extends(variant2)
+    );
+    depsMap.set(variant, deps);
+
+    if (deps.length > 0) {
+      deps.forEach(visit);
+    }
+
+    sorted.push(variant);
+  };
+
+  variants.forEach(visit);
+
+  return { sorted, dependencies: depsMap };
 }
