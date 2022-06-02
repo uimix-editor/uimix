@@ -5,6 +5,16 @@ const config = {
   title: "Macaron",
   description: "Visual editor for Web Components",
 
+  vue: {
+    template: {
+      compilerOptions: {
+        isCustomElement: (tag) => {
+          return tag === "top-page";
+        },
+      },
+    },
+  },
+
   themeConfig: {
     repo: "macaronapp/macaron-next",
     nav: [{ text: "Guide", link: "/guide/", activeMatch: "^/guide/" }],
