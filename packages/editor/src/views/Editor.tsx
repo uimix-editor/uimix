@@ -9,12 +9,6 @@ import { ToolBar } from "./ToolBar";
 import { Viewport } from "./viewport/Viewport";
 
 const Columns = styled.div`
-  position: fixed;
-  left: 0;
-  top: 0;
-  width: 100%;
-  height: 100%;
-
   display: flex;
   background-color: ${colors.background};
 `;
@@ -29,9 +23,10 @@ const StyledViewport = styled(Viewport)`
   flex: 1;
 `;
 
-export const Editor: React.FC<{ editorState: EditorState }> = ({
-  editorState,
-}) => {
+export const Editor: React.FC<{
+  className?: string;
+  editorState: EditorState;
+}> = ({ className, editorState }) => {
   // TODO: avoid attaching listeners to window
   useEffect(() => {
     const onWindowKeyDown = action((e: KeyboardEvent) => {
@@ -54,7 +49,10 @@ export const Editor: React.FC<{ editorState: EditorState }> = ({
 
   return (
     <EditorStateContext.Provider value={editorState}>
-      <Columns onContextMenuCapture={(e) => e.preventDefault()}>
+      <Columns
+        className={className}
+        onContextMenuCapture={(e) => e.preventDefault()}
+      >
         <Center>
           <ToolBar />
           <StyledViewport />

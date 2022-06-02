@@ -5,7 +5,7 @@ import {
 } from "@seanchas116/paintkit/src/components/GlobalStyle";
 import { ContextMenuProvider } from "@seanchas116/paintkit/src/components/menu/ContextMenuProvider";
 import { reaction } from "mobx";
-import { createGlobalStyle } from "styled-components";
+import styled, { createGlobalStyle } from "styled-components";
 import { fontFamily } from "@seanchas116/paintkit/src/components/Common";
 import { Editor } from "../views/Editor";
 import { AppEditorState } from "./AppEditorState";
@@ -24,6 +24,12 @@ const GlobalStyle = createGlobalStyle`
   .tippy-content {
     font-size: 12px;
   }
+`;
+
+const StyledEditor = styled(Editor)`
+  position: fixed;
+  width: 100%;
+  height: 100%;
 `;
 
 export const App: React.FC<{
@@ -48,7 +54,7 @@ export const App: React.FC<{
       <GlobalStyle />
       <PaintkitProvider>
         <ContextMenuProvider>
-          <Editor editorState={editorState} />
+          <StyledEditor editorState={editorState} />
         </ContextMenuProvider>
       </PaintkitProvider>
     </ColorSchemeProvider>
