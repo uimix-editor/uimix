@@ -188,12 +188,9 @@ function isMediaQueryExtendsOther(
   return maxWidth < otherMaxWidth;
 }
 
-interface VariantDependencies {
-  sorted: Variant[]; // topological sort
-  dependencies: Map<Variant, Variant[]>;
-}
-
-function solveVariantDependencies(variants: Variant[]): VariantDependencies {
+function solveVariantDependencies(
+  variants: Variant[]
+): Map<Variant, Variant[]> {
   const sorted: Variant[] = [];
   const depsMap = new Map<Variant, Variant[]>();
 
@@ -212,5 +209,13 @@ function solveVariantDependencies(variants: Variant[]): VariantDependencies {
 
   variants.forEach(visit);
 
-  return { sorted, dependencies: depsMap };
+  sorted.sort();
+
+  for (const key of [...depsMap.keys()]) {
+    const deps = depsMap.get(key)!;
+    const sortedDeps = sorted.filter((variant) => deps.includes(variant));
+    depsMap.set(key, sortedDeps);
+  }
+
+  return depsMap;
 }
