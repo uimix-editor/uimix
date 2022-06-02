@@ -4,7 +4,9 @@ You might want to create a component that can be customized. Macaron follows the
 
 ## Slots
 
-`<slot>` elements are used to customize the partial content of a Web Component.
+`<slot>` elements are used to customize the partial content of a Web Component. They are placeholders for contents inserted by component instances.
+
+([The MDN Reference](https://developer.mozilla.org/en-US/docs/Web/Web_Components/Using_templates_and_slots) is a good resource for Web Components slots.)
 
 Macaron has a shortcut way to create a `<slot>` element. Select an element and right-click, select **Wrap Contents in Slot** to wrap the children of the selected element in a `<slot>` element.
 
@@ -15,8 +17,6 @@ Macaron has a shortcut way to create a `<slot>` element. Select an element and r
 When you add a child to an instance of the component, it will be shown in place of the `<slot>` children.
 
 <img srcset="./images/slotted-content.png 2x" />
-
-[The MDN Reference](https://developer.mozilla.org/en-US/docs/Web/Web_Components/Using_templates_and_slots) is a good resource for Web Components slots.
 
 ## CSS variables
 
