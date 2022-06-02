@@ -9,12 +9,13 @@
   "main": "./out/extension.js",
   "scripts": {
     "build": "vsce package",
-    "compile": "node build.js",
+    "compile:copy-files": "cp ../editor/dist/vscode.es.js ./out/webview.js",
+    "compile:esbuild": "node build.js",
     "dev": "node build.js --dev",
     "lint": "eslint src --ext ts",
     "pretest": "run-s build lint",
     "test": "node ./out/test/runTest.js",
-    "vscode:prepublish": "run-s compile"
+    "vscode:prepublish": "run-s compile:*"
   },
   "contributes": {
     "commands": [
