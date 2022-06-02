@@ -16,12 +16,19 @@ When you want to edit a `.macaron` file by hand in the text editor, right-click 
 
 ```html
 <!-- imports to external Web Components: -->
-<script type="module" src="./external-web-components.js"></script>
+<!-- may be a link to a CDN delivered library -->
+<script
+  type="module"
+  src="https://cdn.jsdelivr.net/npm/<some package>..."
+></script>
+<!-- or a local file -->
+<script type="module" src="./external-components.js"></script>
 
 <!-- Global CSS variables --->
 <style>
   :root {
-    --my-card--color: red;
+    --my-global-text-color: #111;
+    --my-card-title-color: red;
   }
 </style>
 
@@ -43,7 +50,7 @@ When you want to edit a `.macaron` file by hand in the text editor, right-click 
   <style>
     #title {
       font-size: 24px;
-      color: var(--my-card--color);
+      color: var(--my-card-title-color);
     }
     #image {
       width: 24px;
