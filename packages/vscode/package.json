@@ -6,6 +6,11 @@
   "categories": [
     "Other"
   ],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/macaronapp/macaron-next.git"
+  },
+  "license": "MIT",
   "main": "./out/extension.js",
   "scripts": {
     "build": "vsce package",
