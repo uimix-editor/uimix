@@ -207,12 +207,12 @@ function isMediaQueryExtendsOther(
 export function solveVariantDependencies(
   variants: Variant[]
 ): Map<Variant, Variant[]> {
-  const sorted: Variant[] = [];
+  const visited = new Set<Variant>();
   const depsMap = new Map<Variant, Variant[]>();
 
   const visit = (variant: Variant): void => {
     console.log("visit", variant.key);
-    if (sorted.includes(variant)) {
+    if (visited.has(variant)) {
       return;
     }
 
@@ -229,12 +229,12 @@ export function solveVariantDependencies(
       deps.forEach(visit);
     }
 
-    sorted.push(variant);
+    visited.add(variant);
   };
 
   variants.forEach(visit);
 
-  sorted.reverse();
+  const sorted = [...visited].reverse();
 
   for (const key of [...depsMap.keys()]) {
     const deps = new Set(depsMap.get(key));
