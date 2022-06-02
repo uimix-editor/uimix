@@ -1,3 +1,4 @@
+import * as path from "path";
 import { defineConfig } from "vite";
 import react from "@vitejs/plugin-react";
 import { NodeGlobalsPolyfillPlugin } from "@esbuild-plugins/node-globals-polyfill";
@@ -78,6 +79,10 @@ export default defineConfig({
         // used during production bundling
         rollupNodePolyFill(),
       ],
+      input: {
+        main: path.resolve(__dirname, "index.html"),
+        vscode: path.resolve(__dirname, "src/vscode/index.html"),
+      },
     },
   },
   server: {
