@@ -42,8 +42,6 @@ export class RootElementMount {
       reaction(
         () => variant.supersetVariants,
         (supersetVariants) => {
-          console.log(supersetVariants);
-
           const classes = ["variant-" + variant.key];
           for (const supersetVariant of supersetVariants) {
             classes.push("variant-" + supersetVariant.key);
