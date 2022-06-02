@@ -131,7 +131,8 @@ export class MacaronEditorSession {
   }
 
   private getHTMLForWebview(webview: vscode.Webview): string {
-    // TODO: production
+    const isDevelopment =
+      this.context.extensionMode === vscode.ExtensionMode.Development;
 
     const nonce = getNonce();
 
@@ -139,11 +140,34 @@ export class MacaronEditorSession {
 
     const csp = `
       default-src 'none';
-      connect-src ${webview.cspSource} ${fileServerOrigin} https: data: ws://localhost:3000;
+      connect-src ${webview.cspSource} ${fileServerOrigin} https: data: ${
+      isDevelopment ? "ws://localhost:3000" : ""
+    };
       img-src ${webview.cspSource} ${fileServerOrigin} https: data:;
       font-src ${webview.cspSource} ${fileServerOrigin} https: data:;
-      style-src ${webview.cspSource} ${fileServerOrigin} https: data: 'unsafe-inline';
+      style-src ${
+        webview.cspSource
+      } ${fileServerOrigin} https: data: 'unsafe-inline';
       script-src 'nonce-${nonce}' 'unsafe-inline' 'unsafe-eval' 'strict-dynamic';
+    `;
+
+    const scriptSrc = isDevelopment
+      ? "http://localhost:3000/src/vscode/main.tsx"
+      : webview
+          .asWebviewUri(
+            vscode.Uri.joinPath(this.context.extensionUri, "out", "webview.js")
+          )
+          .toString();
+
+    const viteScripts = `
+      <script nonce="${nonce}" type="module">
+        import RefreshRuntime from "http://localhost:3000/@react-refresh"
+        RefreshRuntime.injectIntoGlobalHook(window)
+        window.$RefreshReg$ = () => {}
+        window.$RefreshSig$ = () => (type) => type
+        window.__vite_plugin_react_preamble_installed__ = true
+      </script>
+      <script nonce="${nonce}" type="module" src="http://localhost:3000/@vite/client"></script>
     `;
 
     return `
@@ -156,17 +180,11 @@ export class MacaronEditorSession {
       </head>
       <body>
         <div id="root"></div>
-        <script nonce="${nonce}" type="module">
-          import RefreshRuntime from "http://localhost:3000/@react-refresh"
-          RefreshRuntime.injectIntoGlobalHook(window)
-          window.$RefreshReg$ = () => {}
-          window.$RefreshSig$ = () => (type) => type
-          window.__vite_plugin_react_preamble_installed__ = true
-        </script>
-        <script nonce="${nonce}" type="module" src="http://localhost:3000/@vite/client"></script>
-        <script nonce="${nonce}" type="module" src="http://localhost:3000/src/vscode/main.tsx"></script>
+        ${isDevelopment ? viteScripts : ""}
+        <script nonce="${nonce}" type="module" src="${scriptSrc}"></script>
       </body>
-      </html>`;
+      </html>
+    `;
   }
 
   private getImageFiles(imageFilePaths: Set<string>): string[] {
