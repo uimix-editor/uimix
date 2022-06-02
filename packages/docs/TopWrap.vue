@@ -1,3 +1,9 @@
+<style scoped>
+  macaron-editor {
+    height: 640px;
+  }
+</style>
+
 <template>
   <top-page></top-page>
   <macaron-editor></macaron-editor>
