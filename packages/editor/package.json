@@ -3,7 +3,7 @@
   "version": "0.0.0",
   "private": true,
   "scripts": {
-    "build": "tsc && vite build",
+    "build": "tsc && vite build --config ./vite.config.vscode.ts",
     "dev": "vite",
     "format": "prettier --write src",
     "lint": "eslint src",
