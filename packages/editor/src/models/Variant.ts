@@ -211,7 +211,6 @@ export function solveVariantDependencies(
   const depsMap = new Map<Variant, Variant[]>();
 
   const visit = (variant: Variant): void => {
-    console.log("visit", variant.key);
     if (visited.has(variant)) {
       return;
     }
@@ -220,10 +219,6 @@ export function solveVariantDependencies(
       (variant2) => variant2 !== variant && variant.extends(variant2)
     );
     depsMap.set(variant, deps);
-    console.log(
-      "deps",
-      deps.map((v) => v.key)
-    );
 
     if (deps.length > 0) {
       deps.forEach(visit);
