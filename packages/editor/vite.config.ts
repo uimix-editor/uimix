@@ -73,16 +73,18 @@ export default defineConfig({
     },
   },
   build: {
+    lib: {
+      entry: path.resolve(__dirname, "src/vscode/main.tsx"),
+      name: "vscode",
+      formats: ["es"],
+      fileName: (format) => `vscode.${format}.js`,
+    },
     rollupOptions: {
       plugins: [
         // Enable rollup polyfills plugin
         // used during production bundling
         rollupNodePolyFill(),
       ],
-      input: {
-        index: path.resolve(__dirname, "index.html"),
-        vscode: path.resolve(__dirname, "vscode.html"),
-      },
     },
   },
   server: {
