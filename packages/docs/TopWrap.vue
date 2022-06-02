@@ -13,7 +13,8 @@
 export default {
   mounted() {
     import('./components.macaron')
-    import('@macaron-app/editor/dist/webcomponent/main')
+    import('@macaron-app/editor/dist/webcomponent/main.js')
+    import('@macaron-app/editor/dist/webcomponent/main.css')
   }
 }
 </script>
