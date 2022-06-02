@@ -18,8 +18,9 @@
     x="1464"
     y="0"
     width="1000"
-    media="(max-width: 1024px) "
+    media="(max-width: 1024px)"
   ></macaron-variant>
+  <macaron-variant x="2488" y="0" media="(max-width: 768px)"></macaron-variant>
   <template>
     <h1 id="heroTitle">Design tool to create<br />Web Components directly</h1>
     <div id="heroSubtitle">
@@ -151,19 +152,18 @@
       font-family: Inter;
       font-weight: 800;
       font-size: 96px;
-      line-height: 100px;
+      line-height: 1;
       letter-spacing: -0.03em;
       text-align: center;
     }
     #heroSubtitle {
       position: relative;
       margin-bottom: 48px;
-      width: 800px;
       color: var(--c-text-light-1);
       font-family: Inter;
       font-weight: 400;
       font-size: 20px;
-      line-height: 36px;
+      line-height: 1.8;
       letter-spacing: -0.03em;
       text-align: center;
     }
@@ -195,8 +195,9 @@
     #features {
       margin-top: 96px;
       margin-right: 32px;
-      margin-bottom: 96px;
+      margin-bottom: 128px;
       margin-left: 32px;
+      max-width: 1032px;
       display: flex;
       flex-direction: column;
       align-items: center;
@@ -221,7 +222,7 @@
       padding-bottom: 0px;
       padding-left: 0px;
       flex-direction: row;
-      align-items: flex-start;
+      align-items: stretch;
       justify-content: flex-start;
       row-gap: 24px;
       column-gap: 24px;
@@ -245,7 +246,7 @@
       padding-bottom: 0px;
       padding-left: 0px;
       flex-direction: row;
-      align-items: flex-start;
+      align-items: stretch;
       justify-content: flex-start;
       row-gap: 24px;
       column-gap: 24px;
@@ -270,7 +271,7 @@
       padding-bottom: 0px;
       padding-left: 0px;
       flex-direction: row;
-      align-items: flex-start;
+      align-items: stretch;
       justify-content: flex-start;
       row-gap: 24px;
       column-gap: 24px;
@@ -298,6 +299,13 @@
       text-align: left;
     }
     @media (max-width: 1024px) {
+      #heroTitle {
+        font-size: 80px;
+        line-height: 1.2;
+      }
+      #features {
+        font-size: 80px;
+      }
       #feature-row1 {
         flex-direction: column;
         align-items: stretch;
@@ -311,12 +319,32 @@
         align-items: stretch;
       }
     }
+    @media (max-width: 768px) {
+      :host {
+        margin-right: 16px;
+        margin-bottom: 32px;
+      }
+      #heroTitle {
+        margin-top: 32px;
+        font-size: 48px;
+      }
+      #heroSubtitle {
+        margin-bottom: 32px;
+        line-height: 1.5;
+      }
+      #features {
+        margin-top: 48px;
+        margin-right: 0px;
+        margin-bottom: 64px;
+        margin-left: 0px;
+      }
+    }
   </style>
 </macaron-component>
 <macaron-component name="feature-card">
   <macaron-variant
-    x="0"
-    y="-168"
+    x="827"
+    y="-423"
     width="480"
     background-color="var(--c-white)"
   ></macaron-variant>
@@ -373,7 +401,6 @@
       opacity: 0.2;
     }
     #text {
-      height: 96px;
       display: flex;
       padding-top: 0px;
       padding-right: 0px;
@@ -395,11 +422,12 @@
       text-align: left;
     }
     #description {
+      padding-bottom: 4px;
       color: #ffffffcc;
       font-family: Inter;
       font-weight: 400;
       font-size: 16px;
-      line-height: 28px;
+      line-height: 1.75;
       letter-spacing: -0.02em;
       text-align: left;
     }
