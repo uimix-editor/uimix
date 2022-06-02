@@ -237,8 +237,8 @@ export function solveVariantDependencies(
   sorted.reverse();
 
   for (const key of [...depsMap.keys()]) {
-    const deps = depsMap.get(key)!;
-    const sortedDeps = sorted.filter((variant) => deps.includes(variant));
+    const deps = new Set(depsMap.get(key));
+    const sortedDeps = sorted.filter((variant) => deps.has(variant));
     depsMap.set(key, sortedDeps);
   }
 
