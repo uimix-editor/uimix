@@ -2,12 +2,14 @@ import React from "react";
 import ReactDOM from "react-dom/client";
 import {
   ColorSchemeProvider,
+  GlobalStyle,
   PaintkitProvider,
 } from "@seanchas116/paintkit/src/components/GlobalStyle";
 import { ContextMenuProvider } from "@seanchas116/paintkit/src/components/menu/ContextMenuProvider";
 import { JSONUndoHistory } from "@seanchas116/paintkit/src/util/JSONUndoHistory";
 import { DocumentJSON, Document } from "../models/Document";
 import { EditorState } from "../state/EditorState";
+import { Editor } from "../views/Editor";
 
 class EditorElementEditorState extends EditorState {
   readonly history = new JSONUndoHistory<DocumentJSON, Document>(
@@ -54,3 +56,5 @@ export class MacaronEditorElement extends HTMLElement {
     return this._editorState;
   }
 }
+
+customElements.define("macaron-editor", MacaronEditorElement);
