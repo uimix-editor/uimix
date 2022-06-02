@@ -32,7 +32,7 @@ describe(solveVariantDependencies.name, () => {
 
     const depsData: Record<string, string[]> = {};
     for (const [variant, deps] of depsMap) {
-      depsData[variant.key] = deps.map((v) => v.key);
+      depsData[variant.key] = [...deps].map((v) => v.key);
     }
 
     expect(depsData).toMatchInlineSnapshot(`
