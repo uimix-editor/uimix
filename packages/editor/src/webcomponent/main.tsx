@@ -42,10 +42,20 @@ export class MacaronEditorElement extends HTMLElement {
   }
 
   connectedCallback(): void {
-    const mountPoint = document.createElement("span");
-    this.attachShadow({ mode: "open" }).appendChild(mountPoint);
+    const shadowRoot = this.attachShadow({ mode: "open" });
     const styles = document.createElement("div");
-    this.shadowRoot?.append(styles);
+    shadowRoot.append(styles);
+
+    const style = document.createElement("style");
+    style.textContent = `
+      :host {
+        display: block;
+      }
+    `;
+    styles.appendChild(style);
+
+    const mountPoint = document.createElement("span");
+    shadowRoot.appendChild(mountPoint);
 
     const root = ReactDOM.createRoot(mountPoint);
     root.render(
