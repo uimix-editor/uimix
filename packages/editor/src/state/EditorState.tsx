@@ -1,3 +1,4 @@
+import React from "react";
 import { MenuItem } from "@seanchas116/paintkit/src/components/menu/Menu";
 import { JSONUndoHistory } from "@seanchas116/paintkit/src/util/JSONUndoHistory";
 import { isTextInputFocused } from "@seanchas116/paintkit/src/util/CurrentFocus";
