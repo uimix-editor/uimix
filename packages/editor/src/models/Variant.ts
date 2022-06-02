@@ -151,7 +151,7 @@ export class Variant extends BaseVariant {
   get supersetVariants(): Variant[] {
     return (
       this.parent?.children.filter(
-        (variant) => variant !== this && variant.extends(this)
+        (variant) => variant !== this && this.extends(variant)
       ) ?? []
     );
   }
