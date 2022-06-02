@@ -3,7 +3,9 @@ home: true
 ---
 
 <script setup>
-  import "./components.macaron"
+import TopWrap from './TopWrap.vue'
 </script>
 
-<top-page></top-page>
+<ClientOnly>
+  <TopWrap/>
+</ClientOnly>
