@@ -39,18 +39,20 @@ export class RootElementMount {
     this.shadow.adoptedStyleSheets = [context.resetStyleSheet, styleSheet];
 
     if (variant.type === "variant") {
-      reaction(
-        () => variant.supersetVariants,
-        (supersetVariants) => {
-          const classes = ["variant-" + variant.key];
-          for (const supersetVariant of supersetVariants) {
-            classes.push("variant-" + supersetVariant.key);
+      this.disposers.push(
+        reaction(
+          () => variant.supersetVariants,
+          (supersetVariants) => {
+            const classes = ["variant-" + variant.key];
+            for (const supersetVariant of supersetVariants) {
+              classes.push("variant-" + supersetVariant.key);
+            }
+            this.dom.className = classes.join(" ");
+          },
+          {
+            fireImmediately: true,
           }
-          this.dom.className = classes.join(" ");
-        },
-        {
-          fireImmediately: true,
-        }
+        )
       );
     }
 
