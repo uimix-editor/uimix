@@ -31,7 +31,7 @@ const App: React.FC<{
   editorState: EditorState;
 }> = ({ editorState }) => {
   return (
-    <ColorSchemeProvider colorScheme="auto">
+    <ColorSchemeProvider colorScheme="dark">
       <GlobalStyle />
       <PaintkitProvider>
         <ContextMenuProvider>
