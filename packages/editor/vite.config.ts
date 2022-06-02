@@ -1,3 +1,4 @@
+import * as path from "path";
 import { defineConfig } from "vite";
 import react from "@vitejs/plugin-react";
 import { NodeGlobalsPolyfillPlugin } from "@esbuild-plugins/node-globals-polyfill";
@@ -72,6 +73,12 @@ export default defineConfig({
     },
   },
   build: {
+    lib: {
+      entry: path.resolve(__dirname, "src/vscode/main.tsx"),
+      name: "vscode",
+      formats: ["es"],
+      fileName: (format) => `vscode.${format}.js`,
+    },
     rollupOptions: {
       plugins: [
         // Enable rollup polyfills plugin
