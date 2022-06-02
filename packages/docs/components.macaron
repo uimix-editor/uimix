@@ -4,28 +4,11 @@
 ></script>
 <style>
   :root {
+    --c-white: #212327;
+    --c-black: #ffffff;
+    --c-text-light-1: #cccccc;
     --c-brand: #0085ff;
     --c-brand-light: #2295ff;
-    --c-bg: #212327;
-    --c-bg-light: #2b313a;
-    --c-bg-lighter: #262c34;
-    --c-text: #ffffff;
-    --c-text-light: #cccccc;
-    --c-text-lighter: #8b9eb0;
-    --c-text-lightest: #8094a8;
-    --c-border: #3e4c5a;
-    --c-border-dark: #34404c;
-    --c-tip: #318a62;
-    --c-warning: #ceab00;
-    --c-warning-bg: #7e755b;
-    --c-warning-title: #ceac03;
-    --c-warning-text: #362e00;
-    --c-danger: #940000;
-    --c-danger-bg: #806161;
-    --c-danger-title: #610000;
-    --c-danger-text: #3a0000;
-    --c-details-bg: #323843;
-    --code-hl-bg-color: #363b46;
     --feature-card-color: #64dd17;
   }
 </style>
@@ -152,13 +135,13 @@
       display: flex;
       flex-direction: column;
       align-items: center;
-      background: var(--c-bg);
+      background: var(--c-white);
     }
     #heroTitle {
       position: relative;
       margin-top: 64px;
       margin-bottom: 32px;
-      color: var(--c-text);
+      color: var(--c-black);
       font-family: Inter;
       font-weight: 800;
       font-size: 96px;
@@ -170,7 +153,7 @@
       position: relative;
       margin-bottom: 48px;
       width: 800px;
-      color: var(--c-text-light);
+      color: var(--c-text-light-1);
       font-family: Inter;
       font-weight: 400;
       font-size: 20px;
@@ -295,7 +278,7 @@
   <macaron-variant
     x="0"
     y="-168"
-    background-color="var(--c-bg)"
+    background-color="var(--c-white)"
   ></macaron-variant>
   <template>
     <div id="icon-area">
@@ -426,7 +409,7 @@
     }
     #getvscodeextension {
       position: relative;
-      color: var(--c-text);
+      color: var(--c-black);
       font-family: Inter;
       font-weight: 700;
       font-size: 16px;
@@ -479,20 +462,20 @@
       column-gap: 10px;
       border-top-width: 1;
       border-top-style: solid;
-      border-top-color: var(--c-text);
+      border-top-color: var(--c-black);
       border-right-width: 1;
       border-right-style: solid;
-      border-right-color: var(--c-text);
+      border-right-color: var(--c-black);
       border-bottom-width: 1;
       border-bottom-style: solid;
-      border-bottom-color: var(--c-text);
+      border-bottom-color: var(--c-black);
       border-left-width: 1;
       border-left-style: solid;
-      border-left-color: var(--c-text);
+      border-left-color: var(--c-black);
     }
     #github1 {
       position: relative;
-      color: var(--c-text);
+      color: var(--c-black);
       font-family: Inter;
       font-weight: 700;
       font-size: 16px;
@@ -501,7 +484,7 @@
       text-align: center;
     }
     :host(:hover) #herobutton1 {
-      color: var(--c-text);
+      color: var(--c-black);
       background: var(--c-brand-light);
       border-top-color: var(--c-brand-light);
       border-right-color: var(--c-brand-light);
