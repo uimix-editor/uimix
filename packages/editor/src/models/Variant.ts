@@ -134,6 +134,44 @@ export class Variant extends BaseVariant {
     this.mediaQuery = json.mediaQuery || "";
     super.loadJSON(json);
   }
+
+  extends(other: Variant): boolean {
+    return (
+      isSelectorExtendsOther(this.selector, other.selector) &&
+      isMediaQueryExtendsOther(this.mediaQuery, other.mediaQuery)
+    );
+  }
+}
+
+// selector ⊂ otherSelector
+function isSelectorExtendsOther(
+  selector: string,
+  otherSelector: string
+): boolean {
+  // TODO: better check
+  return selector.includes(otherSelector);
+}
+
+// mediaQuery ⊂ otherMediaQuery
+function isMediaQueryExtendsOther(
+  mediaQuery: string,
+  otherMediaQuery: string
+): boolean {
+  if (!otherMediaQuery) {
+    return true;
+  }
+
+  // TODO: support other media queries
+
+  const maxWidth = parseInt(
+    mediaQuery.split("(max-width:")[1].split(")")[0],
+    10
+  );
+  const otherMaxWidth = parseInt(
+    otherMediaQuery.split("(max-width:")[1].split(")")[0],
+    10
+  );
+  return maxWidth < otherMaxWidth;
 }
 
 export interface VariantJSON extends BaseVariantJSON {
