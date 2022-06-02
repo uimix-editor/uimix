@@ -80,8 +80,8 @@ export default defineConfig({
         rollupNodePolyFill(),
       ],
       input: {
-        main: path.resolve(__dirname, "index.html"),
-        vscode: path.resolve(__dirname, "src/vscode/index.html"),
+        index: path.resolve(__dirname, "index.html"),
+        vscode: path.resolve(__dirname, "vscode.html"),
       },
     },
   },
