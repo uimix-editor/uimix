@@ -136,6 +136,12 @@ export class Variant extends BaseVariant {
   }
 
   extends(other: Variant): boolean {
+    if (this.selector === other.selector) {
+      return isMediaQueryExtendsOther(this.mediaQuery, other.mediaQuery);
+    }
+    if (this.mediaQuery === other.mediaQuery) {
+      return isSelectorExtendsOther(this.selector, other.selector);
+    }
     return (
       isSelectorExtendsOther(this.selector, other.selector) &&
       isMediaQueryExtendsOther(this.mediaQuery, other.mediaQuery)
@@ -162,8 +168,15 @@ function isSelectorExtendsOther(
   selector: string,
   otherSelector: string
 ): boolean {
+  if (!otherSelector) {
+    return true;
+  }
+  if (!selector) {
+    return false;
+  }
+
   // TODO: better check
-  return selector.includes(otherSelector);
+  return selector !== otherSelector && selector.includes(otherSelector);
 }
 
 // mediaQuery ⊂ otherMediaQuery
@@ -173,6 +186,9 @@ function isMediaQueryExtendsOther(
 ): boolean {
   if (!otherMediaQuery) {
     return true;
+  }
+  if (!mediaQuery) {
+    return false;
   }
 
   // TODO: support other media queries
@@ -188,17 +204,26 @@ function isMediaQueryExtendsOther(
   return maxWidth < otherMaxWidth;
 }
 
-function solveVariantDependencies(
+export function solveVariantDependencies(
   variants: Variant[]
 ): Map<Variant, Variant[]> {
   const sorted: Variant[] = [];
   const depsMap = new Map<Variant, Variant[]>();
 
   const visit = (variant: Variant): void => {
+    console.log("visit", variant.key);
+    if (sorted.includes(variant)) {
+      return;
+    }
+
     const deps = variants.filter(
       (variant2) => variant2 !== variant && variant.extends(variant2)
     );
     depsMap.set(variant, deps);
+    console.log(
+      "deps",
+      deps.map((v) => v.key)
+    );
 
     if (deps.length > 0) {
       deps.forEach(visit);
