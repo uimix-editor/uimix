@@ -193,8 +193,10 @@ yarn
 yarn dev
 ```
 
-- http://localhost:8080 : [Demo editor](/packages/editor/src/index.tsx)
+- http://localhost:3000 : [Demo editor](/packages/editor/src/index.tsx)
+- http://localhost:4000 : [Docs](/packages/docs)
 - http://localhost:7007 : Storybook for paintkit
+- http://localhost:1234 : [Test Project](/packages/test-project)
 
 ### Launch VS Code extension
 

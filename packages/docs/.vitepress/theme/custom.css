@@ -7,3 +7,19 @@
 body {
   font-family: Inter, sans-serif;
 }
+
+:root {
+  --c-white: #ffffff;
+  --c-white-dark: #f8f8f8;
+  --c-black: #000000;
+
+  --c-divider-light: rgba(60, 60, 67, 0.12);
+  --c-divider-dark: rgba(84, 84, 88, 0.48);
+
+  --c-text-light-1: #2c3e50;
+  --c-text-light-2: #476582;
+  --c-text-light-3: #90a4b7;
+
+  --c-brand: #0085ff;
+  --c-brand-light: #2295ff;
+}
