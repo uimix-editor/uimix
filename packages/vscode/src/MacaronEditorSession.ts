@@ -131,9 +131,8 @@ export class MacaronEditorSession {
   }
 
   private getHTMLForWebview(webview: vscode.Webview): string {
-    // const isDevelopment =
-    //   this.context.extensionMode === vscode.ExtensionMode.Development;
-    const isDevelopment = false;
+    const isDevelopment =
+      this.context.extensionMode === vscode.ExtensionMode.Development;
 
     const nonce = getNonce();
 
