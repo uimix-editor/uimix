@@ -12,6 +12,7 @@
   },
   "devDependencies": {
     "vitepress": "^0.22.4",
-    "@macaron-app/loader-vite": "*"
+    "@macaron-app/loader-vite": "*",
+    "@macaron-app/editor": "*"
   }
 }
