@@ -1,6 +1,9 @@
+// @ts-ignore
+import "tippy.js/dist/tippy.css";
+
 import React from "react";
 import ReactDOM from "react-dom/client";
-import { StyleSheetManager } from "styled-components";
+import styled, { StyleSheetManager } from "styled-components";
 import {
   ColorSchemeProvider,
   GlobalStyle,
@@ -8,6 +11,7 @@ import {
 } from "@seanchas116/paintkit/src/components/GlobalStyle";
 import { ContextMenuProvider } from "@seanchas116/paintkit/src/components/menu/ContextMenuProvider";
 import { JSONUndoHistory } from "@seanchas116/paintkit/src/util/JSONUndoHistory";
+import { RootPortalHostProvider } from "@seanchas116/paintkit/src/components/RootPortal";
 import { DocumentJSON, Document } from "../models/Document";
 import { EditorState } from "../state/EditorState";
 import { Editor } from "../views/Editor";
@@ -18,6 +22,11 @@ class EditorElementEditorState extends EditorState {
   );
 }
 
+const StyledEditor = styled(Editor)`
+  width: 100%;
+  height: 100%;
+`;
+
 const App: React.FC<{
   editorState: EditorState;
 }> = ({ editorState }) => {
@@ -26,7 +35,7 @@ const App: React.FC<{
       <GlobalStyle />
       <PaintkitProvider>
         <ContextMenuProvider>
-          <Editor editorState={editorState} />
+          <StyledEditor editorState={editorState} />
         </ContextMenuProvider>
       </PaintkitProvider>
     </ColorSchemeProvider>
@@ -60,9 +69,11 @@ export class MacaronEditorElement extends HTMLElement {
     const root = ReactDOM.createRoot(mountPoint);
     root.render(
       <React.StrictMode>
-        <StyleSheetManager target={styles}>
-          <App editorState={this._editorState} />
-        </StyleSheetManager>
+        <RootPortalHostProvider value={shadowRoot}>
+          <StyleSheetManager target={styles}>
+            <App editorState={this._editorState} />
+          </StyleSheetManager>
+        </RootPortalHostProvider>
       </React.StrictMode>
     );
   }
