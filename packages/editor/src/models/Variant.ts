@@ -141,6 +141,14 @@ export class Variant extends BaseVariant {
       isMediaQueryExtendsOther(this.mediaQuery, other.mediaQuery)
     );
   }
+
+  get supersetVariants(): Variant[] {
+    return (
+      this.parent?.children.filter(
+        (variant) => variant !== this && variant.extends(this)
+      ) ?? []
+    );
+  }
 }
 
 // selector ⊂ otherSelector
