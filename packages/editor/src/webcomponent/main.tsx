@@ -1,5 +1,6 @@
 import React from "react";
 import ReactDOM from "react-dom/client";
+import { StyleSheetManager } from "styled-components";
 import {
   ColorSchemeProvider,
   GlobalStyle,
@@ -43,11 +44,15 @@ export class MacaronEditorElement extends HTMLElement {
   connectedCallback(): void {
     const mountPoint = document.createElement("span");
     this.attachShadow({ mode: "open" }).appendChild(mountPoint);
+    const styles = document.createElement("div");
+    this.shadowRoot?.append(styles);
 
     const root = ReactDOM.createRoot(mountPoint);
     root.render(
       <React.StrictMode>
-        <App editorState={this._editorState} />
+        <StyleSheetManager target={styles}>
+          <App editorState={this._editorState} />
+        </StyleSheetManager>
       </React.StrictMode>
     );
   }
