@@ -203,39 +203,3 @@ function isMediaQueryExtendsOther(
   );
   return maxWidth < otherMaxWidth;
 }
-
-export function solveVariantDependencies(
-  variants: Variant[]
-): Map<Variant, Variant[]> {
-  const visited = new Set<Variant>();
-  const depsMap = new Map<Variant, Variant[]>();
-
-  const visit = (variant: Variant): void => {
-    if (visited.has(variant)) {
-      return;
-    }
-
-    const deps = variants.filter(
-      (variant2) => variant2 !== variant && variant.extends(variant2)
-    );
-    depsMap.set(variant, deps);
-
-    if (deps.length > 0) {
-      deps.forEach(visit);
-    }
-
-    visited.add(variant);
-  };
-
-  variants.forEach(visit);
-
-  const sorted = [...visited].reverse();
-
-  for (const key of [...depsMap.keys()]) {
-    const deps = new Set(depsMap.get(key));
-    const sortedDeps = sorted.filter((variant) => deps.has(variant));
-    depsMap.set(key, sortedDeps);
-  }
-
-  return depsMap;
-}
