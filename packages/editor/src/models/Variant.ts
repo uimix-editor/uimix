@@ -134,10 +134,72 @@ export class Variant extends BaseVariant {
     this.mediaQuery = json.mediaQuery || "";
     super.loadJSON(json);
   }
+
+  extends(other: Variant): boolean {
+    if (this.selector === other.selector) {
+      return isMediaQueryExtendsOther(this.mediaQuery, other.mediaQuery);
+    }
+    if (this.mediaQuery === other.mediaQuery) {
+      return isSelectorExtendsOther(this.selector, other.selector);
+    }
+    return (
+      isSelectorExtendsOther(this.selector, other.selector) &&
+      isMediaQueryExtendsOther(this.mediaQuery, other.mediaQuery)
+    );
+  }
+
+  get supersetVariants(): Variant[] {
+    return (
+      this.parent?.children.filter(
+        (variant) => variant !== this && this.extends(variant)
+      ) ?? []
+    );
+  }
 }
 
 export interface VariantJSON extends BaseVariantJSON {
   key: string;
   selector?: string;
   mediaQuery?: string;
+}
+
+// selector ⊂ otherSelector
+function isSelectorExtendsOther(
+  selector: string,
+  otherSelector: string
+): boolean {
+  if (!otherSelector) {
+    return true;
+  }
+  if (!selector) {
+    return false;
+  }
+
+  // TODO: better check
+  return selector !== otherSelector && selector.includes(otherSelector);
+}
+
+// mediaQuery ⊂ otherMediaQuery
+function isMediaQueryExtendsOther(
+  mediaQuery: string,
+  otherMediaQuery: string
+): boolean {
+  if (!otherMediaQuery) {
+    return true;
+  }
+  if (!mediaQuery) {
+    return false;
+  }
+
+  // TODO: support other media queries
+
+  const maxWidth = parseInt(
+    mediaQuery.split("(max-width:")[1].split(")")[0],
+    10
+  );
+  const otherMaxWidth = parseInt(
+    otherMediaQuery.split("(max-width:")[1].split(")")[0],
+    10
+  );
+  return maxWidth < otherMaxWidth;
 }

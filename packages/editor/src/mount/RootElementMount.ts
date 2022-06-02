@@ -1,4 +1,5 @@
 import { assertNonNull } from "@seanchas116/paintkit/src/util/Assert";
+import { reaction } from "mobx";
 import { Component } from "../models/Component";
 import { ElementInstance } from "../models/ElementInstance";
 import { DefaultVariant, Variant } from "../models/Variant";
@@ -37,8 +38,20 @@ export class RootElementMount {
     // @ts-ignore
     this.shadow.adoptedStyleSheets = [context.resetStyleSheet, styleSheet];
 
-    if (this.variant.type === "variant") {
-      this.dom.classList.add("variant-" + this.variant.key);
+    if (variant.type === "variant") {
+      reaction(
+        () => variant.supersetVariants,
+        (supersetVariants) => {
+          const classes = ["variant-" + variant.key];
+          for (const supersetVariant of supersetVariants) {
+            classes.push("variant-" + supersetVariant.key);
+          }
+          this.dom.className = classes.join(" ");
+        },
+        {
+          fireImmediately: true,
+        }
+      );
     }
 
     this.childMountSync = new ChildMountSync(this, this.shadow, () =>

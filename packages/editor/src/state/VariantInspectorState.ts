@@ -96,7 +96,7 @@ export class VariantInspectorState {
 
   readonly onChangeSelector = action((selector: string) => {
     for (const v of this.selectedVariants) {
-      v.selector = selector;
+      v.selector = selector.trim();
     }
     this.editorState.history.commit("Change Variant Selector");
     return true;
@@ -108,7 +108,7 @@ export class VariantInspectorState {
 
   readonly onChangeMediaQuery = action((mediaQuery: string) => {
     for (const v of this.selectedVariants) {
-      v.mediaQuery = mediaQuery;
+      v.mediaQuery = mediaQuery.trim();
     }
     this.editorState.history.commit("Change Variant Media Query");
     return true;
