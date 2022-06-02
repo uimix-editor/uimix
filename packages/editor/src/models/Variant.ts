@@ -206,9 +206,9 @@ function isMediaQueryExtendsOther(
 
 export function solveVariantDependencies(
   variants: Variant[]
-): Map<Variant, Set<Variant>> {
+): Map<Variant, Variant[]> {
   const sorted: Variant[] = [];
-  const depsMap = new Map<Variant, Set<Variant>>();
+  const depsMap = new Map<Variant, Variant[]>();
 
   const visit = (variant: Variant): void => {
     console.log("visit", variant.key);
@@ -219,7 +219,7 @@ export function solveVariantDependencies(
     const deps = variants.filter(
       (variant2) => variant2 !== variant && variant.extends(variant2)
     );
-    depsMap.set(variant, new Set(deps));
+    depsMap.set(variant, deps);
     console.log(
       "deps",
       deps.map((v) => v.key)
@@ -238,8 +238,8 @@ export function solveVariantDependencies(
 
   for (const key of [...depsMap.keys()]) {
     const deps = depsMap.get(key)!;
-    const sortedDeps = sorted.filter((variant) => deps.has(variant));
-    depsMap.set(key, new Set(sortedDeps));
+    const sortedDeps = sorted.filter((variant) => deps.includes(variant));
+    depsMap.set(key, sortedDeps);
   }
 
   return depsMap;
