@@ -49,7 +49,7 @@
         ><hero-button-secondary id="herobutton3"></hero-button-secondary
       ></a>
     </div>
-    <slot><div id="div10"></div></slot>
+    <slot><div id="div11"></div></slot>
     <div id="features">
       <div id="feature-rows">
         <div id="feature-row1">
@@ -152,8 +152,6 @@
   </template>
   <style>
     :host {
-      margin-bottom: 64px;
-      height: 1964px;
       display: flex;
       padding-right: 32px;
       padding-left: 32px;
@@ -163,11 +161,11 @@
     }
     #heroTitle {
       position: relative;
-      margin-top: 64px;
+      margin-top: 48px;
       margin-bottom: 32px;
       color: var(--c-black);
       font-weight: 800;
-      font-size: 96px;
+      font-size: 80px;
       line-height: 1;
       letter-spacing: -0.03em;
       text-align: center;
@@ -208,7 +206,7 @@
     #herobutton3 {
       position: relative;
     }
-    #div10 {
+    #div11 {
       top: 482px;
       left: 663px;
       width: 100%;
@@ -324,8 +322,7 @@
     }
     @media (max-width: 1024px) {
       #heroTitle {
-        font-size: 80px;
-        line-height: 1.2;
+        font-size: 72px;
       }
       #features {
         font-size: 80px;
@@ -353,6 +350,7 @@
       #heroTitle {
         margin-top: 32px;
         font-size: 40px;
+        line-height: 1.2;
       }
       #heroSubtitle {
         margin-bottom: 32px;
