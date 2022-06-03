@@ -14,7 +14,7 @@ import { OutlineTreeView } from "./outline/OutlineTreeView";
 import { AssetBrowser } from "./assets/AssetBrowser";
 import { InspectorTabs } from "./inspector/InspectorTabs";
 
-const RightSideBarWrap = styled.div`
+const SideBarWrap = styled.div`
   position: relative;
   width: 200px;
   border-left: 2px solid ${colors.separator};
@@ -63,7 +63,7 @@ export const UnifiedSideBar: React.FC = observer(() => {
   );
 
   return (
-    <RightSideBarWrap
+    <SideBarWrap
       style={{
         width: `${editorState.sideBarWidth}px`,
       }}
@@ -98,7 +98,7 @@ export const UnifiedSideBar: React.FC = observer(() => {
         width={editorState.sideBarWidth}
         onChangeWidth={onChangeWidth}
       />
-    </RightSideBarWrap>
+    </SideBarWrap>
   );
 });
 
@@ -113,7 +113,7 @@ export const RightSideBar: React.FC = observer(() => {
   );
 
   return (
-    <RightSideBarWrap
+    <SideBarWrap
       style={{
         width: `${editorState.sideBarWidth}px`,
       }}
@@ -124,7 +124,7 @@ export const RightSideBar: React.FC = observer(() => {
         width={editorState.sideBarWidth}
         onChangeWidth={onChangeWidth}
       />
-    </RightSideBarWrap>
+    </SideBarWrap>
   );
 });
 
@@ -151,7 +151,7 @@ export const LeftSideBar: React.FC = observer(() => {
   );
 
   return (
-    <RightSideBarWrap
+    <SideBarWrap
       style={{
         width: `${editorState.sideBarWidth}px`,
       }}
@@ -179,6 +179,6 @@ export const LeftSideBar: React.FC = observer(() => {
         width={editorState.sideBarWidth}
         onChangeWidth={onChangeWidth}
       />
-    </RightSideBarWrap>
+    </SideBarWrap>
   );
 });
