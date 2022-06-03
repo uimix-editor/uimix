@@ -16,14 +16,17 @@ const config = {
   },
 
   themeConfig: {
-    repo: "macaronapp/macaron-next",
     nav: [{ text: "Guide", link: "/guide/", activeMatch: "^/guide/" }],
+
+    socialLinks: [
+      { icon: "github", link: "https://github.com/macaronapp/macaron-next" },
+    ],
 
     sidebar: {
       "/guide/": [
         {
           text: "Guide",
-          children: [
+          items: [
             {
               text: "Getting Started",
               link: "/guide/",
