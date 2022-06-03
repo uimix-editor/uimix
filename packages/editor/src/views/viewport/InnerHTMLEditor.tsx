@@ -20,6 +20,7 @@ import { formatHTML } from "../../util/Format";
 import { parseHTMLFragment } from "../../util/Hast";
 import { EditorState } from "../../state/EditorState";
 import cssFiles from "../../cssFiles.json";
+import { colors } from "@seanchas116/paintkit/src/components/Palette";
 
 const GlobalStyle = createGlobalStyle`
   ${cssFiles["codemirror/lib/codemirror.css"]}
@@ -49,6 +50,10 @@ const TextareaWrap = styled.div`
     height: 100%;
     font-family: ${monospaceFontFamily};
     font-size: 12px;
+  }
+
+  .CodeMirror-selected {
+    background: #79beffac !important;
   }
 `;
 
