@@ -39,6 +39,7 @@ export class MacaronEditorElement extends HTMLElement {
   constructor() {
     super();
     this._editorState.wheelScrollEnabled = false;
+    this._editorState.layout = "threeColumn";
   }
 
   connectedCallback(): void {

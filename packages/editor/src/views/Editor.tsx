@@ -2,8 +2,9 @@ import React from "react";
 import styled from "styled-components";
 import { colors } from "@seanchas116/paintkit/src/components/Palette";
 import { ContextMenuProvider } from "@seanchas116/paintkit/src/components/menu/ContextMenuProvider";
+import { observer } from "mobx-react-lite";
 import { EditorState } from "../state/EditorState";
-import { RightSideBar } from "./sidebar/SideBar";
+import { LeftSideBar, RightSideBar, UnifiedSideBar } from "./sidebar/SideBar";
 import { ToolBar } from "./ToolBar";
 import { Viewport } from "./viewport/Viewport";
 import { EditorStateProvider } from "./useEditorState";
@@ -26,7 +27,13 @@ const StyledViewport = styled(Viewport)`
 export const Editor: React.FC<{
   className?: string;
   editorState: EditorState;
-}> = ({ className, editorState }) => {
+}> = observer(({ className, editorState }) => {
+  const center = (
+    <Center>
+      <ToolBar />
+      <StyledViewport />
+    </Center>
+  );
   return (
     <EditorStateProvider value={editorState}>
       <ContextMenuProvider>
@@ -34,13 +41,20 @@ export const Editor: React.FC<{
           className={className}
           onContextMenuCapture={(e) => e.preventDefault()}
         >
-          <Center>
-            <ToolBar />
-            <StyledViewport />
-          </Center>
-          <RightSideBar />
+          {editorState.layout === "threeColumn" ? (
+            <>
+              <LeftSideBar />
+              {center}
+              <RightSideBar />
+            </>
+          ) : (
+            <>
+              {center}
+              <UnifiedSideBar />
+            </>
+          )}
         </Columns>
       </ContextMenuProvider>
     </EditorStateProvider>
   );
-};
+});

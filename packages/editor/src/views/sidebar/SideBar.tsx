@@ -34,7 +34,7 @@ const TabArea = styled.div`
   }
 `;
 
-export const RightSideBar: React.FC = observer(() => {
+export const UnifiedSideBar: React.FC = observer(() => {
   const editorState = useEditorState();
 
   const onClickOutlineTab = useCallback(
@@ -95,6 +95,87 @@ export const RightSideBar: React.FC = observer(() => {
       </TabArea>
       <WidthResizeHandle
         position="left"
+        width={editorState.sideBarWidth}
+        onChangeWidth={onChangeWidth}
+      />
+    </RightSideBarWrap>
+  );
+});
+
+export const RightSideBar: React.FC = observer(() => {
+  const editorState = useEditorState();
+
+  const onChangeWidth = useCallback(
+    action((width: number) => {
+      editorState.sideBarWidth = Math.max(width, minSideBarWidth);
+    }),
+    [editorState]
+  );
+
+  return (
+    <RightSideBarWrap
+      style={{
+        width: `${editorState.sideBarWidth}px`,
+      }}
+    >
+      <InspectorTabs />
+      <WidthResizeHandle
+        position="left"
+        width={editorState.sideBarWidth}
+        onChangeWidth={onChangeWidth}
+      />
+    </RightSideBarWrap>
+  );
+});
+
+export const LeftSideBar: React.FC = observer(() => {
+  const editorState = useEditorState();
+
+  const onClickOutlineTab = useCallback(
+    action(() => {
+      editorState.currentOutlineTab = "outline";
+    }),
+    [editorState]
+  );
+  const onClickAssetsTab = useCallback(
+    action(() => {
+      editorState.currentOutlineTab = "assets";
+    }),
+    [editorState]
+  );
+  const onChangeWidth = useCallback(
+    action((width: number) => {
+      editorState.sideBarWidth = Math.max(width, minSideBarWidth);
+    }),
+    [editorState]
+  );
+
+  return (
+    <RightSideBarWrap
+      style={{
+        width: `${editorState.sideBarWidth}px`,
+      }}
+    >
+      <TabArea>
+        <InspectorTabBar>
+          <InspectorTabBarItem
+            aria-selected={editorState.currentOutlineTab === "outline"}
+            onClick={onClickOutlineTab}
+          >
+            Outline
+          </InspectorTabBarItem>
+          <InspectorTabBarItem
+            aria-selected={editorState.currentOutlineTab === "assets"}
+            onClick={onClickAssetsTab}
+          >
+            Assets
+          </InspectorTabBarItem>
+        </InspectorTabBar>
+        <OutlineTreeView hidden={editorState.currentOutlineTab !== "outline"} />
+        <AssetBrowser hidden={editorState.currentOutlineTab !== "assets"} />
+      </TabArea>
+      <WidthResizeHandle
+        position="right"
         width={editorState.sideBarWidth}
         onChangeWidth={onChangeWidth}
       />
