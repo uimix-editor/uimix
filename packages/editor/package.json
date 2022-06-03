@@ -3,6 +3,7 @@
   "version": "0.0.0",
   "private": true,
   "scripts": {
+    "buildResources": "ts-node scripts/buildResources.mts",
     "build": "tsc && node build.js",
     "dev": "vite",
     "format": "prettier --write src",
