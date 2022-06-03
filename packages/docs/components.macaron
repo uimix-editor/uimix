@@ -12,7 +12,7 @@
     x="0"
     y="0"
     width="1440"
-    background-color="#212327"
+    background-color="white"
   ></macaron-variant>
   <macaron-variant
     x="1464"
@@ -44,7 +44,7 @@
         ><hero-button-secondary id="herobutton3"></hero-button-secondary
       ></a>
     </div>
-    <slot><div id="div12"></div></slot>
+    <slot><div id="div21"></div></slot>
     <div id="features">
       <div id="feature-rows">
         <div id="feature-row1">
@@ -158,7 +158,7 @@
       position: relative;
       margin-top: 48px;
       margin-bottom: 32px;
-      color: white;
+      color: #1e252b;
       font-weight: 800;
       font-size: 80px;
       line-height: 1;
@@ -168,7 +168,7 @@
     #heroSubtitle {
       position: relative;
       margin-bottom: 48px;
-      color: #ffffffcc;
+      color: #4e5154;
       font-weight: 400;
       font-size: 20px;
       line-height: 1.8;
@@ -201,7 +201,7 @@
     #herobutton3 {
       position: relative;
     }
-    #div12 {
+    #div21 {
       top: 482px;
       left: 663px;
       width: 100%;
@@ -307,7 +307,7 @@
       --feature-card-color: #aa00ff;
     }
     #workinprogress {
-      color: #ffffffcc;
+      color: #4e5154;
       font-weight: 400;
       font-style: italic;
       font-size: 16px;
@@ -399,7 +399,7 @@
       flex-direction: row;
       column-gap: 16px;
       font-family: Readex Pro;
-      background: #ffffff0d;
+      background: #1e252b08;
     }
     #icon-area {
       width: 32px;
@@ -432,9 +432,10 @@
       justify-content: flex-start;
       row-gap: 8px;
       column-gap: 8px;
+      color: #4e5154;
     }
     #title {
-      color: #ffffff;
+      color: #1e252b;
       font-weight: 700;
       font-size: 18px;
       line-height: 32px;
@@ -443,7 +444,7 @@
     }
     #description {
       padding-bottom: 4px;
-      color: #ffffffcc;
+      color: #4e5154;
       font-weight: 400;
       font-size: 16px;
       line-height: 1.75;
@@ -534,23 +535,27 @@
       justify-content: flex-start;
       row-gap: 10px;
       column-gap: 10px;
-      color: white;
-      background: #ffffff0d;
+      color: #1e252b;
+      background: #1e252b08;
       border-top-width: 1;
       border-top-style: solid;
-      border-top-color: #ffffff33;
+      border-top-color: #1e252b26;
       border-right-width: 1;
       border-right-style: solid;
-      border-right-color: #ffffff33;
+      border-right-color: #1e252b26;
       border-bottom-width: 1;
       border-bottom-style: solid;
-      border-bottom-color: #ffffff33;
+      border-bottom-color: #1e252b26;
       border-left-width: 1;
       border-left-style: solid;
-      border-left-color: #ffffff33;
+      border-left-color: #1e252b26;
     }
     :host(:hover) #herobutton1 {
-      background: #ffffff1f;
+      background: #1e252b1a;
+      border-top-color: #1e252b26;
+      border-right-color: #1e252b26;
+      border-bottom-color: #1e252b26;
+      border-left-color: #1e252b26;
     }
   </style>
 </macaron-component>

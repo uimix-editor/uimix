@@ -4,12 +4,20 @@
 
 body {
   font-family: "Readex Pro", sans-serif;
+
+  background: linear-gradient(
+    180deg,
+    rgba(24, 158, 255, 0.05) 0%,
+    rgba(196, 196, 196, 0) 100%
+  );
+  background-size: 100% 800px;
+  background-repeat: no-repeat;
 }
 
 :root {
   /* always dark mode */
 
-  --vp-c-bg: var(--vp-c-black-soft);
+  /* --vp-c-bg: var(--vp-c-black-soft);
   --vp-c-bg-soft: var(--vp-c-black-mute);
   --vp-c-bg-mute: var(--vp-c-gray-dark-3);
   --vp-c-bg-alt: var(--vp-c-black);
@@ -30,12 +38,12 @@ body {
   --vp-c-text-inverse-3: var(--vp-c-text-light-3);
   --vp-c-text-inverse-4: var(--vp-c-text-light-4);
 
-  --vp-c-text-code: var(--vp-c-indigo-lighter);
+  --vp-c-text-code: var(--vp-c-indigo-lighter); */
 
   /* custom colors */
 
-  --vp-c-bg: #212327;
-  --vp-c-bg-alt: #1e2023;
+  /* --vp-c-bg: #212327;
+  --vp-c-bg-alt: #1e2023; */
   --vp-c-brand: #0085ff;
   --vp-c-brand-light: #0085ff;
   --vp-c-brand-lighter: #0085ff;
