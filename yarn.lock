@@ -1414,6 +1414,11 @@
   resolved "https://registry.yarnpkg.com/@figma/plugin-typings/-/plugin-typings-1.47.0.tgz#cc6345b1611a156228655c0869c87953cd1ec868"
   integrity sha512-DwMHzjDvks2cRWOTz4JRXqh+PZ2YP71MAdegw6qTqjjpACIWQGfuiFPrO2duoqB8pY1mMZsBK8xqozF2LIr7Kw==
 
+"@fontsource/readex-pro@^4.5.9":
+  version "4.5.9"
+  resolved "https://registry.yarnpkg.com/@fontsource/readex-pro/-/readex-pro-4.5.9.tgz#bec0f66d819a2cb88e7fe442cb8445b7c8fe4f2a"
+  integrity sha512-PGGp8t3ewjrl5cJamnNfIiHRjGlTa7nBmNnHJuAemU7D+K3HJspPk0q1s/7ar4W2QkFzaKHSLnA437defxBthA==
+
 "@gar/promisify@^1.0.1":
   version "1.1.3"
   resolved "https://registry.yarnpkg.com/@gar/promisify/-/promisify-1.1.3.tgz#555193ab2e3bb3b6adc3d551c9c030d9e860daf6"
