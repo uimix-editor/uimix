@@ -8,15 +8,15 @@ async function generateCSSStrings(cwd: string): Promise<void> {
   ];
 
   const contents = Object.fromEntries(
-    Object.entries(files).map(([name, importPath]) => {
+    files.map((importPath) => {
       const filePath = require.resolve(importPath);
       const content = fs.readFileSync(filePath, { encoding: "utf-8" });
-      return [name, content];
+      return [importPath, content];
     })
   );
 
   fs.writeFileSync(
-    `${path.resolve(cwd, "src/views/styles")}.json`,
+    `${path.resolve(cwd, "src/styles")}.json`,
     JSON.stringify(contents, null, 2)
   );
 }
