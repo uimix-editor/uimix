@@ -48,6 +48,7 @@ export class MacaronEditorElement extends HTMLElement {
     style.textContent = `
       :host {
         display: block;
+        position: relative;
       }
     `;
     styles.appendChild(style);
