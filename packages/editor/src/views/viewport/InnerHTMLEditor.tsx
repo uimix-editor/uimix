@@ -5,7 +5,7 @@ import {
 } from "@seanchas116/paintkit/src/components/Common";
 import { useViewModel } from "@seanchas116/paintkit/src/components/hooks/useViewModel";
 import { observer } from "mobx-react-lite";
-import styled from "styled-components";
+import styled, { createGlobalStyle } from "styled-components";
 import { toHtml } from "hast-util-to-html";
 import { action, computed, makeObservable, observable, reaction } from "mobx";
 import { Rect } from "paintvec";
@@ -21,7 +21,7 @@ import { parseHTMLFragment } from "../../util/Hast";
 import { EditorState } from "../../state/EditorState";
 import cssFiles from "../../cssFiles.json";
 
-const GlobalStyle = styled.div`
+const GlobalStyle = createGlobalStyle`
   ${cssFiles["codemirror/lib/codemirror.css"]}
   ${cssFiles["codemirror/theme/material-darker.css"]}
 `;
