@@ -10,6 +10,16 @@ macaron-editor {
   border-radius: 10px;
   overflow: hidden;
 }
+
+:global(body) {
+  background: linear-gradient(
+    180deg,
+    rgba(24, 158, 255, 0.05) 0%,
+    rgba(196, 196, 196, 0) 100%
+  );
+  background-size: 100% 800px;
+  background-repeat: no-repeat;
+}
 </style>
 
 <template>
