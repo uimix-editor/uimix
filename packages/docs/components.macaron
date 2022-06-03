@@ -4,11 +4,6 @@
 ></script>
 <style>
   :root {
-    --c-white: #212327;
-    --c-black: #ffffff;
-    --c-text-light-1: #cccccc;
-    --c-brand: #0085ff;
-    --c-brand-light: #2798ff;
     --feature-card-color: #64dd17;
   }
 </style>
@@ -163,7 +158,7 @@
       position: relative;
       margin-top: 48px;
       margin-bottom: 32px;
-      color: var(--c-black);
+      color: white;
       font-weight: 800;
       font-size: 80px;
       line-height: 1;
@@ -173,7 +168,7 @@
     #heroSubtitle {
       position: relative;
       margin-bottom: 48px;
-      color: var(--c-text-light-1);
+      color: #ffffffcc;
       font-weight: 400;
       font-size: 20px;
       line-height: 1.8;
@@ -371,7 +366,7 @@
     x="827"
     y="-423"
     width="480"
-    background-color="var(--c-white)"
+    background-color="#212327"
   ></macaron-variant>
   <template>
     <div id="icon-area">
@@ -495,7 +490,7 @@
       row-gap: 10px;
       column-gap: 10px;
       color: white;
-      background: var(--c-brand);
+      background: #0085ff;
     }
     :host(:hover) #herobutton {
       background: #0073eb;
