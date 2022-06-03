@@ -13,7 +13,12 @@
   }
 </style>
 <macaron-component name="top-page">
-  <macaron-variant x="0" y="0" width="1440"></macaron-variant>
+  <macaron-variant
+    x="0"
+    y="0"
+    width="1440"
+    background-color="#212327"
+  ></macaron-variant>
   <macaron-variant
     x="1464"
     y="0"
@@ -144,7 +149,6 @@
       display: flex;
       flex-direction: column;
       align-items: center;
-      background: var(--c-white);
     }
     #heroTitle {
       position: relative;
