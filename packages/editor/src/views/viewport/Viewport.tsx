@@ -1,6 +1,6 @@
 import { colors } from "@seanchas116/paintkit/src/components/Palette";
 import { Rect, Vec2 } from "paintvec";
-import { action, runInAction } from "mobx";
+import { action } from "mobx";
 import React, { useCallback, useEffect } from "react";
 import styled from "styled-components";
 import { observer } from "mobx-react-lite";
@@ -48,20 +48,23 @@ export const Viewport: React.FC<{ className?: string }> = observer(
         return;
       }
 
-      runInAction(() => {
+      const updateViewportClientRect = action(() => {
         editorState.scroll.viewportClientRect = Rect.from(
           elem.getBoundingClientRect()
         );
       });
-      const resizeObserver = new ResizeObserver(
-        action(() => {
-          editorState.scroll.viewportClientRect = Rect.from(
-            elem.getBoundingClientRect()
-          );
-        })
-      );
+
+      updateViewportClientRect();
+
+      const resizeObserver = new ResizeObserver(updateViewportClientRect);
       resizeObserver.observe(elem);
-      return () => resizeObserver.disconnect();
+
+      window.addEventListener("scroll", updateViewportClientRect);
+
+      return () => {
+        resizeObserver.disconnect();
+        window.removeEventListener("scroll", updateViewportClientRect);
+      };
     }, []);
 
     useEffect(() => {
