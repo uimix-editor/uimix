@@ -38,7 +38,7 @@
         ><hero-button-secondary id="herobutton3"></hero-button-secondary
       ></a>
     </div>
-    <slot><div id="div21"></div></slot>
+    <slot><div id="div22"></div></slot>
     <div id="features">
       <div id="feature-rows">
         <div id="feature-row1">
@@ -155,7 +155,7 @@
       color: #1e252b;
       font-weight: 800;
       font-size: 80px;
-      line-height: 1;
+      line-height: 1.2;
       letter-spacing: -0.03em;
       text-align: center;
     }
@@ -195,7 +195,7 @@
     #herobutton3 {
       position: relative;
     }
-    #div21 {
+    #div22 {
       top: 482px;
       left: 663px;
       width: 100%;
