@@ -36,6 +36,7 @@ export class DocumentMount {
     this.iframe.style.left = "0";
     this.iframe.style.width = "100%";
     this.iframe.style.height = "100%";
+    this.iframe.style.colorScheme = "none";
     parent.append(this.iframe);
 
     this.domDocument = assertNonNull(this.iframe.contentDocument);
