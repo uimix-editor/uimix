@@ -297,6 +297,9 @@ export abstract class EditorState {
         break;
       case " ":
         this.panMode = true;
+        if (!isTextInputFocused()) {
+          return true;
+        }
         break;
     }
 
