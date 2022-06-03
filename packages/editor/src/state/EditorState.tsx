@@ -72,7 +72,8 @@ export abstract class EditorState {
   @observable currentInspectorTab: "element" | "style" = "element";
   @observable assetTab: "components" | "images" | "icons" = "components";
   @observable sideBarSplitRatio = 0.3;
-  @observable sideBarWidth = 256;
+  @observable leftSideBarWidth = 256;
+  @observable rightSideBarWidth = 256;
 
   readonly variantInspectorState = new VariantInspectorState(this);
   readonly elementInspectorState = new ElementInspectorState(this);

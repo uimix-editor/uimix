@@ -57,7 +57,7 @@ export const UnifiedSideBar: React.FC = observer(() => {
   );
   const onChangeWidth = useCallback(
     action((width: number) => {
-      editorState.sideBarWidth = Math.max(width, minSideBarWidth);
+      editorState.rightSideBarWidth = Math.max(width, minSideBarWidth);
     }),
     [editorState]
   );
@@ -65,7 +65,7 @@ export const UnifiedSideBar: React.FC = observer(() => {
   return (
     <SideBarWrap
       style={{
-        width: `${editorState.sideBarWidth}px`,
+        width: `${editorState.rightSideBarWidth}px`,
       }}
     >
       <TabArea>
@@ -95,7 +95,7 @@ export const UnifiedSideBar: React.FC = observer(() => {
       </TabArea>
       <WidthResizeHandle
         position="left"
-        width={editorState.sideBarWidth}
+        width={editorState.rightSideBarWidth}
         onChangeWidth={onChangeWidth}
       />
     </SideBarWrap>
@@ -107,7 +107,7 @@ export const RightSideBar: React.FC = observer(() => {
 
   const onChangeWidth = useCallback(
     action((width: number) => {
-      editorState.sideBarWidth = Math.max(width, minSideBarWidth);
+      editorState.rightSideBarWidth = Math.max(width, minSideBarWidth);
     }),
     [editorState]
   );
@@ -115,13 +115,13 @@ export const RightSideBar: React.FC = observer(() => {
   return (
     <SideBarWrap
       style={{
-        width: `${editorState.sideBarWidth}px`,
+        width: `${editorState.rightSideBarWidth}px`,
       }}
     >
       <InspectorTabs />
       <WidthResizeHandle
         position="left"
-        width={editorState.sideBarWidth}
+        width={editorState.rightSideBarWidth}
         onChangeWidth={onChangeWidth}
       />
     </SideBarWrap>
@@ -145,7 +145,7 @@ export const LeftSideBar: React.FC = observer(() => {
   );
   const onChangeWidth = useCallback(
     action((width: number) => {
-      editorState.sideBarWidth = Math.max(width, minSideBarWidth);
+      editorState.leftSideBarWidth = Math.max(width, minSideBarWidth);
     }),
     [editorState]
   );
@@ -153,7 +153,7 @@ export const LeftSideBar: React.FC = observer(() => {
   return (
     <SideBarWrap
       style={{
-        width: `${editorState.sideBarWidth}px`,
+        width: `${editorState.leftSideBarWidth}px`,
       }}
     >
       <TabArea>
@@ -176,7 +176,7 @@ export const LeftSideBar: React.FC = observer(() => {
       </TabArea>
       <WidthResizeHandle
         position="right"
-        width={editorState.sideBarWidth}
+        width={editorState.leftSideBarWidth}
         onChangeWidth={onChangeWidth}
       />
     </SideBarWrap>
