@@ -23,9 +23,15 @@
     x="1464"
     y="0"
     width="1000"
+    background-color="#212327"
     media="(max-width: 1024px)"
   ></macaron-variant>
-  <macaron-variant x="2488" y="0" media="(max-width: 768px)"></macaron-variant>
+  <macaron-variant
+    x="2488"
+    y="0"
+    background-color="#212327"
+    media="(max-width: 768px)"
+  ></macaron-variant>
   <template>
     <h1 id="heroTitle">Design tool to create<br />Web Components directly</h1>
     <div id="heroSubtitle">
@@ -42,7 +48,7 @@
         ><hero-button-secondary id="herobutton3"></hero-button-secondary
       ></a>
     </div>
-    <slot><div id="div"></div></slot>
+    <slot><div id="div1"></div></slot>
     <div id="features">
       <div id="feature-rows">
         <div id="feature-row1">
@@ -146,16 +152,17 @@
   <style>
     :host {
       margin-bottom: 64px;
+      height: 1964px;
       display: flex;
       flex-direction: column;
       align-items: center;
+      font-family: Readex Pro;
     }
     #heroTitle {
       position: relative;
       margin-top: 64px;
       margin-bottom: 32px;
       color: var(--c-black);
-      font-family: Inter;
       font-weight: 800;
       font-size: 96px;
       line-height: 1;
@@ -166,7 +173,6 @@
       position: relative;
       margin-bottom: 48px;
       color: var(--c-text-light-1);
-      font-family: Inter;
       font-weight: 400;
       font-size: 20px;
       line-height: 1.8;
@@ -199,16 +205,16 @@
     #herobutton3 {
       position: relative;
     }
-    #div {
+    #div1 {
       top: 482px;
       left: 663px;
-      width: 1024px;
+      width: 100%;
       height: 720px;
       border-top-left-radius: 10px;
       border-top-right-radius: 10px;
       border-bottom-right-radius: 10px;
       border-bottom-left-radius: 10px;
-      background: #cccccc;
+      background: #cccccc0d;
     }
     #features {
       margin-top: 96px;
@@ -308,7 +314,6 @@
     }
     #workinprogress {
       color: #ffffffcc;
-      font-family: Inter;
       font-weight: 400;
       font-style: italic;
       font-size: 16px;
@@ -396,6 +401,7 @@
       padding-left: 16px;
       flex-direction: row;
       column-gap: 16px;
+      font-family: Readex Pro;
       background: #ffffff0d;
     }
     #icon-area {
@@ -432,7 +438,6 @@
     }
     #title {
       color: #ffffff;
-      font-family: Inter;
       font-weight: 700;
       font-size: 18px;
       line-height: 32px;
@@ -442,7 +447,6 @@
     #description {
       padding-bottom: 4px;
       color: #ffffffcc;
-      font-family: Inter;
       font-weight: 400;
       font-size: 16px;
       line-height: 1.75;
@@ -471,6 +475,7 @@
   <style>
     :host {
       display: block;
+      font-family: Readex Pro;
     }
     #herobutton {
       height: 48px;
@@ -493,7 +498,6 @@
     #getvscodeextension {
       position: relative;
       color: var(--c-black);
-      font-family: Inter;
       font-weight: 700;
       font-size: 16px;
       line-height: 48px;
@@ -525,6 +529,7 @@
   <style>
     :host {
       display: block;
+      font-family: Readex Pro;
     }
     #herobutton1 {
       width: 102px;
@@ -559,7 +564,6 @@
     #github1 {
       position: relative;
       color: var(--c-black);
-      font-family: Inter;
       font-weight: 700;
       font-size: 16px;
       line-height: 48px;

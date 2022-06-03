@@ -1,11 +1,11 @@
-@import url("https://fonts.googleapis.com/css2?family=Inter:wght@100;200;300;400;500;600;700;800;900&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Readex+Pro:wght@100;200;300;400;500;600;700;800;900&display=swap");
 
 .home-content {
   max-width: none !important;
 }
 
 body {
-  font-family: Inter, sans-serif;
+  font-family: "Readex Pro", sans-serif;
 }
 
 :root {
@@ -38,9 +38,9 @@ body {
 
   --vp-c-bg: #212327;
   --vp-c-bg-alt: #1e2023;
-  --vp-c-brand: #0085ff;
-  --vp-c-brand-light: #2295ff;
-  --vp-c-brand-lighter: #2295ff;
-  --vp-c-brand-dark: #0085ff;
-  --vp-c-brand-darker: #0085ff;
+  --vp-c-brand: #ff4081;
+  --vp-c-brand-light: #ff4081;
+  --vp-c-brand-lighter: #ff4081;
+  --vp-c-brand-dark: #ff4081;
+  --vp-c-brand-darker: #ff4081;
 }
