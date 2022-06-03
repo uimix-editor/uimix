@@ -1,7 +1,6 @@
-import React, { useEffect } from "react";
+import React from "react";
 import styled from "styled-components";
 import { colors } from "@seanchas116/paintkit/src/components/Palette";
-import { action } from "mobx";
 import { ContextMenuProvider } from "@seanchas116/paintkit/src/components/menu/ContextMenuProvider";
 import { EditorState } from "../state/EditorState";
 import { RightSideBar } from "./sidebar/SideBar";
@@ -28,26 +27,6 @@ export const Editor: React.FC<{
   className?: string;
   editorState: EditorState;
 }> = ({ className, editorState }) => {
-  // TODO: avoid attaching listeners to window
-  useEffect(() => {
-    const onWindowKeyDown = action((e: KeyboardEvent) => {
-      if (editorState.handleGlobalKeyDown(e)) {
-        e.preventDefault();
-        e.stopPropagation();
-      }
-    });
-    const onWindowKeyUp = action((e: KeyboardEvent) => {
-      editorState.handleGlobalKeyUp(e);
-    });
-
-    window.addEventListener("keydown", onWindowKeyDown, { capture: true });
-    window.addEventListener("keyup", onWindowKeyUp, { capture: true });
-    return () => {
-      window.removeEventListener("keydown", onWindowKeyDown, { capture: true });
-      window.removeEventListener("keyup", onWindowKeyUp, { capture: true });
-    };
-  }, []);
-
   return (
     <EditorStateProvider value={editorState}>
       <ContextMenuProvider>

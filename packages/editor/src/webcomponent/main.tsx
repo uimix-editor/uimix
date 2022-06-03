@@ -10,6 +10,7 @@ import { RootPortalHostProvider } from "@seanchas116/paintkit/src/components/Roo
 import { DocumentJSON, Document } from "../models/Document";
 import { EditorState } from "../state/EditorState";
 import { Editor } from "../views/Editor";
+import { registerEditorKeyHandler } from "../views/registerEditorKeyHandler";
 
 class EditorElementEditorState extends EditorState {
   readonly history = new JSONUndoHistory<DocumentJSON, Document>(
@@ -42,6 +43,8 @@ export class MacaronEditorElement extends HTMLElement {
   }
 
   connectedCallback(): void {
+    this.setAttribute("tabindex", "-1");
+
     const shadowRoot = this.attachShadow({ mode: "open" });
     const styles = document.createElement("div");
     shadowRoot.append(styles);
@@ -56,6 +59,8 @@ export class MacaronEditorElement extends HTMLElement {
 
     const mountPoint = document.createElement("span");
     shadowRoot.appendChild(mountPoint);
+
+    registerEditorKeyHandler(this, this._editorState);
 
     this._reactRoot = ReactDOM.createRoot(mountPoint);
     this._reactRoot.render(
