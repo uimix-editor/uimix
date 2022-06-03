@@ -44,6 +44,7 @@ const App: React.FC<{
 
 export class MacaronEditorElement extends HTMLElement {
   private _editorState: EditorElementEditorState;
+  private _reactRoot?: ReactDOM.Root;
 
   constructor() {
     super();
@@ -66,8 +67,8 @@ export class MacaronEditorElement extends HTMLElement {
     const mountPoint = document.createElement("span");
     shadowRoot.appendChild(mountPoint);
 
-    const root = ReactDOM.createRoot(mountPoint);
-    root.render(
+    this._reactRoot = ReactDOM.createRoot(mountPoint);
+    this._reactRoot.render(
       <React.StrictMode>
         <RootPortalHostProvider value={shadowRoot}>
           <StyleSheetManager target={styles}>
@@ -76,6 +77,10 @@ export class MacaronEditorElement extends HTMLElement {
         </RootPortalHostProvider>
       </React.StrictMode>
     );
+  }
+
+  disconnectedCallback(): void {
+    this._reactRoot?.unmount();
   }
 
   get editorState(): EditorElementEditorState {
