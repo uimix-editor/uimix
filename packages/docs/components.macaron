@@ -7,8 +7,8 @@
     --c-white: #212327;
     --c-black: #ffffff;
     --c-text-light-1: #cccccc;
-    --c-brand: #0085ff;
-    --c-brand-light: #2295ff;
+    --c-brand: #ff4081;
+    --c-brand-light: #ff4f8b;
     --feature-card-color: #64dd17;
   }
 </style>
@@ -48,7 +48,7 @@
         ><hero-button-secondary id="herobutton3"></hero-button-secondary
       ></a>
     </div>
-    <slot><div id="div1"></div></slot>
+    <slot><div id="div2"></div></slot>
     <div id="features">
       <div id="feature-rows">
         <div id="feature-row1">
@@ -205,7 +205,7 @@
     #herobutton3 {
       position: relative;
     }
-    #div1 {
+    #div2 {
       top: 482px;
       left: 663px;
       width: 100%;
