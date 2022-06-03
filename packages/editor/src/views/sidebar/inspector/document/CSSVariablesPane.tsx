@@ -12,7 +12,7 @@ import {
   PaneHeading,
 } from "@seanchas116/paintkit/src/components/sidebar/Inspector";
 import { Color } from "@seanchas116/paintkit/src/util/Color";
-import { useEditorState } from "../../../EditorStateContext";
+import { useEditorState } from "../../../useEditorState";
 import { CSSVariableListView } from "./CSSVariableListView";
 
 const StyledColorTokenTreeView = styled(CSSVariableListView)`

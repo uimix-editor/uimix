@@ -1,7 +1,7 @@
 import React, { Fragment } from "react";
 import { observer } from "mobx-react-lite";
 import { Rect } from "paintvec";
-import { useEditorState } from "../../EditorStateContext";
+import { useEditorState } from "../../useEditorState";
 
 function rectToSVGPoints(rect: Rect) {
   return [...rect.vertices, rect.topLeft].map((v) => `${v.x},${v.y}`).join(" ");

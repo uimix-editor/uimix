@@ -11,7 +11,7 @@ import { Dropdown } from "@seanchas116/paintkit/src/components/menu/Dropdown";
 import { ZoomControl } from "@seanchas116/paintkit/src/components/toolbar/ZoomControl";
 import { observer } from "mobx-react-lite";
 import { action } from "mobx";
-import { useEditorState } from "./EditorStateContext";
+import { useEditorState } from "./useEditorState";
 
 export const ToolBar: React.FC = observer(() => {
   const editorState = useEditorState();

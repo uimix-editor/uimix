@@ -4,7 +4,7 @@ import { Vec2 } from "paintvec";
 import React, { useRef } from "react";
 import styled from "styled-components";
 import { usePointerStroke } from "@seanchas116/paintkit/src/components/hooks/usePointerStroke";
-import { useEditorState } from "../EditorStateContext";
+import { useEditorState } from "../useEditorState";
 
 export const PanOverlay: React.FC = observer(function PanOverlay() {
   const editorState = useEditorState();

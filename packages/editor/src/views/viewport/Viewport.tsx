@@ -1,12 +1,12 @@
 import { colors } from "@seanchas116/paintkit/src/components/Palette";
 import { Rect, Vec2 } from "paintvec";
-import { action, runInAction } from "mobx";
-import React, { useCallback, useEffect } from "react";
+import { action } from "mobx";
+import React, { useEffect } from "react";
 import styled from "styled-components";
 import { observer } from "mobx-react-lite";
 import { checkPattern } from "@seanchas116/paintkit/src/components/Common";
 import { DocumentMount } from "../../mount/DocumentMount";
-import { useEditorState } from "../EditorStateContext";
+import { useEditorState } from "../useEditorState";
 import { PanOverlay } from "./PanOverlay";
 import { Indicators } from "./indicators/Indicators";
 import { PointerOverlay } from "./pointer/PointerOverlay";
@@ -48,20 +48,23 @@ export const Viewport: React.FC<{ className?: string }> = observer(
         return;
       }
 
-      runInAction(() => {
+      const updateViewportClientRect = action(() => {
         editorState.scroll.viewportClientRect = Rect.from(
           elem.getBoundingClientRect()
         );
       });
-      const resizeObserver = new ResizeObserver(
-        action(() => {
-          editorState.scroll.viewportClientRect = Rect.from(
-            elem.getBoundingClientRect()
-          );
-        })
-      );
+
+      updateViewportClientRect();
+
+      const resizeObserver = new ResizeObserver(updateViewportClientRect);
       resizeObserver.observe(elem);
-      return () => resizeObserver.disconnect();
+
+      window.addEventListener("scroll", updateViewportClientRect);
+
+      return () => {
+        resizeObserver.disconnect();
+        window.removeEventListener("scroll", updateViewportClientRect);
+      };
     }, []);
 
     useEffect(() => {
@@ -76,11 +79,18 @@ export const Viewport: React.FC<{ className?: string }> = observer(
       };
     }, [editorState.document]);
 
-    const onWheel = useCallback(
-      action((e: React.WheelEvent) => {
-        // if (!editorState.wheelScrollEnabled) {
-        //   return;
-        // }
+    useEffect(() => {
+      const elem = ref.current;
+      if (!elem) {
+        return;
+      }
+
+      const onWheel = action((e: WheelEvent) => {
+        if (!editorState.wheelScrollEnabled) {
+          return;
+        }
+
+        e.preventDefault();
 
         if (e.ctrlKey || e.metaKey) {
           const factor = Math.pow(2, e.deltaY / 100);
@@ -103,15 +113,18 @@ export const Viewport: React.FC<{ className?: string }> = observer(
             new Vec2(e.deltaX, e.deltaY).round
           );
         }
-      }),
-      [editorState]
-    );
+      });
+
+      elem.addEventListener("wheel", onWheel);
+      return () => {
+        elem.removeEventListener("wheel", onWheel);
+      };
+    }, [editorState]);
 
     return (
       <ViewportWrap
         className={className}
         ref={ref}
-        onWheel={onWheel}
         style={{
           ["--checkOffsetX" as keyof React.CSSProperties]: `${editorState.scroll.translation.x}px`,
           ["--checkOffsetY" as keyof React.CSSProperties]: `${editorState.scroll.translation.y}px`,

@@ -1,3 +1,4 @@
+import React from "react";
 import { MenuItem } from "@seanchas116/paintkit/src/components/menu/Menu";
 import { JSONUndoHistory } from "@seanchas116/paintkit/src/util/JSONUndoHistory";
 import { isTextInputFocused } from "@seanchas116/paintkit/src/util/CurrentFocus";
@@ -65,16 +66,21 @@ export abstract class EditorState {
     value: item.family,
   }));
 
+  @observable layout: "threeColumn" | "twoColumn" = "threeColumn";
+
   @observable currentOutlineTab: "outline" | "assets" = "outline";
   @observable currentInspectorTab: "element" | "style" = "element";
   @observable assetTab: "components" | "images" | "icons" = "components";
   @observable sideBarSplitRatio = 0.3;
-  @observable sideBarWidth = 256;
+  @observable leftSideBarWidth = 256;
+  @observable rightSideBarWidth = 256;
 
   readonly variantInspectorState = new VariantInspectorState(this);
   readonly elementInspectorState = new ElementInspectorState(this);
 
   readonly scroll = new Scroll();
+
+  @observable wheelScrollEnabled = true;
 
   @observable hoveredItem: ElementInstance | TextInstance | undefined =
     undefined;
@@ -285,7 +291,7 @@ export abstract class EditorState {
     ];
   }
 
-  handleGlobalKeyDown(e: KeyboardEvent): boolean {
+  protected handleGlobalKeyDown(e: KeyboardEvent): boolean {
     switch (e.key) {
       case "Escape":
         this.insertMode = undefined;
@@ -296,6 +302,9 @@ export abstract class EditorState {
         break;
       case " ":
         this.panMode = true;
+        if (!isTextInputFocused()) {
+          return true;
+        }
         break;
     }
 
@@ -332,7 +341,7 @@ export abstract class EditorState {
     return false;
   }
 
-  handleGlobalKeyUp(e: KeyboardEvent): void {
+  protected handleGlobalKeyUp(e: KeyboardEvent): void {
     switch (e.key) {
       case "Alt":
         this.measureMode = false;
@@ -341,6 +350,29 @@ export abstract class EditorState {
         this.panMode = false;
         break;
     }
+  }
+
+  listenKeyEvents(target: Window | HTMLElement): () => void {
+    const onWindowKeyDown = action((e: KeyboardEvent) => {
+      if (this.handleGlobalKeyDown(e)) {
+        e.preventDefault();
+        e.stopPropagation();
+      }
+    });
+    const onWindowKeyUp = action((e: KeyboardEvent) => {
+      this.handleGlobalKeyUp(e);
+    });
+
+    const _target = target as Window;
+
+    _target.addEventListener("keydown", onWindowKeyDown, { capture: true });
+    _target.addEventListener("keyup", onWindowKeyUp, { capture: true });
+    return () => {
+      _target.removeEventListener("keydown", onWindowKeyDown, {
+        capture: true,
+      });
+      _target.removeEventListener("keyup", onWindowKeyUp, { capture: true });
+    };
   }
 
   @computed get imageURLOptions(): SelectItem[] {

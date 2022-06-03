@@ -1,11 +1,7 @@
 import React, { useEffect, useMemo } from "react";
-import {
-  ColorSchemeProvider,
-  PaintkitProvider,
-} from "@seanchas116/paintkit/src/components/GlobalStyle";
-import { ContextMenuProvider } from "@seanchas116/paintkit/src/components/menu/ContextMenuProvider";
+import { PaintkitRoot } from "@seanchas116/paintkit/src/components/PaintkitRoot";
 import { reaction } from "mobx";
-import { createGlobalStyle } from "styled-components";
+import styled, { createGlobalStyle } from "styled-components";
 import { fontFamily } from "@seanchas116/paintkit/src/components/Common";
 import { Editor } from "../views/Editor";
 import { AppEditorState } from "./AppEditorState";
@@ -26,6 +22,14 @@ const GlobalStyle = createGlobalStyle`
   }
 `;
 
+const StyledEditor = styled(Editor)`
+  position: fixed;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+`;
+
 export const App: React.FC<{
   file: File;
 }> = ({ file }) => {
@@ -43,14 +47,14 @@ export const App: React.FC<{
     );
   }, [editorState]);
 
+  useEffect(() => editorState.listenKeyEvents(window), [editorState]);
+
   return (
-    <ColorSchemeProvider colorScheme="auto">
+    <>
       <GlobalStyle />
-      <PaintkitProvider>
-        <ContextMenuProvider>
-          <Editor editorState={editorState} />
-        </ContextMenuProvider>
-      </PaintkitProvider>
-    </ColorSchemeProvider>
+      <PaintkitRoot colorScheme="auto">
+        <StyledEditor editorState={editorState} />
+      </PaintkitRoot>
+    </>
   );
 };

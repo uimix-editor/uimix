@@ -5,22 +5,26 @@ import {
 } from "@seanchas116/paintkit/src/components/Common";
 import { useViewModel } from "@seanchas116/paintkit/src/components/hooks/useViewModel";
 import { observer } from "mobx-react-lite";
-import styled from "styled-components";
+import styled, { createGlobalStyle } from "styled-components";
 import { toHtml } from "hast-util-to-html";
 import { action, computed, makeObservable, observable, reaction } from "mobx";
 import { Rect } from "paintvec";
 import type * as hast from "hast";
 import { isEqual } from "lodash-es";
-import "codemirror/lib/codemirror.css";
-import "codemirror/theme/material-darker.css";
-import "codemirror/mode/xml/xml";
 import CodeMirror from "codemirror";
+import "codemirror/mode/xml/xml";
 import { RootPortal } from "@seanchas116/paintkit/src/components/RootPortal";
 import { ElementInstance } from "../../models/ElementInstance";
-import { useEditorState } from "../EditorStateContext";
+import { useEditorState } from "../useEditorState";
 import { formatHTML } from "../../util/Format";
 import { parseHTMLFragment } from "../../util/Hast";
 import { EditorState } from "../../state/EditorState";
+import cssFiles from "../../cssFiles.json";
+
+const GlobalStyle = createGlobalStyle`
+  ${cssFiles["codemirror/lib/codemirror.css"]}
+  ${cssFiles["codemirror/theme/material-darker.css"]}
+`;
 
 const Background = styled.div`
   position: absolute;
@@ -31,7 +35,7 @@ const Background = styled.div`
 `;
 
 const TextareaWrap = styled.div`
-  position: absolute;
+  position: fixed;
   ${popoverStyle}
   padding: 4px;
 
@@ -152,6 +156,7 @@ export const InnerHTMLEditorBody: React.FC<{
 
   return (
     <RootPortal>
+      <GlobalStyle />
       <Background onClick={state.onEnd} />
       <TextareaWrap
         style={{

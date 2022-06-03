@@ -6,7 +6,7 @@ import {
   PaneHeadingRow,
 } from "@seanchas116/paintkit/src/components/sidebar/Inspector";
 import { ImageInput } from "@seanchas116/paintkit/src/components/ImageInput";
-import { useEditorState } from "../../../EditorStateContext";
+import { useEditorState } from "../../../useEditorState";
 
 export const ImgElementPane: React.FC = observer(function ImgElementPane() {
   const editorState = useEditorState();

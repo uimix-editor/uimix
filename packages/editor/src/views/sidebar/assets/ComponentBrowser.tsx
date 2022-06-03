@@ -1,10 +1,11 @@
+import React from "react";
 import { Scrollable } from "@seanchas116/paintkit/src/components/Scrollable";
 import { toHtml } from "hast-util-to-html";
 import { observer } from "mobx-react-lite";
 import { useState } from "react";
 import styled from "styled-components";
 import { CustomElementMetadata } from "../../../models/CustomElementMetadata";
-import { useEditorState } from "../../EditorStateContext";
+import { useEditorState } from "../../useEditorState";
 import {
   AssetGrid,
   AssetGridHeading,

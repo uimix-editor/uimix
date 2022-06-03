@@ -1,20 +1,15 @@
-import React, { useEffect } from "react";
+import React from "react";
 import styled from "styled-components";
 import { colors } from "@seanchas116/paintkit/src/components/Palette";
-import { action } from "mobx";
+import { ContextMenuProvider } from "@seanchas116/paintkit/src/components/menu/ContextMenuProvider";
+import { observer } from "mobx-react-lite";
 import { EditorState } from "../state/EditorState";
-import { RightSideBar } from "./sidebar/SideBar";
-import { EditorStateContext } from "./EditorStateContext";
+import { LeftSideBar, RightSideBar, UnifiedSideBar } from "./sidebar/SideBar";
 import { ToolBar } from "./ToolBar";
 import { Viewport } from "./viewport/Viewport";
+import { EditorStateProvider } from "./useEditorState";
 
 const Columns = styled.div`
-  position: fixed;
-  left: 0;
-  top: 0;
-  width: 100%;
-  height: 100%;
-
   display: flex;
   background-color: ${colors.background};
 `;
@@ -29,38 +24,37 @@ const StyledViewport = styled(Viewport)`
   flex: 1;
 `;
 
-export const Editor: React.FC<{ editorState: EditorState }> = ({
-  editorState,
-}) => {
-  // TODO: avoid attaching listeners to window
-  useEffect(() => {
-    const onWindowKeyDown = action((e: KeyboardEvent) => {
-      if (editorState.handleGlobalKeyDown(e)) {
-        e.preventDefault();
-        e.stopPropagation();
-      }
-    });
-    const onWindowKeyUp = action((e: KeyboardEvent) => {
-      editorState.handleGlobalKeyUp(e);
-    });
-
-    window.addEventListener("keydown", onWindowKeyDown, { capture: true });
-    window.addEventListener("keyup", onWindowKeyUp, { capture: true });
-    return () => {
-      window.removeEventListener("keydown", onWindowKeyDown, { capture: true });
-      window.removeEventListener("keyup", onWindowKeyUp, { capture: true });
-    };
-  }, []);
-
-  return (
-    <EditorStateContext.Provider value={editorState}>
-      <Columns onContextMenuCapture={(e) => e.preventDefault()}>
-        <Center>
-          <ToolBar />
-          <StyledViewport />
-        </Center>
-        <RightSideBar />
-      </Columns>
-    </EditorStateContext.Provider>
+export const Editor: React.FC<{
+  className?: string;
+  editorState: EditorState;
+}> = observer(({ className, editorState }) => {
+  const center = (
+    <Center>
+      <ToolBar />
+      <StyledViewport />
+    </Center>
   );
-};
+  return (
+    <EditorStateProvider value={editorState}>
+      <ContextMenuProvider>
+        <Columns
+          className={className}
+          onContextMenuCapture={(e) => e.preventDefault()}
+        >
+          {editorState.layout === "threeColumn" ? (
+            <>
+              <LeftSideBar />
+              {center}
+              <RightSideBar />
+            </>
+          ) : (
+            <>
+              {center}
+              <UnifiedSideBar />
+            </>
+          )}
+        </Columns>
+      </ContextMenuProvider>
+    </EditorStateProvider>
+  );
+});

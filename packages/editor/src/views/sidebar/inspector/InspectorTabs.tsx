@@ -8,7 +8,7 @@ import { Scrollable } from "@seanchas116/paintkit/src/components/Scrollable";
 import { action } from "mobx";
 import { observer } from "mobx-react-lite";
 import { startCase } from "lodash-es";
-import { useEditorState } from "../../EditorStateContext";
+import { useEditorState } from "../../useEditorState";
 import { ElementInspector } from "./element/ElementInspector";
 import { VariantInspector } from "./VariantInspector";
 import { StyleInspector } from "./style/StyleInspector";

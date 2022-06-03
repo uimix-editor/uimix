@@ -7,7 +7,7 @@ import { colors } from "@seanchas116/paintkit/src/components/Palette";
 import { roundRectXYWH } from "@seanchas116/paintkit/src/util/Geometry";
 import { EditorState } from "../../../state/EditorState";
 import { ElementInstance } from "../../../models/ElementInstance";
-import { useEditorState } from "../../EditorStateContext";
+import { useEditorState } from "../../useEditorState";
 
 class ElementResizeBoxState {
   constructor(editorState: EditorState) {

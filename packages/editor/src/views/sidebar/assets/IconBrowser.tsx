@@ -19,7 +19,7 @@ import { Scrollable } from "@seanchas116/paintkit/src/components/Scrollable";
 import { IconButton } from "@seanchas116/paintkit/src/components/IconButton";
 import { useContextMenu } from "@seanchas116/paintkit/src/components/menu/ContextMenuProvider";
 import { iconToSVGString } from "@seanchas116/paintkit/src/util/Image";
-import { useEditorState } from "../../EditorStateContext";
+import { useEditorState } from "../../useEditorState";
 import { IconItem, IconSet } from "./IconSet";
 import { IconBrowserState } from "./IconBrowserState";
 import { SearchBar } from "./SearchBar";
