@@ -1,7 +1,7 @@
 import { colors } from "@seanchas116/paintkit/src/components/Palette";
 import { Rect, Vec2 } from "paintvec";
 import { action } from "mobx";
-import React, { useCallback, useEffect } from "react";
+import React, { useEffect } from "react";
 import styled from "styled-components";
 import { observer } from "mobx-react-lite";
 import { checkPattern } from "@seanchas116/paintkit/src/components/Common";
@@ -79,11 +79,14 @@ export const Viewport: React.FC<{ className?: string }> = observer(
       };
     }, [editorState.document]);
 
-    const onWheel = useCallback(
-      action((e: React.WheelEvent) => {
-        // if (!editorState.wheelScrollEnabled) {
-        //   return;
-        // }
+    useEffect(() => {
+      const elem = ref.current;
+      if (!elem) {
+        return;
+      }
+
+      const onWheel = action((e: WheelEvent) => {
+        e.preventDefault();
 
         if (e.ctrlKey || e.metaKey) {
           const factor = Math.pow(2, e.deltaY / 100);
@@ -106,15 +109,18 @@ export const Viewport: React.FC<{ className?: string }> = observer(
             new Vec2(e.deltaX, e.deltaY).round
           );
         }
-      }),
-      [editorState]
-    );
+      });
+
+      elem.addEventListener("wheel", onWheel);
+      return () => {
+        elem.removeEventListener("wheel", onWheel);
+      };
+    }, [editorState]);
 
     return (
       <ViewportWrap
         className={className}
         ref={ref}
-        onWheel={onWheel}
         style={{
           ["--checkOffsetX" as keyof React.CSSProperties]: `${editorState.scroll.translation.x}px`,
           ["--checkOffsetY" as keyof React.CSSProperties]: `${editorState.scroll.translation.y}px`,
