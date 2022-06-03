@@ -45,6 +45,7 @@
     "short-uuid": "^4.2.0",
     "styled-components": "^5.3.5",
     "tiny-typed-emitter": "^2.1.0",
+    "tippy.js": "^6.3.7",
     "unified": "^10.1.2",
     "unist-util-inspect": "^7.0.0",
     "validate-element-name": "^3.0.0"
