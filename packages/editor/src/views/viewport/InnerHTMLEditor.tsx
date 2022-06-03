@@ -19,11 +19,11 @@ import { useEditorState } from "../useEditorState";
 import { formatHTML } from "../../util/Format";
 import { parseHTMLFragment } from "../../util/Hast";
 import { EditorState } from "../../state/EditorState";
-import styles from "../../styles.json";
+import cssFiles from "../../cssFiles.json";
 
 const GlobalStyle = styled.div`
-  ${styles["codemirror/lib/codemirror.css"]}
-  ${styles["codemirror/theme/material-darker.css"]}
+  ${cssFiles["codemirror/lib/codemirror.css"]}
+  ${cssFiles["codemirror/theme/material-darker.css"]}
 `;
 
 const Background = styled.div`

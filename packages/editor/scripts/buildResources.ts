@@ -16,7 +16,7 @@ async function generateCSSStrings(cwd: string): Promise<void> {
   );
 
   fs.writeFileSync(
-    `${path.resolve(cwd, "src/styles")}.json`,
+    `${path.resolve(cwd, "src/cssFiles")}.json`,
     JSON.stringify(contents, null, 2)
   );
 }
