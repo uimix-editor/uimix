@@ -48,7 +48,7 @@
         ><hero-button-secondary id="herobutton3"></hero-button-secondary
       ></a>
     </div>
-    <slot><div id="div2"></div></slot>
+    <slot><div id="div6"></div></slot>
     <div id="features">
       <div id="feature-rows">
         <div id="feature-row1">
@@ -207,7 +207,7 @@
     #herobutton3 {
       position: relative;
     }
-    #div2 {
+    #div6 {
       top: 482px;
       left: 663px;
       width: 100%;
@@ -471,14 +471,13 @@
     selector=":hover"
   ></macaron-variant>
   <template>
-    <div id="herobutton">
-      <div id="getvscodeextension"><slot>Get Started</slot></div>
-    </div>
+    <div id="herobutton"><slot>Get Started</slot></div>
   </template>
   <style>
     :host {
       display: block;
       font-family: Readex Pro;
+      font-weight: 700;
     }
     #herobutton {
       height: 48px;
@@ -492,20 +491,12 @@
       padding-bottom: 0px;
       padding-left: 23px;
       flex-direction: row;
-      align-items: flex-start;
-      justify-content: flex-start;
+      align-items: center;
+      justify-content: center;
       row-gap: 10px;
       column-gap: 10px;
+      color: white;
       background: var(--c-brand);
-    }
-    #getvscodeextension {
-      position: relative;
-      color: var(--c-black);
-      font-weight: 700;
-      font-size: 16px;
-      line-height: 48px;
-      letter-spacing: -0.02em;
-      text-align: center;
     }
     :host(:hover) #herobutton {
       background: var(--c-brand-light);
@@ -525,17 +516,15 @@
     selector=":hover"
   ></macaron-variant>
   <template>
-    <div id="herobutton1">
-      <div id="github1"><slot>GitHub</slot></div>
-    </div>
+    <div id="herobutton1"><slot>GitHub</slot></div>
   </template>
   <style>
     :host {
       display: block;
       font-family: Readex Pro;
+      font-weight: 700;
     }
     #herobutton1 {
-      width: 102px;
       height: 48px;
       border-top-left-radius: 24px;
       border-top-right-radius: 24px;
@@ -547,10 +536,11 @@
       padding-bottom: 0px;
       padding-left: 23px;
       flex-direction: row;
-      align-items: flex-start;
+      align-items: center;
       justify-content: flex-start;
       row-gap: 10px;
       column-gap: 10px;
+      color: white;
       border-top-width: 1;
       border-top-style: solid;
       border-top-color: var(--c-black);
@@ -563,15 +553,6 @@
       border-left-width: 1;
       border-left-style: solid;
       border-left-color: var(--c-black);
-    }
-    #github1 {
-      position: relative;
-      color: var(--c-black);
-      font-weight: 700;
-      font-size: 16px;
-      line-height: 48px;
-      letter-spacing: -0.02em;
-      text-align: center;
     }
     :host(:hover) #herobutton1 {
       color: var(--c-black);
