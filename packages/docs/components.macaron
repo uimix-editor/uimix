@@ -7,8 +7,8 @@
     --c-white: #212327;
     --c-black: #ffffff;
     --c-text-light-1: #cccccc;
-    --c-brand: #ff4081;
-    --c-brand-light: #ff4f8b;
+    --c-brand: #0085ff;
+    --c-brand-light: #2798ff;
     --feature-card-color: #64dd17;
   }
 </style>
@@ -49,7 +49,7 @@
         ><hero-button-secondary id="herobutton3"></hero-button-secondary
       ></a>
     </div>
-    <slot><div id="div11"></div></slot>
+    <slot><div id="div12"></div></slot>
     <div id="features">
       <div id="feature-rows">
         <div id="feature-row1">
@@ -206,7 +206,7 @@
     #herobutton3 {
       position: relative;
     }
-    #div11 {
+    #div12 {
       top: 482px;
       left: 663px;
       width: 100%;
@@ -498,7 +498,7 @@
       background: var(--c-brand);
     }
     :host(:hover) #herobutton {
-      background: var(--c-brand-light);
+      background: #0073eb;
     }
   </style>
 </macaron-component>
@@ -509,8 +509,8 @@
     background-color="transparent"
   ></macaron-variant>
   <macaron-variant
-    x="767"
-    y="-80"
+    x="766.9999879656075"
+    y="-79.99999997955751"
     background-color="transparent"
     selector=":hover"
   ></macaron-variant>
@@ -540,26 +540,22 @@
       row-gap: 10px;
       column-gap: 10px;
       color: white;
+      background: #ffffff0d;
       border-top-width: 1;
       border-top-style: solid;
-      border-top-color: var(--c-black);
+      border-top-color: #ffffff33;
       border-right-width: 1;
       border-right-style: solid;
-      border-right-color: var(--c-black);
+      border-right-color: #ffffff33;
       border-bottom-width: 1;
       border-bottom-style: solid;
-      border-bottom-color: var(--c-black);
+      border-bottom-color: #ffffff33;
       border-left-width: 1;
       border-left-style: solid;
-      border-left-color: var(--c-black);
+      border-left-color: #ffffff33;
     }
     :host(:hover) #herobutton1 {
-      color: var(--c-black);
-      background: var(--c-brand-light);
-      border-top-color: var(--c-brand-light);
-      border-right-color: var(--c-brand-light);
-      border-bottom-color: var(--c-brand-light);
-      border-left-color: var(--c-brand-light);
+      background: #ffffff1f;
     }
   </style>
 </macaron-component>
