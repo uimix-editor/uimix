@@ -3,7 +3,6 @@ import { PaintkitRoot } from "@seanchas116/paintkit/src/components/PaintkitRoot"
 import styled, { createGlobalStyle } from "styled-components";
 import { fontFamily } from "@seanchas116/paintkit/src/components/Common";
 import { Editor } from "../views/Editor";
-import { registerEditorKeyHandler } from "../views/registerEditorKeyHandler";
 import { VSCodeEditorState } from "./VSCodeEditorState";
 import { VSCodeAppState } from "./VSCodeAppState";
 
@@ -43,15 +42,15 @@ export const VSCodeApp: React.FC<{
     return new VSCodeEditorState(appState);
   }, [appState]);
 
-  useEffect(() => registerEditorKeyHandler(window, editorState), [editorState]);
+  useEffect(() => editorState.listenKeyEvents(window), [editorState]);
 
   return (
     <>
       <GlobalStyle />
       <PaintkitRoot
         colorScheme="auto"
-        lightSelector="body.vscode-light &"
-        darkSelector="body.vscode-dark &, body.vscode-high-contrast &"
+        lightSelector=".vscode-light &"
+        darkSelector=".vscode-dark &, .vscode-high-contrast &"
       >
         <StyledEditor editorState={editorState} />
       </PaintkitRoot>

@@ -4,7 +4,6 @@ import { reaction } from "mobx";
 import styled, { createGlobalStyle } from "styled-components";
 import { fontFamily } from "@seanchas116/paintkit/src/components/Common";
 import { Editor } from "../views/Editor";
-import { registerEditorKeyHandler } from "../views/registerEditorKeyHandler";
 import { AppEditorState } from "./AppEditorState";
 import { File } from "./File";
 
@@ -48,7 +47,7 @@ export const App: React.FC<{
     );
   }, [editorState]);
 
-  useEffect(() => registerEditorKeyHandler(window, editorState), [editorState]);
+  useEffect(() => editorState.listenKeyEvents(window), [editorState]);
 
   return (
     <>
