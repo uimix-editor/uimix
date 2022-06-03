@@ -86,6 +86,10 @@ export const Viewport: React.FC<{ className?: string }> = observer(
       }
 
       const onWheel = action((e: WheelEvent) => {
+        if (!editorState.wheelScrollEnabled) {
+          return;
+        }
+
         e.preventDefault();
 
         if (e.ctrlKey || e.metaKey) {

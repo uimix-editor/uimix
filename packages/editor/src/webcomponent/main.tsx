@@ -36,6 +36,11 @@ export class MacaronEditorElement extends HTMLElement {
   private _editorState = new EditorElementEditorState();
   private _reactRoot?: ReactDOM.Root;
 
+  constructor() {
+    super();
+    this._editorState.wheelScrollEnabled = false;
+  }
+
   connectedCallback(): void {
     this.setAttribute("tabindex", "-1");
     this._editorState.listenKeyEvents(this);

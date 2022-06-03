@@ -77,6 +77,8 @@ export abstract class EditorState {
 
   readonly scroll = new Scroll();
 
+  @observable wheelScrollEnabled = true;
+
   @observable hoveredItem: ElementInstance | TextInstance | undefined =
     undefined;
 
