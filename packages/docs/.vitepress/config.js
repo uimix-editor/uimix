@@ -16,12 +16,11 @@ const config = {
   },
 
   themeConfig: {
+    logo: "/logo.svg",
     nav: [{ text: "Guide", link: "/guide/", activeMatch: "^/guide/" }],
-
     socialLinks: [
       { icon: "github", link: "https://github.com/macaronapp/macaron-next" },
     ],
-
     sidebar: {
       "/guide/": [
         {
