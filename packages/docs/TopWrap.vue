@@ -1,6 +1,6 @@
 <style scoped>
 macaron-editor {
-  width: 100%;
+  width: calc(100% - 64px);
   max-width: 1280px;
   height: 640px;
 
