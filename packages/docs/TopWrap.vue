@@ -1,5 +1,7 @@
 <style scoped>
 macaron-editor {
+  width: 100%;
+  max-width: 1280px;
   height: 640px;
 
   border: 0.5px solid rgba(255, 255, 255, 0.12);
@@ -11,8 +13,9 @@ macaron-editor {
 </style>
 
 <template>
-  <top-page></top-page>
-  <macaron-editor></macaron-editor>
+  <top-page>
+    <macaron-editor></macaron-editor>
+  </top-page>
 </template>
 
 <script>
