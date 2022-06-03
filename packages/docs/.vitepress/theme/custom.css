@@ -1,25 +1,44 @@
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@100;200;300;400;500;600;700;800;900&display=swap');
-
 .home-content {
   max-width: none !important;
 }
 
 body {
-  font-family: Inter, sans-serif;
+  font-family: "Readex Pro", sans-serif;
 }
 
 :root {
-  --c-white: #ffffff;
-  --c-white-dark: #f8f8f8;
-  --c-black: #000000;
+  /* always dark mode */
 
-  --c-divider-light: rgba(60, 60, 67, 0.12);
-  --c-divider-dark: rgba(84, 84, 88, 0.48);
+  /* --vp-c-bg: var(--vp-c-black-soft);
+  --vp-c-bg-soft: var(--vp-c-black-mute);
+  --vp-c-bg-mute: var(--vp-c-gray-dark-3);
+  --vp-c-bg-alt: var(--vp-c-black);
 
-  --c-text-light-1: #2c3e50;
-  --c-text-light-2: #476582;
-  --c-text-light-3: #90a4b7;
+  --vp-c-divider: var(--vp-c-divider-dark-1);
+  --vp-c-divider-light: var(--vp-c-divider-dark-2);
 
-  --c-brand: #0085ff;
-  --c-brand-light: #2295ff;
+  --vp-c-divider-inverse: var(--vp-c-divider-light-1);
+  --vp-c-divider-inverse-light: var(--vp-c-divider-light-2);
+
+  --vp-c-text-1: var(--vp-c-text-dark-1);
+  --vp-c-text-2: var(--vp-c-text-dark-2);
+  --vp-c-text-3: var(--vp-c-text-dark-3);
+  --vp-c-text-4: var(--vp-c-text-dark-4);
+
+  --vp-c-text-inverse-1: var(--vp-c-text-light-1);
+  --vp-c-text-inverse-2: var(--vp-c-text-light-2);
+  --vp-c-text-inverse-3: var(--vp-c-text-light-3);
+  --vp-c-text-inverse-4: var(--vp-c-text-light-4);
+
+  --vp-c-text-code: var(--vp-c-indigo-lighter); */
+
+  /* custom colors */
+
+  /* --vp-c-bg: #212327;
+  --vp-c-bg-alt: #1e2023; */
+  --vp-c-brand: #0085ff;
+  --vp-c-brand-light: #0085ff;
+  --vp-c-brand-lighter: #0085ff;
+  --vp-c-brand-dark: #0085ff;
+  --vp-c-brand-darker: #0085ff;
 }

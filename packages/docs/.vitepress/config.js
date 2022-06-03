@@ -1,29 +1,32 @@
+const customElements = ["top-page", "macaron-editor"];
+
 /**
  * @type {import('vitepress').UserConfig}
  */
 const config = {
   title: "Macaron",
   description: "Visual editor for Web Components",
+  appearance: false,
 
   vue: {
     template: {
       compilerOptions: {
-        isCustomElement: (tag) => {
-          return tag === "top-page";
-        },
+        isCustomElement: (tag) => customElements.includes(tag),
       },
     },
   },
 
   themeConfig: {
-    repo: "macaronapp/macaron-next",
+    logo: "/logo.svg",
     nav: [{ text: "Guide", link: "/guide/", activeMatch: "^/guide/" }],
-
+    socialLinks: [
+      { icon: "github", link: "https://github.com/macaronapp/macaron-next" },
+    ],
     sidebar: {
       "/guide/": [
         {
           text: "Guide",
-          children: [
+          items: [
             {
               text: "Getting Started",
               link: "/guide/",

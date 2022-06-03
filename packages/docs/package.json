@@ -11,8 +11,11 @@
     "serve": "vitepress serve . --port 4001"
   },
   "devDependencies": {
-    "vitepress": "^0.22.4",
+    "@macaron-app/editor": "*",
     "@macaron-app/loader-vite": "*",
-    "@macaron-app/editor": "*"
+    "vitepress": "^1.0.0-alpha.1"
+  },
+  "dependencies": {
+    "@fontsource/readex-pro": "^4.5.9"
   }
 }

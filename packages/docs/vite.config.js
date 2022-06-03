@@ -6,5 +6,9 @@ export default defineConfig({
   server: {
     host: true,
     port: 4000,
+    fs: {
+      // Allow serving files from one level up to the project root
+      allow: ["../.."],
+    },
   },
 });

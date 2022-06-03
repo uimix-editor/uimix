@@ -1,6 +1,24 @@
 <style scoped>
-macaron-editor {
+.background-gradient {
+  position: fixed;
+  top: 0;
+  left: 0;
   width: 100%;
+  height: 400px;
+
+  background: linear-gradient(
+    180deg,
+    rgba(24, 158, 255, 0.1) 0%,
+    rgba(196, 196, 196, 0) 100%
+  );
+}
+
+top-page {
+  position: relative;
+}
+
+macaron-editor {
+  width: calc(100% - 64px);
   max-width: 1280px;
   height: 640px;
 
@@ -13,6 +31,7 @@ macaron-editor {
 </style>
 
 <template>
+  <div class="background-gradient"></div>
   <top-page>
     <macaron-editor></macaron-editor>
   </top-page>

@@ -4,16 +4,16 @@
 ></script>
 <style>
   :root {
-    --c-white: #212327;
-    --c-black: #ffffff;
-    --c-text-light-1: #cccccc;
-    --c-brand: #0085ff;
-    --c-brand-light: #2295ff;
     --feature-card-color: #64dd17;
   }
 </style>
 <macaron-component name="top-page">
-  <macaron-variant x="0" y="0" width="1440"></macaron-variant>
+  <macaron-variant
+    x="0"
+    y="0"
+    width="1440"
+    background-color="white"
+  ></macaron-variant>
   <macaron-variant
     x="1464"
     y="0"
@@ -24,8 +24,9 @@
   <template>
     <h1 id="heroTitle">Design tool to create<br />Web Components directly</h1>
     <div id="heroSubtitle">
-      Macaron is an open-source UI design tool to create Web Components
-      visually.<br />Intended to be integrated into your development workflow.
+      Macaron is an open-source UI design tool to create and maintain Web
+      Components.<br />Create components visually and use them with or without
+      any framework.
     </div>
     <div id="buttons">
       <a href="/guide/" id="hero-button-link"
@@ -37,7 +38,7 @@
         ><hero-button-secondary id="herobutton3"></hero-button-secondary
       ></a>
     </div>
-    <slot><div id="div"></div></slot>
+    <slot><div id="div22"></div></slot>
     <div id="features">
       <div id="feature-rows">
         <div id="feature-row1">
@@ -140,29 +141,28 @@
   </template>
   <style>
     :host {
-      margin-bottom: 64px;
       display: flex;
+      padding-right: 32px;
+      padding-left: 32px;
       flex-direction: column;
       align-items: center;
-      background: var(--c-white);
+      font-family: Readex Pro;
     }
     #heroTitle {
       position: relative;
-      margin-top: 64px;
+      margin-top: 48px;
       margin-bottom: 32px;
-      color: var(--c-black);
-      font-family: Inter;
+      color: #1e252b;
       font-weight: 800;
-      font-size: 96px;
-      line-height: 1;
+      font-size: 80px;
+      line-height: 1.2;
       letter-spacing: -0.03em;
       text-align: center;
     }
     #heroSubtitle {
       position: relative;
       margin-bottom: 48px;
-      color: var(--c-text-light-1);
-      font-family: Inter;
+      color: #4e5154;
       font-weight: 400;
       font-size: 20px;
       line-height: 1.8;
@@ -195,22 +195,20 @@
     #herobutton3 {
       position: relative;
     }
-    #div {
+    #div22 {
       top: 482px;
       left: 663px;
-      width: 1024px;
+      width: 100%;
       height: 720px;
       border-top-left-radius: 10px;
       border-top-right-radius: 10px;
       border-bottom-right-radius: 10px;
       border-bottom-left-radius: 10px;
-      background: #cccccc;
+      background: #cccccc0d;
     }
     #features {
       margin-top: 96px;
-      margin-right: 32px;
       margin-bottom: 128px;
-      margin-left: 32px;
       max-width: 1032px;
       display: flex;
       flex-direction: column;
@@ -303,8 +301,7 @@
       --feature-card-color: #aa00ff;
     }
     #workinprogress {
-      color: #ffffffcc;
-      font-family: Inter;
+      color: #4e5154;
       font-weight: 400;
       font-style: italic;
       font-size: 16px;
@@ -314,8 +311,7 @@
     }
     @media (max-width: 1024px) {
       #heroTitle {
-        font-size: 80px;
-        line-height: 1.2;
+        font-size: 72px;
       }
       #features {
         font-size: 80px;
@@ -335,16 +331,20 @@
     }
     @media (max-width: 768px) {
       :host {
-        margin-right: 16px;
+        margin-right: 0px;
         margin-bottom: 32px;
+        padding-right: 16px;
+        padding-left: 16px;
       }
       #heroTitle {
         margin-top: 32px;
-        font-size: 48px;
+        font-size: 40px;
+        line-height: 1.2;
       }
       #heroSubtitle {
         margin-bottom: 32px;
-        line-height: 1.5;
+        font-size: 16px;
+        line-height: 1.75;
       }
       #features {
         margin-top: 48px;
@@ -356,12 +356,7 @@
   </style>
 </macaron-component>
 <macaron-component name="feature-card">
-  <macaron-variant
-    x="827"
-    y="-423"
-    width="480"
-    background-color="var(--c-white)"
-  ></macaron-variant>
+  <macaron-variant x="827" y="-423" width="480"></macaron-variant>
   <template>
     <div id="icon-area">
       <div id="icon-bg"></div>
@@ -392,7 +387,8 @@
       padding-left: 16px;
       flex-direction: row;
       column-gap: 16px;
-      background: #ffffff0d;
+      font-family: Readex Pro;
+      background: #19273308;
     }
     #icon-area {
       width: 32px;
@@ -425,10 +421,10 @@
       justify-content: flex-start;
       row-gap: 8px;
       column-gap: 8px;
+      color: #4e5154;
     }
     #title {
-      color: #ffffff;
-      font-family: Inter;
+      color: #1e252b;
       font-weight: 700;
       font-size: 18px;
       line-height: 32px;
@@ -437,8 +433,7 @@
     }
     #description {
       padding-bottom: 4px;
-      color: #ffffffcc;
-      font-family: Inter;
+      color: #4e5154;
       font-weight: 400;
       font-size: 16px;
       line-height: 1.75;
@@ -460,13 +455,13 @@
     selector=":hover"
   ></macaron-variant>
   <template>
-    <div id="herobutton">
-      <div id="getvscodeextension"><slot>Get Started</slot></div>
-    </div>
+    <div id="herobutton"><slot>Get Started</slot></div>
   </template>
   <style>
     :host {
       display: block;
+      font-family: Readex Pro;
+      font-weight: 700;
     }
     #herobutton {
       height: 48px;
@@ -480,50 +475,35 @@
       padding-bottom: 0px;
       padding-left: 23px;
       flex-direction: row;
-      align-items: flex-start;
-      justify-content: flex-start;
+      align-items: center;
+      justify-content: center;
       row-gap: 10px;
       column-gap: 10px;
-      background: var(--c-brand);
-    }
-    #getvscodeextension {
-      position: relative;
-      color: var(--c-black);
-      font-family: Inter;
-      font-weight: 700;
-      font-size: 16px;
-      line-height: 48px;
-      letter-spacing: -0.02em;
-      text-align: center;
+      color: white;
+      background: #0085ff;
     }
     :host(:hover) #herobutton {
-      background: var(--c-brand-light);
+      background: #0073eb;
     }
   </style>
 </macaron-component>
 <macaron-component name="hero-button-secondary">
+  <macaron-variant x="520" y="-80"></macaron-variant>
   <macaron-variant
-    x="520"
-    y="-80"
-    background-color="transparent"
-  ></macaron-variant>
-  <macaron-variant
-    x="767"
-    y="-80"
-    background-color="transparent"
+    x="766.9999879656075"
+    y="-79.99999997955751"
     selector=":hover"
   ></macaron-variant>
   <template>
-    <div id="herobutton1">
-      <div id="github1"><slot>GitHub</slot></div>
-    </div>
+    <div id="herobutton1"><slot>GitHub</slot></div>
   </template>
   <style>
     :host {
       display: block;
+      font-family: Readex Pro;
+      font-weight: 700;
     }
     #herobutton1 {
-      width: 102px;
       height: 48px;
       border-top-left-radius: 24px;
       border-top-right-radius: 24px;
@@ -535,40 +515,31 @@
       padding-bottom: 0px;
       padding-left: 23px;
       flex-direction: row;
-      align-items: flex-start;
+      align-items: center;
       justify-content: flex-start;
       row-gap: 10px;
       column-gap: 10px;
+      color: #1e252b;
+      background: #1e252b08;
       border-top-width: 1;
       border-top-style: solid;
-      border-top-color: var(--c-black);
+      border-top-color: #1e252b26;
       border-right-width: 1;
       border-right-style: solid;
-      border-right-color: var(--c-black);
+      border-right-color: #1e252b26;
       border-bottom-width: 1;
       border-bottom-style: solid;
-      border-bottom-color: var(--c-black);
+      border-bottom-color: #1e252b26;
       border-left-width: 1;
       border-left-style: solid;
-      border-left-color: var(--c-black);
-    }
-    #github1 {
-      position: relative;
-      color: var(--c-black);
-      font-family: Inter;
-      font-weight: 700;
-      font-size: 16px;
-      line-height: 48px;
-      letter-spacing: -0.02em;
-      text-align: center;
+      border-left-color: #1e252b26;
     }
     :host(:hover) #herobutton1 {
-      color: var(--c-black);
-      background: var(--c-brand-light);
-      border-top-color: var(--c-brand-light);
-      border-right-color: var(--c-brand-light);
-      border-bottom-color: var(--c-brand-light);
-      border-left-color: var(--c-brand-light);
+      background: #1e252b1a;
+      border-top-color: #1e252b26;
+      border-right-color: #1e252b26;
+      border-bottom-color: #1e252b26;
+      border-left-color: #1e252b26;
     }
   </style>
 </macaron-component>
