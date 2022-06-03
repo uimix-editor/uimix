@@ -11,16 +11,20 @@ import { action, computed, makeObservable, observable, reaction } from "mobx";
 import { Rect } from "paintvec";
 import type * as hast from "hast";
 import { isEqual } from "lodash-es";
-import "codemirror/lib/codemirror.css";
-import "codemirror/theme/material-darker.css";
-import "codemirror/mode/xml/xml";
 import CodeMirror from "codemirror";
+import "codemirror/mode/xml/xml";
 import { RootPortal } from "@seanchas116/paintkit/src/components/RootPortal";
 import { ElementInstance } from "../../models/ElementInstance";
 import { useEditorState } from "../useEditorState";
 import { formatHTML } from "../../util/Format";
 import { parseHTMLFragment } from "../../util/Hast";
 import { EditorState } from "../../state/EditorState";
+import styles from "../../styles.json";
+
+const GlobalStyle = styled.div`
+  ${styles["codemirror/lib/codemirror.css"]}
+  ${styles["codemirror/theme/material-darker.css"]}
+`;
 
 const Background = styled.div`
   position: absolute;
@@ -152,6 +156,7 @@ export const InnerHTMLEditorBody: React.FC<{
 
   return (
     <RootPortal>
+      <GlobalStyle />
       <Background onClick={state.onEnd} />
       <TextareaWrap
         style={{
