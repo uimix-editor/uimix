@@ -9,9 +9,38 @@ body {
 }
 
 :root {
+  /* always dark mode */
+
+  --vp-c-bg: var(--vp-c-black-soft);
+  --vp-c-bg-soft: var(--vp-c-black-mute);
+  --vp-c-bg-mute: var(--vp-c-gray-dark-3);
+  --vp-c-bg-alt: var(--vp-c-black);
+
+  --vp-c-divider: var(--vp-c-divider-dark-1);
+  --vp-c-divider-light: var(--vp-c-divider-dark-2);
+
+  --vp-c-divider-inverse: var(--vp-c-divider-light-1);
+  --vp-c-divider-inverse-light: var(--vp-c-divider-light-2);
+
+  --vp-c-text-1: var(--vp-c-text-dark-1);
+  --vp-c-text-2: var(--vp-c-text-dark-2);
+  --vp-c-text-3: var(--vp-c-text-dark-3);
+  --vp-c-text-4: var(--vp-c-text-dark-4);
+
+  --vp-c-text-inverse-1: var(--vp-c-text-light-1);
+  --vp-c-text-inverse-2: var(--vp-c-text-light-2);
+  --vp-c-text-inverse-3: var(--vp-c-text-light-3);
+  --vp-c-text-inverse-4: var(--vp-c-text-light-4);
+
+  --vp-c-text-code: var(--vp-c-indigo-lighter);
+
+  /* custom colors */
+
+  --vp-c-bg: #212327;
+  --vp-c-bg-alt: #1e2023;
   --vp-c-brand: #0085ff;
-  --vp-c-brand-light: #0085ff;
-  --vp-c-brand-lighter: #0085ff;
+  --vp-c-brand-light: #2295ff;
+  --vp-c-brand-lighter: #2295ff;
   --vp-c-brand-dark: #0085ff;
   --vp-c-brand-darker: #0085ff;
 }
