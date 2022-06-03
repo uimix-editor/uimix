@@ -1,8 +1,5 @@
 import React, { useEffect, useMemo } from "react";
-import {
-  ColorSchemeProvider,
-  PaintkitProvider,
-} from "@seanchas116/paintkit/src/components/GlobalStyle";
+import { PaintkitRoot } from "@seanchas116/paintkit/src/components/PaintkitRoot";
 import { ContextMenuProvider } from "@seanchas116/paintkit/src/components/menu/ContextMenuProvider";
 import { reaction } from "mobx";
 import styled, { createGlobalStyle } from "styled-components";
@@ -52,13 +49,13 @@ export const App: React.FC<{
   }, [editorState]);
 
   return (
-    <ColorSchemeProvider colorScheme="auto">
+    <>
       <GlobalStyle />
-      <PaintkitProvider>
+      <PaintkitRoot colorScheme="auto">
         <ContextMenuProvider>
           <StyledEditor editorState={editorState} />
         </ContextMenuProvider>
-      </PaintkitProvider>
-    </ColorSchemeProvider>
+      </PaintkitRoot>
+    </>
   );
 };

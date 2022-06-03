@@ -4,11 +4,7 @@ import "tippy.js/dist/tippy.css";
 import React from "react";
 import ReactDOM from "react-dom/client";
 import styled, { StyleSheetManager } from "styled-components";
-import {
-  ColorSchemeProvider,
-  GlobalStyle,
-  PaintkitProvider,
-} from "@seanchas116/paintkit/src/components/GlobalStyle";
+import { PaintkitRoot } from "@seanchas116/paintkit/src/components/PaintkitRoot";
 import { ContextMenuProvider } from "@seanchas116/paintkit/src/components/menu/ContextMenuProvider";
 import { JSONUndoHistory } from "@seanchas116/paintkit/src/util/JSONUndoHistory";
 import { RootPortalHostProvider } from "@seanchas116/paintkit/src/components/RootPortal";
@@ -31,14 +27,11 @@ const App: React.FC<{
   editorState: EditorState;
 }> = ({ editorState }) => {
   return (
-    <ColorSchemeProvider colorScheme="dark">
-      <GlobalStyle />
-      <PaintkitProvider>
-        <ContextMenuProvider>
-          <StyledEditor editorState={editorState} />
-        </ContextMenuProvider>
-      </PaintkitProvider>
-    </ColorSchemeProvider>
+    <PaintkitRoot colorScheme="dark">
+      <ContextMenuProvider>
+        <StyledEditor editorState={editorState} />
+      </ContextMenuProvider>
+    </PaintkitRoot>
   );
 };
 
