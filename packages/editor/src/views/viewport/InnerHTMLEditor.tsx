@@ -35,7 +35,7 @@ const Background = styled.div`
 `;
 
 const TextareaWrap = styled.div`
-  position: absolute;
+  position: fixed;
   ${popoverStyle}
   padding: 4px;
 
