@@ -18,15 +18,9 @@
     x="1464"
     y="0"
     width="1000"
-    background-color="#212327"
     media="(max-width: 1024px)"
   ></macaron-variant>
-  <macaron-variant
-    x="2488"
-    y="0"
-    background-color="#212327"
-    media="(max-width: 768px)"
-  ></macaron-variant>
+  <macaron-variant x="2488" y="0" media="(max-width: 768px)"></macaron-variant>
   <template>
     <h1 id="heroTitle">Design tool to create<br />Web Components directly</h1>
     <div id="heroSubtitle">
@@ -362,12 +356,7 @@
   </style>
 </macaron-component>
 <macaron-component name="feature-card">
-  <macaron-variant
-    x="827"
-    y="-423"
-    width="480"
-    background-color="#212327"
-  ></macaron-variant>
+  <macaron-variant x="827" y="-423" width="480"></macaron-variant>
   <template>
     <div id="icon-area">
       <div id="icon-bg"></div>
@@ -399,7 +388,7 @@
       flex-direction: row;
       column-gap: 16px;
       font-family: Readex Pro;
-      background: #1e252b08;
+      background: #19273308;
     }
     #icon-area {
       width: 32px;
@@ -499,15 +488,10 @@
   </style>
 </macaron-component>
 <macaron-component name="hero-button-secondary">
-  <macaron-variant
-    x="520"
-    y="-80"
-    background-color="transparent"
-  ></macaron-variant>
+  <macaron-variant x="520" y="-80"></macaron-variant>
   <macaron-variant
     x="766.9999879656075"
     y="-79.99999997955751"
-    background-color="transparent"
     selector=":hover"
   ></macaron-variant>
   <template>
