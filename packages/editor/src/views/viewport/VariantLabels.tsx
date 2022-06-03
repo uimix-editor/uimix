@@ -8,7 +8,7 @@ import { assertNonNull } from "@seanchas116/paintkit/src/util/Assert";
 import { useContextMenu } from "@seanchas116/paintkit/src/components/menu/ContextMenuProvider";
 import { DefaultVariant, Variant } from "../../models/Variant";
 import { ElementPickResult } from "../../mount/ElementPicker";
-import { useEditorState } from "../EditorStateContext";
+import { useEditorState } from "../useEditorState";
 import { DragHandler } from "./pointer/DragHandler";
 import { ElementClickMoveDragHandler } from "./pointer/ElementClickMoveDragHandler";
 

@@ -25,7 +25,7 @@ import underlineIcon from "@iconify-icons/ic/outline-format-underlined";
 import closeIcon from "@iconify-icons/ic/outline-close";
 import { stripQuotes } from "@seanchas116/paintkit/src/util/String";
 import { StyleInspectorState } from "../../../../state/StyleInspectorState";
-import { useEditorState } from "../../../EditorStateContext";
+import { useEditorState } from "../../../useEditorState";
 import { lengthPercentageEmptyUnits, lengthPercentageUnits } from "./Units";
 import {
   StyleColorInput,

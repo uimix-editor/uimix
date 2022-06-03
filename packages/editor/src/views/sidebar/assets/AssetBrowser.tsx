@@ -3,7 +3,7 @@ import { observer } from "mobx-react-lite";
 import React from "react";
 import styled from "styled-components";
 import { colors } from "@seanchas116/paintkit/src/components/Palette";
-import { useEditorState } from "../../EditorStateContext";
+import { useEditorState } from "../../useEditorState";
 import { ComponentBrowser } from "./ComponentBrowser";
 import { IconBrowser } from "./IconBrowser";
 import { ImageBrowser } from "./ImageBrowser";

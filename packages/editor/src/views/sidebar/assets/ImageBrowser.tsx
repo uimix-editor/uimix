@@ -5,7 +5,7 @@ import styled from "styled-components";
 import Tippy from "@tippyjs/react";
 import { colors } from "@seanchas116/paintkit/src/components/Palette";
 import { Scrollable } from "@seanchas116/paintkit/src/components/Scrollable";
-import { useEditorState } from "../../EditorStateContext";
+import { useEditorState } from "../../useEditorState";
 import { SearchBar } from "./SearchBar";
 import {
   AssetGrid,

@@ -8,7 +8,7 @@ import { reaction } from "mobx";
 import { Component } from "../../../models/Component";
 import { ElementInstance } from "../../../models/ElementInstance";
 import { TextInstance } from "../../../models/TextInstance";
-import { useEditorState } from "../../EditorStateContext";
+import { useEditorState } from "../../useEditorState";
 import { ElementItem } from "./ElementItem";
 import { ComponentItem } from "./ComponentItem";
 import { RootItem } from "./RootItem";

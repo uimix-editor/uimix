@@ -10,7 +10,7 @@ import { Label } from "@seanchas116/paintkit/src/components/Label";
 import { Input } from "@seanchas116/paintkit/src/components/Input";
 import { SelectOption } from "@seanchas116/paintkit/src/components/Select";
 import { isValidCSSIdentifier } from "@seanchas116/paintkit/src/util/Name";
-import { useEditorState } from "../../../EditorStateContext";
+import { useEditorState } from "../../../useEditorState";
 
 const tagNameOptions: SelectOption[] = ["div", "h1"].map((value) => ({
   value,

@@ -24,7 +24,7 @@ import {
   TreeRowLabel,
 } from "@seanchas116/paintkit/src/components/treeview/TreeRow";
 import { EditorState } from "../../../state/EditorState";
-import { useEditorState } from "../../EditorStateContext";
+import { useEditorState } from "../../useEditorState";
 import { DefaultVariant, Variant } from "../../../models/Variant";
 import { Component } from "../../../models/Component";
 import { addVariant } from "../../../services/AddVariant";

@@ -8,7 +8,7 @@ import {
 } from "@seanchas116/paintkit/src/components/sidebar/Inspector";
 import { Label } from "@seanchas116/paintkit/src/components/Label";
 import { Input } from "@seanchas116/paintkit/src/components/Input";
-import { useEditorState } from "../../../EditorStateContext";
+import { useEditorState } from "../../../useEditorState";
 
 export const SlotElementPane: React.FC = observer(function SlotElementPane() {
   const editorState = useEditorState();

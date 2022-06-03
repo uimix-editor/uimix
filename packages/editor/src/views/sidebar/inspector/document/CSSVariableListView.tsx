@@ -18,7 +18,7 @@ import { PopoverCaster } from "@seanchas116/paintkit/src/components/PopoverCaste
 import { CSSVariable } from "../../../../models/CSSVariable";
 import { EditorState } from "../../../../state/EditorState";
 import { CSSVariableList } from "../../../../models/CSSVariableList";
-import { useEditorState } from "../../../EditorStateContext";
+import { useEditorState } from "../../../useEditorState";
 
 const DRAG_MIME = "application/x.macaron-tree-drag-css-variable";
 

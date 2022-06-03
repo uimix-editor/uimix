@@ -6,7 +6,7 @@ import styled from "styled-components";
 import { observer } from "mobx-react-lite";
 import { checkPattern } from "@seanchas116/paintkit/src/components/Common";
 import { DocumentMount } from "../../mount/DocumentMount";
-import { useEditorState } from "../EditorStateContext";
+import { useEditorState } from "../useEditorState";
 import { PanOverlay } from "./PanOverlay";
 import { Indicators } from "./indicators/Indicators";
 import { PointerOverlay } from "./pointer/PointerOverlay";

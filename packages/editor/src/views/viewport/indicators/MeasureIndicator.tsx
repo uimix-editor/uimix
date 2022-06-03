@@ -2,7 +2,7 @@ import { observer } from "mobx-react-lite";
 import { Rect } from "paintvec";
 import React from "react";
 import { colors } from "@seanchas116/paintkit/src/components/Palette";
-import { useEditorState } from "../../EditorStateContext";
+import { useEditorState } from "../../useEditorState";
 import { XDistanceIndicator, YDistanceIndicator } from "./DistanceIndicator";
 
 export const MeasureIndicator: React.FC = observer(function MeasureIndicator() {

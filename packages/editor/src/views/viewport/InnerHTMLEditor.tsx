@@ -17,7 +17,7 @@ import "codemirror/mode/xml/xml";
 import CodeMirror from "codemirror";
 import { RootPortal } from "@seanchas116/paintkit/src/components/RootPortal";
 import { ElementInstance } from "../../models/ElementInstance";
-import { useEditorState } from "../EditorStateContext";
+import { useEditorState } from "../useEditorState";
 import { formatHTML } from "../../util/Format";
 import { parseHTMLFragment } from "../../util/Hast";
 import { EditorState } from "../../state/EditorState";

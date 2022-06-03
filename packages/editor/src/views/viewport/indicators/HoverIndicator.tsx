@@ -1,7 +1,7 @@
 import React from "react";
 import { observer } from "mobx-react-lite";
 import { colors } from "@seanchas116/paintkit/src/components/Palette";
-import { useEditorState } from "../../EditorStateContext";
+import { useEditorState } from "../../useEditorState";
 
 export const HoverIndicator: React.FC = observer(function HoverIndicator() {
   const editorState = useEditorState();

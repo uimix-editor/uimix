@@ -5,9 +5,9 @@ import { action } from "mobx";
 import { ContextMenuProvider } from "@seanchas116/paintkit/src/components/menu/ContextMenuProvider";
 import { EditorState } from "../state/EditorState";
 import { RightSideBar } from "./sidebar/SideBar";
-import { EditorStateContext } from "./EditorStateContext";
 import { ToolBar } from "./ToolBar";
 import { Viewport } from "./viewport/Viewport";
+import { EditorStateProvider } from "./useEditorState";
 
 const Columns = styled.div`
   display: flex;
@@ -49,7 +49,7 @@ export const Editor: React.FC<{
   }, []);
 
   return (
-    <EditorStateContext.Provider value={editorState}>
+    <EditorStateProvider value={editorState}>
       <ContextMenuProvider>
         <Columns
           className={className}
@@ -62,6 +62,6 @@ export const Editor: React.FC<{
           <RightSideBar />
         </Columns>
       </ContextMenuProvider>
-    </EditorStateContext.Provider>
+    </EditorStateProvider>
   );
 };

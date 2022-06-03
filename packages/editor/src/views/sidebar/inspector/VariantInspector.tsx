@@ -13,7 +13,7 @@ import { Label } from "@seanchas116/paintkit/src/components/Label";
 import { Input } from "@seanchas116/paintkit/src/components/Input";
 import { NumberInput } from "@seanchas116/paintkit/src/components/NumberInput";
 import { CSSColorInput } from "@seanchas116/paintkit/src/components/css/CSSColorInput";
-import { useEditorState } from "../../EditorStateContext";
+import { useEditorState } from "../../useEditorState";
 
 const VariantInspectorWrap = styled.div``;
 

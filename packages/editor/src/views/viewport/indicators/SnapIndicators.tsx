@@ -6,7 +6,7 @@ import {
   SameMarginSnapping,
 } from "@seanchas116/paintkit/src/util/Snapping";
 import { colors } from "@seanchas116/paintkit/src/components/Palette";
-import { useEditorState } from "../../EditorStateContext";
+import { useEditorState } from "../../useEditorState";
 import { XDistanceIndicator, YDistanceIndicator } from "./DistanceIndicator";
 
 const SnapLine = (props: {

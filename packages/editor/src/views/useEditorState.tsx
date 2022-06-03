@@ -1,8 +1,9 @@
 import React, { useContext } from "react";
 import { EditorState } from "../state/EditorState";
 
-export const EditorStateContext =
-  React.createContext<EditorState | undefined>(undefined);
+const EditorStateContext = React.createContext<EditorState | undefined>(
+  undefined
+);
 
 export function useEditorState(): EditorState {
   const editorState = useContext(EditorStateContext);
@@ -13,3 +14,5 @@ export function useEditorState(): EditorState {
   }
   return editorState;
 }
+
+export const EditorStateProvider = EditorStateContext.Provider;

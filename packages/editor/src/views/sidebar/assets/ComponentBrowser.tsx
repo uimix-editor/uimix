@@ -5,7 +5,7 @@ import { observer } from "mobx-react-lite";
 import { useState } from "react";
 import styled from "styled-components";
 import { CustomElementMetadata } from "../../../models/CustomElementMetadata";
-import { useEditorState } from "../../EditorStateContext";
+import { useEditorState } from "../../useEditorState";
 import {
   AssetGrid,
   AssetGridHeading,

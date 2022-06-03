@@ -4,7 +4,7 @@ import { observer } from "mobx-react-lite";
 import { Rect } from "paintvec";
 import { colors } from "@seanchas116/paintkit/src/components/Palette";
 import { sameOrNone } from "@seanchas116/paintkit/src/util/Collection";
-import { useEditorState } from "../../EditorStateContext";
+import { useEditorState } from "../../useEditorState";
 import { RootElement } from "../../../models/RootElement";
 
 const SelectionInfoWrap = styled.div`
