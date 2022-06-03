@@ -2,6 +2,7 @@ import React, { useEffect } from "react";
 import styled from "styled-components";
 import { colors } from "@seanchas116/paintkit/src/components/Palette";
 import { action } from "mobx";
+import { ContextMenuProvider } from "@seanchas116/paintkit/src/components/menu/ContextMenuProvider";
 import { EditorState } from "../state/EditorState";
 import { RightSideBar } from "./sidebar/SideBar";
 import { EditorStateContext } from "./EditorStateContext";
@@ -49,16 +50,18 @@ export const Editor: React.FC<{
 
   return (
     <EditorStateContext.Provider value={editorState}>
-      <Columns
-        className={className}
-        onContextMenuCapture={(e) => e.preventDefault()}
-      >
-        <Center>
-          <ToolBar />
-          <StyledViewport />
-        </Center>
-        <RightSideBar />
-      </Columns>
+      <ContextMenuProvider>
+        <Columns
+          className={className}
+          onContextMenuCapture={(e) => e.preventDefault()}
+        >
+          <Center>
+            <ToolBar />
+            <StyledViewport />
+          </Center>
+          <RightSideBar />
+        </Columns>
+      </ContextMenuProvider>
     </EditorStateContext.Provider>
   );
 };

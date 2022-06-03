@@ -1,6 +1,5 @@
 import React, { useEffect, useMemo } from "react";
 import { PaintkitRoot } from "@seanchas116/paintkit/src/components/PaintkitRoot";
-import { ContextMenuProvider } from "@seanchas116/paintkit/src/components/menu/ContextMenuProvider";
 import { reaction } from "mobx";
 import styled, { createGlobalStyle } from "styled-components";
 import { fontFamily } from "@seanchas116/paintkit/src/components/Common";
@@ -52,9 +51,7 @@ export const App: React.FC<{
     <>
       <GlobalStyle />
       <PaintkitRoot colorScheme="auto">
-        <ContextMenuProvider>
-          <StyledEditor editorState={editorState} />
-        </ContextMenuProvider>
+        <StyledEditor editorState={editorState} />
       </PaintkitRoot>
     </>
   );

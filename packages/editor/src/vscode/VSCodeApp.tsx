@@ -1,6 +1,5 @@
 import React, { useMemo } from "react";
 import { PaintkitRoot } from "@seanchas116/paintkit/src/components/PaintkitRoot";
-import { ContextMenuProvider } from "@seanchas116/paintkit/src/components/menu/ContextMenuProvider";
 import styled, { createGlobalStyle } from "styled-components";
 import { fontFamily } from "@seanchas116/paintkit/src/components/Common";
 import { Editor } from "../views/Editor";
@@ -51,9 +50,7 @@ export const VSCodeApp: React.FC<{
         lightSelector="body.vscode-light &"
         darkSelector="body.vscode-dark &, body.vscode-high-contrast &"
       >
-        <ContextMenuProvider>
-          <StyledEditor editorState={editorState} />
-        </ContextMenuProvider>
+        <StyledEditor editorState={editorState} />
       </PaintkitRoot>
     </>
   );
