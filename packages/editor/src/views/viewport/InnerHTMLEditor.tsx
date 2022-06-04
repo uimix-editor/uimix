@@ -159,7 +159,6 @@ export const InnerHTMLEditorBody: React.FC<{
       lineWrapping: true,
     });
     editorRef.current = editor;
-    editor.setValue(state.value);
 
     setTimeout(() => {
       editor.execCommand("selectAll");
@@ -170,7 +169,16 @@ export const InnerHTMLEditorBody: React.FC<{
       state.onChangeValue(editor.getValue());
     });
 
+    const disposer = reaction(
+      () => state.value,
+      (value) => {
+        editor.setValue(value);
+      },
+      { fireImmediately: true }
+    );
+
     return () => {
+      disposer();
       editor.toTextArea();
     };
   }, []);
