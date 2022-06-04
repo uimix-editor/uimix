@@ -8,9 +8,9 @@ import { observer } from "mobx-react-lite";
 import styled, { createGlobalStyle } from "styled-components";
 import { toHtml } from "hast-util-to-html";
 import { action, computed, makeObservable, observable, reaction } from "mobx";
-import { Rect } from "paintvec";
+import { Rect, Vec2 } from "paintvec";
 import type * as hast from "hast";
-import { isEqual } from "lodash-es";
+import { clamp, isEqual } from "lodash-es";
 import CodeMirror from "codemirror";
 import "codemirror/mode/xml/xml";
 import { RootPortal } from "@seanchas116/paintkit/src/components/RootPortal";
@@ -34,13 +34,15 @@ const Background = styled.div`
   height: 100%;
 `;
 
+const popoverSize = new Vec2(480, 160);
+
 const TextareaWrap = styled.div`
   position: fixed;
   ${popoverStyle}
   padding: 4px;
 
-  width: 400px;
-  height: 160px;
+  width: ${popoverSize.x}px;
+  height: ${popoverSize.y}px;
 
   resize: both;
 
@@ -102,6 +104,13 @@ class InnerHTMLEditorState {
     return this.target.boundingBox
       .transform(this.editorState.scroll.documentToViewport)
       .translate(this.editorState.scroll.viewportClientRect.topLeft);
+  }
+
+  @computed get position(): Vec2 {
+    const { bbox } = this;
+    const x = clamp(bbox.left, 0, window.innerWidth - popoverSize.x);
+    const y = clamp(bbox.bottom, 0, window.innerHeight - popoverSize.y);
+    return new Vec2(x, y);
   }
 
   setValue(value: string): void {
@@ -166,14 +175,16 @@ export const InnerHTMLEditorBody: React.FC<{
     };
   }, []);
 
+  const { position } = state;
+
   return (
     <RootPortal>
       <GlobalStyle />
       <Background onClick={state.onEnd} />
       <TextareaWrap
         style={{
-          left: `${state.bbox.left}px`,
-          top: `${state.bbox.bottom}px`,
+          left: `${position.x}px`,
+          top: `${position.y}px`,
         }}
         onWheel={(e) => e.stopPropagation()}
       >
