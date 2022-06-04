@@ -14,16 +14,23 @@ import { clamp, isEqual } from "lodash-es";
 import CodeMirror from "codemirror";
 import "codemirror/mode/xml/xml";
 import { RootPortal } from "@seanchas116/paintkit/src/components/RootPortal";
+// @ts-ignore
+// eslint-disable-next-line
+import codemirrorCSS from "codemirror/lib/codemirror.css?raw";
+// @ts-ignore
+// eslint-disable-next-line
+import codemirrorMaterialDarkerCSS from "codemirror/theme/material-darker.css?raw";
 import { ElementInstance } from "../../models/ElementInstance";
 import { useEditorState } from "../useEditorState";
 import { formatHTML } from "../../util/Format";
 import { parseHTMLFragment } from "../../util/Hast";
 import { EditorState } from "../../state/EditorState";
-import cssFiles from "../../cssFiles.json";
+
+console.log(codemirrorCSS);
 
 const GlobalStyle = createGlobalStyle`
-  ${cssFiles["codemirror/lib/codemirror.css"]}
-  ${cssFiles["codemirror/theme/material-darker.css"]}
+${codemirrorCSS}
+${codemirrorMaterialDarkerCSS}
 `;
 
 const Background = styled.div`
