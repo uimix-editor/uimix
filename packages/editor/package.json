@@ -3,9 +3,8 @@
   "version": "0.0.0",
   "private": true,
   "scripts": {
-    "buildResources": "ts-node -P tsconfig.node.json scripts/buildResources.ts",
-    "build": "run-s buildResources && tsc && node build.js",
-    "dev": "run-s buildResources && vite",
+    "build": "tsc && node build.js",
+    "dev": "vite",
     "format": "prettier --write src",
     "lint": "eslint src",
     "preview": "vite preview",
