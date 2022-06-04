@@ -42,6 +42,8 @@ export class DocumentMount {
     this.domDocument = assertNonNull(this.iframe.contentDocument);
     editorState.elementPicker.root = this.domDocument;
     this.domDocument.body.style.margin = "0";
+    // @ts-ignore
+    this.domDocument.body.style.webkitFontSmoothing = "antialiased";
 
     this.container = this.domDocument.createElement("div");
     this.container.style.position = "absolute";
@@ -69,8 +71,8 @@ export class DocumentMount {
       }
     });
 
-    const globalStyle = this.domDocument.createElement("style");
-    this.domDocument.head.append(globalStyle);
+    const cssVariablesStyle = this.domDocument.createElement("style");
+    this.domDocument.head.append(cssVariablesStyle);
 
     this.disposers = [
       reaction(
@@ -96,8 +98,8 @@ export class DocumentMount {
       ),
       reaction(
         () => document.cssVariables.toCSSRule(),
-        (globalCSS) => {
-          globalStyle.textContent = globalCSS.toString();
+        (cssVariablesCSS) => {
+          cssVariablesStyle.textContent = cssVariablesCSS.toString();
         },
         { fireImmediately: true }
       ),
