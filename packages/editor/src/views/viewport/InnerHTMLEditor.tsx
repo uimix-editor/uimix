@@ -166,13 +166,17 @@ export const InnerHTMLEditorBody: React.FC<{
     }, 0);
 
     editor.on("change", (editor) => {
-      state.onChangeValue(editor.getValue());
+      if (state.value !== editor.getValue()) {
+        state.onChangeValue(editor.getValue());
+      }
     });
 
     const disposer = reaction(
       () => state.value,
       (value) => {
-        editor.setValue(value);
+        if (editor.getValue() !== value) {
+          editor.setValue(value);
+        }
       },
       { fireImmediately: true }
     );
