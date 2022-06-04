@@ -7,12 +7,14 @@ import styled, { StyleSheetManager } from "styled-components";
 import { PaintkitRoot } from "@seanchas116/paintkit/src/components/PaintkitRoot";
 import { JSONUndoHistory } from "@seanchas116/paintkit/src/util/JSONUndoHistory";
 import { RootPortalHostProvider } from "@seanchas116/paintkit/src/components/RootPortal";
+import { action, observable } from "mobx";
 import { DocumentJSON, Document } from "../models/Document";
 import { EditorState } from "../state/EditorState";
 import { Editor } from "../views/Editor";
+import { parseDocument } from "../fileFormat/document";
 
 class EditorElementEditorState extends EditorState {
-  readonly history = new JSONUndoHistory<DocumentJSON, Document>(
+  @observable.ref history = new JSONUndoHistory<DocumentJSON, Document>(
     new Document()
   );
 }
@@ -33,14 +35,17 @@ const App: React.FC<{
 };
 
 export class MacaronEditorElement extends HTMLElement {
-  private _editorState = new EditorElementEditorState();
-  private _reactRoot?: ReactDOM.Root;
+  static get observedAttributes(): string[] {
+    return ["value"];
+  }
 
   constructor() {
     super();
     this._editorState.wheelScrollEnabled = false;
     this._editorState.layout = "threeColumn";
   }
+  private _editorState = new EditorElementEditorState();
+  private _reactRoot?: ReactDOM.Root;
 
   connectedCallback(): void {
     this.setAttribute("tabindex", "-1");
@@ -80,6 +85,30 @@ export class MacaronEditorElement extends HTMLElement {
 
   get editorState(): EditorElementEditorState {
     return this._editorState;
+  }
+
+  private _value = "";
+
+  get value(): string {
+    return this._value;
+  }
+
+  @action set value(value: string) {
+    this._value = value;
+    const document = parseDocument(value);
+    this._editorState.history = new JSONUndoHistory<DocumentJSON, Document>(
+      document
+    );
+  }
+
+  attributeChangedCallback(
+    name: string,
+    oldValue: string,
+    newValue: string
+  ): void {
+    if (name === "value") {
+      this.value = newValue;
+    }
   }
 }
 

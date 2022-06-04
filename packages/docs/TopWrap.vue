@@ -58,7 +58,7 @@ demo-tab {
     >
       Responsive Design
     </demo-tab>
-    <macaron-editor slot="demo-editor"></macaron-editor>
+    <macaron-editor slot="demo-editor" :value="macaronFile"></macaron-editor>
   </top-page>
 </template>
 
@@ -69,6 +69,7 @@ export default {
   data() {
     return {
       currentTab: 0,
+      macaronFile: thisPageMacaronFile,
     };
   },
 
