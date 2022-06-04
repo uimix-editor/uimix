@@ -63,6 +63,8 @@ demo-tab {
 </template>
 
 <script>
+import thisPageMacaronFile from "./components.macaron?raw";
+
 export default {
   data() {
     return {
@@ -74,6 +76,7 @@ export default {
     import("./components.macaron");
     import("@macaron-app/editor/dist/webcomponent/main.js");
     import("@macaron-app/editor/dist/webcomponent/main.css");
+    console.log(thisPageMacaronFile);
   },
 };
 </script>
