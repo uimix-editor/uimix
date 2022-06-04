@@ -10,17 +10,21 @@
 <macaron-component name="top-page">
   <macaron-variant
     x="0"
-    y="0"
+    y="154"
     width="1440"
     background-color="white"
   ></macaron-variant>
   <macaron-variant
     x="1464"
-    y="0"
+    y="154"
     width="1000"
     media="(max-width: 1024px)"
   ></macaron-variant>
-  <macaron-variant x="2488" y="0" media="(max-width: 768px)"></macaron-variant>
+  <macaron-variant
+    x="2484"
+    y="154"
+    media="(max-width: 768px)"
+  ></macaron-variant>
   <template>
     <h1 id="heroTitle">Design tool to create<br />Web Components directly</h1>
     <div id="heroSubtitle">
@@ -345,7 +349,7 @@
   </style>
 </macaron-component>
 <macaron-component name="feature-card">
-  <macaron-variant x="827" y="-423" width="480"></macaron-variant>
+  <macaron-variant x="349" y="0" width="480"></macaron-variant>
   <template>
     <div id="icon-area">
       <div id="icon-bg"></div>
@@ -433,14 +437,10 @@
   </style>
 </macaron-component>
 <macaron-component name="hero-button">
+  <macaron-variant x="0" y="0" background-color="transparent"></macaron-variant>
   <macaron-variant
-    x="520"
-    y="-168"
-    background-color="transparent"
-  ></macaron-variant>
-  <macaron-variant
-    x="767"
-    y="-168"
+    x="161"
+    y="0"
     background-color="transparent"
     selector=":hover"
   ></macaron-variant>
@@ -478,12 +478,8 @@
   </style>
 </macaron-component>
 <macaron-component name="hero-button-secondary">
-  <macaron-variant x="520" y="-80"></macaron-variant>
-  <macaron-variant
-    x="766.9999879656075"
-    y="-79.99999997955751"
-    selector=":hover"
-  ></macaron-variant>
+  <macaron-variant x="0" y="72"></macaron-variant>
+  <macaron-variant x="139" y="72" selector=":hover"></macaron-variant>
   <template>
     <div id="herobutton1"><slot>GitHub</slot></div>
   </template>
