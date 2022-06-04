@@ -28,6 +28,10 @@ macaron-editor {
   border-radius: 10px;
   overflow: hidden;
 }
+
+demo-tab {
+  cursor: pointer;
+}
 </style>
 
 <template>

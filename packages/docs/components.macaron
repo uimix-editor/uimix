@@ -556,7 +556,7 @@
       padding-left: 24px;
       color: #4e515480;
       font-family: Readex Pro;
-      font-weight: 600;
+      font-weight: 500;
       font-size: 16px;
       line-height: 2;
     }
