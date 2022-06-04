@@ -37,15 +37,39 @@ demo-tab {
 <template>
   <div class="background-gradient"></div>
   <top-page>
-    <demo-tab slot="demo-tabs" aria-selected="true">This Web Site</demo-tab>
-    <demo-tab slot="demo-tabs">Interactions</demo-tab>
-    <demo-tab slot="demo-tabs">Responsive Design</demo-tab>
+    <demo-tab
+      slot="demo-tabs"
+      :aria-selected="currentTab === 0"
+      @click="currentTab = 0"
+    >
+      This Web Site
+    </demo-tab>
+    <demo-tab
+      slot="demo-tabs"
+      :aria-selected="currentTab === 1"
+      @click="currentTab = 1"
+    >
+      Interactions
+    </demo-tab>
+    <demo-tab
+      slot="demo-tabs"
+      :aria-selected="currentTab === 2"
+      @click="currentTab = 2"
+    >
+      Responsive Design
+    </demo-tab>
     <macaron-editor slot="demo-editor"></macaron-editor>
   </top-page>
 </template>
 
 <script>
 export default {
+  data() {
+    return {
+      currentTab: 0,
+    };
+  },
+
   mounted() {
     import("./components.macaron");
     import("@macaron-app/editor/dist/webcomponent/main.js");
