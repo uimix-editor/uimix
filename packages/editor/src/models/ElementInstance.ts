@@ -173,6 +173,9 @@ export class ElementInstance {
       height?: boolean;
     }
   ): void {
+    let variantWidthSet = false;
+    let variantHeightSet = false;
+
     if (!this.parent) {
       const variant = this.variant;
       if (variant) {
@@ -181,6 +184,14 @@ export class ElementInstance {
         }
         if (options.y) {
           variant.y = boundingBox.top;
+        }
+        if (options.width && variant.width !== undefined) {
+          variantWidthSet = true;
+          variant.width = boundingBox.width;
+        }
+        if (options.height && variant.height !== undefined) {
+          variantHeightSet = true;
+          variant.height = boundingBox.height;
         }
       }
     } else if (
@@ -196,10 +207,10 @@ export class ElementInstance {
       }
     }
 
-    if (options.width) {
+    if (options.width && !variantWidthSet) {
       this.style.width = `${boundingBox.width}px`;
     }
-    if (options.height) {
+    if (options.height && !variantHeightSet) {
       this.style.height = `${boundingBox.height}px`;
     }
   }
