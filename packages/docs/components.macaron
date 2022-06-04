@@ -42,7 +42,13 @@
         ><hero-button-secondary id="herobutton3"></hero-button-secondary
       ></a>
     </div>
-    <slot></slot>
+    <div id="div">
+      <slot name="demo-tabs"
+        ><demo-tab id="div5"></demo-tab><demo-tab id="div6">Example 2</demo-tab
+        ><demo-tab id="div7">Example 3</demo-tab></slot
+      >
+    </div>
+    <slot name="demo-editor"></slot>
     <div id="features">
       <div id="feature-rows">
         <div id="feature-row1">
@@ -198,6 +204,9 @@
     }
     #herobutton3 {
       position: relative;
+    }
+    #div {
+      display: flex;
     }
     #features {
       margin-top: 96px;
@@ -526,6 +535,32 @@
       border-right-color: #1e252b26;
       border-bottom-color: #1e252b26;
       border-left-color: #1e252b26;
+    }
+  </style>
+</macaron-component>
+<macaron-component name="demo-tab">
+  <macaron-variant x="863" y="0"></macaron-variant>
+  <macaron-variant
+    x="1027"
+    y="0"
+    selector="[aria-selected=&#x22;true&#x22;]"
+  ></macaron-variant>
+  <template>
+    <slot>Example 1</slot>
+  </template>
+  <style>
+    :host {
+      display: block;
+      padding-right: 32px;
+      padding-left: 32px;
+      color: #4e515480;
+      font-family: Readex Pro;
+      font-weight: 600;
+      font-size: 16px;
+      line-height: 2;
+    }
+    :host([aria-selected="true"]) {
+      color: #0085ff;
     }
   </style>
 </macaron-component>
