@@ -56,6 +56,14 @@ export class StylePropertyState {
   readonly onChangeWithoutCommit = action((value: string | undefined) => {
     for (const instance of this.targetInstances) {
       instance.style[this.key] = value || undefined;
+
+      if (this.key === "width") {
+        if (!instance.parent && instance.variant) {
+          if (value) {
+            instance.variant.width = undefined;
+          }
+        }
+      }
     }
     return true;
   });
