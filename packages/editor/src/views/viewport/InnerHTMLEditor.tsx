@@ -40,8 +40,8 @@ const TextareaWrap = styled.div`
   ${popoverStyle}
   padding: 4px;
 
-  width: 320px;
-  height: 80px;
+  width: 400px;
+  height: 160px;
 
   resize: both;
 
@@ -141,6 +141,7 @@ export const InnerHTMLEditorBody: React.FC<{
     const editor = CodeMirror.fromTextArea(textareaRef.current, {
       theme: "material-darker",
       mode: "xml",
+      lineWrapping: true,
     });
     editorRef.current = editor;
     editor.setValue(state.value);
