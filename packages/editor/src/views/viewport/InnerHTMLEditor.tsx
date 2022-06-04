@@ -68,7 +68,12 @@ class InnerHTMLEditorState {
 
     this.editorState = editorState;
     this.target = target;
-    const innerHTML = target.element.innerHTML;
+    const innerHTML = target.element.innerHTML.filter((node) => {
+      if (node.type === "element" && node.properties?.slot) {
+        return false;
+      }
+      return true;
+    });
     this.lastInnerHTML = innerHTML;
     this.value = toFormattedHTML(innerHTML);
 
