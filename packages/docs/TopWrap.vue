@@ -33,7 +33,7 @@ macaron-editor {
 <template>
   <div class="background-gradient"></div>
   <top-page>
-    <macaron-editor></macaron-editor>
+    <macaron-editor slot="demo-editor"></macaron-editor>
   </top-page>
 </template>
 
