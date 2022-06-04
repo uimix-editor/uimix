@@ -206,6 +206,7 @@
       position: relative;
     }
     #div {
+      margin-bottom: 16px;
       display: flex;
     }
     #features {
@@ -551,8 +552,8 @@
   <style>
     :host {
       display: block;
-      padding-right: 32px;
-      padding-left: 32px;
+      padding-right: 24px;
+      padding-left: 24px;
       color: #4e515480;
       font-family: Readex Pro;
       font-weight: 600;

@@ -33,6 +33,9 @@ macaron-editor {
 <template>
   <div class="background-gradient"></div>
   <top-page>
+    <demo-tab slot="demo-tabs" aria-selected="true">This Web Site</demo-tab>
+    <demo-tab slot="demo-tabs">Interactions</demo-tab>
+    <demo-tab slot="demo-tabs">Responsive Design</demo-tab>
     <macaron-editor slot="demo-editor"></macaron-editor>
   </top-page>
 </template>
