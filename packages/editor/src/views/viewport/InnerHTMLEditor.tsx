@@ -26,8 +26,6 @@ import { formatHTML } from "../../util/Format";
 import { parseHTMLFragment } from "../../util/Hast";
 import { EditorState } from "../../state/EditorState";
 
-console.log(codemirrorCSS);
-
 const GlobalStyle = createGlobalStyle`
 ${codemirrorCSS}
 ${codemirrorMaterialDarkerCSS}
