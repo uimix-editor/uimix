@@ -20,7 +20,6 @@ import { formatHTML } from "../../util/Format";
 import { parseHTMLFragment } from "../../util/Hast";
 import { EditorState } from "../../state/EditorState";
 import cssFiles from "../../cssFiles.json";
-import { colors } from "@seanchas116/paintkit/src/components/Palette";
 
 const GlobalStyle = createGlobalStyle`
   ${cssFiles["codemirror/lib/codemirror.css"]}
@@ -53,12 +52,14 @@ const TextareaWrap = styled.div`
   }
 
   .CodeMirror-selected {
-    background: #79beffac !important;
+    background: #5b8dbc !important;
   }
 `;
 
 function toFormattedHTML(hastNodes: hast.Content[]): string {
-  return formatHTML(toHtml(hastNodes));
+  return formatHTML(toHtml(hastNodes), {
+    printWidth: Infinity,
+  });
 }
 
 class InnerHTMLEditorState {
