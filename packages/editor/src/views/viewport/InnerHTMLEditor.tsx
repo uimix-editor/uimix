@@ -7,8 +7,8 @@ import { useViewModel } from "@seanchas116/paintkit/src/components/hooks/useView
 import { observer } from "mobx-react-lite";
 import styled, { createGlobalStyle } from "styled-components";
 import { toHtml } from "hast-util-to-html";
-import { action, computed, makeObservable, observable, reaction } from "mobx";
-import { Rect, Vec2 } from "paintvec";
+import { action, makeObservable, observable, reaction } from "mobx";
+import { Vec2 } from "paintvec";
 import type * as hast from "hast";
 import { clamp, isEqual } from "lodash-es";
 import CodeMirror from "codemirror";
@@ -90,6 +90,13 @@ class InnerHTMLEditorState {
         })
       )
     );
+
+    const bbox = this.target.boundingBox
+      .transform(this.editorState.scroll.documentToViewport)
+      .translate(this.editorState.scroll.viewportClientRect.topLeft);
+    const x = clamp(bbox.left, 0, window.innerWidth - popoverSize.x);
+    const y = clamp(bbox.bottom, 0, window.innerHeight - popoverSize.y);
+    this.position = new Vec2(x, y);
   }
 
   private disposers: (() => void)[] = [];
@@ -100,18 +107,7 @@ class InnerHTMLEditorState {
   @observable value = "";
   private lastInnerHTML: hast.Content[] = [];
 
-  @computed get bbox(): Rect {
-    return this.target.boundingBox
-      .transform(this.editorState.scroll.documentToViewport)
-      .translate(this.editorState.scroll.viewportClientRect.topLeft);
-  }
-
-  @computed get position(): Vec2 {
-    const { bbox } = this;
-    const x = clamp(bbox.left, 0, window.innerWidth - popoverSize.x);
-    const y = clamp(bbox.bottom, 0, window.innerHeight - popoverSize.y);
-    return new Vec2(x, y);
-  }
+  readonly position: Vec2;
 
   setValue(value: string): void {
     this.value = value;
