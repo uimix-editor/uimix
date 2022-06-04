@@ -8,9 +8,9 @@ import { observer } from "mobx-react-lite";
 import styled, { createGlobalStyle } from "styled-components";
 import { toHtml } from "hast-util-to-html";
 import { action, computed, makeObservable, observable, reaction } from "mobx";
-import { Rect } from "paintvec";
+import { Vec2 } from "paintvec";
 import type * as hast from "hast";
-import { isEqual } from "lodash-es";
+import { clamp, isEqual } from "lodash-es";
 import CodeMirror from "codemirror";
 import "codemirror/mode/xml/xml";
 import { RootPortal } from "@seanchas116/paintkit/src/components/RootPortal";
@@ -34,13 +34,15 @@ const Background = styled.div`
   height: 100%;
 `;
 
+const popoverSize = new Vec2(480, 160);
+
 const TextareaWrap = styled.div`
   position: fixed;
   ${popoverStyle}
   padding: 4px;
 
-  width: 320px;
-  height: 80px;
+  width: ${popoverSize.x}px;
+  height: ${popoverSize.y}px;
 
   resize: both;
 
@@ -50,10 +52,16 @@ const TextareaWrap = styled.div`
     font-family: ${monospaceFontFamily};
     font-size: 12px;
   }
+
+  .CodeMirror-selected {
+    background: #5b8dbc !important;
+  }
 `;
 
 function toFormattedHTML(hastNodes: hast.Content[]): string {
-  return formatHTML(toHtml(hastNodes));
+  return formatHTML(toHtml(hastNodes), {
+    printWidth: Infinity,
+  });
 }
 
 class InnerHTMLEditorState {
@@ -62,7 +70,12 @@ class InnerHTMLEditorState {
 
     this.editorState = editorState;
     this.target = target;
-    const innerHTML = target.element.innerHTML;
+    const innerHTML = target.element.innerHTML.filter((node) => {
+      if (node.type === "element" && node.properties?.slot) {
+        return false;
+      }
+      return true;
+    });
     this.lastInnerHTML = innerHTML;
     this.value = toFormattedHTML(innerHTML);
 
@@ -77,6 +90,8 @@ class InnerHTMLEditorState {
         })
       )
     );
+
+    this.initialPosition = this.getPosition();
   }
 
   private disposers: (() => void)[] = [];
@@ -87,17 +102,30 @@ class InnerHTMLEditorState {
   @observable value = "";
   private lastInnerHTML: hast.Content[] = [];
 
-  @computed get bbox(): Rect {
-    return this.target.boundingBox
+  readonly initialPosition: Vec2;
+
+  @computed get position(): Vec2 {
+    const pos = this.getPosition();
+    return new Vec2(this.initialPosition.x, pos.y);
+  }
+
+  private getPosition(): Vec2 {
+    const bbox = this.target.boundingBox
       .transform(this.editorState.scroll.documentToViewport)
       .translate(this.editorState.scroll.viewportClientRect.topLeft);
+    const x = clamp(bbox.left, 0, window.innerWidth - popoverSize.x);
+    const y = clamp(bbox.bottom, 0, window.innerHeight - popoverSize.y);
+    return new Vec2(x, y);
   }
 
   setValue(value: string): void {
     this.value = value;
 
-    const node = parseHTMLFragment(value);
-    this.target.setInnerHTML(node.children);
+    const namedSlotContents = this.target.element.innerHTML.filter(
+      (node) => node.type === "element" && node.properties?.slot
+    );
+    const newContents = parseHTMLFragment(value).children;
+    this.target.setInnerHTML([...namedSlotContents, ...newContents]);
     this.lastInnerHTML = this.target.element.innerHTML;
 
     this.editorState.history.commitDebounced("Change Inner HTML");
@@ -136,9 +164,9 @@ export const InnerHTMLEditorBody: React.FC<{
     const editor = CodeMirror.fromTextArea(textareaRef.current, {
       theme: "material-darker",
       mode: "xml",
+      lineWrapping: true,
     });
     editorRef.current = editor;
-    editor.setValue(state.value);
 
     setTimeout(() => {
       editor.execCommand("selectAll");
@@ -146,13 +174,28 @@ export const InnerHTMLEditorBody: React.FC<{
     }, 0);
 
     editor.on("change", (editor) => {
-      state.onChangeValue(editor.getValue());
+      if (state.value !== editor.getValue()) {
+        state.onChangeValue(editor.getValue());
+      }
     });
 
+    const disposer = reaction(
+      () => state.value,
+      (value) => {
+        if (editor.getValue() !== value) {
+          editor.setValue(value);
+        }
+      },
+      { fireImmediately: true }
+    );
+
     return () => {
+      disposer();
       editor.toTextArea();
     };
   }, []);
+
+  const { position } = state;
 
   return (
     <RootPortal>
@@ -160,8 +203,8 @@ export const InnerHTMLEditorBody: React.FC<{
       <Background onClick={state.onEnd} />
       <TextareaWrap
         style={{
-          left: `${state.bbox.left}px`,
-          top: `${state.bbox.bottom}px`,
+          left: `${position.x}px`,
+          top: `${position.y}px`,
         }}
         onWheel={(e) => e.stopPropagation()}
       >
