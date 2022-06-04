@@ -559,9 +559,19 @@
       font-weight: 500;
       font-size: 16px;
       line-height: 2;
+      letter-spacing: -0.02em;
+      border-bottom-width: 2px;
+      border-bottom-style: solid;
+      border-bottom-color: transparent;
     }
     :host([aria-selected="true"]) {
-      color: #0085ff;
+      color: #1e252b;
+      border-top-width: 0px;
+      border-right-width: 0px;
+      border-bottom-width: 2px;
+      border-bottom-style: solid;
+      border-bottom-color: #0085ff;
+      border-left-width: 0px;
     }
   </style>
 </macaron-component>
