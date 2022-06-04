@@ -121,8 +121,11 @@ class InnerHTMLEditorState {
   setValue(value: string): void {
     this.value = value;
 
-    const node = parseHTMLFragment(value);
-    this.target.setInnerHTML(node.children);
+    const namedSlotContents = this.target.element.innerHTML.filter(
+      (node) => node.type === "element" && node.properties?.slot
+    );
+    const newContents = parseHTMLFragment(value).children;
+    this.target.setInnerHTML([...namedSlotContents, ...newContents]);
     this.lastInnerHTML = this.target.element.innerHTML;
 
     this.editorState.history.commitDebounced("Change Inner HTML");
