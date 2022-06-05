@@ -42,13 +42,12 @@
         ><hero-button-secondary id="herobutton3"></hero-button-secondary
       ></a>
     </div>
-    <div id="div">
-      <slot name="demo-tabs"
-        ><demo-tab id="div5"></demo-tab><demo-tab id="div6">Example 2</demo-tab
-        ><demo-tab id="div7">Example 3</demo-tab></slot
-      >
-    </div>
-    <slot name="demo-editor"></slot>
+    <slot name="playground"
+      ><div id="div">
+        <demo-tab id="div5"></demo-tab><demo-tab id="div6">Example 2</demo-tab
+        ><demo-tab id="div7">Example 3</demo-tab>
+      </div></slot
+    >
     <div id="features">
       <div id="feature-rows">
         <div id="feature-row1">

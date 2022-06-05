@@ -22,6 +22,7 @@ demo-tab {
 }
 
 .playground-floating {
+  width: 100%;
   height: 640px;
   border: 0.5px solid rgba(255, 255, 255, 0.12);
   box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.15),
@@ -35,7 +36,7 @@ demo-tab {
   max-width: 1280px;
   display: flex;
   flex-direction: column;
-  align-items: stretch;
+  align-items: center;
   gap: 16px;
 }
 
@@ -62,20 +63,26 @@ demo-tab {
 .preview {
   flex: 1 0 0;
 }
+
+.demo-tabs {
+  display: flex;
+}
 </style>
 
 <template>
   <div class="background-gradient"></div>
   <top-page>
-    <demo-tab
-      slot="demo-tabs"
-      v-for="(demoFile, index) in demoFiles"
-      :aria-selected="currentTab === index"
-      @click="currentTab = index"
-    >
-      {{ demoFile.name }}
-    </demo-tab>
-    <div slot="demo-editor" class="playground">
+    <div slot="playground" class="playground">
+      <div class="demo-tabs">
+        <demo-tab
+          slot="demo-tabs"
+          v-for="(demoFile, index) in demoFiles"
+          :aria-selected="currentTab === index"
+          @click="currentTab = index"
+        >
+          {{ demoFile.name }}
+        </demo-tab>
+      </div>
       <macaron-editor
         class="playground-floating"
         slot="demo-editor"
