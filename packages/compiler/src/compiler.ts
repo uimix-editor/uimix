@@ -1,26 +1,10 @@
-import path from "path";
-import fs from "fs";
 import type * as hast from "hast";
-import * as prettier from "prettier";
 import { upperFirst, camelCase } from "lodash-es";
 import { toHtml } from "hast-util-to-html";
 import dedent from "dedent";
 import { parseHTMLFragment } from "./util";
 import { fixAssetPathInCSS, fixAssetPathInHTMLTree } from "./fix-asset-path";
 import { resetCSS } from "./resetCSS";
-
-export function compileFile(filePath: string, outputDir?: string): void {
-  const data = fs.readFileSync(filePath, "utf8");
-
-  const outFileName = path.basename(filePath).replace(/\.macaron$/, ".js");
-  const outFilePath = path.join(
-    outputDir ?? path.dirname(filePath),
-    outFileName
-  );
-
-  const out = compile(data);
-  fs.writeFileSync(outFilePath, out);
-}
 
 function compileComponent(ast: hast.Element): string {
   const name = ast.properties?.name?.toString();
@@ -108,9 +92,5 @@ export function compile(data: string): string {
     }
   }
 
-  const output = outputs.join("");
-
-  return prettier.format(output, {
-    parser: "babel",
-  });
+  return outputs.join("");
 }
