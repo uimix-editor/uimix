@@ -16,8 +16,8 @@ export function generatePreviewHTML(macaronFile: string, html: string): string {
       </style>
     </head>
     <body>
+      <script type="module" defer>${jsFile}</script>
       ${html}
-      <script type="module">${jsFile}</script>
     </body>
   </html>
   `;
