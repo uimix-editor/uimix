@@ -108,10 +108,12 @@ const demoFiles = [
   {
     name: "Basic",
     content: basicMacaronFile,
+    html: `<my-component></my-component>`,
   },
   {
     name: "Interactions",
     content: interactionsMacaronFile,
+    html: `<my-button>Button</my-button>`,
   },
   {
     name: "Responsive Design",
@@ -132,6 +134,7 @@ export default {
     onCurrentTabChange(index) {
       this.currentTab = index;
       this.currentFileContent = this.demoFiles[index].content;
+      this.codeMirror.setValue(this.demoFiles[index].html);
       this.updatePreviewHTML();
     },
     onFileContentChange() {
