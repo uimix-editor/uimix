@@ -15,7 +15,8 @@ const data = fs.readFileSync(fixtureFilePath, "utf-8");
 let doc: Document;
 
 beforeEach(() => {
-  doc = parseDocument(data);
+  doc = new Document();
+  parseDocument(doc, data);
 });
 
 describe(Document.name, () => {

@@ -47,7 +47,8 @@ export class File {
 
     try {
       const data = await (await fileHandle.getFile()).text();
-      const document = parseDocument(data);
+      const document = new Document();
+      parseDocument(document, data);
       runInAction(() => {
         this.history = new JSONUndoHistory<DocumentJSON, Document>(document);
         this.fileHandle = fileHandle;

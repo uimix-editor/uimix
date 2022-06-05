@@ -100,10 +100,8 @@ export class MacaronEditorElement extends HTMLElement {
 
   @action set value(value: string) {
     this._value = value;
-    const document = parseDocument(value);
-    this._editorState.history = new JSONUndoHistory<DocumentJSON, Document>(
-      document
-    );
+    parseDocument(this._editorState.document, value);
+    this._editorState.history.undoStack.clear();
   }
 
   attributeChangedCallback(
