@@ -34,6 +34,8 @@ demo-tab {
   flex: 1 0 0;
 }
 .html-editor :global(.CodeMirror) {
+  font-family: var(--vp-font-family-mono);
+  font-size: 13px;
   height: 100%;
 }
 
