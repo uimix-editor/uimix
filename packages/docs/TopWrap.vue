@@ -39,16 +39,28 @@ demo-tab {
   gap: 16px;
 }
 
-.html-editor-preview {
+.usage {
   position: relative;
   background-color: white;
+
+  display: flex;
+  align-items: stretch;
 }
 
 .html-editor {
-  height: 100%;
+  flex: 1 0 0;
 }
 .html-editor :global(.CodeMirror) {
   height: 100%;
+}
+
+.splitter {
+  width: 2px;
+  background-color: #ccc;
+}
+
+.preview {
+  flex: 1 0 0;
 }
 </style>
 
@@ -69,8 +81,10 @@ demo-tab {
         slot="demo-editor"
         :value="currentDemoFile.content"
       ></macaron-editor>
-      <div class="playground-floating html-editor-preview">
+      <div class="playground-floating usage">
         <div ref="editorBody" class="html-editor"></div>
+        <div class="splitter"></div>
+        <div class="preview"></div>
       </div>
     </div>
   </top-page>
