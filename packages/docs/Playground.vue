@@ -40,8 +40,19 @@ demo-tab {
 }
 
 .splitter {
-  width: 2px;
+  width: 4px;
   background-color: #ccc;
+  position: relative;
+}
+
+.splitter-draggable {
+  cursor: col-resize;
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: -4px;
+  right: -4px;
+  height: 100%;
 }
 
 .preview {
@@ -72,7 +83,9 @@ demo-tab {
     ></macaron-editor>
     <div class="playground-floating usage">
       <div ref="editorBody" class="html-editor"></div>
-      <div class="splitter"></div>
+      <div class="splitter">
+        <div class="splitter-draggable"></div>
+      </div>
       <div class="preview"></div>
     </div>
   </div>
