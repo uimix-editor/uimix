@@ -87,7 +87,7 @@ demo-tab {
       <div class="splitter">
         <div class="splitter-draggable"></div>
       </div>
-      <iframe class="preview" ref="preview"></iframe>
+      <iframe class="preview" ref="preview" sandbox="allow-scripts"></iframe>
     </div>
   </div>
 </template>
