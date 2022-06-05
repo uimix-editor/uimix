@@ -78,7 +78,7 @@ demo-tab {
 
 <script>
 import CodeMirror from "codemirror";
-import "codemirror/mode/xml/xml";
+import "codemirror/mode/htmlmixed/htmlmixed";
 import "codemirror/lib/codemirror.css";
 import "codemirror/theme/material-darker.css";
 import basicMacaronFile from "./examples/basic.macaron?raw";
@@ -125,7 +125,7 @@ export default {
       },
       {
         value: "<div>Hello</div>",
-        mode: "xml",
+        mode: "htmlmixed",
         lineNumbers: true,
         theme: "material-darker",
       }
