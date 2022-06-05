@@ -11,7 +11,7 @@ import { action, makeObservable, observable } from "mobx";
 import { DocumentJSON, Document } from "../models/Document";
 import { EditorState } from "../state/EditorState";
 import { Editor } from "../views/Editor";
-import { parseDocument } from "../fileFormat/document";
+import { parseDocument, stringifyDocument } from "../fileFormat/document";
 
 class EditorElementEditorState extends EditorState {
   constructor() {
@@ -48,6 +48,12 @@ export class MacaronEditorElement extends HTMLElement {
     super();
     this._editorState.wheelScrollEnabled = false;
     this._editorState.layout = "threeColumn";
+
+    this._editorState.history.on("change", () => {
+      this._value = stringifyDocument(this._editorState.document);
+      const event = new CustomEvent("change");
+      this.dispatchEvent(event);
+    });
   }
   private _editorState = new EditorElementEditorState();
   private _reactRoot?: ReactDOM.Root;
@@ -99,6 +105,9 @@ export class MacaronEditorElement extends HTMLElement {
   }
 
   @action set value(value: string) {
+    if (this._value === value) {
+      return;
+    }
     this._value = value;
     parseDocument(this._editorState.document, value);
     this._editorState.history.undoStack.clear();
