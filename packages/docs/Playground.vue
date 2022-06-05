@@ -173,7 +173,7 @@ export default {
       this.updatePreviewHTML();
     });
 
-    this.updatePreviewHTML(basicMacaronFile, `<my-component></my-component>`);
+    this.updatePreviewHTML(demoFiles[0].content, demoFiles[0].html);
   },
 };
 </script>
