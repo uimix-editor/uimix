@@ -86,7 +86,7 @@ demo-tab {
       <div class="splitter">
         <div class="splitter-draggable"></div>
       </div>
-      <div class="preview"></div>
+      <iframe class="preview" ref="preview"></iframe>
     </div>
   </div>
 </template>
@@ -98,6 +98,7 @@ import "codemirror/lib/codemirror.css";
 import "codemirror/theme/material-darker.css";
 import basicMacaronFile from "./examples/basic.macaron?raw";
 import interactionsMacaronFile from "./examples/interactions.macaron?raw";
+import { generatePreviewHTML } from "./generatePreviewHTML";
 
 const demoFiles = [
   {
@@ -133,6 +134,7 @@ export default {
     import("@macaron-app/editor/dist/webcomponent/main.css");
 
     const editorBody = this.$refs.editorBody;
+    const iframe = this.$refs.iframe;
 
     const codeMirror = CodeMirror(
       (elt) => {
@@ -144,6 +146,11 @@ export default {
         lineNumbers: true,
         theme: "material-darker",
       }
+    );
+
+    iframe.srcdoc = generatePreviewHTML(
+      basicMacaronFile,
+      `<my-component></my-component>`
     );
   },
 };
