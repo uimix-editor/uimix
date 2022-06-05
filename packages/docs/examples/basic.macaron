@@ -8,7 +8,7 @@
   }
 </style>
 <macaron-component name="my-component">
-  <macaron-variant x="0" y="0" width="390"></macaron-variant>
+  <macaron-variant x="192" y="32" width="390"></macaron-variant>
   <template>
     <div id="navbar">
       <div id="logo">

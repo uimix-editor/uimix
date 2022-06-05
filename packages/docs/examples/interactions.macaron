@@ -8,10 +8,14 @@
   }
 </style>
 <macaron-component name="my-button">
-  <macaron-variant x="0" y="0" background-color="transparent"></macaron-variant>
   <macaron-variant
-    x="161"
-    y="0"
+    x="192"
+    y="32"
+    background-color="transparent"
+  ></macaron-variant>
+  <macaron-variant
+    x="368"
+    y="32"
     background-color="transparent"
     selector=":hover"
   ></macaron-variant>
