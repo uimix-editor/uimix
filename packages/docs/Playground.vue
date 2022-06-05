@@ -134,7 +134,7 @@ export default {
     import("@macaron-app/editor/dist/webcomponent/main.css");
 
     const editorBody = this.$refs.editorBody;
-    const iframe = this.$refs.iframe;
+    const iframe = this.$refs.preview;
 
     const codeMirror = CodeMirror(
       (elt) => {
