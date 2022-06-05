@@ -33,12 +33,12 @@
       </svg>
     </div>
     <div id="hero">
-      <h1 id="title">
-        Design tool to create<br />React components<br />directly
-      </h1>
+      <h1 id="title"><slot name="heading">Lorem Ipsum Dolor Sit Amet</slot></h1>
       <p id="subtitle">
-        Macaron is a visual component editor for Web developers and designers<br />where
-        you can create user interfaces just like in vector design tools.
+        <slot name="description"
+          >Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
+          eiusmod tempor incididunt ut labore et dolore magna aliqua.</slot
+        >
       </p>
       <div id="frame8"><div id="prealpha">Pre-alpha</div></div>
       <div id="buttons">

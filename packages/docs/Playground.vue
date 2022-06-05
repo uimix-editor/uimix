@@ -95,6 +95,7 @@ demo-tab {
 </template>
 
 <script>
+import dedent from "dedent";
 import CodeMirror from "codemirror";
 import "codemirror/mode/htmlmixed/htmlmixed";
 import "codemirror/lib/codemirror.css";
@@ -108,7 +109,15 @@ const demoFiles = [
   {
     name: "Basic",
     content: basicMacaronFile,
-    html: `<my-component></my-component>`,
+    html: dedent`<my-component>
+                  <span slot="heading">
+                    Design tool to create Web Components visually
+                  </span>
+                  <span slot="description">
+                    Macaron is an open-source UI design tool to create and maintain Web Components.
+                    Create components visually and use them with or without any framework.
+                  </span>
+                </my-component>`,
   },
   {
     name: "Interactions",
@@ -162,7 +171,7 @@ export default {
         editorBody.append(elt);
       },
       {
-        value: "<my-component></my-component>",
+        value: demoFiles[0].html,
         mode: "htmlmixed",
         lineNumbers: true,
         theme: "material-darker",
