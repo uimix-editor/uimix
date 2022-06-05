@@ -39,26 +39,16 @@ demo-tab {
   <top-page>
     <demo-tab
       slot="demo-tabs"
-      :aria-selected="currentTab === 0"
-      @click="currentTab = 0"
+      v-for="(demoFile, index) in demoFiles"
+      :aria-selected="currentTab === index"
+      @click="currentTab = index"
     >
-      This Web Site
+      {{ demoFile.name }}
     </demo-tab>
-    <demo-tab
-      slot="demo-tabs"
-      :aria-selected="currentTab === 1"
-      @click="currentTab = 1"
-    >
-      Interactions
-    </demo-tab>
-    <demo-tab
-      slot="demo-tabs"
-      :aria-selected="currentTab === 2"
-      @click="currentTab = 2"
-    >
-      Responsive Design
-    </demo-tab>
-    <macaron-editor slot="demo-editor" :value="macaronFile"></macaron-editor>
+    <macaron-editor
+      slot="demo-editor"
+      :value="currentDemoFile.content"
+    ></macaron-editor>
   </top-page>
 </template>
 
@@ -69,11 +59,15 @@ import interactionsMacaronFile from "./examples/interactions.macaron?raw";
 const demoFiles = [
   {
     name: "Basic",
-    file: basicMacaronFile,
+    content: basicMacaronFile,
   },
   {
     name: "Interactions",
-    file: interactionsMacaronFile,
+    content: interactionsMacaronFile,
+  },
+  {
+    name: "Responsive Design",
+    content: interactionsMacaronFile, // TODO
   },
 ];
 
@@ -81,14 +75,13 @@ export default {
   data() {
     return {
       currentTab: 0,
+      demoFiles: demoFiles,
     };
   },
 
   computed: {
-    // a computed getter
-    macaronFile() {
-      // `this` points to the component instance
-      return demoFiles[this.currentTab].file;
+    currentDemoFile() {
+      return this.demoFiles[this.currentTab];
     },
   },
 
