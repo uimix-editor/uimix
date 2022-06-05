@@ -100,6 +100,7 @@ import "codemirror/theme/material-darker.css";
 import basicMacaronFile from "./examples/basic.macaron?raw";
 import interactionsMacaronFile from "./examples/interactions.macaron?raw";
 import { generatePreviewHTML } from "./generatePreviewHTML";
+import { debounce } from "lodash-es";
 
 const demoFiles = [
   {
@@ -131,10 +132,10 @@ export default {
   },
 
   methods: {
-    updatePreviewHTML(macaron, html) {
+    updatePreviewHTML: debounce(function (macaron, html) {
       const iframe = this.$refs.preview;
       iframe.srcdoc = generatePreviewHTML(macaron, html);
-    },
+    }, 500),
   },
 
   mounted() {
