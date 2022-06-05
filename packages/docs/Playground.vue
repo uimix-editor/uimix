@@ -158,7 +158,7 @@ export default {
         this.currentFileContent,
         this.codeMirror.getValue()
       );
-    }, 500),
+    }, 200),
   },
 
   mounted() {
