@@ -7,13 +7,18 @@ import styled, { StyleSheetManager } from "styled-components";
 import { PaintkitRoot } from "@seanchas116/paintkit/src/components/PaintkitRoot";
 import { JSONUndoHistory } from "@seanchas116/paintkit/src/util/JSONUndoHistory";
 import { RootPortalHostProvider } from "@seanchas116/paintkit/src/components/RootPortal";
-import { action, observable } from "mobx";
+import { action, makeObservable, observable } from "mobx";
 import { DocumentJSON, Document } from "../models/Document";
 import { EditorState } from "../state/EditorState";
 import { Editor } from "../views/Editor";
 import { parseDocument } from "../fileFormat/document";
 
 class EditorElementEditorState extends EditorState {
+  constructor() {
+    super();
+    makeObservable(this);
+  }
+
   @observable.ref history = new JSONUndoHistory<DocumentJSON, Document>(
     new Document()
   );
