@@ -32,6 +32,7 @@ demo-tab {
 
 .html-editor {
   flex: 1 0 0;
+  min-width: 0;
 }
 .html-editor :global(.CodeMirror) {
   font-family: var(--vp-font-family-mono);
