@@ -57,6 +57,7 @@ demo-tab {
 
 .preview {
   flex: 1 0 0;
+  border: none;
 }
 
 .demo-tabs {
