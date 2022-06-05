@@ -47,6 +47,9 @@ demo-tab {
 .html-editor {
   height: 100%;
 }
+.html-editor :global(.CodeMirror) {
+  height: 100%;
+}
 </style>
 
 <template>
@@ -74,7 +77,10 @@ demo-tab {
 </template>
 
 <script>
-import * as monaco from "monaco-editor/esm/vs/editor/editor.api";
+import CodeMirror from "codemirror";
+import "codemirror/mode/xml/xml";
+import "codemirror/lib/codemirror.css";
+import "codemirror/theme/material-darker.css";
 import basicMacaronFile from "./examples/basic.macaron?raw";
 import interactionsMacaronFile from "./examples/interactions.macaron?raw";
 
@@ -113,12 +119,18 @@ export default {
     import("@macaron-app/editor/dist/webcomponent/main.css");
 
     const editorBody = this.$refs.editorBody;
-    monaco.editor.create(editorBody, {
-      value: ["function x() {", '\tconsole.log("Hello world!");', "}"].join(
-        "\n"
-      ),
-      language: "typescript",
-    });
+
+    const codeMirror = CodeMirror(
+      (elt) => {
+        editorBody.append(elt);
+      },
+      {
+        value: "<div>Hello</div>",
+        mode: "xml",
+        lineNumbers: true,
+        theme: "material-darker",
+      }
+    );
   },
 };
 </script>
