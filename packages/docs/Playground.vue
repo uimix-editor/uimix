@@ -130,12 +130,18 @@ export default {
     },
   },
 
+  methods: {
+    updatePreviewHTML(macaron, html) {
+      const iframe = this.$refs.preview;
+      iframe.srcdoc = generatePreviewHTML(macaron, html);
+    },
+  },
+
   mounted() {
     import("@macaron-app/editor/dist/webcomponent/main.js");
     import("@macaron-app/editor/dist/webcomponent/main.css");
 
     const editorBody = this.$refs.editorBody;
-    const iframe = this.$refs.preview;
 
     const codeMirror = CodeMirror(
       (elt) => {
@@ -148,11 +154,11 @@ export default {
         theme: "material-darker",
       }
     );
+    codeMirror.on("change", () => {
+      this.updatePreviewHTML(basicMacaronFile, codeMirror.getValue());
+    });
 
-    iframe.srcdoc = generatePreviewHTML(
-      basicMacaronFile,
-      `<my-component></my-component>`
-    );
+    this.updatePreviewHTML(basicMacaronFile, `<my-component></my-component>`);
   },
 };
 </script>
