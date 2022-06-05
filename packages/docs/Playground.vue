@@ -118,6 +118,7 @@ const demoFiles = [
   {
     name: "Responsive Design",
     content: interactionsMacaronFile, // TODO
+    html: `<my-button>Button</my-button>`,
   },
 ];
 
