@@ -63,21 +63,39 @@ demo-tab {
 </template>
 
 <script>
-import thisPageMacaronFile from "./components.macaron?raw";
+import basicMacaronFile from "./examples/basic.macaron?raw";
+import interactionsMacaronFile from "./examples/interactions.macaron?raw";
+
+const demoFiles = [
+  {
+    name: "Basic",
+    file: basicMacaronFile,
+  },
+  {
+    name: "Interactions",
+    file: interactionsMacaronFile,
+  },
+];
 
 export default {
   data() {
     return {
       currentTab: 0,
-      macaronFile: thisPageMacaronFile,
     };
+  },
+
+  computed: {
+    // a computed getter
+    macaronFile() {
+      // `this` points to the component instance
+      return demoFiles[this.currentTab].file;
+    },
   },
 
   mounted() {
     import("./components.macaron");
     import("@macaron-app/editor/dist/webcomponent/main.js");
     import("@macaron-app/editor/dist/webcomponent/main.css");
-    console.log(thisPageMacaronFile);
   },
 };
 </script>
