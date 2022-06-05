@@ -72,16 +72,17 @@ demo-tab {
         slot="demo-tabs"
         v-for="(demoFile, index) in demoFiles"
         :aria-selected="currentTab === index"
-        @click="currentTab = index"
+        @click="onCurrentTabChange(index)"
       >
         {{ demoFile.name }}
       </demo-tab>
     </div>
     <macaron-editor
       class="playground-floating"
+      ref="editor"
       slot="demo-editor"
-      :value="currentDemoFile.content"
-      @change="updatePreviewHTML()"
+      :value="currentFileContent"
+      @change="onFileContentChange()"
     ></macaron-editor>
     <div class="playground-floating usage">
       <div ref="editorBody" class="html-editor"></div>
@@ -123,20 +124,24 @@ export default {
     return {
       currentTab: 0,
       demoFiles: demoFiles,
+      currentFileContent: demoFiles[0].content,
     };
   },
 
-  computed: {
-    currentDemoFile() {
-      return this.demoFiles[this.currentTab];
-    },
-  },
-
   methods: {
+    onCurrentTabChange(index) {
+      this.currentTab = index;
+      this.currentFileContent = this.demoFiles[index].content;
+      this.updatePreviewHTML();
+    },
+    onFileContentChange() {
+      this.currentFileContent = this.$refs.editor.value;
+      this.updatePreviewHTML();
+    },
     updatePreviewHTML: debounce(function () {
       const iframe = this.$refs.preview;
       iframe.srcdoc = generatePreviewHTML(
-        this.currentDemoFile.content,
+        this.currentFileContent,
         this.codeMirror.getValue()
       );
     }, 500),
