@@ -81,6 +81,7 @@ demo-tab {
       class="playground-floating"
       slot="demo-editor"
       :value="currentDemoFile.content"
+      @change="updatePreviewHTML()"
     ></macaron-editor>
     <div class="playground-floating usage">
       <div ref="editorBody" class="html-editor"></div>
@@ -132,9 +133,12 @@ export default {
   },
 
   methods: {
-    updatePreviewHTML: debounce(function (macaron, html) {
+    updatePreviewHTML: debounce(function () {
       const iframe = this.$refs.preview;
-      iframe.srcdoc = generatePreviewHTML(macaron, html);
+      iframe.srcdoc = generatePreviewHTML(
+        this.currentDemoFile.content,
+        this.codeMirror.getValue()
+      );
     }, 500),
   },
 
@@ -149,14 +153,15 @@ export default {
         editorBody.append(elt);
       },
       {
-        value: "<div>Hello</div>",
+        value: "<my-component></my-component>",
         mode: "htmlmixed",
         lineNumbers: true,
         theme: "material-darker",
       }
     );
+    this.codeMirror = codeMirror;
     codeMirror.on("change", () => {
-      this.updatePreviewHTML(basicMacaronFile, codeMirror.getValue());
+      this.updatePreviewHTML();
     });
 
     this.updatePreviewHTML(basicMacaronFile, `<my-component></my-component>`);
