@@ -9,9 +9,12 @@ export async function copyLayers(document: Document): Promise<void> {
   }
 
   const html = stringifyFragment(fragment);
+  const base64 = btoa(html);
+
+  const encoded = `<span data-macaron="${base64}"></span>`;
 
   const type = "text/html";
-  const blob = new Blob([html], { type });
+  const blob = new Blob([encoded], { type });
   const data = [new ClipboardItem({ [type]: blob })];
 
   await navigator.clipboard.write(data);
@@ -25,7 +28,15 @@ export async function pasteLayers(document: Document): Promise<void> {
     return;
   }
 
-  const html = await (await item.getType("text/html")).text();
+  const encoded = await (await item.getType("text/html")).text();
+
+  const match = encoded.match(/<span data-macaron="(.*)">/);
+  if (!match) {
+    return;
+  }
+
+  const base64 = match[1];
+  const html = atob(base64);
   const fragment = parseFragment(html);
   if (fragment) {
     runInAction(() => {
