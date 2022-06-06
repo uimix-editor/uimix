@@ -70,6 +70,12 @@ demo-tab {
 .demo-tabs {
   display: flex;
 }
+
+.result-tabs {
+  display: flex;
+}
+.result-tab {
+}
 </style>
 
 <template>
@@ -95,8 +101,15 @@ demo-tab {
       <div class="splitter">
         <div class="splitter-draggable"></div>
       </div>
-      <div ref="editorBody" class="html-editor"></div>
-      <iframe class="preview" ref="preview" sandbox="allow-scripts"></iframe>
+      <div>
+        <div class="result-tabs">
+          <div class="result-tab">JS Output</div>
+          <div class="result-tab">HTML</div>
+          <div class="result-tab">Preview</div>
+        </div>
+        <div ref="editorBody" class="html-editor"></div>
+        <iframe class="preview" ref="preview" sandbox="allow-scripts"></iframe>
+      </div>
     </div>
   </div>
 </template>
