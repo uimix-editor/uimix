@@ -8,8 +8,8 @@ export async function copyLayers(document: Document): Promise<void> {
     return;
   }
 
-  const html = stringifyFragment(fragment);
-  const base64 = btoa(html);
+  const fragmentString = stringifyFragment(fragment);
+  const base64 = btoa(fragmentString);
 
   const encoded = `<span data-macaron="${base64}"></span>`;
 
@@ -36,8 +36,8 @@ export async function pasteLayers(document: Document): Promise<void> {
   }
 
   const base64 = match[1];
-  const html = atob(base64);
-  const fragment = parseFragment(html);
+  const fragmentString = atob(base64);
+  const fragment = parseFragment(fragmentString);
   if (fragment) {
     runInAction(() => {
       document.appendFragmentBeforeSelection(fragment);
