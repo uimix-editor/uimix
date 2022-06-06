@@ -47,7 +47,7 @@ export class MacaronEditorElement extends HTMLElement {
   constructor() {
     super();
     this._editorState.wheelScrollEnabled = false;
-    this._editorState.layout = "threeColumn";
+    // this._editorState.layout = "threeColumn";
 
     this._editorState.history.on("change", () => {
       this._value = stringifyDocument(this._editorState.document);

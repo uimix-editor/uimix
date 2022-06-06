@@ -66,7 +66,7 @@ export abstract class EditorState {
     value: item.family,
   }));
 
-  @observable layout: "threeColumn" | "twoColumn" = "threeColumn";
+  @observable layout: "threeColumn" | "twoColumn" = "twoColumn";
 
   @observable currentOutlineTab: "outline" | "assets" = "outline";
   @observable currentInspectorTab: "element" | "style" = "element";

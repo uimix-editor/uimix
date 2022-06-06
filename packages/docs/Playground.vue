@@ -5,14 +5,21 @@ demo-tab {
 
 .playground-floating {
   width: 100%;
-  height: 480px;
+  height: 720px;
   border: 0.5px solid rgba(255, 255, 255, 0.12);
   box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.15),
     0px 24px 30px rgba(0, 0, 0, 0.35);
   border-radius: 10px;
   overflow: hidden;
+  display: flex;
 }
 
+.playground-floating > :first-child {
+  flex: 2 0 0;
+}
+.playground-floating > :last-child {
+  flex: 1 0 0;
+}
 .playground {
   width: calc(100% - 64px);
   max-width: 1280px;
@@ -31,8 +38,8 @@ demo-tab {
 }
 
 .html-editor {
-  flex: 1 0 0;
   min-width: 0;
+  display: none;
 }
 .html-editor :global(.CodeMirror) {
   font-family: var(--vp-font-family-mono);
@@ -57,7 +64,6 @@ demo-tab {
 }
 
 .preview {
-  flex: 1 0 0;
   border: none;
 }
 
@@ -78,18 +84,18 @@ demo-tab {
         {{ demoFile.name }}
       </demo-tab>
     </div>
-    <macaron-editor
-      class="playground-floating"
-      ref="editor"
-      slot="demo-editor"
-      :value="currentFileContent"
-      @change="onFileContentChange()"
-    ></macaron-editor>
-    <div class="playground-floating usage">
-      <div ref="editorBody" class="html-editor"></div>
+
+    <div class="playground-floating">
+      <macaron-editor
+        ref="editor"
+        slot="demo-editor"
+        :value="currentFileContent"
+        @change="onFileContentChange()"
+      ></macaron-editor>
       <div class="splitter">
         <div class="splitter-draggable"></div>
       </div>
+      <div ref="editorBody" class="html-editor"></div>
       <iframe class="preview" ref="preview" sandbox="allow-scripts"></iframe>
     </div>
   </div>
