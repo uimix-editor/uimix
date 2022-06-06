@@ -15,8 +15,10 @@ document.addEventListener("copy", (e) => {
 window.addEventListener("message", (e) => {
   const msg: MessageToUI = e.data.pluginMessage;
   if (msg.type === "copy") {
-    const html: string = msg.data;
-    htmlToCopy = html;
+    const fragmentString: string = msg.data;
+    const base64 = btoa(fragmentString);
+    const encoded = `<span data-macaron="${base64}"></span>`;
+    htmlToCopy = encoded;
     document.execCommand("copy");
 
     postMessageToPlugin({
