@@ -574,3 +574,41 @@
     }
   </style>
 </macaron-component>
+<macaron-component name="output-tab">
+  <macaron-variant x="863" y="-96"></macaron-variant>
+  <macaron-variant
+    x="1027"
+    y="-96"
+    selector="[aria-selected=&#x22;true&#x22;]"
+  ></macaron-variant>
+  <template>
+    <slot>Example 1</slot>
+  </template>
+  <style>
+    :host {
+      height: 32px;
+      display: flex;
+      padding-right: 12px;
+      padding-left: 12px;
+      align-items: center;
+      justify-content: center;
+      color: #4e515480;
+      font-family: Readex Pro;
+      font-weight: 500;
+      font-size: 12px;
+      line-height: 2;
+      border-bottom-width: 2px;
+      border-bottom-style: solid;
+      border-bottom-color: transparent;
+    }
+    :host([aria-selected="true"]) {
+      color: #1e252b;
+      border-top-width: 0px;
+      border-right-width: 0px;
+      border-bottom-width: 2px;
+      border-bottom-style: solid;
+      border-bottom-color: #0085ff;
+      border-left-width: 0px;
+    }
+  </style>
+</macaron-component>

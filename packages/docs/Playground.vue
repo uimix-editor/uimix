@@ -73,8 +73,11 @@ demo-tab {
 
 .result-tabs {
   display: flex;
+  border-bottom: 2px solid #0000000a;
 }
-.result-tab {
+.result-tabs > * {
+  margin-bottom: -2px;
+  cursor: pointer;
 }
 </style>
 
@@ -103,9 +106,21 @@ demo-tab {
       </div>
       <div>
         <div class="result-tabs">
-          <div class="result-tab">JS Output</div>
-          <div class="result-tab">HTML</div>
-          <div class="result-tab">Preview</div>
+          <output-tab
+            :aria-selected="outputTab === 'jsOutput'"
+            @click="outputTab = 'jsOutput'"
+            >JS Output</output-tab
+          >
+          <output-tab
+            :aria-selected="outputTab === 'html'"
+            @click="outputTab = 'html'"
+            >HTML</output-tab
+          >
+          <output-tab
+            :aria-selected="outputTab === 'preview'"
+            @click="outputTab = 'preview'"
+            >Preview</output-tab
+          >
         </div>
         <div ref="editorBody" class="html-editor"></div>
         <iframe class="preview" ref="preview" sandbox="allow-scripts"></iframe>
@@ -157,6 +172,7 @@ export default {
       currentTab: 0,
       demoFiles: demoFiles,
       currentFileContent: demoFiles[0].content,
+      outputTab: "jsOutput",
     };
   },
 
