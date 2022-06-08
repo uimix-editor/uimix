@@ -26,7 +26,7 @@ demo-tab {
 }
 .playground {
   width: calc(100% - 64px);
-  /* max-width: 1280px; */
+  max-width: 1280px;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -148,8 +148,11 @@ demo-tab {
         </div>
         <div class="result-contents">
           <div
-            ref="editorBody"
-            class="html-editor"
+            ref="jsOutputEditorWrap"
+            :class="{ 'result-content-hidden': outputTab !== 'jsOutput' }"
+          ></div>
+          <div
+            ref="htmlEditorWrap"
             :class="{ 'result-content-hidden': outputTab !== 'html' }"
           ></div>
           <iframe
@@ -170,6 +173,7 @@ import CodeMirror from "codemirror";
 import "codemirror/mode/htmlmixed/htmlmixed";
 import "codemirror/lib/codemirror.css";
 import "codemirror/theme/material-darker.css";
+import { compile } from "@macaron-app/compiler";
 import basicMacaronFile from "./examples/basic.macaron?raw";
 import interactionsMacaronFile from "./examples/interactions.macaron?raw";
 import { generatePreviewHTML } from "./generatePreviewHTML";
@@ -207,6 +211,7 @@ export default {
       currentTab: 0,
       demoFiles: demoFiles,
       currentFileContent: demoFiles[0].content,
+      jsOutput: compile(demoFiles[0].content),
       outputTab: "jsOutput",
     };
   },
@@ -235,11 +240,11 @@ export default {
     import("@macaron-app/editor/dist/webcomponent/main.js");
     import("@macaron-app/editor/dist/webcomponent/main.css");
 
-    const editorBody = this.$refs.editorBody;
+    const { htmlEditorWrap, jsOutputEditorWrap } = this.$refs;
 
     const codeMirror = CodeMirror(
       (elt) => {
-        editorBody.append(elt);
+        htmlEditorWrap.append(elt);
       },
       {
         value: demoFiles[0].html,
@@ -254,6 +259,18 @@ export default {
     });
 
     this.updatePreviewHTML(demoFiles[0].content, demoFiles[0].html);
+
+    CodeMirror(
+      (elt) => {
+        jsOutputEditorWrap.append(elt);
+      },
+      {
+        value: compile(demoFiles[0].content),
+        mode: "javascript",
+        lineNumbers: true,
+        //theme: "material-darker",
+      }
+    );
   },
 };
 </script>
