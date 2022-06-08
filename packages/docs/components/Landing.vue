@@ -13,22 +13,22 @@
   );
 }
 
-macaron-top-page {
+macaron-landing {
   position: relative;
 }
 
-macaron-top-page [slot="playground"] {
+macaron-landing [slot="playground"] {
   display: contents;
 }
 </style>
 
 <template>
   <div class="background-gradient"></div>
-  <macaron-top-page>
+  <macaron-landing>
     <div slot="playground">
       <Playground />
     </div>
-  </macaron-top-page>
+  </macaron-landing>
 </template>
 
 <script>

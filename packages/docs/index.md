@@ -3,9 +3,9 @@ layout: page
 ---
 
 <script setup>
-import TopWrap from './TopWrap.vue'
+import Landing from './components/Landing.vue'
 </script>
 
 <ClientOnly>
-  <TopWrap/>
+  <Landing/>
 </ClientOnly>

@@ -7,7 +7,7 @@
     --feature-card-color: #64dd17;
   }
 </style>
-<macaron-component name="macaron-top-page">
+<macaron-component name="macaron-landing">
   <macaron-variant
     x="0"
     y="154"
