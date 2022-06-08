@@ -65,6 +65,8 @@ export class Document {
   clear(): void {
     this.components.clear();
     this.cssVariables.clear();
+    this.preludeScripts.clear();
+    this.preludeStyleSheets.clear();
   }
 
   toJSON(): DocumentJSON {
