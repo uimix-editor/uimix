@@ -169,15 +169,13 @@ macaron-demo-tab {
 
 <script>
 import dedent from "dedent";
-import CodeMirror from "codemirror";
-import "codemirror/mode/htmlmixed/htmlmixed";
 import "codemirror/lib/codemirror.css";
 import "codemirror/theme/material-darker.css";
 import { compile } from "@macaron-app/compiler";
 import basicMacaronFile from "./examples/basic.macaron?raw";
 import interactionsMacaronFile from "./examples/interactions.macaron?raw";
 import { generatePreviewHTML } from "./generatePreviewHTML";
-import { debounce } from "lodash-es";
+import { debounce } from "lodash";
 
 const demoFiles = [
   {
@@ -236,9 +234,11 @@ export default {
     }, 200),
   },
 
-  mounted() {
+  async mounted() {
     import("@macaron-app/editor/dist/webcomponent/main.js");
     import("@macaron-app/editor/dist/webcomponent/main.css");
+    const CodeMirror = (await import("codemirror")).default;
+    await import("codemirror/mode/htmlmixed/htmlmixed");
 
     const { htmlEditorWrap, jsOutputEditorWrap } = this.$refs;
 
