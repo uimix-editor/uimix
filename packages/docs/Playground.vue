@@ -211,7 +211,7 @@ export default {
       demoFiles: demoFiles,
       currentFileContent: demoFiles[0].content,
       jsOutput: compile(demoFiles[0].content),
-      outputTab: "jsOutput",
+      outputTab: "preview",
     };
   },
 
