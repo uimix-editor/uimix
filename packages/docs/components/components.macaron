@@ -161,7 +161,6 @@
       font-family: Readex Pro;
     }
     #heroTitle {
-      position: relative;
       margin-top: 24px;
       margin-bottom: 32px;
       color: #1e252b;
@@ -172,7 +171,6 @@
       text-align: center;
     }
     #heroSubtitle {
-      position: relative;
       margin-bottom: 32px;
       color: #4e5154;
       font-weight: 400;
@@ -182,7 +180,6 @@
       text-align: center;
     }
     #buttons {
-      position: relative;
       margin-bottom: 64px;
       display: flex;
       padding-top: 0px;

@@ -33,14 +33,6 @@ macaron-demo-tab {
   gap: 16px;
 }
 
-.usage {
-  position: relative;
-  background-color: white;
-
-  display: flex;
-  align-items: stretch;
-}
-
 .splitter {
   width: 4px;
   background-color: #ccc;

@@ -4,7 +4,6 @@
 ></script>
 <style>
   :root {
-    --feature-card-color: #64dd17;
   }
 </style>
 <macaron-component name="my-button">
