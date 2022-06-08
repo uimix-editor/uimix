@@ -29,31 +29,31 @@ function compileComponent(ast: hast.Element): string {
     }
   }
 
-  return dedent`
-    class ${className} extends HTMLElement {
-      constructor() {
-        super();
+  return `
+class ${className} extends HTMLElement {
+  constructor() {
+    super();
 
-        const style = \`\n${resetCSS}\n${dedent(style)}\`;
-        const template = \`\n${dedent(template)}\`;
+    const style = \`\n${resetCSS}\n${dedent(style)}\`;
+    const template = \`\n${dedent(template)}\`;
 
-        this.attachShadow({ mode: "open" });
-        this.shadowRoot.innerHTML = ${"`<style>${style}</style>${template}`"};
-      }
-    }
+    this.attachShadow({ mode: "open" });
+    this.shadowRoot.innerHTML = ${"`<style>${style}</style>${template}`"};
+  }
+}
 
-    customElements.define(${JSON.stringify(name)}, ${className});
-  `;
+customElements.define(${JSON.stringify(name)}, ${className});
+`;
 }
 
 function compileGlobalStyle(ast: hast.Element): string {
   const style = (ast.children[0] as hast.Text).value;
-  return dedent`
-    const style = \`${style}\`;
-    const styleElement = document.createElement("style");
-    styleElement.innerHTML = style;
-    document.head.appendChild(styleElement);
-  `;
+  return `
+const style = \`${dedent(style)}\`;
+const styleElement = document.createElement("style");
+styleElement.innerHTML = style;
+document.head.appendChild(styleElement);
+`;
 }
 
 function compileImports(ast: hast.Root): string[] {
