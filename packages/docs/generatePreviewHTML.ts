@@ -1,8 +1,6 @@
 import { compile } from "@macaron-app/compiler";
 
-export function generatePreviewHTML(macaronFile: string, html: string): string {
-  const jsFile = compile(macaronFile);
-
+export function generatePreviewHTML(jsOutput: string, html: string): string {
   const previewHTML = `
   <html>
     <head>
@@ -18,7 +16,7 @@ export function generatePreviewHTML(macaronFile: string, html: string): string {
       </style>
     </head>
     <body>
-      <script type="module" defer>${jsFile}</script>
+      <script type="module" defer>${jsOutput}</script>
       ${html}
     </body>
   </html>

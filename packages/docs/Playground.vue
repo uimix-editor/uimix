@@ -218,6 +218,8 @@ export default {
     onCurrentTabChange(index) {
       this.currentTab = index;
       this.currentFileContent = this.demoFiles[index].content;
+      this.jsOutput = compile(this.currentFileContent);
+      this.jsOutputCodeMirror.setValue(this.jsOutput);
       this.codeMirror.setValue(this.demoFiles[index].html);
       this.updatePreviewHTML();
     },
@@ -226,9 +228,12 @@ export default {
       this.updatePreviewHTML();
     },
     updatePreviewHTML: debounce(function () {
+      this.jsOutput = compile(this.currentFileContent);
+      this.jsOutputCodeMirror.setValue(this.jsOutput);
+
       const iframe = this.$refs.preview;
       iframe.srcdoc = generatePreviewHTML(
-        this.currentFileContent,
+        this.jsOutput,
         this.codeMirror.getValue()
       );
     }, 200),
@@ -260,7 +265,7 @@ export default {
 
     this.updatePreviewHTML(demoFiles[0].content, demoFiles[0].html);
 
-    CodeMirror(
+    this.jsOutputCodeMirror = CodeMirror(
       (elt) => {
         jsOutputEditorWrap.append(elt);
       },
