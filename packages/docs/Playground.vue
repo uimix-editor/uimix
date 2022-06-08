@@ -101,6 +101,7 @@ demo-tab {
   font-family: var(--vp-font-family-mono);
   font-size: 13px;
   height: 100%;
+  overscroll-behavior-x: none;
 }
 </style>
 
