@@ -2,6 +2,12 @@ import { Vec2 } from "paintvec";
 import { ElementInstance } from "../models/ElementInstance";
 
 export function moveByPixels(instance: ElementInstance, offset: Vec2): void {
+  if (!instance.parent && instance.variant) {
+    instance.variant.x += offset.x;
+    instance.variant.y += offset.y;
+    return;
+  }
+
   if (instance.computedStyle.position !== "absolute") {
     return;
   }
