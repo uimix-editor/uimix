@@ -72,7 +72,7 @@
     }
     #macaron {
       color: #2d2e31;
-      font-family: Lexend;
+      font-family: Readex Pro;
       font-weight: 500;
       font-size: 20px;
       line-height: 32px;
@@ -99,7 +99,7 @@
       margin-top: 0px;
       margin-bottom: 24px;
       color: #1e252b;
-      font-family: Lexend;
+      font-family: Readex Pro;
       font-weight: 600;
       font-size: 36px;
       line-height: 48px;
@@ -110,10 +110,10 @@
       margin-top: 0px;
       margin-bottom: 24px;
       color: #4e5154;
-      font-family: Manrope;
-      font-weight: 500;
+      font-family: Readex Pro;
       font-size: 16px;
       line-height: 28px;
+      letter-spacing: -0.02em;
       text-align: center;
     }
     #buttons {
@@ -136,10 +136,11 @@
       row-gap: 10px;
       column-gap: 10px;
       color: white;
-      font-family: Manrope;
+      font-family: Readex Pro;
       font-weight: 800;
       font-size: 14px;
       line-height: 40px;
+      letter-spacing: -0.02em;
       background: #ff4081;
       border-top-width: 1.5px;
       border-top-style: solid;
@@ -168,10 +169,11 @@
       row-gap: 10px;
       column-gap: 10px;
       color: #ff4081;
-      font-family: Manrope;
+      font-family: Readex Pro;
       font-weight: 800;
       font-size: 14px;
       line-height: 40px;
+      letter-spacing: -0.02em;
       border-top-width: 1.5px;
       border-top-style: solid;
       border-top-color: #ff4081;
