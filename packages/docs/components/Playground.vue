@@ -169,7 +169,6 @@ macaron-demo-tab {
 <script>
 import dedent from "dedent";
 import "codemirror/lib/codemirror.css";
-import "codemirror/theme/material-darker.css";
 import { compile } from "@macaron-app/compiler";
 import basicMacaronFile from "../examples/basic.macaron?raw";
 import interactionsMacaronFile from "../examples/interactions.macaron?raw";
