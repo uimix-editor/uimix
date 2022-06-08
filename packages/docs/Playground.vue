@@ -41,15 +41,6 @@ demo-tab {
   align-items: stretch;
 }
 
-.html-editor {
-  min-width: 0;
-}
-.html-editor :global(.CodeMirror) {
-  font-family: var(--vp-font-family-mono);
-  font-size: 13px;
-  height: 100%;
-}
-
 .splitter {
   width: 4px;
   background-color: #ccc;
@@ -89,8 +80,27 @@ demo-tab {
   align-items: stretch;
   min-width: 0;
 }
-.result-pane > :not(:first-child) {
+.result-contents {
   flex: 1 0 0;
+  position: relative;
+}
+.result-contents > * {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+}
+
+.result-content-hidden {
+  opacity: 0;
+  pointer-events: none;
+}
+
+:global(.CodeMirror) {
+  font-family: var(--vp-font-family-mono);
+  font-size: 13px;
+  height: 100%;
 }
 </style>
 
@@ -135,17 +145,19 @@ demo-tab {
             >Preview</output-tab
           >
         </div>
-        <div
-          ref="editorBody"
-          class="html-editor"
-          :hidden="outputTab !== 'html'"
-        ></div>
-        <iframe
-          class="preview"
-          ref="preview"
-          sandbox="allow-scripts"
-          :hidden="outputTab !== 'preview'"
-        ></iframe>
+        <div class="result-contents">
+          <div
+            ref="editorBody"
+            class="html-editor"
+            :class="{ 'result-content-hidden': outputTab !== 'html' }"
+          ></div>
+          <iframe
+            class="preview"
+            ref="preview"
+            sandbox="allow-scripts"
+            :class="{ 'result-content-hidden': outputTab !== 'preview' }"
+          ></iframe>
+        </div>
       </div>
     </div>
   </div>
