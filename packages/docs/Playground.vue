@@ -100,6 +100,7 @@ macaron-demo-tab {
 :global(.CodeMirror) {
   font-family: var(--vp-font-family-mono);
   font-size: 13px;
+  width: 100%;
   height: 100%;
   overscroll-behavior-x: none;
 }
@@ -159,7 +160,7 @@ macaron-demo-tab {
             class="preview"
             ref="preview"
             sandbox="allow-scripts"
-            :class="{ 'result-content-hidden': outputTab !== 'preview' }"
+            :hidden="outputTab !== 'preview'"
           ></iframe>
         </div>
       </div>
