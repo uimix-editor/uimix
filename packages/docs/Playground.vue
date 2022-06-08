@@ -256,6 +256,7 @@ export default {
         value: demoFiles[0].html,
         mode: "htmlmixed",
         lineNumbers: true,
+        lineWrapping: true,
         //theme: "material-darker",
       }
     );
@@ -274,6 +275,7 @@ export default {
         value: compile(demoFiles[0].content),
         mode: "javascript",
         lineNumbers: true,
+        lineWrapping: true,
         //theme: "material-darker",
       }
     );
