@@ -6,8 +6,8 @@
   <macaron-variant x="192" y="32" width="640"></macaron-variant>
   <macaron-variant
     x="192"
-    y="300"
-    width="400"
+    y="247"
+    width="300"
     media="(max-width: 400px)"
   ></macaron-variant>
   <template>
