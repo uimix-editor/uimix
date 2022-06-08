@@ -175,6 +175,7 @@ import "codemirror/theme/material-darker.css";
 import { compile } from "@macaron-app/compiler";
 import basicMacaronFile from "../examples/basic.macaron?raw";
 import interactionsMacaronFile from "../examples/interactions.macaron?raw";
+import responsiveMacaronFile from "../examples/responsive.macaron?raw";
 import { generatePreviewHTML } from "./generatePreviewHTML";
 import { debounce } from "lodash";
 
@@ -199,8 +200,21 @@ const demoFiles = [
   },
   {
     name: "Responsive Design",
-    content: interactionsMacaronFile, // TODO
-    html: `<my-button>Button</my-button>`,
+    content: responsiveMacaronFile, // TODO
+    html: dedent`
+    <hotel-card>
+      <img slot="thumb" src="https://source.unsplash.com/0sSJMTfLXUI"/>
+      <span slot="name">Moonlight Hotel & Spa</span>
+      <span slot="rating">4</span>
+      <span slot="price">$299</span>
+      </hotel-card>
+    <hotel-card>
+      <img slot="thumb" src="https://source.unsplash.com/58ApUELd3Ec"/>
+      <span slot="name">Autumn Cottage Hotel</span>
+      <span slot="rating">4</span>
+      <span slot="price">$199</span>
+      </hotel-card>
+    `,
   },
 ];
 
