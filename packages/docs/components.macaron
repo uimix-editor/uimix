@@ -159,7 +159,7 @@
     }
     #heroTitle {
       position: relative;
-      margin-top: 48px;
+      margin-top: 24px;
       margin-bottom: 32px;
       color: #1e252b;
       font-weight: 800;
@@ -170,7 +170,7 @@
     }
     #heroSubtitle {
       position: relative;
-      margin-bottom: 48px;
+      margin-bottom: 32px;
       color: #4e5154;
       font-weight: 400;
       font-size: 20px;

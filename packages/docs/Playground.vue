@@ -26,7 +26,7 @@ demo-tab {
 }
 .playground {
   width: calc(100% - 64px);
-  max-width: 1280px;
+  /* max-width: 1280px; */
   display: flex;
   flex-direction: column;
   align-items: center;
