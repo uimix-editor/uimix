@@ -202,6 +202,7 @@ const demoFiles = [
     name: "Responsive Design",
     content: responsiveMacaronFile, // TODO
     html: dedent`
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
     <hotel-card>
       <img slot="thumb" src="https://source.unsplash.com/0sSJMTfLXUI"/>
       <span slot="name">Moonlight Hotel & Spa</span>

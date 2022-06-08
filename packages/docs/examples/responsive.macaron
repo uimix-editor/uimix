@@ -72,7 +72,7 @@
       font-size: 18px;
     }
     #rating {
-      color: D800B2;
+      color: #d800b2;
       font-weight: 500;
       font-size: 14px;
     }
