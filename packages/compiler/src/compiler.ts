@@ -29,7 +29,7 @@ function compileComponent(ast: hast.Element): string {
     }
   }
 
-  return `
+  return dedent`
     class ${className} extends HTMLElement {
       constructor() {
         super();
@@ -48,7 +48,7 @@ function compileComponent(ast: hast.Element): string {
 
 function compileGlobalStyle(ast: hast.Element): string {
   const style = (ast.children[0] as hast.Text).value;
-  return `
+  return dedent`
     const style = \`${style}\`;
     const styleElement = document.createElement("style");
     styleElement.innerHTML = style;
@@ -70,7 +70,7 @@ function compileImports(ast: hast.Root): string[] {
       throw new Error("script must have a src");
     }
 
-    return `import "${src}";`;
+    return `import "${src}";\n`;
   });
 
   return imports;
