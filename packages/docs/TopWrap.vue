@@ -25,11 +25,9 @@ macaron-top-page [slot="playground"] {
 <template>
   <div class="background-gradient"></div>
   <macaron-top-page>
-    <ClientOnly>
-      <div slot="playground">
-        <Playground />
-      </div>
-    </ClientOnly>
+    <div slot="playground">
+      <Playground />
+    </div>
   </macaron-top-page>
 </template>
 
