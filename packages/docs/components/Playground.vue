@@ -208,13 +208,13 @@ const demoFiles = [
       <span slot="name">Moonlight Hotel & Spa</span>
       <span slot="rating">4</span>
       <span slot="price">$299</span>
-      </hotel-card>
+    </hotel-card>
     <hotel-card>
       <img slot="thumb" src="https://source.unsplash.com/58ApUELd3Ec"/>
       <span slot="name">Autumn Cottage Hotel</span>
       <span slot="rating">4</span>
       <span slot="price">$199</span>
-      </hotel-card>
+    </hotel-card>
     `,
   },
 ];
