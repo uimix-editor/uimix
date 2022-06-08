@@ -292,7 +292,6 @@ export default {
         mode: "htmlmixed",
         lineNumbers: true,
         lineWrapping: true,
-        //theme: "material-darker",
       }
     );
     this.codeMirror = codeMirror;
@@ -311,7 +310,7 @@ export default {
         mode: "javascript",
         lineNumbers: true,
         lineWrapping: true,
-        //theme: "material-darker",
+        readOnly: true,
       }
     );
   },
