@@ -123,13 +123,19 @@ macaron-demo-tab {
       <macaron-editor
         ref="editor"
         slot="demo-editor"
+        :style="{ flex: `${ratio} 0 0` }"
         :value="currentFileContent"
         @change="onFileContentChange()"
       ></macaron-editor>
-      <div class="splitter">
+      <div
+        class="splitter"
+        @pointerdown="onSplitterMouseDown"
+        @pointermove="onSplitterMouseMove"
+        @pointerup="onSplitterMouseUp"
+      >
         <div class="splitter-draggable"></div>
       </div>
-      <div class="result-pane">
+      <div class="result-pane" :style="{ flex: `${1 - ratio} 0 0` }">
         <div class="result-tabs">
           <macaron-output-tab
             :aria-selected="outputTab === 'jsOutput'"
@@ -227,6 +233,7 @@ export default {
       currentFileContent: demoFiles[0].content,
       jsOutput: compile(demoFiles[0].content),
       outputTab: "preview",
+      ratio: 0.667,
     };
   },
 
@@ -253,6 +260,23 @@ export default {
         this.codeMirror.getValue()
       );
     }, 200),
+
+    onSplitterMouseDown(event) {
+      event.target.setPointerCapture(event.pointerId);
+      this.splitterMouseDown = true;
+    },
+    onSplitterMouseMove(event) {
+      if (!this.splitterMouseDown) return;
+
+      const splitable = event.target.closest(".playground-floating");
+      const splitableRect = splitable.getBoundingClientRect();
+
+      this.ratio = (event.clientX - splitableRect.left) / splitableRect.width;
+    },
+    onSplitterMouseUp(event) {
+      event.target.releasePointerCapture(event.pointerId);
+      this.splitterMouseDown = false;
+    },
   },
 
   async mounted() {
