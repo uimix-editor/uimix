@@ -20,13 +20,13 @@
     selector=":hover"
   ></macaron-variant>
   <template>
-    <button id="herobutton"><slot>Button</slot></button>
+    <button id="button"><slot>Button</slot></button>
   </template>
   <style>
     :host {
       display: block;
     }
-    #herobutton {
+    #button {
       height: 48px;
       border-top-left-radius: 24px;
       border-top-right-radius: 24px;
@@ -52,7 +52,7 @@
       border-bottom-width: 0px;
       border-left-width: 0px;
     }
-    :host(:hover) #herobutton {
+    :host(:hover) #button {
       background: #0073eb;
     }
   </style>
