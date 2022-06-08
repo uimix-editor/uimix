@@ -189,11 +189,12 @@
       border-left-color: #ff4081;
     }
     #screenshot {
-      position: relative;
+      position: static;
       margin-top: 24px;
+      margin-right: 24px;
       margin-bottom: 24px;
-      width: 366px;
-      height: 304px;
+      margin-left: 24px;
+      align-self: stretch;
     }
   </style>
 </macaron-component>
