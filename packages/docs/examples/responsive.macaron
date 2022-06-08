@@ -3,9 +3,9 @@
   }
 </style>
 <macaron-component name="hotel-card">
-  <macaron-variant x="192" y="32" width="640"></macaron-variant>
+  <macaron-variant x="100" y="32" width="640"></macaron-variant>
   <macaron-variant
-    x="192"
+    x="100"
     y="247"
     width="300"
     media="(max-width: 400px)"
