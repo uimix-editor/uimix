@@ -2,6 +2,7 @@ import { TreeNode } from "@seanchas116/paintkit/src/util/TreeNode";
 import { computed, makeObservable, observable } from "mobx";
 import type * as hast from "hast";
 import validateElementName from "validate-element-name";
+import { compact } from "lodash-es";
 import { CustomElementMetadata } from "./CustomElementMetadata";
 import { ComponentList, Document } from "./Document";
 import { Element, ElementJSON } from "./Element";
@@ -159,7 +160,7 @@ export class Component extends TreeNode<ComponentList, Component, never> {
 
   @computed.struct get selectedInstances(): (ElementInstance | TextInstance)[] {
     if (this.selected) {
-      return [];
+      return compact(this.allVariants.map((v) => v.rootInstance));
     }
 
     return this.allVariants.flatMap(
@@ -169,7 +170,7 @@ export class Component extends TreeNode<ComponentList, Component, never> {
 
   @computed.struct get selectedVariants(): (Variant | DefaultVariant)[] {
     if (this.selected) {
-      return [];
+      return this.allVariants;
     }
 
     return this.allVariants.filter((v) => v.rootInstance?.selected ?? false);
@@ -177,7 +178,7 @@ export class Component extends TreeNode<ComponentList, Component, never> {
 
   @computed.struct get selectedNodes(): (Element | Text)[] {
     if (this.selected) {
-      return [];
+      return [this.rootElement];
     }
 
     // TODO: disallow selecting elements from multiple variants

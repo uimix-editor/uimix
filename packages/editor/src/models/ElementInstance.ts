@@ -89,7 +89,10 @@ export class ElementInstance {
   @observable selected = false;
 
   @computed get ancestorSelected(): boolean {
-    return this.selected || this.parent?.ancestorSelected || false;
+    if (!this.parent) {
+      return this.selected || this.element.component?.selected || false;
+    }
+    return this.selected || this.parent.ancestorSelected || false;
   }
 
   select(): void {
