@@ -7,9 +7,6 @@ import {
 } from "./fix-asset-path";
 import { parseHTMLFragment } from "./util";
 
-const filePath = "./src/file.macaron";
-const outFilePath = "file.js";
-
 describe(fixAssetPath.name, () => {
   it("fixes asset path based on filePath and publicPath", () => {
     const assetPath = "../images/logo.png";
