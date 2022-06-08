@@ -110,7 +110,7 @@ export class MacaronEditorElement extends HTMLElement {
     }
     this._value = value;
     parseDocument(this._editorState.document, value);
-    this._editorState.history.revert(this._editorState.history.snapshot);
+    this._editorState.history.revert();
   }
 
   attributeChangedCallback(
