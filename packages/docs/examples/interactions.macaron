@@ -20,13 +20,11 @@
     selector=":hover"
   ></macaron-variant>
   <template>
-    <div id="herobutton"><slot>Get Started</slot></div>
+    <button id="herobutton"><slot>Button</slot></button>
   </template>
   <style>
     :host {
       display: block;
-      font-family: Readex Pro;
-      font-weight: 700;
     }
     #herobutton {
       height: 48px;
@@ -45,7 +43,14 @@
       row-gap: 10px;
       column-gap: 10px;
       color: white;
+      font-family: Readex Pro;
+      font-weight: 700;
+      font-size: 16px;
       background: #0085ff;
+      border-top-width: 0px;
+      border-right-width: 0px;
+      border-bottom-width: 0px;
+      border-left-width: 0px;
     }
     :host(:hover) #herobutton {
       background: #0073eb;
