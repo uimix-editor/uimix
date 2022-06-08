@@ -7,7 +7,7 @@
     --feature-card-color: #64dd17;
   }
 </style>
-<macaron-component name="top-page">
+<macaron-component name="macaron-top-page">
   <macaron-variant
     x="0"
     y="154"
@@ -34,28 +34,31 @@
     </div>
     <div id="buttons">
       <a href="/guide/" id="hero-button-link"
-        ><hero-button id="herobutton2"></hero-button></a
+        ><macaron-hero-button id="herobutton2"></macaron-hero-button></a
       ><a
         href="https://github.com/macaronapp/macaron-next"
         target="_blank"
         id="hero-button-link1"
-        ><hero-button-secondary id="herobutton3"></hero-button-secondary
+        ><macaron-hero-button-secondary
+          id="herobutton3"
+        ></macaron-hero-button-secondary
       ></a>
     </div>
     <slot name="playground"
       ><div id="div">
-        <demo-tab id="div5"></demo-tab><demo-tab id="div6">Example 2</demo-tab
-        ><demo-tab id="div7">Example 3</demo-tab>
+        <macaron-demo-tab id="div5"></macaron-demo-tab
+        ><macaron-demo-tab id="div6">Example 2</macaron-demo-tab
+        ><macaron-demo-tab id="div7">Example 3</macaron-demo-tab>
       </div></slot
     >
     <div id="features">
       <div id="feature-rows">
         <div id="feature-row1">
-          <feature-card id="feature1"
+          <macaron-feature-card id="feature1"
             ><span slot="title">Easy-to-use visual editor</span>If you are
             familiar with popular design tools, you can create components very
-            quickly, without writing code.</feature-card
-          ><feature-card id="feature8"
+            quickly, without writing code.</macaron-feature-card
+          ><macaron-feature-card id="feature8"
             ><svg
               width="24"
               height="24"
@@ -71,23 +74,23 @@
             </svg>
             <span slot="title">Runs in Visual Studio Code</span> Custom editor
             extension for Visual Studio Code.<br />No need to install an app or
-            open a browser tab.</feature-card
+            open a browser tab.</macaron-feature-card
           >
         </div>
         <div id="feature-row3">
-          <feature-card id="feature5"
+          <macaron-feature-card id="feature5"
             ><iconify-icon icon="ic:outline-language" slot="icon"></iconify-icon
             ><span slot="title">Framework-agnostic</span>Macaron authors Web
             Components, which can be used in most frameworks or even without
-            frameworks.</feature-card
-          ><feature-card id="feature10"
+            frameworks.</macaron-feature-card
+          ><macaron-feature-card id="feature10"
             ><iconify-icon icon="ic:outline-download" slot="icon"></iconify-icon
             ><span slot="title">Import Web Components</span> Load existing Web
-            Components and place them in the editor.</feature-card
+            Components and place them in the editor.</macaron-feature-card
           >
         </div>
         <div id="feature-row4">
-          <feature-card id="feature9"
+          <macaron-feature-card id="feature9"
             ><svg
               width="24"
               height="24"
@@ -123,8 +126,8 @@
             </svg>
             <span slot="title">Clean File Format</span> HTML-based clean file
             format. Easy to read and modify for both humans and
-            programs.</feature-card
-          ><feature-card id="feature7"
+            programs.</macaron-feature-card
+          ><macaron-feature-card id="feature7"
             ><svg
               width="24"
               height="24"
@@ -141,7 +144,7 @@
               >Copy-paste from Figma</span
             >
             🚧 Copy layers in Figma and paste them in Macaron with our Figma
-            plugin for Macaron.</feature-card
+            plugin for Macaron.</macaron-feature-card
           >
         </div>
       </div>
@@ -357,7 +360,7 @@
     }
   </style>
 </macaron-component>
-<macaron-component name="feature-card">
+<macaron-component name="macaron-feature-card">
   <macaron-variant x="349" y="0" width="480"></macaron-variant>
   <template>
     <div id="icon-area">
@@ -445,7 +448,7 @@
     }
   </style>
 </macaron-component>
-<macaron-component name="hero-button">
+<macaron-component name="macaron-hero-button">
   <macaron-variant x="0" y="0" background-color="transparent"></macaron-variant>
   <macaron-variant
     x="161"
@@ -486,7 +489,7 @@
     }
   </style>
 </macaron-component>
-<macaron-component name="hero-button-secondary">
+<macaron-component name="macaron-hero-button-secondary">
   <macaron-variant x="0" y="72"></macaron-variant>
   <macaron-variant x="139" y="72" selector=":hover"></macaron-variant>
   <template>
@@ -538,7 +541,7 @@
     }
   </style>
 </macaron-component>
-<macaron-component name="demo-tab">
+<macaron-component name="macaron-demo-tab">
   <macaron-variant x="863" y="0"></macaron-variant>
   <macaron-variant
     x="1027"
@@ -574,7 +577,7 @@
     }
   </style>
 </macaron-component>
-<macaron-component name="output-tab">
+<macaron-component name="macaron-output-tab">
   <macaron-variant x="863" y="-96"></macaron-variant>
   <macaron-variant
     x="1027"

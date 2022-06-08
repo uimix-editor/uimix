@@ -1,5 +1,3 @@
-const customElements = ["top-page", "macaron-editor"];
-
 /**
  * @type {import('vitepress').UserConfig}
  */
@@ -11,7 +9,7 @@ const config = {
   vue: {
     template: {
       compilerOptions: {
-        isCustomElement: (tag) => customElements.includes(tag),
+        isCustomElement: (tag) => tag.startsWith("macaron-"),
       },
     },
   },

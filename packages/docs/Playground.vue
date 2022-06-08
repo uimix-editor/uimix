@@ -3,7 +3,7 @@
   display: none !important;
 }
 
-demo-tab {
+macaron-demo-tab {
   cursor: pointer;
 }
 
@@ -108,14 +108,14 @@ demo-tab {
 <template>
   <div class="playground">
     <div class="demo-tabs">
-      <demo-tab
+      <macaron-demo-tab
         slot="demo-tabs"
         v-for="(demoFile, index) in demoFiles"
         :aria-selected="currentTab === index"
         @click="onCurrentTabChange(index)"
       >
         {{ demoFile.name }}
-      </demo-tab>
+      </macaron-demo-tab>
     </div>
 
     <div class="playground-floating">
@@ -130,20 +130,20 @@ demo-tab {
       </div>
       <div class="result-pane">
         <div class="result-tabs">
-          <output-tab
+          <macaron-output-tab
             :aria-selected="outputTab === 'jsOutput'"
             @click="outputTab = 'jsOutput'"
-            >JS Output</output-tab
+            >JS Output</macaron-output-tab
           >
-          <output-tab
+          <macaron-output-tab
             :aria-selected="outputTab === 'html'"
             @click="outputTab = 'html'"
-            >HTML</output-tab
+            >HTML</macaron-output-tab
           >
-          <output-tab
+          <macaron-output-tab
             :aria-selected="outputTab === 'preview'"
             @click="outputTab = 'preview'"
-            >Preview</output-tab
+            >Preview</macaron-output-tab
           >
         </div>
         <div class="result-contents">
