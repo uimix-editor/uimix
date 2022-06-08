@@ -7,7 +7,7 @@ import styled, { StyleSheetManager } from "styled-components";
 import { PaintkitRoot } from "@seanchas116/paintkit/src/components/PaintkitRoot";
 import { JSONUndoHistory } from "@seanchas116/paintkit/src/util/JSONUndoHistory";
 import { RootPortalHostProvider } from "@seanchas116/paintkit/src/components/RootPortal";
-import { action, makeObservable, observable } from "mobx";
+import { makeObservable, observable, runInAction } from "mobx";
 import { DocumentJSON, Document } from "../models/Document";
 import { EditorState } from "../state/EditorState";
 import { Editor } from "../views/Editor";
@@ -104,13 +104,15 @@ export class MacaronEditorElement extends HTMLElement {
     return this._value;
   }
 
-  @action set value(value: string) {
+  set value(value: string) {
     if (this._value === value) {
       return;
     }
     this._value = value;
-    parseDocument(this._editorState.document, value);
-    this._editorState.history.revert();
+    runInAction(() => {
+      parseDocument(this._editorState.document, value);
+      this._editorState.history.revert();
+    });
   }
 
   attributeChangedCallback(
