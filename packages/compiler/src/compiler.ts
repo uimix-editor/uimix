@@ -1,26 +1,10 @@
-import path from "path";
-import fs from "fs";
 import type * as hast from "hast";
-import * as prettier from "prettier";
 import { upperFirst, camelCase } from "lodash-es";
 import { toHtml } from "hast-util-to-html";
 import dedent from "dedent";
 import { parseHTMLFragment } from "./util";
 import { fixAssetPathInCSS, fixAssetPathInHTMLTree } from "./fix-asset-path";
 import { resetCSS } from "./resetCSS";
-
-export function compileFile(filePath: string, outputDir?: string): void {
-  const data = fs.readFileSync(filePath, "utf8");
-
-  const outFileName = path.basename(filePath).replace(/\.macaron$/, ".js");
-  const outFilePath = path.join(
-    outputDir ?? path.dirname(filePath),
-    outFileName
-  );
-
-  const out = compile(data);
-  fs.writeFileSync(outFilePath, out);
-}
 
 function compileComponent(ast: hast.Element): string {
   const name = ast.properties?.name?.toString();
@@ -46,30 +30,30 @@ function compileComponent(ast: hast.Element): string {
   }
 
   return `
-    class ${className} extends HTMLElement {
-      constructor() {
-        super();
+class ${className} extends HTMLElement {
+  constructor() {
+    super();
 
-        const style = \`\n${resetCSS}\n${dedent(style)}\`;
-        const template = \`\n${dedent(template)}\`;
+    const style = \`\n${resetCSS}\n${dedent(style)}\`;
+    const template = \`\n${dedent(template)}\`;
 
-        this.attachShadow({ mode: "open" });
-        this.shadowRoot.innerHTML = ${"`<style>${style}</style>${template}`"};
-      }
-    }
+    this.attachShadow({ mode: "open" });
+    this.shadowRoot.innerHTML = ${"`<style>${style}</style>${template}`"};
+  }
+}
 
-    customElements.define(${JSON.stringify(name)}, ${className});
-  `;
+customElements.define(${JSON.stringify(name)}, ${className});
+`;
 }
 
 function compileGlobalStyle(ast: hast.Element): string {
   const style = (ast.children[0] as hast.Text).value;
   return `
-    const style = \`${style}\`;
-    const styleElement = document.createElement("style");
-    styleElement.innerHTML = style;
-    document.head.appendChild(styleElement);
-  `;
+const style = \`${dedent(style)}\`;
+const styleElement = document.createElement("style");
+styleElement.innerHTML = style;
+document.head.appendChild(styleElement);
+`;
 }
 
 function compileImports(ast: hast.Root): string[] {
@@ -86,7 +70,7 @@ function compileImports(ast: hast.Root): string[] {
       throw new Error("script must have a src");
     }
 
-    return `import "${src}";`;
+    return `import "${src}";\n`;
   });
 
   return imports;
@@ -108,9 +92,5 @@ export function compile(data: string): string {
     }
   }
 
-  const output = outputs.join("");
-
-  return prettier.format(output, {
-    parser: "babel",
-  });
+  return outputs.join("");
 }

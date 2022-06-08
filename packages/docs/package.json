@@ -16,6 +16,9 @@
     "vitepress": "^1.0.0-alpha.1"
   },
   "dependencies": {
-    "@fontsource/readex-pro": "^4.5.9"
+    "@macaron-app/compiler": "*",
+    "@fontsource/readex-pro": "^4.5.9",
+    "codemirror": "^5.65.5",
+    "monaco-editor": "^0.33.0"
   }
 }

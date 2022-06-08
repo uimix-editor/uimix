@@ -19,7 +19,8 @@ export class VSCodeFile {
       if (currentContent === content) {
         return;
       }
-      const document = parseDocument(content);
+      const document = new Document();
+      parseDocument(document, content);
       runInAction(() => {
         this.history = new JSONUndoHistory<DocumentJSON, Document>(document);
         this.url = url;

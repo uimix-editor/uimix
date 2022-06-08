@@ -1,8 +1,28 @@
+import * as path from "path";
+import * as fs from "fs";
 import chokidar from "chokidar";
 import glob from "glob";
 import { Command } from "commander";
 import slash from "slash";
-import { compileFile } from "./compiler";
+import * as prettier from "prettier";
+import { compile } from "./compiler";
+
+function compileFile(filePath: string, outputDir?: string): void {
+  const data = fs.readFileSync(filePath, "utf8");
+
+  const outFileName = path.basename(filePath).replace(/\.macaron$/, ".js");
+  const outFilePath = path.join(
+    outputDir ?? path.dirname(filePath),
+    outFileName
+  );
+
+  const out = compile(data);
+  const formatted = prettier.format(out, {
+    parser: "babel",
+  });
+
+  fs.writeFileSync(outFilePath, formatted);
+}
 
 function compileFiles(
   filePathOrGlobs: string[],

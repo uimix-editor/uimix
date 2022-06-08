@@ -1,0 +1,58 @@
+<script
+  type="module"
+  src="https://cdn.jsdelivr.net/npm/iconify-icon@0.0.6/dist/iconify-icon.min.js"
+></script>
+<style>
+  :root {
+  }
+</style>
+<macaron-component name="my-button">
+  <macaron-variant
+    x="192"
+    y="32"
+    background-color="transparent"
+  ></macaron-variant>
+  <macaron-variant
+    x="368"
+    y="32"
+    background-color="transparent"
+    selector=":hover"
+  ></macaron-variant>
+  <template>
+    <button id="button"><slot>Button</slot></button>
+  </template>
+  <style>
+    :host {
+      display: block;
+    }
+    #button {
+      height: 48px;
+      border-top-left-radius: 24px;
+      border-top-right-radius: 24px;
+      border-bottom-right-radius: 24px;
+      border-bottom-left-radius: 24px;
+      display: flex;
+      padding-top: 0px;
+      padding-right: 23px;
+      padding-bottom: 0px;
+      padding-left: 23px;
+      flex-direction: row;
+      align-items: center;
+      justify-content: center;
+      row-gap: 10px;
+      column-gap: 10px;
+      color: white;
+      font-family: Readex Pro;
+      font-weight: 700;
+      font-size: 16px;
+      background: #0085ff;
+      border-top-width: 0px;
+      border-right-width: 0px;
+      border-bottom-width: 0px;
+      border-left-width: 0px;
+    }
+    :host(:hover) #button {
+      background: #0073eb;
+    }
+  </style>
+</macaron-component>

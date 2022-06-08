@@ -37,8 +37,8 @@ function dumpDocument(document: Document): hast.Content[] {
   ];
 }
 
-function loadDocument(hastNodes: hast.Content[]): Document {
-  const document = new Document();
+function loadDocument(document: Document, hastNodes: hast.Content[]): void {
+  document.clear();
 
   for (const child of hastNodes) {
     if (child.type !== "element") {
@@ -73,8 +73,6 @@ function loadDocument(hastNodes: hast.Content[]): Document {
       loadGlobalStyle(document, child);
     }
   }
-
-  return document;
 }
 
 export function stringifyDocument(document: Document): string {
@@ -82,7 +80,7 @@ export function stringifyDocument(document: Document): string {
   return formatHTML(html);
 }
 
-export function parseDocument(data: string): Document {
+export function parseDocument(document: Document, data: string): void {
   const hast = parseHTMLFragment(data);
-  return loadDocument(hast.children);
+  return loadDocument(document, hast.children);
 }

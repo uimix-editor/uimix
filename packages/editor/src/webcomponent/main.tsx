@@ -7,12 +7,19 @@ import styled, { StyleSheetManager } from "styled-components";
 import { PaintkitRoot } from "@seanchas116/paintkit/src/components/PaintkitRoot";
 import { JSONUndoHistory } from "@seanchas116/paintkit/src/util/JSONUndoHistory";
 import { RootPortalHostProvider } from "@seanchas116/paintkit/src/components/RootPortal";
+import { makeObservable, observable, runInAction } from "mobx";
 import { DocumentJSON, Document } from "../models/Document";
 import { EditorState } from "../state/EditorState";
 import { Editor } from "../views/Editor";
+import { parseDocument, stringifyDocument } from "../fileFormat/document";
 
 class EditorElementEditorState extends EditorState {
-  readonly history = new JSONUndoHistory<DocumentJSON, Document>(
+  constructor() {
+    super();
+    makeObservable(this);
+  }
+
+  @observable.ref history = new JSONUndoHistory<DocumentJSON, Document>(
     new Document()
   );
 }
@@ -33,14 +40,23 @@ const App: React.FC<{
 };
 
 export class MacaronEditorElement extends HTMLElement {
-  private _editorState = new EditorElementEditorState();
-  private _reactRoot?: ReactDOM.Root;
+  static get observedAttributes(): string[] {
+    return ["value"];
+  }
 
   constructor() {
     super();
     this._editorState.wheelScrollEnabled = false;
-    this._editorState.layout = "threeColumn";
+    // this._editorState.layout = "threeColumn";
+
+    this._editorState.history.on("change", () => {
+      this._value = stringifyDocument(this._editorState.document);
+      const event = new CustomEvent("change");
+      this.dispatchEvent(event);
+    });
   }
+  private _editorState = new EditorElementEditorState();
+  private _reactRoot?: ReactDOM.Root;
 
   connectedCallback(): void {
     this.setAttribute("tabindex", "-1");
@@ -80,6 +96,33 @@ export class MacaronEditorElement extends HTMLElement {
 
   get editorState(): EditorElementEditorState {
     return this._editorState;
+  }
+
+  private _value = "";
+
+  get value(): string {
+    return this._value;
+  }
+
+  set value(value: string) {
+    if (this._value === value) {
+      return;
+    }
+    this._value = value;
+    runInAction(() => {
+      parseDocument(this._editorState.document, value);
+      this._editorState.history.revert();
+    });
+  }
+
+  attributeChangedCallback(
+    name: string,
+    oldValue: string,
+    newValue: string
+  ): void {
+    if (name === "value") {
+      this.value = newValue;
+    }
   }
 }
 

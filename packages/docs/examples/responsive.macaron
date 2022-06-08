@@ -1,0 +1,117 @@
+<style>
+  :root {
+  }
+</style>
+<macaron-component name="hotel-card">
+  <macaron-variant x="100" y="32" width="640"></macaron-variant>
+  <macaron-variant
+    x="100"
+    y="247"
+    width="300"
+    media="(max-width: 400px)"
+  ></macaron-variant>
+  <template>
+    <div id="thumb">
+      <slot name="thumb"
+        ><img src="https://source.unsplash.com/0sSJMTfLXUI"
+      /></slot>
+    </div>
+    <div id="flex-container1">
+      <div id="flex-container">
+        <h3 id="name"><slot name="name">Moonlight Hotel &#x26; Spa</slot></h3>
+        <div id="rating">
+          <span><slot name="rating">4</slot></span
+          >-star
+        </div>
+      </div>
+      <div id="price">
+        <span><slot name="price">$199</slot></span> per night
+      </div>
+    </div>
+  </template>
+  <style>
+    :host {
+      display: flex;
+      padding-top: 12px;
+      padding-right: 12px;
+      padding-bottom: 12px;
+      padding-left: 12px;
+      align-items: center;
+      row-gap: 24px;
+      column-gap: 24px;
+      font-family: Inter;
+    }
+    #thumb {
+      top: 19px;
+      left: 24px;
+      min-width: 0px;
+      max-width: 240px;
+      border-top-left-radius: 4px;
+      border-top-right-radius: 4px;
+      border-bottom-right-radius: 4px;
+      border-bottom-left-radius: 4px;
+      display: flex;
+      flex-direction: column;
+      background: #cccccc;
+    }
+    #flex-container1 {
+      top: 47px;
+      left: 293px;
+      flex-shrink: 1;
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      row-gap: 24px;
+      column-gap: 24px;
+    }
+    #flex-container {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      row-gap: 8px;
+      column-gap: 8px;
+    }
+    #name {
+      margin-top: 0px;
+      margin-bottom: 0px;
+      color: #333;
+      font-size: 18px;
+    }
+    #rating {
+      color: #d800b2;
+      font-weight: 500;
+      font-size: 14px;
+    }
+    #price {
+      color: #666;
+    }
+    @media (max-width: 400px) {
+      :host {
+        flex-direction: column;
+        align-items: flex-start;
+        row-gap: 12px;
+        column-gap: 12px;
+      }
+      #thumb {
+        max-width: none;
+        align-self: stretch;
+      }
+      #flex-container1 {
+        row-gap: 8px;
+      }
+      #flex-container {
+        flex-direction: row;
+        align-items: center;
+      }
+      #name {
+        font-size: 16px;
+      }
+      #rating {
+        font-size: 12px;
+      }
+      #price {
+        font-size: 14px;
+      }
+    }
+  </style>
+</macaron-component>

@@ -1,6 +1,7 @@
 import url from "url";
 import path from "path";
 import fs from "fs";
+import * as prettier from "prettier";
 import { describe, it, expect } from "vitest";
 import { compile } from "./compiler";
 
@@ -14,6 +15,9 @@ describe(compile.name, () => {
   it("compiles", () => {
     const data = fs.readFileSync(fixtureFilePath, "utf-8");
     const out = compile(data);
-    expect(out).toMatchSnapshot();
+    const formatted = prettier.format(out, {
+      parser: "babel",
+    });
+    expect(formatted).toMatchSnapshot();
   });
 });
