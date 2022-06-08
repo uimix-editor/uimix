@@ -1,33 +1,13 @@
-import path from "path";
 import type * as hast from "hast";
 // @ts-ignore
 import replaceCSSURL from "replace-css-url";
-import slash from "slash";
 
-export function fixAssetPath(
-  assetPath: string,
-
-  // used to adjust relative paths
-  filePath = ".",
-  outFilePath = "."
-): string {
+export function fixAssetPath(assetPath: string): string {
   try {
     new URL(assetPath);
     return assetPath;
   } catch {
-    filePath = slash(filePath);
-    outFilePath = slash(outFilePath);
-
-    const absAssetPath = path.posix.resolve(
-      path.posix.dirname(filePath),
-      assetPath
-    );
-    const assetPathFromOut = path.posix.relative(
-      path.posix.dirname(outFilePath),
-      absAssetPath
-    );
-
-    return `\${new URL("${assetPathFromOut}", import.meta.url)}`;
+    return `\${new URL("${assetPath}", import.meta.url)}`;
   }
 }
 
@@ -40,14 +20,10 @@ const assetAttributes = {
   use: ["xLinkHref", "href"],
 };
 
-export function fixAssetPathInHTMLTree(
-  node: hast.Content | hast.Root,
-  filePath = ".",
-  outFilePath = "."
-): void {
+export function fixAssetPathInHTMLTree(node: hast.Content | hast.Root): void {
   if ("children" in node) {
     for (const child of node.children) {
-      fixAssetPathInHTMLTree(child, filePath, outFilePath);
+      fixAssetPathInHTMLTree(child);
     }
   }
 
@@ -59,11 +35,7 @@ export function fixAssetPathInHTMLTree(
       ]) {
         const value = node.properties?.[attribute];
         if (typeof value === "string") {
-          node.properties[attribute] = fixAssetPath(
-            value,
-            filePath,
-            outFilePath
-          );
+          node.properties[attribute] = fixAssetPath(value);
         }
       }
     }
@@ -77,7 +49,7 @@ export function fixAssetPathInCSS(
 ): string {
   // eslint-disable-next-line
   const newCSS: string = replaceCSSURL(css, (url: string) => {
-    return fixAssetPath(url, filePath, outFilePath);
+    return fixAssetPath(url);
   });
   return newCSS;
 }
