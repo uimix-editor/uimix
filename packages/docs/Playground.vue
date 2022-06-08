@@ -1,4 +1,8 @@
 <style scoped>
+[hidden] {
+  display: none !important;
+}
+
 demo-tab {
   cursor: pointer;
 }
@@ -39,7 +43,6 @@ demo-tab {
 
 .html-editor {
   min-width: 0;
-  display: none;
 }
 .html-editor :global(.CodeMirror) {
   font-family: var(--vp-font-family-mono);
@@ -79,6 +82,16 @@ demo-tab {
   margin-bottom: -2px;
   cursor: pointer;
 }
+
+.result-pane {
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  min-width: 0;
+}
+.result-pane > :not(:first-child) {
+  flex: 1 0 0;
+}
 </style>
 
 <template>
@@ -104,7 +117,7 @@ demo-tab {
       <div class="splitter">
         <div class="splitter-draggable"></div>
       </div>
-      <div>
+      <div class="result-pane">
         <div class="result-tabs">
           <output-tab
             :aria-selected="outputTab === 'jsOutput'"
@@ -122,8 +135,17 @@ demo-tab {
             >Preview</output-tab
           >
         </div>
-        <div ref="editorBody" class="html-editor"></div>
-        <iframe class="preview" ref="preview" sandbox="allow-scripts"></iframe>
+        <div
+          ref="editorBody"
+          class="html-editor"
+          :hidden="outputTab !== 'html'"
+        ></div>
+        <iframe
+          class="preview"
+          ref="preview"
+          sandbox="allow-scripts"
+          :hidden="outputTab !== 'preview'"
+        ></iframe>
       </div>
     </div>
   </div>
@@ -210,7 +232,7 @@ export default {
         value: demoFiles[0].html,
         mode: "htmlmixed",
         lineNumbers: true,
-        theme: "material-darker",
+        //theme: "material-darker",
       }
     );
     this.codeMirror = codeMirror;
