@@ -8,9 +8,7 @@ const style = \`:root {
   --red: #ff0000;
   --user-card-name-color: #333333;
 }\`;
-const styleElement = document.createElement(\\"style\\");
-styleElement.innerHTML = style;
-document.head.appendChild(styleElement);
+document.head.appendChild(document.createElement(\\"style\\")).textContent = style;
 
 class MyComponent extends HTMLElement {
   constructor() {
