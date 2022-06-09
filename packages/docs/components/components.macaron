@@ -45,10 +45,10 @@
       ></a>
     </div>
     <slot name="playground"
-      ><div id="div">
-        <macaron-demo-tab id="div5"></macaron-demo-tab
-        ><macaron-demo-tab id="div6">Example 2</macaron-demo-tab
-        ><macaron-demo-tab id="div7">Example 3</macaron-demo-tab>
+      ><div id="div1">
+        <macaron-demo-tab aria-selected="true" id="div8"></macaron-demo-tab
+        ><macaron-demo-tab id="div9">Example 2</macaron-demo-tab
+        ><macaron-demo-tab id="div10">Example 3</macaron-demo-tab>
       </div></slot
     >
     <div id="features">
@@ -204,7 +204,7 @@
     #herobutton3 {
       position: relative;
     }
-    #div {
+    #div1 {
       margin-bottom: 16px;
       display: flex;
     }

@@ -48,9 +48,10 @@ export class ComponentStyleMount extends TypedEmitter<{
         ElementInstance,
       ]);
 
-      const scope =
-        variant.type === "defaultVariant" ? "" : ".variant-" + variant.key;
-
+      const scopes =
+        variant.type === "defaultVariant"
+          ? []
+          : [variant.selector, ".variant-" + variant.key];
       for (const instance of instances) {
         if (instance !== rootInstance && !instance.element.id) {
           continue;
@@ -58,15 +59,15 @@ export class ComponentStyleMount extends TypedEmitter<{
 
         let selector: string;
         if (instance === rootInstance) {
-          if (scope) {
-            selector = `:host(${scope})`;
+          if (scopes.length) {
+            selector = scopes.map((s) => `:host(${s})`).join(",");
           } else {
             selector = `:host`;
           }
         } else {
           const id = instance.element.id;
-          if (scope) {
-            selector = `:host(${scope}) #${id}`;
+          if (scopes.length) {
+            selector = scopes.map((s) => `:host(${s}) #${id}`).join(",");
           } else {
             selector = `#${id}`;
           }
