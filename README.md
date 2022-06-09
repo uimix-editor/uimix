@@ -3,14 +3,19 @@
 ![Screenshot](packages/vscode/screenshot.png)
 
 Macaron is an open-source design tool to visually create Web Components, [which can be used in most Web frameworks](https://custom-elements-everywhere.com/), or in vanilla HTML/JavaScript.  
-It aims to be integrated directly into your development workflow.
+
+Its goal is to allow you to create and continuously maintain components visually, and make Web frontend development easier and more fun.
 
 * :pen: Easy-to-use visual editor
 * :technologist: Runs in Visual Studio Code
 * :globe_with_meridians: Framework-agnostic
 * :inbox_tray: Import Web Components
 * :spiral_notepad: Clean File Format
-* :art: Copy-paste from Figma
+* :art: Copy-paste from Figma (WIP)
+
+## Usage
+
+* See [the guide](https://macaron-elements.com/guide).
 
 ## Development
 
@@ -35,7 +40,7 @@ yarn build
 - `/packages/figma` - The Figma plugin for Macaron
 - `/packages/compiler` - The compiler that converts Macaron files to Web Components
 - `/packages/loader-vite` - The Vite plugin to import Macaron files directly from JS/HTML
-- `/packages/docs` - The documentation
+- `/packages/docs` - The Website and documentation
 
 This project uses Yarn Workspaces.
 
