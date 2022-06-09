@@ -13,6 +13,10 @@ Its goal is to allow you to create and continuously maintain components visually
 * :spiral_notepad: Clean File Format
 * :art: Copy-paste from Figma (WIP)
 
+## Demo
+
+* See [the Website](https://macaron-elements.com).
+
 ## Usage
 
 * See [the guide](https://macaron-elements.com/guide).
