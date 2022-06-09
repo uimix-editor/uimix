@@ -197,7 +197,14 @@ const demoFiles = [
     content: interactionsMacaronFile,
     html: dedent`
       <link href="https://fonts.googleapis.com/css2?family=Readex+Pro:wght@400;500;600;700&display=swap" rel="stylesheet">
-      <my-button>Button</my-button>`,
+      <style>
+        my-button {
+          margin: 16px;
+        }
+      </style>
+      <my-button>Button</my-button>
+      <my-button type="secondary">Button</my-button>
+    `,
   },
   {
     name: "Responsive Design",

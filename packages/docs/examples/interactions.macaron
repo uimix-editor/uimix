@@ -3,16 +3,17 @@
   }
 </style>
 <macaron-component name="my-button">
+  <macaron-variant x="192" y="32"></macaron-variant>
+  <macaron-variant x="393" y="32" selector=":hover"></macaron-variant>
   <macaron-variant
     x="192"
-    y="32"
-    background-color="transparent"
+    y="124"
+    selector="[type=&#x22;secondary&#x22;]"
   ></macaron-variant>
   <macaron-variant
-    x="368"
-    y="32"
-    background-color="transparent"
-    selector=":hover"
+    x="391"
+    y="124"
+    selector="[type=&#x22;secondary&#x22;]:hover"
   ></macaron-variant>
   <template>
     <button id="button"><slot>Button</slot></button>
@@ -49,6 +50,21 @@
     }
     :host(:hover) #button {
       background: #0073eb;
+    }
+    :host([type="secondary"]) #button {
+      color: #1e252b;
+      background: #1e252b08;
+      border-top-width: 1px;
+      border-top-color: #1e252b26;
+      border-right-width: 1px;
+      border-right-color: #1e252b26;
+      border-bottom-width: 1px;
+      border-bottom-color: #1e252b26;
+      border-left-width: 1px;
+      border-left-color: #1e252b26;
+    }
+    :host([type="secondary"]:hover) #button {
+      background: #1e252b1a;
     }
   </style>
 </macaron-component>
