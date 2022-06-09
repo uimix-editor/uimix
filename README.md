@@ -190,7 +190,10 @@ yarn build
 - `/packages/editor` - The Macaron Editor
 - `/packages/paintkit` - The submodule for the [paintkit](https://github.com/seanchas116/paintkit) library
 - `/packages/vscode` - The VS Code extension that provides Macaron as a custom editor
+- `/packages/figma` - The Figma plugin for Macaron
 - `/packages/compiler` - The compiler that converts Macaron files to Web Components
+- `/packages/loader-vite` - The Vite plugin to import Macaron files directly from JS/HTML
+- `/packages/docs` - The documentation
 
 This project uses Yarn Workspaces.
 
