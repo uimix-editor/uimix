@@ -172,6 +172,16 @@ macaron components.macaron #=> components.js
 
 ## Development
 
+### Setup
+
+```bash
+# Clone
+git clone --recursive git@github.com:macaron-elements/macaron.git
+
+# Install dependencies
+yarn
+```
+
 ### Project Structure
 
 - `/packages/editor` - The Macaron Editor
@@ -184,12 +194,6 @@ This project uses Yarn Workspaces.
 ### Start devservers
 
 ```bash
-git submodule update --init
-
-# Install dependencies and build libraries
-yarn
-
-# Start watching for changes and launch devservers
 yarn dev
 ```
 
@@ -203,3 +207,15 @@ yarn dev
 - Make sure `yarn dev` is running
 - Open the root directory in VS Code
 - Press `F5` (or menu **Run** → **Start Debugging**)
+
+### Build
+
+```bash
+yarn build
+```
+
+### Test
+
+```bash
+yarn test
+```
