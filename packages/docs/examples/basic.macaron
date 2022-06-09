@@ -1,10 +1,8 @@
-<script
-  type="module"
-  src="https://cdn.jsdelivr.net/npm/iconify-icon@0.0.6/dist/iconify-icon.min.js"
-></script>
 <style>
   :root {
-    --feature-card-color: #64dd17;
+    --brand-color: #ff4081;
+    --heading-color: #1e252b;
+    --text-color: #4e5154;
   }
 </style>
 <macaron-component name="my-component">
@@ -95,7 +93,7 @@
       margin-right: 12px;
       margin-bottom: 24px;
       margin-left: 12px;
-      color: #1e252b;
+      color: var(--heading-color);
       font-weight: 600;
       font-size: 36px;
       line-height: 48px;
@@ -107,7 +105,7 @@
       margin-right: 12px;
       margin-bottom: 24px;
       margin-left: 12px;
-      color: #4e5154;
+      color: var(--text-color);
       font-size: 16px;
       line-height: 28px;
       letter-spacing: -0.02em;
@@ -134,19 +132,19 @@
       font-size: 14px;
       line-height: 40px;
       letter-spacing: -0.02em;
-      background: #ff4081;
+      background: var(--brand-color);
       border-top-width: 1.5px;
       border-top-style: solid;
-      border-top-color: #ff4081;
+      border-top-color: var(--brand-color);
       border-right-width: 1.5px;
       border-right-style: solid;
-      border-right-color: #ff4081;
+      border-right-color: var(--brand-color);
       border-bottom-width: 1.5px;
       border-bottom-style: solid;
-      border-bottom-color: #ff4081;
+      border-bottom-color: var(--brand-color);
       border-left-width: 1.5px;
       border-left-style: solid;
-      border-left-color: #ff4081;
+      border-left-color: var(--brand-color);
     }
     #button2 {
       border-top-left-radius: 24px;
@@ -158,23 +156,23 @@
       padding-left: 14px;
       row-gap: 10px;
       column-gap: 10px;
-      color: #ff4081;
+      color: var(--brand-color);
       font-weight: 800;
       font-size: 14px;
       line-height: 40px;
       letter-spacing: -0.02em;
       border-top-width: 1.5px;
       border-top-style: solid;
-      border-top-color: #ff4081;
+      border-top-color: var(--brand-color);
       border-right-width: 1.5px;
       border-right-style: solid;
-      border-right-color: #ff4081;
+      border-right-color: var(--brand-color);
       border-bottom-width: 1.5px;
       border-bottom-style: solid;
-      border-bottom-color: #ff4081;
+      border-bottom-color: var(--brand-color);
       border-left-width: 1.5px;
       border-left-style: solid;
-      border-left-color: #ff4081;
+      border-left-color: var(--brand-color);
     }
     #screenshot {
       position: static;
