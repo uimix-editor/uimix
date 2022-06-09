@@ -180,6 +180,9 @@ git clone --recursive git@github.com:macaron-elements/macaron.git
 
 # Install dependencies
 yarn
+
+# Build
+yarn build
 ```
 
 ### Project Structure
@@ -207,12 +210,6 @@ yarn dev
 - Make sure `yarn dev` is running
 - Open the root directory in VS Code
 - Press `F5` (or menu **Run** → **Start Debugging**)
-
-### Build
-
-```bash
-yarn build
-```
 
 ### Test
 
