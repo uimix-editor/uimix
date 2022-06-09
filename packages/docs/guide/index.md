@@ -61,6 +61,8 @@ Then, you can load the component in HTML:
 
 ## Use with Vite
 
+> [Example Project](https://github.com/macaron-elements/macaron-examples/tree/main/vite)
+
 If you are using Vite, you can configure Vite to use a loader for Macaron (`@macaron-elements/loader-vite`) to import `.macaron` files directly from your HTML and JS files.
 
 First, install the loader:
