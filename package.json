@@ -11,14 +11,14 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/macaronapp/macaron-next.git"
+    "url": "git+https://github.com/macaron-elements/macaron.git"
   },
   "author": "",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/macaronapp/macaron-next/issues"
+    "url": "https://github.com/macaron-elements/macaron/issues"
   },
-  "homepage": "https://github.com/macaronapp/macaron-next#readme",
+  "homepage": "https://github.com/macaron-elements/macaron#readme",
   "workspaces": [
     "packages/*"
   ],

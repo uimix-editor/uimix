@@ -2,13 +2,13 @@
   "name": "@macaron-elements/compiler",
   "version": "0.2.0",
   "description": "Macaron compiler",
-  "homepage": "https://github.com/macaronapp/macaron#readme",
+  "homepage": "https://github.com/macaron-elements/macaron#readme",
   "bugs": {
-    "url": "https://github.com/macaronapp/macaron/issues"
+    "url": "https://github.com/macaron-elements/macaron/issues"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/macaronapp/macaron.git"
+    "url": "git+https://github.com/macaron-elements/macaron.git"
   },
   "license": "MIT",
   "author": "Ryohei Ikegami <iofg2100@gmail.com>",

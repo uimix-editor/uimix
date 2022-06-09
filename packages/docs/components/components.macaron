@@ -36,7 +36,7 @@
       <a href="/guide/" id="hero-button-link"
         ><macaron-hero-button id="herobutton2"></macaron-hero-button></a
       ><a
-        href="https://github.com/macaronapp/macaron-next"
+        href="https://github.com/macaron-elements/macaron"
         target="_blank"
         id="hero-button-link1"
         ><macaron-hero-button-secondary

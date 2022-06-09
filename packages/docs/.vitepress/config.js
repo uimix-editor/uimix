@@ -18,7 +18,7 @@ const config = {
     logo: "/logo.svg",
     nav: [{ text: "Guide", link: "/guide/", activeMatch: "^/guide/" }],
     socialLinks: [
-      { icon: "github", link: "https://github.com/macaronapp/macaron-next" },
+      { icon: "github", link: "https://github.com/macaron-elements/macaron" },
     ],
     sidebar: {
       "/guide/": [
