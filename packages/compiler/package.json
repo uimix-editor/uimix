@@ -1,6 +1,6 @@
 {
   "name": "@macaron-elements/compiler",
-  "version": "0.2.0",
+  "version": "0.1.0",
   "description": "Macaron compiler",
   "homepage": "https://github.com/macaron-elements/macaron#readme",
   "bugs": {
@@ -12,11 +12,11 @@
   },
   "license": "MIT",
   "author": "Ryohei Ikegami <iofg2100@gmail.com>",
-  "main": "./dist/index.cjs",
   "exports": {
     "import": "./dist/index.mjs",
     "require": "./dist/index.cjs"
   },
+  "main": "./dist/index.cjs",
   "types": "./dist/index.d.ts",
   "bin": {
     "macaron": "./bin/cli.js"
@@ -28,12 +28,12 @@
     "README.md"
   ],
   "scripts": {
-    "build:ts": "tsc -p tsconfig.build.json",
-    "build:bundle": "node build.js",
     "build": "run-p build:*",
-    "dev:ts": "tsc -p tsconfig.build.json -w",
-    "dev:bundle": "node build.js --dev",
+    "build:bundle": "node build.js",
+    "build:ts": "tsc -p tsconfig.build.json",
     "dev": "run-p dev:*",
+    "dev:bundle": "node build.js --dev",
+    "dev:ts": "tsc -p tsconfig.build.json -w",
     "format": "prettier -w src",
     "lint": "eslint src",
     "prepare": "npm run build",
@@ -41,8 +41,7 @@
   },
   "dependencies": {
     "chokidar": "^3.5.3",
-    "dedent": "^0.7.0",
-    "replace-css-url": "^1.2.6",
+    "prettier": "^2.6.2",
     "slash": "^4.0.0"
   },
   "devDependencies": {
@@ -52,12 +51,14 @@
     "@types/prettier": "^2.6.3",
     "@types/shelljs": "^0.8.11",
     "commander": "^9.3.0",
+    "dedent": "^0.7.0",
     "glob": "^8.0.3",
     "hast-util-from-parse5": "^7.1.0",
     "hast-util-to-html": "^8.0.3",
     "lodash-es": "^4.17.21",
     "parse5": "^7.0.0",
     "prettier": "^2.6.2",
+    "replace-css-url": "^1.2.6",
     "shelljs": "^0.8.5",
     "tmp-promise": "^3.0.3",
     "vitest": "^0.13.1"

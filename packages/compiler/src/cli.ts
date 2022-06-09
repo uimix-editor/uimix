@@ -61,7 +61,6 @@ program
   .option("-o, --output <directory>", "Output directory")
   .argument("<files...>")
   .action((files: string[], options: { watch?: boolean; output?: string }) => {
-    console.log(options);
     compileFiles(files.map(slash), options);
   });
 
