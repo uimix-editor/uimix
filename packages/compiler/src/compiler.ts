@@ -50,9 +50,7 @@ function compileGlobalStyle(ast: hast.Element): string {
   const style = (ast.children[0] as hast.Text).value;
   return `
 const style = \`${dedent(style)}\`;
-const styleElement = document.createElement("style");
-styleElement.innerHTML = style;
-document.head.appendChild(styleElement);
+document.head.appendChild(document.createElement("style")).textContent = style;
 `;
 }
 
