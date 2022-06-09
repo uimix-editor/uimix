@@ -50,6 +50,8 @@ npm install -g @macaron-elements/compiler
 macaron components.macaron #=> emits components.js
 ```
 
+It emits a zero-dependency JavaScript module that registers the component.
+
 Then, you can load the component in HTML:
 
 ```html
