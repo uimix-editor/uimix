@@ -25,7 +25,7 @@ const element = document.createElement("component-created-in-macaron");
 ## Install
 
 ```bash
-npm install @macaron-app/loader-vite --save-dev
+npm install @macaron-elements/loader-vite --save-dev
 ```
 
 ## Setup
@@ -33,7 +33,7 @@ npm install @macaron-app/loader-vite --save-dev
 #### `vite.config.js`
 
 ```js
-import macaronLoader from "@macaron-app/loader-vite";
+import macaronLoader from "@macaron-elements/loader-vite";
 
 export default defineConfig({
   plugins: [macaronLoader()],

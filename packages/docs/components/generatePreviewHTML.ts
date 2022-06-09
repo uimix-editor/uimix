@@ -1,4 +1,4 @@
-import { compile } from "@macaron-app/compiler";
+import { compile } from "@macaron-elements/compiler";
 
 export function generatePreviewHTML(jsOutput: string, html: string): string {
   const previewHTML = `

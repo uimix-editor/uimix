@@ -41,12 +41,12 @@ You may want to change the font or the color of the text. Select **Style** tab i
 
 ## Compile to JS
 
-`@macaron-app/compiler` provides a CLI that compiles Macaron files to JavaScript.
+`@macaron-elements/compiler` provides a CLI that compiles Macaron files to JavaScript.
 
 Install it and compile the component:
 
 ```bash
-npm install -g @macaron-app/compiler
+npm install -g @macaron-elements/compiler
 macaron components.macaron #=> emits components.js
 ```
 
@@ -59,19 +59,19 @@ Then, you can load the component in HTML:
 
 ## Use with Vite
 
-If you are using Vite, you can configure Vite to use a loader for Macaron (`@macaron-app/loader-vite`) to import `.macaron` files directly from your HTML and JS files.
+If you are using Vite, you can configure Vite to use a loader for Macaron (`@macaron-elements/loader-vite`) to import `.macaron` files directly from your HTML and JS files.
 
 First, install the loader:
 
 ```bash
-npm install --save-dev @macaron-app/loader-vite
+npm install --save-dev @macaron-elements/loader-vite
 ```
 
 Configure `vite.config.js`:
 
 ```js
 import { defineConfig } from "vite";
-import macaronLoader from "@macaron-app/loader-vite";
+import macaronLoader from "@macaron-elements/loader-vite";
 
 export default defineConfig({
   plugins: [macaronLoader()],

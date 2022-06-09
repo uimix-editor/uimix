@@ -11,7 +11,7 @@
     "dev": "run-p dev:*"
   },
   "dependencies": {
-    "@macaron-app/compiler": "*",
+    "@macaron-elements/compiler": "*",
     "serve": "^13.0.2"
   },
   "devDependencies": {

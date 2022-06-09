@@ -1,4 +1,4 @@
-const { compile } = require("@macaron-app/compiler");
+const { compile } = require("@macaron-elements/compiler");
 
 const fileRegex = /\.macaron$/;
 

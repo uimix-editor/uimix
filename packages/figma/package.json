@@ -1,5 +1,5 @@
 {
-  "name": "@macaron-app/figma-plugin",
+  "name": "macaron-figma-plugin",
   "version": "1.0.0",
   "private": true,
   "description": "Figma plugin for Macaron",

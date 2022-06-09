@@ -5,7 +5,7 @@ This library / CLI is the compiler that converts Macaron files to Web Components
 ## Installation
 
 ```bash
-npm install -g @macaron-app/compiler
+npm install -g @macaron-elements/compiler
 ```
 
 ## Usage
@@ -39,7 +39,7 @@ macaron help
 ## API
 
 ```js
-import { compile } from "@macaron-app/compiler";
+import { compile } from "@macaron-elements/compiler";
 
 const data = fs.readFileSync("src/test.macaron", "utf-8");
 const out = compile(data);

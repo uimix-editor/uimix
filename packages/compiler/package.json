@@ -1,5 +1,5 @@
 {
-  "name": "@macaron-app/compiler",
+  "name": "@macaron-elements/compiler",
   "version": "0.2.0",
   "description": "Macaron compiler",
   "homepage": "https://github.com/macaronapp/macaron#readme",

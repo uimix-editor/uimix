@@ -169,7 +169,7 @@ macaron-demo-tab {
 <script>
 import dedent from "dedent";
 import "codemirror/lib/codemirror.css";
-import { compile } from "@macaron-app/compiler";
+import { compile } from "@macaron-elements/compiler";
 import basicMacaronFile from "../examples/basic.macaron?raw";
 import interactionsMacaronFile from "../examples/interactions.macaron?raw";
 import responsiveMacaronFile from "../examples/responsive.macaron?raw";
@@ -282,8 +282,8 @@ export default {
   },
 
   async mounted() {
-    import("@macaron-app/editor/dist/webcomponent/main.js");
-    import("@macaron-app/editor/dist/webcomponent/main.css");
+    import("@macaron-elements/editor/dist/webcomponent/main.js");
+    import("@macaron-elements/editor/dist/webcomponent/main.css");
     const CodeMirror = (await import("codemirror")).default;
     await import("codemirror/mode/htmlmixed/htmlmixed");
 
