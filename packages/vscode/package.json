@@ -20,7 +20,7 @@
     "lint": "eslint src --ext ts",
     "pretest": "run-s build lint",
     "test": "node ./out/test/runTest.js",
-    "vscode:prepublish": "run-s compile:*"
+    "vscode:prepublish": "run-s compile:esbuild compile:copy-files"
   },
   "contributes": {
     "commands": [
