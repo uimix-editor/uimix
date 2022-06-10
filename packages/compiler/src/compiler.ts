@@ -42,7 +42,9 @@ function compileComponent(ast: hast.Element): string {
     }
   }
 
-  customElements.define(${JSON.stringify(name)}, ${className});
+  if (!customElements.get("${name}")) {
+    customElements.define("${name}", ${className});
+  }
 `;
 }
 
