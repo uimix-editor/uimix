@@ -19,6 +19,7 @@ const config = {
     nav: [{ text: "Guide", link: "/guide/", activeMatch: "^/guide/" }],
     socialLinks: [
       { icon: "github", link: "https://github.com/macaron-elements/macaron" },
+      { icon: "discord", link: "https://discord.gg/WGk6Mx8qTK" },
     ],
     sidebar: {
       "/guide/": [
