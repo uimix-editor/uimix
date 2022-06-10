@@ -45,10 +45,10 @@
       ></a>
     </div>
     <slot name="playground"
-      ><div id="div1">
-        <macaron-demo-tab aria-selected="true" id="div8"></macaron-demo-tab
-        ><macaron-demo-tab id="div9">Example 2</macaron-demo-tab
-        ><macaron-demo-tab id="div10">Example 3</macaron-demo-tab>
+      ><div id="div7">
+        <macaron-demo-tab aria-selected="true" id="div26"></macaron-demo-tab
+        ><macaron-demo-tab id="div27">Example 2</macaron-demo-tab
+        ><macaron-demo-tab id="div28">Example 3</macaron-demo-tab>
       </div></slot
     >
     <div id="features">
@@ -150,6 +150,27 @@
       </div>
       <div id="workinprogress">🚧 - Work in progress</div>
     </div>
+    <div href="https://github.com/macaron-elements/macaron" id="frame15">
+      <div id="frame2">
+        <div id="getinvolved">Get involved</div>
+        <div id="macaronisintheearlys">
+          Macaron is in the early stages of development.<br />Please subscribe
+          for updates and give us your feedbacks!
+        </div>
+      </div>
+      <div id="frame3">
+        <a
+          href="https://github.com/macaron-elements/macaron"
+          target="_blank"
+          id="github"
+          ><iconify-icon icon="bi:github"></iconify-icon>GitHub</a
+        ><a href="https://discord.gg/WGk6Mx8qTK" target="_blank" id="discord"
+          ><iconify-icon icon="bi:discord"></iconify-icon>Discord</a
+        ><a id="twitter"
+          ><iconify-icon icon="bi:twitter"></iconify-icon>Twitter</a
+        >
+      </div>
+    </div>
   </template>
   <style>
     :host {
@@ -204,13 +225,13 @@
     #herobutton3 {
       position: relative;
     }
-    #div1 {
+    #div7 {
       margin-bottom: 16px;
       display: flex;
     }
     #features {
       margin-top: 96px;
-      margin-bottom: 128px;
+      margin-bottom: 96px;
       max-width: 1032px;
       display: flex;
       flex-direction: column;
@@ -310,6 +331,86 @@
       line-height: 24px;
       letter-spacing: -0.02em;
       text-align: left;
+    }
+    #frame15 {
+      margin-bottom: 128px;
+      max-width: 800px;
+      border-top-left-radius: 24px;
+      border-top-right-radius: 24px;
+      border-bottom-right-radius: 24px;
+      border-bottom-left-radius: 24px;
+      display: flex;
+      padding-top: 40px;
+      padding-right: 40px;
+      padding-bottom: 40px;
+      padding-left: 40px;
+      align-items: center;
+      justify-content: space-between;
+      row-gap: 107px;
+      column-gap: 107px;
+      background: linear-gradient(135deg, #ff40d5 0%, #ff4081 100%);
+    }
+    #frame2 {
+      display: flex;
+      padding-top: 0px;
+      padding-right: 0px;
+      padding-bottom: 0px;
+      padding-left: 0px;
+      flex-direction: column;
+      row-gap: 20px;
+      column-gap: 20px;
+    }
+    #getinvolved {
+      color: #ffffff;
+      font-weight: 700;
+      font-size: 32px;
+      line-height: 40px;
+      letter-spacing: -0.03em;
+      text-align: left;
+    }
+    #macaronisintheearlys {
+      color: #ffffffe6;
+      font-size: 16px;
+      line-height: 24px;
+      letter-spacing: -0.01em;
+      text-align: left;
+    }
+    #frame3 {
+      display: flex;
+      flex-direction: column;
+    }
+    #github {
+      display: flex;
+      align-items: center;
+      column-gap: 8px;
+      color: #ffffff;
+      font-weight: 500;
+      font-size: 16px;
+      line-height: 32px;
+      letter-spacing: -0.03em;
+      text-decoration-line: none;
+    }
+    #discord {
+      display: flex;
+      align-items: center;
+      column-gap: 8px;
+      color: #ffffff;
+      font-weight: 500;
+      font-size: 16px;
+      line-height: 32px;
+      letter-spacing: -0.03em;
+      text-decoration-line: none;
+    }
+    #twitter {
+      display: flex;
+      align-items: center;
+      column-gap: 8px;
+      color: #ffffff;
+      font-weight: 500;
+      font-size: 16px;
+      line-height: 32px;
+      letter-spacing: -0.03em;
+      text-decoration-line: none;
     }
     @media (max-width: 1024px) {
       #heroTitle {
