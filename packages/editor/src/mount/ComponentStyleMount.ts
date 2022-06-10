@@ -51,7 +51,10 @@ export class ComponentStyleMount extends TypedEmitter<{
       const scopes =
         variant.type === "defaultVariant"
           ? []
-          : [variant.selector, ".variant-" + variant.key];
+          : [
+              ...(variant.selector ? [variant.selector] : []),
+              ".variant-" + variant.key,
+            ];
       for (const instance of instances) {
         if (instance !== rootInstance && !instance.element.id) {
           continue;
