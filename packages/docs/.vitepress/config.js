@@ -3,7 +3,13 @@
  */
 const config = {
   title: "Macaron",
-  description: "Visual editor for Web Components",
+  description:
+    "Open-source visual editor to create and maintain Web Components",
+  head: [
+    ["meta", { property: "og:image", content: "ogp.png" }],
+    ["link", { rel: "icon", type: "image/svg+xml", href: "logo.svg" }],
+  ],
+
   appearance: false,
 
   vue: {
@@ -20,6 +26,7 @@ const config = {
     socialLinks: [
       { icon: "github", link: "https://github.com/macaron-elements/macaron" },
       { icon: "discord", link: "https://discord.gg/WGk6Mx8qTK" },
+      { icon: "twitter", link: "https://twitter.com/macaron_editor" },
     ],
     sidebar: {
       "/guide/": [
