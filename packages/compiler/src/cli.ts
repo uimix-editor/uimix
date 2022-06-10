@@ -8,6 +8,11 @@ import * as prettier from "prettier";
 import { compile } from "./compiler";
 
 function compileFile(filePath: string, outputDir?: string): void {
+  if (!filePath.endsWith(".macaron")) {
+    console.warn(`${filePath} does not end with .macaron. skipping.`);
+    return;
+  }
+
   const data = fs.readFileSync(filePath, "utf8");
 
   const outFileName = path.basename(filePath).replace(/\.macaron$/, ".js");
