@@ -45,10 +45,10 @@
       ></a>
     </div>
     <slot name="playground"
-      ><div id="div7">
-        <macaron-demo-tab aria-selected="true" id="div26"></macaron-demo-tab
-        ><macaron-demo-tab id="div27">Example 2</macaron-demo-tab
-        ><macaron-demo-tab id="div28">Example 3</macaron-demo-tab>
+      ><div id="div12">
+        <macaron-demo-tab aria-selected="true" id="div41"></macaron-demo-tab
+        ><macaron-demo-tab id="div42">Example 2</macaron-demo-tab
+        ><macaron-demo-tab id="div43">Example 3</macaron-demo-tab>
       </div></slot
     >
     <div id="features">
@@ -225,7 +225,7 @@
     #herobutton3 {
       position: relative;
     }
-    #div7 {
+    #div12 {
       margin-bottom: 16px;
       display: flex;
     }
@@ -346,8 +346,8 @@
       padding-left: 40px;
       align-items: center;
       justify-content: space-between;
-      row-gap: 107px;
-      column-gap: 107px;
+      row-gap: 32px;
+      column-gap: 32px;
       background: linear-gradient(135deg, #ff40d5 0%, #ff4081 100%);
     }
     #frame2 {
@@ -364,14 +364,14 @@
       color: #ffffff;
       font-weight: 700;
       font-size: 32px;
-      line-height: 40px;
+      line-height: 1.5;
       letter-spacing: -0.03em;
       text-align: left;
     }
     #macaronisintheearlys {
       color: #ffffffe6;
       font-size: 16px;
-      line-height: 24px;
+      line-height: 1.5;
       letter-spacing: -0.01em;
       text-align: left;
     }
@@ -386,7 +386,7 @@
       color: #ffffff;
       font-weight: 500;
       font-size: 16px;
-      line-height: 32px;
+      line-height: 2;
       letter-spacing: -0.03em;
       text-decoration-line: none;
     }
@@ -397,7 +397,7 @@
       color: #ffffff;
       font-weight: 500;
       font-size: 16px;
-      line-height: 32px;
+      line-height: 2;
       letter-spacing: -0.03em;
       text-decoration-line: none;
     }
@@ -408,7 +408,7 @@
       color: #ffffff;
       font-weight: 500;
       font-size: 16px;
-      line-height: 32px;
+      line-height: 2;
       letter-spacing: -0.03em;
       text-decoration-line: none;
     }
@@ -454,6 +454,16 @@
         margin-right: 0px;
         margin-bottom: 64px;
         margin-left: 0px;
+      }
+      #frame15 {
+        margin-bottom: 64px;
+        padding-top: 32px;
+        padding-right: 32px;
+        padding-bottom: 32px;
+        padding-left: 32px;
+      }
+      #getinvolved {
+        font-size: 24px;
       }
     }
   </style>
