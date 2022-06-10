@@ -1,4 +1,4 @@
-<h1 align="center"> <a href="https://macaron-components.com">Macaron</a> for VS Code </h1>
+<h1 align="center"> <a href="https://macaron-elements.com">Macaron</a> for VS Code </h1>
 
 <p align="center">Create Web Components visually, without leaving VS Code</p>
 
@@ -14,4 +14,4 @@
 * Create a file with `.macaron` extension
   * The editor UI of Macaron is shown in a tab instead of the normal text editor of VS Code.
 
-See [the guide](https://macaron-components.com/guide) for more information.
+See [the guide](https://macaron-elements.com/guide) for more information.
