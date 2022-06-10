@@ -5,7 +5,7 @@
   "description": "Figma plugin for Macaron",
   "license": "MIT License",
   "scripts": {
-    "build": "yarn run build:ui && yarn run build:main -- --minify",
+    "build": "yarn run build:ui && yarn run build:main",
     "build:main": "esbuild plugin-src/code.ts --bundle --outfile=dist/code.js",
     "build:ui": "npx vite build --minify esbuild --emptyOutDir=false",
     "build:watch": "concurrently -n widget,iframe \"yarn run build:main -- --watch\" \"yarn run build:ui -- --watch\"",
