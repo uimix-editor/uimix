@@ -30,27 +30,27 @@ function compileComponent(ast: hast.Element): string {
   }
 
   return `
-class ${className} extends HTMLElement {
-  constructor() {
-    super();
+  class ${className} extends HTMLElement {
+    constructor() {
+      super();
 
-    const style = \`\n${resetCSS}\n${dedent(style)}\`;
-    const template = \`\n${dedent(template)}\`;
+      const style = \`\n${resetCSS}\n${dedent(style)}\`;
+      const template = \`\n${dedent(template)}\`;
 
-    this.attachShadow({ mode: "open" });
-    this.shadowRoot.innerHTML = ${"`<style>${style}</style>${template}`"};
+      this.attachShadow({ mode: "open" });
+      this.shadowRoot.innerHTML = ${"`<style>${style}</style>${template}`"};
+    }
   }
-}
 
-customElements.define(${JSON.stringify(name)}, ${className});
+  customElements.define(${JSON.stringify(name)}, ${className});
 `;
 }
 
 function compileGlobalStyle(ast: hast.Element): string {
   const style = (ast.children[0] as hast.Text).value;
   return `
-const style = \`${dedent(style)}\`;
-document.head.appendChild(document.createElement("style")).textContent = style;
+  const style = \`${dedent(style)}\`;
+  document.head.appendChild(document.createElement("style")).textContent = style;
 `;
 }
 
@@ -81,6 +81,8 @@ export function compile(data: string): string {
 
   outputs.push(...compileImports(ast));
 
+  outputs.push(`if (typeof window !== "undefined") {`);
+
   for (const child of ast.children) {
     if (child.type === "element" && child.tagName === "macaron-component") {
       outputs.push(compileComponent(child));
@@ -89,6 +91,8 @@ export function compile(data: string): string {
       outputs.push(compileGlobalStyle(child));
     }
   }
+
+  outputs.push("}");
 
   return outputs.join("");
 }
