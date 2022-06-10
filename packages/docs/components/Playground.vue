@@ -25,12 +25,29 @@ macaron-demo-tab {
   flex: 1 0 0;
 }
 .playground {
-  width: calc(100% - 64px);
+  width: 100%;
   max-width: 1280px;
   display: flex;
   flex-direction: column;
   align-items: center;
   gap: 16px;
+}
+
+.playground-alt {
+  display: none;
+}
+
+@media (max-width: 768px) {
+  .playground {
+    display: none;
+  }
+
+  .playground-alt {
+    display: block;
+    box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.15),
+      0px 24px 30px rgba(0, 0, 0, 0.35);
+    border-radius: 10px;
+  }
 }
 
 .splitter {
@@ -99,6 +116,7 @@ macaron-demo-tab {
 </style>
 
 <template>
+  <img class="playground-alt" alt="Screenshot" src="/screenshot.png" />
   <div class="playground">
     <div class="demo-tabs">
       <macaron-demo-tab
