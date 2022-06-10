@@ -4,6 +4,8 @@
 const config = {
   title: "Macaron",
   description: "Visual editor for Web Components",
+  head: [["meta", { property: "og:image", content: "ogp.png" }]],
+
   appearance: false,
 
   vue: {
