@@ -6,6 +6,4 @@ layout: page
 import Landing from './components/Landing.vue'
 </script>
 
-<ClientOnly>
-  <Landing/>
-</ClientOnly>
+<Landing/>

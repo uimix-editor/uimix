@@ -32,13 +32,10 @@ macaron-landing [slot="playground"] {
 </template>
 
 <script>
+import "./components.macaron";
 import Playground from "./Playground.vue";
 
 export default {
-  mounted() {
-    import("./components.macaron");
-  },
-
   components: {
     Playground: Playground,
   },
