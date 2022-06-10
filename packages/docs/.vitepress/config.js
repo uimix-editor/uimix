@@ -20,6 +20,7 @@ const config = {
     socialLinks: [
       { icon: "github", link: "https://github.com/macaron-elements/macaron" },
       { icon: "discord", link: "https://discord.gg/WGk6Mx8qTK" },
+      { icon: "twitter", link: "https://twitter.com/macaron_editor" },
     ],
     sidebar: {
       "/guide/": [

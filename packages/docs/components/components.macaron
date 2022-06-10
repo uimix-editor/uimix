@@ -45,10 +45,10 @@
       ></a>
     </div>
     <slot name="playground"
-      ><div id="div12">
-        <macaron-demo-tab aria-selected="true" id="div41"></macaron-demo-tab
-        ><macaron-demo-tab id="div42">Example 2</macaron-demo-tab
-        ><macaron-demo-tab id="div43">Example 3</macaron-demo-tab>
+      ><div id="div13">
+        <macaron-demo-tab aria-selected="true" id="div44"></macaron-demo-tab
+        ><macaron-demo-tab id="div45">Example 2</macaron-demo-tab
+        ><macaron-demo-tab id="div46">Example 3</macaron-demo-tab>
       </div></slot
     >
     <div id="features">
@@ -166,7 +166,10 @@
           ><iconify-icon icon="bi:github"></iconify-icon>GitHub</a
         ><a href="https://discord.gg/WGk6Mx8qTK" target="_blank" id="discord"
           ><iconify-icon icon="bi:discord"></iconify-icon>Discord</a
-        ><a id="twitter"
+        ><a
+          href="https://twitter.com/macaron_editor"
+          target="_blank"
+          id="twitter"
           ><iconify-icon icon="bi:twitter"></iconify-icon>Twitter</a
         >
       </div>
@@ -225,7 +228,7 @@
     #herobutton3 {
       position: relative;
     }
-    #div12 {
+    #div13 {
       margin-bottom: 16px;
       display: flex;
     }
