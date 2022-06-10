@@ -349,8 +349,7 @@
       padding-left: 40px;
       align-items: center;
       justify-content: space-between;
-      row-gap: 32px;
-      column-gap: 32px;
+      column-gap: 64px;
       background: linear-gradient(135deg, #ff40d5 0%, #ff4081 100%);
     }
     #frame2 {
@@ -360,7 +359,7 @@
       padding-bottom: 0px;
       padding-left: 0px;
       flex-direction: column;
-      row-gap: 20px;
+      row-gap: 16px;
       column-gap: 20px;
     }
     #getinvolved {
@@ -464,6 +463,7 @@
         padding-right: 32px;
         padding-bottom: 32px;
         padding-left: 32px;
+        column-gap: 32px;
       }
       #getinvolved {
         font-size: 24px;
