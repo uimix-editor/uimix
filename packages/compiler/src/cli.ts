@@ -3,6 +3,7 @@ import * as fs from "fs";
 import chokidar from "chokidar";
 import glob from "glob";
 import { Command } from "commander";
+import minimatch from "minimatch";
 import slash from "slash";
 import * as prettier from "prettier";
 import { compile } from "./compiler";
@@ -43,7 +44,9 @@ function compileFiles(
 
     const onChangeAdd = (filePath: string) => {
       try {
-        compileFile(filePath);
+        if (filePathOrGlobs.some((p) => minimatch(filePath, p))) {
+          compileFile(filePath);
+        }
       } catch (e) {
         console.error(e);
       }
