@@ -4,7 +4,8 @@
   "version": "0.0.1",
   "description": "Macaron editor for VS Code",
   "categories": [
-    "Other"
+    "Visualization",
+    "Programming Languages"
   ],
   "repository": {
     "type": "git",
