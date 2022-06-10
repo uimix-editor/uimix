@@ -2,19 +2,20 @@
 
 exports[`compile > compiles 1`] = `
 "import \\"https://cdn.jsdelivr.net/npm/@shoelace-style/shoelace@2.0.0-beta.73/dist/shoelace.js\\";
-
-const style = \`:root {
+if (typeof window !== \\"undefined\\") {
+  const style = \`:root {
   --textColor: #333333;
   --red: #ff0000;
   --user-card-name-color: #333333;
 }\`;
-document.head.appendChild(document.createElement(\\"style\\")).textContent = style;
+  document.head.appendChild(document.createElement(\\"style\\")).textContent =
+    style;
 
-class MyComponent extends HTMLElement {
-  constructor() {
-    super();
+  class MyComponent extends HTMLElement {
+    constructor() {
+      super();
 
-    const style = \`
+      const style = \`
 :host {
   box-sizing: border-box;
 }
@@ -65,7 +66,7 @@ class MyComponent extends HTMLElement {
     color: #008000;
   }
 }\`;
-    const template = \`
+      const template = \`
 <h1 title=\\"Hover Me\\" id=\\"heading\\">Hello, <em id=\\"em\\">World!</em></h1>
 <div id=\\"div1\\">Type something</div>
 <div>Type something</div>
@@ -80,18 +81,20 @@ class MyComponent extends HTMLElement {
   <div id=\\"div\\"></div>
 </div>\`;
 
-    this.attachShadow({ mode: \\"open\\" });
-    this.shadowRoot.innerHTML = \`<style>\${style}</style>\${template}\`;
+      this.attachShadow({ mode: \\"open\\" });
+      this.shadowRoot.innerHTML = \`<style>\${style}</style>\${template}\`;
+    }
   }
-}
 
-customElements.define(\\"my-component\\", MyComponent);
+  if (!customElements.get(\\"my-component\\")) {
+    customElements.define(\\"my-component\\", MyComponent);
+  }
 
-class ComponentWrapper extends HTMLElement {
-  constructor() {
-    super();
+  class ComponentWrapper extends HTMLElement {
+    constructor() {
+      super();
 
-    const style = \`
+      const style = \`
 :host {
   box-sizing: border-box;
 }
@@ -115,27 +118,29 @@ class ComponentWrapper extends HTMLElement {
   top: 32px;
   left: 11px;
 }\`;
-    const template = \`
+      const template = \`
 <user-card id=\\"user-card\\">User 1 <span slot=\\"location\\">Location 2</span><img slot=\\"avatar\\" src=\\"\${new URL(
-      \\"./images/user2.jpg\\",
-      import.meta.url
-    )}\\"></user-card><user-card id=\\"user-card1\\">User 2<span slot=\\"location\\">Location 2</span><img slot=\\"avatar\\" src=\\"\${new URL(
-      \\"./images/user1.png\\",
-      import.meta.url
-    )}\\"></user-card>\`;
+        \\"./images/user2.jpg\\",
+        import.meta.url
+      )}\\"></user-card><user-card id=\\"user-card1\\">User 2<span slot=\\"location\\">Location 2</span><img slot=\\"avatar\\" src=\\"\${new URL(
+        \\"./images/user1.png\\",
+        import.meta.url
+      )}\\"></user-card>\`;
 
-    this.attachShadow({ mode: \\"open\\" });
-    this.shadowRoot.innerHTML = \`<style>\${style}</style>\${template}\`;
+      this.attachShadow({ mode: \\"open\\" });
+      this.shadowRoot.innerHTML = \`<style>\${style}</style>\${template}\`;
+    }
   }
-}
 
-customElements.define(\\"component-wrapper\\", ComponentWrapper);
+  if (!customElements.get(\\"component-wrapper\\")) {
+    customElements.define(\\"component-wrapper\\", ComponentWrapper);
+  }
 
-class UseShoelace extends HTMLElement {
-  constructor() {
-    super();
+  class UseShoelace extends HTMLElement {
+    constructor() {
+      super();
 
-    const style = \`
+      const style = \`
 :host {
   box-sizing: border-box;
 }
@@ -157,21 +162,23 @@ class UseShoelace extends HTMLElement {
   align-items: flex-start;
   row-gap: 20px;
 }\`;
-    const template = \`
+      const template = \`
 <sl-input id=\\"input\\"></sl-input><sl-checkbox id=\\"input1\\">Check Box</sl-checkbox><sl-checkbox id=\\"input3\\">Check Box</sl-checkbox><sl-button id=\\"input2\\">Button</sl-button><sl-button id=\\"input4\\">Button</sl-button>\`;
 
-    this.attachShadow({ mode: \\"open\\" });
-    this.shadowRoot.innerHTML = \`<style>\${style}</style>\${template}\`;
+      this.attachShadow({ mode: \\"open\\" });
+      this.shadowRoot.innerHTML = \`<style>\${style}</style>\${template}\`;
+    }
   }
-}
 
-customElements.define(\\"use-shoelace\\", UseShoelace);
+  if (!customElements.get(\\"use-shoelace\\")) {
+    customElements.define(\\"use-shoelace\\", UseShoelace);
+  }
 
-class BoxSizingTest extends HTMLElement {
-  constructor() {
-    super();
+  class BoxSizingTest extends HTMLElement {
+    constructor() {
+      super();
 
-    const style = \`
+      const style = \`
 :host {
   box-sizing: border-box;
 }
@@ -196,21 +203,23 @@ class BoxSizingTest extends HTMLElement {
   text-align: center;
   background: #00ff7c;
 }\`;
-    const template = \`
+      const template = \`
 Box Sizing Test\`;
 
-    this.attachShadow({ mode: \\"open\\" });
-    this.shadowRoot.innerHTML = \`<style>\${style}</style>\${template}\`;
+      this.attachShadow({ mode: \\"open\\" });
+      this.shadowRoot.innerHTML = \`<style>\${style}</style>\${template}\`;
+    }
   }
-}
 
-customElements.define(\\"box-sizing-test\\", BoxSizingTest);
+  if (!customElements.get(\\"box-sizing-test\\")) {
+    customElements.define(\\"box-sizing-test\\", BoxSizingTest);
+  }
 
-class UserCard extends HTMLElement {
-  constructor() {
-    super();
+  class UserCard extends HTMLElement {
+    constructor() {
+      super();
 
-    const style = \`
+      const style = \`
 :host {
   box-sizing: border-box;
 }
@@ -316,7 +325,7 @@ class UserCard extends HTMLElement {
   text-align: left;
   opacity: 1;
 }\`;
-    const template = \`
+      const template = \`
 <div id=\\"usercard\\">
   <div id=\\"image-area\\">
     <slot name=\\"avatar\\"><img src=\\"\${new URL(
@@ -335,11 +344,14 @@ class UserCard extends HTMLElement {
   </div>
 </div>\`;
 
-    this.attachShadow({ mode: \\"open\\" });
-    this.shadowRoot.innerHTML = \`<style>\${style}</style>\${template}\`;
+      this.attachShadow({ mode: \\"open\\" });
+      this.shadowRoot.innerHTML = \`<style>\${style}</style>\${template}\`;
+    }
+  }
+
+  if (!customElements.get(\\"user-card\\")) {
+    customElements.define(\\"user-card\\", UserCard);
   }
 }
-
-customElements.define(\\"user-card\\", UserCard);
 "
 `;
