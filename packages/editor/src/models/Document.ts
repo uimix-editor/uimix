@@ -305,7 +305,8 @@ export class Document {
 
   readonly preludeStyleSheets = observable.array<string>([]);
   readonly preludeScripts = observable.array<string>([]);
-  readonly loadedCustomElements = observable.array<CustomElementMetadata>();
+  readonly externalCustomElementMetadataList =
+    observable.array<CustomElementMetadata>();
 
   @computed.struct get usedFontFamilies(): Set<string> {
     const set = new Set<string>();
@@ -323,7 +324,7 @@ export class Document {
       return component.metadata;
     }
     // TODO: use map
-    return this.loadedCustomElements.find(
+    return this.externalCustomElementMetadataList.find(
       (metadata) => metadata.tagName === tagName
     );
   }

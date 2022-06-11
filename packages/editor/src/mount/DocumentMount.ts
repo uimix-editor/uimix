@@ -301,7 +301,7 @@ export class DocumentMount {
     const metadatas = await Promise.all(tagNames.map(getMetadata));
 
     runInAction(() => {
-      this.document.loadedCustomElements.replace(metadatas);
+      this.document.externalCustomElementMetadataList.replace(metadatas);
     });
   }
 }

@@ -36,7 +36,7 @@ export const ComponentBrowser: React.FC<React.HTMLAttributes<HTMLDivElement>> =
       (component) => component.name.includes(search)
     );
     const customElements = [
-      ...editorState.document.loadedCustomElements,
+      ...editorState.document.externalCustomElementMetadataList,
     ].filter((c) => c.tagName.includes(search));
 
     return (
