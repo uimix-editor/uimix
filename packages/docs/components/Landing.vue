@@ -17,6 +17,10 @@ macaron-landing {
   position: relative;
 }
 
+macaron-landing:not(:defined) {
+  display: none;
+}
+
 macaron-landing [slot="playground"] {
   display: contents;
 }
