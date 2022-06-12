@@ -7,7 +7,7 @@ const config = {
     "Open-source visual editor to create and maintain Web Components",
   head: [
     ["meta", { property: "og:image", content: "/ogp.png" }],
-    ["link", { rel: "icon", type: "image/svg+xml", href: "/logo.svg" }],
+    ["link", { rel: "icon", href: "/favicon.ico" }],
   ],
 
   appearance: false,
