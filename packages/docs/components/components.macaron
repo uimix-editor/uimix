@@ -630,16 +630,16 @@
       column-gap: 10px;
       color: #1e252b;
       background: #1e252b08;
-      border-top-width: 1;
+      border-top-width: 1px;
       border-top-style: solid;
       border-top-color: #1e252b26;
-      border-right-width: 1;
+      border-right-width: 1px;
       border-right-style: solid;
       border-right-color: #1e252b26;
-      border-bottom-width: 1;
+      border-bottom-width: 1px;
       border-bottom-style: solid;
       border-bottom-color: #1e252b26;
-      border-left-width: 1;
+      border-left-width: 1px;
       border-left-style: solid;
       border-left-color: #1e252b26;
     }
