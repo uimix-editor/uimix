@@ -14,7 +14,7 @@ The extension is currently in beta and not yet published to the marketplace. Ins
 
 <!-- TODO: link -->
 
-- <a href="/artifacts/macaron-vscode-extension-0.2.0.vsix" download>Download the extension</a>
+- <a href="/macaron-vscode.vsix" download>Download the extension</a>
 - Install the extension via **Install from VSIX...** menu in the extension workbench
 
 <img srcset="./images/install.png 2x" />
