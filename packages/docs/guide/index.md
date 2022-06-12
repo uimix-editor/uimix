@@ -85,14 +85,16 @@ export default defineConfig({
 Import the `.macaron` file directly from HTML:
 
 ```html
-<script type="module" src="components.macaron"></script>
+<script type="module">
+ import "./components.macaron";
+</script>
 <my-component></my-component>
 ```
 
 or from JS:
 
 ```js
-import "./test.macaron";
+import "./components.macaron";
 const element = document.createElement("my-component");
 ```
 
