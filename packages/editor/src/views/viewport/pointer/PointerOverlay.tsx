@@ -23,6 +23,19 @@ const PointerOverlayWrap = styled.div`
   border: none;
 `;
 
+function isInnerHTMLEditable(instance: ElementInstance): boolean {
+  const element = instance.element;
+  const nonSlottedChildren = element.children.filter(
+    (child) => child.type === "text" || !child.attrs.get("slot")
+  );
+
+  if (nonSlottedChildren.length === 0) {
+    return !isVoidElement(element.tagName);
+  }
+
+  return nonSlottedChildren.some((child) => child.type === "text");
+}
+
 export const PointerOverlay: React.FC<{}> = () => {
   const editorState = useEditorState();
   const contextMenu = useContextMenu();
@@ -56,7 +69,7 @@ export const PointerOverlay: React.FC<{}> = () => {
 
       if (isDoubleClick) {
         const instance = pickResult.doubleClickable;
-        if (instance?.selected && !isVoidElement(instance.element.tagName)) {
+        if (instance?.selected && isInnerHTMLEditable(instance)) {
           editorState.innerHTMLEditTarget = instance;
         }
       }
