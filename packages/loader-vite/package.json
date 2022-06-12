@@ -14,7 +14,7 @@
   "author": "Ryohei Ikegami <iofg2100@gmail.com>",
   "main": "index.js",
   "dependencies": {
-    "@macaron-elements/compiler": "*"
+    "@macaron-elements/compiler": "^0.1.0"
   },
   "publishConfig": {
     "access": "public"

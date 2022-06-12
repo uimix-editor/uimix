@@ -1,4 +1,7 @@
 {
-  "packages": ["packages/compiler", "packages/loader-vite"],
+  "packages": [
+    "packages/compiler",
+    "packages/loader-vite"
+  ],
   "version": "0.1.0"
 }
