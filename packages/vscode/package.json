@@ -2,6 +2,7 @@
   "name": "macaron-vscode",
   "displayName": "macaron-vscode",
   "version": "0.0.1",
+  "private": true,
   "description": "Macaron editor for VS Code",
   "categories": [
     "Visualization",
