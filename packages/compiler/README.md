@@ -1,6 +1,6 @@
 # The Macaron compiler library and command-line interface
 
-This library / CLI is the compiler that converts Macaron files to Web Components.
+This library / CLI is the compiler that converts [Macaron](https://macaron-elements.com/) files to Web Components.
 
 ## Installation
 

@@ -1,6 +1,6 @@
 # Vite Macaron loader
 
-A Vite plugin to load Macaron files as JavaScript modules.
+A Vite plugin to load [Macaron](https://macaron-elements.com/) files as JavaScript modules.
 
 ```html
 <!DOCTYPE html>
