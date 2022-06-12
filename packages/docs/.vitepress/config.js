@@ -6,8 +6,8 @@ const config = {
   description:
     "Open-source visual editor to create and maintain Web Components",
   head: [
-    ["meta", { property: "og:image", content: "ogp.png" }],
-    ["link", { rel: "icon", type: "image/svg+xml", href: "logo.svg" }],
+    ["meta", { property: "og:image", content: "/ogp.png" }],
+    ["link", { rel: "icon", type: "image/svg+xml", href: "/logo.svg" }],
   ],
 
   appearance: false,
