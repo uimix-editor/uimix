@@ -70,3 +70,9 @@ yarn dev
 ```bash
 yarn test
 ```
+
+### Publish npm packages
+
+```bash
+lerna publish
+```
