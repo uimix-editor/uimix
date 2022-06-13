@@ -1,6 +1,7 @@
-import React, { useRef } from "react";
+import React from "react";
 import "./App.css";
 import { MessageToPlugin, MessageToUI } from "../message";
+import { Buffer } from "buffer";
 
 let htmlToCopy: string | undefined;
 
@@ -16,7 +17,7 @@ window.addEventListener("message", (e) => {
   const msg: MessageToUI = e.data.pluginMessage;
   if (msg.type === "copy") {
     const fragmentString: string = msg.data;
-    const base64 = btoa(fragmentString);
+    const base64 = Buffer.from(fragmentString).toString("base64");
     const encoded = `<span data-macaron="${base64}"></span>`;
     htmlToCopy = encoded;
     document.execCommand("copy");
