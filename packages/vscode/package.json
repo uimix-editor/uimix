@@ -9,6 +9,7 @@
     "Programming Languages"
   ],
   "icon": "icon.png",
+  "publisher": "Macaron",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/macaron-elements/macaron.git"
