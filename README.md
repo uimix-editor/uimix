@@ -76,3 +76,12 @@ yarn test
 ```bash
 lerna publish
 ```
+
+## Analytics
+
+Macaron uses [Plausible](https://plausible.io/) to collect anonymous analytics data.
+
+### Dashboards
+
+* [Website](https://plausible.io/macaron-elements.com)
+* [VS Code custom editor](https://plausible.io/vscode.macaron-elements.com)
