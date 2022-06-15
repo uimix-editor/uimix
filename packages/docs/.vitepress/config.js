@@ -8,6 +8,22 @@ const config = {
   head: [
     ["meta", { property: "og:image", content: "/ogp.png" }],
     ["link", { rel: "icon", href: "/favicon.ico" }],
+    [
+      "script",
+      {
+        defer: "",
+        "data-domain": "macaron-elements.com",
+        src: "https://plausible.io/js/plausible.js",
+      },
+    ],
+    // [
+    //   "script",
+    //   {
+    //     defer: "",
+    //     "data-domain": "macaron-elements.com",
+    //     src: "https://plausible.io/js/script.exclusions.local.js",
+    //   },
+    // ],
   ],
 
   appearance: false,
