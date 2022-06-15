@@ -3,7 +3,7 @@
   "displayName": "Macaron",
   "version": "0.0.2",
   "private": true,
-  "description": "Macaron editor for VS Code",
+  "description": "Design tool to create Web Components directly",
   "categories": [
     "Visualization",
     "Programming Languages"
