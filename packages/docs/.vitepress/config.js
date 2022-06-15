@@ -6,8 +6,11 @@ const config = {
   description:
     "Open-source visual editor to create and maintain Web Components",
   head: [
-    ["meta", { property: "twitter:card", content: "summary_large_image" }],
-    ["meta", { property: "og:image", content: "/ogp.png" }],
+    ["meta", { property: "twitter:card", content: "summary" }],
+    [
+      "meta",
+      { property: "og:image", content: "https://macaron-elements.com/ogp.jpg" },
+    ],
     ["link", { rel: "icon", href: "/favicon.ico" }],
     [
       "script",
