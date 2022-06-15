@@ -82,9 +82,7 @@ export class AutoLayout {
     instance.style.rowGap = `${layout.gap}px`;
     instance.style.columnGap = `${layout.gap}px`;
 
-    const bbox = layout.bbox.translate(
-      instance.offsetParentOfChildren.boundingBox.topLeft.neg
-    );
+    const bbox = layout.bbox.translate(instance.boundingBox.topLeft.neg);
     const size = instance.boundingBox.size;
 
     const paddingLeft = bbox.left;
