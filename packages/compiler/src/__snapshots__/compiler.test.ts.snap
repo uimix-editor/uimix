@@ -25,6 +25,10 @@ if (typeof window !== \\"undefined\\") {
 [hidden] {
   display: none !important;
 }
+img, video {
+  max-width: 100%;
+  height: auto;
+}
 :host {
   color: var(--textColor);
   font-family: Inter;
@@ -104,6 +108,10 @@ if (typeof window !== \\"undefined\\") {
 [hidden] {
   display: none !important;
 }
+img, video {
+  max-width: 100%;
+  height: auto;
+}
 :host {
   position: relative;
   display: flex;
@@ -150,6 +158,10 @@ if (typeof window !== \\"undefined\\") {
 [hidden] {
   display: none !important;
 }
+img, video {
+  max-width: 100%;
+  height: auto;
+}
 :host {
   width: 269px;
   height: 284px;
@@ -187,6 +199,10 @@ if (typeof window !== \\"undefined\\") {
 }
 [hidden] {
   display: none !important;
+}
+img, video {
+  max-width: 100%;
+  height: auto;
 }
 :host {
   width: 170px;
@@ -228,6 +244,10 @@ Box Sizing Test\`;
 }
 [hidden] {
   display: none !important;
+}
+img, video {
+  max-width: 100%;
+  height: auto;
 }
 :host {
   display: block;
