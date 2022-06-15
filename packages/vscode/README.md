@@ -2,16 +2,16 @@
 
 <p align="center">Create Web Components visually, without leaving VS Code</p>
 
-![Screenshot](screenshot.png)
+![Screenshot](https://macaron-elements.com/vscode-screenshot.webp)
 
 ## Features
 
-* Easy-to-use visual editor to create Web Components directly
-* Syntax highlighting for created files (`*.macaron`)
+- Easy-to-use visual editor to create Web Components directly
+- Syntax highlighting for created files (`*.macaron`)
 
 ## Usage
 
-* Create a file with `.macaron` extension
-  * The editor UI of Macaron is shown in a tab instead of the normal text editor of VS Code.
+- Create a file with `.macaron` extension
+  - The editor UI of Macaron is shown in a tab instead of the normal text editor of VS Code.
 
 See [the guide](https://macaron-elements.com/guide) for more information.
