@@ -2,24 +2,24 @@
 
 ![Screenshot](packages/vscode/screenshot.png)
 
-Macaron is an open-source design tool to visually create Web Components, [which can be used in most Web frameworks](https://custom-elements-everywhere.com/), or in vanilla HTML/JavaScript.  
+Macaron is an open-source design tool to visually create Web Components, [which can be used in most Web frameworks](https://custom-elements-everywhere.com/), or in vanilla HTML/JavaScript.
 
 Its goal is to allow you to create and continuously maintain components visually, and make Web frontend development easier and more fun.
 
-* :pen: Easy-to-use visual editor
-* :technologist: Runs in Visual Studio Code
-* :globe_with_meridians: Framework-agnostic
-* :inbox_tray: Import Web Components
-* :spiral_notepad: Clean File Format
-* :art: Copy-paste from Figma (WIP)
+- :pen: Easy-to-use visual editor
+- :technologist: Runs in Visual Studio Code
+- :globe_with_meridians: Framework-agnostic
+- :inbox_tray: Import Web Components
+- :spiral_notepad: Clean File Format
+- :art: Copy-paste from Figma (WIP)
 
 ## Demo
 
-* See [the Website](https://macaron-elements.com).
+- See [the Website](https://macaron-elements.com).
 
 ## Usage
 
-* See [the guide](https://macaron-elements.com/guide).
+- See [the guide](https://macaron-elements.com/guide).
 
 ## Development
 
@@ -69,6 +69,9 @@ yarn dev
 
 ```bash
 yarn test
+
+# Update snapshots
+yarn test -u
 ```
 
 ### Publish npm packages
@@ -83,5 +86,5 @@ Macaron uses [Plausible](https://plausible.io/) to collect anonymous analytics d
 
 ### Dashboards
 
-* [Website](https://plausible.io/macaron-elements.com)
-* [VS Code custom editor](https://plausible.io/vscode.macaron-elements.com)
+- [Website](https://plausible.io/macaron-elements.com)
+- [VS Code custom editor](https://plausible.io/vscode.macaron-elements.com)
