@@ -177,6 +177,8 @@ export class MacaronEditorSession {
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <meta http-equiv="Content-Security-Policy" content="${csp}">
+        <script nonce="${nonce}" defer data-domain="app.macaron-elements.com" src="https://plausible.io/js/plausible.js"></script>
+        <script nonce="${nonce}" defer data-domain="app.macaron-elements.com" src="https://plausible.io/js/script.exclusions.local.js"></script>
       </head>
       <body>
         <div id="root"></div>
