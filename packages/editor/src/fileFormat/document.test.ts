@@ -17,6 +17,6 @@ describe("File format", () => {
     const doc = new Document();
     parseDocument(doc, data);
     const saved = stringifyDocument(doc);
-    expect(saved).toBe(data);
+    expect(saved).toBe(data.replace("\r", ""));
   });
 });
