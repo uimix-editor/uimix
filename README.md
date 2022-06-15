@@ -1,9 +1,8 @@
 <h1 align="center"><a href="https://macaron-elements.com">Macaron</a></h1>
 
-[![](https://vsmarketplacebadge.apphb.com/version/Macaron.macaron-vscode.svg)](https://marketplace.visualstudio.com/items?itemName=Macaron.macaron-vscode) ![example workflow](https://github.com/macaron-elements/macaron/actions/workflows/node.js.yml/badge.svg)
-
-
 ![Screenshot](packages/vscode/screenshot.png)
+
+[![](https://vsmarketplacebadge.apphb.com/version/Macaron.macaron-vscode.svg)](https://marketplace.visualstudio.com/items?itemName=Macaron.macaron-vscode) ![example workflow](https://github.com/macaron-elements/macaron/actions/workflows/node.js.yml/badge.svg)
 
 Macaron is an open-source design tool to visually create Web Components, [which can be used in most Web frameworks](https://custom-elements-everywhere.com/), or in vanilla HTML/JavaScript.
 
