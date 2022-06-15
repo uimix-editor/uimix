@@ -1,6 +1,6 @@
 {
   "name": "macaron-vscode",
-  "displayName": "macaron-vscode",
+  "displayName": "Macaron",
   "version": "0.0.1",
   "private": true,
   "description": "Macaron editor for VS Code",
@@ -8,6 +8,7 @@
     "Visualization",
     "Programming Languages"
   ],
+  "icon": "icon.png",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/macaron-elements/macaron.git"
