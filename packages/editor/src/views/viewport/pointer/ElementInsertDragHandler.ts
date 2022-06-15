@@ -40,8 +40,10 @@ export class ElementInsertDragHandler implements DragHandler {
         );
       }
     } else {
-      const element = new Element({ tagName: "div" });
-      element.rename("div");
+      const element = new Element({
+        tagName: mode === "image" ? "img" : "div",
+      });
+      element.rename(element.tagName);
 
       if (mode === "text") {
         element.append(new Text({ content: "Type something" }));
@@ -50,8 +52,11 @@ export class ElementInsertDragHandler implements DragHandler {
       parent.element.append(element);
       this.instance = getInstance(parent.variant, element);
       this.instance.style.position = "absolute";
-      if (mode !== "text") {
+      if (mode === "frame") {
         this.instance.style.background = "#cccccc";
+      }
+      if (mode === "image") {
+        element.attrs.set("src", "https://picsum.photos/id/10/200/300");
       }
     }
 

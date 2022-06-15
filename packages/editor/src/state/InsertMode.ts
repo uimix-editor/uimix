@@ -1,1 +1,1 @@
-export type InsertMode = "frame" | "text";
+export type InsertMode = "frame" | "text" | "image";

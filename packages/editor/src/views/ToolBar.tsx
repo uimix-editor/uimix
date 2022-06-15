@@ -2,6 +2,7 @@ import React, { useCallback } from "react";
 import menuIcon from "@iconify-icons/ic/outline-menu";
 import paragraphIcon from "@seanchas116/paintkit/src/icon/Paragraph";
 import frameIcon from "@seanchas116/paintkit/src/icon/Frame";
+import imageIcon from "@seanchas116/paintkit/src/icon/Image";
 import { ToolBar as ToolBarWrap } from "@seanchas116/paintkit/src/components/toolbar/ToolBar";
 import {
   ToolButton,
@@ -25,6 +26,12 @@ export const ToolBar: React.FC = observer(() => {
   const onTextToolClick = useCallback(
     action(() => {
       editorState.insertMode = "text";
+    }),
+    []
+  );
+  const onImageToolClick = useCallback(
+    action(() => {
+      editorState.insertMode = "image";
     }),
     []
   );
@@ -69,6 +76,12 @@ export const ToolBar: React.FC = observer(() => {
           label="Text"
           icon={paragraphIcon}
           onClick={onTextToolClick}
+        />
+        <ToolButton
+          selected={editorState.insertMode === "image"}
+          label="Image"
+          icon={imageIcon}
+          onClick={onImageToolClick}
         />
       </ToolButtonArray>
 
