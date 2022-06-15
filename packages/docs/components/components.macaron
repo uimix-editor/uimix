@@ -29,8 +29,8 @@
     <h1 id="heroTitle">Design tool to create<br />Web Components directly</h1>
     <div id="heroSubtitle">
       Macaron is an open-source UI design tool to create and maintain Web
-      Components.<br />Create components visually and use them with or without
-      any framework.
+      Components.<br />Create components visually and use them with any
+      framework, or with vanilla HTML/JavaScript.
     </div>
     <div id="buttons">
       <a href="/guide/" id="hero-button-link"
