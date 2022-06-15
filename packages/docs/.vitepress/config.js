@@ -47,7 +47,7 @@ const config = {
     sidebar: {
       "/guide/": [
         {
-          text: "Guide",
+          text: "Introduction",
           items: [
             {
               text: "Getting Started",
@@ -66,12 +66,30 @@ const config = {
               link: "/guide/create-customizable-components",
             },
             {
-              text: "File Format",
-              link: "/guide/file-format",
-            },
-            {
               text: "Examples",
               link: "/guide/examples",
+            },
+          ],
+        },
+        {
+          text: "Framework Integration",
+          items: [
+            {
+              text: "Use with React",
+              link: "/guide/use-with-react",
+            },
+            {
+              text: "Use with Vue",
+              link: "/guide/use-with-vue",
+            },
+          ],
+        },
+        {
+          text: "Advanced",
+          items: [
+            {
+              text: "File Format",
+              link: "/guide/file-format",
             },
           ],
         },
