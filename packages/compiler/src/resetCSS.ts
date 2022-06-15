@@ -11,4 +11,8 @@ export const resetCSS = dedent`
   [hidden] {
     display: none !important;
   }
+  img, video {
+    max-width: 100%;
+    height: auto;
+  }
 `;
