@@ -56,6 +56,18 @@ export class FileServer {
     });
   }
 
+  close(): Promise<void> {
+    return new Promise((resolve, reject) => {
+      this._server.close((err) => {
+        if (err) {
+          reject(err);
+        } else {
+          resolve();
+        }
+      });
+    });
+  }
+
   toServerUri(uri: vscode.Uri): vscode.Uri {
     const relativePath = path.posix.relative(this.publicPathUri.path, uri.path);
     if (relativePath.startsWith("..")) {

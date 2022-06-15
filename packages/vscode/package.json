@@ -26,12 +26,6 @@
     "vscode:prepublish": "run-s compile:esbuild compile:copy-files"
   },
   "contributes": {
-    "commands": [
-      {
-        "command": "macaron-vscode.helloWorld",
-        "title": "Hello World"
-      }
-    ],
     "customEditors": [
       {
         "viewType": "macaron.macaronFile",
@@ -53,7 +47,6 @@
     ]
   },
   "activationEvents": [
-    "onCommand:macaron-vscode.helloWorld",
     "onCustomEditor:macaron.macaronFile"
   ],
   "dependencies": {
