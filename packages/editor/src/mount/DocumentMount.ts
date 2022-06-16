@@ -44,6 +44,7 @@ export class DocumentMount {
     this.domDocument.body.style.margin = "0";
     // @ts-ignore
     this.domDocument.body.style.webkitFontSmoothing = "antialiased";
+    this.domDocument.body.style.overflow = "hidden";
 
     this.container = this.domDocument.createElement("div");
     this.container.style.position = "absolute";
