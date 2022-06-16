@@ -12,6 +12,7 @@ import { Indicators } from "./indicators/Indicators";
 import { PointerOverlay } from "./pointer/PointerOverlay";
 import { FrameLabels } from "./VariantLabels";
 import { InnerHTMLEditor } from "./InnerHTMLEditor";
+import { ScrollBars } from "./ScrollBars";
 
 const ViewportWrap = styled.div`
   ${checkPattern(
@@ -136,6 +137,7 @@ export const Viewport: React.FC<{ className?: string }> = observer(
         <Indicators />
         <InnerHTMLEditor />
         <PanOverlay />
+        <ScrollBars />
       </ViewportWrap>
     );
   }
