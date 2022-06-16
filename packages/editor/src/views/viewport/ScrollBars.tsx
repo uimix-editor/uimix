@@ -3,7 +3,7 @@ import React from "react";
 import { Vec2 } from "paintvec";
 import { observer } from "mobx-react-lite";
 import { action } from "mobx";
-import { usePointerStroke } from "@seanchas116/paintkit/dist/components/hooks/usePointerStroke";
+import { usePointerStroke } from "@seanchas116/paintkit/src/components/hooks/usePointerStroke";
 import { useEditorState } from "../useEditorState";
 
 const ScrollBarsWrap = styled.div``;
