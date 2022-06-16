@@ -5,6 +5,7 @@ import { observer } from "mobx-react-lite";
 import { action } from "mobx";
 import { usePointerStroke } from "@seanchas116/paintkit/src/components/hooks/usePointerStroke";
 import { useEditorState } from "../useEditorState";
+import { clamp } from "lodash-es";
 
 const ScrollBarsWrap = styled.div``;
 
@@ -99,8 +100,8 @@ export const ScrollBars: React.FC = observer(function ScrollBars() {
         <ScrollBarX
           {...xPointerProps}
           style={{
-            left: `${xBegin * 100}%`,
-            width: `${xSize * 100}%`,
+            left: `${clamp(xBegin, 0, 0.9) * 100}%`,
+            right: `${clamp(1 - xBegin - xSize, 0, 0.9) * 100}%`,
           }}
         />
       </ScrollRailX>
@@ -108,8 +109,8 @@ export const ScrollBars: React.FC = observer(function ScrollBars() {
         <ScrollBarY
           {...yPointerProps}
           style={{
-            top: `${yBegin * 100}%`,
-            height: `${ySize * 100}%`,
+            top: `${clamp(yBegin, 0, 0.9) * 100}%`,
+            bottom: `${clamp(1 - yBegin - ySize, 0, 0.9) * 100}%`,
           }}
         />
       </ScrollRailY>

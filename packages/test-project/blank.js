@@ -1,0 +1,2 @@
+if (typeof window !== "undefined") {
+}
