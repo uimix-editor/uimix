@@ -1,7 +1,7 @@
 import { assertNonNull } from "@seanchas116/paintkit/src/util/Assert";
 import { filterInstance } from "@seanchas116/paintkit/src/util/Collection";
 import { TreeNode } from "@seanchas116/paintkit/src/util/TreeNode";
-import { last } from "lodash-es";
+import { compact, last } from "lodash-es";
 import { computed, makeObservable, observable } from "mobx";
 import { changeTagName } from "../services/ChangeTagName";
 import { Component, ComponentJSON } from "./Component";
@@ -16,6 +16,7 @@ import { RootElement } from "./RootElement";
 import { Text } from "./Text";
 import { TextInstance } from "./TextInstance";
 import { DefaultVariant, Variant } from "./Variant";
+import { Rect } from "paintvec";
 
 export class ComponentList extends TreeNode<never, ComponentList, Component> {
   constructor(document: Document) {
@@ -79,6 +80,15 @@ export class Document {
   loadJSON(json: DocumentJSON): void {
     this.components.loadJSON(json.components);
     this.cssVariables.loadJSON(json.cssVariables);
+  }
+
+  @computed get boundingBox(): Rect | undefined {
+    const variants = this.components.children.flatMap(
+      (component) => component.allVariants
+    );
+    return Rect.union(
+      ...compact(variants.map((v) => v.rootInstance?.boundingBox))
+    );
   }
 
   @computed.struct get selectedInstances(): (ElementInstance | TextInstance)[] {
