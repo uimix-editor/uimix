@@ -11,9 +11,11 @@ The components in the current `.macaron` file will be available by default.
 
 ### External Web Components
 
-To make external Web Components available, append `<script>` tags to the `.macaron` file and reopen the editor. (
+To make external Web Components available, append `<script type="module">` tags to the `.macaron` file and reopen the editor. (
 See [File Format](./file-format) for details.
 )
+
+The `src` can be a local JS file (the file must be in the current VS Code workspace) or a remote URL (e.g. a CDN-delivered Web Components UI library).
 
 ```html
 <script type="module" src="./external-web-components.js"></script>
