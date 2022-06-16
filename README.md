@@ -65,7 +65,7 @@ yarn dev
 
 - Make sure `yarn dev` is running
 - Open the root directory in VS Code
-- Press `F5` (or menu **Run** → **Start Debugging**)
+- Press <kbd>F5</kbd> (or menu **Run** → **Start Debugging**)
 
 ### Test
 
