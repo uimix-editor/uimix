@@ -4,8 +4,8 @@ import { Vec2 } from "paintvec";
 import { observer } from "mobx-react-lite";
 import { action } from "mobx";
 import { usePointerStroke } from "@seanchas116/paintkit/src/components/hooks/usePointerStroke";
-import { useEditorState } from "../useEditorState";
 import { clamp } from "lodash-es";
+import { useEditorState } from "../useEditorState";
 
 const ScrollBarsWrap = styled.div``;
 

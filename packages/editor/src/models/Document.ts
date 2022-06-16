@@ -3,6 +3,7 @@ import { filterInstance } from "@seanchas116/paintkit/src/util/Collection";
 import { TreeNode } from "@seanchas116/paintkit/src/util/TreeNode";
 import { compact, last } from "lodash-es";
 import { computed, makeObservable, observable } from "mobx";
+import { Rect } from "paintvec";
 import { changeTagName } from "../services/ChangeTagName";
 import { Component, ComponentJSON } from "./Component";
 import { CustomElementMetadata } from "./CustomElementMetadata";
@@ -16,7 +17,6 @@ import { RootElement } from "./RootElement";
 import { Text } from "./Text";
 import { TextInstance } from "./TextInstance";
 import { DefaultVariant, Variant } from "./Variant";
-import { Rect } from "paintvec";
 
 export class ComponentList extends TreeNode<never, ComponentList, Component> {
   constructor(document: Document) {
