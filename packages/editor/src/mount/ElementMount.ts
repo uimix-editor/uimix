@@ -2,6 +2,7 @@ import { computed, reaction } from "mobx";
 import { Rect } from "paintvec";
 import { kebabCase } from "lodash-es";
 import { isSVGTagName } from "@seanchas116/paintkit/src/util/HTMLTagCategory";
+import { roundToFixed } from "@seanchas116/paintkit/src/util/Math";
 import { Element } from "../models/Element";
 import { Text } from "../models/Text";
 import { ElementInstance } from "../models/ElementInstance";
@@ -266,13 +267,20 @@ export function fetchComputedValues(
     );
   }
 
-  let bbox: DOMRect;
+  let clientBBox: DOMRect;
   if (computedStyle.display === "contents") {
     const range = document.createRange();
     range.selectNodeContents(dom);
-    bbox = range.getBoundingClientRect();
+    clientBBox = range.getBoundingClientRect();
   } else {
-    bbox = dom.getBoundingClientRect();
+    clientBBox = dom.getBoundingClientRect();
   }
-  instance.boundingBox = Rect.from(bbox).transform(viewportToDocument);
+  const boundingBox = Rect.from(clientBBox).transform(viewportToDocument);
+  const roundBoundingBox = Rect.from({
+    left: roundToFixed(boundingBox.left, 3),
+    top: roundToFixed(boundingBox.top, 3),
+    width: roundToFixed(boundingBox.width, 3),
+    height: roundToFixed(boundingBox.height, 3),
+  });
+  instance.boundingBox = roundBoundingBox;
 }
