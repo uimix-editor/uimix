@@ -31,6 +31,8 @@ Its goal is to allow you to create and continuously maintain components visually
 # Clone
 git clone --recursive git@github.com:macaron-elements/macaron.git
 
+cd macaron
+
 # Install dependencies
 yarn
 
