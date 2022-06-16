@@ -3,7 +3,7 @@
   "displayName": "Macaron",
   "version": "0.0.2",
   "private": true,
-  "description": "Design tool to create Web Components directly",
+  "description": "Design tool to create Web Components visually",
   "categories": [
     "Visualization",
     "Programming Languages"
