@@ -233,7 +233,18 @@ const demoFiles = [
           max-width: 100%;
           height: auto;
         }
+        body {
+          font-family: "Inter";
+        }
+        .splitter-info {
+          padding: 1em;
+          color: gray;
+          font-size: 12px;
+        }
       </style>
+      <div class="splitter-info">
+        ← Move this splitter to see the responsive behavior
+      </div>
       <hotel-card>
         <img slot="thumb" src="https://source.unsplash.com/0sSJMTfLXUI"/>
         <span slot="name">Moonlight Hotel & Spa</span>
