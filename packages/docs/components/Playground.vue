@@ -116,7 +116,6 @@ macaron-demo-tab {
 </style>
 
 <template>
-  <img class="playground-alt" alt="Screenshot" src="/screenshot.webp" />
   <div class="playground">
     <div class="demo-tabs">
       <macaron-demo-tab

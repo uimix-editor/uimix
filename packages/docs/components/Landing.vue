@@ -24,13 +24,37 @@ macaron-landing:not(:defined) {
 macaron-landing [slot="playground"] {
   display: contents;
 }
+
+.playground-alt {
+  display: block;
+  box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.15),
+    0px 24px 30px rgba(0, 0, 0, 0.35);
+  border-radius: 10px;
+  width: 100%;
+  max-width: 1198px;
+}
+
+.playground ~ .playground-alt {
+  display: none;
+}
+
+@media (max-width: 1023px) {
+  .playground {
+    display: none;
+  }
+
+  .playground ~ .playground-alt {
+    display: block;
+  }
+}
 </style>
 
 <template>
   <div class="background-gradient"></div>
   <macaron-landing>
     <div slot="playground">
-      <Playground />
+      <Playground class="playground" v-if="playgroundEnabled" />
+      <img class="playground-alt" alt="Screenshot" src="/screenshot.webp" />
     </div>
   </macaron-landing>
 </template>
@@ -38,8 +62,18 @@ macaron-landing [slot="playground"] {
 <script>
 import "./components.macaron";
 import Playground from "./Playground.vue";
+import UAParser from "ua-parser-js";
+
+const uaParser = new UAParser();
+const isBlink = uaParser.getEngine().name === "Blink";
 
 export default {
+  data() {
+    return {
+      playgroundEnabled: isBlink,
+    };
+  },
+
   components: {
     Playground: Playground,
   },
