@@ -10,7 +10,11 @@ Unlike most Web design tools, Macaron aims to be integrated directly into your d
 
 Macaron provides a custom editor extension for Visual Studio Code. It enables you to use the Macaron editor in Visual Studio Code tabs.
 
-- [Get VS Code Extension](https://marketplace.visualstudio.com/items?itemName=Macaron.macaron-vscode)
+<a href="https://marketplace.visualstudio.com/items?itemName=Macaron.macaron-vscode" target="_blank">
+<macaron-hero-button>
+Get VS Code Extension
+</macaron-hero-button>
+</a>
 
 ## Create a Macaron file
 

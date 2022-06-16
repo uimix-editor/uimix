@@ -572,6 +572,7 @@
   </template>
   <style>
     :host {
+      width: fit-content;
       display: block;
       font-family: Readex Pro;
       font-weight: 700;
@@ -613,6 +614,7 @@
       font-weight: 700;
     }
     #herobutton1 {
+      width: fit-content;
       height: 48px;
       border-top-left-radius: 24px;
       border-top-right-radius: 24px;
