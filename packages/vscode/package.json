@@ -1,7 +1,7 @@
 {
   "name": "macaron-vscode",
   "displayName": "Macaron",
-  "version": "0.0.3",
+  "version": "0.0.4",
   "private": true,
   "description": "Design tool to create Web Components visually",
   "categories": [
