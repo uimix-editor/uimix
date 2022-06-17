@@ -4,7 +4,6 @@ import {
   Pane,
   PaneHeading,
   PaneHeadingRow,
-  Row111,
   Row12,
   RowGroup,
 } from "@seanchas116/paintkit/src/components/sidebar/Inspector";
