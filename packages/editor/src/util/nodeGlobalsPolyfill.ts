@@ -1,5 +1,5 @@
 // @ts-ignore
-import { Buffer } from "buffer";
+import { Buffer } from "rollup-plugin-node-polyfills/polyfills/buffer-es6";
 // @ts-ignore
 import process from "rollup-plugin-node-polyfills/polyfills/process-es6";
 
