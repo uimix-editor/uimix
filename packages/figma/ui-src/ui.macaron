@@ -34,7 +34,11 @@
     y="-16"
     selector="[aria-disabled=&#x22;true&#x22;]"
   ></macaron-variant>
-  <macaron-variant x="324" y="-89" selector=":hover"></macaron-variant>
+  <macaron-variant
+    x="324"
+    y="-89"
+    selector="[aria-disabled=&#x22;false&#x22;]:hover"
+  ></macaron-variant>
   <template> Copy Selected Layers </template>
   <style>
     :host {
@@ -61,7 +65,7 @@
       background: #eee;
       cursor: not-allowed;
     }
-    :host(:hover) {
+    :host([aria-disabled="false"]:hover) {
       background: #0073eb;
     }
   </style>

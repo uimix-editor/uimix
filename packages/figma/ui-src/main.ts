@@ -2,6 +2,16 @@ import "./ui.macaron";
 import { MessageToPlugin, MessageToUI } from "../message";
 import { Buffer } from "buffer";
 
+const ui = document.querySelector("macaron-figma-ui")!;
+const copyButtonElement = ui.shadowRoot!.querySelector(
+  "#copy-button"
+)! as HTMLElement;
+const selectionCountElement = ui.shadowRoot!.querySelector(
+  "#selection-count"
+)! as HTMLElement;
+
+copyButtonElement.addEventListener("click", onCopy);
+
 let htmlToCopy: string | undefined;
 
 document.addEventListener("copy", (e) => {
@@ -25,6 +35,18 @@ window.addEventListener("message", (e) => {
       type: "notify",
       data: "Copied to clipboard. Paste in Macaron",
     });
+  } else if (msg.type === "selectionChange") {
+    if (msg.count === 0) {
+      copyButtonElement.ariaDisabled = "true";
+      selectionCountElement.innerText = "No layers selected";
+    } else {
+      copyButtonElement.ariaDisabled = "false";
+      if (msg.count === 1) {
+        selectionCountElement.innerText = "1 layer selected";
+      } else if (msg.count > 1) {
+        selectionCountElement.innerText = `${msg.count} layers selected`;
+      }
+    }
   }
 });
 
@@ -32,12 +54,9 @@ function postMessageToPlugin(data: MessageToPlugin): void {
   parent.postMessage({ pluginMessage: data }, "*");
 }
 
-const onCopy = () => {
+function onCopy(): void {
+  if (copyButtonElement.ariaDisabled === "true") {
+    return;
+  }
   postMessageToPlugin({ type: "copy" });
-};
-
-const ui = document.querySelector("macaron-figma-ui")!;
-
-const copyButton = ui.shadowRoot!.querySelector("#copy-button");
-
-copyButton?.addEventListener("click", onCopy);
+}

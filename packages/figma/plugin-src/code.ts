@@ -39,3 +39,15 @@ figma.ui.onmessage = async (msg: MessageToPlugin) => {
     }
   }
 };
+
+const onSelectionChange = () => {
+  const msg: MessageToUI = {
+    type: "selectionChange",
+    count: figma.currentPage.selection.length,
+  };
+
+  figma.ui.postMessage(msg);
+};
+
+figma.on("selectionchange", onSelectionChange);
+onSelectionChange();

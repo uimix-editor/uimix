@@ -7,7 +7,12 @@ export type MessageToPlugin =
       data: string;
     };
 
-export type MessageToUI = {
-  type: "copy";
-  data: string;
-};
+export type MessageToUI =
+  | {
+      type: "copy";
+      data: string;
+    }
+  | {
+      type: "selectionChange";
+      count: number;
+    };
