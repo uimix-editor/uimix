@@ -1,0 +1,73 @@
+<style>
+  :root {
+  }
+</style>
+<macaron-component name="macaron-figma-ui">
+  <macaron-variant x="119" y="78" width="400"></macaron-variant>
+  <template>
+    <macaron-figma-button id="copy-button"></macaron-figma-button>
+    <div id="selection-count">1 layer is selected</div>
+  </template>
+  <style>
+    :host {
+      display: flex;
+      padding-top: 16px;
+      padding-right: 16px;
+      padding-bottom: 16px;
+      padding-left: 16px;
+      flex-direction: column;
+      row-gap: 16px;
+      column-gap: 16px;
+      font-family: Helvetica, sans-serif;
+      font-size: 14px;
+    }
+    #selection-count {
+      color: #aaa;
+      line-height: 1;
+      text-align: center;
+    }
+  </style>
+</macaron-component>
+<macaron-component name="macaron-figma-button">
+  <macaron-variant x="119" y="-16"></macaron-variant>
+  <macaron-variant
+    x="324"
+    y="-16"
+    selector="[aria-disabled=&#x22;true&#x22;]"
+  ></macaron-variant>
+  <macaron-variant
+    x="324"
+    y="-89"
+    selector="[aria-disabled=&#x22;false&#x22;]:hover"
+  ></macaron-variant>
+  <template> Copy Selected Layers </template>
+  <style>
+    :host {
+      border-top-left-radius: 8px;
+      border-top-right-radius: 8px;
+      border-bottom-right-radius: 8px;
+      border-bottom-left-radius: 8px;
+      display: block;
+      padding-top: 12px;
+      padding-right: 12px;
+      padding-bottom: 12px;
+      padding-left: 12px;
+      color: white;
+      font-family: Helvetica, sans-serif;
+      font-weight: 700;
+      font-size: 14px;
+      line-height: 1;
+      text-align: center;
+      background: #0085ff;
+      cursor: pointer;
+    }
+    :host([aria-disabled="true"]) {
+      color: #aaa;
+      background: #eee;
+      cursor: not-allowed;
+    }
+    :host([aria-disabled="false"]:hover) {
+      background: #0073eb;
+    }
+  </style>
+</macaron-component>
