@@ -22,7 +22,8 @@
       font-size: 14px;
     }
     #selection-count {
-      color: #888;
+      color: #aaa;
+      line-height: 1;
       text-align: center;
     }
   </style>
@@ -53,7 +54,7 @@
       padding-left: 12px;
       color: white;
       font-family: Helvetica, sans-serif;
-      font-weight: 400;
+      font-weight: 700;
       font-size: 14px;
       line-height: 1;
       text-align: center;
