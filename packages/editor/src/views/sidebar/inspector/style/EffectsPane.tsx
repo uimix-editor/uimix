@@ -5,6 +5,7 @@ import {
   PaneHeading,
   PaneHeadingRow,
   Row111,
+  Row12,
   RowGroup,
 } from "@seanchas116/paintkit/src/components/sidebar/Inspector";
 import opacityIcon from "@iconify-icons/ic/outline-opacity";
@@ -30,14 +31,14 @@ export const EffectsPane: React.FC<{
       </PaneHeadingRow>
 
       <RowGroup>
-        <Row111>
+        <Row12>
           <StyleInput icon={opacityIcon} property={state.props.opacity} />
           <StyleComboBox
             icon={mouseIcon}
             options={cursorOptions}
             property={state.props.cursor}
           />
-        </Row111>
+        </Row12>
       </RowGroup>
     </Pane>
   );
