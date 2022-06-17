@@ -8,8 +8,17 @@ import {
   RowGroup,
 } from "@seanchas116/paintkit/src/components/sidebar/Inspector";
 import opacityIcon from "@iconify-icons/ic/outline-opacity";
+import mouseIcon from "@iconify-icons/ic/outline-mouse";
 import { StyleInspectorState } from "../../../../state/StyleInspectorState";
-import { StyleInput } from "./Components";
+import { StyleComboBox, StyleInput } from "./Components";
+
+const cursorOptions = [
+  { value: "auto" },
+  { value: "default" },
+  { value: "pointer" },
+  { value: "text" },
+  { value: "not-allowed" },
+];
 
 export const EffectsPane: React.FC<{
   state: StyleInspectorState;
@@ -23,6 +32,11 @@ export const EffectsPane: React.FC<{
       <RowGroup>
         <Row111>
           <StyleInput icon={opacityIcon} property={state.props.opacity} />
+          <StyleComboBox
+            icon={mouseIcon}
+            options={cursorOptions}
+            property={state.props.cursor}
+          />
         </Row111>
       </RowGroup>
     </Pane>
