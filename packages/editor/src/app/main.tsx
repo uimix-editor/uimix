@@ -1,5 +1,7 @@
 /// <reference types="vite/client" />
 
+import "../util/nodeGlobalsPolyfill";
+
 import React from "react";
 import ReactDOM from "react-dom/client";
 import { App } from "./App";

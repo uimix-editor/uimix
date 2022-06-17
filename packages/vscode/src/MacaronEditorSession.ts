@@ -187,10 +187,6 @@ export class MacaronEditorSession {
       <body>
         <div id="root"></div>
         ${isDevelopment ? viteScripts : ""}
-        <script nonce="${nonce}">
-          // avoid process is not defined error
-          window.process = {};
-        </script>
         <script nonce="${nonce}" type="module" src="${scriptSrc}"></script>
       </body>
       </html>
