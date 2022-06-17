@@ -106,6 +106,7 @@ export const styleKeys = [
   "borderLeftColor",
 
   "opacity",
+  "cursor",
 ] as const;
 
 const shorthandStyleKeys = Object.keys(
