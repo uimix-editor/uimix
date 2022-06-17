@@ -19,6 +19,7 @@
       row-gap: 16px;
       column-gap: 16px;
       font-family: Helvetica, sans-serif;
+      font-size: 16px;
     }
     #selection-count {
       color: #888;
