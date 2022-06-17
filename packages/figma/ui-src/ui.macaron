@@ -19,7 +19,7 @@
       row-gap: 16px;
       column-gap: 16px;
       font-family: Helvetica, sans-serif;
-      font-size: 16px;
+      font-size: 14px;
     }
     #selection-count {
       color: #888;
@@ -50,7 +50,7 @@
       color: white;
       font-family: Helvetica, sans-serif;
       font-weight: 400;
-      font-size: 16px;
+      font-size: 14px;
       line-height: 1;
       text-align: center;
       background: #0085ff;
