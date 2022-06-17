@@ -63,11 +63,11 @@ export default defineConfig({
       },
       // Enable esbuild polyfill plugins
       plugins: [
-        NodeGlobalsPolyfillPlugin({
-          process: true,
-          buffer: true,
-        }),
-        NodeModulesPolyfillPlugin(),
+        // NodeGlobalsPolyfillPlugin({
+        //   process: true,
+        //   buffer: true,
+        // }),
+        // NodeModulesPolyfillPlugin(),
       ],
     },
   },

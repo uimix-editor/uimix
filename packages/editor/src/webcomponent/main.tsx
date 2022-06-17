@@ -1,3 +1,5 @@
+import "../util/nodeGlobalsPolyfill";
+
 // @ts-ignore
 import "tippy.js/dist/tippy.css";
 
