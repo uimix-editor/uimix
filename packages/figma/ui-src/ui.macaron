@@ -54,10 +54,12 @@
       line-height: 1;
       text-align: center;
       background: #0085ff;
+      cursor: pointer;
     }
     :host([aria-disabled="true"]) {
       color: #aaa;
       background: #eee;
+      cursor: not-allowed;
     }
     :host(:hover) {
       background: #0073eb;
