@@ -17,7 +17,7 @@ export function generatePreviewHTML(jsOutput: string, html: string): string {
     </head>
     <body>
       <script type="module" defer>${jsOutput}</script>
-      ${html}
+      ${html.replace('<script type="module" src="output.js"></script>', "")}
     </body>
   </html>
   `;
