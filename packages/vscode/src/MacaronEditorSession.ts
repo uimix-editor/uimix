@@ -1,6 +1,9 @@
 import * as path from "path";
 import * as vscode from "vscode";
-import { setupMessageRPC } from "@seanchas116/paintkit/src/util/MessageRPC";
+import {
+  setupMessageRPC,
+  PromisifyMethods,
+} from "@seanchas116/paintkit/src/util/MessageRPC";
 //import type { API } from "../../editor/src/vscode/API";
 import { MacaronEditorDocument } from "./MacaronEditorDocument";
 import { IExtensionAPI, IWebviewAPI } from "./APIInterface";
@@ -22,7 +25,7 @@ export class MacaronEditorSession {
   private document: MacaronEditorDocument;
   private webviewPanel: vscode.WebviewPanel;
   private disposables: vscode.Disposable[] = [];
-  private webviewAPI: IWebviewAPI | undefined;
+  private webviewAPI: PromisifyMethods<IWebviewAPI> | undefined;
   private fileWatcher: vscode.FileSystemWatcher;
 
   private readonly _onDidChange =

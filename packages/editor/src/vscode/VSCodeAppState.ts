@@ -11,16 +11,16 @@ export class VSCodeAppState {
     makeObservable(this);
 
     const webviewAPI: IWebviewAPI = {
-      async setContent(content: string, url: string | undefined) {
+      setContent(content: string, url: string | undefined) {
         file.setContent(content, url);
       },
-      async getContent() {
+      getContent() {
         return file.getContent();
       },
-      async updateSavePoint() {
+      updateSavePoint() {
         file.updateSavePoint();
       },
-      setImageAssets: action(async (assets: string[]) => {
+      setImageAssets: action((assets: string[]) => {
         assets.sort((a, b) => a.localeCompare(b));
         this.imageAssets = assets;
       }),
