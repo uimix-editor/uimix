@@ -1,10 +1,10 @@
 export interface IWebviewAPI {
-  setContent(content: string, url: string | undefined): void;
-  getContent(): string;
-  updateSavePoint(): void;
-  setImageAssets(assets: string[]): void;
+  setContent(content: string, url: string | undefined): Promise<void>;
+  getContent(): Promise<string>;
+  updateSavePoint(): Promise<void>;
+  setImageAssets(assets: string[]): Promise<void>;
 }
 
 export interface IExtensionAPI {
-  onDirtyChange(isDirty: boolean): void;
+  onDirtyChange(isDirty: boolean): Promise<void>;
 }

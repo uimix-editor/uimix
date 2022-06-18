@@ -1,5 +1,5 @@
-import * as Comlink from "comlink";
 import { action, makeObservable, observable } from "mobx";
+import { setupMessageRPC } from "@seanchas116/paintkit/src/util/MessageRPC";
 import { IExtensionAPI, IWebviewAPI } from "../../../vscode/src/APIInterface";
 import { VSCodeFile } from "./VSCodeFile";
 
@@ -10,33 +10,38 @@ export class VSCodeAppState {
     const file = (this.file = new VSCodeFile());
     makeObservable(this);
 
-    const comlinkEndpoint: Comlink.Endpoint = {
-      addEventListener: window.addEventListener.bind(window),
-      removeEventListener: window.removeEventListener.bind(window),
-      postMessage: (message: unknown) => {
-        vscode.postMessage(message);
-      },
-    };
-
     const webviewAPI: IWebviewAPI = {
-      setContent(content: string, url: string | undefined): void {
+      async setContent(content: string, url: string | undefined) {
         file.setContent(content, url);
       },
-      getContent(): string {
+      async getContent() {
         return file.getContent();
       },
-      updateSavePoint(): void {
+      async updateSavePoint() {
         file.updateSavePoint();
       },
-      setImageAssets: action((assets: string[]) => {
+      setImageAssets: action(async (assets: string[]) => {
         assets.sort((a, b) => a.localeCompare(b));
         this.imageAssets = assets;
       }),
     };
 
-    Comlink.expose(webviewAPI, comlinkEndpoint);
+    const extensionAPI = setupMessageRPC<IExtensionAPI>(webviewAPI, {
+      addEventListener: (listener: (data: any) => void) => {
+        const cb = (e: MessageEvent) => {
+          listener(e.data);
+        };
 
-    const extensionAPI = Comlink.wrap<IExtensionAPI>(comlinkEndpoint);
+        window.addEventListener("message", cb);
+        return () => {
+          window.removeEventListener("message", cb);
+        };
+      },
+      postMessage: (data: any) => {
+        vscode.postMessage(data);
+      },
+    });
+
     file.onDirtyChange((dirty) => extensionAPI.onDirtyChange(dirty));
 
     vscode.postMessage("ready");
