@@ -4,7 +4,8 @@
 const config = {
   title: "Macaron",
   titleTemplate: "Visual component editor for Web development",
-  description: "Visual component editor for Web development",
+  description:
+    "Macaron is an open-source UI design tool to create and maintain Web Components.",
   head: [
     ["meta", { property: "twitter:card", content: "summary" }],
     [
