@@ -84,6 +84,16 @@ yarn test -u
 lerna publish
 ```
 
+### Publish VS Code extension
+
+> [Log in to vsce](https://code.visualstudio.com/api/working-with-extensions/publishing-extension) before publish
+
+```bash
+yarn build
+cd packages/vscode
+yarn vsce publish
+```
+
 ## Analytics
 
 Macaron uses [Plausible](https://plausible.io/) to collect anonymous analytics data.
