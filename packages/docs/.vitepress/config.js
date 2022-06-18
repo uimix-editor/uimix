@@ -3,8 +3,8 @@
  */
 const config = {
   title: "Macaron",
-  description:
-    "Open-source visual editor to create and maintain Web Components",
+  titleTemplate: "Visual component editor for Web development",
+  description: "Visual component editor for Web development",
   head: [
     ["meta", { property: "twitter:card", content: "summary" }],
     [
