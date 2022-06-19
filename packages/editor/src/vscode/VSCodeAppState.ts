@@ -1,5 +1,5 @@
 import { action, makeObservable, observable } from "mobx";
-import { setupMessageRPC } from "@seanchas116/paintkit/src/util/MessageRPC";
+import * as RemoteMethods from "remote-methods";
 import { IExtensionAPI, IWebviewAPI } from "../../../vscode/src/APIInterface";
 import { VSCodeFile } from "./VSCodeFile";
 
@@ -26,7 +26,7 @@ export class VSCodeAppState {
       }),
     };
 
-    const extensionAPI = setupMessageRPC<IExtensionAPI>(webviewAPI, {
+    const extensionAPI = RemoteMethods.setup<IExtensionAPI>(webviewAPI, {
       addEventListener: (listener: (data: any) => void) => {
         const cb = (e: MessageEvent) => {
           listener(e.data);

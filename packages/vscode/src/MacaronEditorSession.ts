@@ -1,9 +1,6 @@
 import * as path from "path";
 import * as vscode from "vscode";
-import {
-  setupMessageRPC,
-  Remote,
-} from "@seanchas116/paintkit/src/util/MessageRPC";
+import * as RemoteMethods from "remote-methods";
 //import type { API } from "../../editor/src/vscode/API";
 import { MacaronEditorDocument } from "./MacaronEditorDocument";
 import { IExtensionAPI, IWebviewAPI } from "./APIInterface";
@@ -25,7 +22,7 @@ export class MacaronEditorSession {
   private document: MacaronEditorDocument;
   private webviewPanel: vscode.WebviewPanel;
   private disposables: vscode.Disposable[] = [];
-  private webviewAPI: Remote<IWebviewAPI> | undefined;
+  private webviewAPI: RemoteMethods.Remote<IWebviewAPI> | undefined;
   private fileWatcher: vscode.FileSystemWatcher;
 
   private readonly _onDidChange =
@@ -83,7 +80,7 @@ export class MacaronEditorSession {
       },
     };
 
-    this.webviewAPI = setupMessageRPC<IWebviewAPI>(extensionAPI, {
+    this.webviewAPI = RemoteMethods.setup<IWebviewAPI>(extensionAPI, {
       addEventListener: (listener: (data: any) => void) => {
         const disposable = this.webviewPanel.webview.onDidReceiveMessage(
           (message) => {

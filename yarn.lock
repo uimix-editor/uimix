@@ -13209,6 +13209,11 @@ remark-squeeze-paragraphs@4.0.0:
   dependencies:
     mdast-squeeze-paragraphs "^4.0.0"
 
+remote-methods@^1.0.1:
+  version "1.0.1"
+  resolved "https://registry.yarnpkg.com/remote-methods/-/remote-methods-1.0.1.tgz#727d0ad5dccf306dbf7d07447d5d18704ccb9876"
+  integrity sha512-26VYf2gOUwLFzg06n040VDMbdG2MeMKvJ3zQ/iHXzS6w1JQA6Tf4cf2hmyYmbhNGKAIvHWUrSrTjeDyPKhpTYg==
+
 remove-trailing-separator@^1.0.1:
   version "1.1.0"
   resolved "https://registry.yarnpkg.com/remove-trailing-separator/-/remove-trailing-separator-1.1.0.tgz#c24bce2a283adad5bc3f58e0d48249b92379d8ef"

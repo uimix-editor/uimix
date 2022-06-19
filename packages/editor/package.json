@@ -41,6 +41,7 @@
     "react": "^18.1.0",
     "react-dom": "^18.1.0",
     "rehype-minify-whitespace": "^5.0.1",
+    "remote-methods": "^1.0.1",
     "replace-css-url": "^1.2.6",
     "scroll-into-view-if-needed": "^2.2.29",
     "short-uuid": "^4.2.0",
