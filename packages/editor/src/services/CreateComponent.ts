@@ -25,6 +25,7 @@ export function createEmptyComponent(editorState: EditorState): Component {
   const component = new Component();
   component.defaultVariant.rootInstance.style.width = "100px";
   component.defaultVariant.rootInstance.style.height = "100px";
+  component.defaultVariant.rootInstance.style.position = "relative";
   editorState.document.components.append(component);
 
   const pos = editorState.findNewComponentPosition(new Vec2(100, 100));
@@ -80,6 +81,8 @@ export function createComponentFromInstance(
       }
     }
   }
+
+  component.defaultVariant.rootInstance.style.position = "relative";
 
   instance.element.remove();
 
