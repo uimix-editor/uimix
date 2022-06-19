@@ -1,5 +1,5 @@
-import * as Comlink from "comlink";
 import { action, makeObservable, observable } from "mobx";
+import * as RemoteMethods from "remote-methods";
 import { IExtensionAPI, IWebviewAPI } from "../../../vscode/src/APIInterface";
 import { VSCodeFile } from "./VSCodeFile";
 
@@ -10,22 +10,14 @@ export class VSCodeAppState {
     const file = (this.file = new VSCodeFile());
     makeObservable(this);
 
-    const comlinkEndpoint: Comlink.Endpoint = {
-      addEventListener: window.addEventListener.bind(window),
-      removeEventListener: window.removeEventListener.bind(window),
-      postMessage: (message: unknown) => {
-        vscode.postMessage(message);
-      },
-    };
-
     const webviewAPI: IWebviewAPI = {
-      setContent(content: string, url: string | undefined): void {
+      setContent(content: string, url: string | undefined) {
         file.setContent(content, url);
       },
-      getContent(): string {
+      getContent() {
         return file.getContent();
       },
-      updateSavePoint(): void {
+      updateSavePoint() {
         file.updateSavePoint();
       },
       setImageAssets: action((assets: string[]) => {
@@ -34,9 +26,22 @@ export class VSCodeAppState {
       }),
     };
 
-    Comlink.expose(webviewAPI, comlinkEndpoint);
+    const extensionAPI = RemoteMethods.setup<IExtensionAPI>(webviewAPI, {
+      addEventListener: (listener: (data: any) => void) => {
+        const cb = (e: MessageEvent) => {
+          listener(e.data);
+        };
 
-    const extensionAPI = Comlink.wrap<IExtensionAPI>(comlinkEndpoint);
+        window.addEventListener("message", cb);
+        return () => {
+          window.removeEventListener("message", cb);
+        };
+      },
+      postMessage: (data: any) => {
+        vscode.postMessage(data);
+      },
+    });
+
     file.onDirtyChange((dirty) => extensionAPI.onDirtyChange(dirty));
 
     vscode.postMessage("ready");

@@ -1,6 +1,6 @@
 import * as path from "path";
 import * as vscode from "vscode";
-import * as Comlink from "comlink";
+import * as RemoteMethods from "remote-methods";
 //import type { API } from "../../editor/src/vscode/API";
 import { MacaronEditorDocument } from "./MacaronEditorDocument";
 import { IExtensionAPI, IWebviewAPI } from "./APIInterface";
@@ -22,7 +22,7 @@ export class MacaronEditorSession {
   private document: MacaronEditorDocument;
   private webviewPanel: vscode.WebviewPanel;
   private disposables: vscode.Disposable[] = [];
-  private webviewAPI: Comlink.Remote<IWebviewAPI> | undefined;
+  private webviewAPI: RemoteMethods.Remote<IWebviewAPI> | undefined;
   private fileWatcher: vscode.FileSystemWatcher;
 
   private readonly _onDidChange =
@@ -74,40 +74,27 @@ export class MacaronEditorSession {
       });
     });
 
-    const disposables = new WeakMap<(evt: Event) => void, vscode.Disposable>();
+    const extensionAPI: IExtensionAPI = {
+      onDirtyChange: async (value) => {
+        this.onDirtyChange(value);
+      },
+    };
 
-    const comlinkEndpoint: Comlink.Endpoint = {
-      addEventListener: (
-        type: string,
-        listener: (evt: Event) => void,
-        options?: {}
-      ) => {
+    this.webviewAPI = RemoteMethods.setup<IWebviewAPI>(extensionAPI, {
+      addEventListener: (listener: (data: any) => void) => {
         const disposable = this.webviewPanel.webview.onDidReceiveMessage(
           (message) => {
             // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
-            listener({ data: message });
+            listener(message);
           }
         );
-        disposables.set(listener, disposable);
+        // eslint-disable-next-line @typescript-eslint/no-unsafe-return
+        return () => disposable.dispose();
       },
-      removeEventListener: (
-        type: string,
-        listener: (evt: Event) => void,
-        options?: {}
-      ) => {
-        disposables.get(listener)?.dispose();
+      postMessage: (data: any) => {
+        void this.webviewPanel.webview.postMessage(data);
       },
-      postMessage: (message: any) => {
-        void this.webviewPanel.webview.postMessage(message);
-      },
-    };
-
-    const extensionAPI: IExtensionAPI = {
-      onDirtyChange: this.onDirtyChange.bind(this),
-    };
-    Comlink.expose(extensionAPI, comlinkEndpoint);
-
-    this.webviewAPI = Comlink.wrap<IWebviewAPI>(comlinkEndpoint);
+    });
 
     if (Project.instance.imagesWatcher) {
       this.disposables.push(
