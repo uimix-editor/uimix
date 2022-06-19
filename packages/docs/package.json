@@ -12,15 +12,15 @@
   },
   "dependencies": {
     "@macaron-elements/compiler": "*",
-    "codemirror": "5.65.5",
-    "iconify-icon": "0.0.6",
-    "monaco-editor": "0.33.0",
-    "ua-parser-js": "1.0.2"
+    "codemirror": "^5.65.5",
+    "iconify-icon": "^0.0.6",
+    "monaco-editor": "^0.33.0",
+    "ua-parser-js": "^1.0.2"
   },
   "devDependencies": {
     "@macaron-elements/editor": "*",
     "@macaron-elements/loader-vite": "*",
     "macaron-vscode": "*",
-    "vitepress": "1.0.0-alpha.1"
+    "vitepress": "^1.0.0-alpha.1"
   }
 }
