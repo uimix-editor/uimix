@@ -42,3 +42,7 @@ body {
   --vp-c-brand-dark: #0085ff;
   --vp-c-brand-darker: #0085ff;
 }
+
+.VPNav {
+  background: none !important;
+}
