@@ -7,7 +7,8 @@
     "build": "wsrun -s -m build",
     "dev": "wsrun -m dev",
     "test": "wsrun -m test",
-    "lint": "wsrun -m lint"
+    "lint": "wsrun -m lint",
+    "update-packages": "ncu -u && wsrun -s -c ncu -u --packageFile package.json -x codemirror"
   },
   "repository": {
     "type": "git",
@@ -23,7 +24,8 @@
     "packages/*"
   ],
   "devDependencies": {
-    "lerna": "^5.1.1",
+    "lerna": "^5.1.4",
+    "npm-check-updates": "^14.0.1",
     "wsrun": "^5.2.4"
   }
 }
