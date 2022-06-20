@@ -78,6 +78,16 @@ export class MacaronEditorSession {
       onDirtyChange: async (value) => {
         this.onDirtyChange(value);
       },
+      showSaveDialog: async (data, extension) => {
+        const uri = await vscode.window.showSaveDialog({
+          filters: {
+            [extension]: [extension],
+          },
+        });
+        if (uri) {
+          await vscode.workspace.fs.writeFile(uri, Buffer.from(data));
+        }
+      },
     };
 
     this.webviewAPI = RemoteMethods.setup<IWebviewAPI>(extensionAPI, {

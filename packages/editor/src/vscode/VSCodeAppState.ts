@@ -1,3 +1,4 @@
+import { setShowSaveDialog } from "@seanchas116/paintkit/src/components/ImageInput";
 import { action, makeObservable, observable } from "mobx";
 import * as RemoteMethods from "remote-methods";
 import { IExtensionAPI, IWebviewAPI } from "../../../vscode/src/APIInterface";
@@ -43,6 +44,10 @@ export class VSCodeAppState {
     });
 
     file.onDirtyChange((dirty) => extensionAPI.onDirtyChange(dirty));
+
+    setShowSaveDialog((data, extension) =>
+      extensionAPI.showSaveDialog(data, extension)
+    );
 
     vscode.postMessage("ready");
   }
