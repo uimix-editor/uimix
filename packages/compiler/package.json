@@ -41,7 +41,7 @@
   },
   "dependencies": {
     "chokidar": "^3.5.3",
-    "prettier": "^2.6.2",
+    "prettier": "^2.7.1",
     "slash": "^4.0.0"
   },
   "devDependencies": {
@@ -59,11 +59,11 @@
     "lodash-es": "^4.17.21",
     "minimatch": "^5.1.0",
     "parse5": "^7.0.0",
-    "prettier": "^2.6.2",
+    "prettier": "^2.7.1",
     "replace-css-url": "^1.2.6",
     "shelljs": "^0.8.5",
     "tmp-promise": "^3.0.3",
-    "vitest": "^0.13.1"
+    "vitest": "^0.15.1"
   },
   "publishConfig": {
     "access": "public"
