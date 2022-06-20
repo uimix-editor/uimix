@@ -8,7 +8,7 @@
     "dev": "wsrun -m dev",
     "test": "wsrun -m test",
     "lint": "wsrun -m lint",
-    "update-packages": "ncu -u && wsrun -s -c ncu -u --packageFile package.json -x codemirror"
+    "update-packages": "ncu -u && wsrun -s -c ncu -u --packageFile package.json -x codemirror -x @types/vscode"
   },
   "repository": {
     "type": "git",
