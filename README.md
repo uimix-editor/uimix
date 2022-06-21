@@ -6,7 +6,7 @@
 ![example workflow](https://github.com/macaron-elements/macaron/actions/workflows/node.js.yml/badge.svg)
 [![Pulls](https://img.shields.io/badge/PRs-welcome-brightgreen.svg)](https://github.com/macaron-elements/macaron/pulls)
 [![Chat on Discord](https://img.shields.io/badge/chat-Discord-7289DA?logo=discord)](https://discord.gg/WGk6Mx8qTK)
-![Twitter Follow](https://img.shields.io/twitter/follow/macaron_editor?style=social)
+[![Twitter Follow](https://img.shields.io/twitter/follow/macaron_editor?style=social)](https://twitter.com/macaron_editor)
 
 Macaron is an open-source design tool to visually create Web Components, [which can be used in most Web frameworks](https://custom-elements-everywhere.com/), or in vanilla HTML/JavaScript.
 
