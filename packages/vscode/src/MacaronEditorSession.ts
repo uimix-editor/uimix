@@ -87,7 +87,7 @@ export class MacaronEditorSession {
         if (uri) {
           await vscode.workspace.fs.writeFile(uri, Buffer.from(data));
 
-          return getImportPath(this.document.uri.path, uri.path);
+          return getImportPath(this.document.uri, uri);
         }
       },
     };
@@ -195,7 +195,9 @@ export class MacaronEditorSession {
   private getImageFiles(imageFilePaths: Set<string>): string[] {
     return [...imageFilePaths]
       .sort()
-      .map((filePath) => getImportPath(this.document.uri.path, filePath));
+      .map((filePath) =>
+        getImportPath(this.document.uri, vscode.Uri.file(filePath))
+      );
   }
 
   private onDirtyChange(dirty: boolean) {
