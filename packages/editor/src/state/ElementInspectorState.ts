@@ -37,6 +37,7 @@ export class ImgElementInspectorState extends SpecificElementInspectorState {
     for (const e of this.elements) {
       e.attrs.set("src", src);
     }
+    this.state.editorState.history.commit("Change Image Source");
     return true;
   });
 }
@@ -55,6 +56,7 @@ export class SlotElementInspectorState extends SpecificElementInspectorState {
     for (const e of this.elements) {
       e.attrs.set("name", name);
     }
+    this.state.editorState.history.commit("Change Slot Name");
     return true;
   });
 }
