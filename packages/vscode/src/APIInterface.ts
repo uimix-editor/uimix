@@ -7,5 +7,8 @@ export interface IWebviewAPI {
 
 export interface IExtensionAPI {
   onDirtyChange(isDirty: boolean): void;
-  showSaveDialog(data: Uint8Array, extension: string): Promise<void>;
+  showSaveDialog(
+    data: Uint8Array,
+    extension: string
+  ): Promise<string | undefined>;
 }

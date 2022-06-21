@@ -86,6 +86,8 @@ export class MacaronEditorSession {
         });
         if (uri) {
           await vscode.workspace.fs.writeFile(uri, Buffer.from(data));
+
+          return getImportPath(this.document.uri.path, uri.path);
         }
       },
     };
