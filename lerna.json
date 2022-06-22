@@ -2,6 +2,7 @@
   "packages": [
     "packages/compiler",
     "packages/loader-vite",
+    "packages/loader-webpack",
     "packages/vscode"
   ],
   "version": "0.2.0"
