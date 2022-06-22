@@ -1,7 +1,7 @@
 {
-  "name": "macaron-next",
+  "name": "macaron",
   "private": true,
-  "version": "0.1.0",
+  "version": "0.2.0",
   "description": "Visual component editor for Web development",
   "scripts": {
     "build": "wsrun -s -m build",
