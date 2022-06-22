@@ -86,6 +86,19 @@ const config = {
           ],
         },
         {
+          text: "Build Tools Integration",
+          items: [
+            {
+              text: "Vite",
+              link: "/guide/vite",
+            },
+            {
+              text: "webpack",
+              link: "/guide/webpack",
+            },
+          ],
+        },
+        {
           text: "Framework Integration",
           items: [
             {
