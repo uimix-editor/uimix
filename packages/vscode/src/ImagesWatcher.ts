@@ -44,7 +44,7 @@ export class ImagesWatcher {
     });
 
     const paths = await globby("**/*.{png,jpg,jpeg,gif,svg}", {
-      cwd: this.rootUri.path,
+      cwd: this.rootUri.fsPath,
       gitignore: true,
     });
 
