@@ -86,6 +86,19 @@ const config = {
           ],
         },
         {
+          text: "Build Tool Integration",
+          items: [
+            {
+              text: "Use with Vite",
+              link: "/guide/build-tools/vite",
+            },
+            {
+              text: "Use with webpack",
+              link: "/guide/build-tools/webpack",
+            },
+          ],
+        },
+        {
           text: "Framework Integration",
           items: [
             {

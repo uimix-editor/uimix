@@ -56,45 +56,9 @@ Then, you can load the component in HTML:
 <my-component></my-component>
 ```
 
-## Use with Vite
+## Import `.macaron` file directly (Vite / webpack)
 
-> [Example Project](https://github.com/macaron-elements/macaron-examples/tree/main/vite)
+If you are using Vite or webpack, you can import `.macaron` files directly by installing loaders for Macaron.
 
-If you are using Vite, you can configure Vite to use a loader for Macaron (`@macaron-elements/loader-vite`) to import `.macaron` files directly from your HTML and JS files.
-
-First, install the loader:
-
-```bash
-npm install --save-dev @macaron-elements/loader-vite
-```
-
-Configure `vite.config.js`:
-
-```js
-import { defineConfig } from "vite";
-import macaronLoader from "@macaron-elements/loader-vite";
-
-export default defineConfig({
-  plugins: [macaronLoader()],
-});
-```
-
-Import the `.macaron` file directly from HTML:
-
-```html
-<script type="module">
-  import "./components.macaron";
-</script>
-<my-component></my-component>
-```
-
-or from JS:
-
-```js
-import "./components.macaron";
-const element = document.createElement("my-component");
-```
-
-## Use with Webpack
-
-The Webpack loader for Macaron is not yet available.
+- [Use with Vite](/guide/build-tools/vite)
+- [Use with webpack](/guide/build-tools/webpack)
