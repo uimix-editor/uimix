@@ -1,6 +1,6 @@
 {
   "name": "@macaron-elements/compiler",
-  "version": "0.1.1",
+  "version": "0.2.0",
   "description": "Macaron compiler",
   "homepage": "https://github.com/macaron-elements/macaron/tree/main/packages/compiler#readme",
   "bugs": {
