@@ -89,11 +89,11 @@ const config = {
           text: "Build Tools Integration",
           items: [
             {
-              text: "Vite",
+              text: "Use with Vite",
               link: "/guide/vite",
             },
             {
-              text: "webpack",
+              text: "Use with webpack",
               link: "/guide/webpack",
             },
           ],
