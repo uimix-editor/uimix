@@ -1,6 +1,6 @@
 {
   "name": "@macaron-elements/loader-webpack",
-  "version": "0.3.0",
+  "version": "0.3.1",
   "description": "Webpack loader for Macaron files",
   "homepage": "https://github.com/macaron-elements/macaron/tree/main/packages/loader-webpack#readme",
   "bugs": {
