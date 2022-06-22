@@ -5,6 +5,7 @@ import type * as hast from "hast";
 import { h } from "hastscript";
 import { isSVGTagName } from "@seanchas116/paintkit/src/util/HTMLTagCategory";
 import * as propertyInformation from "property-information";
+import { toValidCSSIdentifier } from "@seanchas116/paintkit/src/util/Name";
 import { Element } from "./Element";
 import { RootElement } from "./RootElement";
 import { Style } from "./Style";
@@ -311,7 +312,7 @@ export function instancesFromHTML(
           continue;
         }
         if (key === "id") {
-          element.rename(String(value));
+          element.rename(toValidCSSIdentifier(String(value)));
           continue;
         }
         const info = propertyInformation.find(
