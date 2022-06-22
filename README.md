@@ -82,13 +82,26 @@ yarn test
 yarn test -u
 ```
 
-### Publish npm packages
+### Release a new version
+
+#### Version bump
 
 ```bash
-lerna publish
+yarn run version # this runs `lerna version --conventional-commits`
 ```
 
-### Publish VS Code extension
+#### Publish NPM packages
+
+```bash
+yarn build
+cd packages/compiler
+yarn publish
+cd ../..
+cd packages/loader-vite
+yarn publish
+```
+
+#### Publish the VS Code extension
 
 > [Log in to vsce](https://code.visualstudio.com/api/working-with-extensions/publishing-extension) before publish
 
@@ -97,7 +110,6 @@ yarn build
 cd packages/vscode
 yarn vsce publish
 ```
-
 ## Analytics
 
 Macaron uses [Plausible](https://plausible.io/) to collect anonymous analytics data.
