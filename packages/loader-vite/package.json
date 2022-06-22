@@ -1,6 +1,6 @@
 {
   "name": "@macaron-elements/loader-vite",
-  "version": "0.2.0",
+  "version": "0.3.0",
   "description": "Vite plugin to load Macaron files",
   "homepage": "https://github.com/macaron-elements/macaron/tree/main/packages/loader-vite#readme",
   "bugs": {
@@ -14,7 +14,7 @@
   "author": "Ryohei Ikegami <iofg2100@gmail.com>",
   "main": "index.js",
   "dependencies": {
-    "@macaron-elements/compiler": "^0.2.0"
+    "@macaron-elements/compiler": "^0.3.0"
   },
   "publishConfig": {
     "access": "public"
