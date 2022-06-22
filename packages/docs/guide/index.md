@@ -97,4 +97,32 @@ const element = document.createElement("my-component");
 
 ## Use with Webpack
 
-The Webpack loader for Macaron is not yet available.
+> [Example Project](https://github.com/macaron-elements/macaron-examples/tree/main/webpack)
+
+```bash
+npm install --save-dev @macaron-elements/loader-webpack
+```
+
+#### `webpack.config.js`
+
+```js
+module.exports = {
+  // ...
+  module: {
+    // ...
+    rules: [
+      {
+        test: /\.macaron/,
+        use: ["macaron-loader"],
+      },
+    ],
+  },
+};
+```
+
+#### Usage in JS
+
+```js
+import "./components.macaron";
+const element = document.createElement("my-component");
+```
