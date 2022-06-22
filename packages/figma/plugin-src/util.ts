@@ -84,12 +84,27 @@ export function imageToDataURL(data: Uint8Array): string | undefined {
   }
 }
 
-export function generateIDFromText(name: string): string {
-  let id = name.replace(/[^a-zA-Z0-9]/g, "");
-  if (/^[0-9]/.exec(id)) {
-    id = `_${id}`;
+export function toValidCSSIdentifier(original: string): string {
+  if (original.length === 0) {
+    return "_";
   }
-  return id.toLowerCase();
+  const result = [...original]
+    .map((c) => {
+      if (/[a-z0-9-_]/i.test(c)) {
+        return c;
+      }
+      // eslint-disable-next-line no-control-regex
+      if (/[^\u0000-\u00A0]/.test(c)) {
+        return c;
+      }
+      return "_";
+    })
+    .join("");
+
+  if (/^[0-9]/.exec(result)) {
+    return "_" + result;
+  }
+  return result;
 }
 
 export function incrementAlphanumeric(str: string): string {
@@ -109,7 +124,7 @@ export class IDGenerator {
   maxLength = 20;
 
   generate(text: string): string {
-    let id = generateIDFromText(text).slice(0, this.maxLength);
+    let id = toValidCSSIdentifier(text).slice(0, this.maxLength);
     while (this.ids.has(id)) {
       id = incrementAlphanumeric(id);
     }
