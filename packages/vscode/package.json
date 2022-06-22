@@ -18,7 +18,7 @@
   "main": "./out/extension.js",
   "scripts": {
     "build": "vsce package && node scripts/copy-vsix-to-docs.js",
-    "compile:copy-files": "cp ../editor/dist/vscode/main.js ./out/webview.js",
+    "compile:copy-files": "cp ../editor/dist/vscode/main.js ./out/webview.js && cp ../../CHANGELOG.md .",
     "compile:esbuild": "node build.js",
     "dev": "node build.js --dev",
     "lint": "eslint src --ext ts",
