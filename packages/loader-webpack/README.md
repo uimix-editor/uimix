@@ -26,7 +26,7 @@ module.exports = {
     rules: [
       {
         test: /\.macaron/,
-        use: ["macaron-loader"],
+        use: ["@macaron-elements/loader-webpack"],
       },
     ],
   },
