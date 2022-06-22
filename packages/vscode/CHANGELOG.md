@@ -13,13 +13,3 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 ### Features
 
 - **editor:** image input with better support for data URLs ([#93](https://github.com/macaron-elements/macaron/issues/93)) ([fe5e652](https://github.com/macaron-elements/macaron/commit/fe5e652148596f4517a493e6dde144b79c31fb04))
-
-# Change Log
-
-All notable changes to the "macaron-vscode" extension will be documented in this file.
-
-Check [Keep a Changelog](http://keepachangelog.com/) for recommendations on how to structure this file.
-
-## [Unreleased]
-
-- Initial release
