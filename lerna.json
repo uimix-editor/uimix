@@ -1,7 +1,4 @@
 {
-  "packages": [
-    "packages/compiler",
-    "packages/loader-vite"
-  ],
+  "packages": ["packages/compiler", "packages/loader-vite", "packages/vscode"],
   "version": "0.1.1"
 }
