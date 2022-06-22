@@ -86,15 +86,15 @@ const config = {
           ],
         },
         {
-          text: "Build Tools Integration",
+          text: "Build Tool Integration",
           items: [
             {
               text: "Use with Vite",
-              link: "/guide/vite",
+              link: "/guide/build-tools/vite",
             },
             {
               text: "Use with webpack",
-              link: "/guide/webpack",
+              link: "/guide/build-tools/webpack",
             },
           ],
         },

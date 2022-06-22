@@ -60,5 +60,5 @@ Then, you can load the component in HTML:
 
 If you are using Vite or webpack, you can import `.macaron` files directly by installing loaders for Macaron.
 
-- [Vite](/guide/vite)
-- [webpack](/guide/webpack)
+- [Use with Vite](/guide/build-tools/vite)
+- [Use with webpack](/guide/build-tools/webpack)
