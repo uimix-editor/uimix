@@ -9,7 +9,7 @@
     "test": "wsrun -m test",
     "lint": "wsrun -m lint",
     "update-packages": "ncu -u && wsrun -s -c ncu -u --packageFile package.json -x codemirror -x @types/vscode",
-    "version": "lerna version --conventional-commits"
+    "bump-version": "lerna version --conventional-commits"
   },
   "repository": {
     "type": "git",
