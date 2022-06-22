@@ -1,4 +1,4 @@
-# Vite webpack loader
+# webpack Macaron loader
 
 A webpack loader to load [Macaron](https://macaron-elements.com/) files as JavaScript modules.
 
