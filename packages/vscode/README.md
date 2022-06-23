@@ -14,4 +14,4 @@
 - Create a file with `.macaron` extension
   - The editor UI of Macaron is shown in a tab instead of the normal text editor of VS Code.
 
-See [the guide](https://macaron-elements.com/guide) for more information.
+See [the guide](https://macaron-elements.com/guide/) for more information.

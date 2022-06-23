@@ -2,7 +2,7 @@
 
 ![Screenshot](packages/vscode/screenshot.png)
 
-[![](https://vsmarketplacebadge.apphb.com/version/Macaron.macaron-vscode.svg)](https://marketplace.visualstudio.com/items?itemName=Macaron.macaron-vscode) 
+[![](https://vsmarketplacebadge.apphb.com/version/Macaron.macaron-vscode.svg)](https://marketplace.visualstudio.com/items?itemName=Macaron.macaron-vscode)
 ![example workflow](https://github.com/macaron-elements/macaron/actions/workflows/node.js.yml/badge.svg)
 [![Pulls](https://img.shields.io/badge/PRs-welcome-brightgreen.svg)](https://github.com/macaron-elements/macaron/pulls)
 [![Chat on Discord](https://img.shields.io/badge/chat-Discord-7289DA?logo=discord)](https://discord.gg/WGk6Mx8qTK)
@@ -25,7 +25,7 @@ Its goal is to allow you to create and continuously maintain components visually
 
 ## Usage
 
-- See [the guide](https://macaron-elements.com/guide).
+- See [the guide](https://macaron-elements.com/guide/).
 
 ## Development
 
@@ -110,6 +110,7 @@ yarn build
 cd packages/vscode
 yarn vsce publish
 ```
+
 ## Analytics
 
 Macaron uses [Plausible](https://plausible.io/) to collect anonymous analytics data.
