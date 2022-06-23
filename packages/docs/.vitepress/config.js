@@ -109,6 +109,10 @@ const config = {
               text: "Use with Vue",
               link: "/guide/frameworks/vue",
             },
+            {
+              text: "Use with Next.js",
+              link: "/guide/frameworks/next",
+            },
           ],
         },
         {
