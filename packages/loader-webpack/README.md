@@ -1,5 +1,7 @@
 # webpack Macaron loader
 
+[![npm](https://img.shields.io/npm/v/@macaron-elements/loader-webpack)](https://www.npmjs.com/package/@macaron-elements/loader-webpack)
+
 A webpack loader to load [Macaron](https://macaron-elements.com/) files as JavaScript modules.
 
 ```js

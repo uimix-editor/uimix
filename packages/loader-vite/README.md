@@ -1,5 +1,7 @@
 # Vite Macaron loader
 
+[![npm](https://img.shields.io/npm/v/@macaron-elements/loader-vite)](https://www.npmjs.com/package/@macaron-elements/loader-vite)
+
 A Vite plugin to load [Macaron](https://macaron-elements.com/) files as JavaScript modules.
 
 ```html

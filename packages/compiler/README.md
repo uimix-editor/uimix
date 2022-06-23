@@ -1,5 +1,7 @@
 # The Macaron compiler library and command-line interface
 
+[![npm](https://img.shields.io/npm/v/@macaron-elements/compiler)](https://www.npmjs.com/package/@macaron-elements/compiler)
+
 This library / CLI is the compiler that converts [Macaron](https://macaron-elements.com/) files to Web Components.
 
 ## Installation
