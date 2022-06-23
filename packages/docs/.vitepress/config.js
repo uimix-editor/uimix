@@ -103,11 +103,11 @@ const config = {
           items: [
             {
               text: "Use with React",
-              link: "/guide/use-with-react",
+              link: "/guide/frameworks/react",
             },
             {
               text: "Use with Vue",
-              link: "/guide/use-with-vue",
+              link: "/guide/frameworks/vue",
             },
           ],
         },
