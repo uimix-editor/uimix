@@ -94,7 +94,7 @@ export const Viewport: React.FC<{ className?: string }> = observer(
         e.preventDefault();
 
         if (e.ctrlKey || e.metaKey) {
-          const factor = Math.pow(2, e.deltaY / 100);
+          const factor = Math.pow(2, -e.deltaY / 100);
           const pos = new Vec2(e.clientX, e.clientY).sub(
             editorState.scroll.viewportClientRect.topLeft
           );
