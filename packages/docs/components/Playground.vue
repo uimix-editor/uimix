@@ -3,10 +3,6 @@
   display: none !important;
 }
 
-macaron-demo-tab {
-  cursor: pointer;
-}
-
 .playground-floating {
   width: 100%;
   height: 720px;
@@ -80,7 +76,6 @@ macaron-demo-tab {
 }
 .result-tabs > * {
   margin-bottom: -2px;
-  cursor: pointer;
 }
 
 .result-pane {

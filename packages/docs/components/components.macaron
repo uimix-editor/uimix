@@ -193,7 +193,6 @@
       line-height: 1.2;
       letter-spacing: -0.03em;
       text-align: center;
-      cursor: not-allowed;
     }
     #heroSubtitle {
       margin-bottom: 32px;
@@ -577,6 +576,7 @@
       display: block;
       font-family: Readex Pro;
       font-weight: 700;
+      cursor: pointer;
     }
     #herobutton {
       height: 48px;
@@ -613,6 +613,7 @@
       display: block;
       font-family: Readex Pro;
       font-weight: 700;
+      cursor: pointer;
     }
     #herobutton1 {
       width: fit-content;
@@ -679,6 +680,7 @@
       border-bottom-width: 2px;
       border-bottom-style: solid;
       border-bottom-color: transparent;
+      cursor: pointer;
     }
     :host([aria-selected="true"]) {
       color: #1e252b;
@@ -717,6 +719,7 @@
       border-bottom-width: 2px;
       border-bottom-style: solid;
       border-bottom-color: transparent;
+      cursor: pointer;
     }
     :host([aria-selected="true"]) {
       color: #1e252b;
