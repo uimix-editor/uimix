@@ -63,7 +63,7 @@
     "replace-css-url": "^1.2.6",
     "shelljs": "^0.8.5",
     "tmp-promise": "^3.0.3",
-    "vitest": "^0.15.1"
+    "vitest": "^0.16.0"
   },
   "publishConfig": {
     "access": "public"

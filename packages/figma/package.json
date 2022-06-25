@@ -27,7 +27,7 @@
     "@figma/plugin-typings": "*",
     "@macaron-elements/loader-vite": "*",
     "concurrently": "^7.2.2",
-    "esbuild": "^0.14.46",
+    "esbuild": "^0.14.47",
     "prettier": "^2.7.1",
     "typescript": "^4.7.4",
     "vite": "^2.9.12",
