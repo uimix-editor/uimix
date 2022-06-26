@@ -1,5 +1,5 @@
 import { assertNonNull } from "@seanchas116/paintkit/src/util/Assert";
-import { reaction } from "mobx";
+import { computed, reaction } from "mobx";
 import { Component } from "../models/Component";
 import { ElementInstance } from "../models/ElementInstance";
 import { DefaultVariant, Variant } from "../models/Variant";
@@ -38,23 +38,17 @@ export class RootElementMount {
     // @ts-ignore
     this.shadow.adoptedStyleSheets = [context.resetStyleSheet, styleSheet];
 
-    if (variant.type === "variant") {
-      this.disposers.push(
-        reaction(
-          () => variant.supersetVariants,
-          (supersetVariants) => {
-            const classes = ["variant-" + variant.key];
-            for (const supersetVariant of supersetVariants) {
-              classes.push("variant-" + supersetVariant.key);
-            }
-            this.dom.className = classes.join(" ");
-          },
-          {
-            fireImmediately: true,
-          }
-        )
-      );
-    }
+    this.disposers.push(
+      reaction(
+        () => this.classNames,
+        (classNames) => {
+          this.dom.className = classNames.join(" ");
+        },
+        {
+          fireImmediately: true,
+        }
+      )
+    );
 
     this.childMountSync = new ChildMountSync(this, this.shadow, () =>
       this.updateBoundingBoxLater()
@@ -111,5 +105,18 @@ export class RootElementMount {
     for (const childMount of this.childMountSync.childMounts) {
       childMount.updateBoundingBox();
     }
+  }
+
+  @computed get classNames(): string[] {
+    if (this.variant.type === "variant") {
+      const supersetVariants = this.variant.supersetVariants;
+      const classes = ["variant-" + this.variant.key];
+      for (const supersetVariant of supersetVariants) {
+        classes.push("variant-" + supersetVariant.key);
+      }
+      return classes;
+    }
+
+    return [];
   }
 }
