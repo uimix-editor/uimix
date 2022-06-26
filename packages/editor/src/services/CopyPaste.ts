@@ -1,7 +1,9 @@
 import { runInAction } from "mobx";
+import * as postcss from "postcss";
 import { parseFragment, stringifyFragment } from "../fileFormat/fragment";
 import { Document } from "../models/Document";
 import { ElementInstance } from "../models/ElementInstance";
+import { positionalStyleKeys } from "../models/Style";
 
 function createClipboardData(attribute: string, data: string): ClipboardItems {
   const base64 = Buffer.from(data).toString("base64");
@@ -60,7 +62,14 @@ export async function pasteLayers(document: Document): Promise<void> {
 
 export async function copyStyle(instance: ElementInstance): Promise<void> {
   await navigator.clipboard.write(
-    createClipboardData("data-macaron-style", instance.style.toString())
+    createClipboardData(
+      "data-macaron-style",
+      instance.style
+        .toPostCSS({
+          exclude: new Set(positionalStyleKeys),
+        })
+        .toString()
+    )
   );
 }
 
@@ -72,6 +81,7 @@ export async function pasteStyle(instance: ElementInstance): Promise<void> {
     return;
   }
   runInAction(() => {
-    instance.style.loadString(styleString);
+    const root = postcss.parse(styleString);
+    instance.style.mergePostCSS(root);
   });
 }
