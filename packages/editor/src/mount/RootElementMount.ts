@@ -126,6 +126,9 @@ export class RootElementMount {
     return [];
   }
 
+  /**
+   * If rendering an instance of a component, gets the assumed viewport width from the media query text of the root variant.
+   */
   @computed get assumedViewportWidth(): number {
     if (this.context.topLevelVariant?.type === "variant") {
       return parseMaxWidth(this.context.topLevelVariant.mediaQuery);
