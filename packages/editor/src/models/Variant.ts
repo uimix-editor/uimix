@@ -157,7 +157,7 @@ export class Variant extends BaseVariant {
     );
   }
 
-  matchesToViewportWidth(width: number): boolean {
+  isImplicitlyEnabledInViewportWidth(width: number): boolean {
     if (this.selector) {
       return false;
     }
