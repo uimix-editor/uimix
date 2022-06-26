@@ -182,6 +182,7 @@ export class MacaronEditorSession {
         <meta http-equiv="Content-Security-Policy" content="${csp}">
         <script nonce="${nonce}" defer data-domain="${plausibleDomain}" src="https://plausible.io/js/plausible.js"></script>
         <script nonce="${nonce}" defer data-domain="${plausibleDomain}" src="https://plausible.io/js/script.exclusions.local.js"></script>
+        <script nonce="${nonce}">window.plausible = window.plausible || function() { (window.plausible.q = window.plausible.q || []).push(arguments) }</script>
       </head>
       <body>
         <div id="root"></div>
