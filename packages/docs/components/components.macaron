@@ -472,7 +472,14 @@
   </style>
 </macaron-component>
 <macaron-component name="macaron-feature-card">
-  <macaron-variant x="349" y="0" width="480"></macaron-variant>
+  <macaron-variant x="347" y="-289" width="480"></macaron-variant>
+  <macaron-variant
+    x="862"
+    y="-289"
+    width="400"
+    selector=":hover"
+    media="(max-width: 768px)"
+  ></macaron-variant>
   <template>
     <div id="icon-area">
       <div id="icon-bg"></div>
@@ -556,6 +563,14 @@
       line-height: 1.75;
       letter-spacing: -0.02em;
       text-align: left;
+    }
+    @media (max-width: 768px) {
+      :host(:hover) {
+        padding-top: 12px;
+        padding-right: 12px;
+        padding-bottom: 12px;
+        padding-left: 12px;
+      }
     }
   </style>
 </macaron-component>
