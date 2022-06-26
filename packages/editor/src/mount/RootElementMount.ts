@@ -1,8 +1,9 @@
 import { assertNonNull } from "@seanchas116/paintkit/src/util/Assert";
-import { reaction } from "mobx";
+import { computed, reaction } from "mobx";
 import { Component } from "../models/Component";
 import { ElementInstance } from "../models/ElementInstance";
 import { DefaultVariant, Variant } from "../models/Variant";
+import { parseMaxWidth } from "../util/parseMaxWidth";
 import { ChildMountSync, fetchComputedValues } from "./ElementMount";
 import { MountContext } from "./MountContext";
 
@@ -38,23 +39,17 @@ export class RootElementMount {
     // @ts-ignore
     this.shadow.adoptedStyleSheets = [context.resetStyleSheet, styleSheet];
 
-    if (variant.type === "variant") {
-      this.disposers.push(
-        reaction(
-          () => variant.supersetVariants,
-          (supersetVariants) => {
-            const classes = ["variant-" + variant.key];
-            for (const supersetVariant of supersetVariants) {
-              classes.push("variant-" + supersetVariant.key);
-            }
-            this.dom.className = classes.join(" ");
-          },
-          {
-            fireImmediately: true,
-          }
-        )
-      );
-    }
+    this.disposers.push(
+      reaction(
+        () => this.classNames,
+        (classNames) => {
+          this.dom.className = classNames.join(" ");
+        },
+        {
+          fireImmediately: true,
+        }
+      )
+    );
 
     this.childMountSync = new ChildMountSync(this, this.shadow, () =>
       this.updateBoundingBoxLater()
@@ -111,5 +106,33 @@ export class RootElementMount {
     for (const childMount of this.childMountSync.childMounts) {
       childMount.updateBoundingBox();
     }
+  }
+
+  @computed get classNames(): string[] {
+    if (this.variant.type === "variant") {
+      const enabledVariants = [this.variant, ...this.variant.supersetVariants];
+      return enabledVariants.map((v) => `variant-${v.key}`);
+    }
+
+    const { assumedViewportWidth } = this;
+
+    if (assumedViewportWidth !== Infinity) {
+      const enabledVariants = this.component.variants.children.filter((v) =>
+        v.matchesViewportWidth(assumedViewportWidth)
+      );
+      return enabledVariants.map((v) => `variant-${v.key}`);
+    }
+
+    return [];
+  }
+
+  /**
+   * If rendering an instance of a component, gets the assumed viewport width from the media query text of the root variant.
+   */
+  @computed get assumedViewportWidth(): number {
+    if (this.context.topLevelVariant?.type === "variant") {
+      return parseMaxWidth(this.context.topLevelVariant.mediaQuery);
+    }
+    return Infinity;
   }
 }

@@ -237,6 +237,8 @@ export class ElementMount {
           ...this.context,
           boundingBoxUpdateScheduler: undefined,
           registry: undefined,
+          topLevelVariant:
+            this.context.topLevelVariant ?? this.instance.variant,
         },
         this.dom as HTMLElement
       );

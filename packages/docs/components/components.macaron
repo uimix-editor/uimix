@@ -457,6 +457,18 @@
         margin-bottom: 64px;
         margin-left: 0px;
       }
+      #feature-rows {
+        row-gap: 16px;
+      }
+      #feature-row1 {
+        row-gap: 16px;
+      }
+      #feature-row3 {
+        row-gap: 16px;
+      }
+      #feature-row4 {
+        row-gap: 16px;
+      }
       #frame15 {
         margin-bottom: 64px;
         padding-top: 32px;
@@ -472,7 +484,13 @@
   </style>
 </macaron-component>
 <macaron-component name="macaron-feature-card">
-  <macaron-variant x="349" y="0" width="480"></macaron-variant>
+  <macaron-variant x="347" y="-289" width="480"></macaron-variant>
+  <macaron-variant
+    x="862"
+    y="-289"
+    width="400"
+    media="(max-width: 768px)"
+  ></macaron-variant>
   <template>
     <div id="icon-area">
       <div id="icon-bg"></div>
@@ -556,6 +574,18 @@
       line-height: 1.75;
       letter-spacing: -0.02em;
       text-align: left;
+    }
+    @media (max-width: 768px) {
+      :host {
+        padding-top: 12px;
+        padding-right: 12px;
+        padding-bottom: 12px;
+        padding-left: 12px;
+        column-gap: 12px;
+      }
+      #title {
+        font-size: 16px;
+      }
     }
   </style>
 </macaron-component>
