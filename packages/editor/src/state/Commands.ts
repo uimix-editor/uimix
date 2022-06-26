@@ -5,6 +5,7 @@ import { action, computed, makeObservable } from "mobx";
 import { Component } from "../models/Component";
 import { Element } from "../models/Element";
 import { getInstance } from "../models/InstanceRegistry";
+import { Text } from "../models/Text";
 import { AutoLayout } from "../services/AutoLayout";
 import { copyLayers, pasteLayers } from "../services/CopyPaste";
 import {
@@ -184,6 +185,47 @@ export class Commands {
         }
 
         this.history.commit("Create Component");
+        return true;
+      }),
+    };
+  }
+
+  @computed get addElement(): Command {
+    return {
+      text: "Add Element",
+      disabled: this.document.selectedElementInstances.length < 1,
+      onClick: action(() => {
+        const instance = this.document.selectedElementInstances[0];
+
+        const element = new Element({ tagName: "div" });
+        element.rename("div");
+        instance.element.append(element);
+
+        const addedInstance = getInstance(instance.variant, element);
+        this.document.deselect();
+        addedInstance.select();
+
+        this.history.commit("Add Element");
+        return true;
+      }),
+    };
+  }
+
+  @computed get addText(): Command {
+    return {
+      text: "Add Text",
+      disabled: this.document.selectedElementInstances.length < 1,
+      onClick: action(() => {
+        const instance = this.document.selectedElementInstances[0];
+
+        const text = new Text({ content: "Text" });
+        instance.element.append(text);
+
+        const addedInstance = getInstance(instance.variant, text);
+        this.document.deselect();
+        addedInstance.select();
+
+        this.history.commit("Add Text");
         return true;
       }),
     };
