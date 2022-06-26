@@ -87,7 +87,7 @@ yarn test -u
 #### Version bump
 
 ```bash
-yarn run version # this runs `lerna version --conventional-commits`
+GH_TOKEN={GitHub PAT with repo: scope} yarn bump-version # this runs `lerna version --conventional-commits --create-release github`
 ```
 
 #### Publish NPM packages
