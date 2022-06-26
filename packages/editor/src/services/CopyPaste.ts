@@ -2,6 +2,19 @@ import { runInAction } from "mobx";
 import { parseFragment, stringifyFragment } from "../fileFormat/fragment";
 import { Document } from "../models/Document";
 
+function encodeClipboardDataInHTML(attribute: string, data: string): string {
+  const base64 = Buffer.from(data).toString("base64");
+  return `<span ${attribute}="${base64}"></span>`;
+}
+
+function decodeClipboardDataFromHTML(attribute: string, html: string): string {
+  const match = html.match(new RegExp(`<span ${attribute}="(.*?)"></span>`));
+  if (match) {
+    return Buffer.from(match[1], "base64").toString();
+  }
+  return "";
+}
+
 export async function copyLayers(document: Document): Promise<void> {
   const fragment = document.selectedFragment;
   if (!fragment) {
@@ -9,9 +22,7 @@ export async function copyLayers(document: Document): Promise<void> {
   }
 
   const fragmentString = stringifyFragment(fragment);
-  const base64 = Buffer.from(fragmentString).toString("base64");
-
-  const encoded = `<span data-macaron="${base64}"></span>`;
+  const encoded = encodeClipboardDataInHTML("data-macaron", fragmentString);
 
   const type = "text/html";
   const blob = new Blob([encoded], { type });
@@ -30,13 +41,7 @@ export async function pasteLayers(document: Document): Promise<void> {
 
   const encoded = await (await item.getType("text/html")).text();
 
-  const match = encoded.match(/<span data-macaron="(.*)">/);
-  if (!match) {
-    return;
-  }
-
-  const base64 = match[1];
-  const fragmentString = Buffer.from(base64, "base64").toString();
+  const fragmentString = decodeClipboardDataFromHTML("data-macaron", encoded);
   const fragment = parseFragment(fragmentString);
   if (fragment) {
     runInAction(() => {
