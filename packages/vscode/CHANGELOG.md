@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.4.0](https://github.com/macaron-elements/macaron/compare/v0.3.1...v0.4.0) (2022-06-26)
+
+
+### Features
+
+* **editor:** insert tool shortcuts + send more analytics ([#117](https://github.com/macaron-elements/macaron/issues/117)) ([a707db9](https://github.com/macaron-elements/macaron/commit/a707db95e5daaf65fa149692655fedb518443a70))
+
+
+
+
+
 ## [0.3.1](https://github.com/macaron-elements/macaron/compare/v0.3.0...v0.3.1) (2022-06-22)
 
 **Note:** Version bump only for package macaron
