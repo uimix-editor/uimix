@@ -14,3 +14,10 @@ declare module "validate-element-name" {
   };
   export = validateElementName;
 }
+
+declare function plausible(
+  event: string,
+  options: {
+    props: Record<string, string>;
+  }
+): void;

@@ -3,14 +3,28 @@ import { makeObservable, observable, reaction, runInAction } from "mobx";
 import { Document, DocumentJSON } from "../models/Document";
 import { parseDocument, stringifyDocument } from "../fileFormat/document";
 
+class History extends JSONUndoHistory<DocumentJSON, Document> {
+  commit(title: string, mergeInterval?: number): boolean {
+    const ret = super.commit(title, mergeInterval);
+
+    console.log(plausible);
+
+    plausible("commit", {
+      props: {
+        title,
+      },
+    });
+
+    return ret;
+  }
+}
+
 export class VSCodeFile {
   constructor() {
     makeObservable(this);
   }
 
-  @observable.ref history = new JSONUndoHistory<DocumentJSON, Document>(
-    new Document()
-  );
+  @observable.ref history = new History(new Document());
   @observable url?: string = undefined;
 
   setContent(content: string, url: string | undefined): void {
@@ -22,7 +36,7 @@ export class VSCodeFile {
       const document = new Document();
       parseDocument(document, content);
       runInAction(() => {
-        this.history = new JSONUndoHistory<DocumentJSON, Document>(document);
+        this.history = new History(document);
         this.url = url;
         console.log(url);
       });
