@@ -109,6 +109,22 @@ export const styleKeys = [
   "cursor",
 ] as const;
 
+export const positionalProperties = [
+  "position",
+  "top",
+  "right",
+  "bottom",
+  "left",
+  "marginTop",
+  "marginRight",
+  "marginBottom",
+  "marginLeft",
+  "alignSelf",
+  "flexGrow",
+  "flexShrink",
+  "flexBasis",
+] as const;
+
 const shorthandStyleKeys = Object.keys(
   styleShorthands
 ) as readonly (keyof typeof styleShorthands)[];

@@ -3,23 +3,8 @@ import { Component } from "../models/Component";
 import { Element } from "../models/Element";
 import { ElementInstance } from "../models/ElementInstance";
 import { getInstance } from "../models/InstanceRegistry";
+import { positionalProperties } from "../models/Style";
 import { EditorState } from "../state/EditorState";
-
-const positionalProperties = [
-  "position",
-  "top",
-  "right",
-  "bottom",
-  "left",
-  "marginTop",
-  "marginRight",
-  "marginBottom",
-  "marginLeft",
-  "alignSelf",
-  "flexGrow",
-  "flexShrink",
-  "flexBasis",
-] as const;
 
 export function createEmptyComponent(editorState: EditorState): Component {
   const component = new Component();
