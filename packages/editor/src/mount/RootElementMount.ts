@@ -114,16 +114,22 @@ export class RootElementMount {
       return enabledVariants.map((v) => `variant-${v.key}`);
     }
 
-    if (this.context.topLevelVariant?.type === "variant") {
-      const maxWidth = parseMaxWidth(this.context.topLevelVariant.mediaQuery);
-      if (!isNaN(maxWidth)) {
-        const enabledVariants = this.component.variants.children.filter((v) =>
-          v.isImplicitlyEnabledInViewportWidth(maxWidth)
-        );
-        return enabledVariants.map((v) => `variant-${v.key}`);
-      }
+    const { assumedViewportWidth } = this;
+
+    if (assumedViewportWidth !== Infinity) {
+      const enabledVariants = this.component.variants.children.filter((v) =>
+        v.matchesViewportWidth(assumedViewportWidth)
+      );
+      return enabledVariants.map((v) => `variant-${v.key}`);
     }
 
     return [];
+  }
+
+  @computed get assumedViewportWidth(): number {
+    if (this.context.topLevelVariant?.type === "variant") {
+      return parseMaxWidth(this.context.topLevelVariant.mediaQuery);
+    }
+    return Infinity;
   }
 }
