@@ -14,6 +14,27 @@ import {
 } from "../services/CreateComponent";
 import { EditorState } from "./EditorState";
 
+function withAnalytics(command: Command): Command {
+  const newCommand = { ...command };
+  const { onClick } = command;
+  if (onClick) {
+    newCommand.onClick = () => {
+      const ret = onClick();
+      try {
+        plausible("command", {
+          props: {
+            text: command.text,
+          },
+        });
+      } catch (e) {
+        console.error(e);
+      }
+      return ret;
+    };
+  }
+  return newCommand;
+}
+
 export class Commands {
   constructor(editorState: EditorState) {
     this.editorState = editorState;
@@ -33,7 +54,7 @@ export class Commands {
   }
 
   @computed get cut(): Command {
-    return {
+    return withAnalytics({
       text: "Cut",
       shortcut: [new KeyGesture(["Command"], "KeyX")],
       onClick: action(() => {
@@ -47,11 +68,11 @@ export class Commands {
         );
         return true;
       }),
-    };
+    });
   }
 
   @computed get copy(): Command {
-    return {
+    return withAnalytics({
       text: "Copy",
       shortcut: [new KeyGesture(["Command"], "KeyC")],
       onClick: action(() => {
@@ -61,11 +82,11 @@ export class Commands {
         void copyLayers(this.document);
         return true;
       }),
-    };
+    });
   }
 
   @computed get paste(): Command {
-    return {
+    return withAnalytics({
       text: "Paste",
       shortcut: [new KeyGesture(["Command"], "KeyV")],
       onClick: action(() => {
@@ -79,11 +100,11 @@ export class Commands {
         );
         return true;
       }),
-    };
+    });
   }
 
   @computed get delete(): Command {
-    return {
+    return withAnalytics({
       text: "Delete",
       shortcut: [new KeyGesture([], "Backspace")],
       onClick: action(() => {
@@ -91,11 +112,11 @@ export class Commands {
         this.history.commit("Delete Element");
         return true;
       }),
-    };
+    });
   }
 
   @computed get undo(): Command {
-    return {
+    return withAnalytics({
       text: `Undo ${this.history.undoStack.undoTitle ?? ""}`,
       disabled: !this.history.undoStack.canUndo,
       shortcut: [new KeyGesture(["Command"], "KeyZ")],
@@ -103,11 +124,11 @@ export class Commands {
         this.history.undoStack.undo();
         return true;
       }),
-    };
+    });
   }
 
   @computed get redo(): Command {
-    return {
+    return withAnalytics({
       text: `Redo ${this.history.undoStack.redoTitle ?? ""}`,
       disabled: !this.history.undoStack.canRedo,
       shortcut: [
@@ -118,11 +139,11 @@ export class Commands {
         this.history.undoStack.redo();
         return true;
       }),
-    };
+    });
   }
 
   @computed get groupIntoFlex(): Command {
-    return {
+    return withAnalytics({
       text: "Group into Flex Container",
       shortcut: [new KeyGesture(["Command"], "KeyG")],
       disabled: this.document.selectedElementInstances.length < 2,
@@ -137,13 +158,13 @@ export class Commands {
         }
         return true;
       }),
-    };
+    });
   }
 
   @computed get autoLayoutChildren(): Command {
     const selection = this.document.selectedElementInstances;
 
-    return {
+    return withAnalytics({
       text: "Auto-layout Children",
       disabled:
         selection.length < 1 ||
@@ -157,13 +178,13 @@ export class Commands {
         this.history.commit("Auto-layout Children");
         return true;
       }),
-    };
+    });
   }
 
   @computed get createComponent(): Command {
     const selection = this.document.selectedElementInstances;
 
-    return {
+    return withAnalytics({
       text: "Create Component",
       shortcut: [new KeyGesture(["Command", "Alt"], "KeyK")],
       onClick: action(() => {
@@ -187,11 +208,11 @@ export class Commands {
         this.history.commit("Create Component");
         return true;
       }),
-    };
+    });
   }
 
   @computed get addElement(): Command {
-    return {
+    return withAnalytics({
       text: "Add Element",
       disabled: this.document.selectedElementInstances.length < 1,
       onClick: action(() => {
@@ -208,11 +229,11 @@ export class Commands {
         this.history.commit("Add Element");
         return true;
       }),
-    };
+    });
   }
 
   @computed get addText(): Command {
-    return {
+    return withAnalytics({
       text: "Add Text",
       disabled: this.document.selectedElementInstances.length < 1,
       onClick: action(() => {
@@ -228,11 +249,11 @@ export class Commands {
         this.history.commit("Add Text");
         return true;
       }),
-    };
+    });
   }
 
   @computed get wrapContentsInSlot(): Command {
-    return {
+    return withAnalytics({
       text: "Wrap Contents in Slot",
       onClick: action(() => {
         for (const instance of this.document.selectedElementInstances) {
@@ -249,11 +270,11 @@ export class Commands {
         this.history.commit("Wrap Contents in Slot");
         return true;
       }),
-    };
+    });
   }
 
   @computed get zoomIn(): Command {
-    return {
+    return withAnalytics({
       text: "Zoom In",
       shortcut: [
         new KeyGesture([], "Equal"),
@@ -267,11 +288,11 @@ export class Commands {
         this.scroll.zoomIn();
         return true;
       }),
-    };
+    });
   }
 
   @computed get zoomOut(): Command {
-    return {
+    return withAnalytics({
       text: "Zoom Out",
       shortcut: [
         new KeyGesture([], "Minus"),
@@ -285,6 +306,6 @@ export class Commands {
         this.scroll.zoomOut();
         return true;
       }),
-    };
+    });
   }
 }
