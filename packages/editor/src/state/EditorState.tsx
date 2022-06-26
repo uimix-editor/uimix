@@ -11,15 +11,12 @@ import { Rect, Vec2 } from "paintvec";
 import { compact } from "lodash-es";
 import { Component } from "../models/Component";
 import { Document, DocumentJSON } from "../models/Document";
-import { Element } from "../models/Element";
 import { ElementInstance } from "../models/ElementInstance";
-import { Text } from "../models/Text";
 import { TextInstance } from "../models/TextInstance";
 import { ElementPicker } from "../mount/ElementPicker";
 import { snapThreshold } from "../views/viewport/Constants";
 import { IconBrowserState } from "../views/sidebar/assets/IconBrowserState";
 import { moveByPixels } from "../services/MoveByPixels";
-import { getInstance } from "../models/InstanceRegistry";
 import { addVariant } from "../services/AddVariant";
 import { findPositionForNewRect } from "../util/findPositionForNewRect";
 import { ElementInspectorState } from "./ElementInspectorState";
@@ -185,54 +182,12 @@ export abstract class EditorState {
             },
           ] as MenuItem[])
         : []),
-      {
-        text: "Add Element",
-        onClick: action(() => {
-          const element = new Element({ tagName: "div" });
-          element.rename("div");
-          instance.element.append(element);
-
-          const addedInstance = getInstance(instance.variant, element);
-          this.document.deselect();
-          addedInstance.select();
-
-          this.history.commit("Add Element");
-          return true;
-        }),
-      },
-      {
-        text: "Add Text",
-        onClick: action(() => {
-          const text = new Text({ content: "Text" });
-          instance.element.append(text);
-
-          const addedInstance = getInstance(instance.variant, text);
-          this.document.deselect();
-          addedInstance.select();
-
-          this.history.commit("Add Text");
-          return true;
-        }),
-      },
+      this.commands.addElement,
+      this.commands.addText,
       {
         type: "separator",
       },
-      {
-        text: "Wrap Contents in Slot",
-        onClick: action(() => {
-          const slot = new Element({ tagName: "slot" });
-          slot.append(...instance.element.children);
-          instance.element.append(slot);
-
-          const slotInstance = getInstance(instance.variant, slot);
-          this.document.deselect();
-          slotInstance.select();
-          slotInstance.collapsed = false;
-
-          this.history.commit("Wrap Contents in Slot");
-          return true;
-        }),
-      },
+      this.commands.wrapContentsInSlot,
       {
         type: "separator",
       },
@@ -256,6 +211,14 @@ export abstract class EditorState {
         type: "separator",
       },
       ...this.getBasicEditMenu(),
+    ];
+  }
+
+  getInsertMenu(): MenuItem[] {
+    return [
+      this.commands.insertFrame,
+      this.commands.insertText,
+      this.commands.insertImage,
     ];
   }
 
@@ -283,6 +246,10 @@ export abstract class EditorState {
       {
         text: "Element",
         children: this.getElementMenu(),
+      },
+      {
+        text: "Insert",
+        children: this.getInsertMenu(),
       },
       {
         text: "View",
