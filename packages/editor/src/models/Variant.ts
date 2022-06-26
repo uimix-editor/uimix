@@ -156,6 +156,16 @@ export class Variant extends BaseVariant {
       ) ?? []
     );
   }
+
+  matchesToViewportWidth(width: number): boolean {
+    if (this.selector) {
+      return false;
+    }
+    if (!this.mediaQuery) {
+      return false;
+    }
+    return width <= parseMaxWidth(this.mediaQuery);
+  }
 }
 
 export interface VariantJSON extends BaseVariantJSON {

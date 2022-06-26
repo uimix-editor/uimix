@@ -117,8 +117,8 @@ export class RootElementMount {
     if (this.context.topLevelVariant?.type === "variant") {
       const maxWidth = parseMaxWidth(this.context.topLevelVariant.mediaQuery);
       if (!isNaN(maxWidth)) {
-        const enabledVariants = this.component.variants.children.filter(
-          (v) => parseMaxWidth(v.mediaQuery) >= maxWidth
+        const enabledVariants = this.component.variants.children.filter((v) =>
+          v.matchesToViewportWidth(maxWidth)
         );
         return enabledVariants.map((v) => `variant-${v.key}`);
       }
