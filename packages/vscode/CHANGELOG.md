@@ -6,8 +6,15 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 # [0.4.0](https://github.com/macaron-elements/macaron/compare/v0.3.1...v0.4.0) (2022-06-26)
 
 
+### Bug Fixes
+
+* **editor:** fix command+scroll and pinch direction ([fb30f30](https://github.com/macaron-elements/macaron/commit/fb30f30820fc808f0eb05e2ddcf47a78387db043))
+* remove vw/vh unit from dropdown (fix [#108](https://github.com/macaron-elements/macaron/issues/108)) ([34bd287](https://github.com/macaron-elements/macaron/commit/34bd287b9e3811c128488912da3d62fb60d9872d))
+
+
 ### Features
 
+* **editor:** icons in cursor select options (fix [#116](https://github.com/macaron-elements/macaron/issues/116)) ([09d5927](https://github.com/macaron-elements/macaron/commit/09d5927d3068c827f1e55bc93c1f5180a7d529aa))
 * **editor:** insert tool shortcuts + send more analytics ([#117](https://github.com/macaron-elements/macaron/issues/117)) ([a707db9](https://github.com/macaron-elements/macaron/commit/a707db95e5daaf65fa149692655fedb518443a70))
 
 
