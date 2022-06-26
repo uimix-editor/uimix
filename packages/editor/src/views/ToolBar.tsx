@@ -37,25 +37,6 @@ const FeedbackButton = styled.a`
 export const ToolBar: React.FC = observer(() => {
   const editorState = useEditorState();
 
-  const onFrameToolClick = useCallback(
-    action(() => {
-      editorState.insertMode = "frame";
-    }),
-    []
-  );
-  const onTextToolClick = useCallback(
-    action(() => {
-      editorState.insertMode = "text";
-    }),
-    []
-  );
-  const onImageToolClick = useCallback(
-    action(() => {
-      editorState.insertMode = "image";
-    }),
-    []
-  );
-
   const onZoomOut = useCallback(
     action(() => editorState.scroll.zoomOut()),
     [editorState]
