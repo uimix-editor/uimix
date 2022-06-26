@@ -242,7 +242,12 @@ export class Style extends StyleBase {
     return root;
   }
 
-  loadPostCSS(container: postcss.Container): void {
+  loadPostCSS(
+    container: postcss.Container,
+    options: {
+      exclude?: ReadonlySet<StyleKey>;
+    } = {}
+  ): void {
     const props: Record<string, string> = {};
     const customProps: Record<string, string> = {};
     for (const node of container.nodes) {
@@ -256,25 +261,12 @@ export class Style extends StyleBase {
     }
 
     for (const key of styleKeys) {
+      if (options.exclude && options.exclude.has(key)) {
+        continue;
+      }
       this[key] = props[key];
     }
     this.customProps.replace(new Map(Object.entries(customProps)));
-  }
-
-  mergePostCSS(container: postcss.Container): void {
-    for (const node of container.nodes) {
-      if (node.type === "decl") {
-        if (node.prop.startsWith("--")) {
-          this.customProps.set(node.prop, node.value);
-          continue;
-        }
-        const camelProp = camelCase(node.prop);
-
-        if ((styleKeys as readonly string[]).includes(camelProp)) {
-          this[camelProp as StyleKey] = node.value;
-        }
-      }
-    }
   }
 
   get usedFontFamilies(): Set<string> {

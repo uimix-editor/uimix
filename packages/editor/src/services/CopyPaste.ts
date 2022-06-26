@@ -82,6 +82,8 @@ export async function pasteStyle(instance: ElementInstance): Promise<void> {
   }
   runInAction(() => {
     const root = postcss.parse(styleString);
-    instance.style.mergePostCSS(root);
+    instance.style.loadPostCSS(root, {
+      exclude: new Set(positionalStyleKeys),
+    });
   });
 }
