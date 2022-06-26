@@ -8,7 +8,8 @@
     "format": "prettier --write src",
     "lint": "eslint src",
     "preview": "vite preview",
-    "test": "vitest --run"
+    "test": "vitest --run",
+    "cypress:open": "cypress open"
   },
   "dependencies": {
     "@iconify-icons/ic": "^1.2.6",
