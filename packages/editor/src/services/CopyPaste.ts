@@ -2,17 +2,31 @@ import { runInAction } from "mobx";
 import { parseFragment, stringifyFragment } from "../fileFormat/fragment";
 import { Document } from "../models/Document";
 
-function encodeClipboardDataInHTML(attribute: string, data: string): string {
+function createClipboardData(attribute: string, data: string): ClipboardItems {
   const base64 = Buffer.from(data).toString("base64");
-  return `<span ${attribute}="${base64}"></span>`;
+  const html = `<span ${attribute}="${base64}"></span>`;
+
+  return [
+    new ClipboardItem({ "text/html": new Blob([html], { type: "text/html" }) }),
+  ];
 }
 
-function decodeClipboardDataFromHTML(attribute: string, html: string): string {
-  const match = html.match(new RegExp(`<span ${attribute}="(.*?)"></span>`));
-  if (match) {
-    return Buffer.from(match[1], "base64").toString();
+async function readClipboardData(
+  clipboardItems: ClipboardItems,
+  attribute: string
+): Promise<string | undefined> {
+  const item = clipboardItems.find((i) => i.types.includes("text/html"));
+  if (!item) {
+    return;
   }
-  return "";
+
+  const html = await (await item.getType("text/html")).text();
+
+  const match = html.match(new RegExp(`<span ${attribute}="(.*?)"></span>`));
+  if (!match) {
+    return;
+  }
+  return Buffer.from(match[1], "base64").toString();
 }
 
 export async function copyLayers(document: Document): Promise<void> {
@@ -20,32 +34,25 @@ export async function copyLayers(document: Document): Promise<void> {
   if (!fragment) {
     return;
   }
-
   const fragmentString = stringifyFragment(fragment);
-  const encoded = encodeClipboardDataInHTML("data-macaron", fragmentString);
 
-  const type = "text/html";
-  const blob = new Blob([encoded], { type });
-  const data = [new ClipboardItem({ [type]: blob })];
-
-  await navigator.clipboard.write(data);
+  await navigator.clipboard.write(
+    createClipboardData("data-macaron", fragmentString)
+  );
 }
 
 export async function pasteLayers(document: Document): Promise<void> {
   const contents = await navigator.clipboard.read();
 
-  const item = contents.find((i) => i.types.includes("text/html"));
-  if (!item) {
+  const fragmentString = await readClipboardData(contents, "data-macaron");
+  if (!fragmentString) {
     return;
   }
-
-  const encoded = await (await item.getType("text/html")).text();
-
-  const fragmentString = decodeClipboardDataFromHTML("data-macaron", encoded);
   const fragment = parseFragment(fragmentString);
-  if (fragment) {
-    runInAction(() => {
-      document.appendFragmentBeforeSelection(fragment);
-    });
+  if (!fragment) {
+    return;
   }
+  runInAction(() => {
+    document.appendFragmentBeforeSelection(fragment);
+  });
 }
