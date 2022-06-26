@@ -1,6 +1,7 @@
 import { TreeNode } from "@seanchas116/paintkit/src/util/TreeNode";
 import { computed, makeObservable, observable } from "mobx";
 import shortUUID from "short-uuid";
+import { parseMaxWidth } from "../util/parseMaxWidth";
 import { Component, VariantList } from "./Component";
 import { ElementInstance } from "./ElementInstance";
 import { getInstance } from "./InstanceRegistry";
@@ -193,13 +194,7 @@ function isMediaQueryExtendsOther(
 
   // TODO: support other media queries
 
-  const maxWidth = parseInt(
-    mediaQuery.split("(max-width:")[1].split(")")[0],
-    10
-  );
-  const otherMaxWidth = parseInt(
-    otherMediaQuery.split("(max-width:")[1].split(")")[0],
-    10
-  );
+  const maxWidth = parseMaxWidth(mediaQuery);
+  const otherMaxWidth = parseMaxWidth(otherMediaQuery);
   return maxWidth < otherMaxWidth;
 }
