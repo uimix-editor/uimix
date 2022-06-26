@@ -3,7 +3,7 @@ import { Component } from "../models/Component";
 import { Element } from "../models/Element";
 import { ElementInstance } from "../models/ElementInstance";
 import { getInstance } from "../models/InstanceRegistry";
-import { positionalProperties } from "../models/Style";
+import { positionalStyleKeys } from "../models/Style";
 import { EditorState } from "../state/EditorState";
 
 export function createEmptyComponent(editorState: EditorState): Component {
@@ -57,7 +57,7 @@ export function createComponentFromInstance(
 
   const newInstance = getInstance(undefined, newElement);
 
-  for (const property of positionalProperties) {
+  for (const property of positionalStyleKeys) {
     newInstance.style[property] = instance.style[property];
 
     for (const child of component.defaultVariant.rootInstance.children) {

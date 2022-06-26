@@ -109,7 +109,7 @@ export const styleKeys = [
   "cursor",
 ] as const;
 
-export const positionalProperties = [
+export const positionalStyleKeys = [
   "position",
   "top",
   "right",
