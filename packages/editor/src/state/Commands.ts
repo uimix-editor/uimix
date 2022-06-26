@@ -20,15 +20,11 @@ function withAnalytics(command: Command): Command {
   if (onClick) {
     newCommand.onClick = () => {
       const ret = onClick();
-      try {
-        plausible("command", {
-          props: {
-            text: command.text,
-          },
-        });
-      } catch (e) {
-        console.error(e);
-      }
+      plausible("command", {
+        props: {
+          text: command.text,
+        },
+      });
       return ret;
     };
   }
