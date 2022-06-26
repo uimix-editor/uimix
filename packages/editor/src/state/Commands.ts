@@ -3,6 +3,8 @@ import { isTextInputFocused } from "@seanchas116/paintkit/src/util/CurrentFocus"
 import { KeyGesture } from "@seanchas116/paintkit/src/util/KeyGesture";
 import { action, computed, makeObservable } from "mobx";
 import { Component } from "../models/Component";
+import { Element } from "../models/Element";
+import { getInstance } from "../models/InstanceRegistry";
 import { AutoLayout } from "../services/AutoLayout";
 import { copyLayers, pasteLayers } from "../services/CopyPaste";
 import {
@@ -182,6 +184,27 @@ export class Commands {
         }
 
         this.history.commit("Create Component");
+        return true;
+      }),
+    };
+  }
+
+  @computed get wrapContentsInSlot(): Command {
+    return {
+      text: "Wrap Contents in Slot",
+      onClick: action(() => {
+        for (const instance of this.document.selectedElementInstances) {
+          const slot = new Element({ tagName: "slot" });
+          slot.append(...instance.element.children);
+          instance.element.append(slot);
+
+          const slotInstance = getInstance(instance.variant, slot);
+          this.document.deselect();
+          slotInstance.select();
+          slotInstance.collapsed = false;
+        }
+
+        this.history.commit("Wrap Contents in Slot");
         return true;
       }),
     };

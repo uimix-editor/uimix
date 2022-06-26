@@ -217,22 +217,7 @@ export abstract class EditorState {
       {
         type: "separator",
       },
-      {
-        text: "Wrap Contents in Slot",
-        onClick: action(() => {
-          const slot = new Element({ tagName: "slot" });
-          slot.append(...instance.element.children);
-          instance.element.append(slot);
-
-          const slotInstance = getInstance(instance.variant, slot);
-          this.document.deselect();
-          slotInstance.select();
-          slotInstance.collapsed = false;
-
-          this.history.commit("Wrap Contents in Slot");
-          return true;
-        }),
-      },
+      this.commands.wrapContentsInSlot,
       {
         type: "separator",
       },
