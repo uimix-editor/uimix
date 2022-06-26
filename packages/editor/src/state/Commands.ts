@@ -141,6 +141,7 @@ export class Commands {
   @computed get insertFrame(): Command {
     return withAnalytics({
       text: "Frame",
+      shortcut: [new KeyGesture([], "KeyF"), new KeyGesture([], "KeyR")],
       selected: this.editorState.insertMode === "frame",
       onClick: action(() => {
         this.editorState.insertMode = "frame";
@@ -152,6 +153,7 @@ export class Commands {
   @computed get insertText(): Command {
     return withAnalytics({
       text: "Text",
+      shortcut: [new KeyGesture([], "KeyT")],
       selected: this.editorState.insertMode === "text",
       onClick: action(() => {
         this.editorState.insertMode = "text";
