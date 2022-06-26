@@ -9,15 +9,20 @@ import {
 } from "@seanchas116/paintkit/src/components/sidebar/Inspector";
 import opacityIcon from "@iconify-icons/ic/outline-opacity";
 import mouseIcon from "@iconify-icons/ic/outline-mouse";
+import blockIcon from "@iconify-icons/ic/outline-block";
+import cursorPointerIcon from "@iconify-icons/mdi/cursor-pointer";
+import cursorDefaultIcon from "@iconify-icons/mdi/cursor-default";
+import cursorTextIcon from "@iconify-icons/mdi/cursor-text";
+import { Icon } from "@iconify/react/dist/offline";
 import { StyleInspectorState } from "../../../../state/StyleInspectorState";
 import { StyleComboBox, StyleInput } from "./Components";
 
 const cursorOptions = [
   { value: "auto" },
-  { value: "default" },
-  { value: "pointer" },
-  { value: "text" },
-  { value: "not-allowed" },
+  { value: "default", icon: <Icon icon={cursorDefaultIcon} /> },
+  { value: "pointer", icon: <Icon icon={cursorPointerIcon} /> },
+  { value: "text", icon: <Icon icon={cursorTextIcon} /> },
+  { value: "not-allowed", icon: <Icon icon={blockIcon} /> },
 ];
 
 export const EffectsPane: React.FC<{
