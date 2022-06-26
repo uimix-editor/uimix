@@ -188,6 +188,10 @@ export class Style extends StyleBase {
     this.customProps.replace(new Map(Object.entries(json.customProps)));
   }
 
+  toString(): string {
+    return this.toPostCSS().toString();
+  }
+
   loadString(styleString: string): void {
     const root = postcss.parse(styleString);
     this.loadPostCSS(root);
