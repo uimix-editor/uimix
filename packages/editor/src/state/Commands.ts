@@ -138,6 +138,39 @@ export class Commands {
     });
   }
 
+  @computed get insertFrame(): Command {
+    return withAnalytics({
+      text: "Frame",
+      selected: this.editorState.insertMode === "frame",
+      onClick: action(() => {
+        this.editorState.insertMode = "frame";
+        return true;
+      }),
+    });
+  }
+
+  @computed get insertText(): Command {
+    return withAnalytics({
+      text: "Text",
+      selected: this.editorState.insertMode === "text",
+      onClick: action(() => {
+        this.editorState.insertMode = "text";
+        return true;
+      }),
+    });
+  }
+
+  @computed get insertImage(): Command {
+    return withAnalytics({
+      text: "Image",
+      selected: this.editorState.insertMode === "image",
+      onClick: action(() => {
+        this.editorState.insertMode = "image";
+        return true;
+      }),
+    });
+  }
+
   @computed get groupIntoFlex(): Command {
     return withAnalytics({
       text: "Group into Flex Container",

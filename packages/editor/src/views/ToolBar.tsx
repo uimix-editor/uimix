@@ -5,6 +5,7 @@ import frameIcon from "@seanchas116/paintkit/src/icon/Frame";
 import imageIcon from "@seanchas116/paintkit/src/icon/Image";
 import { ToolBar as ToolBarWrap } from "@seanchas116/paintkit/src/components/toolbar/ToolBar";
 import {
+  CommandToolButton,
   ToolButton,
   ToolButtonArray,
   ToolButtonArrayGroup,
@@ -93,23 +94,17 @@ export const ToolBar: React.FC = observer(() => {
       </ToolButtonArrayGroup>
 
       <ToolButtonArray>
-        <ToolButton
-          selected={editorState.insertMode === "frame"}
-          label="Frame"
+        <CommandToolButton
+          command={editorState.commands.insertFrame}
           icon={frameIcon}
-          onClick={onFrameToolClick}
         />
-        <ToolButton
-          selected={editorState.insertMode === "text"}
-          label="Text"
+        <CommandToolButton
+          command={editorState.commands.insertText}
           icon={paragraphIcon}
-          onClick={onTextToolClick}
         />
-        <ToolButton
-          selected={editorState.insertMode === "image"}
-          label="Image"
+        <CommandToolButton
+          command={editorState.commands.insertImage}
           icon={imageIcon}
-          onClick={onImageToolClick}
         />
       </ToolButtonArray>
 

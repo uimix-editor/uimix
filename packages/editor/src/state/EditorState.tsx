@@ -214,6 +214,14 @@ export abstract class EditorState {
     ];
   }
 
+  getInsertMenu(): MenuItem[] {
+    return [
+      this.commands.insertFrame,
+      this.commands.insertText,
+      this.commands.insertImage,
+    ];
+  }
+
   getElementMenu(): MenuItem[] {
     return [
       this.commands.groupIntoFlex,
@@ -238,6 +246,10 @@ export abstract class EditorState {
       {
         text: "Element",
         children: this.getElementMenu(),
+      },
+      {
+        text: "Insert",
+        children: this.getInsertMenu(),
       },
       {
         text: "View",
