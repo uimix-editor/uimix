@@ -477,7 +477,6 @@
     x="862"
     y="-289"
     width="400"
-    selector=":hover"
     media="(max-width: 768px)"
   ></macaron-variant>
   <template>
@@ -565,7 +564,7 @@
       text-align: left;
     }
     @media (max-width: 768px) {
-      :host(:hover) {
+      :host {
         padding-top: 12px;
         padding-right: 12px;
         padding-bottom: 12px;
