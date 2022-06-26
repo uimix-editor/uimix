@@ -3,6 +3,7 @@ import { computed, reaction } from "mobx";
 import { Component } from "../models/Component";
 import { ElementInstance } from "../models/ElementInstance";
 import { DefaultVariant, Variant } from "../models/Variant";
+import { parseMaxWidth } from "../util/parseMaxWidth";
 import { ChildMountSync, fetchComputedValues } from "./ElementMount";
 import { MountContext } from "./MountContext";
 
@@ -109,12 +110,18 @@ export class RootElementMount {
 
   @computed get classNames(): string[] {
     if (this.variant.type === "variant") {
-      const supersetVariants = this.variant.supersetVariants;
-      const classes = ["variant-" + this.variant.key];
-      for (const supersetVariant of supersetVariants) {
-        classes.push("variant-" + supersetVariant.key);
+      const enabledVariants = [this.variant, ...this.variant.supersetVariants];
+      return enabledVariants.map((v) => `variant-${v.key}`);
+    }
+
+    if (this.context.topLevelVariant?.type === "variant") {
+      const maxWidth = parseMaxWidth(this.context.topLevelVariant.mediaQuery);
+      if (!isNaN(maxWidth)) {
+        const enabledVariants = this.component.variants.children.filter(
+          (v) => parseMaxWidth(v.mediaQuery) >= maxWidth
+        );
+        return enabledVariants.map((v) => `variant-${v.key}`);
       }
-      return classes;
     }
 
     return [];
