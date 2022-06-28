@@ -166,6 +166,39 @@ export class Document {
     }
   }
 
+  selectAll(): void {
+    const { selectedComponents, selectedInstances } = this;
+    this.deselect();
+
+    if (!selectedComponents.length && selectedInstances.length) {
+      const parents = new Set<ElementInstance | Component>();
+      for (const instance of selectedInstances) {
+        if (instance.parent) {
+          parents.add(instance.parent);
+        } else if (instance.node.component) {
+          parents.add(instance.node.component);
+        }
+      }
+
+      for (const parent of parents) {
+        if (parent instanceof Component) {
+          for (const variant of parent.allVariants) {
+            variant.rootInstance?.select();
+          }
+        } else {
+          for (const child of parent.children) {
+            child.select();
+          }
+        }
+      }
+      return;
+    }
+
+    for (const component of this.components.children) {
+      component.select();
+    }
+  }
+
   renameTagNameUsages(oldTagName: string, newTagName: string): void {
     const elementsToRename: Element[] = [];
 
