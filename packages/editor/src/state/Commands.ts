@@ -13,7 +13,10 @@ import {
   pasteLayers,
   pasteStyle,
 } from "../services/CopyPaste";
-import { createComponent } from "../services/CreateComponent";
+import {
+  createComponentFromExistingInstance,
+  createEmptyComponent,
+} from "../services/CreateComponent";
 import { EditorState } from "./EditorState";
 
 function withAnalytics(command: Command): Command {
@@ -251,10 +254,12 @@ export class Commands {
 
         if (selection.length) {
           for (const instance of selection) {
-            components.push(createComponent(this.editorState, instance));
+            components.push(
+              createComponentFromExistingInstance(this.editorState, instance)
+            );
           }
         } else {
-          components.push(createComponent(this.editorState));
+          components.push(createEmptyComponent(this.editorState));
         }
 
         this.document.deselect();

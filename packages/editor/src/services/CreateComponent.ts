@@ -6,7 +6,7 @@ import { getInstance } from "../models/InstanceRegistry";
 import { positionalStyleKeys, styleKeys } from "../models/Style";
 import { EditorState } from "../state/EditorState";
 
-function createEmptyComponent(editorState: EditorState): Component {
+export function createEmptyComponent(editorState: EditorState): Component {
   const component = new Component();
   component.defaultVariant.rootInstance.style.width = "100px";
   component.defaultVariant.rootInstance.style.height = "100px";
@@ -20,7 +20,7 @@ function createEmptyComponent(editorState: EditorState): Component {
   return component;
 }
 
-export function createComponent(
+export function createComponentFromExistingInstance(
   editorState: EditorState,
   instance?: ElementInstance | undefined
 ): Component {
