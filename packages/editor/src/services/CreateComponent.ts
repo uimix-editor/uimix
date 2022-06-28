@@ -3,7 +3,7 @@ import { Component } from "../models/Component";
 import { Element } from "../models/Element";
 import { ElementInstance } from "../models/ElementInstance";
 import { getInstance } from "../models/InstanceRegistry";
-import { positionalStyleKeys } from "../models/Style";
+import { positionalStyleKeys, styleKeys } from "../models/Style";
 import { EditorState } from "../state/EditorState";
 
 export function createEmptyComponent(editorState: EditorState): Component {
@@ -34,20 +34,28 @@ export function createComponentFromInstance(
     return createEmptyComponent(editorState);
   }
 
-  const size = instance.boundingBox.size;
-
-  const html = instance.outerHTML;
+  // build component
+  // TODO: generate component name
 
   const component = new Component();
   document.components.append(component);
 
-  // TODO: generate component name
+  for (const property of styleKeys) {
+    if ((positionalStyleKeys as readonly string[]).includes(property)) {
+      continue;
+    }
+    component.defaultVariant.rootInstance.style[property] =
+      instance.style[property];
+  }
+  component.defaultVariant.rootInstance.style.position = "relative";
 
-  component.defaultVariant.rootInstance.setInnerHTML([html]);
+  component.defaultVariant.rootInstance.setInnerHTML(instance.innerHTML);
 
-  const pos = editorState.findNewComponentPosition(size);
+  const pos = editorState.findNewComponentPosition(instance.boundingBox.size);
   component.defaultVariant.x = pos.x;
   component.defaultVariant.y = pos.y;
+
+  // create instance
 
   const newElement = new Element({
     tagName: component.name,
@@ -59,15 +67,7 @@ export function createComponentFromInstance(
 
   for (const property of positionalStyleKeys) {
     newInstance.style[property] = instance.style[property];
-
-    for (const child of component.defaultVariant.rootInstance.children) {
-      if (child.type === "element") {
-        child.style[property] = undefined;
-      }
-    }
   }
-
-  component.defaultVariant.rootInstance.style.position = "relative";
 
   instance.element.remove();
 
