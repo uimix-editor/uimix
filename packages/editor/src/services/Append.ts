@@ -10,12 +10,15 @@ import { Text } from "../models/Text";
 import { TextInstance } from "../models/TextInstance";
 import { Variant } from "../models/Variant";
 import { EditorState } from "../state/EditorState";
-import { setComponentContent } from "./CreateComponent";
+import {
+  moveComponentToAvailableSpace,
+  setComponentContent,
+} from "./CreateComponent";
 
-export function appendFragmentBeforeSelection(
+export async function appendFragmentBeforeSelection(
   editorState: EditorState,
   fragment: Fragment
-): void {
+): Promise<void> {
   switch (fragment.type) {
     case "components": {
       appendComponentsBeforeSelection(editorState, fragment.components);
@@ -26,7 +29,7 @@ export function appendFragmentBeforeSelection(
       return;
     }
     case "instances": {
-      appendInstancesBeforeSelection(editorState, fragment.instances);
+      await appendInstancesBeforeSelection(editorState, fragment.instances);
       return;
     }
   }
@@ -84,10 +87,10 @@ export function appendVariantsBeforeSelection(
   }
 }
 
-export function appendInstancesBeforeSelection(
+export async function appendInstancesBeforeSelection(
   editorState: EditorState,
   instances: (ElementInstance | TextInstance)[]
-): void {
+): Promise<void> {
   const { document } = editorState;
   const { selectedComponents, selectedNodes } = document;
   let selectedNode = last(selectedNodes);
@@ -98,11 +101,19 @@ export function appendInstancesBeforeSelection(
   }
 
   if (!selectedNode) {
+    const components: Component[] = [];
+
     for (const instance of instances) {
       const component = new Component();
       document.components.append(component);
       setComponentContent(component, instance);
+      components.push(component);
     }
+
+    await Promise.all(
+      components.map((c) => moveComponentToAvailableSpace(editorState, c))
+    );
+
     return;
   }
 
