@@ -37,9 +37,14 @@ export class DocumentMount {
     this.iframe.style.width = "100%";
     this.iframe.style.height = "100%";
     this.iframe.style.colorScheme = "none";
+
     parent.append(this.iframe);
 
     this.domDocument = assertNonNull(this.iframe.contentDocument);
+    this.domDocument.write(
+      `<!DOCTYPE html><html><head></head><body></body></html>`
+    );
+
     editorState.elementPicker.root = this.domDocument;
     this.domDocument.body.style.margin = "0";
     // @ts-ignore
