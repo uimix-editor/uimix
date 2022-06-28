@@ -22,7 +22,7 @@ export function createEmptyComponent(editorState: EditorState): Component {
 
 export function createComponentFromExistingInstance(
   editorState: EditorState,
-  instance?: ElementInstance | undefined
+  instance: ElementInstance
 ): Component {
   if (!instance) {
     return createEmptyComponent(editorState);
