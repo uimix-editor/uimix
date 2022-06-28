@@ -101,6 +101,7 @@ export async function appendInstancesBeforeSelection(
   }
 
   if (!selectedNode) {
+    document.deselect();
     const components: Component[] = [];
 
     for (const instance of instances) {
@@ -108,6 +109,7 @@ export async function appendInstancesBeforeSelection(
       document.components.append(component);
       setComponentContent(component, instance);
       components.push(component);
+      component.select();
     }
 
     await Promise.all(
