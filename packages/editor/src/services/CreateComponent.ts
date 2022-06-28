@@ -1,9 +1,10 @@
 import { Vec2 } from "paintvec";
 import { Component } from "../models/Component";
 import { Element } from "../models/Element";
-import { ElementInstance } from "../models/ElementInstance";
+import { ElementInstance, instancesFromHTML } from "../models/ElementInstance";
 import { getInstance } from "../models/InstanceRegistry";
 import { positionalStyleKeys, styleKeys } from "../models/Style";
+import { TextInstance } from "../models/TextInstance";
 import { EditorState } from "../state/EditorState";
 
 export function createEmptyComponent(editorState: EditorState): Component {
@@ -18,6 +19,41 @@ export function createEmptyComponent(editorState: EditorState): Component {
   component.defaultVariant.y = pos.y;
 
   return component;
+}
+
+export function setComponentContent(
+  component: Component,
+  instance: ElementInstance | TextInstance | undefined
+): void {
+  if (!instance) {
+    return;
+  }
+
+  if (instance.type === "text") {
+    component.rootElement.append(instance.node);
+    return;
+  }
+
+  const createsWrapper = ["img", "input", "textarea", "select"].includes(
+    instance.element.tagName
+  );
+
+  if (createsWrapper) {
+    component.rootElement.append(instance.node);
+    for (const property of positionalStyleKeys) {
+      instance.style[property] = undefined;
+    }
+  } else {
+    for (const property of styleKeys) {
+      if ((positionalStyleKeys as readonly string[]).includes(property)) {
+        continue;
+      }
+      component.defaultVariant.rootInstance.style[property] =
+        instance.style[property];
+    }
+    component.rootElement.append(...instance.element.children);
+  }
+  component.defaultVariant.rootInstance.style.position = "relative";
 }
 
 export function createComponentFromExistingInstance(
@@ -44,28 +80,7 @@ export function createComponentFromExistingInstance(
   const component = new Component();
   document.components.append(component);
 
-  const createsWrapper = ["img", "input", "textarea", "select"].includes(
-    instance.element.tagName
-  );
-
-  if (createsWrapper) {
-    component.defaultVariant.rootInstance.setInnerHTML([instance.outerHTML]);
-    const child = component.defaultVariant.rootInstance
-      .children[0] as ElementInstance;
-    for (const property of positionalStyleKeys) {
-      child.style[property] = undefined;
-    }
-  } else {
-    for (const property of styleKeys) {
-      if ((positionalStyleKeys as readonly string[]).includes(property)) {
-        continue;
-      }
-      component.defaultVariant.rootInstance.style[property] =
-        instance.style[property];
-    }
-    component.defaultVariant.rootInstance.setInnerHTML(instance.innerHTML);
-  }
-  component.defaultVariant.rootInstance.style.position = "relative";
+  setComponentContent(component, instancesFromHTML([instance.outerHTML])[0]);
 
   const pos = editorState.findNewComponentPosition(instance.boundingBox.size);
   component.defaultVariant.x = pos.x;
