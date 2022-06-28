@@ -1,9 +1,11 @@
+import { runInAction } from "mobx";
 import { Vec2 } from "paintvec";
 import { Component } from "../models/Component";
 import { Element } from "../models/Element";
-import { ElementInstance } from "../models/ElementInstance";
+import { ElementInstance, instancesFromHTML } from "../models/ElementInstance";
 import { getInstance } from "../models/InstanceRegistry";
-import { positionalStyleKeys } from "../models/Style";
+import { positionalStyleKeys, styleKeys } from "../models/Style";
+import { TextInstance } from "../models/TextInstance";
 import { EditorState } from "../state/EditorState";
 
 export function createEmptyComponent(editorState: EditorState): Component {
@@ -20,10 +22,67 @@ export function createEmptyComponent(editorState: EditorState): Component {
   return component;
 }
 
-export function createComponentFromInstance(
+export function setComponentContent(
+  component: Component,
+  instance: ElementInstance | TextInstance | undefined
+): void {
+  if (!instance) {
+    return;
+  }
+
+  if (instance.type === "text") {
+    component.rootElement.append(instance.node);
+    return;
+  }
+
+  const createsWrapper = ["img", "input", "textarea", "select"].includes(
+    instance.element.tagName
+  );
+
+  if (createsWrapper) {
+    component.rootElement.append(instance.node);
+    for (const property of positionalStyleKeys) {
+      instance.style[property] = undefined;
+    }
+  } else {
+    for (const property of styleKeys) {
+      if ((positionalStyleKeys as readonly string[]).includes(property)) {
+        continue;
+      }
+      component.defaultVariant.rootInstance.style[property] =
+        instance.style[property];
+    }
+    component.rootElement.append(...instance.element.children);
+  }
+  component.defaultVariant.rootInstance.style.position = "relative";
+}
+
+export async function moveComponentToAvailableSpace(
+  editorState: EditorState,
+  component: Component
+): Promise<void> {
+  component.defaultVariant.x = -10000;
+  component.defaultVariant.y = -10000;
+
+  await new Promise((resolve) => setTimeout(resolve, 0));
+
+  runInAction(() => {
+    const size = component.defaultVariant.rootInstance.boundingBox.size;
+
+    const pos = editorState.findNewComponentPosition(size);
+    component.defaultVariant.x = pos.x;
+    component.defaultVariant.y = pos.y;
+  });
+}
+
+export async function createComponentFromExistingInstance(
   editorState: EditorState,
   instance: ElementInstance
-): Component {
+): Promise<Component> {
+  if (!instance) {
+    return createEmptyComponent(editorState);
+  }
+
   const parent = instance.element.parent;
   if (!parent) {
     return createEmptyComponent(editorState);
@@ -34,20 +93,15 @@ export function createComponentFromInstance(
     return createEmptyComponent(editorState);
   }
 
-  const size = instance.boundingBox.size;
-
-  const html = instance.outerHTML;
+  // build component
+  // TODO: generate component name
 
   const component = new Component();
   document.components.append(component);
 
-  // TODO: generate component name
+  setComponentContent(component, instancesFromHTML([instance.outerHTML])[0]);
 
-  component.defaultVariant.rootInstance.setInnerHTML([html]);
-
-  const pos = editorState.findNewComponentPosition(size);
-  component.defaultVariant.x = pos.x;
-  component.defaultVariant.y = pos.y;
+  // create instance
 
   const newElement = new Element({
     tagName: component.name,
@@ -59,17 +113,11 @@ export function createComponentFromInstance(
 
   for (const property of positionalStyleKeys) {
     newInstance.style[property] = instance.style[property];
-
-    for (const child of component.defaultVariant.rootInstance.children) {
-      if (child.type === "element") {
-        child.style[property] = undefined;
-      }
-    }
   }
 
-  component.defaultVariant.rootInstance.style.position = "relative";
-
   instance.element.remove();
+
+  await moveComponentToAvailableSpace(editorState, component);
 
   return component;
 }

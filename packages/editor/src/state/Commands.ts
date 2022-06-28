@@ -1,7 +1,7 @@
 import { Command } from "@seanchas116/paintkit/src/components/menu/Menu";
 import { isTextInputFocused } from "@seanchas116/paintkit/src/util/CurrentFocus";
 import { KeyGesture } from "@seanchas116/paintkit/src/util/KeyGesture";
-import { action, computed, makeObservable } from "mobx";
+import { action, computed, makeObservable, runInAction } from "mobx";
 import { Component } from "../models/Component";
 import { Element } from "../models/Element";
 import { getInstance } from "../models/InstanceRegistry";
@@ -14,7 +14,7 @@ import {
   pasteStyle,
 } from "../services/CopyPaste";
 import {
-  createComponentFromInstance,
+  createComponentFromExistingInstance,
   createEmptyComponent,
 } from "../services/CreateComponent";
 import { EditorState } from "./EditorState";
@@ -94,7 +94,7 @@ export class Commands {
         if (isTextInputFocused()) {
           return false;
         }
-        void pasteLayers(this.editorState.document).then(
+        void pasteLayers(this.editorState).then(
           action(() => {
             this.history.commit("Paste");
           })
@@ -250,24 +250,32 @@ export class Commands {
       text: "Create Component",
       shortcut: [new KeyGesture(["Command", "Alt"], "KeyK")],
       onClick: action(() => {
-        const components: Component[] = [];
+        void (async () => {
+          const components: Component[] = [];
 
-        if (selection.length) {
-          for (const instance of selection) {
-            components.push(
-              createComponentFromInstance(this.editorState, instance)
-            );
+          if (selection.length) {
+            for (const instance of selection) {
+              components.push(
+                await createComponentFromExistingInstance(
+                  this.editorState,
+                  instance
+                )
+              );
+            }
+          } else {
+            components.push(createEmptyComponent(this.editorState));
           }
-        } else {
-          components.push(createEmptyComponent(this.editorState));
-        }
 
-        this.document.deselect();
-        for (const component of components) {
-          component.defaultVariant.rootInstance.select();
-        }
+          runInAction(() => {
+            this.document.deselect();
+            for (const component of components) {
+              component.defaultVariant.rootInstance.select();
+            }
 
-        this.history.commit("Create Component");
+            this.history.commit("Create Component");
+          });
+        })();
+
         return true;
       }),
     });

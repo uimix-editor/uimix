@@ -4,6 +4,8 @@ import { parseFragment, stringifyFragment } from "../fileFormat/fragment";
 import { Document } from "../models/Document";
 import { ElementInstance } from "../models/ElementInstance";
 import { positionalStyleKeys } from "../models/Style";
+import { EditorState } from "../state/EditorState";
+import { appendFragmentBeforeSelection } from "./Append";
 
 function createClipboardData(attribute: string, data: string): ClipboardItems {
   const base64 = Buffer.from(data).toString("base64");
@@ -44,7 +46,7 @@ export async function copyLayers(document: Document): Promise<void> {
   );
 }
 
-export async function pasteLayers(document: Document): Promise<void> {
+export async function pasteLayers(editorState: EditorState): Promise<void> {
   const contents = await navigator.clipboard.read();
 
   const fragmentString = await readClipboardData(contents, "data-macaron");
@@ -55,9 +57,7 @@ export async function pasteLayers(document: Document): Promise<void> {
   if (!fragment) {
     return;
   }
-  runInAction(() => {
-    document.appendFragmentBeforeSelection(fragment);
-  });
+  await runInAction(() => appendFragmentBeforeSelection(editorState, fragment));
 }
 
 export async function copyStyle(instance: ElementInstance): Promise<void> {
