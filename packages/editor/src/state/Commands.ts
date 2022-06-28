@@ -7,7 +7,12 @@ import { Element } from "../models/Element";
 import { getInstance } from "../models/InstanceRegistry";
 import { Text } from "../models/Text";
 import { AutoLayout } from "../services/AutoLayout";
-import { copyLayers, pasteLayers } from "../services/CopyPaste";
+import {
+  copyLayers,
+  copyStyle,
+  pasteLayers,
+  pasteStyle,
+} from "../services/CopyPaste";
 import {
   createComponentFromInstance,
   createEmptyComponent,
@@ -108,6 +113,32 @@ export class Commands {
         this.history.commit("Delete Element");
         return true;
       }),
+    });
+  }
+
+  @computed get copyStyle(): Command {
+    return withAnalytics({
+      text: "Copy Style",
+      shortcut: [new KeyGesture(["Command", "Alt"], "KeyC")],
+      disabled: !this.document.selectedElementInstances.length,
+      onClick: () => {
+        const instance = this.document.selectedElementInstances[0];
+        void copyStyle(instance);
+        return true;
+      },
+    });
+  }
+
+  @computed get pasteStyle(): Command {
+    return withAnalytics({
+      text: "Paste Style",
+      shortcut: [new KeyGesture(["Command", "Alt"], "KeyV")],
+      disabled: !this.document.selectedElementInstances.length,
+      onClick: () => {
+        const instance = this.document.selectedElementInstances[0];
+        void pasteStyle(instance);
+        return true;
+      },
     });
   }
 

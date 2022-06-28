@@ -177,25 +177,20 @@ export abstract class EditorState {
                 return true;
               }),
             },
-            {
-              type: "separator",
-            },
+            { type: "separator" },
           ] as MenuItem[])
         : []),
       this.commands.addElement,
       this.commands.addText,
-      {
-        type: "separator",
-      },
+      { type: "separator" },
       this.commands.wrapContentsInSlot,
-      {
-        type: "separator",
-      },
+      { type: "separator" },
       ...this.getElementMenu(),
-      {
-        type: "separator",
-      },
+      { type: "separator" },
       ...this.getBasicEditMenu(),
+      { type: "separator" },
+      this.commands.copyStyle,
+      this.commands.pasteStyle,
     ];
   }
 
@@ -207,10 +202,11 @@ export abstract class EditorState {
     return [
       this.commands.undo,
       this.commands.redo,
-      {
-        type: "separator",
-      },
+      { type: "separator" },
       ...this.getBasicEditMenu(),
+      { type: "separator" },
+      this.commands.copyStyle,
+      this.commands.pasteStyle,
     ];
   }
 

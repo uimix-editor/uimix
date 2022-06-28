@@ -3,23 +3,8 @@ import { Component } from "../models/Component";
 import { Element } from "../models/Element";
 import { ElementInstance } from "../models/ElementInstance";
 import { getInstance } from "../models/InstanceRegistry";
+import { positionalStyleKeys } from "../models/Style";
 import { EditorState } from "../state/EditorState";
-
-const positionalProperties = [
-  "position",
-  "top",
-  "right",
-  "bottom",
-  "left",
-  "marginTop",
-  "marginRight",
-  "marginBottom",
-  "marginLeft",
-  "alignSelf",
-  "flexGrow",
-  "flexShrink",
-  "flexBasis",
-] as const;
 
 export function createEmptyComponent(editorState: EditorState): Component {
   const component = new Component();
@@ -72,7 +57,7 @@ export function createComponentFromInstance(
 
   const newInstance = getInstance(undefined, newElement);
 
-  for (const property of positionalProperties) {
+  for (const property of positionalStyleKeys) {
     newInstance.style[property] = instance.style[property];
 
     for (const child of component.defaultVariant.rootInstance.children) {

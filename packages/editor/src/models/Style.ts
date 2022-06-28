@@ -109,6 +109,22 @@ export const styleKeys = [
   "cursor",
 ] as const;
 
+export const positionalStyleKeys = [
+  "position",
+  "top",
+  "right",
+  "bottom",
+  "left",
+  "marginTop",
+  "marginRight",
+  "marginBottom",
+  "marginLeft",
+  "alignSelf",
+  "flexGrow",
+  "flexShrink",
+  "flexBasis",
+] as const;
+
 const shorthandStyleKeys = Object.keys(
   styleShorthands
 ) as readonly (keyof typeof styleShorthands)[];
@@ -188,15 +204,26 @@ export class Style extends StyleBase {
     this.customProps.replace(new Map(Object.entries(json.customProps)));
   }
 
+  toString(): string {
+    return this.toPostCSS().toString();
+  }
+
   loadString(styleString: string): void {
     const root = postcss.parse(styleString);
     this.loadPostCSS(root);
   }
 
-  toPostCSS(): postcss.Root {
+  toPostCSS(
+    options: {
+      exclude?: ReadonlySet<StyleKey>;
+    } = {}
+  ): postcss.Root {
     const root = new postcss.Root();
 
     for (const key of styleKeys) {
+      if (options.exclude && options.exclude.has(key)) {
+        continue;
+      }
       const value = this[key];
       if (value !== undefined) {
         root.append({
@@ -215,7 +242,12 @@ export class Style extends StyleBase {
     return root;
   }
 
-  loadPostCSS(container: postcss.Container): void {
+  loadPostCSS(
+    container: postcss.Container,
+    options: {
+      exclude?: ReadonlySet<StyleKey>;
+    } = {}
+  ): void {
     const props: Record<string, string> = {};
     const customProps: Record<string, string> = {};
     for (const node of container.nodes) {
@@ -229,6 +261,9 @@ export class Style extends StyleBase {
     }
 
     for (const key of styleKeys) {
+      if (options.exclude && options.exclude.has(key)) {
+        continue;
+      }
       this[key] = props[key];
     }
     this.customProps.replace(new Map(Object.entries(customProps)));

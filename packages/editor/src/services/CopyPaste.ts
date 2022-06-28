@@ -1,46 +1,89 @@
 import { runInAction } from "mobx";
+import * as postcss from "postcss";
 import { parseFragment, stringifyFragment } from "../fileFormat/fragment";
 import { Document } from "../models/Document";
+import { ElementInstance } from "../models/ElementInstance";
+import { positionalStyleKeys } from "../models/Style";
+
+function createClipboardData(attribute: string, data: string): ClipboardItems {
+  const base64 = Buffer.from(data).toString("base64");
+  const html = `<span ${attribute}="${base64}"></span>`;
+
+  return [
+    new ClipboardItem({ "text/html": new Blob([html], { type: "text/html" }) }),
+  ];
+}
+
+async function readClipboardData(
+  clipboardItems: ClipboardItems,
+  attribute: string
+): Promise<string | undefined> {
+  const item = clipboardItems.find((i) => i.types.includes("text/html"));
+  if (!item) {
+    return;
+  }
+
+  const html = await (await item.getType("text/html")).text();
+
+  const match = html.match(new RegExp(`<span ${attribute}="(.*?)"></span>`));
+  if (!match) {
+    return;
+  }
+  return Buffer.from(match[1], "base64").toString();
+}
 
 export async function copyLayers(document: Document): Promise<void> {
   const fragment = document.selectedFragment;
   if (!fragment) {
     return;
   }
-
   const fragmentString = stringifyFragment(fragment);
-  const base64 = Buffer.from(fragmentString).toString("base64");
 
-  const encoded = `<span data-macaron="${base64}"></span>`;
-
-  const type = "text/html";
-  const blob = new Blob([encoded], { type });
-  const data = [new ClipboardItem({ [type]: blob })];
-
-  await navigator.clipboard.write(data);
+  await navigator.clipboard.write(
+    createClipboardData("data-macaron", fragmentString)
+  );
 }
 
 export async function pasteLayers(document: Document): Promise<void> {
   const contents = await navigator.clipboard.read();
 
-  const item = contents.find((i) => i.types.includes("text/html"));
-  if (!item) {
+  const fragmentString = await readClipboardData(contents, "data-macaron");
+  if (!fragmentString) {
     return;
   }
-
-  const encoded = await (await item.getType("text/html")).text();
-
-  const match = encoded.match(/<span data-macaron="(.*)">/);
-  if (!match) {
-    return;
-  }
-
-  const base64 = match[1];
-  const fragmentString = Buffer.from(base64, "base64").toString();
   const fragment = parseFragment(fragmentString);
-  if (fragment) {
-    runInAction(() => {
-      document.appendFragmentBeforeSelection(fragment);
-    });
+  if (!fragment) {
+    return;
   }
+  runInAction(() => {
+    document.appendFragmentBeforeSelection(fragment);
+  });
+}
+
+export async function copyStyle(instance: ElementInstance): Promise<void> {
+  await navigator.clipboard.write(
+    createClipboardData(
+      "data-macaron-style",
+      instance.style
+        .toPostCSS({
+          exclude: new Set(positionalStyleKeys),
+        })
+        .toString()
+    )
+  );
+}
+
+export async function pasteStyle(instance: ElementInstance): Promise<void> {
+  const contents = await navigator.clipboard.read();
+
+  const styleString = await readClipboardData(contents, "data-macaron-style");
+  if (!styleString) {
+    return;
+  }
+  runInAction(() => {
+    const root = postcss.parse(styleString);
+    instance.style.loadPostCSS(root, {
+      exclude: new Set(positionalStyleKeys),
+    });
+  });
 }
