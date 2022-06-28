@@ -2,10 +2,12 @@ import { assertNonNull } from "@seanchas116/paintkit/src/util/Assert";
 import { last } from "lodash-es";
 import { Component } from "../models/Component";
 import { Element } from "../models/Element";
+import { ElementInstance } from "../models/ElementInstance";
 import { Fragment } from "../models/Fragment";
 import { getInstance } from "../models/InstanceRegistry";
 import { RootElement } from "../models/RootElement";
 import { Text } from "../models/Text";
+import { TextInstance } from "../models/TextInstance";
 import { Variant } from "../models/Variant";
 import { EditorState } from "../state/EditorState";
 
@@ -23,10 +25,7 @@ export function appendFragmentBeforeSelection(
       return;
     }
     case "instances": {
-      appendNodesBeforeSelection(
-        editorState,
-        fragment.instances.map((i) => i.node)
-      );
+      appendInstancesBeforeSelection(editorState, fragment.instances);
       return;
     }
   }
@@ -84,9 +83,9 @@ export function appendVariantsBeforeSelection(
   }
 }
 
-export function appendNodesBeforeSelection(
+export function appendInstancesBeforeSelection(
   editorState: EditorState,
-  nodes: (Element | Text)[]
+  instances: (ElementInstance | TextInstance)[]
 ): void {
   const { document } = editorState;
   const { selectedComponents, selectedNodes } = document;
@@ -127,8 +126,8 @@ export function appendNodesBeforeSelection(
 
   document.deselect();
 
-  for (const node of nodes) {
-    parent.insertBefore(node, next);
-    getInstance(variantToSelect, node).select();
+  for (const instance of instances) {
+    parent.insertBefore(instance.node, next);
+    getInstance(variantToSelect, instance.node).select();
   }
 }
