@@ -7,8 +7,6 @@ class History extends JSONUndoHistory<DocumentJSON, Document> {
   commit(title: string, mergeInterval?: number): boolean {
     const ret = super.commit(title, mergeInterval);
 
-    console.log(plausible);
-
     plausible("commit", {
       props: {
         title,
