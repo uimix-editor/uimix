@@ -1,3 +1,4 @@
+import { runInAction } from "mobx";
 import { Vec2 } from "paintvec";
 import { Component } from "../models/Component";
 import { Element } from "../models/Element";
@@ -64,12 +65,14 @@ export async function moveComponentToAvailableSpace(
   component.defaultVariant.y = -10000;
 
   await new Promise((resolve) => setTimeout(resolve, 0));
-  const size = component.defaultVariant.rootInstance.boundingBox.size;
-  console.log(size);
 
-  const pos = editorState.findNewComponentPosition(size);
-  component.defaultVariant.x = pos.x;
-  component.defaultVariant.y = pos.y;
+  runInAction(() => {
+    const size = component.defaultVariant.rootInstance.boundingBox.size;
+
+    const pos = editorState.findNewComponentPosition(size);
+    component.defaultVariant.x = pos.x;
+    component.defaultVariant.y = pos.y;
+  });
 }
 
 export async function createComponentFromExistingInstance(

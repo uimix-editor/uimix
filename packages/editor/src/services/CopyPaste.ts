@@ -57,9 +57,7 @@ export async function pasteLayers(editorState: EditorState): Promise<void> {
   if (!fragment) {
     return;
   }
-  runInAction(() => {
-    appendFragmentBeforeSelection(editorState, fragment);
-  });
+  await runInAction(() => appendFragmentBeforeSelection(editorState, fragment));
 }
 
 export async function copyStyle(instance: ElementInstance): Promise<void> {

@@ -1,7 +1,7 @@
 import { Command } from "@seanchas116/paintkit/src/components/menu/Menu";
 import { isTextInputFocused } from "@seanchas116/paintkit/src/util/CurrentFocus";
 import { KeyGesture } from "@seanchas116/paintkit/src/util/KeyGesture";
-import { action, computed, makeObservable } from "mobx";
+import { action, computed, makeObservable, runInAction } from "mobx";
 import { Component } from "../models/Component";
 import { Element } from "../models/Element";
 import { getInstance } from "../models/InstanceRegistry";
@@ -266,12 +266,14 @@ export class Commands {
             components.push(createEmptyComponent(this.editorState));
           }
 
-          this.document.deselect();
-          for (const component of components) {
-            component.defaultVariant.rootInstance.select();
-          }
+          runInAction(() => {
+            this.document.deselect();
+            for (const component of components) {
+              component.defaultVariant.rootInstance.select();
+            }
 
-          this.history.commit("Create Component");
+            this.history.commit("Create Component");
+          });
         })();
 
         return true;
