@@ -40,16 +40,28 @@ export function createComponentFromInstance(
   const component = new Component();
   document.components.append(component);
 
-  for (const property of styleKeys) {
-    if ((positionalStyleKeys as readonly string[]).includes(property)) {
-      continue;
+  const createsWrapper = ["img", "input", "textarea", "select"].includes(
+    instance.element.tagName
+  );
+
+  if (createsWrapper) {
+    component.defaultVariant.rootInstance.setInnerHTML([instance.outerHTML]);
+    const child = component.defaultVariant.rootInstance
+      .children[0] as ElementInstance;
+    for (const property of positionalStyleKeys) {
+      child.style[property] = undefined;
     }
-    component.defaultVariant.rootInstance.style[property] =
-      instance.style[property];
+  } else {
+    for (const property of styleKeys) {
+      if ((positionalStyleKeys as readonly string[]).includes(property)) {
+        continue;
+      }
+      component.defaultVariant.rootInstance.style[property] =
+        instance.style[property];
+    }
+    component.defaultVariant.rootInstance.setInnerHTML(instance.innerHTML);
   }
   component.defaultVariant.rootInstance.style.position = "relative";
-
-  component.defaultVariant.rootInstance.setInnerHTML(instance.innerHTML);
 
   const pos = editorState.findNewComponentPosition(instance.boundingBox.size);
   component.defaultVariant.x = pos.x;
