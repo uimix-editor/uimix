@@ -94,7 +94,7 @@ export class Commands {
         if (isTextInputFocused()) {
           return false;
         }
-        void pasteLayers(this.editorState.document).then(
+        void pasteLayers(this.editorState).then(
           action(() => {
             this.history.commit("Paste");
           })
