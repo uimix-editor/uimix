@@ -250,24 +250,30 @@ export class Commands {
       text: "Create Component",
       shortcut: [new KeyGesture(["Command", "Alt"], "KeyK")],
       onClick: action(() => {
-        const components: Component[] = [];
+        void (async () => {
+          const components: Component[] = [];
 
-        if (selection.length) {
-          for (const instance of selection) {
-            components.push(
-              createComponentFromExistingInstance(this.editorState, instance)
-            );
+          if (selection.length) {
+            for (const instance of selection) {
+              components.push(
+                await createComponentFromExistingInstance(
+                  this.editorState,
+                  instance
+                )
+              );
+            }
+          } else {
+            components.push(createEmptyComponent(this.editorState));
           }
-        } else {
-          components.push(createEmptyComponent(this.editorState));
-        }
 
-        this.document.deselect();
-        for (const component of components) {
-          component.defaultVariant.rootInstance.select();
-        }
+          this.document.deselect();
+          for (const component of components) {
+            component.defaultVariant.rootInstance.select();
+          }
 
-        this.history.commit("Create Component");
+          this.history.commit("Create Component");
+        })();
+
         return true;
       }),
     });

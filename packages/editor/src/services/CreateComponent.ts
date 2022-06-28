@@ -56,10 +56,23 @@ export function setComponentContent(
   component.defaultVariant.rootInstance.style.position = "relative";
 }
 
-export function createComponentFromExistingInstance(
+export async function moveComponentToAvailableSpace(
+  editorState: EditorState,
+  component: Component
+): Promise<void> {
+  await new Promise((resolve) => setTimeout(resolve, 0));
+  const size = component.defaultVariant.rootInstance.boundingBox.size;
+  console.log(size);
+
+  const pos = editorState.findNewComponentPosition(size);
+  component.defaultVariant.x = pos.x;
+  component.defaultVariant.y = pos.y;
+}
+
+export async function createComponentFromExistingInstance(
   editorState: EditorState,
   instance: ElementInstance
-): Component {
+): Promise<Component> {
   if (!instance) {
     return createEmptyComponent(editorState);
   }
@@ -82,10 +95,6 @@ export function createComponentFromExistingInstance(
 
   setComponentContent(component, instancesFromHTML([instance.outerHTML])[0]);
 
-  const pos = editorState.findNewComponentPosition(instance.boundingBox.size);
-  component.defaultVariant.x = pos.x;
-  component.defaultVariant.y = pos.y;
-
   // create instance
 
   const newElement = new Element({
@@ -101,6 +110,8 @@ export function createComponentFromExistingInstance(
   }
 
   instance.element.remove();
+
+  await moveComponentToAvailableSpace(editorState, component);
 
   return component;
 }
