@@ -60,6 +60,9 @@ export async function moveComponentToAvailableSpace(
   editorState: EditorState,
   component: Component
 ): Promise<void> {
+  component.defaultVariant.x = -10000;
+  component.defaultVariant.y = -10000;
+
   await new Promise((resolve) => setTimeout(resolve, 0));
   const size = component.defaultVariant.rootInstance.boundingBox.size;
   console.log(size);
