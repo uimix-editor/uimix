@@ -135,6 +135,7 @@ export abstract class EditorState {
       this.commands.copy,
       this.commands.paste,
       this.commands.delete,
+      this.commands.selectAll,
     ];
   }
 

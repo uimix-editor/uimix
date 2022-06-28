@@ -116,6 +116,20 @@ export class Commands {
     });
   }
 
+  @computed get selectAll(): Command {
+    return withAnalytics({
+      text: "Select All",
+      shortcut: [new KeyGesture(["Command"], "KeyA")],
+      onClick: action(() => {
+        if (isTextInputFocused()) {
+          return false;
+        }
+        this.document.selectAll();
+        return true;
+      }),
+    });
+  }
+
   @computed get copyStyle(): Command {
     return withAnalytics({
       text: "Copy Style",
