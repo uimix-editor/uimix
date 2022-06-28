@@ -10,6 +10,7 @@ import { Text } from "../models/Text";
 import { TextInstance } from "../models/TextInstance";
 import { Variant } from "../models/Variant";
 import { EditorState } from "../state/EditorState";
+import { setComponentContent } from "./CreateComponent";
 
 export function appendFragmentBeforeSelection(
   editorState: EditorState,
@@ -97,9 +98,12 @@ export function appendInstancesBeforeSelection(
   }
 
   if (!selectedNode) {
-    const component = new Component();
-    document.components.append(component);
-    selectedNode = component.rootElement;
+    for (const instance of instances) {
+      const component = new Component();
+      document.components.append(component);
+      setComponentContent(component, instance);
+    }
+    return;
   }
 
   let parent: Element;
