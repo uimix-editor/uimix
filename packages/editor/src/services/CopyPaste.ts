@@ -8,21 +8,22 @@ import { positionalStyleKeys } from "../models/Style";
 import { EditorState } from "../state/EditorState";
 import { appendFragmentStringBeforeSelection } from "./Append";
 
-function createClipboardData(attribute: string, data: string): ClipboardItems {
+async function writeCustomData(attribute: string, data: string): Promise<void> {
   const base64 = Buffer.from(data).toString("base64");
   const html = `<span ${attribute}="${base64}"></span>`;
 
-  return [
+  const items = [
     new ClipboardItem({
       "text/html": new Blob([html], { type: "text/html" }),
     }),
   ];
+
+  await navigator.clipboard.write(items);
 }
 
-async function readClipboardData(
-  clipboardItems: ClipboardItems,
-  attribute: string
-): Promise<string | undefined> {
+async function readCustomData(attribute: string): Promise<string | undefined> {
+  const clipboardItems = await navigator.clipboard.read();
+
   const item = clipboardItems.find((i) => i.types.includes("text/html"));
   if (!item) {
     return;
@@ -43,16 +44,11 @@ export async function copy(document: Document): Promise<void> {
     return;
   }
   const fragmentString = stringifyFragment(fragment);
-
-  await navigator.clipboard.write(
-    createClipboardData("data-macaron", fragmentString)
-  );
+  await writeCustomData("data-macaron", fragmentString);
 }
 
 export async function paste(editorState: EditorState): Promise<void> {
-  const contents = await navigator.clipboard.read();
-
-  const fragmentString = await readClipboardData(contents, "data-macaron");
+  const fragmentString = await readCustomData("data-macaron");
   if (fragmentString) {
     await appendFragmentStringBeforeSelection(editorState, fragmentString);
     return;
@@ -80,22 +76,18 @@ export async function pasteHTML(editorState: EditorState): Promise<void> {
 }
 
 export async function copyStyle(instance: ElementInstance): Promise<void> {
-  await navigator.clipboard.write(
-    createClipboardData(
-      "data-macaron-style",
-      instance.style
-        .toPostCSS({
-          exclude: new Set(positionalStyleKeys),
-        })
-        .toString()
-    )
+  await writeCustomData(
+    "data-macaron-style",
+    instance.style
+      .toPostCSS({
+        exclude: new Set(positionalStyleKeys),
+      })
+      .toString()
   );
 }
 
 export async function pasteStyle(editorState: EditorState): Promise<boolean> {
-  const contents = await navigator.clipboard.read();
-
-  const styleString = await readClipboardData(contents, "data-macaron-style");
+  const styleString = await readCustomData("data-macaron-style");
   if (!styleString) {
     return false;
   }
