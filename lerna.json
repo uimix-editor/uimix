@@ -3,6 +3,7 @@
     "packages/compiler",
     "packages/loader-vite",
     "packages/loader-webpack",
+    "packages/editor",
     "packages/vscode"
   ],
   "version": "0.4.1"
