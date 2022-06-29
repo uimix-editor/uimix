@@ -78,7 +78,7 @@ export const Viewport: React.FC<{ className?: string }> = observer(
       return () => {
         mount.dispose();
       };
-    }, [editorState.document]);
+    }, [editorState, editorState.document]);
 
     useEffect(() => {
       const elem = ref.current;
