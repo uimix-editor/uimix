@@ -1,8 +1,8 @@
 import { TreeNode } from "@seanchas116/paintkit/src/util/TreeNode";
 import { Rect, Vec2 } from "paintvec";
 import { ElementInstance } from "../../../models/ElementInstance";
-import { TextInstance } from "../../../models/TextInstance";
 import { ElementPickResult } from "../../../mount/ElementPicker";
+import { DropDestination } from "../../../state/DropDestination";
 import { EditorState } from "../../../state/EditorState";
 import { DragHandler } from "./DragHandler";
 
@@ -32,18 +32,13 @@ export class ElementInFlowMoveDragHandler implements DragHandler {
       rect.translate(offset)
     );
 
-    const { parent: newParent, ref: newRef } = findDropDestination(
-      this.editorState,
-      pickResult,
-      [...this.targets.keys()]
-    );
+    const dst = findDropDestination(this.editorState, pickResult, [
+      ...this.targets.keys(),
+    ]);
 
-    if (newParent) {
-      this.editorState.dropTargetPreviewRect = newParent.boundingBox;
-      this.editorState.dropIndexIndicator = dropDestinationIndicator(
-        newParent,
-        newRef
-      );
+    if (dst) {
+      this.editorState.dropTargetPreviewRect = dst.parent.boundingBox;
+      this.editorState.dropIndexIndicator = dropDestinationIndicator(dst);
     }
   }
 
@@ -53,18 +48,18 @@ export class ElementInFlowMoveDragHandler implements DragHandler {
     this.editorState.dropTargetPreviewRect = undefined;
     this.editorState.dropIndexIndicator = undefined;
 
-    const { parent: newParent, ref: newRef } = findDropDestination(
+    const dst = findDropDestination(
       this.editorState,
       this.editorState.elementPicker.pick(event),
       [...this.targets.keys()]
     );
-    if (!newParent) {
+    if (!dst) {
       return;
     }
 
     TreeNode.moveNodes(
-      newParent.element,
-      newRef ? newRef.node : undefined,
+      dst.parent.element,
+      dst.ref?.node,
       [...this.targets.keys()].map((o) => o.node)
     );
     this.editorState.history.commit("Move Layer");
@@ -79,10 +74,7 @@ export function findDropDestination(
   editorState: EditorState,
   pickResult: ElementPickResult,
   subjects: ElementInstance[]
-): {
-  parent?: ElementInstance | undefined;
-  ref?: ElementInstance | TextInstance | undefined;
-} {
+): DropDestination | undefined {
   const parent = pickResult.all.find((dst) => {
     // cannot move inside itself
     if (subjects.some((target) => target.element.includes(dst.element))) {
@@ -115,7 +107,7 @@ export function findDropDestination(
   });
 
   if (!parent) {
-    return {};
+    return;
   }
 
   const direction = parent.layoutDirection;
@@ -134,9 +126,10 @@ export function findDropDestination(
 }
 
 function dropDestinationIndicator(
-  parent: ElementInstance,
-  ref: ElementInstance | TextInstance | undefined
+  dst: DropDestination
 ): [Vec2, Vec2] | undefined {
+  const { parent, ref } = dst;
+
   const direction = parent.layoutDirection;
   const inFlowChildren = parent.inFlowChildren;
 

@@ -132,14 +132,10 @@ export const PointerOverlay: React.FC<{}> = () => {
     const insertInstances = action(
       (instances: (ElementInstance | TextInstance)[]) => {
         if (target.hasLayout) {
-          const { parent, ref } = findDropDestination(
-            editorState,
-            pickResult,
-            []
-          );
-          if (parent) {
+          const dst = findDropDestination(editorState, pickResult, []);
+          if (dst) {
             for (const instance of instances) {
-              parent.node.insertBefore(instance.node, ref?.node);
+              dst.parent.node.insertBefore(instance.node, dst.ref?.node);
             }
           }
         } else {
