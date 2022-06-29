@@ -1,4 +1,5 @@
 import { compact } from "lodash-es";
+import { Vec2 } from "paintvec";
 import { Document } from "../models/Document";
 import { ElementInstance } from "../models/ElementInstance";
 import { EditorState } from "../state/EditorState";
@@ -90,6 +91,7 @@ export class ElementPicker {
         event.clientX - offset.x,
         event.clientY - offset.y
       ),
+      this.editorState.scroll.documentPosForEvent(event),
       event,
       mode
     );
@@ -100,17 +102,20 @@ export class ElementPickResult {
   constructor(
     document: Document,
     all: readonly ElementInstance[],
+    pos: Vec2,
     event: MouseEvent | DragEvent,
     mode: "click" | "doubleClick"
   ) {
     this.document = document;
     this.all = all;
+    this.pos = pos;
     this.event = event;
     this.mode = mode;
   }
 
   readonly document: Document;
   readonly all: readonly ElementInstance[];
+  readonly pos: Vec2;
   readonly event: MouseEvent | DragEvent;
   readonly mode: "click" | "doubleClick";
 
