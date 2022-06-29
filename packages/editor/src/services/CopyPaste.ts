@@ -8,13 +8,18 @@ import { positionalStyleKeys } from "../models/Style";
 import { EditorState } from "../state/EditorState";
 import { appendFragmentStringBeforeSelection } from "./Append";
 
-async function writeCustomData(attribute: string, data: string): Promise<void> {
+async function writeCustomData(
+  attribute: string,
+  data: string,
+  alt: string
+): Promise<void> {
   const base64 = Buffer.from(data).toString("base64");
   const html = `<span ${attribute}="${base64}"></span>`;
 
   const items = [
     new ClipboardItem({
       "text/html": new Blob([html], { type: "text/html" }),
+      "text/plain": new Blob([alt], { type: "text/plain" }),
     }),
   ];
 
@@ -44,7 +49,8 @@ export async function copy(document: Document): Promise<void> {
     return;
   }
   const fragmentString = stringifyFragment(fragment);
-  await writeCustomData("data-macaron", fragmentString);
+  const text = toHtml(document.selectedNodes.map((node) => node.outerHTML));
+  await writeCustomData("data-macaron", fragmentString, text);
 }
 
 export async function paste(editorState: EditorState): Promise<void> {
@@ -76,14 +82,13 @@ export async function pasteHTML(editorState: EditorState): Promise<void> {
 }
 
 export async function copyStyle(instance: ElementInstance): Promise<void> {
-  await writeCustomData(
-    "data-macaron-style",
-    instance.style
-      .toPostCSS({
-        exclude: new Set(positionalStyleKeys),
-      })
-      .toString()
-  );
+  const style = instance.style
+    .toPostCSS({
+      exclude: new Set(positionalStyleKeys),
+    })
+    .toString();
+
+  await writeCustomData("data-macaron-style", style, style);
 }
 
 export async function pasteStyle(editorState: EditorState): Promise<boolean> {
