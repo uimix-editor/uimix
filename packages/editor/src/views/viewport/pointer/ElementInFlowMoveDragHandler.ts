@@ -116,8 +116,8 @@ export class ElementInFlowMoveDragHandler implements DragHandler {
       return {};
     }
 
-    const direction = layoutDirection(parent);
-    const inFlowChildren = getInFlowChildren(parent);
+    const direction = parent.layoutDirection;
+    const inFlowChildren = parent.inFlowChildren;
     const centers = inFlowChildren.map((c) => c.boundingBox.center);
     const index = centers.findIndex((c) => c[direction] > pos[direction]);
     if (index < 0) {
@@ -134,29 +134,12 @@ export class ElementInFlowMoveDragHandler implements DragHandler {
   private readonly targets = new Map<ElementInstance, Rect>();
 }
 
-function layoutDirection(parent: ElementInstance): "x" | "y" {
-  if (
-    parent.computedStyle.display?.includes("flex") &&
-    parent.computedStyle.flexDirection === "row"
-  ) {
-    return "x";
-  } else {
-    return "y";
-  }
-}
-
-function getInFlowChildren(
-  parent: ElementInstance
-): (ElementInstance | TextInstance)[] {
-  return parent.children.filter((o) => o.isInFlow);
-}
-
 function dropIndexIndicator(
   parent: ElementInstance,
   ref: ElementInstance | TextInstance | undefined
 ): [Vec2, Vec2] | undefined {
-  const direction = layoutDirection(parent);
-  const inFlowChildren = getInFlowChildren(parent);
+  const direction = parent.layoutDirection;
+  const inFlowChildren = parent.inFlowChildren;
 
   let index = inFlowChildren.findIndex((o) => o === ref);
   if (index < 0) {

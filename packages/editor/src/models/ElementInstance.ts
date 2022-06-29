@@ -80,6 +80,10 @@ export class ElementInstance {
     );
   }
 
+  get inFlowChildren(): readonly (ElementInstance | TextInstance)[] {
+    return this.children.filter((o) => o.isInFlow);
+  }
+
   @computed get allDescendants(): (ElementInstance | TextInstance)[] {
     return [this, ...this.children.flatMap((child) => child.allDescendants)];
   }
@@ -229,6 +233,17 @@ export class ElementInstance {
       return false;
     }
     return true;
+  }
+
+  get layoutDirection(): "x" | "y" {
+    if (
+      this.computedStyle.display?.includes("flex") &&
+      this.computedStyle.flexDirection === "row"
+    ) {
+      return "x";
+    } else {
+      return "y";
+    }
   }
 
   get hasLayout(): boolean {
