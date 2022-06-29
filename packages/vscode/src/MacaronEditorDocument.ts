@@ -44,7 +44,7 @@ export class MacaronEditorDocument implements vscode.CustomDocument {
 
   dispose(): void {}
 
-  get serverUri(): vscode.Uri | undefined {
-    return Project.instance.fileServer?.toServerUri(this.uri);
+  get assetServerUri(): vscode.Uri | undefined {
+    return Project.instance.assetServer?.toServerUri(this.uri);
   }
 }

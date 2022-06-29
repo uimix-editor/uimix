@@ -59,7 +59,7 @@ export class MacaronEditorSession {
         const content = Buffer.from(data).toString();
         await this.webviewAPI?.setContent(
           content,
-          this.document.serverUri?.toString()
+          this.document.assetServerUri?.toString()
         );
       })
     );
@@ -121,7 +121,7 @@ export class MacaronEditorSession {
 
     await this.webviewAPI.setContent(
       this.document.initialContent,
-      this.document.serverUri?.toString()
+      this.document.assetServerUri?.toString()
     );
   }
 
@@ -135,18 +135,18 @@ export class MacaronEditorSession {
 
     const nonce = getNonce();
 
-    const fileServerOrigin = Project.instance.fileServer?.origin ?? "";
+    const assetServerOrigin = Project.instance.assetServer?.origin ?? "";
 
     const csp = `
       default-src 'none';
-      connect-src ${webview.cspSource} ${fileServerOrigin} https: data: ${
+      connect-src ${webview.cspSource} ${assetServerOrigin} https: data: ${
       isDevelopment ? "ws://localhost:3000" : ""
     };
-      img-src ${webview.cspSource} ${fileServerOrigin} https: data:;
-      font-src ${webview.cspSource} ${fileServerOrigin} https: data:;
+      img-src ${webview.cspSource} ${assetServerOrigin} https: data:;
+      font-src ${webview.cspSource} ${assetServerOrigin} https: data:;
       style-src ${
         webview.cspSource
-      } ${fileServerOrigin} https: data: 'unsafe-inline';
+      } ${assetServerOrigin} https: data: 'unsafe-inline';
       script-src 'nonce-${nonce}' 'unsafe-inline' 'unsafe-eval' 'strict-dynamic';
     `;
 
