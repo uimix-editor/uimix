@@ -8,42 +8,21 @@ import { positionalStyleKeys } from "../models/Style";
 import { EditorState } from "../state/EditorState";
 import { appendFragmentStringBeforeSelection } from "./Append";
 
-async function writeCustomData(
-  attribute: string,
-  data: string,
-  alt: string
-): Promise<void> {
-  const base64 = Buffer.from(data).toString("base64");
-  const html = `<span ${attribute}="${base64}"></span>`;
-
-  const items = [
-    new ClipboardItem({
-      "text/html": new Blob([html], { type: "text/html" }),
-      "text/plain": new Blob([alt], { type: "text/plain" }),
-    }),
-  ];
-
-  await navigator.clipboard.write(items);
-}
-
-async function readCustomData(attribute: string): Promise<string | undefined> {
-  const clipboardItems = await navigator.clipboard.read();
-
-  const item = clipboardItems.find((i) => i.types.includes("text/html"));
-  if (!item) {
-    return;
-  }
-
-  const html = await (await item.getType("text/html")).text();
-
-  const match = html.match(new RegExp(`<span ${attribute}="(.*?)"></span>`));
-  if (!match) {
-    return;
-  }
-  return Buffer.from(match[1], "base64").toString();
-}
-
 export async function copy(document: Document): Promise<void> {
+  return copyFragment(document);
+}
+
+export async function paste(editorState: EditorState): Promise<void> {
+  if (await pasteFragment(editorState)) {
+    return;
+  }
+  if (await pasteStyle(editorState)) {
+    return;
+  }
+  await pasteHTML(editorState);
+}
+
+export async function copyFragment(document: Document): Promise<void> {
   const fragment = document.selectedFragment;
   if (!fragment) {
     return;
@@ -53,18 +32,15 @@ export async function copy(document: Document): Promise<void> {
   await writeCustomData("data-macaron", fragmentString, text);
 }
 
-export async function paste(editorState: EditorState): Promise<void> {
+export async function pasteFragment(
+  editorState: EditorState
+): Promise<boolean> {
   const fragmentString = await readCustomData("data-macaron");
-  if (fragmentString) {
-    await appendFragmentStringBeforeSelection(editorState, fragmentString);
-    return;
+  if (!fragmentString) {
+    return false;
   }
-
-  if (await pasteStyle(editorState)) {
-    return;
-  }
-
-  await pasteHTML(editorState);
+  await appendFragmentStringBeforeSelection(editorState, fragmentString);
+  return true;
 }
 
 export async function copyHTML(document: Document): Promise<void> {
@@ -106,4 +82,39 @@ export async function pasteStyle(editorState: EditorState): Promise<boolean> {
     }
   });
   return true;
+}
+
+async function writeCustomData(
+  attribute: string,
+  data: string,
+  alt: string
+): Promise<void> {
+  const base64 = Buffer.from(data).toString("base64");
+  const html = `<span ${attribute}="${base64}"></span>`;
+
+  const items = [
+    new ClipboardItem({
+      "text/html": new Blob([html], { type: "text/html" }),
+      "text/plain": new Blob([alt], { type: "text/plain" }),
+    }),
+  ];
+
+  await navigator.clipboard.write(items);
+}
+
+async function readCustomData(attribute: string): Promise<string | undefined> {
+  const clipboardItems = await navigator.clipboard.read();
+
+  const item = clipboardItems.find((i) => i.types.includes("text/html"));
+  if (!item) {
+    return;
+  }
+
+  const html = await (await item.getType("text/html")).text();
+
+  const match = html.match(new RegExp(`<span ${attribute}="(.*?)"></span>`));
+  if (!match) {
+    return;
+  }
+  return Buffer.from(match[1], "base64").toString();
 }
