@@ -75,7 +75,7 @@ export class ElementInFlowMoveDragHandler implements DragHandler {
   private readonly targets = new Map<ElementInstance, Rect>();
 }
 
-function findNewParent(
+export function findNewParent(
   editorState: EditorState,
   pickResult: ElementPickResult,
   subjects: ElementInstance[]

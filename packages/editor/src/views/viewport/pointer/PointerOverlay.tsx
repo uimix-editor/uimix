@@ -13,6 +13,7 @@ import { doubleClickInterval } from "../Constants";
 import { DragHandler } from "./DragHandler";
 import { ElementClickMoveDragHandler } from "./ElementClickMoveDragHandler";
 import { ElementInsertDragHandler } from "./ElementInsertDragHandler";
+import { findNewParent } from "./ElementInFlowMoveDragHandler";
 
 const PointerOverlayWrap = styled.div`
   position: absolute;
@@ -121,34 +122,21 @@ export const PointerOverlay: React.FC<{}> = () => {
   const onDrop = action(async (e: React.DragEvent) => {
     e.preventDefault();
 
-    const target = editorState.elementPicker.pick(e.nativeEvent).default;
+    const pickResult = editorState.elementPicker.pick(e.nativeEvent);
+
+    const target = pickResult.default;
     if (!target) {
       return;
     }
 
-    const pos = editorState.scroll.documentPosForEvent(e);
-
     const insertInstances = action(
       (instances: (ElementInstance | TextInstance)[]) => {
         if (target.hasLayout) {
-          const inFlowChildren = target.inFlowChildren;
-          const direction = target.layoutDirection;
-
-          let next: ElementInstance | undefined;
-
-          for (const child of inFlowChildren) {
-            if (child.type === "text") {
-              continue;
+          const { parent, ref } = findNewParent(editorState, pickResult, []);
+          if (parent) {
+            for (const instance of instances) {
+              parent.node.insertBefore(instance.node, ref?.node);
             }
-
-            if (pos[direction] < child.boundingBox.center[direction]) {
-              next = child;
-              break;
-            }
-          }
-
-          for (const instance of instances) {
-            target.node.insertBefore(instance.node, next?.node);
           }
         } else {
           for (const instance of instances) {
