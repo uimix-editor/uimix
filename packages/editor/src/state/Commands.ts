@@ -9,8 +9,10 @@ import { Text } from "../models/Text";
 import { AutoLayout } from "../services/AutoLayout";
 import {
   copyFragments,
+  copyHTML,
   copyStyle,
   pasteFragments,
+  pasteHTML,
   pasteStyle,
 } from "../services/CopyPaste";
 import {
@@ -151,6 +153,29 @@ export class Commands {
       onClick: () => {
         const instance = this.document.selectedElementInstances[0];
         void pasteStyle(instance);
+        return true;
+      },
+    });
+  }
+
+  @computed get copyHTML(): Command {
+    return withAnalytics({
+      text: "Copy HTML/SVG",
+      onClick: action(() => {
+        if (isTextInputFocused()) {
+          return false;
+        }
+        void copyHTML(this.document);
+        return true;
+      }),
+    });
+  }
+
+  @computed get pasteHTML(): Command {
+    return withAnalytics({
+      text: "Paste HTML/SVG",
+      onClick: () => {
+        void pasteHTML(this.editorState);
         return true;
       },
     });

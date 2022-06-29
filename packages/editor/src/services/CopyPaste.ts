@@ -14,7 +14,6 @@ function createClipboardData(attribute: string, data: string): ClipboardItems {
   return [
     new ClipboardItem({
       "text/html": new Blob([html], { type: "text/html" }),
-      "text/plain": new Blob([data], { type: "text/plain" }),
     }),
   ];
 }
@@ -56,6 +55,15 @@ export async function pasteFragments(editorState: EditorState): Promise<void> {
   if (fragmentString) {
     await appendFragmentStringBeforeSelection(editorState, fragmentString);
   }
+}
+
+export async function copyHTML(document: Document): Promise<void> {
+  const fragment = document.selectedFragment;
+  if (!fragment) {
+    return;
+  }
+  const fragmentString = stringifyFragment(fragment);
+  await navigator.clipboard.writeText(fragmentString);
 }
 
 export async function pasteHTML(editorState: EditorState): Promise<void> {

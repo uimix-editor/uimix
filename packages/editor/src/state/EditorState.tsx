@@ -136,6 +136,9 @@ export abstract class EditorState {
       this.commands.paste,
       this.commands.delete,
       this.commands.selectAll,
+      { type: "separator" },
+      this.commands.copyHTML,
+      this.commands.pasteHTML,
     ];
   }
 
