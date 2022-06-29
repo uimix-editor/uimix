@@ -95,15 +95,26 @@ function getRenderableAST(node: Node): hast.Element | hast.Text | undefined {
     }
     attributes.style = styleLines.join("");
 
-    const childNodes = element.shadowRoot
-      ? element.shadowRoot.childNodes
-      : element.tagName === "SLOT"
-      ? (element as HTMLSlotElement).assignedNodes()
-      : element.childNodes;
+    const childNodes = getActualChildNodes(element);
 
     const children = compact(Array.from(childNodes).map(getRenderableAST));
     const isSVG = element.namespaceURI === "http://www.w3.org/2000/svg";
 
     return (isSVG ? s : h)(element.tagName.toLowerCase(), attributes, children);
   }
+}
+
+function getActualChildNodes(element: Element): Node[] {
+  if (element.shadowRoot) {
+    return [...element.shadowRoot.childNodes];
+  }
+
+  if (element.tagName === "SLOT") {
+    const assignedNodes = (element as HTMLSlotElement).assignedNodes();
+    if (assignedNodes.length) {
+      return assignedNodes;
+    }
+  }
+
+  return [...element.childNodes];
 }
