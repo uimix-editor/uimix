@@ -41,9 +41,11 @@ export class DocumentMount {
     parent.append(this.iframe);
 
     this.domDocument = assertNonNull(this.iframe.contentDocument);
+    this.domDocument.open();
     this.domDocument.write(
       `<!DOCTYPE html><html><head></head><body></body></html>`
     );
+    this.domDocument.close();
 
     editorState.elementPicker.root = this.domDocument;
     this.domDocument.body.style.margin = "0";
