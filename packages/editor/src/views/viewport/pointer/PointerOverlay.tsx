@@ -131,19 +131,18 @@ export const PointerOverlay: React.FC<{}> = () => {
     const insertInstances = action(
       (instances: (ElementInstance | TextInstance)[]) => {
         if (target.hasLayout) {
-          const inFlowChildren = target.children.filter((o) => o.isInFlow);
+          const inFlowChildren = target.inFlowChildren;
+          const direction = target.layoutDirection;
 
           let next: ElementInstance | undefined;
 
-          for (const [i, child] of inFlowChildren.entries()) {
+          for (const child of inFlowChildren) {
             if (child.type === "text") {
               continue;
             }
 
-            console.log(i, pos.x, child.boundingBox.center.x);
-            if (pos.x < child.boundingBox.center.x) {
+            if (pos[direction] < child.boundingBox.center[direction]) {
               next = child;
-              console.log(i);
               break;
             }
           }
