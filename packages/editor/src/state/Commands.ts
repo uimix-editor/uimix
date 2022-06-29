@@ -8,9 +8,11 @@ import { getInstance } from "../models/InstanceRegistry";
 import { Text } from "../models/Text";
 import { AutoLayout } from "../services/AutoLayout";
 import {
-  copyLayers,
+  copy,
+  copyHTML,
   copyStyle,
-  pasteLayers,
+  paste,
+  pasteHTML,
   pasteStyle,
 } from "../services/CopyPaste";
 import {
@@ -62,7 +64,7 @@ export class Commands {
         if (isTextInputFocused()) {
           return false;
         }
-        void copyLayers(this.document).then(
+        void copy(this.document).then(
           action(() => {
             this.document.deleteSelected();
           })
@@ -80,7 +82,7 @@ export class Commands {
         if (isTextInputFocused()) {
           return false;
         }
-        void copyLayers(this.document);
+        void copy(this.document);
         return true;
       }),
     });
@@ -94,7 +96,7 @@ export class Commands {
         if (isTextInputFocused()) {
           return false;
         }
-        void pasteLayers(this.editorState).then(
+        void paste(this.editorState).then(
           action(() => {
             this.history.commit("Paste");
           })
@@ -149,8 +151,42 @@ export class Commands {
       shortcut: [new KeyGesture(["Command", "Alt"], "KeyV")],
       disabled: !this.document.selectedElementInstances.length,
       onClick: () => {
-        const instance = this.document.selectedElementInstances[0];
-        void pasteStyle(instance);
+        void pasteStyle(this.editorState).then(
+          action(() => {
+            this.history.commit("Paste Style");
+          })
+        );
+        return true;
+      },
+    });
+  }
+
+  @computed get copyHTML(): Command {
+    return withAnalytics({
+      text: "Copy HTML/SVG",
+      onClick: action(() => {
+        if (isTextInputFocused()) {
+          return false;
+        }
+        void copyHTML(this.document);
+        return true;
+      }),
+    });
+  }
+
+  @computed get pasteHTML(): Command {
+    return withAnalytics({
+      text: "Paste HTML/SVG",
+      onClick: () => {
+        if (isTextInputFocused()) {
+          return false;
+        }
+        void pasteHTML(this.editorState).then(
+          action(() => {
+            this.history.commit("Paste HTML/SVG");
+          })
+        );
+        return true;
         return true;
       },
     });

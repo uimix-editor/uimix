@@ -136,6 +136,17 @@ export abstract class EditorState {
       this.commands.paste,
       this.commands.delete,
       this.commands.selectAll,
+      { type: "separator" },
+      {
+        text: "Copy/Paste as",
+        children: [
+          this.commands.copyHTML,
+          this.commands.pasteHTML,
+          { type: "separator" },
+          this.commands.copyStyle,
+          this.commands.pasteStyle,
+        ],
+      },
     ];
   }
 
@@ -189,9 +200,6 @@ export abstract class EditorState {
       ...this.getElementMenu(),
       { type: "separator" },
       ...this.getBasicEditMenu(),
-      { type: "separator" },
-      this.commands.copyStyle,
-      this.commands.pasteStyle,
     ];
   }
 
@@ -205,9 +213,6 @@ export abstract class EditorState {
       this.commands.redo,
       { type: "separator" },
       ...this.getBasicEditMenu(),
-      { type: "separator" },
-      this.commands.copyStyle,
-      this.commands.pasteStyle,
     ];
   }
 
