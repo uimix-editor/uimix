@@ -152,7 +152,11 @@ export class Commands {
       disabled: !this.document.selectedElementInstances.length,
       onClick: () => {
         const instance = this.document.selectedElementInstances[0];
-        void pasteStyle(instance);
+        void pasteStyle(instance).then(
+          action(() => {
+            this.history.commit("Paste Style");
+          })
+        );
         return true;
       },
     });
@@ -180,7 +184,7 @@ export class Commands {
         }
         void pasteHTML(this.editorState).then(
           action(() => {
-            this.history.commit("Paste");
+            this.history.commit("Paste HTML/SVG");
           })
         );
         return true;
