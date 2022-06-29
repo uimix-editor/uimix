@@ -175,7 +175,15 @@ export class Commands {
     return withAnalytics({
       text: "Paste HTML/SVG",
       onClick: () => {
-        void pasteHTML(this.editorState);
+        if (isTextInputFocused()) {
+          return false;
+        }
+        void pasteHTML(this.editorState).then(
+          action(() => {
+            this.history.commit("Paste");
+          })
+        );
+        return true;
         return true;
       },
     });
