@@ -8,10 +8,10 @@ import { getInstance } from "../models/InstanceRegistry";
 import { Text } from "../models/Text";
 import { AutoLayout } from "../services/AutoLayout";
 import {
-  copyFragments,
+  copy,
   copyHTML,
   copyStyle,
-  pasteFragments,
+  paste,
   pasteHTML,
   pasteStyle,
 } from "../services/CopyPaste";
@@ -64,7 +64,7 @@ export class Commands {
         if (isTextInputFocused()) {
           return false;
         }
-        void copyFragments(this.document).then(
+        void copy(this.document).then(
           action(() => {
             this.document.deleteSelected();
           })
@@ -82,7 +82,7 @@ export class Commands {
         if (isTextInputFocused()) {
           return false;
         }
-        void copyFragments(this.document);
+        void copy(this.document);
         return true;
       }),
     });
@@ -96,7 +96,7 @@ export class Commands {
         if (isTextInputFocused()) {
           return false;
         }
-        void pasteFragments(this.editorState).then(
+        void paste(this.editorState).then(
           action(() => {
             this.history.commit("Paste");
           })
@@ -151,8 +151,7 @@ export class Commands {
       shortcut: [new KeyGesture(["Command", "Alt"], "KeyV")],
       disabled: !this.document.selectedElementInstances.length,
       onClick: () => {
-        const instance = this.document.selectedElementInstances[0];
-        void pasteStyle(instance).then(
+        void pasteStyle(this.editorState).then(
           action(() => {
             this.history.commit("Paste Style");
           })

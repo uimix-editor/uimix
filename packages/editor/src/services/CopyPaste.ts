@@ -38,7 +38,7 @@ async function readClipboardData(
   return Buffer.from(match[1], "base64").toString();
 }
 
-export async function copyFragments(document: Document): Promise<void> {
+export async function copy(document: Document): Promise<void> {
   const fragment = document.selectedFragment;
   if (!fragment) {
     return;
@@ -50,20 +50,26 @@ export async function copyFragments(document: Document): Promise<void> {
   );
 }
 
-export async function pasteFragments(editorState: EditorState): Promise<void> {
+export async function paste(editorState: EditorState): Promise<boolean> {
   const contents = await navigator.clipboard.read();
 
   const fragmentString = await readClipboardData(contents, "data-macaron");
   if (fragmentString) {
     await appendFragmentStringBeforeSelection(editorState, fragmentString);
-    return;
+    return true;
+  }
+
+  if (await pasteStyle(editorState)) {
+    return true;
   }
 
   const text = await navigator.clipboard.readText();
   if (isSvg(text)) {
     await appendFragmentStringBeforeSelection(editorState, text);
-    return;
+    return true;
   }
+
+  return false;
 }
 
 export async function copyHTML(document: Document): Promise<void> {
@@ -93,17 +99,21 @@ export async function copyStyle(instance: ElementInstance): Promise<void> {
   );
 }
 
-export async function pasteStyle(instance: ElementInstance): Promise<void> {
+export async function pasteStyle(editorState: EditorState): Promise<boolean> {
   const contents = await navigator.clipboard.read();
 
   const styleString = await readClipboardData(contents, "data-macaron-style");
   if (!styleString) {
-    return;
+    return false;
   }
   runInAction(() => {
     const root = postcss.parse(styleString);
-    instance.style.loadPostCSS(root, {
-      exclude: new Set(positionalStyleKeys),
-    });
+
+    for (const instance of editorState.document.selectedElementInstances) {
+      instance.style.loadPostCSS(root, {
+        exclude: new Set(positionalStyleKeys),
+      });
+    }
   });
+  return true;
 }
