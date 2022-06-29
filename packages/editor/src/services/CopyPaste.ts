@@ -12,7 +12,10 @@ function createClipboardData(attribute: string, data: string): ClipboardItems {
   const html = `<span ${attribute}="${base64}"></span>`;
 
   return [
-    new ClipboardItem({ "text/html": new Blob([html], { type: "text/html" }) }),
+    new ClipboardItem({
+      "text/html": new Blob([html], { type: "text/html" }),
+      "text/plain": new Blob([data], { type: "text/plain" }),
+    }),
   ];
 }
 
@@ -52,6 +55,7 @@ export async function pasteLayers(editorState: EditorState): Promise<void> {
   const fragmentString = await readClipboardData(contents, "data-macaron");
   if (fragmentString) {
     await appendFragmentStringBeforeSelection(editorState, fragmentString);
+    return;
   }
 
   const text = await navigator.clipboard.readText();
