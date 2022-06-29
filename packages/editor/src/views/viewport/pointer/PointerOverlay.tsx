@@ -111,8 +111,17 @@ export const PointerOverlay: React.FC<{}> = () => {
   });
 
   const onDragOver = action((e: React.DragEvent) => {
-    const target = editorState.elementPicker.pick(e.nativeEvent).default;
-    editorState.hoveredItem = target;
+    const pickResult = editorState.elementPicker.pick(e.nativeEvent);
+    const target = pickResult.default;
+    if (target?.hasLayout) {
+      editorState.dropDestination = findDropDestination(
+        editorState,
+        pickResult,
+        []
+      );
+    } else {
+      editorState.hoveredItem = target;
+    }
 
     if (e.dataTransfer.types.includes("text/html")) {
       e.preventDefault();
@@ -122,8 +131,10 @@ export const PointerOverlay: React.FC<{}> = () => {
   const onDrop = action(async (e: React.DragEvent) => {
     e.preventDefault();
 
-    const pickResult = editorState.elementPicker.pick(e.nativeEvent);
+    editorState.dropDestination = undefined;
+    editorState.hoveredItem = undefined;
 
+    const pickResult = editorState.elementPicker.pick(e.nativeEvent);
     const target = pickResult.default;
     if (!target) {
       return;
