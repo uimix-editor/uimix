@@ -7,7 +7,7 @@ import * as vscode from "vscode";
 // https://vitejs.dev/config/#server-fs-deny
 const excludedFiles = [".env", ".env.*", "*.{pem,crt}"];
 
-export class FileServer {
+export class AssetServer {
   constructor(rootUri: vscode.Uri) {
     this.publicPathUri = rootUri;
     this._server = http.createServer((request, response) => {
@@ -68,8 +68,11 @@ export class FileServer {
     });
   }
 
-  toServerUri(uri: vscode.Uri): vscode.Uri {
-    const relativePath = path.posix.relative(this.publicPathUri.path, uri.path);
+  toServerUri(fileUri: vscode.Uri): vscode.Uri {
+    const relativePath = path.posix.relative(
+      this.publicPathUri.path,
+      fileUri.path
+    );
     if (relativePath.startsWith("..")) {
       throw new Error("Invalid path");
     }

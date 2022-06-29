@@ -9,7 +9,7 @@ import { Project } from "./Project";
 export async function activate(
   context: vscode.ExtensionContext
 ): Promise<void> {
-  await Project.instance.fileServer?.listen();
+  await Project.instance.assetServer?.listen();
 
   context.subscriptions.push(
     vscode.window.registerCustomEditorProvider(
@@ -27,5 +27,5 @@ export async function activate(
 
 // this method is called when your extension is deactivated
 export async function deactivate(): Promise<void> {
-  await Project.instance.fileServer?.close();
+  await Project.instance.assetServer?.close();
 }
