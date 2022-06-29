@@ -1,5 +1,6 @@
 import { runInAction } from "mobx";
 import * as postcss from "postcss";
+import { toHtml } from "hast-util-to-html";
 import { stringifyFragment } from "../fileFormat/fragment";
 import { Document } from "../models/Document";
 import { ElementInstance } from "../models/ElementInstance";
@@ -58,11 +59,11 @@ export async function pasteFragments(editorState: EditorState): Promise<void> {
 }
 
 export async function copyHTML(document: Document): Promise<void> {
-  const fragment = document.selectedFragment;
-  if (!fragment) {
+  const nodes = document.selectedNodes;
+  if (!nodes.length) {
     return;
   }
-  const fragmentString = stringifyFragment(fragment);
+  const fragmentString = toHtml(nodes.map((node) => node.outerHTML));
   await navigator.clipboard.writeText(fragmentString);
 }
 
