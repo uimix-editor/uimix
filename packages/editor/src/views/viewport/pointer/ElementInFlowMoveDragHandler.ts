@@ -2,6 +2,7 @@ import { TreeNode } from "@seanchas116/paintkit/src/util/TreeNode";
 import { Rect, Vec2 } from "paintvec";
 import { ElementInstance } from "../../../models/ElementInstance";
 import { TextInstance } from "../../../models/TextInstance";
+import { ElementPickResult } from "../../../mount/ElementPicker";
 import { EditorState } from "../../../state/EditorState";
 import { DragHandler } from "./DragHandler";
 
@@ -23,18 +24,18 @@ export class ElementInFlowMoveDragHandler implements DragHandler {
   }
 
   move(event: MouseEvent | DragEvent): void {
-    const pos = this.editorState.scroll.documentPosForEvent(event);
-    const overridesAtPos = this.editorState.elementPicker.pick(event).all;
+    const pickResult = this.editorState.elementPicker.pick(event);
 
-    const offset = pos.sub(this.initPos);
+    const offset = pickResult.pos.sub(this.initPos);
 
     this.editorState.dragPreviewRects = [...this.targets.values()].map((rect) =>
       rect.translate(offset)
     );
 
-    const { parent: newParent, ref: newRef } = this.newParent(
-      pos,
-      overridesAtPos
+    const { parent: newParent, ref: newRef } = findNewParent(
+      this.editorState,
+      pickResult,
+      [...this.targets.keys()]
     );
 
     if (newParent) {
@@ -52,12 +53,10 @@ export class ElementInFlowMoveDragHandler implements DragHandler {
     this.editorState.dropTargetPreviewRect = undefined;
     this.editorState.dropIndexIndicator = undefined;
 
-    const pos = this.editorState.scroll.documentPosForEvent(event);
-    const overridesAtPos = this.editorState.elementPicker.pick(event).all;
-
-    const { parent: newParent, ref: newRef } = this.newParent(
-      pos,
-      overridesAtPos
+    const { parent: newParent, ref: newRef } = findNewParent(
+      this.editorState,
+      this.editorState.elementPicker.pick(event),
+      [...this.targets.keys()]
     );
     if (!newParent) {
       return;
@@ -71,67 +70,67 @@ export class ElementInFlowMoveDragHandler implements DragHandler {
     this.editorState.history.commit("Move Layer");
   }
 
-  private newParent(
-    pos: Vec2,
-    overridesAtPos: readonly ElementInstance[]
-  ): {
-    parent?: ElementInstance | undefined;
-    ref?: ElementInstance | TextInstance | undefined;
-  } {
-    const parent = overridesAtPos.find((dst) => {
-      // cannot move inside itself
-      if (
-        [...this.targets.keys()].some((target) =>
-          target.element.includes(dst.element)
-        )
-      ) {
-        return false;
-      }
-
-      if (dst.parent) {
-        const bbox = dst.boundingBox;
-        const parentBBox = dst.parent.boundingBox;
-
-        const parentCloseThresh = this.editorState.snapThreshold;
-        const threshold = this.editorState.snapThreshold * 2;
-
-        // do not drop near the edge when the parent edge is close
-
-        for (const edge of ["left", "top", "right", "bottom"] as const) {
-          if (
-            Math.abs(bbox[edge] - parentBBox[edge]) < parentCloseThresh &&
-            Math.abs(
-              bbox[edge] - pos[edge === "left" || edge === "right" ? "x" : "y"]
-            ) < threshold
-          ) {
-            return false;
-          }
-        }
-      }
-
-      return true;
-    });
-
-    if (!parent) {
-      return {};
-    }
-
-    const direction = parent.layoutDirection;
-    const inFlowChildren = parent.inFlowChildren;
-    const centers = inFlowChildren.map((c) => c.boundingBox.center);
-    const index = centers.findIndex((c) => c[direction] > pos[direction]);
-    if (index < 0) {
-      return { parent };
-    }
-    return {
-      parent,
-      ref: inFlowChildren[index],
-    };
-  }
-
   private readonly editorState: EditorState;
   private readonly initPos: Vec2;
   private readonly targets = new Map<ElementInstance, Rect>();
+}
+
+function findNewParent(
+  editorState: EditorState,
+  pickResult: ElementPickResult,
+  subjects: ElementInstance[]
+): {
+  parent?: ElementInstance | undefined;
+  ref?: ElementInstance | TextInstance | undefined;
+} {
+  const parent = pickResult.all.find((dst) => {
+    // cannot move inside itself
+    if (subjects.some((target) => target.element.includes(dst.element))) {
+      return false;
+    }
+
+    if (dst.parent) {
+      const bbox = dst.boundingBox;
+      const parentBBox = dst.parent.boundingBox;
+
+      const parentCloseThresh = editorState.snapThreshold;
+      const threshold = editorState.snapThreshold * 2;
+
+      // do not drop near the edge when the parent edge is close
+
+      for (const edge of ["left", "top", "right", "bottom"] as const) {
+        if (
+          Math.abs(bbox[edge] - parentBBox[edge]) < parentCloseThresh &&
+          Math.abs(
+            bbox[edge] -
+              pickResult.pos[edge === "left" || edge === "right" ? "x" : "y"]
+          ) < threshold
+        ) {
+          return false;
+        }
+      }
+    }
+
+    return true;
+  });
+
+  if (!parent) {
+    return {};
+  }
+
+  const direction = parent.layoutDirection;
+  const inFlowChildren = parent.inFlowChildren;
+  const centers = inFlowChildren.map((c) => c.boundingBox.center);
+  const index = centers.findIndex(
+    (c) => c[direction] > pickResult.pos[direction]
+  );
+  if (index < 0) {
+    return { parent };
+  }
+  return {
+    parent,
+    ref: inFlowChildren[index],
+  };
 }
 
 function dropIndexIndicator(
