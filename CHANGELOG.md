@@ -3,6 +3,27 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.4.1](https://github.com/macaron-elements/macaron/compare/v0.4.0...v0.4.1) (2022-06-29)
+
+
+### Bug Fixes
+
+* **editor:** disable quirks mode of renderer iframe (fix [#69](https://github.com/macaron-elements/macaron/issues/69)) ([e208594](https://github.com/macaron-elements/macaron/commit/e2085942cb2cabc5d99549345fd8f40b44aa0b88))
+* **editor:** set display to block when creating new components ([ca3bfe8](https://github.com/macaron-elements/macaron/commit/ca3bfe81c74b7a698aaa20a74f0444463ff6157d))
+
+
+### Features
+
+* **editor:** activate media query variants in component instances based on variant artboard width ([#119](https://github.com/macaron-elements/macaron/issues/119)) ([4d0b762](https://github.com/macaron-elements/macaron/commit/4d0b762a1bd7962683be4a993ffa45e671f974ed))
+* **editor:** copy & paste styles ([#121](https://github.com/macaron-elements/macaron/issues/121)) ([4c20634](https://github.com/macaron-elements/macaron/commit/4c206349550a3d021f597aa53d5f02169da04f13))
+* **editor:** do not append wrapper elements to components created from elements ([#122](https://github.com/macaron-elements/macaron/issues/122)) ([3ea2105](https://github.com/macaron-elements/macaron/commit/3ea21057aaf3bc7cf687d6873dc948f17458fa39))
+* **editor:** implement eye dropper (fix [#114](https://github.com/macaron-elements/macaron/issues/114)) ([8adc6e4](https://github.com/macaron-elements/macaron/commit/8adc6e45775fd15e88d9a469d28d350a51fd0bed))
+* **editor:** Implement Select All ([#126](https://github.com/macaron-elements/macaron/issues/126)) ([1778a80](https://github.com/macaron-elements/macaron/commit/1778a804b630aa214531c417892fa09f804f13b5))
+
+
+
+
+
 # [0.4.0](https://github.com/macaron-elements/macaron/compare/v0.3.1...v0.4.0) (2022-06-26)
 
 ### Bug Fixes
