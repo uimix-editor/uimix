@@ -126,9 +126,32 @@ export const PointerOverlay: React.FC<{}> = () => {
       return;
     }
 
+    const pos = editorState.scroll.documentPosForEvent(e);
+
     const insertInstances = action(
       (instances: (ElementInstance | TextInstance)[]) => {
-        if (!target.hasLayout) {
+        if (target.hasLayout) {
+          const inFlowChildren = target.children.filter((o) => o.isInFlow);
+
+          let next: ElementInstance | undefined;
+
+          for (const [i, child] of inFlowChildren.entries()) {
+            if (child.type === "text") {
+              continue;
+            }
+
+            console.log(i, pos.x, child.boundingBox.center.x);
+            if (pos.x < child.boundingBox.center.x) {
+              next = child;
+              console.log(i);
+              break;
+            }
+          }
+
+          for (const instance of instances) {
+            target.node.insertBefore(instance.node, next?.node);
+          }
+        } else {
           for (const instance of instances) {
             if (instance.type !== "element") {
               continue;
@@ -145,9 +168,8 @@ export const PointerOverlay: React.FC<{}> = () => {
             instance.style.left = `${pos.x}px`;
             instance.style.top = `${pos.y}px`;
           }
+          target.element.append(...instances.map((i) => i.node));
         }
-
-        target.element.append(...instances.map((i) => i.node));
 
         editorState.document.deselect();
         for (const instance of instances) {
