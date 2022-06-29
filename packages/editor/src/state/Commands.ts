@@ -8,9 +8,9 @@ import { getInstance } from "../models/InstanceRegistry";
 import { Text } from "../models/Text";
 import { AutoLayout } from "../services/AutoLayout";
 import {
-  copyLayers,
+  copyFragments,
   copyStyle,
-  pasteLayers,
+  pasteFragments,
   pasteStyle,
 } from "../services/CopyPaste";
 import {
@@ -62,7 +62,7 @@ export class Commands {
         if (isTextInputFocused()) {
           return false;
         }
-        void copyLayers(this.document).then(
+        void copyFragments(this.document).then(
           action(() => {
             this.document.deleteSelected();
           })
@@ -80,7 +80,7 @@ export class Commands {
         if (isTextInputFocused()) {
           return false;
         }
-        void copyLayers(this.document);
+        void copyFragments(this.document);
         return true;
       }),
     });
@@ -94,7 +94,7 @@ export class Commands {
         if (isTextInputFocused()) {
           return false;
         }
-        void pasteLayers(this.editorState).then(
+        void pasteFragments(this.editorState).then(
           action(() => {
             this.history.commit("Paste");
           })

@@ -37,7 +37,7 @@ async function readClipboardData(
   return Buffer.from(match[1], "base64").toString();
 }
 
-export async function copyLayers(document: Document): Promise<void> {
+export async function copyFragments(document: Document): Promise<void> {
   const fragment = document.selectedFragment;
   if (!fragment) {
     return;
@@ -49,15 +49,16 @@ export async function copyLayers(document: Document): Promise<void> {
   );
 }
 
-export async function pasteLayers(editorState: EditorState): Promise<void> {
+export async function pasteFragments(editorState: EditorState): Promise<void> {
   const contents = await navigator.clipboard.read();
 
   const fragmentString = await readClipboardData(contents, "data-macaron");
   if (fragmentString) {
     await appendFragmentStringBeforeSelection(editorState, fragmentString);
-    return;
   }
+}
 
+export async function pasteHTML(editorState: EditorState): Promise<void> {
   const text = await navigator.clipboard.readText();
   await appendFragmentStringBeforeSelection(editorState, text);
 }
