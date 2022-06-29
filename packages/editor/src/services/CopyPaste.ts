@@ -1,6 +1,7 @@
 import { runInAction } from "mobx";
 import * as postcss from "postcss";
 import { toHtml } from "hast-util-to-html";
+import isSvg from "is-svg";
 import { stringifyFragment } from "../fileFormat/fragment";
 import { Document } from "../models/Document";
 import { ElementInstance } from "../models/ElementInstance";
@@ -55,6 +56,13 @@ export async function pasteFragments(editorState: EditorState): Promise<void> {
   const fragmentString = await readClipboardData(contents, "data-macaron");
   if (fragmentString) {
     await appendFragmentStringBeforeSelection(editorState, fragmentString);
+    return;
+  }
+
+  const text = await navigator.clipboard.readText();
+  if (isSvg(text)) {
+    await appendFragmentStringBeforeSelection(editorState, text);
+    return;
   }
 }
 
