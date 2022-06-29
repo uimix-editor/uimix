@@ -1,7 +1,5 @@
 import { runInAction } from "mobx";
 import * as postcss from "postcss";
-import isHTML from "is-html";
-import isSVG from "is-svg";
 import { stringifyFragment } from "../fileFormat/fragment";
 import { Document } from "../models/Document";
 import { ElementInstance } from "../models/ElementInstance";
@@ -57,9 +55,7 @@ export async function pasteLayers(editorState: EditorState): Promise<void> {
   }
 
   const text = await navigator.clipboard.readText();
-  if (isHTML(text) || isSVG(text)) {
-    await appendFragmentStringBeforeSelection(editorState, text);
-  }
+  await appendFragmentStringBeforeSelection(editorState, text);
 }
 
 export async function copyStyle(instance: ElementInstance): Promise<void> {
