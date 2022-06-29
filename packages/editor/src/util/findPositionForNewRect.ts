@@ -1,5 +1,5 @@
 import { Rect, Vec2 } from "paintvec";
-import { Quadtree, Rectangle } from "@timohausmann/quadtree-ts";
+import { Quadtree, Rectangle } from "@timohausmann/quadtree-ts/src/index.esm";
 import { minBy } from "lodash-es";
 
 export function findPositionForNewRect(
