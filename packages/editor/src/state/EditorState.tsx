@@ -24,6 +24,7 @@ import { VariantInspectorState } from "./VariantInspectorState";
 import { InsertMode } from "./InsertMode";
 import { ElementSnapper } from "./ElementSnapper";
 import { Commands } from "./Commands";
+import { DropDestination } from "./DropDestination";
 
 export abstract class EditorState {
   constructor() {
@@ -104,9 +105,7 @@ export abstract class EditorState {
   @observable resizeBoxVisible = true;
 
   @observable.ref dragPreviewRects: readonly Rect[] = [];
-  @observable.ref dropTargetPreviewRect: Rect | undefined = undefined;
-  @observable.ref dropIndexIndicator: readonly [Vec2, Vec2] | undefined =
-    undefined;
+  @observable.ref dropDestination: DropDestination | undefined = undefined;
 
   readonly elementPicker = new ElementPicker(this);
   readonly snapper = new ElementSnapper(this);
