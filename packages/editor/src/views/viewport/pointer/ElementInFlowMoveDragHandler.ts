@@ -32,7 +32,7 @@ export class ElementInFlowMoveDragHandler implements DragHandler {
       rect.translate(offset)
     );
 
-    const { parent: newParent, ref: newRef } = findNewParent(
+    const { parent: newParent, ref: newRef } = findDropDestination(
       this.editorState,
       pickResult,
       [...this.targets.keys()]
@@ -40,7 +40,7 @@ export class ElementInFlowMoveDragHandler implements DragHandler {
 
     if (newParent) {
       this.editorState.dropTargetPreviewRect = newParent.boundingBox;
-      this.editorState.dropIndexIndicator = dropIndexIndicator(
+      this.editorState.dropIndexIndicator = dropDestinationIndicator(
         newParent,
         newRef
       );
@@ -53,7 +53,7 @@ export class ElementInFlowMoveDragHandler implements DragHandler {
     this.editorState.dropTargetPreviewRect = undefined;
     this.editorState.dropIndexIndicator = undefined;
 
-    const { parent: newParent, ref: newRef } = findNewParent(
+    const { parent: newParent, ref: newRef } = findDropDestination(
       this.editorState,
       this.editorState.elementPicker.pick(event),
       [...this.targets.keys()]
@@ -75,7 +75,7 @@ export class ElementInFlowMoveDragHandler implements DragHandler {
   private readonly targets = new Map<ElementInstance, Rect>();
 }
 
-export function findNewParent(
+export function findDropDestination(
   editorState: EditorState,
   pickResult: ElementPickResult,
   subjects: ElementInstance[]
@@ -133,7 +133,7 @@ export function findNewParent(
   };
 }
 
-function dropIndexIndicator(
+function dropDestinationIndicator(
   parent: ElementInstance,
   ref: ElementInstance | TextInstance | undefined
 ): [Vec2, Vec2] | undefined {

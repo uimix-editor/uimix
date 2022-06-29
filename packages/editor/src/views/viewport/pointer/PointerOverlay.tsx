@@ -13,7 +13,7 @@ import { doubleClickInterval } from "../Constants";
 import { DragHandler } from "./DragHandler";
 import { ElementClickMoveDragHandler } from "./ElementClickMoveDragHandler";
 import { ElementInsertDragHandler } from "./ElementInsertDragHandler";
-import { findNewParent } from "./ElementInFlowMoveDragHandler";
+import { findDropDestination } from "./ElementInFlowMoveDragHandler";
 
 const PointerOverlayWrap = styled.div`
   position: absolute;
@@ -132,7 +132,11 @@ export const PointerOverlay: React.FC<{}> = () => {
     const insertInstances = action(
       (instances: (ElementInstance | TextInstance)[]) => {
         if (target.hasLayout) {
-          const { parent, ref } = findNewParent(editorState, pickResult, []);
+          const { parent, ref } = findDropDestination(
+            editorState,
+            pickResult,
+            []
+          );
           if (parent) {
             for (const instance of instances) {
               parent.node.insertBefore(instance.node, ref?.node);
