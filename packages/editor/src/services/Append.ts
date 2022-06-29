@@ -1,5 +1,7 @@
 import { assertNonNull } from "@seanchas116/paintkit/src/util/Assert";
 import { last } from "lodash-es";
+import { runInAction } from "mobx";
+import { parseFragment } from "../fileFormat/fragment";
 import { Component } from "../models/Component";
 import { Element } from "../models/Element";
 import { ElementInstance } from "../models/ElementInstance";
@@ -14,6 +16,17 @@ import {
   moveComponentToAvailableSpace,
   setComponentContent,
 } from "./CreateComponent";
+
+export async function appendFragmentStringBeforeSelection(
+  editorState: EditorState,
+  fragmentString: string
+): Promise<void> {
+  const fragment = parseFragment(fragmentString);
+  if (!fragment) {
+    return;
+  }
+  await runInAction(() => appendFragmentBeforeSelection(editorState, fragment));
+}
 
 export async function appendFragmentBeforeSelection(
   editorState: EditorState,
