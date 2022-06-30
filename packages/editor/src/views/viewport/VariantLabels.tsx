@@ -44,6 +44,7 @@ const Label: React.FC<{
         new ElementPickResult(
           editorState.document,
           [rootInstance],
+          editorState.scroll.documentPosForEvent(e),
           e.nativeEvent,
           "click"
         )

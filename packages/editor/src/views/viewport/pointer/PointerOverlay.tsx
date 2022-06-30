@@ -13,6 +13,7 @@ import { doubleClickInterval } from "../Constants";
 import { DragHandler } from "./DragHandler";
 import { ElementClickMoveDragHandler } from "./ElementClickMoveDragHandler";
 import { ElementInsertDragHandler } from "./ElementInsertDragHandler";
+import { findDropDestination } from "./ElementInFlowMoveDragHandler";
 
 const PointerOverlayWrap = styled.div`
   position: absolute;
@@ -110,8 +111,17 @@ export const PointerOverlay: React.FC<{}> = () => {
   });
 
   const onDragOver = action((e: React.DragEvent) => {
-    const target = editorState.elementPicker.pick(e.nativeEvent).default;
-    editorState.hoveredItem = target;
+    const pickResult = editorState.elementPicker.pick(e.nativeEvent);
+    const target = pickResult.default;
+    if (target?.hasLayout) {
+      editorState.dropDestination = findDropDestination(
+        editorState,
+        pickResult,
+        []
+      );
+    } else {
+      editorState.hoveredItem = target;
+    }
 
     if (e.dataTransfer.types.includes("text/html")) {
       e.preventDefault();
@@ -121,14 +131,25 @@ export const PointerOverlay: React.FC<{}> = () => {
   const onDrop = action(async (e: React.DragEvent) => {
     e.preventDefault();
 
-    const target = editorState.elementPicker.pick(e.nativeEvent).default;
+    editorState.dropDestination = undefined;
+    editorState.hoveredItem = undefined;
+
+    const pickResult = editorState.elementPicker.pick(e.nativeEvent);
+    const target = pickResult.default;
     if (!target) {
       return;
     }
 
     const insertInstances = action(
       (instances: (ElementInstance | TextInstance)[]) => {
-        if (!target.hasLayout) {
+        if (target.hasLayout) {
+          const dst = findDropDestination(editorState, pickResult, []);
+          if (dst) {
+            for (const instance of instances) {
+              dst.parent.node.insertBefore(instance.node, dst.ref?.node);
+            }
+          }
+        } else {
           for (const instance of instances) {
             if (instance.type !== "element") {
               continue;
@@ -145,9 +166,8 @@ export const PointerOverlay: React.FC<{}> = () => {
             instance.style.left = `${pos.x}px`;
             instance.style.top = `${pos.y}px`;
           }
+          target.element.append(...instances.map((i) => i.node));
         }
-
-        target.element.append(...instances.map((i) => i.node));
 
         editorState.document.deselect();
         for (const instance of instances) {
