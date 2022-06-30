@@ -229,20 +229,25 @@ export class ElementMount {
     this.attachedMount?.dispose();
     this.attachedMount = undefined;
 
-    if (component) {
-      this.attachedMount = new RootElementMount(
-        component,
-        component?.defaultVariant,
-        {
-          ...this.context,
-          boundingBoxUpdateScheduler: undefined,
-          registry: undefined,
-          topLevelVariant:
-            this.context.topLevelVariant ?? this.instance.variant,
-        },
-        this.dom as HTMLElement
-      );
+    if (!component) {
+      return;
     }
+    if (component === this.instance.element.component) {
+      console.warn("Cannot render component recursively");
+      return;
+    }
+
+    this.attachedMount = new RootElementMount(
+      component,
+      component?.defaultVariant,
+      {
+        ...this.context,
+        boundingBoxUpdateScheduler: undefined,
+        registry: undefined,
+        topLevelVariant: this.context.topLevelVariant ?? this.instance.variant,
+      },
+      this.dom as HTMLElement
+    );
   }
 
   private isDisposed = false;
