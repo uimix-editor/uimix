@@ -123,9 +123,7 @@ export function layoutStyle(node: BaseFrameMixin): Style {
   return style;
 }
 
-export function fillBorderStyle(
-  node: GeometryMixin & RectangleCornerMixin
-): Style {
+export function fillBorderStyle(node: BaseFrameMixin): Style {
   // TODO: A rectangle with single image fill should be treated as <img> rather than <div> with a background image
 
   // TODO: support multiple fills

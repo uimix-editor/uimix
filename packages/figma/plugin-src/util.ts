@@ -40,6 +40,7 @@ export function rgbaToHex(rgba: RGBA): string {
 
 const vectorLikeTypes: SceneNode["type"][] = [
   "LINE",
+  "RECTANGLE",
   "ELLIPSE",
   "POLYGON",
   "STAR",
