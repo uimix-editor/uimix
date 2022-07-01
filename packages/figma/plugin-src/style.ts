@@ -11,7 +11,10 @@ export function positionStyle(
   const style: Style = {};
 
   // TODO: more constraints
-  if (parentLayout === "NONE") {
+  if (
+    parentLayout === "NONE" ||
+    ("layoutPositioning" in node && node.layoutPositioning === "ABSOLUTE")
+  ) {
     style.position = "absolute";
     style.left = `${node.x - groupTopLeft.x}px`;
     style.top = `${node.y - groupTopLeft.y}px`;
