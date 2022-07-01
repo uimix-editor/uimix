@@ -32,6 +32,11 @@ export async function figmaToMacaron(
     return undefined;
   }
 
+  // ignore mask layers
+  if ("isMask" in node && node.isMask) {
+    return undefined;
+  }
+
   if (isVectorLikeNode(node)) {
     try {
       const svg = await node.exportAsync({ format: "SVG" });
