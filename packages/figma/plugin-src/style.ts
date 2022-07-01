@@ -136,20 +136,35 @@ export function fillBorderStyle(node: BaseFrameMixin): Style {
 
   const borderColor =
     stroke?.type === "SOLID" ? solidPaintToHex(stroke) : undefined;
-  const borderWidth =
-    borderColor && node.strokeWeight ? String(node.strokeWeight) : undefined;
+  const borderTopWidth =
+    borderColor && node.strokeTopWeight
+      ? String(node.strokeTopWeight)
+      : undefined;
+  const borderRightWidth =
+    borderColor && node.strokeRightWeight
+      ? String(node.strokeRightWeight)
+      : undefined;
+  const borderBottomWidth =
+    borderColor && node.strokeBottomWeight
+      ? String(node.strokeBottomWeight)
+      : undefined;
+  const borderLeftWidth =
+    borderColor && node.strokeLeftWeight
+      ? String(node.strokeLeftWeight)
+      : undefined;
+
   const borderStyle = borderColor ? "solid" : undefined;
 
   return {
-    background: background,
+    background,
     borderTopStyle: borderStyle,
     borderRightStyle: borderStyle,
     borderBottomStyle: borderStyle,
     borderLeftStyle: borderStyle,
-    borderTopWidth: borderWidth,
-    borderRightWidth: borderWidth,
-    borderBottomWidth: borderWidth,
-    borderLeftWidth: borderWidth,
+    borderTopWidth,
+    borderRightWidth,
+    borderBottomWidth,
+    borderLeftWidth,
     borderTopColor: borderColor,
     borderRightColor: borderColor,
     borderBottomColor: borderColor,
