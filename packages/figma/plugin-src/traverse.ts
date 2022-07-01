@@ -122,10 +122,17 @@ export async function figmaToMacaron(
         ...compact(
           await Promise.all(
             node.children.map((child) =>
-              figmaToMacaron(idGenerator, child, node.layoutMode, {
-                x: node.strokeLeftWeight,
-                y: node.strokeTopWeight,
-              })
+              figmaToMacaron(
+                idGenerator,
+                child,
+                node.layoutMode,
+                node.strokes.length
+                  ? {
+                      x: node.strokeLeftWeight,
+                      y: node.strokeTopWeight,
+                    }
+                  : { x: 0, y: 0 }
+              )
             )
           )
         )
