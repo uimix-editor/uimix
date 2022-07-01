@@ -24,7 +24,7 @@
     "svg-parser": "^2.0.4"
   },
   "devDependencies": {
-    "@figma/plugin-typings": "*",
+    "@figma/plugin-typings": "^1.49.0",
     "@macaron-elements/loader-vite": "*",
     "concurrently": "^7.2.2",
     "esbuild": "^0.14.47",
