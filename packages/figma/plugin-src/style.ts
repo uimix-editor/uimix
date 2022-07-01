@@ -136,39 +136,26 @@ export function fillBorderStyle(node: BaseFrameMixin): Style {
 
   const borderColor =
     stroke?.type === "SOLID" ? solidPaintToHex(stroke) : undefined;
-  const borderTopWidth =
-    borderColor && node.strokeTopWeight
-      ? String(node.strokeTopWeight)
-      : undefined;
-  const borderRightWidth =
-    borderColor && node.strokeRightWeight
-      ? String(node.strokeRightWeight)
-      : undefined;
-  const borderBottomWidth =
-    borderColor && node.strokeBottomWeight
-      ? String(node.strokeBottomWeight)
-      : undefined;
-  const borderLeftWidth =
-    borderColor && node.strokeLeftWeight
-      ? String(node.strokeLeftWeight)
-      : undefined;
-
   const borderStyle = borderColor ? "solid" : undefined;
 
   return {
     background,
-    borderTopStyle: borderStyle,
-    borderRightStyle: borderStyle,
-    borderBottomStyle: borderStyle,
-    borderLeftStyle: borderStyle,
-    borderTopWidth,
-    borderRightWidth,
-    borderBottomWidth,
-    borderLeftWidth,
-    borderTopColor: borderColor,
-    borderRightColor: borderColor,
-    borderBottomColor: borderColor,
-    borderLeftColor: borderColor,
+    ...(borderStyle === "solid"
+      ? {
+          borderTopStyle: borderStyle,
+          borderRightStyle: borderStyle,
+          borderBottomStyle: borderStyle,
+          borderLeftStyle: borderStyle,
+          borderTopWidth: `${node.strokeTopWeight}px`,
+          borderRightWidth: `${node.strokeRightWeight}px`,
+          borderBottomWidth: `${node.strokeBottomWeight}px`,
+          borderLeftWidth: `${node.strokeLeftWeight}px`,
+          borderTopColor: borderColor,
+          borderRightColor: borderColor,
+          borderBottomColor: borderColor,
+          borderLeftColor: borderColor,
+        }
+      : {}),
     borderTopLeftRadius:
       node.topLeftRadius !== 0 ? `${node.topLeftRadius}px` : undefined,
     borderTopRightRadius:
