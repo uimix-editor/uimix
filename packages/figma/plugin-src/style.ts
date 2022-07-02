@@ -11,7 +11,10 @@ export function positionStyle(
   const style: Style = {};
 
   // TODO: more constraints
-  if (parentLayout === "NONE") {
+  if (
+    parentLayout === "NONE" ||
+    ("layoutPositioning" in node && node.layoutPositioning === "ABSOLUTE")
+  ) {
     style.position = "absolute";
     style.left = `${node.x - groupTopLeft.x}px`;
     style.top = `${node.y - groupTopLeft.y}px`;
@@ -117,12 +120,14 @@ export function layoutStyle(node: BaseFrameMixin): Style {
     }
   }
 
+  if (node.clipsContent) {
+    style.overflow = "hidden";
+  }
+
   return style;
 }
 
-export function fillBorderStyle(
-  node: GeometryMixin & RectangleCornerMixin
-): Style {
+export function fillBorderStyle(node: BaseFrameMixin): Style {
   // TODO: A rectangle with single image fill should be treated as <img> rather than <div> with a background image
 
   // TODO: support multiple fills
@@ -135,24 +140,26 @@ export function fillBorderStyle(
 
   const borderColor =
     stroke?.type === "SOLID" ? solidPaintToHex(stroke) : undefined;
-  const borderWidth =
-    borderColor && node.strokeWeight ? String(node.strokeWeight) : undefined;
   const borderStyle = borderColor ? "solid" : undefined;
 
   return {
-    background: background,
-    borderTopStyle: borderStyle,
-    borderRightStyle: borderStyle,
-    borderBottomStyle: borderStyle,
-    borderLeftStyle: borderStyle,
-    borderTopWidth: borderWidth,
-    borderRightWidth: borderWidth,
-    borderBottomWidth: borderWidth,
-    borderLeftWidth: borderWidth,
-    borderTopColor: borderColor,
-    borderRightColor: borderColor,
-    borderBottomColor: borderColor,
-    borderLeftColor: borderColor,
+    background,
+    ...(borderStyle === "solid"
+      ? {
+          borderTopStyle: borderStyle,
+          borderRightStyle: borderStyle,
+          borderBottomStyle: borderStyle,
+          borderLeftStyle: borderStyle,
+          borderTopWidth: `${node.strokeTopWeight}px`,
+          borderRightWidth: `${node.strokeRightWeight}px`,
+          borderBottomWidth: `${node.strokeBottomWeight}px`,
+          borderLeftWidth: `${node.strokeLeftWeight}px`,
+          borderTopColor: borderColor,
+          borderRightColor: borderColor,
+          borderBottomColor: borderColor,
+          borderLeftColor: borderColor,
+        }
+      : {}),
     borderTopLeftRadius:
       node.topLeftRadius !== 0 ? `${node.topLeftRadius}px` : undefined,
     borderTopRightRadius:

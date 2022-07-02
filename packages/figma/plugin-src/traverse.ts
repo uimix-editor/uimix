@@ -32,6 +32,35 @@ export async function figmaToMacaron(
     return undefined;
   }
 
+  // ignore mask layers
+  if ("isMask" in node && node.isMask) {
+    return undefined;
+  }
+
+  // Image like node
+  if (
+    node.type == "RECTANGLE" &&
+    node.fills !== figma.mixed &&
+    node.fills.length
+  ) {
+    const fill = node.fills[0];
+    if (fill.type === "IMAGE" && fill.imageHash) {
+      const image = figma.getImageByHash(fill.imageHash);
+      const dataURL = image
+        ? imageToDataURL(await image.getBytesAsync())
+        : undefined;
+
+      return h("img", {
+        id,
+        src: dataURL,
+        style: stringifyStyle({
+          ...positionStyle(node, parentLayout, groupTopLeft),
+          ...effectStyle(node),
+        }),
+      });
+    }
+  }
+
   if (isVectorLikeNode(node)) {
     try {
       const svg = await node.exportAsync({ format: "SVG" });
@@ -61,35 +90,6 @@ export async function figmaToMacaron(
   }
 
   switch (node.type) {
-    case "RECTANGLE": {
-      if (node.fills !== figma.mixed && node.fills.length) {
-        const fill = node.fills[0];
-        if (fill.type === "IMAGE" && fill.imageHash) {
-          const image = figma.getImageByHash(fill.imageHash);
-          const dataURL = image
-            ? imageToDataURL(await image.getBytesAsync())
-            : undefined;
-
-          return h("img", {
-            id,
-            src: dataURL,
-            style: stringifyStyle({
-              ...positionStyle(node, parentLayout, groupTopLeft),
-              ...effectStyle(node),
-            }),
-          });
-        }
-      }
-
-      return h("div", {
-        id,
-        style: stringifyStyle({
-          ...fillBorderStyle(node),
-          ...positionStyle(node, parentLayout, groupTopLeft),
-          ...effectStyle(node),
-        }),
-      });
-    }
     case "TEXT": {
       return h(
         "div",
@@ -122,7 +122,17 @@ export async function figmaToMacaron(
         ...compact(
           await Promise.all(
             node.children.map((child) =>
-              figmaToMacaron(idGenerator, child, node.layoutMode)
+              figmaToMacaron(
+                idGenerator,
+                child,
+                node.layoutMode,
+                node.strokes.length
+                  ? {
+                      x: node.strokeLeftWeight,
+                      y: node.strokeTopWeight,
+                    }
+                  : { x: 0, y: 0 }
+              )
             )
           )
         )
