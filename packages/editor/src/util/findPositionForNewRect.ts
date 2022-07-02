@@ -1,4 +1,4 @@
-import { Rect, Vec2 } from "paintvec";
+import { EdgeOffsets, Rect, Vec2 } from "paintvec";
 import { Quadtree, Rectangle } from "@timohausmann/quadtree-ts/src/index.esm";
 import { minBy } from "lodash-es";
 
@@ -8,7 +8,7 @@ export function findPositionForNewRect(
   size: Vec2,
   margin = 40
 ): Vec2 {
-  const candidates: Vec2[] = [];
+  const candidates: Rect[] = [];
 
   const quadTree = new Quadtree({
     x: areaRect.left,
@@ -51,12 +51,21 @@ export function findPositionForNewRect(
             !Rect.intersection((rect as Rectangle<Rect>).data!, candidate)
         )
       ) {
-        candidates.push(pos);
+        candidates.push(Rect.from({ topLeft: pos, size }));
       }
     }
   }
 
-  return (
-    minBy(candidates, (p) => p.sub(areaRect.center).length) ?? areaRect.center
-  );
+  const defaultPos = areaRect.center.sub(size.mulScalar(0.5));
+
+  const best = minBy(candidates, (r) => r.center.sub(areaRect.center).length);
+  if (!best) {
+    return defaultPos;
+  }
+
+  if (!areaRect.inset(EdgeOffsets.from(margin)).includes(best.center)) {
+    return defaultPos;
+  }
+
+  return best.topLeft;
 }

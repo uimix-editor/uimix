@@ -118,12 +118,17 @@ export abstract class EditorState {
     return snapThreshold / this.scroll.scale;
   }
 
-  findNewComponentPosition(size: Vec2): Vec2 {
+  findNewComponentPosition(
+    size: Vec2,
+    options: { exclude?: Set<Component> } = {}
+  ): Vec2 {
     return findPositionForNewRect(
       this.scroll.viewportRectInDocument,
-      this.document.components.children.flatMap((c) =>
-        compact(c.allVariants.map((v) => v.rootInstance?.boundingBox))
-      ),
+      this.document.components.children
+        .filter((c) => !options.exclude?.has(c))
+        .flatMap((c) =>
+          compact(c.allVariants.map((v) => v.rootInstance?.boundingBox))
+        ),
       size
     );
   }

@@ -66,7 +66,7 @@ export const Viewport: React.FC<{ className?: string }> = observer(
         resizeObserver.disconnect();
         window.removeEventListener("scroll", updateViewportClientRect);
       };
-    }, []);
+    }, [editorState]);
 
     useEffect(() => {
       const mount = new DocumentMount(

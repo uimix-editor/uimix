@@ -71,7 +71,10 @@ export async function moveComponentToAvailableSpace(
   runInAction(() => {
     const size = component.defaultVariant.rootInstance.boundingBox.size;
 
-    const pos = editorState.findNewComponentPosition(size);
+    const pos = editorState.findNewComponentPosition(size, {
+      exclude: new Set([component]),
+    });
+
     component.defaultVariant.x = pos.x;
     component.defaultVariant.y = pos.y;
   });
