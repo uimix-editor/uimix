@@ -120,6 +120,10 @@ export function layoutStyle(node: BaseFrameMixin): Style {
     }
   }
 
+  if (node.clipsContent) {
+    style.overflow = "hidden";
+  }
+
   return style;
 }
 
