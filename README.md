@@ -30,8 +30,8 @@ Its goal is to allow you to create and continuously maintain components visually
 ## Roadmap
 
 - Better component usability
-  - [ ] Better access to inner elements (#125)
-  - [ ] Per-element pseudoclasses / pseudoelements (#124)
+  - [ ] Better access to inner elements ([#125](https://github.com/macaron-elements/macaron/issues/125))
+  - [ ] Per-element pseudoclasses / pseudoelements ([#124](https://github.com/macaron-elements/macaron/issues/124))
   - [ ] Improve server side rendering
     - Macaron currently compatible with SSR by Next.js or other tools but component contents are renderered in client side
 
