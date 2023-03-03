@@ -21,7 +21,7 @@
     "dist"
   ],
   "scripts": {
-    "build": "run-z build:tsc build:editor build:esbuild build:copy-static",
+    "build": "run-z build:editor build:tsc build:esbuild build:copy-static",
     "build:copy-static": "rm -rf ./dist/static && cp -r ../editor/dist ./dist/static",
     "build:editor": "cd ../editor && pnpm build",
     "build:esbuild": "node build.cjs",
