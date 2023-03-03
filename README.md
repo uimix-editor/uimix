@@ -2,7 +2,7 @@
 
 > Macaron has been renamed to UIMix and is currently undergoing a complete rewrite.
 >
-> - [Old Branch](https://github.com/macaron-elements/macaron/tree/old)
+> - [Old Branch](https://github.com/uimix-editor/uimix/tree/old)
 > - [Old Website](https://macaron-elements.com/)
 
 UIMix is a WYSIWYG editor for React components that offers a Figma or Framer-like experience for creating and maintaining React components.
