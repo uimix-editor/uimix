@@ -1,0 +1,21 @@
+{
+  "name": "@uimix/render",
+  "license": "MIT",
+  "type": "module",
+  "main": "dist/index.js",
+  "typings": "dist/index.d.ts",
+  "scripts": {
+    "build": "tsc -p tsconfig.build.json",
+    "dev": "tsc -p tsconfig.build.json --watch",
+    "test": "vitest"
+  },
+  "devDependencies": {
+    "@types/react": "^18.0.28",
+    "@types/react-test-renderer": "^18.0.0",
+    "@uimix/node-data": "workspace:*",
+    "react": "^18.2.0",
+    "react-test-renderer": "^18.2.0",
+    "typescript": "^4.9.5",
+    "vitest": "^0.29.1"
+  }
+}

@@ -1,0 +1,8 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+body {
+  /* prevent swipe to go back */
+  overscroll-behavior: none;
+}
