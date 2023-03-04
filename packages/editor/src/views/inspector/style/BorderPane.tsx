@@ -18,7 +18,6 @@ import edgeBottomIcon from "@seanchas116/design-icons/json/edge-bottom.json";
 import edgeLeftIcon from "@seanchas116/design-icons/json/edge-left.json";
 import { SeparableInput } from "../../../components/SeparableInput";
 import { useContext } from "react";
-import { abstractNodeTypes } from "../../../models/Node";
 
 function BorderWidthEdit() {
   const selectables = useContext(InspectorTargetContext);
@@ -83,7 +82,7 @@ function BorderWidthEdit() {
 
 export const BorderPane: React.FC = observer(function BorderPane() {
   const selectables = projectState.selectedSelectables.filter(
-    (s) => !abstractNodeTypes.includes(s.node.type)
+    (s) => !s.node.isAbstract
   );
   const border = sameOrMixed(selectables.map((s) => s.style.border));
   const hasBorder = border && border !== Mixed;

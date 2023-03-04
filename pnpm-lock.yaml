@@ -16,14 +16,16 @@ importers:
       '@types/glob': ^8.1.0
       '@types/lodash-es': ^4.17.6
       '@types/prettier': ^2.7.2
+      '@types/react': ^18.0.28
       '@types/ws': ^8.5.4
+      '@uimix/editor': workspace:*
       '@uimix/node-data': workspace:*
-      '@uimix/render': workspace:*
       '@vitejs/plugin-react': ^3.1.0
       cac: ^6.7.14
       chokidar: ^3.5.3
       commander: ^10.0.0
       cors: ^2.8.5
+      csstype: ^3.1.1
       data-uri-to-buffer: ^4.0.1
       esbuild: ^0.17.10
       esbuild-node-externals: ^1.6.0
@@ -44,6 +46,7 @@ importers:
       vite: ^4.1.4
       vitest: ^0.29.1
       ws: ^8.12.1
+      yjs: ^13.5.47
       zod: ^3.20.6
     dependencies:
       '@trpc/server': 10.13.2
@@ -70,9 +73,11 @@ importers:
       '@types/glob': 8.1.0
       '@types/lodash-es': 4.17.6
       '@types/prettier': 2.7.2
+      '@types/react': 18.0.28
       '@types/ws': 8.5.4
+      '@uimix/editor': link:../editor
       '@uimix/node-data': link:../node-data
-      '@uimix/render': link:../render
+      csstype: 3.1.1
       esbuild: 0.17.10
       esbuild-node-externals: 1.6.0_esbuild@0.17.10
       esbuild-register: 3.4.2_esbuild@0.17.10
@@ -82,6 +87,7 @@ importers:
       ts-node: 10.9.1_typescript@4.9.5
       typescript: 4.9.5
       vitest: 0.29.1
+      yjs: 13.5.47
 
   packages/editor:
     specifiers:
@@ -122,7 +128,6 @@ importers:
       '@typescript-eslint/eslint-plugin': ^5.54.0
       '@typescript-eslint/parser': ^5.54.0
       '@uimix/node-data': workspace:*
-      '@uimix/render': workspace:*
       '@vitejs/plugin-react': ^3.1.0
       any-base: ^1.1.0
       ariakit: 2.0.0-next.43
@@ -132,6 +137,7 @@ importers:
       clsx: ^1.2.1
       color-namer: ^1.4.0
       css-color-names: ^1.0.1
+      csstype: ^3.1.1
       dedent: ^0.7.0
       eslint: 8.35.0
       eslint-plugin-import: ^2.27.5
@@ -185,7 +191,6 @@ importers:
       '@thoughtbot/tailwindcss-aria-attributes': 0.2.0
       '@trpc/client': 10.13.2
       '@uimix/node-data': link:../node-data
-      '@uimix/render': link:../render
       any-base: 1.1.0
       ariakit: 2.0.0-next.43_zula6vjvt3wdocc4mwcxqa6nzi
       buffer: 6.0.3
@@ -242,6 +247,7 @@ importers:
       autoprefixer: 10.4.13_postcss@8.4.21
       babel-loader: 9.1.2_@babel+core@7.21.0
       color-namer: 1.4.0
+      csstype: 3.1.1
       eslint: 8.35.0
       eslint-plugin-import: 2.27.5_ajyizmi44oc3hrc35l6ndh7p4e
       html-tags: 3.2.0
@@ -260,24 +266,6 @@ importers:
     dependencies:
       zod: 3.20.6
 
-  packages/render:
-    specifiers:
-      '@types/react': ^18.0.28
-      '@types/react-test-renderer': ^18.0.0
-      '@uimix/node-data': workspace:*
-      react: ^18.2.0
-      react-test-renderer: ^18.2.0
-      typescript: ^4.9.5
-      vitest: ^0.29.1
-    devDependencies:
-      '@types/react': 18.0.28
-      '@types/react-test-renderer': 18.0.0
-      '@uimix/node-data': link:../node-data
-      react: 18.2.0
-      react-test-renderer: 18.2.0_react@18.2.0
-      typescript: 4.9.5
-      vitest: 0.29.1
-
   packages/sandbox:
     specifiers:
       '@babel/core': ^7.21.0
@@ -290,14 +278,16 @@ importers:
       '@storybook/testing-library': ^0.0.13
       '@types/react': ^18.0.28
       '@types/react-dom': ^18.0.11
-      '@uimix/render': workspace:*
+      '@types/react-test-renderer': ^18.0.0
       '@vitejs/plugin-react': ^3.1.0
       babel-loader: ^9.1.2
       react: ^18.2.0
       react-dom: ^18.2.0
+      react-test-renderer: ^18.2.0
       typescript: ^4.9.5
       uimix: workspace:*
       vite: ^4.1.4
+      vitest: ^0.29.1
     dependencies:
       react: 18.2.0
       react-dom: 18.2.0_react@18.2.0
@@ -312,12 +302,14 @@ importers:
       '@storybook/testing-library': 0.0.13_biqbaboplfbrettd7655fr4n2y
       '@types/react': 18.0.28
       '@types/react-dom': 18.0.11
-      '@uimix/render': link:../render
+      '@types/react-test-renderer': 18.0.0
       '@vitejs/plugin-react': 3.1.0_vite@4.1.4
       babel-loader: 9.1.2_@babel+core@7.21.0
+      react-test-renderer: 18.2.0_react@18.2.0
       typescript: 4.9.5
       uimix: link:../devserver
       vite: 4.1.4
+      vitest: 0.29.1
 
 packages:
 
@@ -10379,7 +10371,6 @@ packages:
 
   /isomorphic.js/0.2.5:
     resolution: {integrity: sha512-PIeMbHqMt4DnUP3MA/Flc0HElYjMXArsw1qwJZcm9sqR8mq3l8NYizFMty0pWwE/tzIGH3EKK5+jes5mAr85yw==}
-    dev: false
 
   /istanbul-lib-coverage/3.2.0:
     resolution: {integrity: sha512-eOeJ5BHCmHYvQK7xt9GkdHuzuCGS1Y6g9Gvnx3Ym33fz/HpLRYxiS0wHNr+m/MBC8B647Xt608vCDEvhl9c6Mw==}
@@ -10652,7 +10643,6 @@ packages:
     engines: {node: '>=14'}
     dependencies:
       isomorphic.js: 0.2.5
-    dev: false
 
   /lilconfig/2.0.6:
     resolution: {integrity: sha512-9JROoBW7pobfsx+Sq2JsASvCo6Pfo6WWoUW79HuB1BCoBXD4PLWJPqDF6fNj67pqBYTbAHkE57M1kS/+L1neOg==}
@@ -15119,7 +15109,6 @@ packages:
     resolution: {integrity: sha512-F7BZ+Bt36OAt+bdSQS7TN43KSxsHjfXWfcLC526tJ3mctO1FYHGEtOrUqpLC7pSp4jPn4rKSYHv1PVQcdb/vIQ==}
     dependencies:
       lib0: 0.2.63
-    dev: false
 
   /yn/3.1.1:
     resolution: {integrity: sha512-Ux4ygGWsu2c7isFWe8Yu1YluJmqVhxqK2cLXNQA5AcC3QfbGNpM7fu0Y8b/z16pXLnFxZYvWhd3fhBY9DLmC6Q==}

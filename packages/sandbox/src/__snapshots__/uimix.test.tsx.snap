@@ -1,0 +1,128 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`render 1`] = `
+<div
+  className="uimix-1Bvi2z3UPfi6W3L8nDt5VA other-class"
+>
+  <div
+    className="uimix-1Bvi2z3UGTM64JtRT7Qc1S"
+  >
+    Hello, world!
+  </div>
+</div>
+`;
+
+exports[`render 2`] = `
+<div
+  className="uimix-1Bvi319YVxZELz4tEskN1S"
+>
+  <header
+    className="uimix-1Bvi31VKu8gfy6XzJ8xrHA"
+  >
+    <div
+      className="wrapper"
+    >
+      <div>
+        <svg
+          height="32"
+          viewBox="0 0 32 32"
+          width="32"
+          xmlns="http://www.w3.org/2000/svg"
+        >
+          <g
+            fill="none"
+            fillRule="evenodd"
+          >
+            <path
+              d="M10 0h12a10 10 0 0110 10v12a10 10 0 01-10 10H10A10 10 0 010 22V10A10 10 0 0110 0z"
+              fill="#FFF"
+            />
+            <path
+              d="M5.3 10.6l10.4 6v11.1l-10.4-6v-11zm11.4-6.2l9.7 5.5-9.7 5.6V4.4z"
+              fill="#555AB9"
+            />
+            <path
+              d="M27.2 10.6v11.2l-10.5 6V16.5l10.5-6zM15.7 4.4v11L6 10l9.7-5.5z"
+              fill="#91BAF8"
+            />
+          </g>
+        </svg>
+        <h1>
+          Acme
+        </h1>
+      </div>
+      <div>
+        <button
+          className="storybook-button storybook-button--small storybook-button--secondary "
+          style={
+            {
+              "backgroundColor": undefined,
+            }
+          }
+          type="button"
+        >
+          Log in
+        </button>
+        <button
+          className="storybook-button storybook-button--small storybook-button--primary "
+          style={
+            {
+              "backgroundColor": undefined,
+            }
+          }
+          type="button"
+        >
+          Sign up
+        </button>
+      </div>
+    </div>
+  </header>
+  <div
+    className="uimix-1Bvi365mtWZmXKDPeJTB4s"
+  >
+    <button
+      className="storybook-button storybook-button--large storybook-button--primary uimix-1Bvi32d9RMi3ES5kk2UvuM"
+      style={
+        {
+          "backgroundColor": "red",
+        }
+      }
+      type="button"
+    >
+      Override Button Label
+    </button>
+    <div
+      className="uimix-1Bvi2z3UrU9VkawwAteXs8 uimix-1Bvi2z3UPfi6W3L8nDt5VA"
+    >
+      <div
+        className="uimix-1Bvi2z3UrU9VkawwAteXs8-1Bvi2z3UGTM64JtRT7Qc1S uimix-1Bvi2z3UGTM64JtRT7Qc1S"
+      >
+        Override Name
+      </div>
+    </div>
+    <img
+      alt="Image"
+      className="uimix-1Bvi392qBdMy93LGLcVymb"
+      src="/src/uimix/images/YmY-tuteU03QY-k_2ARy1uacNmXDNmOX-FFAlj2qCIo=.png"
+    />
+    <div
+      className="uimix-1Bvi39mct9UNYZ9eTCCRdV uimix-1Bvi2z3TfkSpYXW29daTN8"
+    >
+      <div
+        className="uimix-1Bvi39mct9UNYZ9eTCCRdV-1Bvi2z3TpKXtTJLTRPTEd8 uimix-1Bvi2z3TpKXtTJLTRPTEd8"
+      />
+      <div
+        className="uimix-1Bvi39mct9UNYZ9eTCCRdV-1Bvi2z3To8ddXo6R6ZftVD uimix-1Bvi2z3To8ddXo6R6ZftVD"
+      />
+      <div
+        className="uimix-1Bvi39mct9UNYZ9eTCCRdV-1Bvi2z3UB1xUVg4Xz9WTpJ uimix-1Bvi2z3UB1xUVg4Xz9WTpJ"
+      />
+      <div
+        className="uimix-1Bvi39mct9UNYZ9eTCCRdV-1Bvi2z3U3SiK6r7gf9vh7N uimix-1Bvi2z3U3SiK6r7gf9vh7N"
+      >
+        Override inner item
+      </div>
+    </div>
+  </div>
+</div>
+`;

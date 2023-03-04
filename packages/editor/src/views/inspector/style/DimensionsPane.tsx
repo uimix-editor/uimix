@@ -13,7 +13,6 @@ import { projectState } from "../../../state/ProjectState";
 import { InspectorTargetContext } from "../components/InspectorTargetContext";
 import { Selectable } from "../../../models/Selectable";
 import { sameOrMixed } from "../../../utils/Mixed";
-import { abstractNodeTypes } from "../../../models/Node";
 import { InspectorHeading } from "../components/InspectorHeading";
 
 const verticalSizeConstraintOptions: ToggleGroupItem<SizeConstraintType>[] = [
@@ -78,7 +77,7 @@ const InspectorAnchorEdit = observer(function InspectorAnchorEdit({
 
 export const DimensionsPane: React.FC = observer(function DimensionPane() {
   const selectables = projectState.selectedSelectables.filter(
-    (s) => !abstractNodeTypes.includes(s.node.type)
+    (s) => !s.node.isAbstract
   );
   if (!selectables.length) {
     return null;

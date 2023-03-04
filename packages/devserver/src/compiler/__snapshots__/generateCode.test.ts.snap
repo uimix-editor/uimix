@@ -4,12 +4,9 @@ exports[`generateCode > generates code 1`] = `
 {
   "index.css": ".uimix-1Bvi2z3UPfi6W3L8nDt5VA {
   position: relative;
-  display: flex;
-  border-style: solid;
   width: max-content;
-  min-width: max-content;
   height: max-content;
-  min-height: max-content;
+  display: flex;
   flex-direction: row;
   align-items: flex-start;
   justify-content: flex-start;
@@ -18,7 +15,8 @@ exports[`generateCode > generates code 1`] = `
   padding-right: 8px;
   padding-top: 4px;
   padding-bottom: 4px;
-  background: #e5e7eb;
+  background: #E5E7EB;
+  border-style: solid;
   border-color: transparent;
   border-top-width: 0px;
   border-right-width: 0px;
@@ -26,20 +24,17 @@ exports[`generateCode > generates code 1`] = `
   border-left-width: 0px;
 }
 .uimix-1Bvi2z3UPfi6W3L8nDt5VA:hover {
-  background: #3b82f6;
+  background: #3B82F6;
 }
 @media (max-width: 767px) {
-  .uimix-1Bvi2z3UPfi6W3L8nDt5VA {
-  }
+.uimix-1Bvi2z3UaHFmaikKtfcmGX {
+}
 }
 .uimix-1Bvi2z3TfkSpYXW29daTN8 {
   position: relative;
-  display: flex;
-  border-style: solid;
   width: max-content;
-  min-width: max-content;
   height: max-content;
-  min-height: max-content;
+  display: flex;
   flex-direction: row;
   align-items: flex-start;
   justify-content: flex-start;
@@ -48,7 +43,8 @@ exports[`generateCode > generates code 1`] = `
   padding-right: 20px;
   padding-top: 10px;
   padding-bottom: 30px;
-  background: #ffffff;
+  background: #FFFFFF;
+  border-style: solid;
   border-color: transparent;
   border-top-width: 0px;
   border-right-width: 0px;
@@ -57,12 +53,9 @@ exports[`generateCode > generates code 1`] = `
 }
 .uimix-1Bvi319YVxZELz4tEskN1S {
   position: relative;
-  display: flex;
-  border-style: solid;
   width: 744px;
-  min-width: 744px;
   height: 456px;
-  min-height: 456px;
+  display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: flex-start;
@@ -71,7 +64,8 @@ exports[`generateCode > generates code 1`] = `
   padding-right: 0px;
   padding-top: 0px;
   padding-bottom: 0px;
-  background: #ffffff;
+  background: #FFFFFF;
+  border-style: solid;
   border-color: transparent;
   border-top-width: 0px;
   border-right-width: 0px;
@@ -80,13 +74,11 @@ exports[`generateCode > generates code 1`] = `
 }
 .uimix-1Bvi2z3UGTM64JtRT7Qc1S {
   position: relative;
+  width: max-content;
+  height: max-content;
   white-space: break-spaces;
   display: flex;
   flex-direction: column;
-  width: max-content;
-  min-width: max-content;
-  height: max-content;
-  min-height: max-content;
   color: #111827;
   font-family: Inter;
   font-size: 16px;
@@ -97,22 +89,17 @@ exports[`generateCode > generates code 1`] = `
   justify-content: flex-start;
 }
 .uimix-1Bvi2z3UPfi6W3L8nDt5VA:hover .uimix-1Bvi2z3UGTM64JtRT7Qc1S {
-  color: #ffffff;
-  line-height: undefined;
+  color: #FFFFFF;
 }
 @media (max-width: 767px) {
-  .uimix-1Bvi2z3UGTM64JtRT7Qc1S {
-    line-height: undefined;
-  }
+.uimix-1Bvi2z3UaHFmaikKtfcmGX-1Bvi2z3UGTM64JtRT7Qc1S {
+}
 }
 .uimix-1Bvi2z3TpKXtTJLTRPTEd8 {
   position: relative;
-  display: flex;
-  border-style: solid;
   width: 50px;
-  min-width: 50px;
   height: 50px;
-  min-height: 50px;
+  display: flex;
   flex-direction: row;
   align-items: flex-start;
   justify-content: flex-start;
@@ -121,7 +108,8 @@ exports[`generateCode > generates code 1`] = `
   padding-right: 0px;
   padding-top: 0px;
   padding-bottom: 0px;
-  background: #ef4444;
+  background: #EF4444;
+  border-style: solid;
   border-color: transparent;
   border-top-width: 0px;
   border-right-width: 0px;
@@ -130,12 +118,9 @@ exports[`generateCode > generates code 1`] = `
 }
 .uimix-1Bvi2z3To8ddXo6R6ZftVD {
   position: relative;
-  display: flex;
-  border-style: solid;
   width: 40px;
-  min-width: 40px;
   height: 80px;
-  min-height: 80px;
+  display: flex;
   flex-direction: row;
   align-items: flex-start;
   justify-content: flex-start;
@@ -144,7 +129,8 @@ exports[`generateCode > generates code 1`] = `
   padding-right: 0px;
   padding-top: 0px;
   padding-bottom: 0px;
-  background: #22c55e;
+  background: #22C55E;
+  border-style: solid;
   border-color: transparent;
   border-top-width: 0px;
   border-right-width: 0px;
@@ -153,12 +139,9 @@ exports[`generateCode > generates code 1`] = `
 }
 .uimix-1Bvi2z3UB1xUVg4Xz9WTpJ {
   position: relative;
-  display: flex;
-  border-style: solid;
   width: 80px;
-  min-width: 80px;
   height: 40px;
-  min-height: 40px;
+  display: flex;
   flex-direction: row;
   align-items: flex-start;
   justify-content: flex-start;
@@ -167,7 +150,8 @@ exports[`generateCode > generates code 1`] = `
   padding-right: 0px;
   padding-top: 0px;
   padding-bottom: 0px;
-  background: #3b82f6;
+  background: #3B82F6;
+  border-style: solid;
   border-color: transparent;
   border-top-width: 0px;
   border-right-width: 0px;
@@ -176,13 +160,11 @@ exports[`generateCode > generates code 1`] = `
 }
 .uimix-1Bvi2z3U3SiK6r7gf9vh7N {
   position: relative;
+  width: max-content;
+  height: max-content;
   white-space: break-spaces;
   display: flex;
   flex-direction: column;
-  width: max-content;
-  min-width: max-content;
-  height: max-content;
-  min-height: max-content;
   color: #000000;
   font-family: Inter;
   font-size: 20px;
@@ -194,19 +176,14 @@ exports[`generateCode > generates code 1`] = `
 }
 .uimix-1Bvi31VKu8gfy6XzJ8xrHA {
   position: relative;
-  min-width: 0;
-  width: 100%;
+  align-self: stretch;
   height: max-content;
-  min-height: max-content;
 }
 .uimix-1Bvi365mtWZmXKDPeJTB4s {
   position: relative;
+  align-self: stretch;
+  flex: 1;
   display: flex;
-  border-style: solid;
-  min-width: 0;
-  width: 100%;
-  min-height: 0;
-  height: 100%;
   flex-direction: row;
   align-items: flex-start;
   justify-content: flex-start;
@@ -215,7 +192,8 @@ exports[`generateCode > generates code 1`] = `
   padding-right: 0px;
   padding-top: 0px;
   padding-bottom: 0px;
-  background: #ffffff;
+  background: #FFFFFF;
+  border-style: solid;
   border-color: transparent;
   border-top-width: 0px;
   border-right-width: 0px;
@@ -227,503 +205,196 @@ exports[`generateCode > generates code 1`] = `
   left: 33px;
   top: 28px;
   width: max-content;
-  min-width: max-content;
   height: max-content;
-  min-height: max-content;
 }
 .uimix-1Bvi2z3UrU9VkawwAteXs8 {
   position: absolute;
-  display: flex;
-  border-style: solid;
   left: 160px;
   top: 28px;
-  width: max-content;
-  min-width: max-content;
-  height: max-content;
-  min-height: max-content;
-  flex-direction: row;
-  align-items: flex-start;
-  justify-content: flex-start;
-  gap: 0px;
-  padding-left: 8px;
-  padding-right: 8px;
-  padding-top: 4px;
-  padding-bottom: 4px;
-  background: #bababa;
-  border-color: transparent;
-  border-top-width: 0px;
-  border-right-width: 0px;
-  border-bottom-width: 0px;
-  border-left-width: 0px;
+  background: #BABABA;
+}
+.uimix-1Bvi2z3UrU9VkawwAteXs8-1Bvi2z3UGTM64JtRT7Qc1S {
 }
 .uimix-1Bvi392qBdMy93LGLcVymb {
   position: absolute;
   left: 33px;
   top: 97px;
   width: 100px;
-  min-width: 100px;
   height: 100px;
-  min-height: 100px;
 }
 .uimix-1Bvi39mct9UNYZ9eTCCRdV {
   position: absolute;
-  display: flex;
-  border-style: solid;
   left: 165px;
   top: 86px;
-  width: max-content;
-  min-width: max-content;
-  height: max-content;
-  min-height: max-content;
-  flex-direction: row;
-  align-items: flex-start;
-  justify-content: flex-start;
-  gap: 10px;
-  padding-left: 40px;
-  padding-right: 20px;
-  padding-top: 10px;
-  padding-bottom: 30px;
-  background: #ffffff;
-  border-color: transparent;
-  border-top-width: 0px;
-  border-right-width: 0px;
-  border-bottom-width: 0px;
-  border-left-width: 0px;
-}
-.uimix-1Bvi2z3UrU9VkawwAteXs8-1Bvi2z3UGTM64JtRT7Qc1S {
-  position: relative;
-  white-space: break-spaces;
-  display: flex;
-  flex-direction: column;
-  width: max-content;
-  min-width: max-content;
-  height: max-content;
-  min-height: max-content;
-  color: #111827;
-  font-family: Inter;
-  font-size: 16px;
-  font-weight: 400;
-  line-height: 1.5;
-  letter-spacing: 0em;
-  text-align: start;
-  justify-content: flex-start;
 }
 .uimix-1Bvi39mct9UNYZ9eTCCRdV-1Bvi2z3TpKXtTJLTRPTEd8 {
-  position: relative;
-  display: flex;
-  border-style: solid;
-  width: 50px;
-  min-width: 50px;
-  height: 50px;
-  min-height: 50px;
-  flex-direction: row;
-  align-items: flex-start;
-  justify-content: flex-start;
-  gap: 0px;
-  padding-left: 0px;
-  padding-right: 0px;
-  padding-top: 0px;
-  padding-bottom: 0px;
-  background: #ef4444;
-  border-color: transparent;
-  border-top-width: 0px;
-  border-right-width: 0px;
-  border-bottom-width: 0px;
-  border-left-width: 0px;
 }
 .uimix-1Bvi39mct9UNYZ9eTCCRdV-1Bvi2z3To8ddXo6R6ZftVD {
-  position: relative;
-  display: flex;
-  border-style: solid;
-  width: 40px;
-  min-width: 40px;
-  height: 80px;
-  min-height: 80px;
-  flex-direction: row;
-  align-items: flex-start;
-  justify-content: flex-start;
-  gap: 0px;
-  padding-left: 0px;
-  padding-right: 0px;
-  padding-top: 0px;
-  padding-bottom: 0px;
-  background: #22c55e;
-  border-color: transparent;
-  border-top-width: 0px;
-  border-right-width: 0px;
-  border-bottom-width: 0px;
-  border-left-width: 0px;
 }
 .uimix-1Bvi39mct9UNYZ9eTCCRdV-1Bvi2z3UB1xUVg4Xz9WTpJ {
-  position: relative;
-  display: flex;
-  border-style: solid;
-  width: 80px;
-  min-width: 80px;
-  height: 40px;
-  min-height: 40px;
-  flex-direction: row;
-  align-items: flex-start;
-  justify-content: flex-start;
-  gap: 0px;
-  padding-left: 0px;
-  padding-right: 0px;
-  padding-top: 0px;
-  padding-bottom: 0px;
-  background: #3b82f6;
-  border-color: transparent;
-  border-top-width: 0px;
-  border-right-width: 0px;
-  border-bottom-width: 0px;
-  border-left-width: 0px;
 }
 .uimix-1Bvi39mct9UNYZ9eTCCRdV-1Bvi2z3U3SiK6r7gf9vh7N {
-  position: relative;
-  white-space: break-spaces;
-  display: flex;
-  flex-direction: column;
-  width: max-content;
-  min-width: max-content;
-  height: max-content;
-  min-height: max-content;
-  color: #000000;
-  font-family: Inter;
-  font-size: 20px;
-  font-weight: 400;
-  line-height: 1.5;
-  letter-spacing: 0em;
-  text-align: start;
-  justify-content: flex-start;
-}
-",
-  "index.ts": "import React from \\"react\\";
-import { createReactComponents } from \\"@uimix/render\\";
-import \\"./index.css\\";
+}",
+  "index.tsx": "import React from \\"react\\";
 import * as header from \\"../../src/stories/Header\\";
 import * as button from \\"../../src/stories/Button\\";
 import image_YmY$tuteU03QY$k_2ARy1uacNmXDNmOX$FFAlj2qCIo from \\"./images/YmY-tuteU03QY-k_2ARy1uacNmXDNmOX-FFAlj2qCIo=.png\\";
+import \\"./index.css\\";
 
-const components = createReactComponents(
-  {
-    nodes: {
-      \\"1Bvi2ymHPmVHms6RDurmNN\\": { type: \\"page\\", name: \\"Page 1\\", index: 0 },
-      \\"1Bvi2z3USBZi1pWrvPd6Ut\\": {
-        type: \\"component\\",
-        name: \\"Button\\",
-        parent: \\"1Bvi2ymHPmVHms6RDurmNN\\",
-        index: 11,
-      },
-      \\"1Bvi2z3UPfi6W3L8nDt5VA\\": {
-        type: \\"frame\\",
-        name: \\"\\",
-        parent: \\"1Bvi2z3USBZi1pWrvPd6Ut\\",
-        index: 0,
-      },
-      \\"1Bvi2z3UGTM64JtRT7Qc1S\\": {
-        type: \\"text\\",
-        name: \\"Text\\",
-        parent: \\"1Bvi2z3UPfi6W3L8nDt5VA\\",
-        index: 0,
-      },
-      \\"1Bvi2z3UVsEskiSt2TcdL7\\": {
-        type: \\"variant\\",
-        name: \\"\\",
-        condition: { type: \\"hover\\" },
-        parent: \\"1Bvi2z3USBZi1pWrvPd6Ut\\",
-        index: 1,
-      },
-      \\"1Bvi2z3UaHFmaikKtfcmGX\\": {
-        type: \\"variant\\",
-        name: \\"\\",
-        condition: { type: \\"maxWidth\\", value: 767 },
-        parent: \\"1Bvi2z3USBZi1pWrvPd6Ut\\",
-        index: 2,
-      },
-      \\"1Bvi2zJALza4DrqmNaGYAk\\": {
-        type: \\"component\\",
-        name: \\"Stack\\",
-        parent: \\"1Bvi2ymHPmVHms6RDurmNN\\",
-        index: 13,
-      },
-      \\"1Bvi2z3TfkSpYXW29daTN8\\": {
-        type: \\"frame\\",
-        name: \\"Stack\\",
-        parent: \\"1Bvi2zJALza4DrqmNaGYAk\\",
-        index: 0,
-      },
-      \\"1Bvi2z3TpKXtTJLTRPTEd8\\": {
-        type: \\"frame\\",
-        name: \\"Item 0\\",
-        parent: \\"1Bvi2z3TfkSpYXW29daTN8\\",
-        index: 0,
-      },
-      \\"1Bvi2z3To8ddXo6R6ZftVD\\": {
-        type: \\"frame\\",
-        name: \\"Item 1\\",
-        parent: \\"1Bvi2z3TfkSpYXW29daTN8\\",
-        index: 1,
-      },
-      \\"1Bvi2z3UB1xUVg4Xz9WTpJ\\": {
-        type: \\"frame\\",
-        name: \\"Item 2\\",
-        parent: \\"1Bvi2z3TfkSpYXW29daTN8\\",
-        index: 2,
-      },
-      \\"1Bvi2z3U3SiK6r7gf9vh7N\\": {
-        type: \\"text\\",
-        name: \\"Text\\",
-        parent: \\"1Bvi2z3TfkSpYXW29daTN8\\",
-        index: 3,
-      },
-      \\"1Bvi3BSSb2oaHb1ZqUEk6H\\": {
-        type: \\"component\\",
-        name: \\"Page\\",
-        parent: \\"1Bvi2ymHPmVHms6RDurmNN\\",
-        index: 14,
-      },
-      \\"1Bvi319YVxZELz4tEskN1S\\": {
-        type: \\"frame\\",
-        name: \\"Frame\\",
-        parent: \\"1Bvi3BSSb2oaHb1ZqUEk6H\\",
-        index: 0,
-      },
-      \\"1Bvi31VKu8gfy6XzJ8xrHA\\": {
-        type: \\"foreign\\",
-        name: \\"Header\\",
-        parent: \\"1Bvi319YVxZELz4tEskN1S\\",
-        index: 1,
-      },
-      \\"1Bvi365mtWZmXKDPeJTB4s\\": {
-        type: \\"frame\\",
-        name: \\"Frame\\",
-        parent: \\"1Bvi319YVxZELz4tEskN1S\\",
-        index: 3,
-      },
-      \\"1Bvi32d9RMi3ES5kk2UvuM\\": {
-        type: \\"foreign\\",
-        name: \\"Button\\",
-        parent: \\"1Bvi365mtWZmXKDPeJTB4s\\",
-        index: 0,
-      },
-      \\"1Bvi2z3UrU9VkawwAteXs8\\": {
-        type: \\"instance\\",
-        name: \\"Instance\\",
-        parent: \\"1Bvi365mtWZmXKDPeJTB4s\\",
-        index: 1,
-      },
-      \\"1Bvi392qBdMy93LGLcVymb\\": {
-        type: \\"image\\",
-        name: \\"Image\\",
-        parent: \\"1Bvi365mtWZmXKDPeJTB4s\\",
-        index: 2,
-      },
-      \\"1Bvi39mct9UNYZ9eTCCRdV\\": {
-        type: \\"instance\\",
-        name: \\"Stack\\",
-        parent: \\"1Bvi365mtWZmXKDPeJTB4s\\",
-        index: 3,
-      },
-    },
-    styles: {
-      \\"1Bvi2ymHPmVHms6RDurmNN\\": {},
-      \\"1Bvi2z3USBZi1pWrvPd6Ut\\": {},
-      \\"1Bvi2z3UPfi6W3L8nDt5VA\\": {
-        position: {
-          x: { type: \\"start\\", start: 50 },
-          y: { type: \\"start\\", start: 400 },
-        },
-        width: { type: \\"hugContents\\" },
-        height: { type: \\"hugContents\\" },
-        fill: \\"#E5E7EB\\",
-        layout: \\"stack\\",
-        paddingTop: 4,
-        paddingRight: 8,
-        paddingBottom: 4,
-        paddingLeft: 8,
-      },
-      \\"1Bvi2z3UGTM64JtRT7Qc1S\\": {
-        width: { type: \\"hugContents\\" },
-        height: { type: \\"hugContents\\" },
-        fill: \\"#111827\\",
-        textContent: \\"Button\\",
-      },
-      \\"1Bvi2z3UVsEskiSt2TcdL7\\": {
-        position: {
-          x: { type: \\"start\\", start: 200 },
-          y: { type: \\"start\\", start: 400 },
-        },
-        fill: \\"#3B82F6\\",
-      },
-      \\"1Bvi2z3UVsEskiSt2TcdL7:1Bvi2z3UGTM64JtRT7Qc1S\\": { fill: \\"#FFFFFF\\" },
-      \\"1Bvi2z3UaHFmaikKtfcmGX\\": {
-        position: {
-          x: { type: \\"start\\", start: 350 },
-          y: { type: \\"start\\", start: 400 },
-        },
-      },
-      \\"1Bvi2z3UaHFmaikKtfcmGX:1Bvi2z3UGTM64JtRT7Qc1S\\": {},
-      \\"1Bvi2zJALza4DrqmNaGYAk\\": {},
-      \\"1Bvi2z3TfkSpYXW29daTN8\\": {
-        position: {
-          x: { type: \\"start\\", start: 50 },
-          y: { type: \\"start\\", start: 184 },
-        },
-        width: { type: \\"hugContents\\" },
-        height: { type: \\"hugContents\\" },
-        fill: \\"#FFFFFF\\",
-        layout: \\"stack\\",
-        gap: 10,
-        paddingTop: 10,
-        paddingRight: 20,
-        paddingBottom: 30,
-        paddingLeft: 40,
-      },
-      \\"1Bvi2z3TpKXtTJLTRPTEd8\\": {
-        width: { type: \\"fixed\\", value: 50 },
-        height: { type: \\"fixed\\", value: 50 },
-        fill: \\"#EF4444\\",
-      },
-      \\"1Bvi2z3To8ddXo6R6ZftVD\\": {
-        width: { type: \\"fixed\\", value: 40 },
-        height: { type: \\"fixed\\", value: 80 },
-        fill: \\"#22C55E\\",
-      },
-      \\"1Bvi2z3UB1xUVg4Xz9WTpJ\\": {
-        width: { type: \\"fixed\\", value: 80 },
-        height: { type: \\"fixed\\", value: 40 },
-        fill: \\"#3B82F6\\",
-      },
-      \\"1Bvi2z3U3SiK6r7gf9vh7N\\": {
-        width: { type: \\"hugContents\\" },
-        height: { type: \\"hugContents\\" },
-        fill: \\"#000000\\",
-        textContent: \\"Hello, world!\\",
-        fontSize: 20,
-      },
-      \\"1Bvi3BSSb2oaHb1ZqUEk6H\\": {},
-      \\"1Bvi319YVxZELz4tEskN1S\\": {
-        position: {
-          x: { type: \\"start\\", start: 50 },
-          y: { type: \\"start\\", start: 585 },
-        },
-        width: { type: \\"fixed\\", value: 744 },
-        height: { type: \\"fixed\\", value: 456 },
-        fill: \\"#FFFFFF\\",
-        layout: \\"stack\\",
-        stackDirection: \\"y\\",
-        stackAlign: \\"center\\",
-      },
-      \\"1Bvi31VKu8gfy6XzJ8xrHA\\": {
-        width: { type: \\"fillContainer\\", value: 744 },
-        height: { type: \\"hugContents\\" },
-        foreignComponentID: {
-          type: \\"react\\",
-          path: \\"src/stories/Header.tsx\\",
-          name: \\"Header\\",
-          props: { label: \\"Button\\" },
-        },
-      },
-      \\"1Bvi365mtWZmXKDPeJTB4s\\": {
-        position: {
-          x: { type: \\"start\\", start: 210 },
-          y: { type: \\"start\\", start: 142 },
-        },
-        width: { type: \\"fillContainer\\", value: 428 },
-        height: { type: \\"fillContainer\\", value: 173 },
-        fill: \\"#FFFFFF\\",
-      },
-      \\"1Bvi32d9RMi3ES5kk2UvuM\\": {
-        position: {
-          x: { type: \\"start\\", start: 33 },
-          y: { type: \\"start\\", start: 28 },
-        },
-        width: { type: \\"hugContents\\" },
-        height: { type: \\"hugContents\\" },
-        foreignComponentID: {
-          type: \\"react\\",
-          path: \\"src/stories/Button.tsx\\",
-          name: \\"Button\\",
-          props: {
+function applyOverrides(
+  rootProps: any,
+  element: React.ReactElement
+): React.ReactElement {
+  const { \\"data-refID\\": refID, ...props } = element.props;
+
+  let additionalProps: any = rootProps;
+  for (const id of refID ?? []) {
+    additionalProps = additionalProps[id + \\"Props\\"] ?? {};
+  }
+  additionalProps = { ...additionalProps };
+  for (const key of Object.keys(additionalProps)) {
+    if (key.endsWith(\\"Props\\")) {
+      delete additionalProps[key];
+    }
+  }
+
+  const result = React.cloneElement(
+    { ...element, props },
+    {
+      ...additionalProps,
+      className: additionalProps.className
+        ? props.className + \\" \\" + additionalProps.className
+        : props.className,
+      children:
+        additionalProps.children ??
+        React.Children.map(element.props.children, (child) => {
+          if (React.isValidElement(child)) {
+            return applyOverrides(rootProps, child);
+          } else {
+            return child;
+          }
+        }),
+    }
+  );
+  return result;
+}
+
+export const Button = React.forwardRef((props, ref) => {
+  return applyOverrides(
+    { ...props, ref },
+    <div className=\\"uimix-1Bvi2z3UPfi6W3L8nDt5VA\\">
+      <div className=\\"uimix-1Bvi2z3UGTM64JtRT7Qc1S\\" data-refID={[\\"text\\"]}>
+        Button
+      </div>
+    </div>
+  );
+}) as React.FC<
+  JSX.IntrinsicElements[\\"div\\"] & {
+    textProps?: JSX.IntrinsicElements[\\"div\\"];
+  }
+>;
+
+export const Stack = React.forwardRef((props, ref) => {
+  return applyOverrides(
+    { ...props, ref },
+    <div className=\\"uimix-1Bvi2z3TfkSpYXW29daTN8\\">
+      <div
+        className=\\"uimix-1Bvi2z3TpKXtTJLTRPTEd8\\"
+        data-refID={[\\"item_0\\"]}
+      ></div>
+      <div
+        className=\\"uimix-1Bvi2z3To8ddXo6R6ZftVD\\"
+        data-refID={[\\"item_1\\"]}
+      ></div>
+      <div
+        className=\\"uimix-1Bvi2z3UB1xUVg4Xz9WTpJ\\"
+        data-refID={[\\"item_2\\"]}
+      ></div>
+      <div className=\\"uimix-1Bvi2z3U3SiK6r7gf9vh7N\\" data-refID={[\\"text\\"]}>
+        Hello, world!
+      </div>
+    </div>
+  );
+}) as React.FC<
+  JSX.IntrinsicElements[\\"div\\"] & {
+    item_0Props?: JSX.IntrinsicElements[\\"div\\"];
+    item_1Props?: JSX.IntrinsicElements[\\"div\\"];
+    item_2Props?: JSX.IntrinsicElements[\\"div\\"];
+    textProps?: JSX.IntrinsicElements[\\"div\\"];
+  }
+>;
+
+export const Page = React.forwardRef((props, ref) => {
+  return applyOverrides(
+    { ...props, ref },
+    <div className=\\"uimix-1Bvi319YVxZELz4tEskN1S\\">
+      <header.Header
+        className=\\"uimix-1Bvi31VKu8gfy6XzJ8xrHA\\"
+        data-refID={[\\"header\\"]}
+        {...{}}
+      />
+      <div className=\\"uimix-1Bvi365mtWZmXKDPeJTB4s\\" data-refID={[\\"frame\\"]}>
+        <button.Button
+          className=\\"uimix-1Bvi32d9RMi3ES5kk2UvuM\\"
+          data-refID={[\\"button\\"]}
+          {...{
             label: \\"Button1\\",
             primary: true,
             backgroundColor: \\"red\\",
             size: \\"large\\",
-          },
-        },
-      },
-      \\"1Bvi2z3UrU9VkawwAteXs8\\": {
-        position: {
-          x: { type: \\"start\\", start: 160 },
-          y: { type: \\"start\\", start: 28 },
-        },
-        fill: \\"#BABABA\\",
-        mainComponentID: \\"1Bvi2z3USBZi1pWrvPd6Ut\\",
-      },
-      \\"1Bvi2z3UrU9VkawwAteXs8:1Bvi2z3UGTM64JtRT7Qc1S\\": {
-        textContent: \\"Override Name\\",
-      },
-      \\"1Bvi392qBdMy93LGLcVymb\\": {
-        position: {
-          x: { type: \\"start\\", start: 33 },
-          y: { type: \\"start\\", start: 97 },
-        },
-        width: { type: \\"fixed\\", value: 100 },
-        height: { type: \\"fixed\\", value: 100 },
-        fill: \\"#FFFFFF\\",
-        imageHash: \\"YmY-tuteU03QY-k_2ARy1uacNmXDNmOX-FFAlj2qCIo=\\",
-      },
-      \\"1Bvi39mct9UNYZ9eTCCRdV\\": {
-        position: {
-          x: { type: \\"start\\", start: 165 },
-          y: { type: \\"start\\", start: 86 },
-        },
-        mainComponentID: \\"1Bvi2zJALza4DrqmNaGYAk\\",
-      },
-      \\"1Bvi39mct9UNYZ9eTCCRdV:1Bvi2z3TpKXtTJLTRPTEd8\\": {},
-      \\"1Bvi39mct9UNYZ9eTCCRdV:1Bvi2z3To8ddXo6R6ZftVD\\": {},
-      \\"1Bvi39mct9UNYZ9eTCCRdV:1Bvi2z3UB1xUVg4Xz9WTpJ\\": {},
-      \\"1Bvi39mct9UNYZ9eTCCRdV:1Bvi2z3U3SiK6r7gf9vh7N\\": {},
-    },
-  },
-  {
-    \\"YmY-tuteU03QY-k_2ARy1uacNmXDNmOX-FFAlj2qCIo=\\":
-      image_YmY$tuteU03QY$k_2ARy1uacNmXDNmOX$FFAlj2qCIo,
-  },
-  {
-    \\"src/stories/Header.tsx\\": header,
-    \\"src/stories/Button.tsx\\": button,
-  }
-);
-
-export const Button = components.get(\\"Button\\") as React.FC<
+          }}
+        />
+        <div
+          className=\\"uimix-1Bvi2z3UrU9VkawwAteXs8 uimix-1Bvi2z3UPfi6W3L8nDt5VA\\"
+          data-refID={[\\"instance\\"]}
+        >
+          <div
+            className=\\"uimix-1Bvi2z3UrU9VkawwAteXs8-1Bvi2z3UGTM64JtRT7Qc1S uimix-1Bvi2z3UGTM64JtRT7Qc1S\\"
+            data-refID={[\\"instance\\", \\"text\\"]}
+          >
+            Override Name
+          </div>
+        </div>
+        <img
+          className=\\"uimix-1Bvi392qBdMy93LGLcVymb\\"
+          data-refID={[\\"image\\"]}
+          src={image_YmY$tuteU03QY$k_2ARy1uacNmXDNmOX$FFAlj2qCIo}
+          alt=\\"Image\\"
+        />
+        <div
+          className=\\"uimix-1Bvi39mct9UNYZ9eTCCRdV uimix-1Bvi2z3TfkSpYXW29daTN8\\"
+          data-refID={[\\"stack\\"]}
+        >
+          <div
+            className=\\"uimix-1Bvi39mct9UNYZ9eTCCRdV-1Bvi2z3TpKXtTJLTRPTEd8 uimix-1Bvi2z3TpKXtTJLTRPTEd8\\"
+            data-refID={[\\"stack\\", \\"item_0\\"]}
+          ></div>
+          <div
+            className=\\"uimix-1Bvi39mct9UNYZ9eTCCRdV-1Bvi2z3To8ddXo6R6ZftVD uimix-1Bvi2z3To8ddXo6R6ZftVD\\"
+            data-refID={[\\"stack\\", \\"item_1\\"]}
+          ></div>
+          <div
+            className=\\"uimix-1Bvi39mct9UNYZ9eTCCRdV-1Bvi2z3UB1xUVg4Xz9WTpJ uimix-1Bvi2z3UB1xUVg4Xz9WTpJ\\"
+            data-refID={[\\"stack\\", \\"item_2\\"]}
+          ></div>
+          <div
+            className=\\"uimix-1Bvi39mct9UNYZ9eTCCRdV-1Bvi2z3U3SiK6r7gf9vh7N uimix-1Bvi2z3U3SiK6r7gf9vh7N\\"
+            data-refID={[\\"stack\\", \\"text\\"]}
+          >
+            Hello, world!
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+}) as React.FC<
   JSX.IntrinsicElements[\\"div\\"] & {
-    overrides?: {
-      text?: JSX.IntrinsicElements[\\"div\\"];
-    };
-  }
->;
-
-export const Stack = components.get(\\"Stack\\") as React.FC<
-  JSX.IntrinsicElements[\\"div\\"] & {
-    overrides?: {
-      item_0?: JSX.IntrinsicElements[\\"div\\"];
-      item_1?: JSX.IntrinsicElements[\\"div\\"];
-      item_2?: JSX.IntrinsicElements[\\"div\\"];
-      text?: JSX.IntrinsicElements[\\"div\\"];
-    };
-  }
->;
-
-export const Page = components.get(\\"Page\\") as React.FC<
-  JSX.IntrinsicElements[\\"div\\"] & {
-    overrides?: {
-      header?: Partial<React.ComponentProps<typeof header.Header>>;
-      frame?: JSX.IntrinsicElements[\\"div\\"];
-      button?: Partial<React.ComponentProps<typeof button.Button>>;
-      instance?: JSX.IntrinsicElements[\\"div\\"];
-      image?: JSX.IntrinsicElements[\\"div\\"];
-      stack?: JSX.IntrinsicElements[\\"div\\"];
-    };
+    headerProps?: Partial<React.ComponentProps<typeof header.Header>>;
+    frameProps?: JSX.IntrinsicElements[\\"div\\"];
+    buttonProps?: Partial<React.ComponentProps<typeof button.Button>>;
+    instanceProps?: JSX.IntrinsicElements[\\"div\\"];
+    imageProps?: JSX.IntrinsicElements[\\"div\\"];
+    stackProps?: JSX.IntrinsicElements[\\"div\\"];
   }
 >;
 ",

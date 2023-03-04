@@ -21,7 +21,7 @@ function compareNodeKey(a: NodeKey, b: NodeKey) {
   return a.index - b.index;
 }
 
-export const abstractNodeTypes: NodeType[] = ["component"];
+export const abstractNodeTypes: NodeType[] = ["page", "component"];
 
 export class Node {
   // Do not use this constructor directly
@@ -98,6 +98,10 @@ export class Node {
 
   get type(): NodeType {
     return this.data.get("type");
+  }
+
+  get isAbstract(): boolean {
+    return abstractNodeTypes.includes(this.type);
   }
 
   @computed get name(): string {

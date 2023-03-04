@@ -10,11 +10,10 @@ import { InspectorHeading } from "../components/InspectorHeading";
 import { InspectorPane } from "../components/InspectorPane";
 import { action } from "mobx";
 import { InspectorTargetContext } from "../components/InspectorTargetContext";
-import { abstractNodeTypes } from "../../../models/Node";
 
 export const FillPane: React.FC = observer(function FillPane() {
   const selectables = projectState.selectedSelectables.filter(
-    (s) => !abstractNodeTypes.includes(s.node.type)
+    (s) => !s.node.isAbstract
   );
   const fill = sameOrMixed(selectables.map((s) => s.style.fill));
   const hasFill = fill && fill !== Mixed;

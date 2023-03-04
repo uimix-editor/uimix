@@ -1,10 +1,10 @@
 import { action } from "mobx";
 import { observer } from "mobx-react-lite";
 import React, { useCallback, useMemo } from "react";
-import { buildNodeCSS } from "@uimix/render";
 import { createEditor, Transforms, Descendant } from "slate";
 import { Slate, Editable, withReact } from "slate-react";
 import { Selectable } from "../../models/Selectable";
+import { buildNodeCSS } from "../../models/buildNodeCSS";
 import { scrollState } from "../../state/ScrollState";
 import { viewportState } from "../../state/ViewportState";
 

@@ -9,6 +9,7 @@ import { computed, makeObservable } from "mobx";
 import { ProjectJSON } from "@uimix/node-data";
 import { toProjectJSON } from "./toProjectJSON";
 import { ImageManager } from "./ImageManager";
+import { Component } from "./Component";
 
 export interface PageHierarchyFolderEntry {
   type: "directory";
@@ -170,5 +171,20 @@ export class Project {
       const selectable = this.selectables.get(id.split(":"));
       selectable.selfStyle.loadJSON(style);
     }
+  }
+
+  get components(): Component[] {
+    const components: Component[] = [];
+
+    for (const page of this.pages.all) {
+      for (const node of page.children) {
+        const component = Component.from(node);
+        if (component) {
+          components.push(component);
+        }
+      }
+    }
+
+    return components;
   }
 }

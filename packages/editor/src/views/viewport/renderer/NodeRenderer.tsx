@@ -1,6 +1,6 @@
 import React, { createRef, useEffect, useRef, useState } from "react";
 import { observer } from "mobx-react-lite";
-import { buildNodeCSS } from "@uimix/render";
+import { StackDirection } from "@uimix/node-data";
 import { Selectable } from "../../../models/Selectable";
 import { viewportState } from "../../../state/ViewportState";
 import { ComputedRectProvider } from "./ComputedRectProvider";
@@ -10,6 +10,7 @@ import {
   ForeignComponentManager,
 } from "../../../models/ForeignComponentManager";
 import { EventEmitter } from "../../../utils/EventEmitter";
+import { buildNodeCSS } from "../../../models/buildNodeCSS";
 
 export const selectableForDOM = new WeakMap<HTMLElement, Selectable>();
 export const domForSelectable = new WeakMap<Selectable, HTMLElement>();
@@ -45,14 +46,14 @@ const computedRectUpdater = new ComputedRectUpdater();
 
 export const NodeRenderer: React.FC<{
   selectable: Selectable;
-  parentHasLayout?: boolean;
+  parentStackDirection?: StackDirection;
   forThumbnail?: boolean; // must not be changed after mount
   style?: React.CSSProperties;
   foreignComponentManager: ForeignComponentManager;
 }> = observer(
   ({
     selectable,
-    parentHasLayout,
+    parentStackDirection,
     forThumbnail,
     style: additionalCSSStyle,
     foreignComponentManager,
@@ -64,7 +65,7 @@ export const NodeRenderer: React.FC<{
     const cssStyle: React.CSSProperties = {
       all: "revert",
       boxSizing: "border-box",
-      ...buildNodeCSS(type, style, parentHasLayout),
+      ...buildNodeCSS(type, style, parentStackDirection),
       ...(selectable === viewportState.focusedSelectable
         ? {
             opacity: 0,
@@ -96,7 +97,10 @@ export const NodeRenderer: React.FC<{
       });
     }
 
-    const hasLayout = type === "frame" && style.layout === "stack";
+    const stackDirection =
+      type === "frame" && style.layout === "stack"
+        ? style.stackDirection
+        : undefined;
 
     // if (selectable.node.type === "instance") {
     //   return (
@@ -198,7 +202,7 @@ export const NodeRenderer: React.FC<{
               <NodeRenderer
                 key={child.id}
                 selectable={child}
-                parentHasLayout={hasLayout}
+                parentStackDirection={stackDirection}
                 forThumbnail={forThumbnail}
                 foreignComponentManager={foreignComponentManager}
               />

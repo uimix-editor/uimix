@@ -33,4 +33,3 @@ The port to listen on. Defaults to 4000.
 
 - `pnpm dev` - Start the dev server.
 - `pnpm build` - Build the project.
-  - Build `node-data` and `editor` before building `devserver`.

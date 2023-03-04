@@ -7,9 +7,10 @@
     "declaration": true,
     "outDir": "dist",
     "strict": true,
-    "lib": ["esnext"],
+    "lib": ["dom", "esnext"], // TODO: remove dom dependency
     "esModuleInterop": true,
     "skipLibCheck": true,
-    "emitDeclarationOnly": true
+    "emitDeclarationOnly": true,
+    "experimentalDecorators": true
   }
 }

@@ -3,7 +3,7 @@ import {
   generateJSIdentifier,
   getIncrementalUniqueName,
   incrementAlphanumeric,
-} from "./name";
+} from "./Name";
 
 describe(incrementAlphanumeric.name, () => {
   it("add 0 if given string does not include number", () => {

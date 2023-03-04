@@ -19,8 +19,9 @@ export const Header = ({
   onLogin,
   onLogout,
   onCreateAccount,
+  ...props
 }: HeaderProps) => (
-  <header>
+  <header {...props}>
     <div className="wrapper">
       <div>
         <svg

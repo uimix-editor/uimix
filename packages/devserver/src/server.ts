@@ -13,6 +13,8 @@ import { createServer as createViteServer } from "vite";
 import { componentsVirtualModulePlugin } from "./docgen.js";
 import react from "@vitejs/plugin-react";
 import { ProjectController } from "./controller/ProjectController.js";
+import { Node } from "@uimix/editor/src/models/Node";
+console.log(Node);
 
 interface ServerOptions {
   port: number;

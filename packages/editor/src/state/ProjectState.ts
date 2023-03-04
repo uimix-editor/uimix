@@ -8,12 +8,12 @@ import {
 import * as Y from "yjs";
 import { debounce } from "lodash-es";
 import { ProjectJSON } from "@uimix/node-data";
-import { getIncrementalUniqueName } from "@uimix/render";
 import { Project } from "../models/Project";
 import { Selectable } from "../models/Selectable";
 import { generateExampleNodes } from "../models/generateExampleNodes";
 import { trpc } from "./trpc";
 import { Node } from "../models/Node";
+import { getIncrementalUniqueName } from "../utils/Name";
 
 export class ProjectState {
   constructor() {

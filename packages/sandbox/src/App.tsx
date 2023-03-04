@@ -29,17 +29,25 @@ function App() {
         Click on the Vite and React logos to learn more
       </p>
       <Button
-        overrides={{
-          text: {
-            children: "Hello, world!",
+        ref={(e) => console.log(e)}
+        textProps={{
+          children: "Hello, world!",
+          ref: (e) => {
+            console.log(e);
           },
         }}
+        // TODO
+        //textAs={(props) => <p {...props} />}
         onClick={() => setCount((count) => count + 1)}
       />
       <Page
-        overrides={{
-          button: {
-            onClick: () => setCount((count) => count + 1),
+        buttonProps={{
+          onClick: () => setCount((count) => count + 1),
+        }}
+        stackProps={{
+          // TODO: typing
+          textProps: {
+            children: "Override inner item",
           },
         }}
       />

@@ -12,7 +12,6 @@ import { snapper } from "../../../state/Snapper";
 import { assertNonNull } from "../../../utils/Assert";
 import { viewportState } from "../../../state/ViewportState";
 import { resizeWithBoundingBox } from "../../../services/Resize";
-import { abstractNodeTypes } from "../../../models/Node";
 
 class NodeResizeBoxState {
   constructor() {
@@ -35,7 +34,7 @@ class NodeResizeBoxState {
   @computed get boundingBox(): Rect | undefined {
     return Rect.union(
       ...this.selectedInstances
-        .filter((s) => !abstractNodeTypes.includes(s.originalNode.type))
+        .filter((s) => !s.originalNode.isAbstract)
         .map((i) => i.computedRect)
     );
   }

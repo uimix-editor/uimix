@@ -214,7 +214,7 @@
         "type": "react",
         "path": "src/stories/Header.tsx",
         "name": "Header",
-        "props": { "label": "Button" }
+        "props": {}
       }
     },
     "1Bvi365mtWZmXKDPeJTB4s": {

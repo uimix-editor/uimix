@@ -26,6 +26,9 @@ export class StubComputedRectProvider implements IComputedRectProvider {
 // a node or a inner node of an instance
 export class Selectable {
   constructor(project: Project, idPath: string[], data: Y.Map<any>) {
+    if (idPath.length === 0) {
+      throw new Error("idPath must not be empty");
+    }
     this.project = project;
     this.idPath = idPath;
     this.data = ObservableYMap.get(data);
@@ -165,6 +168,17 @@ export class Selectable {
   }
   @computed get originalStyle(): IStyle {
     return this.getStyle("original");
+  }
+
+  get superSelectable(): Selectable | undefined {
+    if (this.idPath.length === 1) {
+      const mainComponent = this.mainComponent;
+      if (mainComponent) {
+        return mainComponent.rootNode.selectable;
+      }
+      return;
+    }
+    return this.project.selectables.get(this.idPath.slice(1));
   }
 
   // resolveMainComponent=false to get main component ID of an instance

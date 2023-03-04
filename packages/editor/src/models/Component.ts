@@ -1,5 +1,7 @@
-import { generateRefIDs } from "@uimix/render";
+import { VariantCondition } from "@uimix/node-data";
+import { generateRefIDs } from "../utils/Name";
 import { Node } from "./Node";
+import { Selectable } from "./Selectable";
 
 export class Component {
   static from(node: Node) {
@@ -16,6 +18,14 @@ export class Component {
   private constructor(node: Node, rootNode: Node) {
     this.node = node;
     this.rootNode = rootNode;
+  }
+
+  get name(): string {
+    return this.node.name;
+  }
+
+  set name(name: string) {
+    this.node.name = name;
   }
 
   get variants(): Variant[] {
@@ -50,4 +60,24 @@ export class Variant {
   }
 
   readonly node: Node;
+
+  get selectable(): Selectable {
+    return this.node.selectable;
+  }
+
+  get component(): Component | undefined {
+    const parent = this.node.parent;
+    if (!parent) {
+      return;
+    }
+    return Component.from(parent);
+  }
+
+  get condition(): VariantCondition | undefined {
+    return this.node.condition;
+  }
+
+  set condition(condition: VariantCondition | undefined) {
+    this.node.condition = condition;
+  }
 }
