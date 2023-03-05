@@ -1,3 +1,4 @@
+import { User } from "@prisma/client";
 import { GetServerSidePropsContext, NextApiRequest } from "next";
 import { getToken } from "next-auth/jwt";
 import { NextRequest } from "next/server";
@@ -22,4 +23,31 @@ export async function getAccountToken(
   });
 
   return account?.access_token ?? undefined;
+}
+
+export async function getCurrentUser(
+  req:
+    | GetServerSidePropsContext["req"]
+    | NextRequest
+    | NextApiRequest
+    | undefined
+): Promise<User | undefined> {
+  if (!req) {
+    return;
+  }
+
+  const token = await getToken({
+    req,
+  });
+  if (!token) {
+    return;
+  }
+
+  return (
+    (await db.user.findFirst({
+      where: {
+        id: token.sub,
+      },
+    })) ?? undefined
+  );
 }
