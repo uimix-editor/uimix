@@ -6,7 +6,8 @@
     "build": "next build",
     "dev": "next dev",
     "lint": "next lint",
-    "start": "next start"
+    "start": "next start",
+    "prisma:generate": "prisma generate"
   },
   "dependencies": {
     "@next-auth/prisma-adapter": "^1.0.5",
