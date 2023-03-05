@@ -4,10 +4,11 @@ export default function Document() {
   const documents = trpc.document.all.useQuery();
   const documentCreateMutation = trpc.document.create.useMutation();
 
-  const onAddClick = () => {
-    documentCreateMutation.mutate({
+  const onAddClick = async () => {
+    await documentCreateMutation.mutateAsync({
       title: "New document",
     });
+    documents.refetch();
   };
 
   return (
