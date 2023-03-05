@@ -1,4 +1,6 @@
 import { useRouter } from "next/router";
+import React, { useEffect } from "react";
+import { trpc } from "../../utils/trpc";
 
 const Document = () => {
   const router = useRouter();
@@ -6,8 +8,20 @@ const Document = () => {
 
   console.log(id);
 
+  const iframeRef = React.useRef<HTMLIFrameElement>(null);
+
+  useEffect(() => {
+    const iframe = iframeRef.current;
+    if (!iframe) {
+      return;
+    }
+
+    console.log("TODO: fetch document from server and send it to the iframe");
+  }, []);
+
   return (
     <iframe
+      ref={iframeRef}
       className="fixed inset-0 w-full h-full"
       src="http://localhost:5173"
     />
