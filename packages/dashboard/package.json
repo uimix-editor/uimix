@@ -7,7 +7,10 @@
     "dev": "next dev",
     "lint": "next lint",
     "start": "next start",
-    "prisma:generate": "prisma generate"
+    "prisma:generate": "prisma generate",
+    "prisma:migrate-dev": "prisma migrate dev",
+    "prisma:migrate-deploy": "prisma migrate deploy",
+    "prisma:studio": "prisma studio"
   },
   "dependencies": {
     "@next-auth/prisma-adapter": "^1.0.5",
