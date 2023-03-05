@@ -1,7 +1,7 @@
 // Next.js API route support: https://nextjs.org/docs/api-routes/introduction
 import type { NextApiRequest, NextApiResponse } from "next";
 import { renderTrpcPanel } from "trpc-panel";
-import { getBaseURL } from "../../lib/baseURL";
+import { getBaseURL } from "../../utils/getBaseUrl";
 import { appRouter } from "../../server/routers/_app";
 
 const handler = (req: NextApiRequest, res: NextApiResponse) => {
