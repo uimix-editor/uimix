@@ -2,13 +2,11 @@ import "../styles/globals.css";
 import type { AppProps } from "next/app";
 import { Inter } from "@next/font/google";
 import { SessionProvider } from "next-auth/react";
+import { trpc } from "../utils/trpc";
 
 const inter = Inter({ subsets: ["latin"] });
 
-export default function App({
-  Component,
-  pageProps: { session, ...pageProps },
-}: AppProps) {
+function App({ Component, pageProps: { session, ...pageProps } }: AppProps) {
   return (
     <>
       <style jsx global>
@@ -24,3 +22,5 @@ export default function App({
     </>
   );
 }
+
+export default trpc.withTRPC(App);
