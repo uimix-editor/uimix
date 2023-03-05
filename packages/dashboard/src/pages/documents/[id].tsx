@@ -4,7 +4,14 @@ const Document = () => {
   const router = useRouter();
   const { id } = router.query;
 
-  return <p>Document: {id}</p>;
+  console.log(id);
+
+  return (
+    <iframe
+      className="fixed inset-0 w-full h-full"
+      src="http://localhost:5173"
+    />
+  );
 };
 
 export default Document;
