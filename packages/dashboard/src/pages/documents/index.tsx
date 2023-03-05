@@ -1,6 +1,6 @@
 import { trpc } from "../../utils/trpc";
 
-export default function Document() {
+export default function Documents() {
   const documents = trpc.document.all.useQuery();
   const documentCreateMutation = trpc.document.create.useMutation();
 
