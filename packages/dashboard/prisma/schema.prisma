@@ -46,7 +46,7 @@ model User {
   image         String?
   accounts      Account[]
   sessions      Session[]
-  Document      Document[]
+  documents     Document[]
 }
 
 model VerificationToken {
