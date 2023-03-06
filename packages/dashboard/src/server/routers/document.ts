@@ -43,7 +43,6 @@ export const documentRouter = router({
       const document = await db.document.create({
         data: {
           title: input.title,
-          content: Buffer.from([]),
           ownerId: currentUser.id,
         },
       });
