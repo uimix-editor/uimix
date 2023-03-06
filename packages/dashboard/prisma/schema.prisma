@@ -58,11 +58,17 @@ model VerificationToken {
 }
 
 model Document {
-  id        String   @id @default(cuid())
+  id        String        @id @default(cuid())
   title     String
-  content   Bytes
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-  owner     User     @relation(fields: [ownerId], references: [id])
+  createdAt DateTime      @default(now())
+  updatedAt DateTime      @updatedAt
+  owner     User          @relation(fields: [ownerId], references: [id])
   ownerId   String
+  data      DocumentData?
+}
+
+model DocumentData {
+  id       String   @id @unique
+  data     Bytes
+  document Document @relation(fields: [id], references: [id])
 }
