@@ -68,7 +68,7 @@ model Document {
 }
 
 model DocumentData {
-  id       String   @id @unique
+  id       String   @id
   data     Bytes
   document Document @relation(fields: [id], references: [id])
 }
