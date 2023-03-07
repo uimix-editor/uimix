@@ -13,14 +13,12 @@ const Editor: React.FC<{
       return;
     }
 
-    dynamicTrpc.collaborative.token.query().then((token) => {
-      console.log("collaborative token", token);
-    });
-
     const provider = new HocuspocusProvider({
       url: "ws://localhost:1234",
-      name: "example-document",
-      token: "my-access-token",
+      name: documentId,
+      token: () => {
+        return dynamicTrpc.collaborative.token.query();
+      },
     });
 
     const doc = provider.document;
