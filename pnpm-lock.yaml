@@ -40,6 +40,7 @@ importers:
       '@trpc/next': ^10.14.0
       '@trpc/react-query': ^10.14.0
       '@trpc/server': ^10.14.0
+      '@types/jsonwebtoken': ^9.0.1
       '@types/node': 18.14.6
       '@types/react': 18.0.28
       '@types/react-dom': 18.0.11
@@ -47,6 +48,7 @@ importers:
       clsx: ^1.2.1
       eslint: 8.35.0
       eslint-config-next: 13.2.3
+      jsonwebtoken: ^9.0.0
       mobx: ^6.8.0
       mobx-react-lite: ^3.4.1
       next: 13.2.3
@@ -79,6 +81,7 @@ importers:
       clsx: 1.2.1
       eslint: 8.35.0
       eslint-config-next: 13.2.3_ycpbpc6yetojsgtrx3mwntkhsu
+      jsonwebtoken: 9.0.0
       mobx: 6.8.0
       mobx-react-lite: 3.4.1_woojb62cqeyk443mbl7msrwu2e
       next: 13.2.3_biqbaboplfbrettd7655fr4n2y
@@ -93,6 +96,7 @@ importers:
       yjs: 13.5.47
       zod: 3.21.0
     devDependencies:
+      '@types/jsonwebtoken': 9.0.1
       autoprefixer: 10.4.13_postcss@8.4.21
       postcss: 8.4.21
       prisma: 4.11.0
@@ -6109,7 +6113,6 @@ packages:
     resolution: {integrity: sha512-c5ltxazpWabia/4UzhIoaDcIza4KViOQhdbjRlfcIGVnsE3c3brkz9Z+F/EeJIECOQP7W7US2hNE930cWWkPiw==}
     dependencies:
       '@types/node': 18.14.6
-    dev: false
 
   /@types/lodash-es/4.17.6:
     resolution: {integrity: sha512-R+zTeVUKDdfoRxpAryaQNRKk3105Rrgx2CFRClIgRGaqDTdjsm8h6IYA8ir584W3ePzkZfst5xIgDwYrlh9HLg==}
