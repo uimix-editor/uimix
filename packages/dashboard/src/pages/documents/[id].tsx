@@ -27,6 +27,10 @@ const Document = () => {
     doc.on("update", (update) => {
       console.log("update", update);
     });
+
+    return () => {
+      provider.disconnect();
+    };
   }, []);
 
   return (
