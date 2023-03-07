@@ -143,7 +143,7 @@ export class Project {
       this,
       getOrCreate(data, "selectables", () => new Y.Map())
     );
-    this.node = this.nodes.create("project");
+    this.node = this.nodes.create("project", "project");
     this.pages = new Pages(this);
   }
 
