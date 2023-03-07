@@ -7,8 +7,10 @@ export function getOrCreate<K, V>(
   key: K,
   create: () => V
 ): V {
-  if (!map.has(key)) {
-    map.set(key, create());
+  let value = map.get(key);
+  if (!value) {
+    value = create();
+    map.set(key, value);
   }
-  return map.get(key)!;
+  return value;
 }
