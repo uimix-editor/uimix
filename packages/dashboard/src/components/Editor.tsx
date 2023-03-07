@@ -1,6 +1,7 @@
 import { HocuspocusProvider } from "@hocuspocus/provider";
 import React, { useEffect, useRef } from "react";
 import { dynamicTrpc } from "../utils/trpc";
+import * as Y from "yjs";
 
 const Editor: React.FC<{
   documentId: string;
@@ -23,14 +24,31 @@ const Editor: React.FC<{
 
     const doc = provider.document;
 
-    doc.on("update", (update) => {
-      console.log("update", update);
-    });
-
     window.addEventListener("message", (message) => {
       if (message.source === iframe?.contentWindow) {
+        if (message.data.type === "uimix:ready") {
+          console.log("uimix:ready");
+          const sendUpdate = (update: Uint8Array) => {
+            console.log(update);
+            iframe.contentWindow?.postMessage(
+              {
+                type: "uimix:sync",
+                data: update,
+              },
+              "*"
+            );
+          };
+          console.log(doc.getMap("project").toJSON());
+          sendUpdate(Y.encodeStateAsUpdate(doc));
+          doc.on("update", (update) => {
+            sendUpdate(update);
+          });
+        }
+
         if (message.data.type === "uimix:update") {
-          console.log(message.data);
+          console.log("uimix:update");
+          Y.applyUpdate(doc, message.data.data);
+          console.log(doc.getMap("project").toJSON());
         }
       }
     });

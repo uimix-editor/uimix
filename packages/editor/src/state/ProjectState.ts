@@ -17,6 +17,15 @@ import { getIncrementalUniqueName } from "../utils/Name";
 export class ProjectState {
   constructor() {
     const ydoc = new Y.Doc();
+
+    window.parent.postMessage({ type: "uimix:ready" }, "*");
+    window.addEventListener("message", (event) => {
+      if (event.data.type === "uimix:sync") {
+        console.log("uimix:sync");
+        Y.applyUpdate(ydoc, event.data.data);
+      }
+    });
+
     ydoc.on("update", (data) => {
       window.parent.postMessage(
         {
@@ -30,12 +39,12 @@ export class ProjectState {
     const projectData = ydoc.getMap("project");
 
     this.project = new Project(projectData);
-    const page = this.project.nodes.create("page");
-    page.name = "Page 1";
-    this.project.node.append([page]);
-    this.pageID = page.id;
+    // const page = this.project.nodes.create("page");
+    // page.name = "Page 1";
+    // this.project.node.append([page]);
+    // this.pageID = page.id;
     this.undoManager = new Y.UndoManager(projectData);
-    generateExampleNodes(page);
+    //generateExampleNodes(page);
     makeObservable(this);
   }
 
