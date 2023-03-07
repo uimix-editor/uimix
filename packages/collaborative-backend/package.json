@@ -9,7 +9,7 @@
   "type": "module",
   "main": "index.js",
   "scripts": {
-    "build": "run-z build:tsc build:esbuild",
+    "build": "run-z prisma:generate build:tsc build:esbuild",
     "build:esbuild": "node build.cjs",
     "build:tsc": "tsc",
     "dev": "run-z build:esbuild dev:esbuild,dev:node-dev",
