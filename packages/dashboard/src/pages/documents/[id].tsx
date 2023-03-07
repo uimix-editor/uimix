@@ -23,7 +23,7 @@ const Document = () => {
     <iframe
       ref={iframeRef}
       className="fixed inset-0 w-full h-full"
-      src="http://localhost:5173"
+      src="http://randomvalue.editor.localhost:5173"
     />
   );
 };
