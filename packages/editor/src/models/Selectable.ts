@@ -25,17 +25,24 @@ export class StubComputedRectProvider implements IComputedRectProvider {
 
 // a node or a inner node of an instance
 export class Selectable {
-  constructor(project: Project, idPath: string[], data: Y.Map<any>) {
+  constructor(project: Project, idPath: string[]) {
     if (idPath.length === 0) {
       throw new Error("idPath must not be empty");
     }
     this.project = project;
     this.idPath = idPath;
-    this.data = ObservableYMap.get(data);
     makeObservable(this);
   }
 
-  readonly data: ObservableYMap<any>;
+  get data(): ObservableYMap<any> {
+    return ObservableYMap.get(
+      getOrCreate(
+        this.project.selectables.data,
+        this.idPath.join(":"),
+        () => new Y.Map()
+      )
+    );
+  }
 
   readonly project: Project;
 
@@ -460,29 +467,22 @@ export class Selectable {
 }
 
 export class SelectableMap {
-  constructor(project: Project, data: Y.Map<Y.Map<any>>) {
+  constructor(project: Project) {
     this.project = project;
-    this.selectablesData = data;
+  }
+
+  get data(): ObservableYMap<Y.Map<any>> {
+    return ObservableYMap.get(
+      getOrCreate(this.project.data, "selectables", () => new Y.Map())
+    );
   }
 
   private readonly project: Project;
-  private readonly selectablesData: Y.Map<Y.Map<any>>;
-  private readonly selectablesCache = new WeakMap<Y.Map<any>, Selectable>();
-
-  private getSelectableData(idPath: string[]): Y.Map<any> {
-    const key = idPath.join(":");
-    let data = this.selectablesData.get(key);
-    if (data === undefined) {
-      data = new Y.Map();
-      this.selectablesData.set(key, data);
-    }
-    return data;
-  }
+  private readonly selectableMap = new Map<string, Selectable>();
 
   get(idPath: string[]): Selectable {
-    const data = this.getSelectableData(idPath);
-    return getOrCreate(this.selectablesCache, data, () => {
-      return new Selectable(this.project, idPath, data);
+    return getOrCreate(this.selectableMap, idPath.join(":"), () => {
+      return new Selectable(this.project, idPath);
     });
   }
 }

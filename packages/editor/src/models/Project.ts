@@ -138,10 +138,7 @@ export class Project {
   constructor(data: Y.Map<any>) {
     this.data = ObservableYMap.get(data);
     this.nodes = new NodeMap(this);
-    this.selectables = new SelectableMap(
-      this,
-      getOrCreate(data, "selectables", () => new Y.Map())
-    );
+    this.selectables = new SelectableMap(this);
     this.node = this.nodes.create("project", "project");
     this.pages = new Pages(this);
   }
