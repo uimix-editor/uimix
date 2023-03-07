@@ -25,61 +25,55 @@ export const abstractNodeTypes: NodeType[] = ["page", "component"];
 
 export class Node {
   // Do not use this constructor directly
-  constructor(project: Project, id: string, data: Y.Map<any>) {
+  constructor(project: Project, id: string) {
     this.project = project;
     this.nodeMap = project.nodes;
     this.id = id;
-    this.data = ObservableYMap.get(data);
     this.lastParentID = this.data.get("parent");
     this.lastIndex = this.data.get("index");
 
-    data.observe(() => {
-      const parentID = this.data.get("parent");
-      const index = this.data.get("index");
+    // data.observe(() => {
+    //   const parentID = this.data.get("parent");
+    //   const index = this.data.get("index");
 
-      if (parentID !== this.lastParentID || index !== this.lastIndex) {
-        if (this.lastParentID) {
-          const oldParentChildrenMap = this.nodeMap.getChildrenMap(
-            this.lastParentID
-          );
-          oldParentChildrenMap.delete({
-            index: this.lastIndex,
-            id: this.id,
-          });
-        }
+    //   if (parentID !== this.lastParentID || index !== this.lastIndex) {
+    //     if (this.lastParentID) {
+    //       const oldParentChildrenMap = this.nodeMap.getChildrenMap(
+    //         this.lastParentID
+    //       );
+    //       oldParentChildrenMap.delete({
+    //         index: this.lastIndex,
+    //         id: this.id,
+    //       });
+    //     }
 
-        if (parentID) {
-          const parentChildrenMap = this.nodeMap.getChildrenMap(parentID);
-          parentChildrenMap.set({ index, id: this.id }, true);
-        }
+    //     if (parentID) {
+    //       const parentChildrenMap = this.nodeMap.getChildrenMap(parentID);
+    //       parentChildrenMap.set({ index, id: this.id }, true);
+    //     }
 
-        this.lastParentID = parentID;
-        this.lastIndex = index;
-      }
-    });
+    //     this.lastParentID = parentID;
+    //     this.lastIndex = index;
+    //   }
+    // });
 
-    if (this.lastParentID) {
-      const parentChildrenMap = this.nodeMap.getChildrenMap(this.lastParentID);
-      parentChildrenMap.set({ index: this.lastIndex, id: this.id }, true);
-    }
+    // if (this.lastParentID) {
+    //   const parentChildrenMap = this.nodeMap.getChildrenMap(this.lastParentID);
+    //   parentChildrenMap.set({ index: this.lastIndex, id: this.id }, true);
+    // }
 
     makeObservable(this);
   }
 
-  dispose() {
-    if (this.lastParentID) {
-      const parentChildrenMap = this.nodeMap.getChildrenMap(this.lastParentID);
-      parentChildrenMap.delete({
-        index: this.lastIndex,
-        id: this.id,
-      });
-    }
-  }
-
   readonly project: Project;
-  private readonly nodeMap: NodeMap;
+  readonly nodeMap: NodeMap;
   readonly id: string;
-  private readonly data: ObservableYMap<any>;
+
+  get data(): ObservableYMap<any> {
+    return ObservableYMap.get(
+      getOrCreate(this.nodeMap.data, this.id, () => new Y.Map())
+    );
+  }
 
   get sortKey(): NodeKey {
     return { index: this.index, id: this.id };
@@ -307,24 +301,83 @@ export class Node {
 }
 
 export class NodeMap {
-  constructor(project: Project, data: Y.Map<Y.Map<any>>) {
+  constructor(project: Project) {
     this.project = project;
-    this.data = ObservableYMap.get(data);
-    data.observe((event) => {
-      for (const [id, change] of event.keys) {
-        if (change.action === "add") {
-          this.nodeMap.set(id, new Node(this.project, id, data.get(id)!));
+
+    const removeFromParentChildrenMap = (node: Node) => {
+      if (node.lastParentID) {
+        const parentChildrenMap = this.getChildrenMap(node.lastParentID);
+        parentChildrenMap.delete({
+          index: node.lastIndex,
+          id: node.id,
+        });
+      }
+    };
+
+    const insertToParentChildrenMap = (node: Node, data: Y.Map<any>) => {
+      const parentID = data.get("parent");
+      const index = data.get("index");
+
+      if (parentID) {
+        const parentChildrenMap = this.getChildrenMap(parentID);
+        parentChildrenMap.set({ index, id: node.id }, true);
+      }
+
+      node.lastParentID = parentID;
+      node.lastIndex = index;
+    };
+
+    project.data.y.observeDeep((events) => {
+      for (const event of events) {
+        const path = event.path;
+
+        if (path.length === 1 && path[0] === "nodes") {
+          // change node
+          for (const [id, change] of event.keys) {
+            if (change.action === "add") {
+              const node = getOrCreate(
+                this.nodeMap,
+                id,
+                () => new Node(this.project, id)
+              );
+              this.nodeMap.set(id, node);
+              insertToParentChildrenMap(node, event.target);
+            } else if (change.action === "update") {
+              const node = this.nodeMap.get(id);
+              if (node) {
+                removeFromParentChildrenMap(node);
+                insertToParentChildrenMap(node, event.target);
+              }
+            } else if (change.action === "delete") {
+              const node = this.nodeMap.get(id);
+              if (node) {
+                removeFromParentChildrenMap(node);
+              }
+            }
+          }
         }
-        if (change.action === "delete") {
-          const node = this.nodeMap.get(id);
-          node?.dispose();
+        if (path.length === 2 && path[0] === "nodes") {
+          if (event.keys.has("parent") || event.keys.has("index")) {
+            const nodeId = path[1];
+            const node = this.nodeMap.get(String(nodeId));
+            if (node) {
+              removeFromParentChildrenMap(node);
+              insertToParentChildrenMap(node, event.target);
+            }
+          }
         }
       }
     });
   }
 
   readonly project: Project;
-  private readonly data: ObservableYMap<Y.Map<any>>;
+
+  get data(): ObservableYMap<Y.Map<any>> {
+    return ObservableYMap.get(
+      getOrCreate(this.project.data, "nodes", () => new Y.Map())
+    );
+  }
+
   private readonly nodeMap = new Map<string, Node>();
   private readonly childrenMaps = new Map<
     string,

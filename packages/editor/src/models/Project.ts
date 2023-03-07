@@ -5,11 +5,12 @@ import { posix as path } from "path-browserify";
 import { getOrCreate } from "../state/Collection";
 import { SelectableMap } from "./Selectable";
 import { Node, NodeMap } from "./Node";
-import { computed, makeObservable } from "mobx";
+import { computed, makeObservable, ObservableMap } from "mobx";
 import { ProjectJSON } from "@uimix/node-data";
 import { toProjectJSON } from "./toProjectJSON";
 import { ImageManager } from "./ImageManager";
 import { Component } from "./Component";
+import { ObservableYMap } from "../utils/ObservableYMap";
 
 export interface PageHierarchyFolderEntry {
   type: "directory";
@@ -135,10 +136,8 @@ class Pages {
 
 export class Project {
   constructor(data: Y.Map<any>) {
-    this.nodes = new NodeMap(
-      this,
-      getOrCreate(data, "nodes", () => new Y.Map())
-    );
+    this.data = ObservableYMap.get(data);
+    this.nodes = new NodeMap(this);
     this.selectables = new SelectableMap(
       this,
       getOrCreate(data, "selectables", () => new Y.Map())
@@ -147,6 +146,7 @@ export class Project {
     this.pages = new Pages(this);
   }
 
+  readonly data: ObservableYMap<any>;
   readonly nodes: NodeMap;
   readonly selectables: SelectableMap;
   readonly node: Node;
