@@ -13,7 +13,9 @@ importers:
       '@hocuspocus/extension-logger': ^1.1.1
       '@hocuspocus/server': ^1.1.1
       '@prisma/client': ^4.11.0
+      '@types/jsonwebtoken': ^9.0.1
       esbuild: ^0.17.10
+      jsonwebtoken: ^9.0.0
       node-dev: ^8.0.0
       prisma: ^4.11.0
       run-z: ^1.11.0
@@ -22,7 +24,9 @@ importers:
       '@hocuspocus/extension-logger': 1.1.1
       '@hocuspocus/server': 1.1.1
       '@prisma/client': 4.11.0_prisma@4.11.0
+      jsonwebtoken: 9.0.0
     devDependencies:
+      '@types/jsonwebtoken': 9.0.1
       esbuild: 0.17.10
       node-dev: 8.0.0
       prisma: 4.11.0

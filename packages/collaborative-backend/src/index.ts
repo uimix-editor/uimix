@@ -1,10 +1,33 @@
 import { Server } from "@hocuspocus/server";
 import { Logger } from "@hocuspocus/extension-logger";
 import { PrismaClient } from "@prisma/client";
+import jwt from "jsonwebtoken";
 
 const db = new PrismaClient({
   log: ["query"],
 });
+
+function decodeToken(token: string | undefined):
+  | {
+      userId: string;
+    }
+  | undefined {
+  if (!token) {
+    return;
+  }
+
+  try {
+    return jwt.verify(
+      token,
+      process.env.COLLABORATIVE_TOKEN_SECRET as string
+    ) as {
+      userId: string;
+    };
+  } catch (err) {
+    console.error("error decoding token");
+    return;
+  }
+}
 
 const server = Server.configure({
   port: 1234,
@@ -18,9 +41,11 @@ const server = Server.configure({
     // - issue a JWT token in dashboard
     // - use that token to authenticate here
 
-    if (data.token !== "my-access-token") {
-      throw new Error("Incorrect access token");
+    const userInfo = decodeToken(data.token);
+    if (!userInfo) {
+      throw new Error("Invalid token");
     }
+    console.log("authenticated user", userInfo.userId);
 
     console.log(await db.document.findMany());
   },
