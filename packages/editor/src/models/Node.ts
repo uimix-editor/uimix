@@ -331,6 +331,21 @@ export class NodeMap {
       for (const event of events) {
         const path = event.path;
 
+        if (path.length === 0 && event.keys.has("nodes")) {
+          // whole node map changed
+
+          for (const node of this.nodeMap.values()) {
+            removeFromParentChildrenMap(node);
+          }
+          this.nodeMap.clear();
+
+          for (const [id, data] of this.data) {
+            const node = new Node(this.project, id);
+            this.nodeMap.set(id, node);
+            insertToParentChildrenMap(node, data);
+          }
+        }
+
         if (path.length === 1 && path[0] === "nodes") {
           // change node
           for (const [id, change] of event.keys) {
