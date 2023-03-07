@@ -3,8 +3,6 @@ import { Logger } from "@hocuspocus/extension-logger";
 
 const server = Server.configure({
   port: 1234,
-  address: "127.0.0.1",
-  name: "hocuspocus-fra1-01",
   extensions: [new Logger()],
   // async getDocumentName({ documentName, requestParameters }) {
   //   return `${documentName}-${requestParameters.get('prefix')}`
