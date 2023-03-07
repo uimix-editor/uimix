@@ -304,29 +304,6 @@ export class NodeMap {
   constructor(project: Project) {
     this.project = project;
 
-    const removeFromParentChildrenMap = (node: Node) => {
-      if (node.lastParentID) {
-        const parentChildrenMap = this.getChildrenMap(node.lastParentID);
-        parentChildrenMap.delete({
-          index: node.lastIndex,
-          id: node.id,
-        });
-      }
-    };
-
-    const insertToParentChildrenMap = (node: Node, data: Y.Map<any>) => {
-      const parentID = data.get("parent");
-      const index = data.get("index");
-
-      if (parentID) {
-        const parentChildrenMap = this.getChildrenMap(parentID);
-        parentChildrenMap.set({ index, id: node.id }, true);
-      }
-
-      node.lastParentID = parentID;
-      node.lastIndex = index;
-    };
-
     project.data.y.observeDeep((events) => {
       for (const event of events) {
         const path = event.path;
@@ -335,14 +312,14 @@ export class NodeMap {
           // whole node map changed
 
           for (const node of this.nodeMap.values()) {
-            removeFromParentChildrenMap(node);
+            this.removeFromParentChildrenMap(node);
           }
           this.nodeMap.clear();
 
           for (const [id, data] of this.data) {
             const node = new Node(this.project, id);
             this.nodeMap.set(id, node);
-            insertToParentChildrenMap(node, data);
+            this.insertToParentChildrenMap(node, data);
           }
         }
 
@@ -356,17 +333,17 @@ export class NodeMap {
                 () => new Node(this.project, id)
               );
               this.nodeMap.set(id, node);
-              insertToParentChildrenMap(node, event.target);
+              this.insertToParentChildrenMap(node, event.target);
             } else if (change.action === "update") {
               const node = this.nodeMap.get(id);
               if (node) {
-                removeFromParentChildrenMap(node);
-                insertToParentChildrenMap(node, event.target);
+                this.removeFromParentChildrenMap(node);
+                this.insertToParentChildrenMap(node, event.target);
               }
             } else if (change.action === "delete") {
               const node = this.nodeMap.get(id);
               if (node) {
-                removeFromParentChildrenMap(node);
+                this.removeFromParentChildrenMap(node);
               }
             }
           }
@@ -376,8 +353,8 @@ export class NodeMap {
             const nodeId = path[1];
             const node = this.nodeMap.get(String(nodeId));
             if (node) {
-              removeFromParentChildrenMap(node);
-              insertToParentChildrenMap(node, event.target);
+              this.removeFromParentChildrenMap(node);
+              this.insertToParentChildrenMap(node, event.target);
             }
           }
         }
@@ -433,6 +410,29 @@ export class NodeMap {
       parentID,
       () => new ObservableRBTree(compareNodeKey)
     );
+  }
+
+  private removeFromParentChildrenMap(node: Node) {
+    if (node.lastParentID) {
+      const parentChildrenMap = this.getChildrenMap(node.lastParentID);
+      parentChildrenMap.delete({
+        index: node.lastIndex,
+        id: node.id,
+      });
+    }
+  }
+
+  private insertToParentChildrenMap(node: Node, data: Y.Map<any>) {
+    const parentID = data.get("parent");
+    const index = data.get("index");
+
+    if (parentID) {
+      const parentChildrenMap = this.getChildrenMap(parentID);
+      parentChildrenMap.set({ index, id: node.id }, true);
+    }
+
+    node.lastParentID = parentID;
+    node.lastIndex = index;
   }
 }
 
