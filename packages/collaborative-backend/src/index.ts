@@ -14,6 +14,10 @@ const server = Server.configure({
   // },
 
   async onAuthenticate(data) {
+    // TODO:
+    // - issue a JWT token in dashboard
+    // - use that token to authenticate here
+
     if (data.token !== "my-access-token") {
       throw new Error("Incorrect access token");
     }
