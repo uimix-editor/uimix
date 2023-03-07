@@ -11,7 +11,6 @@ import { ProjectJSON } from "@uimix/node-data";
 import { Project } from "../models/Project";
 import { Selectable } from "../models/Selectable";
 import { generateExampleNodes } from "../models/generateExampleNodes";
-import { trpc } from "./trpc";
 import { Node } from "../models/Node";
 import { getIncrementalUniqueName } from "../utils/Name";
 
@@ -19,13 +18,6 @@ export class ProjectState {
   constructor() {
     const ydoc = new Y.Doc();
     const projectData = ydoc.getMap("project");
-
-    projectData.observeDeep(() => {
-      if (this._loading) {
-        return;
-      }
-      this.saveLater();
-    });
 
     this.project = new Project(projectData);
     const page = this.project.nodes.create("page");
@@ -35,79 +27,21 @@ export class ProjectState {
     this.undoManager = new Y.UndoManager(projectData);
     generateExampleNodes(page);
     makeObservable(this);
-
-    void this.load();
-  }
-
-  private saveLater = debounce(() => {
-    this.save();
-  }, 500);
-
-  private async save() {
-    console.log("save");
-    await trpc?.save.mutate({ project: this.project.toJSON() });
-  }
-
-  @observable private _loading = true;
-
-  get loading() {
-    return this._loading;
-  }
-
-  private async load() {
-    if (!trpc) {
-      return;
-    }
-
-    const project = await trpc.load.query();
-    console.log(project);
-
-    runInAction(() => {
-      this.loadJSON(project);
-      this._loading = false;
-    });
-
-    trpc.onChange.subscribe(undefined, {
-      onData: action((projectJSON: ProjectJSON) => {
-        console.log("received", projectJSON);
-        this.loadJSON(projectJSON);
-      }),
-      onError: (err) => {
-        console.error("error", err);
-      },
-    });
-
-    trpc.onImageAdded.subscribe(undefined, {
-      onData: async (entry) => {
-        await this.project.imageManager.onServerImageAdded(entry);
-      },
-    });
-    this.project.imageManager.insertServerImage = async (entry) => {
-      await trpc?.insertImage.mutate({
-        entry,
-      });
-    };
   }
 
   loadJSON(projectJSON: ProjectJSON) {
-    try {
-      this._loading = true;
-
-      if (Object.keys(projectJSON.nodes).length) {
-        this.project.loadJSON(projectJSON);
-        const allPages = this.project.pages.all;
-        if (!allPages.some((p) => p.id === this.pageID)) {
-          this.pageID = allPages[0]?.id;
-        }
-      } else {
-        this.project.node.clear();
-        const page = this.project.nodes.create("page");
-        page.name = "Page 1";
-        this.project.node.append([page]);
-        this.pageID = page.id;
+    if (Object.keys(projectJSON.nodes).length) {
+      this.project.loadJSON(projectJSON);
+      const allPages = this.project.pages.all;
+      if (!allPages.some((p) => p.id === this.pageID)) {
+        this.pageID = allPages[0]?.id;
       }
-    } finally {
-      this._loading = false;
+    } else {
+      this.project.node.clear();
+      const page = this.project.nodes.create("page");
+      page.name = "Page 1";
+      this.project.node.append([page]);
+      this.pageID = page.id;
     }
   }
 
