@@ -19,12 +19,15 @@ export class ProjectState {
     const ydoc = new Y.Doc();
 
     window.parent.postMessage({ type: "uimix:ready" }, "*");
-    window.addEventListener("message", (event) => {
-      if (event.data.type === "uimix:sync") {
-        console.log("uimix:sync");
-        Y.applyUpdate(ydoc, event.data.data);
-      }
-    });
+    window.addEventListener(
+      "message",
+      action((event) => {
+        if (event.data.type === "uimix:sync") {
+          console.log("uimix:sync");
+          Y.applyUpdate(ydoc, event.data.data);
+        }
+      })
+    );
 
     ydoc.on("update", (data) => {
       window.parent.postMessage(
