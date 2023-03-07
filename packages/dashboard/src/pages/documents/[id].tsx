@@ -20,6 +20,7 @@ const Document = () => {
     const provider = new HocuspocusProvider({
       url: "ws://localhost:1234",
       name: "example-document",
+      token: "my-access-token",
     });
 
     const doc = provider.document;

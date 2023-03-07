@@ -15,15 +15,18 @@
     "dev": "run-z build:esbuild dev:esbuild,dev:node-dev",
     "dev:esbuild": "node build.cjs --watch",
     "dev:node-dev": "node-dev dist/index.js",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "prisma:generate": "prisma generate"
   },
   "dependencies": {
     "@hocuspocus/extension-logger": "^1.1.1",
-    "@hocuspocus/server": "^1.1.1"
+    "@hocuspocus/server": "^1.1.1",
+    "@prisma/client": "^4.11.0"
   },
   "devDependencies": {
     "esbuild": "^0.17.10",
     "node-dev": "^8.0.0",
+    "prisma": "^4.11.0",
     "run-z": "^1.11.0",
     "typescript": "^4.9.5"
   }

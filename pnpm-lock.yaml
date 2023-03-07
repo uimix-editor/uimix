@@ -12,16 +12,20 @@ importers:
     specifiers:
       '@hocuspocus/extension-logger': ^1.1.1
       '@hocuspocus/server': ^1.1.1
+      '@prisma/client': ^4.11.0
       esbuild: ^0.17.10
       node-dev: ^8.0.0
+      prisma: ^4.11.0
       run-z: ^1.11.0
       typescript: ^4.9.5
     dependencies:
       '@hocuspocus/extension-logger': 1.1.1
       '@hocuspocus/server': 1.1.1
+      '@prisma/client': 4.11.0_prisma@4.11.0
     devDependencies:
       esbuild: 0.17.10
       node-dev: 8.0.0
+      prisma: 4.11.0
       run-z: 1.11.0
       typescript: 4.9.5
 

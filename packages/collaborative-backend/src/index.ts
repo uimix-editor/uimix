@@ -1,5 +1,10 @@
 import { Server } from "@hocuspocus/server";
 import { Logger } from "@hocuspocus/extension-logger";
+import { PrismaClient } from "@prisma/client";
+
+const db = new PrismaClient({
+  log: ["query"],
+});
 
 const server = Server.configure({
   port: 1234,
@@ -8,11 +13,13 @@ const server = Server.configure({
   //   return `${documentName}-${requestParameters.get('prefix')}`
   // },
 
-  // async onAuthenticate(data) {
-  //   if (data.token !== 'my-access-token') {
-  //     throw new Error('Incorrect access token')
-  //   }
-  // },
+  async onAuthenticate(data) {
+    if (data.token !== "my-access-token") {
+      throw new Error("Incorrect access token");
+    }
+
+    console.log(await db.document.findMany());
+  },
 
   // Test error handling
   // async onConnect(data) {
