@@ -14,10 +14,8 @@ import { generateExampleNodes } from "../models/generateExampleNodes";
 import { Node } from "../models/Node";
 import { getIncrementalUniqueName } from "../utils/Name";
 
-export class ProjectState {
-  constructor() {
-    const ydoc = new Y.Doc();
-
+class DataConnector {
+  constructor(ydoc: Y.Doc) {
     window.parent.postMessage({ type: "uimix:ready" }, "*");
     window.addEventListener(
       "message",
@@ -32,14 +30,38 @@ export class ProjectState {
     );
 
     ydoc.on("update", (data) => {
+      this.updates.push(data);
+      if (!this.sendQueued) {
+        queueMicrotask(() => {
+          this.sendUpdate();
+        });
+        this.sendQueued = true;
+      }
+    });
+  }
+
+  private updates: Uint8Array[] = [];
+  private sendQueued = false;
+
+  sendUpdate() {
+    this.sendQueued = false;
+    if (this.updates.length) {
       window.parent.postMessage(
         {
           type: "uimix:update",
-          data,
+          data: Y.mergeUpdates(this.updates),
         },
         "*"
       );
-    });
+      this.updates = [];
+    }
+  }
+}
+
+export class ProjectState {
+  constructor() {
+    const ydoc = new Y.Doc();
+    new DataConnector(ydoc);
 
     const projectData = ydoc.getMap("project");
 
