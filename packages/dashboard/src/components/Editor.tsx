@@ -27,6 +27,14 @@ const Editor: React.FC<{
       console.log("update", update);
     });
 
+    window.addEventListener("message", (message) => {
+      if (message.source === iframe?.contentWindow) {
+        if (message.data.type === "uimix:update") {
+          console.log(message.data);
+        }
+      }
+    });
+
     return () => {
       provider.disconnect();
     };

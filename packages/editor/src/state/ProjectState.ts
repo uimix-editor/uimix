@@ -17,6 +17,16 @@ import { getIncrementalUniqueName } from "../utils/Name";
 export class ProjectState {
   constructor() {
     const ydoc = new Y.Doc();
+    ydoc.on("update", (data) => {
+      window.parent.postMessage(
+        {
+          type: "uimix:update",
+          data,
+        },
+        "*"
+      );
+    });
+
     const projectData = ydoc.getMap("project");
 
     this.project = new Project(projectData);
