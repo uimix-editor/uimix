@@ -4,7 +4,6 @@
   "private": true,
   "description": "",
   "keywords": [],
-  "license": "ISC",
   "author": "",
   "type": "module",
   "main": "index.js",
