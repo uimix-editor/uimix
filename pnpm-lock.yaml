@@ -10,6 +10,7 @@ importers:
 
   packages/collaborative-backend:
     specifiers:
+      '@hocuspocus/extension-database': ^1.1.1
       '@hocuspocus/extension-logger': ^1.1.1
       '@hocuspocus/server': ^1.1.1
       '@prisma/client': ^4.11.0
@@ -21,6 +22,7 @@ importers:
       run-z: ^1.11.0
       typescript: ^4.9.5
     dependencies:
+      '@hocuspocus/extension-database': 1.1.1
       '@hocuspocus/extension-logger': 1.1.1
       '@hocuspocus/server': 1.1.1
       '@prisma/client': 4.11.0_prisma@4.11.0
@@ -2529,6 +2531,18 @@ packages:
     resolution: {integrity: sha512-bCzj/EkUiWi4VWRefJq6hoAYgWthRscBt65zIee0FR7X+xbtkYSGGtyA9A+e/YPqb+uynbw721WSgxnkpW7XmQ==}
     dependencies:
       lib0: 0.2.63
+    dev: false
+
+  /@hocuspocus/extension-database/1.1.1:
+    resolution: {integrity: sha512-6p+Gd7VYMeOBXiwKS5vd2gmuMtDuRuzjmGlNu1h6srE6EOjVqZwAdU0MfAJzl1/sGA1PDyakiEuRs4mEWJvhiQ==}
+    peerDependencies:
+      yjs: ^13.5.29
+    dependencies:
+      '@hocuspocus/server': 1.1.1
+    transitivePeerDependencies:
+      - bufferutil
+      - utf-8-validate
+      - y-protocols
     dev: false
 
   /@hocuspocus/extension-logger/1.1.1:

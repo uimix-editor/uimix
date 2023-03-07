@@ -2,6 +2,7 @@ import { Server } from "@hocuspocus/server";
 import { Logger } from "@hocuspocus/extension-logger";
 import { PrismaClient } from "@prisma/client";
 import jwt from "jsonwebtoken";
+import { Database } from "@hocuspocus/extension-database";
 
 const db = new PrismaClient({
   log: ["query"],
@@ -31,7 +32,35 @@ function decodeToken(token: string | undefined):
 
 const server = Server.configure({
   port: 1234,
-  extensions: [new Logger()],
+  extensions: [
+    new Logger(),
+    new Database({
+      // Return a Promise to retrieve data …
+      fetch: async ({ documentName }) => {
+        const data = await db.documentData.findUnique({
+          where: {
+            id: documentName,
+          },
+        });
+        return data?.data ?? null;
+      },
+      // … and a Promise to store data:
+      store: async ({ documentName, state }) => {
+        await db.documentData.upsert({
+          where: {
+            id: documentName,
+          },
+          update: {
+            data: state,
+          },
+          create: {
+            id: documentName,
+            data: state,
+          },
+        });
+      },
+    }),
+  ],
   // async getDocumentName({ documentName, requestParameters }) {
   //   return `${documentName}-${requestParameters.get('prefix')}`
   // },
