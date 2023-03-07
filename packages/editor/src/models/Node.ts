@@ -29,38 +29,6 @@ export class Node {
     this.project = project;
     this.nodeMap = project.nodes;
     this.id = id;
-    this.lastParentID = this.data.get("parent");
-    this.lastIndex = this.data.get("index");
-
-    // data.observe(() => {
-    //   const parentID = this.data.get("parent");
-    //   const index = this.data.get("index");
-
-    //   if (parentID !== this.lastParentID || index !== this.lastIndex) {
-    //     if (this.lastParentID) {
-    //       const oldParentChildrenMap = this.nodeMap.getChildrenMap(
-    //         this.lastParentID
-    //       );
-    //       oldParentChildrenMap.delete({
-    //         index: this.lastIndex,
-    //         id: this.id,
-    //       });
-    //     }
-
-    //     if (parentID) {
-    //       const parentChildrenMap = this.nodeMap.getChildrenMap(parentID);
-    //       parentChildrenMap.set({ index, id: this.id }, true);
-    //     }
-
-    //     this.lastParentID = parentID;
-    //     this.lastIndex = index;
-    //   }
-    // });
-
-    // if (this.lastParentID) {
-    //   const parentChildrenMap = this.nodeMap.getChildrenMap(this.lastParentID);
-    //   parentChildrenMap.set({ index: this.lastIndex, id: this.id }, true);
-    // }
 
     makeObservable(this);
   }
