@@ -47,7 +47,15 @@ const server = Server.configure({
     }
     console.log("authenticated user", userInfo.userId);
 
-    console.log(await db.document.findMany());
+    const document = await db.document.findUnique({
+      where: {
+        id: data.documentName,
+      },
+    });
+    if (!document || document.ownerId !== userInfo.userId) {
+      throw new Error("Document not found");
+    }
+    console.log(document);
   },
 
   // Test error handling
