@@ -24,7 +24,7 @@ const Editor: React.FC<{
 
     const doc = provider.document;
 
-    window.addEventListener("message", (message) => {
+    const onMessage = (message: MessageEvent) => {
       if (message.source === iframe?.contentWindow) {
         if (message.data.type === "uimix:ready") {
           console.log("uimix:ready");
@@ -51,10 +51,13 @@ const Editor: React.FC<{
           console.log(doc.getMap("project").toJSON());
         }
       }
-    });
+    };
+
+    window.addEventListener("message", onMessage);
 
     return () => {
       provider.disconnect();
+      window.removeEventListener("message", onMessage);
     };
   }, []);
 

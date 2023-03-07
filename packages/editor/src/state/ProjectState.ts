@@ -25,8 +25,8 @@ export class ProjectState {
         if (event.data.type === "uimix:sync") {
           console.log("uimix:sync");
           Y.applyUpdate(ydoc, event.data.data);
-          console.log("sync", ydoc.get("project").toJSON());
-          console.log(this.project.node.children);
+          // console.log("sync", ydoc.get("project").toJSON());
+          // console.log(this.project.node.children);
         }
       })
     );
