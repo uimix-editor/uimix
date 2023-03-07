@@ -56,7 +56,7 @@ export class Node {
   }
 
   lastParentID: string | undefined;
-  lastIndex: number;
+  lastIndex = 0;
 
   get type(): NodeType {
     return this.data.get("type");
