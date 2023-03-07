@@ -316,10 +316,10 @@ export class NodeMap {
           }
           this.nodeMap.clear();
 
-          for (const [id, data] of this.data) {
+          for (const [id] of this.data) {
             const node = new Node(this.project, id);
             this.nodeMap.set(id, node);
-            this.insertToParentChildrenMap(node, data);
+            this.insertToParentChildrenMap(node);
           }
         }
 
@@ -333,12 +333,12 @@ export class NodeMap {
                 () => new Node(this.project, id)
               );
               this.nodeMap.set(id, node);
-              this.insertToParentChildrenMap(node, event.target);
+              this.insertToParentChildrenMap(node);
             } else if (change.action === "update") {
               const node = this.nodeMap.get(id);
               if (node) {
                 this.removeFromParentChildrenMap(node);
-                this.insertToParentChildrenMap(node, event.target);
+                this.insertToParentChildrenMap(node);
               }
             } else if (change.action === "delete") {
               const node = this.nodeMap.get(id);
@@ -354,7 +354,7 @@ export class NodeMap {
             const node = this.nodeMap.get(String(nodeId));
             if (node) {
               this.removeFromParentChildrenMap(node);
-              this.insertToParentChildrenMap(node, event.target);
+              this.insertToParentChildrenMap(node);
             }
           }
         }
@@ -422,7 +422,8 @@ export class NodeMap {
     }
   }
 
-  private insertToParentChildrenMap(node: Node, data: Y.Map<any>) {
+  private insertToParentChildrenMap(node: Node) {
+    const data = node.data;
     const parentID = data.get("parent");
     const index = data.get("index");
 
