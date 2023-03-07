@@ -1,4 +1,4 @@
-import { httpBatchLink } from "@trpc/client";
+import { createTRPCProxyClient, httpBatchLink } from "@trpc/client";
 import { createTRPCNext } from "@trpc/next";
 import type { AppRouter } from "../server/routers/_app";
 import { getBaseURL } from "./getBaseUrl";
@@ -25,4 +25,13 @@ export const trpc = createTRPCNext<AppRouter>({
    * @link https://trpc.io/docs/ssr
    **/
   ssr: false,
+});
+
+// for use outside of React components
+export const dynamicTrpc = createTRPCProxyClient<AppRouter>({
+  links: [
+    httpBatchLink({
+      url: "/api/trpc",
+    }),
+  ],
 });

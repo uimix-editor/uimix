@@ -1,5 +1,6 @@
 import { HocuspocusProvider } from "@hocuspocus/provider";
 import React, { useEffect, useRef } from "react";
+import { dynamicTrpc } from "../utils/trpc";
 
 const Editor: React.FC<{
   documentId: string;
@@ -11,6 +12,10 @@ const Editor: React.FC<{
     if (!iframe) {
       return;
     }
+
+    dynamicTrpc.collaborative.token.query().then((token) => {
+      console.log("collaborative token", token);
+    });
 
     const provider = new HocuspocusProvider({
       url: "ws://localhost:1234",
