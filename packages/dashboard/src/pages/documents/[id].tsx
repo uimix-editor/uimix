@@ -1,3 +1,4 @@
+import { HocuspocusProvider } from "@hocuspocus/provider";
 import { useRouter } from "next/router";
 import React, { useEffect } from "react";
 import { trpc } from "../../utils/trpc";
@@ -16,7 +17,16 @@ const Document = () => {
       return;
     }
 
-    console.log("TODO: fetch document from server and send it to the iframe");
+    const provider = new HocuspocusProvider({
+      url: "ws://localhost:1234",
+      name: "example-document",
+    });
+
+    const doc = provider.document;
+
+    doc.on("update", (update) => {
+      console.log("update", update);
+    });
   }, []);
 
   return (
