@@ -66,10 +66,6 @@ const server = Server.configure({
   // },
 
   async onAuthenticate(data) {
-    // TODO:
-    // - issue a JWT token in dashboard
-    // - use that token to authenticate here
-
     const userInfo = decodeToken(data.token);
     if (!userInfo) {
       throw new Error("Invalid token");
