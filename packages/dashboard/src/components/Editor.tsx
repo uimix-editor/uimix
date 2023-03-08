@@ -10,6 +10,7 @@ import type {
   IEditorToRootRPCHandler,
 } from "../../../editor/src/state/IFrameDataConnector";
 import { Icon } from "@iconify/react";
+import Link from "next/link";
 
 class Connection extends TypedEmitter<{
   ready(): void;
@@ -103,12 +104,15 @@ const Editor: React.FC<{
     <div className="fixed inset-0 w-full h-full">
       <div className="flex flex-col w-full h-full">
         <div className="h-10 border-b border-neutral-200 relative flex items-center justify-center">
-          <button className="absolute left-0 top-0 h-10 w-10 flex items-center justify-center">
+          <Link
+            className="absolute left-0 top-0 h-10 w-10 flex items-center justify-center"
+            href="/documents"
+          >
             <Icon
               icon="material-symbols:keyboard-arrow-left"
               className="text-base"
             />
-          </button>
+          </Link>
           <div>TODO: Document Title</div>
         </div>
         <iframe
