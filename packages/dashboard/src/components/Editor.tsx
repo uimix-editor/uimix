@@ -59,6 +59,9 @@ class Connection extends TypedEmitter<{
   };
 
   onReady = () => {
+    console.log("-- ready");
+    console.log("needs initial content", this.needsInitialContent);
+
     const doc = this.provider.document;
     const sendUpdate = (update: Uint8Array) => {
       console.log(update);
