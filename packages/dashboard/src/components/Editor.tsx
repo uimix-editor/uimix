@@ -1,5 +1,5 @@
 import { HocuspocusProvider } from "@hocuspocus/provider";
-import React, { useEffect, useRef } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { dynamicTrpc } from "../utils/trpc";
 import * as Y from "yjs";
 
@@ -7,6 +7,7 @@ const Editor: React.FC<{
   documentId: string;
 }> = ({ documentId }) => {
   const iframeRef = useRef<HTMLIFrameElement>(null);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     const iframe = iframeRef.current;
@@ -20,6 +21,11 @@ const Editor: React.FC<{
       token: () => {
         return dynamicTrpc.collaborative.token.query();
       },
+    });
+    provider.on("connect", () => {
+      console.log("connected!");
+      console.log(provider.document.getMap("project").toJSON());
+      setLoading(false);
     });
 
     const doc = provider.document;
@@ -62,11 +68,20 @@ const Editor: React.FC<{
   }, []);
 
   return (
-    <iframe
-      ref={iframeRef}
-      className="fixed inset-0 w-full h-full"
-      src="http://randomvalue.editor.localhost:5173"
-    />
+    <div className="fixed inset-0 w-full h-full">
+      <iframe
+        ref={iframeRef}
+        className="fixed inset-0 w-full h-full"
+        src="http://randomvalue.editor.localhost:5173"
+      />
+      {loading && (
+        <div className="fixed inset-0 w-full h-full bg-white opacity-50">
+          <div className="absolute inset-0 flex items-center justify-center">
+            <div className="text-2xl">Loading...</div>
+          </div>
+        </div>
+      )}
+    </div>
   );
 };
 
