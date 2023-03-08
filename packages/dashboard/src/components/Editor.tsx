@@ -2,6 +2,72 @@ import { HocuspocusProvider } from "@hocuspocus/provider";
 import React, { useEffect, useRef, useState } from "react";
 import { dynamicTrpc } from "../utils/trpc";
 import * as Y from "yjs";
+import { TypedEmitter } from "tiny-typed-emitter";
+
+class Connection extends TypedEmitter<{
+  loadingChange(): void;
+}> {
+  constructor(iframe: HTMLIFrameElement, documentId: string) {
+    super();
+    this.iframe = iframe;
+
+    this.provider = new HocuspocusProvider({
+      url: "ws://localhost:1234",
+      name: documentId,
+      token: () => {
+        return dynamicTrpc.collaborative.token.query();
+      },
+    });
+    this.provider.on("connect", () => {
+      console.log("connected!");
+      console.log(this.provider.document.getMap("project").toJSON());
+      this.loading = false;
+      this.emit("loadingChange");
+    });
+
+    window.addEventListener("message", this.onMessage);
+  }
+
+  dispose() {
+    this.provider.disconnect();
+    window.removeEventListener("message", this.onMessage);
+  }
+
+  onMessage = (message: MessageEvent) => {
+    const { iframe } = this;
+    const doc = this.provider.document;
+    if (message.source === iframe.contentWindow) {
+      if (message.data.type === "uimix:ready") {
+        console.log("uimix:ready");
+        const sendUpdate = (update: Uint8Array) => {
+          console.log(update);
+          iframe.contentWindow?.postMessage(
+            {
+              type: "uimix:sync",
+              data: update,
+            },
+            "*"
+          );
+        };
+        console.log(doc.getMap("project").toJSON());
+        sendUpdate(Y.encodeStateAsUpdate(doc));
+        doc.on("update", (update) => {
+          sendUpdate(update);
+        });
+      }
+
+      if (message.data.type === "uimix:update") {
+        console.log("uimix:update");
+        Y.applyUpdate(doc, message.data.data);
+        console.log(doc.getMap("project").toJSON());
+      }
+    }
+  };
+
+  iframe: HTMLIFrameElement;
+  provider: HocuspocusProvider;
+  loading = true;
+}
 
 const Editor: React.FC<{
   documentId: string;
@@ -14,57 +80,11 @@ const Editor: React.FC<{
     if (!iframe) {
       return;
     }
-
-    const provider = new HocuspocusProvider({
-      url: "ws://localhost:1234",
-      name: documentId,
-      token: () => {
-        return dynamicTrpc.collaborative.token.query();
-      },
+    const connection = new Connection(iframe, documentId);
+    connection.on("loadingChange", () => {
+      setLoading(connection.loading);
     });
-    provider.on("connect", () => {
-      console.log("connected!");
-      console.log(provider.document.getMap("project").toJSON());
-      setLoading(false);
-    });
-
-    const doc = provider.document;
-
-    const onMessage = (message: MessageEvent) => {
-      if (message.source === iframe?.contentWindow) {
-        if (message.data.type === "uimix:ready") {
-          console.log("uimix:ready");
-          const sendUpdate = (update: Uint8Array) => {
-            console.log(update);
-            iframe.contentWindow?.postMessage(
-              {
-                type: "uimix:sync",
-                data: update,
-              },
-              "*"
-            );
-          };
-          console.log(doc.getMap("project").toJSON());
-          sendUpdate(Y.encodeStateAsUpdate(doc));
-          doc.on("update", (update) => {
-            sendUpdate(update);
-          });
-        }
-
-        if (message.data.type === "uimix:update") {
-          console.log("uimix:update");
-          Y.applyUpdate(doc, message.data.data);
-          console.log(doc.getMap("project").toJSON());
-        }
-      }
-    };
-
-    window.addEventListener("message", onMessage);
-
-    return () => {
-      provider.disconnect();
-      window.removeEventListener("message", onMessage);
-    };
+    return () => connection.dispose();
   }, []);
 
   return (
