@@ -125,7 +125,7 @@ const Editor: React.FC<{
       {loading && (
         <div className="fixed inset-0 w-full h-full bg-white">
           <div className="absolute inset-0 flex items-center justify-center">
-            <div className="text-base">Loading...</div>
+            <div className="text-base text-neutral-600">Loading...</div>
           </div>
         </div>
       )}
