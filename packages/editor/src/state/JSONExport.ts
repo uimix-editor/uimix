@@ -20,12 +20,12 @@ export async function exportToJSON() {
 export async function importJSON() {
   // select file via input element
 
-  const file = await new Promise<File | null>((resolve) => {
+  const file = await new Promise<File | undefined>((resolve) => {
     const input = document.createElement("input");
     input.type = "file";
     input.accept = "application/json";
     input.onchange = () => {
-      resolve(input.files?.[0] ?? null);
+      resolve(input.files?.[0]);
     };
     input.click();
   });
