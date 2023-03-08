@@ -20,14 +20,17 @@ class Connection extends TypedEmitter<{
     });
     this.provider.on("connect", () => {
       console.log("connected!");
-      console.log(this.provider.document.getMap("project").toJSON());
+      const data = this.provider.document.getMap("project");
+      console.log(data.toJSON());
       this.hocuspocusReady = true;
+      this.needsInitialContent = data.size === 0;
       if (this.iframeReady) {
         this.emit("ready");
       }
     });
 
     window.addEventListener("message", this.onMessage);
+    this.on("ready", this.onReady);
   }
 
   dispose() {
@@ -40,27 +43,11 @@ class Connection extends TypedEmitter<{
     const doc = this.provider.document;
     if (message.source === iframe.contentWindow) {
       if (message.data.type === "uimix:ready") {
+        console.log("uimix:ready");
         this.iframeReady = true;
         if (this.hocuspocusReady) {
           this.emit("ready");
         }
-
-        console.log("uimix:ready");
-        const sendUpdate = (update: Uint8Array) => {
-          console.log(update);
-          iframe.contentWindow?.postMessage(
-            {
-              type: "uimix:sync",
-              data: update,
-            },
-            "*"
-          );
-        };
-        console.log(doc.getMap("project").toJSON());
-        sendUpdate(Y.encodeStateAsUpdate(doc));
-        doc.on("update", (update) => {
-          sendUpdate(update);
-        });
       }
 
       if (message.data.type === "uimix:update") {
@@ -71,10 +58,30 @@ class Connection extends TypedEmitter<{
     }
   };
 
+  onReady = () => {
+    const doc = this.provider.document;
+    const sendUpdate = (update: Uint8Array) => {
+      console.log(update);
+      this.iframe.contentWindow?.postMessage(
+        {
+          type: "uimix:sync",
+          data: update,
+        },
+        "*"
+      );
+    };
+    console.log(doc.getMap("project").toJSON());
+    sendUpdate(Y.encodeStateAsUpdate(doc));
+    doc.on("update", (update) => {
+      sendUpdate(update);
+    });
+  };
+
   iframe: HTMLIFrameElement;
   provider: HocuspocusProvider;
   hocuspocusReady = false;
   iframeReady = false;
+  needsInitialContent = true;
 }
 
 const Editor: React.FC<{
@@ -89,8 +96,8 @@ const Editor: React.FC<{
       return;
     }
     const connection = new Connection(iframe, documentId);
-    connection.on("loadingChange", () => {
-      setLoading(connection.loading);
+    connection.on("ready", () => {
+      setLoading(false);
     });
     return () => connection.dispose();
   }, []);
