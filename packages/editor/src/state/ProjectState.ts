@@ -1,12 +1,5 @@
-import {
-  action,
-  computed,
-  makeObservable,
-  observable,
-  runInAction,
-} from "mobx";
+import { action, computed, makeObservable, observable } from "mobx";
 import * as Y from "yjs";
-import { debounce } from "lodash-es";
 import { ProjectJSON } from "@uimix/node-data";
 import { Project } from "../models/Project";
 import { Selectable } from "../models/Selectable";
@@ -38,10 +31,6 @@ class DataConnector {
           } else {
             projectState.pageID = projectState.project.pages.all[0].id;
           }
-
-          // TODO:
-          // - create page if none exists
-          // - select a page
         }
       })
     );
