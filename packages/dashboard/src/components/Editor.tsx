@@ -101,7 +101,7 @@ const Editor: React.FC<{
   }, []);
 
   return (
-    <div className="fixed inset-0 w-full h-full">
+    <div className="fixed inset-0 w-full h-full text-neutral-800">
       <div className="flex flex-col w-full h-full">
         <div className="h-10 border-b border-neutral-200 relative flex items-center justify-center">
           <Link
@@ -113,7 +113,7 @@ const Editor: React.FC<{
               className="text-base"
             />
           </Link>
-          <div>TODO: Document Title</div>
+          <div className="text-xs font-medium">TODO: Document Title</div>
         </div>
         <iframe
           ref={iframeRef}
