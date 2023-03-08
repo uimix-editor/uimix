@@ -1,6 +1,6 @@
 import { HocuspocusProvider } from "@hocuspocus/provider";
 import React, { useEffect, useRef, useState } from "react";
-import { dynamicTrpc } from "../utils/trpc";
+import { dynamicTrpc, trpc } from "../utils/trpc";
 import * as Y from "yjs";
 import { TypedEmitter } from "tiny-typed-emitter";
 import { iframeTarget } from "@uimix/typed-rpc/browser";
@@ -87,6 +87,9 @@ const Editor: React.FC<{
 }> = ({ documentId }) => {
   const iframeRef = useRef<HTMLIFrameElement>(null);
   const [loading, setLoading] = useState(true);
+  const document = trpc.document.get.useQuery({
+    id: documentId,
+  }).data;
 
   useEffect(() => {
     const iframe = iframeRef.current;
@@ -113,7 +116,7 @@ const Editor: React.FC<{
               className="text-base"
             />
           </Link>
-          <div className="text-xs font-medium">TODO: Document Title</div>
+          <div className="text-xs font-medium">{document?.title}</div>
         </div>
         <iframe
           ref={iframeRef}

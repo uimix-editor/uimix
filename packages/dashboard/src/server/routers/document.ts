@@ -49,4 +49,30 @@ export const documentRouter = router({
 
       return document;
     }),
+
+  get: baseProcedure
+    .input(
+      z.object({
+        id: z.string(),
+      })
+    )
+    .query(async ({ ctx, input }) => {
+      const currentUser = await getCurrentUser(ctx.req);
+
+      if (!currentUser) {
+        throw new TRPCError({
+          code: "UNAUTHORIZED",
+          message: "Unauthorized",
+        });
+      }
+
+      const document = await db.document.findFirst({
+        where: {
+          id: input.id,
+          ownerId: currentUser.id,
+        },
+      });
+
+      return document ?? undefined;
+    }),
 });
