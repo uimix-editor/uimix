@@ -29,7 +29,7 @@ interface ForeignComponent {
 
 export const components: ForeignComponent[] = [
   {
-    path: "src/Button.tsx",
+    path: "src/stories/Button.tsx",
     name: "Button",
     props: [
       {
@@ -55,7 +55,7 @@ export const components: ForeignComponent[] = [
     component: (await import("./stories/Button")).Button,
   },
   {
-    path: "src/Header.tsx",
+    path: "src/stories/Header.tsx",
     name: "Header",
     props: [],
     component: (await import("./stories/Header")).Header,
