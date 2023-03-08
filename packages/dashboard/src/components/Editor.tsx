@@ -23,7 +23,6 @@ class Connection extends TypedEmitter<{
       const data = this.provider.document.getMap("project");
       console.log(data.toJSON());
       this.hocuspocusReady = true;
-      this.needsInitialContent = data.size === 0;
       if (this.iframeReady) {
         this.emit("ready");
       }
@@ -60,23 +59,18 @@ class Connection extends TypedEmitter<{
 
   onReady = () => {
     console.log("-- ready");
-    console.log("needs initial content", this.needsInitialContent);
 
     const doc = this.provider.document;
-    const sendUpdate = (update: Uint8Array) => {
-      console.log(update);
+    console.log(doc.getMap("project").toJSON());
+    this.iframe.contentWindow?.postMessage(
+      { type: "uimix:init", data: Y.encodeStateAsUpdate(doc) },
+      "*"
+    );
+    doc.on("update", (update) => {
       this.iframe.contentWindow?.postMessage(
-        {
-          type: "uimix:sync",
-          data: update,
-        },
+        { type: "uimix:sync", data: update },
         "*"
       );
-    };
-    console.log(doc.getMap("project").toJSON());
-    sendUpdate(Y.encodeStateAsUpdate(doc));
-    doc.on("update", (update) => {
-      sendUpdate(update);
     });
   };
 
@@ -84,7 +78,6 @@ class Connection extends TypedEmitter<{
   provider: HocuspocusProvider;
   hocuspocusReady = false;
   iframeReady = false;
-  needsInitialContent = true;
 }
 
 const Editor: React.FC<{

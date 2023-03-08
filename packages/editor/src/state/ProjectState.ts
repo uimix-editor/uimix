@@ -25,6 +25,13 @@ class DataConnector {
           Y.applyUpdate(ydoc, event.data.data);
           // console.log("sync", ydoc.get("project").toJSON());
           // console.log(this.project.node.children);
+        } else if (event.data.type === "uimix:init") {
+          console.log("uimix:init");
+          Y.applyUpdate(ydoc, event.data.data);
+
+          // TODO:
+          // - create page if none exists
+          // - select a page
         }
       })
     );
