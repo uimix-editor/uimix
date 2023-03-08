@@ -3,6 +3,38 @@ import React, { useEffect, useRef, useState } from "react";
 import { dynamicTrpc } from "../utils/trpc";
 import * as Y from "yjs";
 import { TypedEmitter } from "tiny-typed-emitter";
+import { rpcToIFrame } from "@uimix/typed-rpc/browser";
+import { RPC } from "@uimix/typed-rpc";
+import type { EditorRPCHandler } from "../../../editor/src/state/ProjectState";
+
+export class RootRPCHandler {
+  constructor(connection: Connection) {
+    this.connection = connection;
+  }
+  private connection: Connection;
+
+  async ready() {
+    const { connection } = this;
+    if (connection.hocuspocusReady) {
+      return;
+    }
+    console.log("connected!");
+    // const data = connection.provider.document.getMap("project");
+    // console.log(data.toJSON());
+    connection.hocuspocusReady = true;
+    if (connection.iframeReady) {
+      connection.emit("ready");
+    }
+  }
+
+  async update(data: Uint8Array) {
+    const { connection } = this;
+    const doc = connection.provider.document;
+    console.log("uimix:update");
+    Y.applyUpdate(doc, data);
+    console.log(doc.getMap("project").toJSON());
+  }
+}
 
 class Connection extends TypedEmitter<{
   ready(): void;
@@ -10,6 +42,7 @@ class Connection extends TypedEmitter<{
   constructor(iframe: HTMLIFrameElement, documentId: string) {
     super();
     this.iframe = iframe;
+    this.rpc = rpcToIFrame(iframe, new RootRPCHandler(this));
 
     this.provider = new HocuspocusProvider({
       url: "ws://localhost:1234",
@@ -31,49 +64,25 @@ class Connection extends TypedEmitter<{
       }
     });
 
-    window.addEventListener("message", this.onMessage);
     this.on("ready", this.onReady);
   }
 
+  rpc: RPC<RootRPCHandler, EditorRPCHandler>;
+
   dispose() {
     this.provider.disconnect();
-    window.removeEventListener("message", this.onMessage);
+    this.rpc.dispose();
   }
-
-  onMessage = (message: MessageEvent) => {
-    const { iframe } = this;
-    const doc = this.provider.document;
-    if (message.source === iframe.contentWindow) {
-      if (message.data.type === "uimix:ready") {
-        console.log("uimix:ready");
-        this.iframeReady = true;
-        if (this.hocuspocusReady) {
-          this.emit("ready");
-        }
-      }
-
-      if (message.data.type === "uimix:update") {
-        console.log("uimix:update");
-        Y.applyUpdate(doc, message.data.data);
-        console.log(doc.getMap("project").toJSON());
-      }
-    }
-  };
 
   onReady = () => {
     console.log("-- ready");
 
     const doc = this.provider.document;
     console.log(doc.getMap("project").toJSON());
-    this.iframe.contentWindow?.postMessage(
-      { type: "uimix:init", data: Y.encodeStateAsUpdate(doc) },
-      "*"
-    );
+
+    this.rpc.remote.init(Y.encodeStateAsUpdate(doc));
     doc.on("update", (update) => {
-      this.iframe.contentWindow?.postMessage(
-        { type: "uimix:sync", data: update },
-        "*"
-      );
+      this.rpc.remote.sync(update);
     });
   };
 

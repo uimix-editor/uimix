@@ -1,4 +1,4 @@
-import { action, computed, makeObservable, observable } from "mobx";
+import { computed, makeObservable, observable } from "mobx";
 import * as Y from "yjs";
 import { ProjectJSON } from "@uimix/node-data";
 import { Project } from "../models/Project";
@@ -6,36 +6,34 @@ import { Selectable } from "../models/Selectable";
 import { generateExampleNodes } from "../models/generateExampleNodes";
 import { Node } from "../models/Node";
 import { getIncrementalUniqueName } from "../utils/Name";
+import { rpcToParentWindow } from "@uimix/typed-rpc/browser";
+import type { RootRPCHandler } from "../../../dashboard/src/components/Editor";
+
+export class EditorRPCHandler {
+  async sync(data: Uint8Array) {
+    console.log("uimix:sync");
+    Y.applyUpdate(projectState.doc, data);
+  }
+
+  async init(data: Uint8Array) {
+    console.log("uimix:init");
+    Y.applyUpdate(projectState.doc, data);
+
+    if (projectState.project.pages.all.length === 0) {
+      const page = projectState.project.nodes.create("page");
+      page.name = "Page 1";
+      projectState.project.node.append([page]);
+      projectState.pageID = page.id;
+      generateExampleNodes(page);
+    } else {
+      projectState.pageID = projectState.project.pages.all[0].id;
+    }
+  }
+}
 
 class DataConnector {
-  constructor(ydoc: Y.Doc) {
-    window.parent.postMessage({ type: "uimix:ready" }, "*");
-    window.addEventListener(
-      "message",
-      action((event) => {
-        if (event.data.type === "uimix:sync") {
-          console.log("uimix:sync");
-          Y.applyUpdate(ydoc, event.data.data);
-          // console.log("sync", ydoc.get("project").toJSON());
-          // console.log(this.project.node.children);
-        } else if (event.data.type === "uimix:init") {
-          console.log("uimix:init");
-          Y.applyUpdate(ydoc, event.data.data);
-
-          if (projectState.project.pages.all.length === 0) {
-            const page = projectState.project.nodes.create("page");
-            page.name = "Page 1";
-            projectState.project.node.append([page]);
-            projectState.pageID = page.id;
-            generateExampleNodes(page);
-          } else {
-            projectState.pageID = projectState.project.pages.all[0].id;
-          }
-        }
-      })
-    );
-
-    ydoc.on("update", (data) => {
+  constructor() {
+    projectState.doc.on("update", (data) => {
       this.updates.push(data);
       if (!this.sendQueued) {
         queueMicrotask(() => {
@@ -44,21 +42,19 @@ class DataConnector {
         this.sendQueued = true;
       }
     });
+    this.rpc.remote.ready();
   }
 
+  private rpc = rpcToParentWindow<EditorRPCHandler, RootRPCHandler>(
+    new EditorRPCHandler()
+  );
   private updates: Uint8Array[] = [];
   private sendQueued = false;
 
   sendUpdate() {
     this.sendQueued = false;
     if (this.updates.length) {
-      window.parent.postMessage(
-        {
-          type: "uimix:update",
-          data: Y.mergeUpdates(this.updates),
-        },
-        "*"
-      );
+      this.rpc.remote.update(Y.mergeUpdates(this.updates));
       this.updates = [];
     }
   }
@@ -66,10 +62,9 @@ class DataConnector {
 
 export class ProjectState {
   constructor() {
-    const ydoc = new Y.Doc();
-    new DataConnector(ydoc);
+    new DataConnector();
 
-    const projectData = ydoc.getMap("project");
+    const projectData = this.doc.getMap("project");
 
     this.project = new Project(projectData);
     // const page = this.project.nodes.create("page");
@@ -97,6 +92,7 @@ export class ProjectState {
     }
   }
 
+  readonly doc = new Y.Doc();
   readonly project: Project;
   @observable pageID: string | undefined;
   @computed get page(): Node | undefined {
