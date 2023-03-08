@@ -2,10 +2,9 @@
 
 import * as Y from "yjs";
 import { posix as path } from "path-browserify";
-import { getOrCreate } from "../state/Collection";
 import { SelectableMap } from "./Selectable";
 import { Node, NodeMap } from "./Node";
-import { computed, makeObservable, ObservableMap } from "mobx";
+import { computed, makeObservable } from "mobx";
 import { ProjectJSON } from "@uimix/node-data";
 import { toProjectJSON } from "./toProjectJSON";
 import { ImageManager } from "./ImageManager";
@@ -14,6 +13,7 @@ import { ObservableYMap } from "../utils/ObservableYMap";
 
 export interface PageHierarchyFolderEntry {
   type: "directory";
+  id: string;
   path: string;
   name: string;
   children: PageHierarchyEntry[];
@@ -21,6 +21,7 @@ export interface PageHierarchyFolderEntry {
 
 export interface PageHierarchyPageEntry {
   type: "file";
+  id: string;
   path: string;
   name: string;
   page: Node;
@@ -57,6 +58,7 @@ class Pages {
   toHierarchy(): PageHierarchyFolderEntry {
     const root: PageHierarchyFolderEntry = {
       type: "directory",
+      id: "",
       name: "",
       path: "",
       children: [],
@@ -77,6 +79,7 @@ class Pages {
       const parent = mkdirp(segments.slice(0, -1));
       const dir: PageHierarchyFolderEntry = {
         type: "directory",
+        id: segments.join("/"),
         name: segments[segments.length - 1],
         path: segments.join("/"),
         children: [],
@@ -95,6 +98,7 @@ class Pages {
 
       const item: PageHierarchyPageEntry = {
         type: "file",
+        id: page.id,
         name: segments[segments.length - 1],
         path: page.name,
         page,
