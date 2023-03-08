@@ -5,7 +5,7 @@ import * as Y from "yjs";
 import { TypedEmitter } from "tiny-typed-emitter";
 
 class Connection extends TypedEmitter<{
-  loadingChange(): void;
+  ready(): void;
 }> {
   constructor(iframe: HTMLIFrameElement, documentId: string) {
     super();
@@ -21,8 +21,10 @@ class Connection extends TypedEmitter<{
     this.provider.on("connect", () => {
       console.log("connected!");
       console.log(this.provider.document.getMap("project").toJSON());
-      this.loading = false;
-      this.emit("loadingChange");
+      this.hocuspocusReady = true;
+      if (this.iframeReady) {
+        this.emit("ready");
+      }
     });
 
     window.addEventListener("message", this.onMessage);
@@ -38,6 +40,11 @@ class Connection extends TypedEmitter<{
     const doc = this.provider.document;
     if (message.source === iframe.contentWindow) {
       if (message.data.type === "uimix:ready") {
+        this.iframeReady = true;
+        if (this.hocuspocusReady) {
+          this.emit("ready");
+        }
+
         console.log("uimix:ready");
         const sendUpdate = (update: Uint8Array) => {
           console.log(update);
@@ -66,7 +73,8 @@ class Connection extends TypedEmitter<{
 
   iframe: HTMLIFrameElement;
   provider: HocuspocusProvider;
-  loading = true;
+  hocuspocusReady = false;
+  iframeReady = false;
 }
 
 const Editor: React.FC<{
