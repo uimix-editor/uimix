@@ -9,6 +9,7 @@ import { commands } from "../state/Commands";
 import { action } from "mobx";
 import { OutlineSideBar } from "./outline/OutlineSideBar";
 import { FontLoader } from "./viewport/renderer/FontLoader";
+import { VerticalToolBar } from "./toolbar/VerticalToolBar";
 
 function useKeyHandling() {
   useEffect(() => {
@@ -54,6 +55,8 @@ export const App = observer(function App() {
         <ToolBar className="shrink-0" />
         <div className="flex flex-1">
           <OutlineSideBar />
+          <div className="bg-macaron-separator w-px" />
+          <VerticalToolBar />
           <div className="flex flex-1 border-l border-r border-macaron-separator">
             <Viewport />
           </div>

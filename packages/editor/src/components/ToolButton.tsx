@@ -10,7 +10,7 @@ export const ToolButton = React.forwardRef<
       {...props}
       ref={ref}
       className={twMerge(
-        `text-macaron-text text-xl outline-0 w-6 h-6 flex items-center justify-center rounded aria-pressed:bg-macaron-active aria-pressed:text-macaron-activeText aria-expanded:bg-macaron-active aria-expanded:text-macaron-activeText active:scale-110 hover:bg-macaron-uiBackground`,
+        `text-macaron-text text-xl outline-0 w-7 h-7 flex items-center justify-center rounded aria-pressed:bg-macaron-active aria-pressed:text-macaron-activeText aria-expanded:bg-macaron-active aria-expanded:text-macaron-activeText active:scale-110 hover:bg-macaron-uiBackground`,
         className
       )}
     />
