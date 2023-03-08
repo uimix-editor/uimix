@@ -50,6 +50,7 @@ importers:
       '@types/node': 18.14.6
       '@types/react': 18.0.28
       '@types/react-dom': 18.0.11
+      '@uimix/typed-rpc': workspace:*
       autoprefixer: ^10.4.13
       clsx: ^1.2.1
       eslint: 8.35.0
@@ -86,6 +87,7 @@ importers:
       '@types/node': 18.14.6
       '@types/react': 18.0.28
       '@types/react-dom': 18.0.11
+      '@uimix/typed-rpc': link:../typed-rpc
       clsx: 1.2.1
       eslint: 8.35.0
       eslint-config-next: 13.2.3_ycpbpc6yetojsgtrx3mwntkhsu
@@ -232,6 +234,7 @@ importers:
       '@typescript-eslint/eslint-plugin': ^5.54.0
       '@typescript-eslint/parser': ^5.54.0
       '@uimix/node-data': workspace:*
+      '@uimix/typed-rpc': workspace:*
       '@vitejs/plugin-react': ^3.1.0
       any-base: ^1.1.0
       ariakit: 2.0.0-next.43
@@ -295,6 +298,7 @@ importers:
       '@thoughtbot/tailwindcss-aria-attributes': 0.2.0
       '@trpc/client': 10.13.2
       '@uimix/node-data': link:../node-data
+      '@uimix/typed-rpc': link:../typed-rpc
       any-base: 1.1.0
       ariakit: 2.0.0-next.43_zula6vjvt3wdocc4mwcxqa6nzi
       buffer: 6.0.3

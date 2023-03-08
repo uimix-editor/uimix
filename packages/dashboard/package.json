@@ -4,15 +4,15 @@
   "private": true,
   "scripts": {
     "build": "next build",
+    "dev": "run-z dev:docker-compose,dev:next",
     "dev:docker-compose": "docker-compose up",
     "dev:next": "next dev",
-    "dev": "run-z dev:docker-compose,dev:next",
     "lint": "next lint",
-    "start": "next start",
     "prisma:generate": "prisma generate",
-    "prisma:migrate-dev": "prisma migrate dev",
     "prisma:migrate-deploy": "prisma migrate deploy",
-    "prisma:studio": "prisma studio"
+    "prisma:migrate-dev": "prisma migrate dev",
+    "prisma:studio": "prisma studio",
+    "start": "next start"
   },
   "dependencies": {
     "@hocuspocus/provider": "^1.1.1",
@@ -27,6 +27,7 @@
     "@types/node": "18.14.6",
     "@types/react": "18.0.28",
     "@types/react-dom": "18.0.11",
+    "@uimix/typed-rpc": "workspace:*",
     "clsx": "^1.2.1",
     "eslint": "8.35.0",
     "eslint-config-next": "13.2.3",
