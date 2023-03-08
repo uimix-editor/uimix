@@ -8,7 +8,7 @@ import { RPC } from "@uimix/typed-rpc";
 import type {
   IRootToEditorRPCHandler,
   IEditorToRootRPCHandler,
-} from "../../../editor/src/state/ProjectState";
+} from "../../../editor/src/state/IFrameDataConnector";
 
 class Connection extends TypedEmitter<{
   ready(): void;
