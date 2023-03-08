@@ -17,6 +17,8 @@ export class ViewportState {
   @observable.ref insertMode: InsertMode | undefined = undefined;
   @observable panMode = false;
   @observable resizeBoxVisible = false;
+
+  @observable showsInstancePalette = false;
 }
 
 export const viewportState = new ViewportState();

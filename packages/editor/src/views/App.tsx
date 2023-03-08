@@ -10,6 +10,7 @@ import { action } from "mobx";
 import { OutlineSideBar } from "./outline/OutlineSideBar";
 import { FontLoader } from "./viewport/renderer/FontLoader";
 import { VerticalToolBar } from "./toolbar/VerticalToolBar";
+import { InspectorPaletteOverlay } from "./viewport/InspectorPaletteOverlay";
 
 function useKeyHandling() {
   useEffect(() => {
@@ -57,8 +58,9 @@ export const App = observer(function App() {
           <OutlineSideBar />
           <div className="bg-macaron-separator w-px" />
           <VerticalToolBar />
-          <div className="flex flex-1 border-l border-r border-macaron-separator">
+          <div className="flex flex-1 border-l border-r border-macaron-separator relative">
             <Viewport />
+            <InspectorPaletteOverlay />
           </div>
           <InspectorSideBar />
         </div>

@@ -53,8 +53,10 @@ export const VerticalToolBar = observer(() => {
           <Icon icon={imageIcon} width={20} />
         </ToolButton>
         <ToolButton
+          aria-pressed={viewportState.showsInstancePalette}
           onClick={action(() => {
             // TODO: show instance palette
+            viewportState.showsInstancePalette = true;
           })}
         >
           <svg width="20" height="20" viewBox="0 0 20 20">
