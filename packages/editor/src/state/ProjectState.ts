@@ -62,8 +62,6 @@ class DataConnector {
 
 export class ProjectState {
   constructor() {
-    new DataConnector();
-
     const projectData = this.doc.getMap("project");
 
     this.project = new Project(projectData);
@@ -166,3 +164,5 @@ export class ProjectState {
 }
 
 export const projectState = new ProjectState();
+
+new DataConnector();

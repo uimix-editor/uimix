@@ -15,14 +15,9 @@ export class RootRPCHandler {
 
   async ready() {
     const { connection } = this;
+    console.log("iframe:ready");
+    connection.iframeReady = true;
     if (connection.hocuspocusReady) {
-      return;
-    }
-    console.log("connected!");
-    // const data = connection.provider.document.getMap("project");
-    // console.log(data.toJSON());
-    connection.hocuspocusReady = true;
-    if (connection.iframeReady) {
       connection.emit("ready");
     }
   }
@@ -60,6 +55,7 @@ class Connection extends TypedEmitter<{
       console.log(data.toJSON());
       this.hocuspocusReady = true;
       if (this.iframeReady) {
+        console.log("emit ready");
         this.emit("ready");
       }
     });
