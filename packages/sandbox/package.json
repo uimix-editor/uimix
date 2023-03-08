@@ -8,7 +8,7 @@
     "build-storybook": "build-storybook",
     "dev:vite": "vite --port 5174",
     "dev:components": "vite --port 5175 --config vite.config.components.js",
-    "dev": "run-z dev:vite, dev:components",
+    "dev": "run-z dev:vite,dev:components",
     "preview": "vite preview",
     "storybook": "start-storybook -p 6006",
     "test": "vitest",
