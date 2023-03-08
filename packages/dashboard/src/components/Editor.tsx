@@ -19,6 +19,9 @@ class Connection extends TypedEmitter<{
       },
     });
     this.provider.on("connect", () => {
+      if (this.hocuspocusReady) {
+        return;
+      }
       console.log("connected!");
       const data = this.provider.document.getMap("project");
       console.log(data.toJSON());
