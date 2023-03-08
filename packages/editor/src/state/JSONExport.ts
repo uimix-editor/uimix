@@ -3,28 +3,35 @@ import { ProjectJSON } from "@uimix/node-data";
 import { formatJSON } from "../utils/Format";
 import { projectState } from "./ProjectState";
 
-const filePickerOptions = {
-  types: [
-    {
-      description: "JSON File",
-      accept: {
-        "application/json": [".json"],
-      },
-    },
-  ],
-};
-
 export async function exportToJSON() {
-  const fileHandle = await showSaveFilePicker(filePickerOptions);
   const projectJSON = projectState.project.toJSON();
-  const writable = await fileHandle.createWritable();
-  await writable.write(formatJSON(JSON.stringify(projectJSON)));
-  await writable.close();
+  const projectJSONText = formatJSON(JSON.stringify(projectJSON));
+
+  // download file
+  const blob = new Blob([projectJSONText], { type: "application/json" });
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement("a");
+  a.href = url;
+  a.download = "project.json";
+  a.click();
+  URL.revokeObjectURL(url);
 }
 
 export async function importJSON() {
-  const [fileHandle] = await showOpenFilePicker(filePickerOptions);
-  const data = await (await fileHandle.getFile()).text();
+  // select file via input element
+
+  const file = await new Promise<File | null>((resolve) => {
+    const input = document.createElement("input");
+    input.type = "file";
+    input.accept = "application/json";
+    input.onchange = () => {
+      resolve(input.files?.[0] ?? null);
+    };
+    input.click();
+  });
+
+  if (!file) return;
+  const data = await file.text();
   const projectJSON = ProjectJSON.parse(JSON.parse(data));
 
   runInAction(() => {
