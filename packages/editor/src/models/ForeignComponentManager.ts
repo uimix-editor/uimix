@@ -2,12 +2,28 @@ import { ForeignComponentRef } from "@uimix/node-data";
 import { makeObservable, observable } from "mobx";
 import type React from "react";
 import type ReactDOM from "react-dom/client";
-import type docgen from "react-docgen-typescript";
+
+export type Type =
+  | {
+      type: "string";
+    }
+  | {
+      type: "boolean";
+    }
+  | {
+      type: "enum";
+      values: string[];
+    };
+
+export interface Prop {
+  name: string;
+  type: Type;
+}
 
 export interface ForeignComponent {
   path: string; // path relative to project root e.g. "src/Button.tsx"
   name: string; // export name; e.g. "Button" ("default" for default export)
-  props: docgen.Props;
+  props: Prop[];
   component: React.ElementType;
 }
 
@@ -20,27 +36,21 @@ export class ForeignComponentManager {
     this.window = window;
     window
       // @ts-ignore
-      .eval(`import("/project/virtual:components")`)
-      .then(async (mod: any) => {
-        this.React = mod.React;
-        this.ReactDOM = mod.ReactDOM;
-
-        const components: docgen.ComponentDoc[] = mod.components;
-        for (const componentDoc of components) {
-          const componentModule = await window
-            // @ts-ignore
-            .eval(`import("/project/${componentDoc.filePath}")`);
-          const componentValue = componentModule[componentDoc.displayName];
-          const component: ForeignComponent = {
-            path: componentDoc.filePath,
-            name: componentDoc.displayName,
-            props: componentDoc.props,
-            component: componentValue,
-          };
-
-          this.components.set(foreignComponentKey(component), component);
+      // TODO: make source URL configurable
+      .eval(`import("http://localhost:5175/src/uimix-components.tsx")`)
+      .then(
+        async (mod: {
+          React: typeof React;
+          ReactDOM: typeof ReactDOM;
+          components: ForeignComponent[];
+        }) => {
+          this.React = mod.React;
+          this.ReactDOM = mod.ReactDOM;
+          for (const component of mod.components) {
+            this.components.set(foreignComponentKey(component), component);
+          }
         }
-      });
+      );
     makeObservable(this);
   }
 
