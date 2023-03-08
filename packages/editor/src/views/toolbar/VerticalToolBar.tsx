@@ -52,7 +52,11 @@ export const VerticalToolBar = observer(() => {
         >
           <Icon icon={imageIcon} width={20} />
         </ToolButton>
-        <ToolButton>
+        <ToolButton
+          onClick={action(() => {
+            // TODO: show instance palette
+          })}
+        >
           <svg width="20" height="20" viewBox="0 0 20 20">
             <path
               d="M13.25 11L9 6.75L13.25 2.5L17.479 6.75L13.25 11ZM3 9V3H9V9H3ZM11 17V11H17V17H11ZM3 17V11H9V17H3ZM4.5 7.5H7.5V4.5H4.5V7.5ZM13.25 8.875L15.354 6.75L13.25 4.625L11.125 6.75L13.25 8.875ZM12.5 15.5H15.5V12.5H12.5V15.5ZM4.5 15.5H7.5V12.5H4.5V15.5Z"
