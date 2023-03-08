@@ -99,7 +99,7 @@ export class NodeInsertDragHandler implements DragHandler {
 
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   end(event: MouseEvent | DragEvent): void {
-    viewportState.insertMode = undefined;
+    viewportState.tool = undefined;
     projectState.undoManager.stopCapturing();
   }
 

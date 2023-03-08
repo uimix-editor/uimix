@@ -2,7 +2,7 @@ import { makeObservable, observable } from "mobx";
 import { Rect } from "paintvec";
 import { Selectable } from "../models/Selectable";
 import { DropDestination } from "./DropDestination";
-import { InsertMode } from "./InsertMode";
+import { Tool } from "./Tool";
 
 export class ViewportState {
   constructor() {
@@ -14,11 +14,9 @@ export class ViewportState {
   @observable.ref dragPreviewRects: readonly Rect[] = [];
   @observable.ref dropDestination: DropDestination | undefined = undefined;
 
-  @observable.ref insertMode: InsertMode | undefined = undefined;
+  @observable.ref tool: Tool | undefined = undefined;
   @observable panMode = false;
   @observable resizeBoxVisible = false;
-
-  @observable showsInstancePalette = false;
 }
 
 export const viewportState = new ViewportState();

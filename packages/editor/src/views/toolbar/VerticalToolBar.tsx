@@ -16,12 +16,9 @@ export const VerticalToolBar = observer(() => {
     <div className="w-10 flex flex-col items-center p-1.5 justify-between">
       <div className="flex flex-col items-center gap-1">
         <ToolButton
-          aria-pressed={
-            !viewportState.insertMode && !viewportState.showsInstancePalette
-          }
+          aria-pressed={!viewportState.tool}
           onClick={action(() => {
-            viewportState.insertMode = undefined;
-            viewportState.showsInstancePalette = false;
+            viewportState.tool = undefined;
           })}
         >
           <svg width="20" height="20" viewBox="0 0 20 20">
@@ -32,7 +29,10 @@ export const VerticalToolBar = observer(() => {
           </svg>
         </ToolButton>
         <ToolButton
-          aria-pressed={viewportState.insertMode?.type === "frame"}
+          aria-pressed={
+            viewportState.tool?.type === "insert" &&
+            viewportState.tool.mode.type === "frame"
+          }
           onClick={action(() => {
             commands.insertFrame();
           })}
@@ -40,7 +40,10 @@ export const VerticalToolBar = observer(() => {
           <Icon icon={rectIcon} width={20} />
         </ToolButton>
         <ToolButton
-          aria-pressed={viewportState.insertMode?.type === "text"}
+          aria-pressed={
+            viewportState.tool?.type === "insert" &&
+            viewportState.tool.mode.type === "text"
+          }
           onClick={action(() => {
             commands.insertText();
           })}
@@ -48,7 +51,10 @@ export const VerticalToolBar = observer(() => {
           <Icon icon={textIcon} width={20} />
         </ToolButton>
         <ToolButton
-          aria-pressed={viewportState.insertMode?.type === "image"}
+          aria-pressed={
+            viewportState.tool?.type === "insert" &&
+            viewportState.tool.mode.type === "image"
+          }
           onClick={action(() => {
             commands.insertImage();
           })}
@@ -56,10 +62,11 @@ export const VerticalToolBar = observer(() => {
           <Icon icon={imageIcon} width={20} />
         </ToolButton>
         <ToolButton
-          aria-pressed={viewportState.showsInstancePalette}
+          aria-pressed={viewportState.tool?.type === "instancePalette"}
           onClick={action(() => {
-            // TODO: show instance palette
-            viewportState.showsInstancePalette = true;
+            viewportState.tool = {
+              type: "instancePalette",
+            };
           })}
         >
           <svg width="20" height="20" viewBox="0 0 20 20">

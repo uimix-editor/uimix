@@ -114,11 +114,17 @@ class Commands {
   }
 
   insertFrame() {
-    viewportState.insertMode = { type: "frame" };
+    viewportState.tool = {
+      type: "insert",
+      mode: { type: "frame" },
+    };
   }
 
   insertText() {
-    viewportState.insertMode = { type: "text" };
+    viewportState.tool = {
+      type: "insert",
+      mode: { type: "text" },
+    };
   }
 
   async insertImage() {
@@ -138,15 +144,9 @@ class Commands {
     const blob = await fileHandle.getFile();
     const dataURL = await blobToDataURL(blob);
 
-    viewportState.insertMode = {
-      type: "image",
-      dataURL: dataURL,
-      // TODO: image source
-      // source: {
-      //   dataURL: dataURL,
-      //   width: image.width,
-      //   height: image.height,
-      // },
+    viewportState.tool = {
+      type: "insert",
+      mode: { type: "image", dataURL },
     };
   }
 
@@ -462,7 +462,7 @@ class Commands {
         return true;
       }
       if (event.key === "Escape") {
-        viewportState.insertMode = undefined;
+        viewportState.tool = undefined;
         return true;
       }
 
