@@ -107,6 +107,7 @@ const Editor: React.FC<{
         ref={iframeRef}
         className="fixed inset-0 w-full h-full"
         src="http://randomvalue.editor.localhost:5173"
+        allow="clipboard-read; clipboard-write"
       />
       {loading && (
         <div className="fixed inset-0 w-full h-full bg-white opacity-50">
