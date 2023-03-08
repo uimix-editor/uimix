@@ -9,6 +9,7 @@ import type {
   IRootToEditorRPCHandler,
   IEditorToRootRPCHandler,
 } from "../../../editor/src/state/IFrameDataConnector";
+import { Icon } from "@iconify/react";
 
 class Connection extends TypedEmitter<{
   ready(): void;
@@ -100,12 +101,23 @@ const Editor: React.FC<{
 
   return (
     <div className="fixed inset-0 w-full h-full">
-      <iframe
-        ref={iframeRef}
-        className="fixed inset-0 w-full h-full"
-        src="http://randomvalue.editor.localhost:5173"
-        allow="clipboard-read; clipboard-write"
-      />
+      <div className="flex flex-col w-full h-full">
+        <div className="h-10 border-b border-neutral-200 relative flex items-center justify-center">
+          <button className="absolute left-0 top-0 h-10 w-10 flex items-center justify-center">
+            <Icon
+              icon="material-symbols:keyboard-arrow-left"
+              className="text-base"
+            />
+          </button>
+          <div>TODO: Document Title</div>
+        </div>
+        <iframe
+          ref={iframeRef}
+          className="flex-1"
+          src="http://randomvalue.editor.localhost:5173"
+          allow="clipboard-read; clipboard-write"
+        />
+      </div>
       {loading && (
         <div className="fixed inset-0 w-full h-full bg-white opacity-50">
           <div className="absolute inset-0 flex items-center justify-center">

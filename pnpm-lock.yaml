@@ -38,6 +38,7 @@ importers:
   packages/dashboard:
     specifiers:
       '@hocuspocus/provider': ^1.1.1
+      '@iconify/react': ^4.1.0
       '@next-auth/prisma-adapter': ^1.0.5
       '@next/font': 13.2.3
       '@prisma/client': ^4.11.0
@@ -76,6 +77,7 @@ importers:
       zod: ^3.21.0
     dependencies:
       '@hocuspocus/provider': 1.1.1_yjs@13.5.47
+      '@iconify/react': 4.1.0_react@18.2.0
       '@next-auth/prisma-adapter': 1.0.5_knaw3qxw4zwoiwojd3fn43zthi
       '@next/font': 13.2.3
       '@prisma/client': 4.11.0_prisma@4.11.0
