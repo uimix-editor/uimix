@@ -16,9 +16,12 @@ export const VerticalToolBar = observer(() => {
     <div className="w-10 flex flex-col items-center p-1.5 justify-between">
       <div className="flex flex-col items-center gap-1">
         <ToolButton
-          aria-pressed={!viewportState.insertMode}
+          aria-pressed={
+            !viewportState.insertMode && !viewportState.showsInstancePalette
+          }
           onClick={action(() => {
             viewportState.insertMode = undefined;
+            viewportState.showsInstancePalette = false;
           })}
         >
           <svg width="20" height="20" viewBox="0 0 20 20">
