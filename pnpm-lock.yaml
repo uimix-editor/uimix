@@ -415,6 +415,9 @@ importers:
       vite: 4.1.4
       vitest: 0.29.1
 
+  packages/typed-rpc:
+    specifiers: {}
+
 packages:
 
   /@ampproject/remapping/2.2.0:
