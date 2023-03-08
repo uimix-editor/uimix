@@ -57,13 +57,17 @@ class Connection extends TypedEmitter<{
   }
 
   private rpc: RPC<IRootToEditorRPCHandler, IEditorToRootRPCHandler>;
+  private iframe: HTMLIFrameElement;
+  private provider: HocuspocusProvider;
+  private hocuspocusReady = false;
+  private iframeReady = false;
 
   dispose() {
     this.provider.disconnect();
     this.rpc.dispose();
   }
 
-  onReady = () => {
+  private onReady = () => {
     console.log("-- ready");
 
     const doc = this.provider.document;
@@ -74,11 +78,6 @@ class Connection extends TypedEmitter<{
       this.rpc.remote.sync(update);
     });
   };
-
-  iframe: HTMLIFrameElement;
-  provider: HocuspocusProvider;
-  hocuspocusReady = false;
-  iframeReady = false;
 }
 
 const Editor: React.FC<{
