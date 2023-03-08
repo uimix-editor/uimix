@@ -29,6 +29,16 @@ class DataConnector {
           console.log("uimix:init");
           Y.applyUpdate(ydoc, event.data.data);
 
+          if (projectState.project.pages.all.length === 0) {
+            const page = projectState.project.nodes.create("page");
+            page.name = "Page 1";
+            projectState.project.node.append([page]);
+            projectState.pageID = page.id;
+            generateExampleNodes(page);
+          } else {
+            projectState.pageID = projectState.project.pages.all[0].id;
+          }
+
           // TODO:
           // - create page if none exists
           // - select a page
