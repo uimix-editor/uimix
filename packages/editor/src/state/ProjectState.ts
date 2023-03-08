@@ -7,33 +7,22 @@ import { generateExampleNodes } from "../models/generateExampleNodes";
 import { Node } from "../models/Node";
 import { getIncrementalUniqueName } from "../utils/Name";
 import { rpcToParentWindow } from "@uimix/typed-rpc/browser";
-import type { RootRPCHandler } from "../../../dashboard/src/components/Editor";
+import { RPC } from "@uimix/typed-rpc";
 
-export class EditorRPCHandler {
-  async sync(data: Uint8Array) {
-    console.log("uimix:sync");
-    Y.applyUpdate(projectState.doc, data);
-  }
+export interface IRootToEditorRPCHandler {
+  sync(data: Uint8Array): Promise<void>;
+  init(data: Uint8Array): Promise<void>;
+}
 
-  async init(data: Uint8Array) {
-    console.log("uimix:init");
-    Y.applyUpdate(projectState.doc, data);
-
-    if (projectState.project.pages.all.length === 0) {
-      const page = projectState.project.nodes.create("page");
-      page.name = "Page 1";
-      projectState.project.node.append([page]);
-      projectState.pageID = page.id;
-      generateExampleNodes(page);
-    } else {
-      projectState.pageID = projectState.project.pages.all[0].id;
-    }
-  }
+export interface IEditorToRootRPCHandler {
+  ready(): Promise<void>;
+  update(data: Uint8Array): Promise<void>;
 }
 
 class DataConnector {
-  constructor() {
-    projectState.doc.on("update", (data) => {
+  constructor(state: ProjectState) {
+    this.state = state;
+    this.state.doc.on("update", (data) => {
       this.updates.push(data);
       if (!this.sendQueued) {
         queueMicrotask(() => {
@@ -42,12 +31,36 @@ class DataConnector {
         this.sendQueued = true;
       }
     });
+
+    this.rpc = rpcToParentWindow<
+      IRootToEditorRPCHandler,
+      IEditorToRootRPCHandler
+    >({
+      sync: async (data: Uint8Array) => {
+        console.log("uimix:sync");
+        Y.applyUpdate(state.doc, data);
+      },
+      init: async (data: Uint8Array) => {
+        console.log("uimix:init");
+        Y.applyUpdate(state.doc, data);
+
+        if (state.project.pages.all.length === 0) {
+          const page = state.project.nodes.create("page");
+          page.name = "Page 1";
+          state.project.node.append([page]);
+          state.pageID = page.id;
+          generateExampleNodes(page);
+        } else {
+          state.pageID = state.project.pages.all[0].id;
+        }
+      },
+    });
+
     this.rpc.remote.ready();
   }
 
-  private rpc = rpcToParentWindow<EditorRPCHandler, RootRPCHandler>(
-    new EditorRPCHandler()
-  );
+  private state: ProjectState;
+  private rpc: RPC<IRootToEditorRPCHandler, IEditorToRootRPCHandler>;
   private updates: Uint8Array[] = [];
   private sendQueued = false;
 
@@ -62,6 +75,8 @@ class DataConnector {
 
 export class ProjectState {
   constructor() {
+    new DataConnector(this);
+
     const projectData = this.doc.getMap("project");
 
     this.project = new Project(projectData);
@@ -164,5 +179,3 @@ export class ProjectState {
 }
 
 export const projectState = new ProjectState();
-
-new DataConnector();

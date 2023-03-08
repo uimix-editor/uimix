@@ -5,31 +5,10 @@ import * as Y from "yjs";
 import { TypedEmitter } from "tiny-typed-emitter";
 import { rpcToIFrame } from "@uimix/typed-rpc/browser";
 import { RPC } from "@uimix/typed-rpc";
-import type { EditorRPCHandler } from "../../../editor/src/state/ProjectState";
-
-export class RootRPCHandler {
-  constructor(connection: Connection) {
-    this.connection = connection;
-  }
-  private connection: Connection;
-
-  async ready() {
-    const { connection } = this;
-    console.log("iframe:ready");
-    connection.iframeReady = true;
-    if (connection.hocuspocusReady) {
-      connection.emit("ready");
-    }
-  }
-
-  async update(data: Uint8Array) {
-    const { connection } = this;
-    const doc = connection.provider.document;
-    console.log("uimix:update");
-    Y.applyUpdate(doc, data);
-    console.log(doc.getMap("project").toJSON());
-  }
-}
+import type {
+  IRootToEditorRPCHandler,
+  IEditorToRootRPCHandler,
+} from "../../../editor/src/state/ProjectState";
 
 class Connection extends TypedEmitter<{
   ready(): void;
@@ -37,7 +16,24 @@ class Connection extends TypedEmitter<{
   constructor(iframe: HTMLIFrameElement, documentId: string) {
     super();
     this.iframe = iframe;
-    this.rpc = rpcToIFrame(iframe, new RootRPCHandler(this));
+    this.rpc = rpcToIFrame<IEditorToRootRPCHandler, IRootToEditorRPCHandler>(
+      iframe,
+      {
+        ready: async () => {
+          console.log("iframe:ready");
+          this.iframeReady = true;
+          if (this.hocuspocusReady) {
+            this.emit("ready");
+          }
+        },
+        update: async (data: Uint8Array) => {
+          const doc = this.provider.document;
+          console.log("uimix:update");
+          Y.applyUpdate(doc, data);
+          console.log(doc.getMap("project").toJSON());
+        },
+      }
+    );
 
     this.provider = new HocuspocusProvider({
       url: "ws://localhost:1234",
@@ -63,7 +59,7 @@ class Connection extends TypedEmitter<{
     this.on("ready", this.onReady);
   }
 
-  rpc: RPC<RootRPCHandler, EditorRPCHandler>;
+  rpc: RPC<IEditorToRootRPCHandler, IRootToEditorRPCHandler>;
 
   dispose() {
     this.provider.disconnect();
