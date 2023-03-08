@@ -1,3 +1,4 @@
+import Link from "next/link";
 import { trpc } from "../../utils/trpc";
 
 export default function Documents() {
@@ -23,7 +24,7 @@ export default function Documents() {
       <ul>
         {documents.data?.map((document) => (
           <li key={document.id}>
-            <a href={`/documents/${document.id}`}>{document.title}</a>
+            <Link href={`/documents/${document.id}`}>{document.title}</Link>
           </li>
         ))}
       </ul>

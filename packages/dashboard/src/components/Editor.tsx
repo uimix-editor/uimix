@@ -111,10 +111,7 @@ const Editor: React.FC<{
             className="absolute left-0 top-0 h-10 w-10 flex items-center justify-center"
             href="/documents"
           >
-            <Icon
-              icon="material-symbols:keyboard-arrow-left"
-              className="text-base"
-            />
+            <Icon icon="material-symbols:chevron-left" className="text-base" />
           </Link>
           <div className="text-xs font-medium">{document?.title}</div>
         </div>
