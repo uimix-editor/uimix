@@ -1,10 +1,7 @@
-import { RPC } from "./index";
+import { Target } from "./index";
 
-export function rpcToIFrame<Self, Remote>(
-  iframe: HTMLIFrameElement,
-  handler: Self
-) {
-  return new RPC<Self, Remote>({
+export function iframeTarget(iframe: HTMLIFrameElement): Target {
+  return {
     post: (message) => iframe.contentWindow?.postMessage(message, "*"),
     subscribe: (handler) => {
       const onMessage = (event: MessageEvent) => {
@@ -17,12 +14,11 @@ export function rpcToIFrame<Self, Remote>(
         window.removeEventListener("message", onMessage);
       };
     },
-    handler,
-  });
+  };
 }
 
-export function rpcToParentWindow<Self, Remote>(handler: Self) {
-  return new RPC<Self, Remote>({
+export function parentWindowTarget(): Target {
+  return {
     post: (message) => window.parent.postMessage(message, "*"),
     subscribe: (handler) => {
       const onMessage = (event: MessageEvent) => {
@@ -36,6 +32,5 @@ export function rpcToParentWindow<Self, Remote>(handler: Self) {
         window.removeEventListener("message", onMessage);
       };
     },
-    handler,
-  });
+  };
 }

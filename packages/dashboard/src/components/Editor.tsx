@@ -3,7 +3,7 @@ import React, { useEffect, useRef, useState } from "react";
 import { dynamicTrpc } from "../utils/trpc";
 import * as Y from "yjs";
 import { TypedEmitter } from "tiny-typed-emitter";
-import { rpcToIFrame } from "@uimix/typed-rpc/browser";
+import { iframeTarget } from "@uimix/typed-rpc/browser";
 import { RPC } from "@uimix/typed-rpc";
 import type {
   IRootToEditorRPCHandler,
@@ -16,24 +16,21 @@ class Connection extends TypedEmitter<{
   constructor(iframe: HTMLIFrameElement, documentId: string) {
     super();
     this.iframe = iframe;
-    this.rpc = rpcToIFrame<IEditorToRootRPCHandler, IRootToEditorRPCHandler>(
-      iframe,
-      {
-        ready: async () => {
-          console.log("iframe:ready");
-          this.iframeReady = true;
-          if (this.hocuspocusReady) {
-            this.emit("ready");
-          }
-        },
-        update: async (data: Uint8Array) => {
-          const doc = this.provider.document;
-          console.log("uimix:update");
-          Y.applyUpdate(doc, data);
-          console.log(doc.getMap("project").toJSON());
-        },
-      }
-    );
+    this.rpc = new RPC(iframeTarget(iframe), {
+      ready: async () => {
+        console.log("iframe:ready");
+        this.iframeReady = true;
+        if (this.hocuspocusReady) {
+          this.emit("ready");
+        }
+      },
+      update: async (data: Uint8Array) => {
+        const doc = this.provider.document;
+        console.log("uimix:update");
+        Y.applyUpdate(doc, data);
+        console.log(doc.getMap("project").toJSON());
+      },
+    });
 
     this.provider = new HocuspocusProvider({
       url: "ws://localhost:1234",
@@ -59,7 +56,7 @@ class Connection extends TypedEmitter<{
     this.on("ready", this.onReady);
   }
 
-  rpc: RPC<IEditorToRootRPCHandler, IRootToEditorRPCHandler>;
+  private rpc: RPC<IRootToEditorRPCHandler, IEditorToRootRPCHandler>;
 
   dispose() {
     this.provider.disconnect();

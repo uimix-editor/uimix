@@ -7,28 +7,25 @@ type MessageData =
       value: any;
     };
 
-export class RPC<Self, Remote> {
-  constructor({
-    post,
-    subscribe,
-    handler,
-  }: {
-    post: (data: MessageData) => void;
-    subscribe: (handler: (data: MessageData) => void) => () => void;
-    handler: Self;
-  }) {
-    this.disposeHandler = subscribe(async (data) => {
+export interface Target {
+  post(data: MessageData): void;
+  subscribe(handler: (data: MessageData) => void): () => void;
+}
+
+export class RPC<Remote, Self> {
+  constructor(target: Target, handler: Self) {
+    this.disposeHandler = target.subscribe(async (data) => {
       if (data.type === "call") {
         try {
           const result = await (handler as any)[data.name](...data.args);
-          post({
+          target.post({
             type: "result",
             callID: data.callID,
             status: "success",
             value: result,
           });
         } catch (error) {
-          post({
+          target.post({
             type: "result",
             callID: data.callID,
             status: "error",
@@ -56,7 +53,7 @@ export class RPC<Self, Remote> {
             return new Promise((resolve, reject) => {
               const callID = Math.random();
               this.resolvers.set(callID, { resolve, reject });
-              post({ type: "call", callID, name, args });
+              target.post({ type: "call", callID, name, args });
             });
           };
         },

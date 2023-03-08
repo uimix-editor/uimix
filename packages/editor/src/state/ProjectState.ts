@@ -6,7 +6,7 @@ import { Selectable } from "../models/Selectable";
 import { generateExampleNodes } from "../models/generateExampleNodes";
 import { Node } from "../models/Node";
 import { getIncrementalUniqueName } from "../utils/Name";
-import { rpcToParentWindow } from "@uimix/typed-rpc/browser";
+import { parentWindowTarget } from "@uimix/typed-rpc/browser";
 import { RPC } from "@uimix/typed-rpc";
 
 export interface IRootToEditorRPCHandler {
@@ -32,10 +32,7 @@ class DataConnector {
       }
     });
 
-    this.rpc = rpcToParentWindow<
-      IRootToEditorRPCHandler,
-      IEditorToRootRPCHandler
-    >({
+    this.rpc = new RPC(parentWindowTarget(), {
       sync: async (data: Uint8Array) => {
         console.log("uimix:sync");
         Y.applyUpdate(state.doc, data);
@@ -60,7 +57,7 @@ class DataConnector {
   }
 
   private state: ProjectState;
-  private rpc: RPC<IRootToEditorRPCHandler, IEditorToRootRPCHandler>;
+  private rpc: RPC<IEditorToRootRPCHandler, IRootToEditorRPCHandler>;
   private updates: Uint8Array[] = [];
   private sendQueued = false;
 
