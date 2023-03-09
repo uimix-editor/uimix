@@ -57,7 +57,7 @@ export function DoubleClickToEdit({
   return (
     <div className={className + " relative"}>
       <div
-        className="h-full w-full flex items-center"
+        className="h-full w-full flex items-center p-1"
         style={{
           opacity: editing ? 0 : 1,
         }}
@@ -67,7 +67,9 @@ export function DoubleClickToEdit({
       </div>
       {editing && (
         <input
-          className="bg-white text-black outline-0 absolute inset-0"
+          className="bg-white text-black outline-0 absolute inset-0
+          focus:ring-1 focus:ring-blue-500 p-1 rounded
+          "
           ref={inputRef}
           value={draft}
           onChange={(e) => onDraftChange(e.currentTarget.value)}
