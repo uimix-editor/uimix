@@ -1,20 +1,12 @@
 import { TRPCError } from "@trpc/server";
 import { z } from "zod";
-import { getCurrentUser } from "../../helpers/api/auth";
+import { getCurrentUser, authenticate } from "../../helpers/api/auth";
 import { db } from "../../lib/prismadb";
 import { baseProcedure, router } from "../trpc";
 
 export const documentRouter = router({
   all: baseProcedure.query(async ({ ctx }) => {
-    const currentUser = await getCurrentUser(ctx.req);
-
-    if (!currentUser) {
-      throw new TRPCError({
-        code: "UNAUTHORIZED",
-        message: "Unauthorized",
-      });
-    }
-
+    const currentUser = await authenticate(ctx.req);
     const documents = await db.document.findMany({
       where: {
         ownerId: currentUser.id,
@@ -31,15 +23,7 @@ export const documentRouter = router({
       })
     )
     .mutation(async ({ ctx, input }) => {
-      const currentUser = await getCurrentUser(ctx.req);
-
-      if (!currentUser) {
-        throw new TRPCError({
-          code: "UNAUTHORIZED",
-          message: "Unauthorized",
-        });
-      }
-
+      const currentUser = await authenticate(ctx.req);
       const document = await db.document.create({
         data: {
           title: input.title,
@@ -57,15 +41,7 @@ export const documentRouter = router({
       })
     )
     .query(async ({ ctx, input }) => {
-      const currentUser = await getCurrentUser(ctx.req);
-
-      if (!currentUser) {
-        throw new TRPCError({
-          code: "UNAUTHORIZED",
-          message: "Unauthorized",
-        });
-      }
-
+      const currentUser = await authenticate(ctx.req);
       const document = await db.document.findFirst({
         where: {
           id: input.id,

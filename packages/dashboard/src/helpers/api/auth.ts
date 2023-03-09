@@ -1,4 +1,5 @@
 import { User } from "@prisma/client";
+import { TRPCError } from "@trpc/server";
 import { GetServerSidePropsContext, NextApiRequest } from "next";
 import { getToken } from "next-auth/jwt";
 import { NextRequest } from "next/server";
@@ -50,4 +51,23 @@ export async function getCurrentUser(
       },
     })) ?? undefined
   );
+}
+
+export async function authenticate(
+  req:
+    | GetServerSidePropsContext["req"]
+    | NextRequest
+    | NextApiRequest
+    | undefined
+): Promise<User> {
+  const currentUser = await getCurrentUser(req);
+
+  if (!currentUser) {
+    throw new TRPCError({
+      code: "UNAUTHORIZED",
+      message: "Unauthorized",
+    });
+  }
+
+  return currentUser;
 }
