@@ -27,7 +27,7 @@ export default function Documents() {
             Add
           </button>
         </div>
-        <ul className="grid grid-cols-3 gap-8">
+        <ul className="grid grid-cols-3 gap-4">
           {documents.data?.map((document) => (
             <li key={document.id}>
               <Link
