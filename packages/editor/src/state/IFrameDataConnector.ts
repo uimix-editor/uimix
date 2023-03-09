@@ -3,6 +3,7 @@ import { generateExampleNodes } from "../models/generateExampleNodes";
 import { parentWindowTarget } from "@uimix/typed-rpc/browser";
 import { RPC } from "@uimix/typed-rpc";
 import { ProjectState } from "./ProjectState";
+import { action } from "mobx";
 
 export interface IRootToEditorRPCHandler {
   sync(data: Uint8Array): Promise<void>;
@@ -28,11 +29,11 @@ export class IFrameDataConnector {
     });
 
     this.rpc = new RPC(parentWindowTarget(), {
-      sync: async (data: Uint8Array) => {
+      sync: action((data: Uint8Array) => {
         console.log("uimix:sync");
         Y.applyUpdate(state.doc, data);
-      },
-      init: async (data: Uint8Array) => {
+      }),
+      init: action((data: Uint8Array) => {
         console.log("uimix:init");
         Y.applyUpdate(state.doc, data);
 
@@ -45,7 +46,7 @@ export class IFrameDataConnector {
         } else {
           state.pageID = state.project.pages.all[0].id;
         }
-      },
+      }),
     });
 
     this.rpc.remote.ready();
