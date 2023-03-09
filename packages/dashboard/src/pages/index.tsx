@@ -1,8 +1,8 @@
-import { useSession } from "next-auth/react";
+import { Icon } from "@iconify/react";
+import { signIn, useSession } from "next-auth/react";
 import Head from "next/head";
 import Router from "next/router";
 import { useEffect } from "react";
-import { LoginButton } from "../components/LoginButton";
 
 export default function Home() {
   const session = useSession().data;
@@ -22,8 +22,27 @@ export default function Home() {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <main>
-        <h1 className="text-3xl font-bold underline">Hello world!</h1>
-        <LoginButton />
+        <h1 className="text-3xl font-bold">UIMix</h1>
+        <div>
+          <button
+            className="border border-gray-200 px-3 py-1 rounded shadow-sm text-sm flex items-center gap-3"
+            onClick={() => {
+              signIn("google", { callbackUrl: "/documents" });
+            }}
+          >
+            <Icon icon="flat-color-icons:google" />
+            Continue with Google
+          </button>
+          <button
+            className="border border-gray-200 px-3 py-1 rounded shadow-sm text-sm flex items-center gap-3"
+            onClick={() => {
+              signIn("github", { callbackUrl: "/documents" });
+            }}
+          >
+            <Icon icon="mdi:github" />
+            Continue with GitHub
+          </button>
+        </div>
       </main>
     </>
   );
