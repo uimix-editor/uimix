@@ -14,6 +14,7 @@ const Document = () => {
   return (
     <>
       <Head>
+        <title>Document</title>
         <style>{`
           body {
             overscroll-behavior: none;
