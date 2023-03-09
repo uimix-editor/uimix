@@ -79,7 +79,7 @@ export default function Documents() {
                     className="block border border-gray-200 rounded-lg hover:bg-gray-50"
                   >
                     <div className="aspect-video w-full bg-gray-100" />
-                    <div className="p-4 flex justify-between">
+                    <div className="p-4 flex justify-between items-center">
                       <div>
                         <div className="text-sm text-gray-900 font-medium mb-1">
                           {document.title}
