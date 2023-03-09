@@ -3,6 +3,7 @@ import { signOut } from "next-auth/react";
 import Head from "next/head";
 import Link from "next/link";
 import { trpc } from "../../utils/trpc";
+import * as DropdownMenu from "@radix-ui/react-dropdown-menu";
 
 export default function Documents() {
   const documents = trpc.document.all.useQuery();
@@ -51,11 +52,39 @@ export default function Documents() {
                   className="block border border-gray-200 rounded-lg"
                 >
                   <div className="aspect-video w-full bg-gray-100" />
-                  <div className="p-4">
-                    <div className="text-sm text-gray-900 font-medium mb-1">
-                      {document.title}
+                  <div className="p-4 flex justify-between">
+                    <div>
+                      <div className="text-sm text-gray-900 font-medium mb-1">
+                        {document.title}
+                      </div>
+                      <div className="text-gray-500">Edited 3 days ago</div>
                     </div>
-                    <div className="text-gray-500">Edited 3 days ago</div>
+                    <div onClick={(e) => e.stopPropagation()}>
+                      <DropdownMenu.Root>
+                        <DropdownMenu.Trigger asChild>
+                          <button className="p-2 hover:bg-gray-100 aria-expanded:bg-gray-100 rounded outline-none">
+                            <Icon
+                              icon="material-symbols:more-vert"
+                              className="text-base"
+                            />
+                          </button>
+                        </DropdownMenu.Trigger>
+                        <DropdownMenu.Portal>
+                          <DropdownMenu.Content
+                            align="end"
+                            sideOffset={4}
+                            className="bg-white border border-gray-200 rounded-lg p-1 text-xs outline-none shadow-xl"
+                          >
+                            <DropdownMenu.Item
+                              onClick={() => {}}
+                              className="hover:bg-blue-500 rounded px-4 py-1 hover:text-white outline-none"
+                            >
+                              Delete...
+                            </DropdownMenu.Item>
+                          </DropdownMenu.Content>
+                        </DropdownMenu.Portal>
+                      </DropdownMenu.Root>
+                    </div>
                   </div>
                 </Link>
               </li>
