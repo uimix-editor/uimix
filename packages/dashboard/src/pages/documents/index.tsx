@@ -76,7 +76,7 @@ export default function Documents() {
                 <li key={document.id}>
                   <Link
                     href={`/documents/${document.id}`}
-                    className="block border border-gray-200 rounded-lg"
+                    className="block border border-gray-200 rounded-lg hover:bg-gray-50"
                   >
                     <div className="aspect-video w-full bg-gray-100" />
                     <div className="p-4 flex justify-between">
