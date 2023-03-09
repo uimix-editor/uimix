@@ -118,7 +118,7 @@ const Editor: React.FC<{
         <iframe
           ref={iframeRef}
           className="flex-1"
-          src="http://randomvalue.editor.localhost:5173"
+          src={`http://${documentId}.editor.localhost:5173`}
           allow="clipboard-read; clipboard-write"
         />
       </div>
