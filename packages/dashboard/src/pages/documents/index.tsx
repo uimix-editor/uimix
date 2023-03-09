@@ -76,8 +76,15 @@ export default function Documents() {
                             className="bg-white border border-gray-200 rounded-lg p-1 text-xs outline-none shadow-xl"
                           >
                             <DropdownMenu.Item
-                              onClick={() => {}}
-                              className="hover:bg-blue-500 rounded px-4 py-1 hover:text-white outline-none"
+                              onClick={() => {
+                                const ok = confirm(
+                                  "Are you sure you want to delete this document?"
+                                );
+                                if (ok) {
+                                  // TODO
+                                }
+                              }}
+                              className="hover:bg-blue-500 rounded px-4 py-1 hover:text-white outline-none text-red-500"
                             >
                               Delete...
                             </DropdownMenu.Item>
