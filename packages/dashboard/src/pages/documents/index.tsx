@@ -1,11 +1,13 @@
 import { Icon } from "@iconify/react";
-import { signOut } from "next-auth/react";
+import { signOut, useSession } from "next-auth/react";
 import Head from "next/head";
 import Link from "next/link";
 import { trpc } from "../../utils/trpc";
 import * as DropdownMenu from "@radix-ui/react-dropdown-menu";
+import Image from "next/image";
 
 export default function Documents() {
+  const session = useSession().data;
   const documents = trpc.document.all.useQuery();
   const documentCreateMutation = trpc.document.create.useMutation();
 
@@ -24,15 +26,37 @@ export default function Documents() {
       <div className="text-xs">
         <div className="border-b border-neutral-200 relative">
           <div className="max-w-[960px] h-10 mx-auto flex items-center justify-end">
-            <button
-              onClick={() =>
-                signOut({
-                  callbackUrl: "/",
-                })
-              }
-            >
-              Sign out
-            </button>
+            <DropdownMenu.Root>
+              <DropdownMenu.Trigger asChild>
+                <button className="outline-none">
+                  <img
+                    className="rounded-full"
+                    src={session?.user?.image}
+                    alt={session?.user?.name}
+                    width={28}
+                    height={28}
+                  />
+                </button>
+              </DropdownMenu.Trigger>
+              <DropdownMenu.Portal>
+                <DropdownMenu.Content
+                  align="end"
+                  sideOffset={4}
+                  className="bg-white border border-gray-200 rounded-lg p-1 text-xs outline-none shadow-xl"
+                >
+                  <DropdownMenu.Item
+                    onClick={() => {
+                      signOut({
+                        callbackUrl: "/",
+                      });
+                    }}
+                    className="hover:bg-blue-500 rounded px-4 py-1 hover:text-white outline-none"
+                  >
+                    Sign Out
+                  </DropdownMenu.Item>
+                </DropdownMenu.Content>
+              </DropdownMenu.Portal>
+            </DropdownMenu.Root>
           </div>
         </div>
         <main className="px-4 pb-8">
