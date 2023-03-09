@@ -1,7 +1,18 @@
+import { useSession } from "next-auth/react";
 import Head from "next/head";
+import Router from "next/router";
+import { useEffect } from "react";
 import { LoginButton } from "../components/LoginButton";
 
 export default function Home() {
+  const session = useSession().data;
+
+  useEffect(() => {
+    if (session?.user) {
+      Router.push("/documents");
+    }
+  });
+
   return (
     <>
       <Head>
