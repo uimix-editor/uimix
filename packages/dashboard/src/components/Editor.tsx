@@ -11,6 +11,7 @@ import type {
 } from "../../../editor/src/state/IFrameDataConnector";
 import { Icon } from "@iconify/react";
 import Link from "next/link";
+import { DoubleClickToEdit } from "./DoubleClickToEdit";
 
 class Connection extends TypedEmitter<{
   ready(): void;
@@ -113,7 +114,12 @@ const Editor: React.FC<{
           >
             <Icon icon="material-symbols:chevron-left" className="text-base" />
           </Link>
-          <div className="text-xs font-medium">{document?.title}</div>
+          <DoubleClickToEdit
+            value={document?.title ?? ""}
+            onChange={(title) => {
+              // TODO
+            }}
+          />
         </div>
         <iframe
           ref={iframeRef}
