@@ -1,4 +1,5 @@
 import { Icon } from "@iconify/react";
+import { signOut } from "next-auth/react";
 import Head from "next/head";
 import Link from "next/link";
 import { trpc } from "../../utils/trpc";
@@ -20,7 +21,17 @@ export default function Documents() {
         <title>Documents</title>
       </Head>
       <div className="text-xs">
-        <div className="h-10 border-b border-neutral-200 relative flex items-center justify-end px-4"></div>
+        <div className="h-10 border-b border-neutral-200 relative flex items-center justify-end px-4">
+          <button
+            onClick={() =>
+              signOut({
+                callbackUrl: "/",
+              })
+            }
+          >
+            Sign out
+          </button>
+        </div>
         <main className="max-w-[960px] mx-auto px-4">
           <div className="flex justify-between items-center">
             <h1 className="font-bold text-lg py-8">Documents</h1>
