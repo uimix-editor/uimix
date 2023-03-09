@@ -27,21 +27,21 @@ export default function Home() {
           <h2 className="text-2xl font-bold mb-8 text-center">Sign In</h2>
           <div className="flex flex-col gap-4 items-center">
             <button
-              className="border border-gray-200 px-3 py-1 rounded shadow-sm text-sm flex items-center gap-3"
+              className="border border-gray-200 px-3 py-1 rounded shadow-sm text-sm flex items-center gap-2"
               onClick={() => {
                 signIn("google", { callbackUrl: "/documents" });
               }}
             >
-              <Icon icon="flat-color-icons:google" />
+              <Icon icon="flat-color-icons:google" className="text-base" />
               Continue with Google
             </button>
             <button
-              className="border border-gray-200 px-3 py-1 rounded shadow-sm text-sm flex items-center gap-3"
+              className="border border-gray-200 px-3 py-1 rounded shadow-sm text-sm flex items-center gap-2"
               onClick={() => {
                 signIn("github", { callbackUrl: "/documents" });
               }}
             >
-              <Icon icon="mdi:github" />
+              <Icon icon="mdi:github" className="text-base" />
               Continue with GitHub
             </button>
           </div>
