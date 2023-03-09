@@ -51,4 +51,51 @@ export const documentRouter = router({
 
       return document ?? undefined;
     }),
+
+  delete: baseProcedure
+    .input(
+      z.object({
+        id: z.string(),
+      })
+    )
+    .mutation(async ({ ctx, input }) => {
+      const currentUser = await authenticate(ctx.req);
+      await db.document.deleteMany({
+        where: {
+          id: input.id,
+          ownerId: currentUser.id,
+        },
+      });
+    }),
+
+  update: baseProcedure
+    .input(
+      z.object({
+        id: z.string(),
+        title: z.string(),
+      })
+    )
+    .mutation(async ({ ctx, input }) => {
+      const currentUser = await authenticate(ctx.req);
+      const document = await db.document.findFirst({
+        where: {
+          id: input.id,
+          ownerId: currentUser.id,
+        },
+      });
+      if (!document) {
+        throw new TRPCError({
+          code: "NOT_FOUND",
+          message: "Document not found",
+        });
+      }
+      return await db.document.update({
+        where: {
+          id: input.id,
+        },
+        data: {
+          title: input.title,
+        },
+      });
+    }),
 });
