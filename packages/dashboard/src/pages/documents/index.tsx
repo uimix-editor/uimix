@@ -1,5 +1,5 @@
 import { Icon } from "@iconify/react";
-import { signOut, useSession } from "next-auth/react";
+import { signIn, signOut, useSession } from "next-auth/react";
 import Head from "next/head";
 import Link from "next/link";
 import { trpc } from "../../utils/trpc";
@@ -54,6 +54,26 @@ export default function Documents() {
                     className="hover:bg-blue-500 rounded px-4 py-1 hover:text-white outline-none"
                   >
                     Sign Out
+                  </DropdownMenu.Item>
+                  <DropdownMenu.Item
+                    className="hover:bg-blue-500 rounded px-4 py-1 hover:text-white outline-none"
+                    onClick={() => {
+                      signIn("github", {
+                        callbackUrl: "/documents",
+                      });
+                    }}
+                  >
+                    Connect GitHub
+                  </DropdownMenu.Item>
+                  <DropdownMenu.Item
+                    className="hover:bg-blue-500 rounded px-4 py-1 hover:text-white outline-none"
+                    onClick={() => {
+                      signIn("google", {
+                        callbackUrl: "/documents",
+                      });
+                    }}
+                  >
+                    Connect Google
                   </DropdownMenu.Item>
                 </DropdownMenu.Content>
               </DropdownMenu.Portal>
