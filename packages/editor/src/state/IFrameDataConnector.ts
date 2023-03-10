@@ -37,15 +37,17 @@ export class IFrameDataConnector {
         console.log("uimix:init");
         Y.applyUpdate(state.doc, data);
 
-        if (state.project.pages.all.length === 0) {
+        const pages = state.project.pages.all;
+        if (pages.length === 0) {
           const page = state.project.nodes.create("page");
           page.name = "Page 1";
           state.project.node.append([page]);
           state.pageID = page.id;
           generateExampleNodes(page);
         } else {
-          state.pageID = state.project.pages.all[0].id;
+          state.pageID = pages[0].id;
         }
+        console.log("setting page id", state.pageID);
       }),
     });
 
