@@ -60,10 +60,24 @@ export const documentRouter = router({
     )
     .mutation(async ({ ctx, input }) => {
       const currentUser = await authenticate(ctx.req);
-      await db.document.deleteMany({
+      const document = await db.document.findFirst({
         where: {
           id: input.id,
           ownerId: currentUser.id,
+        },
+      });
+      if (!document) {
+        return;
+      }
+
+      await db.documentData.deleteMany({
+        where: {
+          id: input.id,
+        },
+      });
+      await db.document.delete({
+        where: {
+          id: input.id,
         },
       });
     }),
