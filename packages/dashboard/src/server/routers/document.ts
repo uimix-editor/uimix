@@ -69,17 +69,18 @@ export const documentRouter = router({
       if (!document) {
         return;
       }
-
-      await db.documentData.deleteMany({
-        where: {
-          id: input.id,
-        },
-      });
-      await db.document.delete({
-        where: {
-          id: input.id,
-        },
-      });
+      await db.$transaction([
+        db.documentData.deleteMany({
+          where: {
+            id: input.id,
+          },
+        }),
+        db.document.delete({
+          where: {
+            id: input.id,
+          },
+        }),
+      ]);
     }),
 
   update: baseProcedure
