@@ -104,12 +104,12 @@ export default function Documents() {
                               className="bg-white border border-gray-200 rounded-lg p-1 text-xs outline-none shadow-xl"
                             >
                               <DropdownMenu.Item
-                                onClick={() => {
+                                onClick={async () => {
                                   const ok = confirm(
                                     "Are you sure you want to delete this document?"
                                   );
                                   if (ok) {
-                                    documentDeleteMutation.mutateAsync({
+                                    await documentDeleteMutation.mutateAsync({
                                       id: document.id,
                                     });
                                   }

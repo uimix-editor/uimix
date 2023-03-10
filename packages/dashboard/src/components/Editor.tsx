@@ -88,9 +88,10 @@ const Editor: React.FC<{
 }> = ({ documentId }) => {
   const iframeRef = useRef<HTMLIFrameElement>(null);
   const [loading, setLoading] = useState(true);
-  const document = trpc.document.get.useQuery({
+  const documentQuery = trpc.document.get.useQuery({
     id: documentId,
-  }).data;
+  });
+  const documentUpdateMutation = trpc.document.update.useMutation();
 
   useEffect(() => {
     const iframe = iframeRef.current;
@@ -115,9 +116,13 @@ const Editor: React.FC<{
             <Icon icon="material-symbols:chevron-left" className="text-base" />
           </Link>
           <DoubleClickToEdit
-            value={document?.title ?? ""}
-            onChange={(title) => {
-              // TODO
+            value={documentQuery.data?.title ?? ""}
+            onChange={async (title) => {
+              await documentUpdateMutation.mutateAsync({
+                id: documentId,
+                title,
+              });
+              documentQuery.refetch();
             }}
           />
         </div>
