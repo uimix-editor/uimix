@@ -14,7 +14,6 @@ import Link from "next/link";
 import { DoubleClickToEdit } from "./DoubleClickToEdit";
 
 class Connection extends TypedEmitter<{
-  ready(): void;
   readyToShow(): void;
 }> {
   constructor(iframe: HTMLIFrameElement, documentId: string) {
@@ -25,7 +24,7 @@ class Connection extends TypedEmitter<{
         console.log("iframe:ready");
         this.iframeReady = true;
         if (this.hocuspocusReady) {
-          this.emit("ready");
+          this.onReady();
         }
       },
       update: async (data: Uint8Array) => {
@@ -52,12 +51,9 @@ class Connection extends TypedEmitter<{
       console.log(data.toJSON());
       this.hocuspocusReady = true;
       if (this.iframeReady) {
-        console.log("emit ready");
-        this.emit("ready");
+        this.onReady();
       }
     });
-
-    this.on("ready", this.onReady);
   }
 
   private rpc: RPC<IRootToEditorRPCHandler, IEditorToRootRPCHandler>;
