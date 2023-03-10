@@ -4,7 +4,7 @@
   "private": true,
   "scripts": {
     "build": "next build",
-    "dev": "run-z dev:docker-compose,dev:next,prisma:studio",
+    "dev": "run-z dev:docker-compose,dev:next",
     "dev:docker-compose": "docker-compose up",
     "dev:next": "next dev",
     "lint": "next lint",
