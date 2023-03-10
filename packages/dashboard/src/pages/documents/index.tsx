@@ -10,6 +10,7 @@ export default function Documents() {
   const session = useSession().data;
   const documents = trpc.document.all.useQuery();
   const documentCreateMutation = trpc.document.create.useMutation();
+  const documentDeleteMutation = trpc.document.delete.useMutation();
 
   const onAddClick = async () => {
     await documentCreateMutation.mutateAsync({
@@ -108,7 +109,9 @@ export default function Documents() {
                                     "Are you sure you want to delete this document?"
                                   );
                                   if (ok) {
-                                    // TODO
+                                    documentDeleteMutation.mutateAsync({
+                                      id: document.id,
+                                    });
                                   }
                                 }}
                                 className="hover:bg-blue-500 rounded px-4 py-1 hover:text-white outline-none text-red-500"
