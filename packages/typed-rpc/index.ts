@@ -50,6 +50,10 @@ export class RPC<Remote, Self> {
       {
         get: (_, name: string) => {
           return (...args: any[]) => {
+            if (this.disposed) {
+              console.error("RPC is disposed");
+              return;
+            }
             return new Promise((resolve, reject) => {
               const callID = Math.random();
               this.resolvers.set(callID, { resolve, reject });
@@ -70,8 +74,10 @@ export class RPC<Remote, Self> {
     }
   >();
   private disposeHandler: () => void;
+  private disposed = false;
 
   dispose() {
     this.disposeHandler();
+    this.disposed = true;
   }
 }
