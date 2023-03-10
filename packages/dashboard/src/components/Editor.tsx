@@ -106,40 +106,38 @@ const Editor: React.FC<{
   }, []);
 
   return (
-    <div className="fixed inset-0 w-full h-full text-neutral-800">
-      <div className="flex flex-col w-full h-full">
-        <div className="h-10 border-b border-neutral-200 relative flex items-center justify-center">
-          <Link
-            className="absolute left-0 top-0 h-10 w-10 flex items-center justify-center"
-            href="/documents"
-          >
-            <Icon icon="material-symbols:chevron-left" className="text-base" />
-          </Link>
-          <DoubleClickToEdit
-            value={documentQuery.data?.title ?? ""}
-            onChange={async (title) => {
-              await documentUpdateMutation.mutateAsync({
-                id: documentId,
-                title,
-              });
-              documentQuery.refetch();
-            }}
-          />
-        </div>
+    <div className="fixed inset-0 w-full h-full text-neutral-800 flex flex-col">
+      <div className="h-10 border-b border-neutral-200 relative flex items-center justify-center">
+        <Link
+          className="absolute left-0 top-0 h-10 w-10 flex items-center justify-center"
+          href="/documents"
+        >
+          <Icon icon="material-symbols:chevron-left" className="text-base" />
+        </Link>
+        <DoubleClickToEdit
+          value={documentQuery.data?.title ?? ""}
+          onChange={async (title) => {
+            await documentUpdateMutation.mutateAsync({
+              id: documentId,
+              title,
+            });
+            documentQuery.refetch();
+          }}
+        />
+      </div>
+      <div className="flex-1 relative">
         <iframe
           ref={iframeRef}
-          className="flex-1"
+          className="absolute inset-0 w-full h-full"
           src={`http://${documentId}.editor.localhost:5173`}
           allow="clipboard-read; clipboard-write"
         />
-      </div>
-      {loading && (
-        <div className="fixed inset-0 w-full h-full bg-white">
-          <div className="absolute inset-0 flex items-center justify-center">
+        {loading && (
+          <div className="absolute inset-0 flex items-center justify-center bg-white">
             <div className="text-base text-neutral-600">Loading...</div>
           </div>
-        </div>
-      )}
+        )}
+      </div>
     </div>
   );
 };
