@@ -15,6 +15,7 @@ import { DoubleClickToEdit } from "./DoubleClickToEdit";
 
 class Connection extends TypedEmitter<{
   ready(): void;
+  readyToShow(): void;
 }> {
   constructor(iframe: HTMLIFrameElement, documentId: string) {
     super();
@@ -70,16 +71,17 @@ class Connection extends TypedEmitter<{
     this.rpc.dispose();
   }
 
-  private onReady = () => {
+  private onReady = async () => {
     console.log("-- ready");
 
     const doc = this.provider.document;
     console.log(doc.getMap("project").toJSON());
 
-    this.rpc.remote.init(Y.encodeStateAsUpdate(doc));
     doc.on("update", (update) => {
       this.rpc.remote.sync(update);
     });
+    await this.rpc.remote.init(Y.encodeStateAsUpdate(doc));
+    this.emit("readyToShow");
   };
 }
 
@@ -99,7 +101,7 @@ const Editor: React.FC<{
       return;
     }
     const connection = new Connection(iframe, documentId);
-    connection.on("ready", () => {
+    connection.on("readyToShow", () => {
       setLoading(false);
     });
     return () => connection.dispose();
