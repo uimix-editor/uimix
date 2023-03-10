@@ -139,20 +139,27 @@ class Pages {
 }
 
 export class Project {
-  constructor(data: Y.Map<any>) {
-    this.data = ObservableYMap.get(data);
+  constructor(doc: Y.Doc) {
+    this.doc = doc;
     this.nodes = new NodeMap(this);
     this.selectables = new SelectableMap(this);
     this.node = this.nodes.create("project", "project");
     this.pages = new Pages(this);
   }
 
-  readonly data: ObservableYMap<any>;
+  readonly doc: Y.Doc;
   readonly nodes: NodeMap;
   readonly selectables: SelectableMap;
   readonly node: Node;
   readonly pages: Pages;
   readonly imageManager = new ImageManager();
+
+  createUndoManager(): Y.UndoManager {
+    return new Y.UndoManager([
+      this.doc.getMap("nodes"),
+      this.doc.getMap("selectables"),
+    ]);
+  }
 
   toJSON(): ProjectJSON {
     return toProjectJSON(this.node.children.map((c) => c.selectable));

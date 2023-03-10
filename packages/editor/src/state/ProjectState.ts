@@ -11,14 +11,12 @@ export class ProjectState {
   constructor() {
     new IFrameDataConnector(this);
 
-    const projectData = this.doc.getMap("project");
-
-    this.project = new Project(projectData);
+    this.project = new Project(this.doc);
     // const page = this.project.nodes.create("page");
     // page.name = "Page 1";
     // this.project.node.append([page]);
     // this.pageID = page.id;
-    this.undoManager = new Y.UndoManager(projectData);
+    this.undoManager = this.project.createUndoManager();
     //generateExampleNodes(page);
     makeObservable(this);
   }

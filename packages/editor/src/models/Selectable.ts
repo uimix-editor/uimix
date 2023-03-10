@@ -472,9 +472,7 @@ export class SelectableMap {
   }
 
   get data(): ObservableYMap<Y.Map<any>> {
-    return ObservableYMap.get(
-      getOrCreate(this.project.data, "selectables", () => new Y.Map())
-    );
+    return ObservableYMap.get(this.project.doc.getMap("selectables"));
   }
 
   private readonly project: Project;

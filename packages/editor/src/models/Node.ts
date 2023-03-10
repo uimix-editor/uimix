@@ -272,26 +272,13 @@ export class NodeMap {
   constructor(project: Project) {
     this.project = project;
 
-    project.data.y.observeDeep((events) => {
+    const data = project.doc.getMap("nodes");
+
+    data.observeDeep((events) => {
       for (const event of events) {
         const path = event.path;
 
-        if (path.length === 0 && event.keys.has("nodes")) {
-          // whole node map changed
-
-          for (const node of this.nodeMap.values()) {
-            this.removeFromParentChildrenMap(node);
-          }
-          this.nodeMap.clear();
-
-          for (const [id] of this.data) {
-            const node = new Node(this.project, id);
-            this.nodeMap.set(id, node);
-            this.insertToParentChildrenMap(node);
-          }
-        }
-
-        if (path.length === 1 && path[0] === "nodes") {
+        if (path.length === 0) {
           // change node
           for (const [id, change] of event.keys) {
             if (change.action === "add") {
@@ -316,9 +303,9 @@ export class NodeMap {
             }
           }
         }
-        if (path.length === 2 && path[0] === "nodes") {
+        if (path.length === 1) {
           if (event.keys.has("parent") || event.keys.has("index")) {
-            const nodeId = path[1];
+            const nodeId = path[0];
             const node = this.nodeMap.get(String(nodeId));
             if (node) {
               this.removeFromParentChildrenMap(node);
@@ -333,9 +320,7 @@ export class NodeMap {
   readonly project: Project;
 
   get data(): ObservableYMap<Y.Map<any>> {
-    return ObservableYMap.get(
-      getOrCreate(this.project.data, "nodes", () => new Y.Map())
-    );
+    return ObservableYMap.get(this.project.doc.getMap("nodes"));
   }
 
   private readonly nodeMap = new Map<string, Node>();

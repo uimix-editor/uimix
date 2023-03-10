@@ -6,7 +6,7 @@ import { Node } from "./Node";
 
 function createEmptyPage() {
   const ydoc = new Y.Doc();
-  const project = new Project(ydoc.getMap("project"));
+  const project = new Project(ydoc);
 
   const page = project.nodes.create("page");
 

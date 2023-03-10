@@ -17,7 +17,7 @@ describe(Project.name, () => {
     );
 
     const ydoc = new Y.Doc();
-    const project = new Project(ydoc.getMap("project"));
+    const project = new Project(ydoc);
     project.loadJSON(projectJSON);
 
     expect(project.toJSON()).toEqual(projectJSON);
