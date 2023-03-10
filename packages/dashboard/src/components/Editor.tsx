@@ -104,7 +104,7 @@ const Editor: React.FC<{
   }, []);
 
   return (
-    <div className="fixed inset-0 w-full h-full text-neutral-800 flex flex-col">
+    <div className="fixed inset-0 w-full h-full text-neutral-800 flex flex-col text-xs">
       <div className="h-10 border-b border-neutral-200 relative flex items-center justify-center">
         <Link
           className="absolute left-0 top-0 h-10 w-10 flex items-center justify-center"
@@ -113,6 +113,7 @@ const Editor: React.FC<{
           <Icon icon="material-symbols:chevron-left" className="text-base" />
         </Link>
         <DoubleClickToEdit
+          className="text-xs font-medium"
           value={documentQuery.data?.title ?? ""}
           onChange={async (title) => {
             await documentUpdateMutation.mutateAsync({
