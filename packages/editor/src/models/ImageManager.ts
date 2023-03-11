@@ -2,56 +2,54 @@ import { imageFromURL } from "../utils/Blob";
 import { Buffer } from "buffer";
 import { encode } from "url-safe-base64";
 import { observable } from "mobx";
+import { Project } from "./Project";
+import { ObservableYMap } from "../utils/ObservableYMap";
 
 interface Image {
   width: number;
   height: number;
-  dataURL: string;
-}
-
-interface ServerImageEntry {
-  hash: string;
-  dataURL: string;
+  url: string;
 }
 
 export class ImageManager {
-  readonly images = observable.map<string, Image>();
-
-  async onServerImageAdded(entry: ServerImageEntry) {
-    const img = await imageFromURL(entry.dataURL);
-    this.images.set(entry.hash, {
-      width: img.width,
-      height: img.height,
-      dataURL: entry.dataURL,
-    });
+  constructor(project: Project) {
+    this.project = project;
   }
 
-  insertServerImage?: (entry: ServerImageEntry) => Promise<void>;
+  readonly project: Project;
+  get images(): ObservableYMap<Image> {
+    return ObservableYMap.get(this.project.doc.getMap("images"));
+  }
 
-  // TODO: load images from server
+  uploadImage?: (blob: Blob) => Promise<string>;
 
-  async insertDataURL(dataURL: string) {
+  async insertDataURL(dataURL: string): Promise<string> {
     const blob = await (await fetch(dataURL)).blob();
     const buffer = await blob.arrayBuffer();
 
     // get hash of blob
-    const hash = await crypto.subtle.digest("SHA-256", buffer);
-    const hashBase64 = encode(Buffer.from(hash).toString("base64"));
+    const hashData = await crypto.subtle.digest("SHA-256", buffer);
+    const hash = encode(Buffer.from(hashData).toString("base64"));
+
+    if (this.images.has(hash)) {
+      return hash;
+    }
+
+    const uploadImage = this.uploadImage;
+    if (!uploadImage) {
+      throw new Error("No uploadImage function set");
+    }
 
     const img = await imageFromURL(dataURL);
 
-    await this.insertServerImage?.({
-      hash: hashBase64,
-      dataURL,
-    });
-
-    this.images.set(hashBase64, {
+    const url = await uploadImage(blob);
+    this.images.set(hash, {
       width: img.width,
       height: img.height,
-      dataURL,
+      url,
     });
 
-    return hashBase64;
+    return hash;
   }
 
   get(hashBase64: string): Image | undefined {

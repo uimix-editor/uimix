@@ -156,7 +156,7 @@ export const NodeRenderer: React.FC<{
     if (node.type === "image") {
       const hash = style.imageHash;
       const dataURL = hash
-        ? projectState.project.imageManager.get(hash)?.dataURL
+        ? projectState.project.imageManager.get(hash)?.url
         : undefined;
       return (
         <img

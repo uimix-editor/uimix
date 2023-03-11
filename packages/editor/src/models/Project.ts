@@ -152,7 +152,7 @@ export class Project {
   readonly selectables: SelectableMap;
   readonly node: Node;
   readonly pages: Pages;
-  readonly imageManager = new ImageManager();
+  readonly imageManager = new ImageManager(this);
 
   createUndoManager(): Y.UndoManager {
     return new Y.UndoManager([
