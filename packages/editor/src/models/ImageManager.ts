@@ -23,8 +23,7 @@ export class ImageManager {
 
   uploadImage?: (blob: Blob) => Promise<string>;
 
-  async insertDataURL(dataURL: string): Promise<string> {
-    const blob = await (await fetch(dataURL)).blob();
+  async insert(blob: Blob): Promise<string> {
     const buffer = await blob.arrayBuffer();
 
     // get hash of blob
@@ -40,9 +39,9 @@ export class ImageManager {
       throw new Error("No uploadImage function set");
     }
 
-    const img = await imageFromURL(dataURL);
-
     const url = await uploadImage(blob);
+    const img = await imageFromURL(url);
+
     this.images.set(hash, {
       width: img.width,
       height: img.height,

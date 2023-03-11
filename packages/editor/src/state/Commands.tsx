@@ -128,25 +128,22 @@ class Commands {
   }
 
   async insertImage() {
-    const imageFilePickerOptions = {
-      types: [
-        {
-          description: "Images",
-          accept: {
-            "image/png": [".png"],
-            "image/jpeg": [".jpg", ".jpeg"],
-          },
-        },
-      ],
-    };
-
-    const [fileHandle] = await showOpenFilePicker(imageFilePickerOptions);
-    const blob = await fileHandle.getFile();
-    const dataURL = await blobToDataURL(blob);
+    const file = await new Promise<File | undefined>((resolve) => {
+      const input = document.createElement("input");
+      input.type = "file";
+      input.accept = "image/png,image/jpeg";
+      input.onchange = () => {
+        resolve(input.files?.[0]);
+      };
+      input.click();
+    });
+    if (!file) {
+      return;
+    }
 
     viewportState.tool = {
       type: "insert",
-      mode: { type: "image", dataURL },
+      mode: { type: "image", blob: file },
     };
   }
 
