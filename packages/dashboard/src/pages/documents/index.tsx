@@ -4,7 +4,6 @@ import Head from "next/head";
 import Link from "next/link";
 import { trpc } from "../../utils/trpc";
 import * as DropdownMenu from "@radix-ui/react-dropdown-menu";
-import Image from "next/image";
 
 export default function Documents() {
   const session = useSession().data;
