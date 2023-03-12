@@ -1,6 +1,6 @@
 import { TRPCError } from "@trpc/server";
 import { z } from "zod";
-import { getCurrentUser, authenticate } from "../../helpers/api/auth";
+import { authenticate } from "../../helpers/api/auth";
 import { db } from "../../lib/prismadb";
 import { baseProcedure, router } from "../trpc";
 
