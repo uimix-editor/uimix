@@ -28,6 +28,17 @@ export default function Documents() {
     }
   };
 
+  const isError = documents.status === "error";
+
+  useEffect(() => {
+    if (isError) {
+      toastController.show({
+        type: "error",
+        message: "Failed to load documents",
+      });
+    }
+  }, [isError]);
+
   return (
     <>
       <Head>
