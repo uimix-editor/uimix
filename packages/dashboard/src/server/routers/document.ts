@@ -11,6 +11,16 @@ export const documentRouter = router({
       where: {
         ownerId: currentUser.id,
       },
+      select: {
+        id: true,
+        title: true,
+        ownerId: true,
+        updatedAt: true,
+        createdAt: true,
+      },
+      orderBy: {
+        updatedAt: "desc",
+      },
     });
 
     return documents;
@@ -31,6 +41,13 @@ export const documentRouter = router({
           title: input.title,
           ownerId: currentUser.id,
         },
+        select: {
+          id: true,
+          title: true,
+          ownerId: true,
+          updatedAt: true,
+          createdAt: true,
+        },
       });
 
       return document;
@@ -49,6 +66,14 @@ export const documentRouter = router({
           id: input.id,
           ownerId: currentUser.id,
         },
+        select: {
+          // exclude data
+          id: true,
+          title: true,
+          ownerId: true,
+          updatedAt: true,
+          createdAt: true,
+        },
       });
 
       return document ?? undefined;
@@ -62,27 +87,12 @@ export const documentRouter = router({
     )
     .mutation(async ({ ctx, input }) => {
       const currentUser = await authenticate(ctx.req);
-      const document = await db.document.findFirst({
+      await db.document.deleteMany({
         where: {
           id: input.id,
           ownerId: currentUser.id,
         },
       });
-      if (!document) {
-        return;
-      }
-      await db.$transaction([
-        db.documentData.deleteMany({
-          where: {
-            id: input.id,
-          },
-        }),
-        db.document.delete({
-          where: {
-            id: input.id,
-          },
-        }),
-      ]);
     }),
 
   update: baseProcedure
@@ -94,21 +104,10 @@ export const documentRouter = router({
     )
     .mutation(async ({ ctx, input }) => {
       const currentUser = await authenticate(ctx.req);
-      const document = await db.document.findFirst({
+      await db.document.updateMany({
         where: {
           id: input.id,
           ownerId: currentUser.id,
-        },
-      });
-      if (!document) {
-        throw new TRPCError({
-          code: "NOT_FOUND",
-          message: "Document not found",
-        });
-      }
-      return await db.document.update({
-        where: {
-          id: input.id,
         },
         data: {
           title: input.title,

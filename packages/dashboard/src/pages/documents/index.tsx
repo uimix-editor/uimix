@@ -126,7 +126,9 @@ export default function Documents() {
                         <div className="text-sm text-gray-900 font-medium mb-1">
                           {document.title}
                         </div>
-                        <div className="text-gray-500">Edited 3 days ago</div>
+                        <div className="text-gray-500">
+                          Edited {document.updatedAt}
+                        </div>
                       </div>
                       <div onClick={(e) => e.stopPropagation()}>
                         <DropdownMenu.Root>

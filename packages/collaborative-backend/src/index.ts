@@ -37,7 +37,7 @@ const server = Server.configure({
     new Database({
       // Return a Promise to retrieve data …
       fetch: async ({ documentName }) => {
-        const data = await db.documentData.findUnique({
+        const data = await db.document.findUnique({
           where: {
             id: documentName,
           },
@@ -46,15 +46,11 @@ const server = Server.configure({
       },
       // … and a Promise to store data:
       store: async ({ documentName, state }) => {
-        await db.documentData.upsert({
+        await db.document.update({
           where: {
             id: documentName,
           },
-          update: {
-            data: state,
-          },
-          create: {
-            id: documentName,
+          data: {
             data: state,
           },
         });
@@ -75,6 +71,9 @@ const server = Server.configure({
     const document = await db.document.findUnique({
       where: {
         id: data.documentName,
+      },
+      select: {
+        ownerId: true,
       },
     });
     if (!document || document.ownerId !== userInfo.userId) {
