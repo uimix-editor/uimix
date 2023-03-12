@@ -68,18 +68,18 @@ class Connection extends TypedEmitter<{
       token: () => {
         return dynamicTrpc.collaborative.token.query();
       },
-    });
-    this.provider.on("connect", () => {
-      if (this.hocuspocusReady) {
-        return;
-      }
-      console.log("connected!");
-      const data = this.provider.document.getMap("project");
-      console.log(data.toJSON());
-      this.hocuspocusReady = true;
-      if (this.iframeReady) {
-        this.onReady();
-      }
+      onAuthenticated: () => {
+        if (this.hocuspocusReady) {
+          return;
+        }
+        console.log("connected!");
+        const data = this.provider.document.getMap("project");
+        console.log(data.toJSON());
+        this.hocuspocusReady = true;
+        if (this.iframeReady) {
+          this.onReady();
+        }
+      },
     });
   }
 
