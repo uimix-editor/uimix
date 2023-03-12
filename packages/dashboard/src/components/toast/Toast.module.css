@@ -1,7 +1,7 @@
 .ToastRoot {
 }
 .ToastRoot[data-state="open"] {
-  animation: slideIn 150ms cubic-bezier(0.16, 1, 0.3, 1), show 150ms ease-in;
+  animation: slideIn 100ms cubic-bezier(0.16, 1, 0.3, 1), show 100ms ease-in;
 }
 .ToastRoot[data-state="closed"] {
   animation: hide 200ms ease-in;
