@@ -12,6 +12,7 @@ import type {
 import { Icon } from "@iconify/react";
 import Link from "next/link";
 import { DoubleClickToEdit } from "./DoubleClickToEdit";
+import { toastController } from "./toast/ToastController";
 
 class Connection extends TypedEmitter<{
   readyToShow(): void;
@@ -142,11 +143,18 @@ const Editor: React.FC<{
           className="text-xs font-medium"
           value={documentQuery.data?.title ?? ""}
           onChange={async (title) => {
-            await documentUpdateMutation.mutateAsync({
-              id: documentId,
-              title,
-            });
-            documentQuery.refetch();
+            try {
+              await documentUpdateMutation.mutateAsync({
+                id: documentId,
+                title,
+              });
+              documentQuery.refetch();
+            } catch {
+              toastController.show({
+                type: "error",
+                message: "Failed to rename document",
+              });
+            }
           }}
         />
       </div>
