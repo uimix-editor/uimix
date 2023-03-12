@@ -23,7 +23,7 @@ export const documentRouter = router({
       })
     )
     .mutation(async ({ ctx, input }) => {
-      throw new Error("test");
+      // throw new Error("test");
 
       const currentUser = await authenticate(ctx.req);
       const document = await db.document.create({

@@ -6,6 +6,7 @@ import { trpc } from "../../utils/trpc";
 import * as DropdownMenu from "@radix-ui/react-dropdown-menu";
 import { useEffect } from "react";
 import { toastController } from "../../components/toast/ToastController";
+import Router from "next/router";
 
 export default function Documents() {
   const session = useSession().data;
@@ -15,16 +16,16 @@ export default function Documents() {
 
   const onAddClick = async () => {
     try {
-      await documentCreateMutation.mutateAsync({
+      const doc = await documentCreateMutation.mutateAsync({
         title: "New document",
       });
+      Router.push(`/documents/${doc.id}`);
     } catch (err) {
       toastController.show({
         type: "error",
         message: "Failed to create document",
       });
     }
-    documents.refetch();
   };
 
   return (
