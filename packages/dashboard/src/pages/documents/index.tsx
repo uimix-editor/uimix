@@ -7,6 +7,9 @@ import * as DropdownMenu from "@radix-ui/react-dropdown-menu";
 import { useEffect } from "react";
 import { toastController } from "../../components/toast/ToastController";
 import Router from "next/router";
+import TimeAgo from "javascript-time-ago";
+import en from "javascript-time-ago/locale/en";
+TimeAgo.addDefaultLocale(en);
 
 export default function Documents() {
   const session = useSession().data;
@@ -127,7 +130,10 @@ export default function Documents() {
                           {document.title}
                         </div>
                         <div className="text-gray-500">
-                          Edited {document.updatedAt}
+                          Edited{" "}
+                          {new TimeAgo("en-US").format(
+                            Date.parse(document.updatedAt)
+                          )}
                         </div>
                       </div>
                       <div onClick={(e) => e.stopPropagation()}>
