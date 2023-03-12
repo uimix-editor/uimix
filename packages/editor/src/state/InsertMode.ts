@@ -7,5 +7,5 @@ export type InsertMode =
     }
   | {
       type: "image";
-      blob: Blob;
+      hash: string;
     };
