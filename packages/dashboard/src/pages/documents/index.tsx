@@ -4,6 +4,8 @@ import Head from "next/head";
 import Link from "next/link";
 import { trpc } from "../../utils/trpc";
 import * as DropdownMenu from "@radix-ui/react-dropdown-menu";
+import { useEffect } from "react";
+import { toastController } from "../../components/toast/ToastController";
 
 export default function Documents() {
   const session = useSession().data;
@@ -16,6 +18,11 @@ export default function Documents() {
       title: "New document",
     });
     documents.refetch();
+
+    toastController.show({
+      type: "success",
+      message: "Document created",
+    });
   };
 
   return (

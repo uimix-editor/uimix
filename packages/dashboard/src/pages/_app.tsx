@@ -3,6 +3,7 @@ import type { AppProps } from "next/app";
 import { Inter } from "@next/font/google";
 import { SessionProvider } from "next-auth/react";
 import { trpc } from "../utils/trpc";
+import { ToastPresenter } from "../components/toast/Toast";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -19,6 +20,7 @@ function App({ Component, pageProps: { session, ...pageProps } }: AppProps) {
       <SessionProvider session={session}>
         <Component {...pageProps} />
       </SessionProvider>
+      <ToastPresenter />
     </>
   );
 }
