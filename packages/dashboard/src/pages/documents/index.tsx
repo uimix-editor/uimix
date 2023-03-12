@@ -75,6 +75,7 @@ export default function Documents() {
                   >
                     Sign Out
                   </DropdownMenu.Item>
+                  <DropdownMenu.Separator className="my-1 border-gray-200 border-t" />
                   <DropdownMenu.Item
                     className="hover:bg-blue-500 rounded px-4 py-1 hover:text-white outline-none"
                     onClick={() => {
