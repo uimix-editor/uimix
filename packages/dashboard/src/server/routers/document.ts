@@ -4,6 +4,15 @@ import { authenticate } from "../../helpers/api/auth";
 import { db } from "../../lib/prismadb";
 import { baseProcedure, router } from "../trpc";
 
+const selectKeys = {
+  // exclude data
+  id: true,
+  title: true,
+  ownerId: true,
+  updatedAt: true,
+  createdAt: true,
+} as const;
+
 export const documentRouter = router({
   all: baseProcedure.query(async ({ ctx }) => {
     const currentUser = await authenticate(ctx.req);
@@ -11,13 +20,7 @@ export const documentRouter = router({
       where: {
         ownerId: currentUser.id,
       },
-      select: {
-        id: true,
-        title: true,
-        ownerId: true,
-        updatedAt: true,
-        createdAt: true,
-      },
+      select: selectKeys,
       orderBy: {
         updatedAt: "desc",
       },
@@ -41,13 +44,7 @@ export const documentRouter = router({
           title: input.title,
           ownerId: currentUser.id,
         },
-        select: {
-          id: true,
-          title: true,
-          ownerId: true,
-          updatedAt: true,
-          createdAt: true,
-        },
+        select: selectKeys,
       });
 
       return document;
@@ -66,14 +63,7 @@ export const documentRouter = router({
           id: input.id,
           ownerId: currentUser.id,
         },
-        select: {
-          // exclude data
-          id: true,
-          title: true,
-          ownerId: true,
-          updatedAt: true,
-          createdAt: true,
-        },
+        select: selectKeys,
       });
 
       return document ?? undefined;
