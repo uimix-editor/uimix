@@ -14,15 +14,17 @@ export default function Documents() {
   const documentDeleteMutation = trpc.document.delete.useMutation();
 
   const onAddClick = async () => {
-    await documentCreateMutation.mutateAsync({
-      title: "New document",
-    });
+    try {
+      await documentCreateMutation.mutateAsync({
+        title: "New document",
+      });
+    } catch (err) {
+      toastController.show({
+        type: "error",
+        message: "Failed to create document",
+      });
+    }
     documents.refetch();
-
-    toastController.show({
-      type: "success",
-      message: "Document created",
-    });
   };
 
   return (
