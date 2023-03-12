@@ -5,6 +5,8 @@ import { toastController } from "./ToastController";
 import styles from "./Toast.module.css";
 
 export const ToastPresenter: React.FC<{}> = observer(() => {
+  // TODO: more message types
+
   return (
     <Toast.Provider swipeDirection="right">
       <Toast.Root
