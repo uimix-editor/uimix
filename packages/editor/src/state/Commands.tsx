@@ -141,15 +141,10 @@ class Commands {
       return;
     }
 
-    try {
-      const hash = await projectState.project.imageManager.insert(file);
-      viewportState.tool = {
-        type: "insert",
-        mode: { type: "image", hash },
-      };
-    } catch {
-      window.alert("Failed to upload image");
-    }
+    viewportState.tool = {
+      type: "insert",
+      mode: { type: "image", blob: file },
+    };
   }
 
   autoLayout() {
