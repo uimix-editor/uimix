@@ -1,18 +1,11 @@
 import { Icon } from "@iconify/react";
-import { signIn, useSession } from "next-auth/react";
+import { GetServerSideProps } from "next";
+import { getServerSession } from "next-auth/next";
+import { signIn } from "next-auth/react";
 import Head from "next/head";
-import Router from "next/router";
-import { useEffect } from "react";
+import { authOptions } from "./api/auth/[...nextauth]";
 
 export default function Home() {
-  const session = useSession().data;
-
-  useEffect(() => {
-    if (session?.user) {
-      Router.push("/documents");
-    }
-  });
-
   return (
     <>
       <Head>
@@ -147,3 +140,22 @@ export default function Home() {
     </>
   );
 }
+
+export const getServerSideProps: GetServerSideProps = async (context) => {
+  const session = await getServerSession(context.req, context.res, authOptions);
+
+  if (session) {
+    return {
+      redirect: {
+        destination: "/documents",
+        permanent: false,
+      },
+    };
+  }
+
+  return {
+    props: {
+      session,
+    },
+  };
+};
