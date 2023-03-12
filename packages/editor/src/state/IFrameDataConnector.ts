@@ -13,6 +13,11 @@ export interface IRootToEditorRPCHandler {
 export interface IEditorToRootRPCHandler {
   ready(): Promise<void>;
   update(data: Uint8Array): Promise<void>;
+  uploadImage(
+    hash: string,
+    contentType: string,
+    data: Uint8Array
+  ): Promise<string>;
 }
 
 export class IFrameDataConnector {
@@ -26,6 +31,16 @@ export class IFrameDataConnector {
         });
         this.sendQueued = true;
       }
+    });
+
+    queueMicrotask(() => {
+      this.state.project.imageManager.uploadImage = async (
+        hash: string,
+        contentType: string,
+        data: Uint8Array
+      ) => {
+        return this.rpc.remote.uploadImage(hash, contentType, data);
+      };
     });
 
     this.rpc = new RPC(parentWindowTarget(), {

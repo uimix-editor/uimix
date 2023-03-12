@@ -19,21 +19,47 @@ class Connection extends TypedEmitter<{
   constructor(iframe: HTMLIFrameElement, documentId: string) {
     super();
     this.iframe = iframe;
-    this.rpc = new RPC(iframeTarget(iframe), {
-      ready: async () => {
-        console.log("iframe:ready");
-        this.iframeReady = true;
-        if (this.hocuspocusReady) {
-          this.onReady();
-        }
-      },
-      update: async (data: Uint8Array) => {
-        const doc = this.provider.document;
-        console.log("uimix:update");
-        Y.applyUpdate(doc, data);
-        console.log(doc.getMap("project").toJSON());
-      },
-    });
+    this.rpc = new RPC<IRootToEditorRPCHandler, IEditorToRootRPCHandler>(
+      iframeTarget(iframe),
+      {
+        ready: async () => {
+          console.log("iframe:ready");
+          this.iframeReady = true;
+          if (this.hocuspocusReady) {
+            this.onReady();
+          }
+        },
+        update: async (data: Uint8Array) => {
+          const doc = this.provider.document;
+          console.log("uimix:update");
+          Y.applyUpdate(doc, data);
+          console.log(doc.getMap("project").toJSON());
+        },
+        uploadImage: async (
+          hash: string,
+          contentType: string,
+          data: Uint8Array
+        ) => {
+          console.log("uimix:uploadImage", hash, contentType, data);
+          const { uploadURL, url } = await dynamicTrpc.image.getUploadURL.query(
+            {
+              hash,
+              contentType,
+            }
+          );
+          console.log(uploadURL);
+          const res = await fetch(uploadURL, {
+            method: "PUT",
+            headers: {
+              "Content-Type": contentType,
+            },
+            body: data,
+          });
+          console.log(res);
+          return url;
+        },
+      }
+    );
 
     this.provider = new HocuspocusProvider({
       url: "ws://localhost:1234",

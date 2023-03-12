@@ -21,7 +21,11 @@ export class ImageManager {
     return ObservableYMap.get(this.project.doc.getMap("images"));
   }
 
-  uploadImage?: (blob: Blob) => Promise<string>;
+  uploadImage?: (
+    hash: string,
+    contentType: string,
+    data: Uint8Array
+  ) => Promise<string>;
 
   async insert(blob: Blob): Promise<string> {
     const buffer = await blob.arrayBuffer();
@@ -39,7 +43,7 @@ export class ImageManager {
       throw new Error("No uploadImage function set");
     }
 
-    const url = await uploadImage(blob);
+    const url = await uploadImage(hash, blob.type, new Uint8Array(buffer));
     const img = await imageFromURL(url);
 
     this.images.set(hash, {
