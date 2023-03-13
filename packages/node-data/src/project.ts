@@ -6,6 +6,7 @@ export const ProjectJSON = z.object({
   // TODO: version
   nodes: z.record(NodeJSON),
   styles: z.record(StyleJSON.partial()),
+  componentURLs: z.array(z.string()).optional(),
 });
 
 export type ProjectJSON = z.infer<typeof ProjectJSON>;

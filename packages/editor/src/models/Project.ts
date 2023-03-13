@@ -164,7 +164,10 @@ export class Project {
   }
 
   toJSON(): ProjectJSON {
-    return toProjectJSON(this.node.children.map((c) => c.selectable));
+    return {
+      ...toProjectJSON(this.node.children.map((c) => c.selectable)),
+      componentURLs: this.componentURLs.toJSON(),
+    };
   }
 
   loadJSON(json: ProjectJSON) {
@@ -181,6 +184,9 @@ export class Project {
       const selectable = this.selectables.get(id.split(":"));
       selectable.selfStyle.loadJSON(style);
     }
+
+    this.componentURLs.delete(0, this.componentURLs.length);
+    this.componentURLs.push(json.componentURLs ?? []);
   }
 
   get components(): Component[] {
