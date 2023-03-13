@@ -45,7 +45,7 @@ export const ForeignComponentListDialog = observer(() => {
             <div className="flex justify-between items-center gap-2 mb-2">
               <input
                 className="block outline-0 w-full h-7 px-1.5 bg-macaron-uiBackground rounded focus:ring-1 ring-inset ring-macaron-active text-macaron-text text-macaron-base placeholder:text-macaron-disabledText aria-invalid:ring-red-500"
-                placeholder="URL"
+                placeholder="JS/CSS URL"
                 aria-invalid={!isURLValid}
                 value={urlToAdd}
                 onChange={(e) => {
