@@ -4,10 +4,10 @@
   "private": true,
   "type": "module",
   "scripts": {
-    "build": "tsc && vite build",
+    "build": "tsc && vite build && vite build -c vite.config.components.js",
     "build-storybook": "build-storybook",
     "dev:vite": "vite --port 5174",
-    "dev:components": "vite --port 5175 --config vite.config.components.js",
+    "dev:components": "vite --port 5175 -c vite.config.components.js",
     "dev": "run-z dev:vite,dev:components",
     "preview": "vite preview",
     "storybook": "start-storybook -p 6006",

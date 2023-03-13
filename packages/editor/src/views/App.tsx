@@ -10,7 +10,8 @@ import { action } from "mobx";
 import { OutlineSideBar } from "./outline/OutlineSideBar";
 import { FontLoader } from "./viewport/renderer/FontLoader";
 import { VerticalToolBar } from "./toolbar/VerticalToolBar";
-import { InspectorPaletteOverlay } from "./viewport/InspectorPaletteOverlay";
+import { InstancePaletteOverlay } from "./viewport/InstancePaletteOverlay";
+import { ForeignComponentListDialog } from "./dialog/ForeignComponentListDialog";
 
 function useKeyHandling() {
   useEffect(() => {
@@ -59,12 +60,13 @@ export const App = observer(function App() {
           <VerticalToolBar />
           <div className="flex flex-1 border-l border-r border-macaron-separator relative">
             <Viewport />
-            <InspectorPaletteOverlay />
+            <InstancePaletteOverlay />
           </div>
           <InspectorSideBar />
         </div>
       </div>
       <ContextMenu />
+      <ForeignComponentListDialog />
     </TooltipProvider>
   );
 });

@@ -3,15 +3,13 @@ import { projectState } from "../../../state/ProjectState";
 import { InspectorHeading } from "../components/InspectorHeading";
 import { InspectorPane } from "../components/InspectorPane";
 import { InspectorTargetContext } from "../components/InspectorTargetContext";
-import {
-  ForeignComponentManager,
-  Prop,
-} from "../../../models/ForeignComponentManager";
+import { ForeignComponentManager } from "../../../models/ForeignComponentManager";
 import { Input } from "../../../components/Input";
 import { Select } from "../../../components/Select";
 import { ForeignComponentRef } from "@uimix/node-data";
 import { action } from "mobx";
 import { Tooltip } from "../../../components/Tooltip";
+import { Prop } from "../../../types/ForeignComponent";
 
 export const PropertyPane: React.FC = observer(function PropertyPane() {
   const selectables = projectState.selectedSelectables.filter(

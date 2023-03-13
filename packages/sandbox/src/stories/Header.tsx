@@ -20,7 +20,7 @@ export const Header = ({
   onLogout,
   onCreateAccount,
   ...props
-}: HeaderProps) => (
+}: HeaderProps & JSX.IntrinsicElements["header"]) => (
   <header {...props}>
     <div className="wrapper">
       <div>

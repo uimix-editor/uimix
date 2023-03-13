@@ -46,6 +46,7 @@ function App() {
         }}
         stackProps={{
           // TODO: typing
+          // @ts-ignore
           textProps: {
             children: "Override inner item",
           },

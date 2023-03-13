@@ -1,31 +1,9 @@
 import { ForeignComponentRef } from "@uimix/node-data";
-import { makeObservable, observable } from "mobx";
+import { action, observable, reaction } from "mobx";
 import type React from "react";
 import type ReactDOM from "react-dom/client";
-
-export type Type =
-  | {
-      type: "string";
-    }
-  | {
-      type: "boolean";
-    }
-  | {
-      type: "enum";
-      values: string[];
-    };
-
-export interface Prop {
-  name: string;
-  type: Type;
-}
-
-export interface ForeignComponent {
-  path: string; // path relative to project root e.g. "src/Button.tsx"
-  name: string; // export name; e.g. "Button" ("default" for default export)
-  props: Prop[];
-  component: React.ElementType;
-}
+import { projectState } from "../state/ProjectState";
+import { ForeignComponent } from "../types/ForeignComponent";
 
 export function foreignComponentKey(ref: { path: string; name: string }) {
   return `${ref.path}#${ref.name}`;
@@ -34,32 +12,46 @@ export function foreignComponentKey(ref: { path: string; name: string }) {
 export class ForeignComponentManager {
   constructor(window: Window) {
     this.window = window;
-    window
-      // @ts-ignore
-      // TODO: make source URL configurable
-      .eval(`import("http://localhost:5175/src/uimix-components.tsx")`)
-      .then(
-        async (mod: {
-          React: typeof React;
-          ReactDOM: typeof ReactDOM;
-          components: ForeignComponent[];
-        }) => {
-          this.React = mod.React;
-          this.ReactDOM = mod.ReactDOM;
-          for (const component of mod.components) {
-            this.components.set(foreignComponentKey(component), component);
+
+    reaction(
+      () => projectState.project.componentURLs.toArray(),
+      action((urls) => {
+        // TODO: unload
+        for (const url of urls) {
+          if (url.endsWith(".css")) {
+            window.document.head.insertAdjacentHTML(
+              "beforeend",
+              `<link rel="stylesheet" href=${JSON.stringify(url)}>`
+            );
+          } else {
+            window
+              // @ts-ignore
+              .eval(`import(${JSON.stringify(url)})`)
+              .then(
+                async (mod: {
+                  React: typeof React;
+                  ReactDOM: typeof ReactDOM;
+                  components: ForeignComponent[];
+                }) => {
+                  for (const component of mod.components) {
+                    this.components.set(
+                      foreignComponentKey(component),
+                      component
+                    );
+                  }
+                }
+              );
           }
         }
-      );
-    makeObservable(this);
+      }),
+      { fireImmediately: true }
+    );
   }
 
   readonly window: Window;
   readonly components = observable.map<string, ForeignComponent>([], {
     deep: false,
   });
-  @observable.ref React: typeof React | undefined;
-  @observable.ref ReactDOM: typeof ReactDOM | undefined;
 
   get(ref: ForeignComponentRef): ForeignComponent | undefined {
     return this.components.get(foreignComponentKey(ref));

@@ -2,35 +2,38 @@ import React from "react";
 import ReactDOM from "react-dom/client";
 import { Button } from "./stories/Button";
 import { Header } from "./stories/Header";
+import type {
+  ForeignComponent,
+  ForeignComponentRenderer,
+} from "../../editor/src/types/ForeignComponent";
 
-// TODO: share type with ForeignComponentManager
+class ReactRenderer implements ForeignComponentRenderer {
+  constructor(element: HTMLElement, Component: React.ElementType) {
+    this.reactRoot = ReactDOM.createRoot(element);
+    this.component = Component;
+  }
 
-type Type =
-  | {
-      type: "string";
-    }
-  | {
-      type: "boolean";
-    }
-  | {
-      type: "enum";
-      values: string[];
-    };
+  render(props: Record<string, unknown>) {
+    return new Promise<void>((resolve) => {
+      this.reactRoot.render(
+        <div style={{ display: "contents" }} ref={() => resolve()}>
+          <this.component {...props} />
+        </div>
+      );
+    });
+  }
 
-interface Prop {
-  name: string;
-  type: Type;
-}
+  dispose() {
+    this.reactRoot.unmount();
+  }
 
-interface ForeignComponent {
-  path: string; // path relative to project root e.g. "src/Button.tsx"
-  name: string; // export name; e.g. "Button" ("default" for default export)
-  props: Prop[];
+  reactRoot: ReactDOM.Root;
   component: React.ElementType;
 }
 
 export const components: ForeignComponent[] = [
   {
+    framework: "react",
     path: "src/stories/Button.tsx",
     name: "Button",
     props: [
@@ -54,14 +57,15 @@ export const components: ForeignComponent[] = [
         type: { type: "string" },
       },
     ],
-    component: Button,
+    createRenderer: (element: HTMLElement) =>
+      new ReactRenderer(element, Button),
   },
   {
+    framework: "react",
     path: "src/stories/Header.tsx",
     name: "Header",
     props: [],
-    component: Header,
+    createRenderer: (element: HTMLElement) =>
+      new ReactRenderer(element, Header),
   },
 ];
-
-export { React, ReactDOM };

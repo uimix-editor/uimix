@@ -1,4 +1,4 @@
-import React, { createRef, useEffect, useRef, useState } from "react";
+import React, { createRef, useEffect, useRef } from "react";
 import { observer } from "mobx-react-lite";
 import { StackDirection } from "@uimix/node-data";
 import { Selectable } from "../../../models/Selectable";
@@ -7,9 +7,9 @@ import { ComputedRectProvider } from "./ComputedRectProvider";
 import { projectState } from "../../../state/ProjectState";
 import {
   ForeignComponent,
-  ForeignComponentManager,
-} from "../../../models/ForeignComponentManager";
-import { EventEmitter } from "../../../utils/EventEmitter";
+  ForeignComponentRenderer as IForeignComponentRenderer,
+} from "../../../types/ForeignComponent";
+import { ForeignComponentManager } from "../../../models/ForeignComponentManager";
 import { buildNodeCSS } from "../../../models/buildNodeCSS";
 
 export const selectableForDOM = new WeakMap<HTMLElement, Selectable>();
@@ -179,7 +179,6 @@ export const NodeRenderer: React.FC<{
         <div style={cssStyle} ref={ref}>
           {foreignComponent && (
             <ForeignComponentRenderer
-              manager={foreignComponentManager}
               component={foreignComponent}
               onRenderFinish={() => {
                 if (!forThumbnail) {
@@ -214,59 +213,33 @@ export const NodeRenderer: React.FC<{
 
 export const ForeignComponentRenderer: React.FC<{
   component: ForeignComponent;
-  manager: ForeignComponentManager;
   onRenderFinish?: () => void;
   props: Record<string, unknown>;
-}> = observer(({ component, manager, onRenderFinish, props }) => {
+}> = observer(({ component, onRenderFinish, props }) => {
   // TODO: reduce DOM nesting
 
   const ref = createRef<HTMLDivElement>();
   const onRenderFinishRef = useRef(onRenderFinish);
   onRenderFinishRef.current = onRenderFinish;
 
-  const [propsChanged] = useState(
-    () => new EventEmitter<Record<string, unknown>>()
-  );
-  propsChanged.emit(props);
-
-  const { React, ReactDOM } = manager;
+  const rendererRef = useRef<IForeignComponentRenderer>();
 
   useEffect(() => {
     const elem = ref.current;
     if (!elem) return;
 
-    if (!React || !ReactDOM) return;
-
-    const RootComponent = () => {
-      const [_props, _setProps] = React.useState(props);
-      React.useEffect(() => {
-        return propsChanged.event((newProps) => {
-          _setProps(newProps);
-        });
-      }, []);
-
-      return React.createElement(
-        "div",
-        {
-          style: {
-            display: "contents",
-          },
-          ref: () => {
-            onRenderFinishRef.current?.();
-          },
-        },
-        React.createElement(component.component, _props)
-      );
-    };
-
-    const reactRoot = ReactDOM.createRoot(elem);
-    reactRoot.render(React.createElement(RootComponent));
-
+    const renderer = component.createRenderer(elem);
+    rendererRef.current = renderer;
     return () => {
-      onRenderFinishRef.current = undefined;
-      reactRoot.unmount();
+      renderer.dispose();
     };
-  }, [React, ReactDOM]);
+  }, [component]);
+
+  useEffect(() => {
+    const renderer = rendererRef.current;
+    if (!renderer) return;
+    renderer.render(props).then(() => onRenderFinish?.());
+  }, [props]);
 
   return (
     <div

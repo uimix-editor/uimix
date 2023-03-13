@@ -1,9 +1,9 @@
 import { action } from "mobx";
 import { observer } from "mobx-react-lite";
 import { viewportState } from "../../state/ViewportState";
-import { InsertPalette } from "../outline/InsertPalette";
+import { InstancePalette } from "../outline/InstancePalette";
 
-export const InspectorPaletteOverlay: React.FC = observer(() => {
+export const InstancePaletteOverlay: React.FC = observer(() => {
   if (viewportState.tool?.type !== "instancePalette") {
     return null;
   }
@@ -16,7 +16,7 @@ export const InspectorPaletteOverlay: React.FC = observer(() => {
           viewportState.tool = undefined;
         })}
       />
-      <InsertPalette />
+      <InstancePalette />
     </div>
   );
 });

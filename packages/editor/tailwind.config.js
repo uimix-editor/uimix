@@ -12,10 +12,12 @@ export default {
       colors: {
         macaron: colors,
       },
+      aria: {
+        invalid: 'invalid="true"',
+      },
     },
   },
   plugins: [
-    await import("@thoughtbot/tailwindcss-aria-attributes"),
     plugin(function ({ addUtilities }) {
       addUtilities({
         ".contain-strict": {

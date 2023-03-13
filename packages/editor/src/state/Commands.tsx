@@ -20,6 +20,7 @@ import { posix as path } from "path-browserify";
 import { Node } from "../models/Node";
 import { toProjectJSON } from "../models/toProjectJSON";
 import { generateExampleNodes } from "../models/generateExampleNodes";
+import { dialogState } from "./DialogState";
 
 class Commands {
   @computed get canUndo(): boolean {
@@ -445,6 +446,10 @@ class Commands {
   }
 
   handleKeyDown(event: KeyboardEvent): boolean {
+    if (dialogState.isAnyOpen) {
+      return false;
+    }
+
     if (event.key === " ") {
       viewportState.panMode = true;
     }

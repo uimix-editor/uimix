@@ -22,6 +22,7 @@
     "@iconify-icons/ic": "^1.2.13",
     "@iconify/react": "^4.1.0",
     "@material-symbols/svg-300": "^0.5.0",
+    "@radix-ui/react-dialog": "^1.0.3",
     "@radix-ui/react-popover": "^1.0.5",
     "@radix-ui/react-scroll-area": "^1.0.3",
     "@radix-ui/react-select": "^1.2.1",
