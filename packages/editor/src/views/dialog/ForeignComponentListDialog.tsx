@@ -7,12 +7,15 @@ import { useState } from "react";
 import { IconButton } from "../../components/IconButton";
 import { Input } from "../../components/Input";
 import { projectState } from "../../state/ProjectState";
+import { z } from "zod";
 
 export const ForeignComponentListDialog = observer(() => {
   const open = dialogState.foreignComponentListDialogOpen;
 
   const urls = [...projectState.project.componentURLs];
   const [urlToAdd, setUrlToAdd] = useState("");
+  const isURLValid = z.string().url().safeParse(urlToAdd).success;
+  console.log(isURLValid);
 
   return (
     <Dialog.Root
@@ -41,8 +44,9 @@ export const ForeignComponentListDialog = observer(() => {
           <div>
             <div className="flex justify-between items-center gap-2 mb-2">
               <input
-                className="block outline-0 w-full h-7 px-1.5 bg-macaron-uiBackground rounded focus:ring-1 ring-inset ring-macaron-active text-macaron-text text-macaron-base placeholder:text-macaron-disabledText"
+                className="block outline-0 w-full h-7 px-1.5 bg-macaron-uiBackground rounded focus:ring-1 ring-inset ring-macaron-active text-macaron-text text-macaron-base placeholder:text-macaron-disabledText aria-invalid:ring-macaron-red"
                 placeholder="URL"
+                aria-invalid={!isURLValid}
                 value={urlToAdd}
                 onChange={(e) => {
                   setUrlToAdd(e.target.value);
