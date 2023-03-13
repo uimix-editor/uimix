@@ -48,6 +48,7 @@ export class IFrameDataConnector {
         } else {
           state.pageID = pages[0].id;
         }
+        state.undoManager.clear();
       }),
     });
 
