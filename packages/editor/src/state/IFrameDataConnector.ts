@@ -5,18 +5,14 @@ import { RPC } from "@uimix/typed-rpc";
 import { ProjectState } from "./ProjectState";
 import { action } from "mobx";
 import { IEditorToRootRPCHandler, IRootToEditorRPCHandler } from "./IFrameRPC";
+import { debounce, throttle } from "lodash-es";
 
 export class IFrameDataConnector {
   constructor(state: ProjectState) {
     this.state = state;
     this.state.doc.on("update", (data) => {
       this.updates.push(data);
-      if (!this.sendQueued) {
-        queueMicrotask(() => {
-          this.sendUpdate();
-        });
-        this.sendQueued = true;
-      }
+      this.sendUpdate();
     });
 
     queueMicrotask(() => {
@@ -58,13 +54,11 @@ export class IFrameDataConnector {
   private state: ProjectState;
   private rpc: RPC<IEditorToRootRPCHandler, IRootToEditorRPCHandler>;
   private updates: Uint8Array[] = [];
-  private sendQueued = false;
 
-  private sendUpdate() {
-    this.sendQueued = false;
+  private sendUpdate = throttle(() => {
     if (this.updates.length) {
       this.rpc.remote.update(Y.mergeUpdates(this.updates));
       this.updates = [];
     }
-  }
+  }, 100);
 }
