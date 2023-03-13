@@ -27,7 +27,7 @@ export const ForeignComponentListDialog = observer(() => {
       <Dialog.Portal>
         <Dialog.Overlay className="fixed inset-0 bg-black bg-opacity-30" />
         <Dialog.Content
-          className="fixed w-fit h-fit bg-white
+          className="fixed bg-white
         -translate-x-1/2 -translate-y-1/2 top-1/2 left-1/2
         rounded-md shadow-xl p-4 text-xs
         w-[640px] min-h-[320px]
