@@ -15,16 +15,14 @@ import { DragHandler } from "../viewport/dragHandler/DragHandler";
 import { Vec2 } from "paintvec";
 import { useResizeObserver } from "../../components/hooks/useResizeObserver";
 import { QueryTester } from "../../utils/QueryTester";
-import {
-  ForeignComponent,
-  ForeignComponentManager,
-} from "../../models/ForeignComponentManager";
+import { ForeignComponentManager } from "../../models/ForeignComponentManager";
 import { IFrame } from "../../components/IFrame";
 import { action, makeObservable, observable } from "mobx";
 import colors from "../../colors";
 import { Color } from "../../utils/Color";
 import { FontLoader } from "../viewport/renderer/FontLoader";
 import { dialogState } from "../../state/DialogState";
+import { ForeignComponent } from "../../types/ForeignComponent";
 
 class InstancePaletteState {
   constructor() {

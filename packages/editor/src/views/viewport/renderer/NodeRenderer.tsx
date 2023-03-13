@@ -8,8 +8,8 @@ import { projectState } from "../../../state/ProjectState";
 import {
   ForeignComponent,
   ForeignComponentRenderer as IForeignComponentRenderer,
-  ForeignComponentManager,
-} from "../../../models/ForeignComponentManager";
+} from "../../../types/ForeignComponent";
+import { ForeignComponentManager } from "../../../models/ForeignComponentManager";
 import { buildNodeCSS } from "../../../models/buildNodeCSS";
 
 export const selectableForDOM = new WeakMap<HTMLElement, Selectable>();

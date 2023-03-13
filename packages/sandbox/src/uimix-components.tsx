@@ -2,38 +2,10 @@ import React from "react";
 import ReactDOM from "react-dom/client";
 import { Button } from "./stories/Button";
 import { Header } from "./stories/Header";
-
-// TODO: share type with ForeignComponentManager
-
-type Type =
-  | {
-      type: "string";
-    }
-  | {
-      type: "boolean";
-    }
-  | {
-      type: "enum";
-      values: string[];
-    };
-
-interface Prop {
-  name: string;
-  type: Type;
-}
-
-interface ForeignComponent {
-  framework: "react"; // TODO: support other frameworks
-  path: string; // path relative to project root e.g. "src/Button.tsx"
-  name: string; // export name; e.g. "Button" ("default" for default export)
-  props: Prop[];
-  createRenderer: (element: HTMLElement) => ForeignComponentRenderer;
-}
-
-interface ForeignComponentRenderer {
-  render(props: Record<string, unknown>): Promise<void>;
-  dispose(): void;
-}
+import type {
+  ForeignComponent,
+  ForeignComponentRenderer,
+} from "../../editor/src/types/ForeignComponent";
 
 class ReactRenderer implements ForeignComponentRenderer {
   constructor(element: HTMLElement, Component: React.ElementType) {
