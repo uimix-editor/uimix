@@ -39,6 +39,12 @@ export class IFrameDataConnector {
           state.project.node.append([page]);
           state.pageID = page.id;
           generateExampleNodes(page);
+          if (state.project.componentURLs.length === 0) {
+            state.project.componentURLs.push([
+              "https://cdn.jsdelivr.net/gh/uimix-editor/uimix@c1b589ca/packages/sandbox/dist-components/components.js",
+              "https://cdn.jsdelivr.net/gh/uimix-editor/uimix@c1b589ca/packages/sandbox/dist-components/style.css",
+            ]);
+          }
         } else {
           state.pageID = pages[0].id;
         }
