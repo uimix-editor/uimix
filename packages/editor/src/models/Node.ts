@@ -38,10 +38,7 @@ export class Node {
   readonly id: string;
 
   get data(): ObservableYMap<any> | undefined {
-    const data = this.nodeMap.data.get(this.id);
-    if (data) {
-      return ObservableYMap.get(data);
-    }
+    return ObservableYMap.get(this.nodeMap.data.get(this.id));
   }
 
   get dataForWrite(): ObservableYMap<any> {

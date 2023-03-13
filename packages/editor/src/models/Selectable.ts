@@ -23,6 +23,31 @@ export class StubComputedRectProvider implements IComputedRectProvider {
   markDirty() {}
 }
 
+class SelectablePartialStyle extends PartialStyle {
+  constructor(selectable: Selectable) {
+    super();
+    this.selectable = selectable;
+  }
+
+  selectable: Selectable;
+
+  get data(): ObservableYMap<any> | undefined {
+    return ObservableYMap.get(
+      this.selectable.selectableMap.stylesData.get(this.selectable.id)
+    );
+  }
+
+  get dataForWrite(): ObservableYMap<any> {
+    return ObservableYMap.get(
+      getOrCreate(
+        this.selectable.selectableMap.stylesData,
+        this.selectable.id,
+        () => new Y.Map()
+      )
+    );
+  }
+}
+
 // a node or a inner node of an instance
 export class Selectable {
   constructor(project: Project, idPath: string[]) {
@@ -30,21 +55,13 @@ export class Selectable {
       throw new Error("idPath must not be empty");
     }
     this.project = project;
+    this.selectableMap = project.selectables;
     this.idPath = idPath;
     makeObservable(this);
   }
 
-  get data(): ObservableYMap<any> {
-    return ObservableYMap.get(
-      getOrCreate(
-        this.project.selectables.data,
-        this.idPath.join(":"),
-        () => new Y.Map()
-      )
-    );
-  }
-
   readonly project: Project;
+  readonly selectableMap: SelectableMap;
 
   // Non component root nodes:
   // [outermost instance ID, ..., innermost instance ID, original node ID]
@@ -150,7 +167,7 @@ export class Selectable {
   }
 
   @computed get selfStyle(): PartialStyle {
-    return new PartialStyle(getOrCreate(this.data, "style", () => new Y.Map()));
+    return new SelectablePartialStyle(this);
   }
 
   @computed get nodePath(): Node[] {
@@ -239,11 +256,18 @@ export class Selectable {
   }
 
   @computed private get _selected(): boolean {
-    return this.data.get("selected") ?? false;
+    return this.selectableMap.selectionData.has(this.id);
   }
 
   private set _selected(value: boolean) {
-    this.data.set("selected", value);
+    if (this._selected === value) {
+      return;
+    }
+    if (value) {
+      this.selectableMap.selectionData.set(this.id, true);
+    } else {
+      this.selectableMap.selectionData.delete(this.id);
+    }
   }
 
   @computed get selected(): boolean {
@@ -471,8 +495,11 @@ export class SelectableMap {
     this.project = project;
   }
 
-  get data(): ObservableYMap<Y.Map<any>> {
-    return ObservableYMap.get(this.project.doc.getMap("selectables"));
+  get stylesData(): ObservableYMap<Y.Map<any>> {
+    return ObservableYMap.get(this.project.doc.getMap("styles"));
+  }
+  get selectionData(): ObservableYMap<true> {
+    return ObservableYMap.get(this.project.doc.getMap("selection"));
   }
 
   private readonly project: Project;
