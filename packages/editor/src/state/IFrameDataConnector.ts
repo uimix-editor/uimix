@@ -5,7 +5,7 @@ import { RPC } from "@uimix/typed-rpc";
 import { ProjectState } from "./ProjectState";
 import { action } from "mobx";
 import { IEditorToRootRPCHandler, IRootToEditorRPCHandler } from "./IFrameRPC";
-import { debounce, throttle } from "lodash-es";
+import { throttle } from "lodash-es";
 
 export class IFrameDataConnector {
   constructor(state: ProjectState) {
@@ -27,11 +27,9 @@ export class IFrameDataConnector {
 
     this.rpc = new RPC(parentWindowTarget(), {
       sync: action((data: Uint8Array) => {
-        console.log("uimix:sync");
         Y.applyUpdate(state.doc, data);
       }),
       init: action((data: Uint8Array) => {
-        console.log("uimix:init");
         Y.applyUpdate(state.doc, data);
 
         const pages = state.project.pages.all;
@@ -44,7 +42,6 @@ export class IFrameDataConnector {
         } else {
           state.pageID = pages[0].id;
         }
-        console.log("setting page id", state.pageID);
       }),
     });
 

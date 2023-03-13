@@ -24,7 +24,6 @@ class Connection extends TypedEmitter<{
       iframeTarget(iframe),
       {
         ready: async () => {
-          console.log("iframe:ready");
           this.iframeReady = true;
           if (this.hocuspocusReady) {
             this.onReady();
@@ -32,31 +31,26 @@ class Connection extends TypedEmitter<{
         },
         update: async (data: Uint8Array) => {
           const doc = this.provider.document;
-          console.log("uimix:update");
           Y.applyUpdate(doc, data);
-          console.log(doc.getMap("project").toJSON());
         },
         uploadImage: async (
           hash: string,
           contentType: string,
           data: Uint8Array
         ) => {
-          console.log("uimix:uploadImage", hash, contentType, data);
           const { uploadURL, url } = await dynamicTrpc.image.getUploadURL.query(
             {
               hash,
               contentType,
             }
           );
-          console.log(uploadURL);
-          const res = await fetch(uploadURL, {
+          await fetch(uploadURL, {
             method: "PUT",
             headers: {
               "Content-Type": contentType,
             },
             body: data,
           });
-          console.log(res);
           return url;
         },
       }
@@ -72,9 +66,7 @@ class Connection extends TypedEmitter<{
         if (this.hocuspocusReady) {
           return;
         }
-        console.log("connected!");
         const data = this.provider.document.getMap("project");
-        console.log(data.toJSON());
         this.hocuspocusReady = true;
         if (this.iframeReady) {
           this.onReady();
@@ -95,10 +87,7 @@ class Connection extends TypedEmitter<{
   }
 
   private onReady = async () => {
-    console.log("-- ready");
-
     const doc = this.provider.document;
-    console.log(doc.getMap("project").toJSON());
 
     doc.on("update", (update) => {
       this.rpc.remote.sync(update);
