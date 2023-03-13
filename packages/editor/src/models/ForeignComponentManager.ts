@@ -45,6 +45,7 @@ export class ForeignComponentManager {
     reaction(
       () => projectState.project.componentURLs.toArray(),
       action((urls) => {
+        // TODO: unload
         for (const url of urls) {
           if (url.endsWith(".css")) {
             window.document.head.insertAdjacentHTML(
