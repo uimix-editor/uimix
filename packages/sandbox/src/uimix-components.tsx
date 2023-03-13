@@ -23,14 +23,34 @@ interface Prop {
 }
 
 interface ForeignComponent {
+  framework: "react"; // TODO: support other frameworks
   path: string; // path relative to project root e.g. "src/Button.tsx"
   name: string; // export name; e.g. "Button" ("default" for default export)
   props: Prop[];
+  createRenderer: (element: HTMLElement) => ForeignComponentRenderer;
+}
+
+interface ForeignComponentRenderer {
+  render(props: Record<string, unknown>): void;
+}
+
+class ReactRenderer {
+  constructor(element: HTMLElement, Component: React.ElementType) {
+    this.reactRoot = ReactDOM.createRoot(element);
+    this.component = Component;
+  }
+
+  render(props: Record<string, unknown>) {
+    this.reactRoot.render(<this.component {...props} />);
+  }
+
+  reactRoot: ReactDOM.Root;
   component: React.ElementType;
 }
 
 export const components: ForeignComponent[] = [
   {
+    framework: "react",
     path: "src/stories/Button.tsx",
     name: "Button",
     props: [
@@ -54,13 +74,16 @@ export const components: ForeignComponent[] = [
         type: { type: "string" },
       },
     ],
-    component: Button,
+    createRenderer: (element: HTMLElement) =>
+      new ReactRenderer(element, Button),
   },
   {
+    framework: "react",
     path: "src/stories/Header.tsx",
     name: "Header",
     props: [],
-    component: Header,
+    createRenderer: (element: HTMLElement) =>
+      new ReactRenderer(element, Header),
   },
 ];
 
