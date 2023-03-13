@@ -23,7 +23,6 @@ import { IFrame } from "../../components/IFrame";
 import { action, makeObservable, observable } from "mobx";
 import colors from "../../colors";
 import { Color } from "../../utils/Color";
-import { FontLoadLink } from "../../components/FontLoadLink";
 import { FontLoader } from "../viewport/renderer/FontLoader";
 
 class InsertPaletteState {

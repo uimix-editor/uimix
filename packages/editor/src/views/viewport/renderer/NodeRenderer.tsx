@@ -179,7 +179,6 @@ export const NodeRenderer: React.FC<{
         <div style={cssStyle} ref={ref}>
           {foreignComponent && (
             <ForeignComponentRenderer
-              manager={foreignComponentManager}
               component={foreignComponent}
               onRenderFinish={() => {
                 if (!forThumbnail) {
@@ -214,10 +213,9 @@ export const NodeRenderer: React.FC<{
 
 export const ForeignComponentRenderer: React.FC<{
   component: ForeignComponent;
-  manager: ForeignComponentManager;
   onRenderFinish?: () => void;
   props: Record<string, unknown>;
-}> = observer(({ component, manager, onRenderFinish, props }) => {
+}> = observer(({ component, onRenderFinish, props }) => {
   // TODO: reduce DOM nesting
 
   const ref = createRef<HTMLDivElement>();

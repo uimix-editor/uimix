@@ -1,5 +1,5 @@
 import { ForeignComponentRef } from "@uimix/node-data";
-import { makeObservable, observable } from "mobx";
+import { observable } from "mobx";
 import type React from "react";
 import type ReactDOM from "react-dom/client";
 
