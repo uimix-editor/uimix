@@ -25,79 +25,45 @@ export const abstractNodeTypes: NodeType[] = ["page", "component"];
 
 export class Node {
   // Do not use this constructor directly
-  constructor(project: Project, id: string, data: Y.Map<any>) {
+  constructor(project: Project, id: string) {
     this.project = project;
     this.nodeMap = project.nodes;
     this.id = id;
-    this.data = ObservableYMap.get(data);
-    this.lastParentID = this.data.get("parent");
-    this.lastIndex = this.data.get("index");
-
-    data.observe(() => {
-      const parentID = this.data.get("parent");
-      const index = this.data.get("index");
-
-      if (parentID !== this.lastParentID || index !== this.lastIndex) {
-        if (this.lastParentID) {
-          const oldParentChildrenMap = this.nodeMap.getChildrenMap(
-            this.lastParentID
-          );
-          oldParentChildrenMap.delete({
-            index: this.lastIndex,
-            id: this.id,
-          });
-        }
-
-        if (parentID) {
-          const parentChildrenMap = this.nodeMap.getChildrenMap(parentID);
-          parentChildrenMap.set({ index, id: this.id }, true);
-        }
-
-        this.lastParentID = parentID;
-        this.lastIndex = index;
-      }
-    });
-
-    if (this.lastParentID) {
-      const parentChildrenMap = this.nodeMap.getChildrenMap(this.lastParentID);
-      parentChildrenMap.set({ index: this.lastIndex, id: this.id }, true);
-    }
 
     makeObservable(this);
   }
 
-  dispose() {
-    if (this.lastParentID) {
-      const parentChildrenMap = this.nodeMap.getChildrenMap(this.lastParentID);
-      parentChildrenMap.delete({
-        index: this.lastIndex,
-        id: this.id,
-      });
-    }
+  readonly project: Project;
+  readonly nodeMap: NodeMap;
+  readonly id: string;
+
+  get data(): ObservableYMap<any> | undefined {
+    return ObservableYMap.get(this.nodeMap.data.get(this.id));
   }
 
-  readonly project: Project;
-  private readonly nodeMap: NodeMap;
-  readonly id: string;
-  private readonly data: ObservableYMap<any>;
+  get dataForWrite(): ObservableYMap<any> {
+    return ObservableYMap.get(
+      getOrCreate(this.nodeMap.data, this.id, () => new Y.Map())
+    );
+  }
 
   get sortKey(): NodeKey {
     return { index: this.index, id: this.id };
   }
 
   get parentID(): string | undefined {
-    return this.data.get("parent");
+    return this.data?.get("parent");
   }
 
   get index(): number {
-    return this.data.get("index");
+    return this.data?.get("index") ?? 0;
   }
 
   lastParentID: string | undefined;
-  lastIndex: number;
+  lastIndex = 0;
 
   get type(): NodeType {
-    return this.data.get("type");
+    return this.data?.get("type") ?? "frame";
   }
 
   get isAbstract(): boolean {
@@ -105,31 +71,31 @@ export class Node {
   }
 
   @computed get name(): string {
-    return this.data.get("name") ?? "";
+    return this.data?.get("name") ?? "";
   }
 
   set name(name: string | undefined) {
     if (name === undefined) {
-      this.data.delete("name");
+      this.data?.delete("name");
     } else {
-      this.data.set("name", name);
+      this.dataForWrite.set("name", name);
     }
   }
 
   // Applicable only to variant nodes
 
   @computed get condition(): VariantCondition | undefined {
-    return this.data.get("condition");
+    return this.data?.get("condition");
   }
 
   set condition(selector: VariantCondition | undefined) {
-    this.data.set("condition", selector);
+    this.dataForWrite.set("condition", selector);
   }
 
   // parent / children
 
   get parent(): Node | undefined {
-    return this.nodeMap.get(this.data.get("parent"));
+    return this.nodeMap.get(this.data?.get("parent"));
   }
 
   get childCount(): number {
@@ -246,8 +212,9 @@ export class Node {
           : i;
 
       // TODO: transaction
-      node.data.set("parent", this.id);
-      node.data.set("index", index);
+      const data = node.dataForWrite;
+      data.set("parent", this.id);
+      data.set("index", index);
     }
   }
 
@@ -256,7 +223,7 @@ export class Node {
   }
 
   remove() {
-    this.data.delete("parent");
+    this.data?.delete("parent");
   }
 
   clear() {
@@ -278,10 +245,11 @@ export class Node {
   }
 
   loadJSON(json: NodeJSON) {
-    this.data.set("name", json.name);
-    this.data.set("condition", json.condition);
-    this.data.set("parent", json.parent);
-    this.data.set("index", json.index);
+    const data = this.dataForWrite;
+    data.set("name", json.name);
+    data.set("condition", json.condition);
+    data.set("parent", json.parent);
+    data.set("index", json.index);
   }
 
   /// Utility
@@ -307,24 +275,60 @@ export class Node {
 }
 
 export class NodeMap {
-  constructor(project: Project, data: Y.Map<Y.Map<any>>) {
+  constructor(project: Project) {
     this.project = project;
-    this.data = ObservableYMap.get(data);
-    data.observe((event) => {
-      for (const [id, change] of event.keys) {
-        if (change.action === "add") {
-          this.nodeMap.set(id, new Node(this.project, id, data.get(id)!));
+
+    const data = project.doc.getMap("nodes");
+
+    data.observeDeep((events) => {
+      for (const event of events) {
+        const path = event.path;
+
+        if (path.length === 0) {
+          // change node
+          for (const [id, change] of event.keys) {
+            if (change.action === "add") {
+              const node = getOrCreate(
+                this.nodeMap,
+                id,
+                () => new Node(this.project, id)
+              );
+              this.nodeMap.set(id, node);
+              this.insertToParentChildrenMap(node);
+            } else if (change.action === "update") {
+              const node = this.nodeMap.get(id);
+              if (node) {
+                this.removeFromParentChildrenMap(node);
+                this.insertToParentChildrenMap(node);
+              }
+            } else if (change.action === "delete") {
+              const node = this.nodeMap.get(id);
+              if (node) {
+                this.removeFromParentChildrenMap(node);
+              }
+            }
+          }
         }
-        if (change.action === "delete") {
-          const node = this.nodeMap.get(id);
-          node?.dispose();
+        if (path.length === 1) {
+          if (event.keys.has("parent") || event.keys.has("index")) {
+            const nodeId = path[0];
+            const node = this.nodeMap.get(String(nodeId));
+            if (node) {
+              this.removeFromParentChildrenMap(node);
+              this.insertToParentChildrenMap(node);
+            }
+          }
         }
       }
     });
   }
 
   readonly project: Project;
-  private readonly data: ObservableYMap<Y.Map<any>>;
+
+  get data(): ObservableYMap<Y.Map<any>> {
+    return ObservableYMap.get(this.project.doc.getMap("nodes"));
+  }
+
   private readonly nodeMap = new Map<string, Node>();
   private readonly childrenMaps = new Map<
     string,
@@ -365,6 +369,30 @@ export class NodeMap {
       parentID,
       () => new ObservableRBTree(compareNodeKey)
     );
+  }
+
+  private removeFromParentChildrenMap(node: Node) {
+    if (node.lastParentID) {
+      const parentChildrenMap = this.getChildrenMap(node.lastParentID);
+      parentChildrenMap.delete({
+        index: node.lastIndex,
+        id: node.id,
+      });
+    }
+  }
+
+  private insertToParentChildrenMap(node: Node) {
+    const data = node.data;
+    const parentID = data?.get("parent");
+    const index = data?.get("index");
+
+    if (parentID) {
+      const parentChildrenMap = this.getChildrenMap(parentID);
+      parentChildrenMap.set({ index, id: node.id }, true);
+    }
+
+    node.lastParentID = parentID;
+    node.lastIndex = index;
   }
 }
 

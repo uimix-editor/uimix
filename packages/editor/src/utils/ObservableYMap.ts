@@ -5,7 +5,12 @@ import { getOrCreate } from "../state/Collection";
 const instances = new WeakMap<Y.Map<any>, ObservableYMap<any>>();
 
 export class ObservableYMap<V> {
-  static get<V>(target: Y.Map<V>): ObservableYMap<V> {
+  static get<V>(target: Y.Map<V>): ObservableYMap<V>;
+  static get<V>(target: Y.Map<V> | undefined): ObservableYMap<V> | undefined;
+  static get<V>(target: Y.Map<V> | undefined): ObservableYMap<V> | undefined {
+    if (!target) {
+      return;
+    }
     let map = instances.get(target);
     if (!map) {
       map = new ObservableYMap(target);

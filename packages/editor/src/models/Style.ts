@@ -75,19 +75,18 @@ export const defaultStyle: StyleJSON = {
   tagName: null,
 };
 
-export class PartialStyle implements Partial<IStyle> {
-  constructor(data: Y.Map<any>) {
-    this.data = ObservableYMap.get(data);
-  }
-  data: ObservableYMap<any>;
+export abstract class PartialStyle implements Partial<IStyle> {
+  abstract get data(): ObservableYMap<any> | undefined;
+  abstract get dataForWrite(): ObservableYMap<any>;
 
-  toJSON() {
-    return this.data.toJSON();
+  toJSON(): Partial<IStyle> {
+    return this.data?.toJSON() ?? {};
   }
   loadJSON(json: Partial<IStyle>) {
-    this.data.clear();
+    const data = this.dataForWrite;
+    data.clear();
     for (const [key, value] of Object.entries(json)) {
-      this.data.set(key, value);
+      data.set(key, value);
     }
   }
 }
@@ -98,13 +97,13 @@ export interface PartialStyle extends Partial<IStyle> {}
 for (const key of Object.keys(defaultStyle)) {
   Object.defineProperty(PartialStyle.prototype, key, {
     get: function (this: PartialStyle) {
-      return this.data.get(key);
+      return this.data?.get(key);
     },
     set(this: PartialStyle, value) {
       if (value === undefined) {
-        this.data.delete(key);
+        this.data?.delete(key);
       } else {
-        this.data.set(key, value);
+        this.dataForWrite.set(key, value);
       }
     },
   });

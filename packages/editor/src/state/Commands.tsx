@@ -114,39 +114,36 @@ class Commands {
   }
 
   insertFrame() {
-    viewportState.insertMode = { type: "frame" };
+    viewportState.tool = {
+      type: "insert",
+      mode: { type: "frame" },
+    };
   }
 
   insertText() {
-    viewportState.insertMode = { type: "text" };
+    viewportState.tool = {
+      type: "insert",
+      mode: { type: "text" },
+    };
   }
 
   async insertImage() {
-    const imageFilePickerOptions = {
-      types: [
-        {
-          description: "Images",
-          accept: {
-            "image/png": [".png"],
-            "image/jpeg": [".jpg", ".jpeg"],
-          },
-        },
-      ],
-    };
+    const file = await new Promise<File | undefined>((resolve) => {
+      const input = document.createElement("input");
+      input.type = "file";
+      input.accept = "image/png,image/jpeg";
+      input.onchange = () => {
+        resolve(input.files?.[0]);
+      };
+      input.click();
+    });
+    if (!file) {
+      return;
+    }
 
-    const [fileHandle] = await showOpenFilePicker(imageFilePickerOptions);
-    const blob = await fileHandle.getFile();
-    const dataURL = await blobToDataURL(blob);
-
-    viewportState.insertMode = {
-      type: "image",
-      dataURL: dataURL,
-      // TODO: image source
-      // source: {
-      //   dataURL: dataURL,
-      //   width: image.width,
-      //   height: image.height,
-      // },
+    viewportState.tool = {
+      type: "insert",
+      mode: { type: "image", blob: file },
     };
   }
 
@@ -462,7 +459,7 @@ class Commands {
         return true;
       }
       if (event.key === "Escape") {
-        viewportState.insertMode = undefined;
+        viewportState.tool = undefined;
         return true;
       }
 

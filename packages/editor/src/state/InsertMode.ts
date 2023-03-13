@@ -7,5 +7,5 @@ export type InsertMode =
     }
   | {
       type: "image";
-      dataURL: string;
+      blob: Blob;
     };

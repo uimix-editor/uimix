@@ -51,7 +51,7 @@ export class NodeInsertDragHandler implements DragHandler {
       this.instance.style.fill = Color.from("white").toHex();
       this.instance.style.width = { type: "fixed", value: 100 };
       this.instance.style.height = { type: "fixed", value: 100 };
-      projectState.project.imageManager.insertDataURL(mode.dataURL).then(
+      projectState.project.imageManager.insert(mode.blob).then(
         action((hash) => {
           console.log(hash);
           this.instance.style.imageHash = hash;
@@ -99,7 +99,7 @@ export class NodeInsertDragHandler implements DragHandler {
 
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   end(event: MouseEvent | DragEvent): void {
-    viewportState.insertMode = undefined;
+    viewportState.tool = undefined;
     projectState.undoManager.stopCapturing();
   }
 

@@ -276,12 +276,13 @@ function useRevealSelectedRow() {
 
 export const NodeTreeView: React.FC = observer(() => {
   const page = projectState.page;
-  if (!page) {
-    return null;
-  }
-  const rootItem = selectableToTreeViewItem(page.selectable);
+  const rootItem = page && selectableToTreeViewItem(page.selectable);
 
   useRevealSelectedRow();
+
+  if (!rootItem) {
+    return null;
+  }
 
   return (
     <TreeView

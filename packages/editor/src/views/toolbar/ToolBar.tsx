@@ -78,7 +78,10 @@ export const ToolBar = observer(function ToolBar({
           />
           <LargeToolButton
             icon={textIcon}
-            selected={viewportState.insertMode?.type === "text"}
+            selected={
+              viewportState.tool?.type === "insert" &&
+              viewportState.tool.mode.type === "text"
+            }
             text="Text"
             onClick={action(() => {
               commands.insertText();
@@ -86,7 +89,10 @@ export const ToolBar = observer(function ToolBar({
           />
           <LargeToolButton
             icon={rectIcon}
-            selected={viewportState.insertMode?.type === "frame"}
+            selected={
+              viewportState.tool?.type === "insert" &&
+              viewportState.tool.mode.type === "frame"
+            }
             text="Frame"
             onClick={action(() => {
               commands.insertFrame();
@@ -94,7 +100,10 @@ export const ToolBar = observer(function ToolBar({
           />
           <LargeToolButton
             icon={imageIcon}
-            selected={viewportState.insertMode?.type === "image"}
+            selected={
+              viewportState.tool?.type === "insert" &&
+              viewportState.tool.mode.type === "image"
+            }
             text="Image"
             onClick={action(() => {
               commands.insertImage();

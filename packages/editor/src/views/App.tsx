@@ -9,6 +9,8 @@ import { commands } from "../state/Commands";
 import { action } from "mobx";
 import { OutlineSideBar } from "./outline/OutlineSideBar";
 import { FontLoader } from "./viewport/renderer/FontLoader";
+import { VerticalToolBar } from "./toolbar/VerticalToolBar";
+import { InspectorPaletteOverlay } from "./viewport/InspectorPaletteOverlay";
 
 function useKeyHandling() {
   useEffect(() => {
@@ -51,11 +53,13 @@ export const App = observer(function App() {
     <TooltipProvider>
       <FontLoader />
       <div className="flex flex-col fixed top-0 left-0 w-full h-full text-macaron-base bg-macaron-background text-macaron-text select-none">
-        <ToolBar className="shrink-0" />
         <div className="flex flex-1">
           <OutlineSideBar />
-          <div className="flex flex-1 border-l border-r border-macaron-separator">
+          <div className="bg-macaron-separator w-px" />
+          <VerticalToolBar />
+          <div className="flex flex-1 border-l border-r border-macaron-separator relative">
             <Viewport />
+            <InspectorPaletteOverlay />
           </div>
           <InspectorSideBar />
         </div>

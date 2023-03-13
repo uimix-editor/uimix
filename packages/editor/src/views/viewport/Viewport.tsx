@@ -10,6 +10,7 @@ import { Indicators } from "./indicator/Indicators";
 import { TextEditor } from "./TextEditor";
 import { ComponentSections, VariantLabels } from "./VariantLabels";
 import { RenderIFrame } from "./renderer/RenderIFrame";
+import { ZoomControlController } from "./FloatingZoomControl";
 
 export const Viewport: React.FC = observer(function Viewport() {
   const ref = createRef<HTMLDivElement>();
@@ -76,6 +77,7 @@ export const Viewport: React.FC = observer(function Viewport() {
       <Indicators />
       <TextEditor />
       <PanOverlay />
+      <ZoomControlController className="absolute bottom-3 left-1/2 transform -translate-x-1/2 shadow-lg" />
     </div>
   );
 });

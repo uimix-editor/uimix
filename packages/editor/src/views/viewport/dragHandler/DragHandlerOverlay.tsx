@@ -40,11 +40,8 @@ export const DragHandlerOverlay: React.FC = observer(
         viewportState.hoveredSelectable = undefined;
         viewportState.focusedSelectable = undefined;
 
-        if (viewportState.insertMode) {
-          return new NodeInsertDragHandler(
-            viewportState.insertMode,
-            pickResult
-          );
+        if (viewportState.tool?.type === "insert") {
+          return new NodeInsertDragHandler(viewportState.tool.mode, pickResult);
         }
 
         if (isDoubleClick) {
@@ -78,7 +75,7 @@ export const DragHandlerOverlay: React.FC = observer(
         viewportState.resizeBoxVisible = true;
 
         snapper.clear();
-        if (viewportState.insertMode) {
+        if (viewportState.tool?.type === "insert") {
           snapper.snapInsertPoint(scrollState.documentPosForEvent(e));
         }
       }),
@@ -109,7 +106,8 @@ export const DragHandlerOverlay: React.FC = observer(
       );
     });
 
-    const cursor = viewportState.insertMode ? "crosshair" : undefined;
+    const cursor =
+      viewportState.tool?.type === "insert" ? "crosshair" : undefined;
 
     return (
       <div

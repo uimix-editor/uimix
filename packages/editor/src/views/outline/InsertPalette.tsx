@@ -38,7 +38,7 @@ const insertPaletteState = new InsertPaletteState();
 
 export const InsertPalette: React.FC = observer(() => {
   return (
-    <div className="flex flex-col h-full">
+    <div className="flex flex-col h-full w-[256px] bg-macaron-background border-r border-macaron-separator">
       <SearchInput
         placeholder="Search"
         value={insertPaletteState.searchText}
