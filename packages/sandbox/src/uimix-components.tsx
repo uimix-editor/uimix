@@ -97,5 +97,3 @@ export const components: ForeignComponent[] = [
       new ReactRenderer(element, Header),
   },
 ];
-
-export { React, ReactDOM };

@@ -16,5 +16,6 @@ export default defineConfig({
       name: "components",
       fileName: "components",
     },
+    outDir: path.resolve(__filename, "../dist-components"),
   },
 });

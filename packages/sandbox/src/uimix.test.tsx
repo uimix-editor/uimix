@@ -30,6 +30,7 @@ describe(Page.name, () => {
             }}
             stackProps={{
               // TODO: typing
+              // @ts-ignore
               textProps: {
                 children: "Override inner item",
               },
