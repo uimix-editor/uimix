@@ -46,23 +46,30 @@ export class ForeignComponentManager {
       () => projectState.project.componentURLs.toArray(),
       action((urls) => {
         for (const url of urls) {
-          window
-            // @ts-ignore
-            .eval(`import(${JSON.stringify(url)})`)
-            .then(
-              async (mod: {
-                React: typeof React;
-                ReactDOM: typeof ReactDOM;
-                components: ForeignComponent[];
-              }) => {
-                for (const component of mod.components) {
-                  this.components.set(
-                    foreignComponentKey(component),
-                    component
-                  );
-                }
-              }
+          if (url.endsWith(".css")) {
+            window.document.head.insertAdjacentHTML(
+              "beforeend",
+              `<link rel="stylesheet" href="${url}">`
             );
+          } else {
+            window
+              // @ts-ignore
+              .eval(`import(${JSON.stringify(url)})`)
+              .then(
+                async (mod: {
+                  React: typeof React;
+                  ReactDOM: typeof ReactDOM;
+                  components: ForeignComponent[];
+                }) => {
+                  for (const component of mod.components) {
+                    this.components.set(
+                      foreignComponentKey(component),
+                      component
+                    );
+                  }
+                }
+              );
+          }
         }
       }),
       { fireImmediately: true }
