@@ -26,10 +26,10 @@ export const ForeignComponentListDialog = observer(() => {
           className="fixed w-fit h-fit bg-white
         -translate-x-1/2 -translate-y-1/2 top-1/2 left-1/2
         rounded-md shadow-xl p-4 text-xs
-        w-96
+        w-[640px] h-[480px]
         "
         >
-          <div className="flex justify-between items-center h-8 mb-2">
+          <div className="flex justify-between items-center mb-4">
             <Dialog.Title className="font-bold">React Components</Dialog.Title>
             <Dialog.Close>
               <Icon icon="material-symbols:close" className="w-4 h-4" />
@@ -37,24 +37,27 @@ export const ForeignComponentListDialog = observer(() => {
           </div>
           <div>
             <div className="flex justify-between items-center gap-2 mb-2">
-              <Input
+              <input
+                className="block outline-0 w-full h-7 px-1.5 bg-macaron-uiBackground rounded focus:ring-1 ring-inset ring-macaron-active text-macaron-text text-macaron-base placeholder:text-macaron-disabledText"
                 placeholder="URL"
                 value={urlToAdd}
                 onChange={(e) => {
                   setUrlToAdd(e.target.value);
                 }}
               />
-              <IconButton
-                icon="material-symbols:add"
+              <button
+                className="h-fit bg-blue-500 hover:bg-blue-700 text-white py-1.5 px-3 rounded flex items-center gap-1"
                 onClick={() => {
                   setUrls([...urls, urlToAdd]);
                   setUrlToAdd("");
                 }}
-              />
+              >
+                Add
+              </button>
             </div>
             <ul>
               {urls.map((url, i) => (
-                <li className="flex justify-between items-center gap-2 h-8">
+                <li className="flex justify-between items-center gap-2 h-7">
                   <p>{url}</p>
                   <IconButton
                     icon="material-symbols:remove"
