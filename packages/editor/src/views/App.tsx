@@ -11,6 +11,7 @@ import { OutlineSideBar } from "./outline/OutlineSideBar";
 import { FontLoader } from "./viewport/renderer/FontLoader";
 import { VerticalToolBar } from "./toolbar/VerticalToolBar";
 import { InstancePaletteOverlay } from "./viewport/InstancePaletteOverlay";
+import { ForeignComponentListDialog } from "./dialog/ForeignComponentListDialog";
 
 function useKeyHandling() {
   useEffect(() => {
@@ -65,6 +66,7 @@ export const App = observer(function App() {
         </div>
       </div>
       <ContextMenu />
+      <ForeignComponentListDialog />
     </TooltipProvider>
   );
 });

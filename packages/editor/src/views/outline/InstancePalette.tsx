@@ -24,6 +24,7 @@ import { action, makeObservable, observable } from "mobx";
 import colors from "../../colors";
 import { Color } from "../../utils/Color";
 import { FontLoader } from "../viewport/renderer/FontLoader";
+import { dialogState } from "../../state/DialogState";
 
 class InstancePaletteState {
   constructor() {
@@ -160,6 +161,9 @@ const ComponentThumbnails: React.FC<{
               cursor: "pointer",
               font: "inherit",
             }}
+            onClick={action(() => {
+              dialogState.foreignComponentListDialogOpen = true;
+            })}
           >
             <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
               <path
