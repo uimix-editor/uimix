@@ -48,7 +48,6 @@ export class ForeignComponentManager {
         for (const url of urls) {
           window
             // @ts-ignore
-            // TODO: make source URL configurable
             .eval(`import(${JSON.stringify(url)})`)
             .then(
               async (mod: {
