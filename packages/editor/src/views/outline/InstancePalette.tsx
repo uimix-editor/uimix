@@ -25,7 +25,7 @@ import colors from "../../colors";
 import { Color } from "../../utils/Color";
 import { FontLoader } from "../viewport/renderer/FontLoader";
 
-class InsertPaletteState {
+class InstancePaletteState {
   constructor() {
     makeObservable(this);
   }
@@ -33,16 +33,16 @@ class InsertPaletteState {
   @observable searchText = "";
 }
 
-const insertPaletteState = new InsertPaletteState();
+const instancePaletteState = new InstancePaletteState();
 
-export const InsertPalette: React.FC = observer(() => {
+export const InstancePalette: React.FC = observer(() => {
   return (
     <div className="flex flex-col h-full w-[256px] bg-macaron-background border-r border-macaron-separator">
       <SearchInput
         placeholder="Search"
-        value={insertPaletteState.searchText}
+        value={instancePaletteState.searchText}
         onChangeValue={action((value) => {
-          insertPaletteState.searchText = value;
+          instancePaletteState.searchText = value;
         })}
       />
       <div className="flex-1 relative">
@@ -67,14 +67,14 @@ export const InsertPalette: React.FC = observer(() => {
   );
 });
 
-InsertPalette.displayName = "InsertPalette";
+InstancePalette.displayName = "InstancePalette";
 
 const ComponentThumbnails: React.FC<{
   foreignComponentManager: ForeignComponentManager;
   iframe: HTMLIFrameElement;
 }> = observer(({ foreignComponentManager, iframe }) => {
   const pages = projectState.project.pages.all;
-  const queryTester = new QueryTester(insertPaletteState.searchText);
+  const queryTester = new QueryTester(instancePaletteState.searchText);
 
   const sections = compact(
     pages.map((page) => {
