@@ -21,10 +21,15 @@ export interface Prop {
 }
 
 export interface ForeignComponent {
+  framework: "react"; // TODO: support other frameworks
   path: string; // path relative to project root e.g. "src/Button.tsx"
   name: string; // export name; e.g. "Button" ("default" for default export)
   props: Prop[];
-  component: React.ElementType;
+  createRenderer: (element: HTMLElement) => ForeignComponentRenderer;
+}
+
+export interface ForeignComponentRenderer {
+  render(props: Record<string, unknown>): Promise<void>;
 }
 
 export function foreignComponentKey(ref: { path: string; name: string }) {
@@ -44,22 +49,18 @@ export class ForeignComponentManager {
           ReactDOM: typeof ReactDOM;
           components: ForeignComponent[];
         }) => {
-          this.React = mod.React;
-          this.ReactDOM = mod.ReactDOM;
           for (const component of mod.components) {
             this.components.set(foreignComponentKey(component), component);
           }
         }
       );
-    makeObservable(this);
+    //makeObservable(this);
   }
 
   readonly window: Window;
   readonly components = observable.map<string, ForeignComponent>([], {
     deep: false,
   });
-  @observable.ref React: typeof React | undefined;
-  @observable.ref ReactDOM: typeof ReactDOM | undefined;
 
   get(ref: ForeignComponentRef): ForeignComponent | undefined {
     return this.components.get(foreignComponentKey(ref));

@@ -31,17 +31,23 @@ interface ForeignComponent {
 }
 
 interface ForeignComponentRenderer {
-  render(props: Record<string, unknown>): void;
+  render(props: Record<string, unknown>): Promise<void>;
 }
 
-class ReactRenderer {
+class ReactRenderer implements ForeignComponentRenderer {
   constructor(element: HTMLElement, Component: React.ElementType) {
     this.reactRoot = ReactDOM.createRoot(element);
     this.component = Component;
   }
 
   render(props: Record<string, unknown>) {
-    this.reactRoot.render(<this.component {...props} />);
+    return new Promise<void>((resolve) => {
+      this.reactRoot.render(
+        <div style={{ display: "contents" }} ref={() => resolve()}>
+          <this.component {...props} />
+        </div>
+      );
+    });
   }
 
   reactRoot: ReactDOM.Root;
