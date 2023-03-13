@@ -50,7 +50,7 @@ export class ForeignComponentManager {
           if (url.endsWith(".css")) {
             window.document.head.insertAdjacentHTML(
               "beforeend",
-              `<link rel="stylesheet" href="${url}">`
+              `<link rel="stylesheet" href=${JSON.stringify(url)}>`
             );
           } else {
             window
