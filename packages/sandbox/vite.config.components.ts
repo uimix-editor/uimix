@@ -18,4 +18,10 @@ export default defineConfig({
     },
     outDir: path.resolve(__filename, "../dist-components"),
   },
+
+  define: {
+    "process.env": {
+      NODE_ENV: "production",
+    },
+  },
 });
