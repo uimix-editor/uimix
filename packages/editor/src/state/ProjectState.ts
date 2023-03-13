@@ -6,25 +6,12 @@ import { Selectable } from "../models/Selectable";
 import { Node } from "../models/Node";
 import { getIncrementalUniqueName } from "../utils/Name";
 import { IFrameDataConnector } from "./IFrameDataConnector";
-import { blobToDataURL } from "../utils/Blob";
 
 export class ProjectState {
   constructor() {
     new IFrameDataConnector(this);
     this.project = new Project(this.doc);
-    // const page = this.project.nodes.create("page");
-    // page.name = "Page 1";
-    // this.project.node.append([page]);
-    // this.pageID = page.id;
     this.undoManager = this.project.createUndoManager();
-
-    // this.project.imageManager.uploadImage = async (blob) => {
-    //   // TODO: upload image
-    //   // return data URL
-    //   return blobToDataURL(blob);
-    // };
-
-    //generateExampleNodes(page);
     makeObservable(this);
   }
 
