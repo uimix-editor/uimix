@@ -31,6 +31,7 @@
     "@types/react": "18.0.28",
     "@types/react-dom": "18.0.11",
     "@uimix/typed-rpc": "workspace:*",
+    "@uimix/editor": "workspace:*",
     "aws-sdk": "^2.1332.0",
     "clsx": "^1.2.1",
     "eslint": "8.35.0",

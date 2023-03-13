@@ -8,7 +8,7 @@ import { RPC } from "@uimix/typed-rpc";
 import type {
   IRootToEditorRPCHandler,
   IEditorToRootRPCHandler,
-} from "../../../editor/src/state/IFrameDataConnector";
+} from "@uimix/editor/src/state/IFrameRPC";
 import { Icon } from "@iconify/react";
 import Link from "next/link";
 import { DoubleClickToEdit } from "./DoubleClickToEdit";

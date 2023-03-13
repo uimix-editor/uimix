@@ -55,8 +55,8 @@ export default function Documents() {
                 <button className="outline-none">
                   <img
                     className="rounded-full"
-                    src={session?.user?.image}
-                    alt={session?.user?.name}
+                    src={session?.user?.image ?? undefined}
+                    alt={session?.user?.name ?? undefined}
                     width={28}
                     height={28}
                   />

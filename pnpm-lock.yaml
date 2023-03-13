@@ -53,6 +53,7 @@ importers:
       '@types/node': 18.14.6
       '@types/react': 18.0.28
       '@types/react-dom': 18.0.11
+      '@uimix/editor': workspace:*
       '@uimix/typed-rpc': workspace:*
       autoprefixer: ^10.4.13
       aws-sdk: ^2.1332.0
@@ -95,6 +96,7 @@ importers:
       '@types/node': 18.14.6
       '@types/react': 18.0.28
       '@types/react-dom': 18.0.11
+      '@uimix/editor': link:../editor
       '@uimix/typed-rpc': link:../typed-rpc
       aws-sdk: 2.1332.0
       clsx: 1.2.1

@@ -4,21 +4,7 @@ import { parentWindowTarget } from "@uimix/typed-rpc/browser";
 import { RPC } from "@uimix/typed-rpc";
 import { ProjectState } from "./ProjectState";
 import { action } from "mobx";
-
-export interface IRootToEditorRPCHandler {
-  sync(data: Uint8Array): Promise<void>;
-  init(data: Uint8Array): Promise<void>;
-}
-
-export interface IEditorToRootRPCHandler {
-  ready(): Promise<void>;
-  update(data: Uint8Array): Promise<void>;
-  uploadImage(
-    hash: string,
-    contentType: string,
-    data: Uint8Array
-  ): Promise<string>;
-}
+import { IEditorToRootRPCHandler, IRootToEditorRPCHandler } from "./IFrameRPC";
 
 export class IFrameDataConnector {
   constructor(state: ProjectState) {
