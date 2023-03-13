@@ -6,10 +6,10 @@ import { Icon } from "@iconify/react";
 
 const shortcutClassNames = `text-macaron-disabledText text-macaron-base ml-auto pl-4`;
 
-const menuClassNames = `text-macaron-text text-macaron-base bg-macaron-background z-10 border border-macaron-separator rounded shadow-xl overflow-hidden py-1 outline-0`;
+const menuClassNames = `text-macaron-text text-macaron-base bg-macaron-background z-10 border border-macaron-separator rounded-lg shadow-xl overflow-hidden p-1 outline-0`;
 
 const itemClassNames =
-  "aria-disabled:text-macaron-disabledText h-6 outline-0 [&[data-active-item]]:bg-macaron-active [&[data-active-item]]:text-macaron-activeText pr-4 pl-6 flex items-center";
+  "aria-disabled:text-macaron-disabledText h-6 outline-0 rounded [&[data-active-item]]:bg-macaron-active [&[data-active-item]]:text-macaron-activeText pr-4 pl-6 flex items-center";
 
 function Submenu({ def }: { def: MenuSubmenuDef }) {
   const menu = AriakitMenu.useMenuState();
@@ -68,7 +68,7 @@ function MenuItem({ def }: { def: MenuItemDef }) {
       );
     case "separator":
       return (
-        <AriakitMenu.MenuSeparator className="my-1 border-macaron-separator" />
+        <AriakitMenu.MenuSeparator className="my-1 border-macaron-uiBackground" />
       );
     default:
       return null;
