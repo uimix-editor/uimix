@@ -231,7 +231,6 @@ importers:
       '@storybook/builder-vite': ^0.4.2
       '@storybook/react': ^6.5.16
       '@storybook/testing-library': ^0.0.13
-      '@thoughtbot/tailwindcss-aria-attributes': ^0.2.0
       '@trpc/client': ^10.15.0
       '@types/color-namer': ^1.3.0
       '@types/dedent': ^0.7.0
@@ -309,7 +308,6 @@ importers:
       '@radix-ui/react-toggle-group': 1.0.3_biqbaboplfbrettd7655fr4n2y
       '@radix-ui/react-tooltip': 1.0.5_zula6vjvt3wdocc4mwcxqa6nzi
       '@seanchas116/design-icons': 1.0.1
-      '@thoughtbot/tailwindcss-aria-attributes': 0.2.0
       '@trpc/client': 10.15.0
       '@uimix/node-data': link:../node-data
       '@uimix/typed-rpc': link:../typed-rpc
@@ -6039,10 +6037,6 @@ packages:
       '@babel/runtime': 7.21.0
       '@testing-library/dom': 8.20.0
     dev: true
-
-  /@thoughtbot/tailwindcss-aria-attributes/0.2.0:
-    resolution: {integrity: sha512-//4JaxWfNvz6K8b9NcwZP0h3lwH24ds318Z3g/TCgsus+VkkWovXTCd1SqRZ6Zg5T0WhtyeZ2Z8VNpFugVr6oQ==}
-    dev: false
 
   /@trpc/client/10.15.0:
     resolution: {integrity: sha512-Tmm3N7jibEOZTsvHRU+tWCVvUf8F9/UcKOVTGAWuyasBpnjOZ7ClZ81F9wo4cg9+9tUxUhuJns+E96/HtATpyQ==}

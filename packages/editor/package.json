@@ -30,7 +30,6 @@
     "@radix-ui/react-toggle-group": "^1.0.3",
     "@radix-ui/react-tooltip": "^1.0.5",
     "@seanchas116/design-icons": "^1.0.1",
-    "@thoughtbot/tailwindcss-aria-attributes": "^0.2.0",
     "@trpc/client": "^10.15.0",
     "@uimix/node-data": "workspace:*",
     "@uimix/typed-rpc": "workspace:*",
