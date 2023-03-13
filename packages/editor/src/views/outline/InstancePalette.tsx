@@ -154,7 +154,7 @@ const ComponentThumbnails: React.FC<{
           React Components
           <button
             style={{
-              color: colors.label,
+              color: colors.icon,
               background: "none",
               border: "none",
               cursor: "pointer",
