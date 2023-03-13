@@ -315,11 +315,7 @@ const ComponentThumbnail: React.FC<{
               height: "max-content",
             }}
           >
-            <ForeignComponentRenderer
-              component={component}
-              manager={foreignComponentManager}
-              props={{}}
-            />
+            <ForeignComponentRenderer component={component} props={{}} />
           </div>
         )}
       </ThumbnailResizer>
