@@ -6,12 +6,13 @@ import { Icon } from "@iconify/react";
 import { useState } from "react";
 import { IconButton } from "../../components/IconButton";
 import { Input } from "../../components/Input";
+import { projectState } from "../../state/ProjectState";
 
 export const ForeignComponentListDialog = observer(() => {
   const open = dialogState.foreignComponentListDialogOpen;
 
-  const [urls, setUrls] = useState<string[]>([]);
-  const [urlToAdd, setUrlToAdd] = useState<string>("");
+  const urls = [...projectState.project.componentURLs];
+  const [urlToAdd, setUrlToAdd] = useState("");
 
   return (
     <Dialog.Root
@@ -49,10 +50,10 @@ export const ForeignComponentListDialog = observer(() => {
               />
               <button
                 className="h-fit bg-blue-500 hover:bg-blue-700 text-white py-1.5 px-3 rounded flex items-center gap-1"
-                onClick={() => {
-                  setUrls([...urls, urlToAdd]);
+                onClick={action(() => {
+                  projectState.project.componentURLs.push([urlToAdd]);
                   setUrlToAdd("");
-                }}
+                })}
               >
                 Add
               </button>
@@ -63,9 +64,9 @@ export const ForeignComponentListDialog = observer(() => {
                   <p>{url}</p>
                   <IconButton
                     icon="material-symbols:remove"
-                    onClick={() => {
-                      setUrls(urls.filter((_, j) => j !== i));
-                    }}
+                    onClick={action(() => {
+                      projectState.project.componentURLs.delete(i);
+                    })}
                   />
                 </li>
               ))}

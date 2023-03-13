@@ -9,7 +9,7 @@ import { ProjectJSON } from "@uimix/node-data";
 import { toProjectJSON } from "./toProjectJSON";
 import { ImageManager } from "./ImageManager";
 import { Component } from "./Component";
-import { ObservableYMap } from "../utils/ObservableYMap";
+import { ObservableYArray } from "../utils/ObservableYArray";
 
 export interface PageHierarchyFolderEntry {
   type: "directory";
@@ -159,6 +159,7 @@ export class Project {
       this.doc.getMap("nodes"),
       this.doc.getMap("styles"),
       this.doc.getMap("selection"),
+      this.doc.getArray("componentURLs"),
     ]);
   }
 
@@ -195,5 +196,9 @@ export class Project {
     }
 
     return components;
+  }
+
+  get componentURLs(): ObservableYArray<string> {
+    return ObservableYArray.get(this.doc.getArray("componentURLs"));
   }
 }
