@@ -1,4 +1,4 @@
-import { makeObservable, observable } from "mobx";
+import { computed, makeObservable, observable } from "mobx";
 
 class DialogState {
   constructor() {
@@ -6,6 +6,10 @@ class DialogState {
   }
 
   @observable foreignComponentListDialogOpen = false;
+
+  @computed get isAnyOpen() {
+    return this.foreignComponentListDialogOpen;
+  }
 }
 
 export const dialogState = new DialogState();
