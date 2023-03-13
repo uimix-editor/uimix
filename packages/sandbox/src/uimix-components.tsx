@@ -32,6 +32,7 @@ interface ForeignComponent {
 
 interface ForeignComponentRenderer {
   render(props: Record<string, unknown>): Promise<void>;
+  dispose(): void;
 }
 
 class ReactRenderer implements ForeignComponentRenderer {
@@ -48,6 +49,10 @@ class ReactRenderer implements ForeignComponentRenderer {
         </div>
       );
     });
+  }
+
+  dispose() {
+    this.reactRoot.unmount();
   }
 
   reactRoot: ReactDOM.Root;

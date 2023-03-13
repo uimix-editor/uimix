@@ -30,6 +30,7 @@ export interface ForeignComponent {
 
 export interface ForeignComponentRenderer {
   render(props: Record<string, unknown>): Promise<void>;
+  dispose(): void;
 }
 
 export function foreignComponentKey(ref: { path: string; name: string }) {

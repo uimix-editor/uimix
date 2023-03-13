@@ -230,6 +230,9 @@ export const ForeignComponentRenderer: React.FC<{
 
     const renderer = component.createRenderer(elem);
     rendererRef.current = renderer;
+    return () => {
+      renderer.dispose();
+    };
   }, [component]);
 
   useEffect(() => {
