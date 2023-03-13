@@ -1,5 +1,7 @@
 import React from "react";
 import ReactDOM from "react-dom/client";
+import { Button } from "./stories/Button";
+import { Header } from "./stories/Header";
 
 // TODO: share type with ForeignComponentManager
 
@@ -52,13 +54,13 @@ export const components: ForeignComponent[] = [
         type: { type: "string" },
       },
     ],
-    component: (await import("./stories/Button")).Button,
+    component: Button,
   },
   {
     path: "src/stories/Header.tsx",
     name: "Header",
     props: [],
-    component: (await import("./stories/Header")).Header,
+    component: Header,
   },
 ];
 
