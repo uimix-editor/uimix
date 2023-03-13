@@ -41,8 +41,8 @@ export class IFrameDataConnector {
           generateExampleNodes(page);
           if (state.project.componentURLs.length === 0) {
             state.project.componentURLs.push([
-              "https://cdn.jsdelivr.net/gh/uimix-editor/uimix@c1b589ca/packages/sandbox/dist-components/components.js",
-              "https://cdn.jsdelivr.net/gh/uimix-editor/uimix@c1b589ca/packages/sandbox/dist-components/style.css",
+              "https://cdn.jsdelivr.net/gh/uimix-editor/uimix@ba0157d5/packages/sandbox/dist-components/components.js",
+              "https://cdn.jsdelivr.net/gh/uimix-editor/uimix@ba0157d5/packages/sandbox/dist-components/style.css",
             ]);
           }
         } else {
