@@ -30,7 +30,9 @@ export const ForeignComponentListDialog = observer(() => {
         "
         >
           <div className="flex justify-between items-center mb-4">
-            <Dialog.Title className="font-bold">React Components</Dialog.Title>
+            <Dialog.Title className="font-semibold">
+              React Components
+            </Dialog.Title>
             <Dialog.Close>
               <Icon icon="material-symbols:close" className="w-4 h-4" />
             </Dialog.Close>
