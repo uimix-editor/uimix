@@ -44,7 +44,7 @@ export const ForeignComponentListDialog = observer(() => {
           <div>
             <div className="flex justify-between items-center gap-2 mb-2">
               <input
-                className="block outline-0 w-full h-7 px-1.5 bg-macaron-uiBackground rounded focus:ring-1 ring-inset ring-macaron-active text-macaron-text text-macaron-base placeholder:text-macaron-disabledText aria-invalid:ring-macaron-red"
+                className="block outline-0 w-full h-7 px-1.5 bg-macaron-uiBackground rounded focus:ring-1 ring-inset ring-macaron-active text-macaron-text text-macaron-base placeholder:text-macaron-disabledText aria-invalid:ring-red-500"
                 placeholder="URL"
                 aria-invalid={!isURLValid}
                 value={urlToAdd}
@@ -53,7 +53,8 @@ export const ForeignComponentListDialog = observer(() => {
                 }}
               />
               <button
-                className="h-fit bg-blue-500 hover:bg-blue-700 text-white py-1.5 px-3 rounded flex items-center gap-1"
+                className="h-fit bg-blue-500 hover:bg-blue-700 disabled:bg-neutral-300 text-white py-1.5 px-3 rounded flex items-center gap-1 disabled:cursor-not-allowed"
+                disabled={!isURLValid}
                 onClick={action(() => {
                   projectState.project.componentURLs.push([urlToAdd]);
                   setUrlToAdd("");
