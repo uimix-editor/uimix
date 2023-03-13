@@ -1,7 +1,8 @@
 import { ForeignComponentRef } from "@uimix/node-data";
-import { observable } from "mobx";
+import { action, observable, reaction } from "mobx";
 import type React from "react";
 import type ReactDOM from "react-dom/client";
+import { projectState } from "../state/ProjectState";
 
 export type Type =
   | {
@@ -40,22 +41,33 @@ export function foreignComponentKey(ref: { path: string; name: string }) {
 export class ForeignComponentManager {
   constructor(window: Window) {
     this.window = window;
-    window
-      // @ts-ignore
-      // TODO: make source URL configurable
-      .eval(`import("http://localhost:5175/src/uimix-components.tsx")`)
-      .then(
-        async (mod: {
-          React: typeof React;
-          ReactDOM: typeof ReactDOM;
-          components: ForeignComponent[];
-        }) => {
-          for (const component of mod.components) {
-            this.components.set(foreignComponentKey(component), component);
-          }
+
+    reaction(
+      () => projectState.project.componentURLs.toArray(),
+      action((urls) => {
+        for (const url of urls) {
+          window
+            // @ts-ignore
+            // TODO: make source URL configurable
+            .eval(`import(${JSON.stringify(url)})`)
+            .then(
+              async (mod: {
+                React: typeof React;
+                ReactDOM: typeof ReactDOM;
+                components: ForeignComponent[];
+              }) => {
+                for (const component of mod.components) {
+                  this.components.set(
+                    foreignComponentKey(component),
+                    component
+                  );
+                }
+              }
+            );
         }
-      );
-    //makeObservable(this);
+      }),
+      { fireImmediately: true }
+    );
   }
 
   readonly window: Window;
