@@ -328,7 +328,7 @@ const ComponentThumbnail: React.FC<{
           bottom: 0,
           right: 0,
           textAlign: "center",
-          color: colors.label,
+          color: colors.text,
           fontSize: "12px",
           lineHeight: "16px",
           padding: "4px",
