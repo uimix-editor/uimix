@@ -157,7 +157,8 @@ export class Project {
   createUndoManager(): Y.UndoManager {
     return new Y.UndoManager([
       this.doc.getMap("nodes"),
-      this.doc.getMap("selectables"),
+      this.doc.getMap("styles"),
+      this.doc.getMap("selection"),
     ]);
   }
 
