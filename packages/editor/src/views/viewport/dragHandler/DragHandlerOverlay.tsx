@@ -4,7 +4,6 @@ import { DragHandler } from "./DragHandler";
 import { NodeClickMoveDragHandler } from "./NodeClickMoveDragHandler";
 import { NodeInsertDragHandler } from "./NodeInsertDragHandler";
 import { Selectable } from "../../../models/Selectable";
-import { usePointerStroke } from "../../../components/hooks/usePointerStroke";
 import { doubleClickInterval } from "../constants";
 import { nodePicker } from "../renderer/NodePicker";
 import { projectState } from "../../../state/ProjectState";
@@ -24,7 +23,7 @@ export const DragHandlerOverlay: React.FC = observer(
     const lastClickTimestampRef = useRef(0);
 
     const ref = useRef<HTMLDivElement>(null);
-    const dragHandlerRef = useRef<DragHandler | null>();
+    const dragHandlerRef = useRef<DragHandler | undefined>();
 
     useEffect(() => {
       const onPointerDown = (e: PointerEvent) => {
@@ -62,7 +61,7 @@ export const DragHandlerOverlay: React.FC = observer(
         }
 
         projectState.page?.selectable.deselect();
-        dragHandlerRef.current = null;
+        dragHandlerRef.current = undefined;
       };
       const onPointerMove = action((e: PointerEvent) => {
         if (e.buttons === 0) {
@@ -77,7 +76,7 @@ export const DragHandlerOverlay: React.FC = observer(
       });
       const onEnd = action((e: PointerEvent) => {
         dragHandlerRef.current?.end(e);
-        dragHandlerRef.current = null;
+        dragHandlerRef.current = undefined;
       });
       const onHover = action((e: PointerEvent) => {
         viewportState.hoveredSelectable = nodePicker.pick(e).default;
