@@ -85,3 +85,4 @@ pnpm dev
 - `EDITOR_URL`: The URL of the `editor` service
   - The editor URL should support wildcard subdomains to use separate domains for each document for security reasons (since it can load arbitrary JavaScript code)
   - When you specify `https://example.com`, the editor should be available at any subdomains (e.g., `https://{documentID}.example.com`)
+  - [How to set up wildcard subdomains on Vercel](https://vercel.com/blog/wildcard-domains)
