@@ -53,7 +53,7 @@ export const App = observer(function App() {
   return (
     <TooltipProvider>
       <FontLoader />
-      <div className="flex flex-col fixed top-0 left-0 w-full h-full text-macaron-base bg-macaron-background text-macaron-text select-none">
+      <div className="flex flex-col fixed top-10 left-0 w-full h-full text-macaron-base bg-macaron-background text-macaron-text select-none">
         <div className="flex flex-1">
           <OutlineSideBar />
           <div className="bg-macaron-separator w-px" />
