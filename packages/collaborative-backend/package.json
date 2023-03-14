@@ -6,7 +6,7 @@
   "keywords": [],
   "author": "",
   "type": "module",
-  "main": "index.js",
+  "main": "dist/index.js",
   "scripts": {
     "build": "run-z prisma:generate build:tsc build:esbuild",
     "build:esbuild": "node build.cjs",
@@ -15,7 +15,8 @@
     "dev:esbuild": "node build.cjs --watch",
     "dev:node-dev": "node-dev dist/index.js",
     "test": "echo \"Error: no test specified\" && exit 1",
-    "prisma:generate": "prisma generate"
+    "prisma:generate": "prisma generate",
+    "start": "node dist/index.js"
   },
   "dependencies": {
     "@hocuspocus/extension-database": "^1.1.1",
