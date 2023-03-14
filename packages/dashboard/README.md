@@ -80,6 +80,6 @@ pnpm dev
 ### Environment variables
 
 - The same as the `.env` description for local development, plus
-- `DATABASE_URL`: The URL of the MySQL database (we use PlanetScale)
+- `DATABASE_URL`: The URL of the MySQL database (we use PlanetScale, but you can use any MySQL-compatible database)
 - `COLLABORATIVE_BACKEND_URL`: The WebSocket URL of the `collaborative-backend` service (eg. `wss://example.com`)
 - `EDITOR_URL`: The URL of the `editor` service
