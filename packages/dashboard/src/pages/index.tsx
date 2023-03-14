@@ -109,8 +109,9 @@ export default function Home() {
                 </svg>
               </a>
             </h1>
-            <p className="text-center text-gray-500 mb-2">🚧 Pre-alpha</p>
-            <p className="text-red-500 text-sm text-center">
+            <p className="text-center text-red-500 mb-2">
+              🚧 Work-in-progress demo
+              <br />
               Data may be lost at any time. Do not use for production!
             </p>
           </div>
