@@ -62,7 +62,7 @@ class Connection extends TypedEmitter<{
       token: () => {
         return dynamicTrpc.collaborative.token.query();
       },
-      onAuthenticated: () => {
+      onSynced: () => {
         if (this.hocuspocusReady) {
           return;
         }
