@@ -26,7 +26,17 @@ export const DragHandlerOverlay: React.FC = observer(
     const dragHandlerRef = useRef<DragHandler | undefined>();
 
     useEffect(() => {
+      const element = ref.current;
+      if (!element) {
+        return;
+      }
+
       const onPointerDown = (e: PointerEvent) => {
+        if (e.button !== 0) {
+          return;
+        }
+        element.setPointerCapture(e.pointerId);
+
         const interval = e.timeStamp - lastClickTimestampRef.current;
         lastClickTimestampRef.current = e.timeStamp;
         const isDoubleClick = interval < doubleClickInterval;
@@ -75,6 +85,7 @@ export const DragHandlerOverlay: React.FC = observer(
         }
       });
       const onEnd = action((e: PointerEvent) => {
+        element.releasePointerCapture(e.pointerId);
         dragHandlerRef.current?.end(e);
         dragHandlerRef.current = undefined;
       });
@@ -88,26 +99,22 @@ export const DragHandlerOverlay: React.FC = observer(
         }
       });
 
-      const el = ref.current;
+      const rawPointerSupported = "onpointerrawupdate" in element;
+      element.addEventListener("pointerdown", onPointerDown);
+      element.addEventListener(
+        (rawPointerSupported ? "pointerrawupdate" : "pointermove") as never,
+        onPointerMove
+      );
+      element.addEventListener("pointerup", onEnd);
 
-      if (el) {
-        const rawPointerSupported = "onpointerrawupdate" in el;
-        el.addEventListener("pointerdown", onPointerDown);
-        el.addEventListener(
+      return () => {
+        element.removeEventListener("pointerdown", onPointerDown);
+        element.removeEventListener(
           (rawPointerSupported ? "pointerrawupdate" : "pointermove") as never,
           onPointerMove
         );
-        el.addEventListener("pointerup", onEnd);
-
-        return () => {
-          el.removeEventListener("pointerdown", onPointerDown);
-          el.removeEventListener(
-            (rawPointerSupported ? "pointerrawupdate" : "pointermove") as never,
-            onPointerMove
-          );
-          el.removeEventListener("pointerup", onEnd);
-        };
-      }
+        element.removeEventListener("pointerup", onEnd);
+      };
     }, []);
 
     const onContextMenu = action((e: React.MouseEvent) => {
