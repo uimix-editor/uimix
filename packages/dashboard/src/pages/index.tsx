@@ -107,7 +107,10 @@ export default function Home() {
                 />
               </svg>
             </h1>
-            <p className="text-center text-gray-500">🚧 Pre-alpha</p>
+            <p className="text-center text-gray-500 mb-2">🚧 Pre-alpha</p>
+            <p className="text-red-500 text-sm text-center">
+              Data may be lost at any time. Do not use for production!
+            </p>
           </div>
 
           <div className="flex flex-col">
