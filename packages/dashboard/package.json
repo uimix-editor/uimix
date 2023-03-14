@@ -3,7 +3,8 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "build": "next build",
+    "build:next": "next build",
+    "build": "run-z prisma:generate build:next",
     "dev": "run-z dev:docker-compose,dev:next",
     "dev:docker-compose": "docker-compose up",
     "dev:next": "next dev",
