@@ -90,14 +90,22 @@ export const DragHandlerOverlay: React.FC = observer(
       });
 
       const el = ref.current;
+
       if (el) {
+        const rawPointerSupported = "onpointerrawupdate" in el;
         el.addEventListener("pointerdown", onPointerDown);
-        el.addEventListener("pointerrawupdate", onPointerMove);
+        el.addEventListener(
+          (rawPointerSupported ? "pointerrawupdate" : "pointermove") as never,
+          onPointerMove
+        );
         el.addEventListener("pointerup", onEnd);
 
         return () => {
           el.removeEventListener("pointerdown", onPointerDown);
-          el.removeEventListener("pointerrawupdate", onPointerMove);
+          el.removeEventListener(
+            (rawPointerSupported ? "pointerrawupdate" : "pointermove") as never,
+            onPointerMove
+          );
           el.removeEventListener("pointerup", onEnd);
         };
       }
