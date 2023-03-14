@@ -57,7 +57,7 @@ class Connection extends TypedEmitter<{
     );
 
     this.provider = new HocuspocusProvider({
-      url: "ws://localhost:1234",
+      url: process.env.NEXT_PUBLIC_COLLABORATIVE_BACKEND_URL as string,
       name: documentId,
       token: () => {
         return dynamicTrpc.collaborative.token.query();
