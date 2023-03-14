@@ -1,5 +1,5 @@
 import { action } from "mobx";
-import React, { useRef } from "react";
+import React, { useEffect, useRef } from "react";
 import { DragHandler } from "./DragHandler";
 import { NodeClickMoveDragHandler } from "./NodeClickMoveDragHandler";
 import { NodeInsertDragHandler } from "./NodeInsertDragHandler";
@@ -23,17 +23,17 @@ export const DragHandlerOverlay: React.FC = observer(
   function DrdagHandlerOverlay() {
     const lastClickTimestampRef = useRef(0);
 
-    const pointerProps = usePointerStroke<
-      HTMLDivElement,
-      DragHandler | undefined
-    >({
-      onBegin: action((e: React.PointerEvent) => {
+    const ref = useRef<HTMLDivElement>(null);
+    const dragHandlerRef = useRef<DragHandler | null>();
+
+    useEffect(() => {
+      const onPointerDown = (e: PointerEvent) => {
         const interval = e.timeStamp - lastClickTimestampRef.current;
         lastClickTimestampRef.current = e.timeStamp;
         const isDoubleClick = interval < doubleClickInterval;
 
         const pickResult = nodePicker.pick(
-          e.nativeEvent,
+          e,
           isDoubleClick ? "doubleClick" : "click"
         );
 
@@ -41,7 +41,11 @@ export const DragHandlerOverlay: React.FC = observer(
         viewportState.focusedSelectable = undefined;
 
         if (viewportState.tool?.type === "insert") {
-          return new NodeInsertDragHandler(viewportState.tool.mode, pickResult);
+          dragHandlerRef.current = new NodeInsertDragHandler(
+            viewportState.tool.mode,
+            pickResult
+          );
+          return;
         }
 
         if (isDoubleClick) {
@@ -53,33 +57,51 @@ export const DragHandlerOverlay: React.FC = observer(
 
         const clickMove = NodeClickMoveDragHandler.create(pickResult);
         if (clickMove) {
-          return clickMove;
+          dragHandlerRef.current = clickMove;
+          return;
         }
 
         projectState.page?.selectable.deselect();
-      }),
-      onMove: action((e: React.PointerEvent, { initData: dragHandler }) => {
-        if (dragHandler) {
-          dragHandler.move(e.nativeEvent);
+        dragHandlerRef.current = null;
+      };
+      const onPointerMove = action((e: PointerEvent) => {
+        if (e.buttons === 0) {
+          onEnd(e);
         }
-      }),
-      onEnd: action((e: React.PointerEvent, { initData: dragHandler }) => {
-        if (dragHandler) {
-          dragHandler.end(e.nativeEvent);
+
+        if (dragHandlerRef.current) {
+          dragHandlerRef.current.move(e);
+        } else {
+          onHover(e);
         }
-      }),
-      onHover: action((e: React.PointerEvent) => {
-        viewportState.hoveredSelectable = nodePicker.pick(
-          e.nativeEvent
-        ).default;
+      });
+      const onEnd = action((e: PointerEvent) => {
+        dragHandlerRef.current?.end(e);
+        dragHandlerRef.current = null;
+      });
+      const onHover = action((e: PointerEvent) => {
+        viewportState.hoveredSelectable = nodePicker.pick(e).default;
         viewportState.resizeBoxVisible = true;
 
         snapper.clear();
         if (viewportState.tool?.type === "insert") {
           snapper.snapInsertPoint(scrollState.documentPosForEvent(e));
         }
-      }),
-    });
+      });
+
+      const el = ref.current;
+      if (el) {
+        el.addEventListener("pointerdown", onPointerDown);
+        el.addEventListener("pointerrawupdate", onPointerMove);
+        el.addEventListener("pointerup", onEnd);
+
+        return () => {
+          el.removeEventListener("pointerdown", onPointerDown);
+          el.removeEventListener("pointerrawupdate", onPointerMove);
+          el.removeEventListener("pointerup", onEnd);
+        };
+      }
+    }, []);
 
     const onContextMenu = action((e: React.MouseEvent) => {
       e.preventDefault();
@@ -111,8 +133,8 @@ export const DragHandlerOverlay: React.FC = observer(
 
     return (
       <div
+        ref={ref}
         className="absolute left-0 top-0 w-full h-full"
-        {...pointerProps}
         onContextMenu={onContextMenu}
         style={{
           cursor,
