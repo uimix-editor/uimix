@@ -121,6 +121,12 @@ const Editor: React.FC<{
 
   const isError = documentQuery.status === "error";
 
+  const editorSrc = process.env.NEXT_PUBLIC_EDITOR_URL?.replace(
+    "://",
+    // adds subdomain to the editor url
+    `://${documentId}.`
+  );
+
   return (
     <div className="fixed inset-0 w-full h-full text-neutral-800 flex flex-col text-xs">
       <div className="h-10 border-b border-neutral-200 relative flex items-center justify-center">
@@ -153,7 +159,7 @@ const Editor: React.FC<{
         <iframe
           ref={iframeRef}
           className="absolute inset-0 w-full h-full"
-          src={`http://${documentId}.editor.localhost:5173`}
+          src={editorSrc}
           allow="clipboard-read; clipboard-write"
         />
         {(loading || isError) && (
