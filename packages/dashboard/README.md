@@ -83,3 +83,5 @@ pnpm dev
 - `DATABASE_URL`: The URL of the MySQL database (we use PlanetScale, but you can use any MySQL-compatible database)
 - `COLLABORATIVE_BACKEND_URL`: The WebSocket URL of the `collaborative-backend` service (eg. `wss://example.com`)
 - `EDITOR_URL`: The URL of the `editor` service
+  - The editor URL should support wildcard subdomains to use separate domains for each document for security reasons (since it can load arbitrary JavaScript code)
+  - When you specify `https://example.com`, the editor should be available at any subdomains (e.g., `https://{documentID}.example.com`)
