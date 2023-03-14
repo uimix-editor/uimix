@@ -10,9 +10,10 @@
     "dev:next": "next dev",
     "lint": "next lint",
     "prisma:generate": "prisma generate",
-    "prisma:migrate-deploy": "prisma migrate deploy",
-    "prisma:migrate-dev": "prisma migrate dev",
+    "prisma:migrate:deploy": "prisma migrate deploy",
+    "prisma:migrate:dev": "prisma migrate dev",
     "prisma:studio": "prisma studio",
+    "prisma:db:push": "prisma db push",
     "start": "next start"
   },
   "dependencies": {
