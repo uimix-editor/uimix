@@ -8,6 +8,7 @@ import { viewportState } from "../../../state/ViewportState";
 import { ViewportEvent } from "./ViewportEvent";
 import { DragHandler } from "./DragHandler";
 import { assertNonNull } from "../../../utils/Assert";
+import { resizeWithBoundingBox } from "../../../services/Resize";
 
 export class NodeInFlowMoveDragHandler implements DragHandler {
   constructor(overrides: Selectable[], initPos: Vec2) {
@@ -17,16 +18,33 @@ export class NodeInFlowMoveDragHandler implements DragHandler {
 
     this.initPos = initPos;
     for (const o of overrides) {
-      this.targets.set(o, o.computedRect);
+      this.targets.set(o, { rect: o.computedRect, absolute: o.isAbsolute });
     }
+    const rects = [...this.targets.values()].map(({ rect }) => rect);
+    this.initWholeBBox = assertNonNull(Rect.union(...rects));
   }
 
   move(event: ViewportEvent): void {
     const offset = event.pos.sub(this.initPos);
-
-    viewportState.dragPreviewRects = [...this.targets.values()].map((rect) =>
-      rect.translate(offset)
+    const snappedRect = snapper.snapMoveRect(
+      this.initWholeBBox.translate(offset)
     );
+    const snappedOffset = snappedRect.topLeft.sub(this.initWholeBBox.topLeft);
+
+    // move absolute elements
+    for (const [target, { absolute, rect }] of this.targets) {
+      if (absolute) {
+        const newRect = rect.translate(snappedOffset);
+        resizeWithBoundingBox(target, newRect, {
+          x: true,
+          y: true,
+        });
+      }
+    }
+
+    viewportState.dragPreviewRects = [...this.targets.values()]
+      .filter(({ absolute }) => !absolute)
+      .map(({ rect }) => rect.translate(offset));
 
     const dst = findDropDestination(event, [...this.targets.keys()]);
     viewportState.dropDestination = dst;
@@ -42,12 +60,29 @@ export class NodeInFlowMoveDragHandler implements DragHandler {
       return;
     }
 
-    dst.parent.insertBefore(dst.ref, [...this.targets.keys()]);
+    const selectablesToInsert = [...this.targets]
+      .filter(([target, { absolute }]) => {
+        // do not move absolute elements that are already inside the destination
+        if (absolute && dst.parent === target.parent) {
+          return false;
+        }
+        return true;
+      })
+      .map(([target]) => target);
+
+    dst.parent.insertBefore(dst.ref, selectablesToInsert);
     projectState.undoManager.stopCapturing();
   }
 
   private readonly initPos: Vec2;
-  private readonly targets = new Map<Selectable, Rect>();
+  private readonly initWholeBBox: Rect;
+  private readonly targets = new Map<
+    Selectable,
+    {
+      rect: Rect;
+      absolute: boolean;
+    }
+  >();
 }
 
 export function findDropDestination(

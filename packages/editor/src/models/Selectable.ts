@@ -355,14 +355,14 @@ export class Selectable {
   }
 
   @computed get inFlowChildren(): Selectable[] {
-    return this.children.filter((child) => child.inFlow);
+    return this.children.filter((child) => !child.isAbsolute);
   }
 
-  @computed get inFlow(): boolean {
+  @computed get isAbsolute(): boolean {
     if (this.parent?.style.layout !== "none") {
-      return !this.style.absolute;
+      return this.style.absolute;
     }
-    return false;
+    return true;
   }
 
   createBefore(type: NodeType, next: Selectable | undefined): Selectable {

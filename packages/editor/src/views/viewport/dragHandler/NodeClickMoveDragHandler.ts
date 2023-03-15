@@ -1,7 +1,6 @@
 import { Vec2 } from "paintvec";
 import { DragHandler } from "./DragHandler";
 import { NodeInFlowMoveDragHandler } from "./NodeInFlowMoveDragHandler";
-import { NodeAbsoluteMoveDragHandler } from "./NodeAbsoluteMoveDragHandler";
 import { dragStartThreshold } from "../constants";
 import { ViewportEvent } from "./ViewportEvent";
 import { Selectable } from "../../../models/Selectable";
@@ -35,27 +34,10 @@ export class NodeClickMoveDragHandler implements DragHandler {
         return;
       }
 
-      const absoluteTargets: Selectable[] = [];
-      const inFlowTargets: Selectable[] = [];
-      for (const override of projectState.selectedSelectables) {
-        if (override.inFlow) {
-          inFlowTargets.push(override);
-        } else {
-          absoluteTargets.push(override);
-        }
-      }
-
-      if (absoluteTargets.length) {
-        this.handler = new NodeAbsoluteMoveDragHandler(
-          absoluteTargets,
-          this.initPos
-        );
-      } else if (inFlowTargets.length) {
-        this.handler = new NodeInFlowMoveDragHandler(
-          inFlowTargets,
-          this.initPos
-        );
-      }
+      this.handler = new NodeInFlowMoveDragHandler(
+        projectState.selectedSelectables,
+        this.initPos
+      );
     }
 
     this.handler?.move(event);
