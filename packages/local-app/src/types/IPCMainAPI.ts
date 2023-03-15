@@ -1,4 +1,7 @@
-import { LocalDocument, ProjectJSON } from "./LocalDocument";
+import {
+  LocalDocument,
+  ProjectJSON,
+} from "../../../editor/src/types/DesktopAPI";
 
 export interface IPCMainAPI {
   getLocalDocuments(): LocalDocument[];

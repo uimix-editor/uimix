@@ -1,4 +1,4 @@
-import { LocalDocument, ProjectJSON } from "./types/LocalDocument";
+import { LocalDocument, ProjectJSON } from "../../editor/src/types/DesktopAPI";
 import path from "path";
 
 const all: LocalDocument[] = [

@@ -5,10 +5,9 @@
 
 import { contextBridge, ipcRenderer } from "electron";
 import { IPCMainAPI } from "./types/IPCMainAPI";
-import { ProjectJSON } from "./types/LocalDocument";
-import { UIMixDesktopAPI } from "./types/UIMixDesktopAPI";
+import { ProjectJSON, DesktopAPI } from "../../editor/src/types/DesktopAPI";
 
-const api: UIMixDesktopAPI = {
+const api: DesktopAPI = {
   desktop: true,
   wait: async (ms: number) => {
     await new Promise((resolve) => setTimeout(resolve, ms));

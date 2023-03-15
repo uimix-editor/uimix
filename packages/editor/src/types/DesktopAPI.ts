@@ -1,6 +1,15 @@
-import { LocalDocument, ProjectJSON } from "./LocalDocument";
+import { ProjectJSON } from "@uimix/node-data/src/project";
 
-export interface UIMixDesktopAPI {
+export { ProjectJSON };
+
+export interface LocalDocument {
+  id: string;
+  name: string;
+  path: string;
+  updatedAt: number;
+}
+
+export interface DesktopAPI {
   desktop: true;
   wait(ms: number): Promise<void>;
   getLocalDocuments(): Promise<LocalDocument[]>;
