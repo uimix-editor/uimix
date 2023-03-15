@@ -5,7 +5,7 @@ import { DropDestination } from "../../../state/DropDestination";
 import { scrollState } from "../../../state/ScrollState";
 import { snapper } from "../../../state/Snapper";
 import { viewportState } from "../../../state/ViewportState";
-import { ViewportEvent } from "../renderer/NodePicker";
+import { ViewportEvent } from "./ViewportEvent";
 import { DragHandler } from "./DragHandler";
 import { assertNonNull } from "../../../utils/Assert";
 

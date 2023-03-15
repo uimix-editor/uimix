@@ -4,7 +4,7 @@ import { resizeWithBoundingBox } from "../../../services/Resize";
 import { projectState } from "../../../state/ProjectState";
 import { snapper } from "../../../state/Snapper";
 import { assertNonNull } from "../../../utils/Assert";
-import { ViewportEvent } from "../renderer/NodePicker";
+import { ViewportEvent } from "./ViewportEvent";
 import { DragHandler } from "./DragHandler";
 
 export class NodeAbsoluteMoveDragHandler implements DragHandler {

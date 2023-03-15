@@ -5,7 +5,7 @@ import { NodeClickMoveDragHandler } from "./NodeClickMoveDragHandler";
 import { NodeInsertDragHandler } from "./NodeInsertDragHandler";
 import { Selectable } from "../../../models/Selectable";
 import { doubleClickInterval } from "../constants";
-import { ViewportEvent } from "../renderer/NodePicker";
+import { ViewportEvent } from "./ViewportEvent";
 import { projectState } from "../../../state/ProjectState";
 import { snapper } from "../../../state/Snapper";
 import { commands } from "../../../state/Commands";

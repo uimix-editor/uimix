@@ -6,7 +6,7 @@ import { snapper } from "../../../state/Snapper";
 import { viewportState } from "../../../state/ViewportState";
 import { Color } from "../../../utils/Color";
 import { dragStartThreshold } from "../constants";
-import { ViewportEvent } from "../renderer/NodePicker";
+import { ViewportEvent } from "./ViewportEvent";
 import { DragHandler } from "./DragHandler";
 import { resizeWithBoundingBox } from "../../../services/Resize";
 import { action } from "mobx";

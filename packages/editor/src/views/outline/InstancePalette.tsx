@@ -23,7 +23,7 @@ import { Color } from "../../utils/Color";
 import { FontLoader } from "../viewport/renderer/FontLoader";
 import { dialogState } from "../../state/DialogState";
 import { ForeignComponent } from "../../types/ForeignComponent";
-import { ViewportEvent } from "../viewport/renderer/NodePicker";
+import { ViewportEvent } from "../viewport/dragHandler/ViewportEvent";
 
 class InstancePaletteState {
   constructor() {

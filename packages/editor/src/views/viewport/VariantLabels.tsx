@@ -9,7 +9,7 @@ import { Icon, IconifyIcon } from "@iconify/react";
 import { usePointerStroke } from "../../components/hooks/usePointerStroke";
 import { DragHandler } from "./dragHandler/DragHandler";
 import { NodeClickMoveDragHandler } from "./dragHandler/NodeClickMoveDragHandler";
-import { ViewportEvent } from "./renderer/NodePicker";
+import { ViewportEvent } from "./dragHandler/ViewportEvent";
 import { action } from "mobx";
 import { viewportState } from "../../state/ViewportState";
 import { DropdownMenu } from "../../components/Menu";

@@ -3,7 +3,7 @@ import { DragHandler } from "./DragHandler";
 import { NodeInFlowMoveDragHandler } from "./NodeInFlowMoveDragHandler";
 import { NodeAbsoluteMoveDragHandler } from "./NodeAbsoluteMoveDragHandler";
 import { dragStartThreshold } from "../constants";
-import { ViewportEvent } from "../renderer/NodePicker";
+import { ViewportEvent } from "./ViewportEvent";
 import { Selectable } from "../../../models/Selectable";
 import { projectState } from "../../../state/ProjectState";
 
