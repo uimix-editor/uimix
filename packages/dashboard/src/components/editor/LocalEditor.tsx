@@ -53,6 +53,7 @@ function loadProjectJSON(ydoc: Y.Doc, projectJSON: ProjectJSON): void {
   }
 }
 
+// TODO: garbage collect nodes/styles/images
 function toProjectJSON(ydoc: Y.Doc): ProjectJSON {
   return {
     nodes: ydoc.getMap("nodes").toJSON(),
