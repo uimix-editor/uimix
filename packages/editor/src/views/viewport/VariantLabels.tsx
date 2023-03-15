@@ -106,10 +106,6 @@ const ComponentLabel: React.FC<{
 }> = observer(function ComponentSection({ component }) {
   const rects = component.children.map((c) => c.computedRect);
   const bbox = Rect.union(...rects);
-  if (!bbox) {
-    return null;
-  }
-  const bboxInView = bbox.transform(scrollState.documentToViewport);
 
   const dragProps = usePointerStroke<Element, DragHandler | undefined>({
     onBegin: action((e) => {
@@ -134,6 +130,11 @@ const ComponentLabel: React.FC<{
   const onPointerLeave = action(() => {
     viewportState.hoveredSelectable = undefined;
   });
+
+  if (!bbox) {
+    return null;
+  }
+  const bboxInView = bbox.transform(scrollState.documentToViewport);
 
   return (
     <div
