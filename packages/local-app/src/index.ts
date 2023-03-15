@@ -50,16 +50,39 @@ app.on("activate", () => {
 // In this file you can include the rest of your app's specific main process
 // code. You can also put them in separate files and import them here.
 
-function handleIPC<T extends keyof IPCMainAPI>(
-  name: T,
-  handler: (
-    event: Electron.IpcMainInvokeEvent,
-    ...args: Parameters<IPCMainAPI[T]>
-  ) => Promise<ReturnType<IPCMainAPI[T]>>
-) {
-  ipcMain.handle(name, handler as any);
+function handleIPC(handler: {
+  [K in keyof IPCMainAPI]: (
+    ...args: Parameters<IPCMainAPI[K]>
+  ) => Promise<ReturnType<IPCMainAPI[K]>>;
+}) {
+  for (const key of Object.keys(handler)) {
+    ipcMain.handle(key, (e, ...args) => {
+      // @ts-ignore
+      return handler[key](...args);
+    });
+  }
 }
 
-handleIPC("getLocalDocuments", async (event) => {
-  return [];
+handleIPC({
+  getLocalDocuments: async () => {
+    return [];
+  },
+  createLocalDocument: async () => {
+    throw new Error("Not implemented");
+  },
+  addExistingLocalDocument: async () => {
+    throw new Error("Not implemented");
+  },
+  deleteLocalDocument: async () => {
+    throw new Error("Not implemented");
+  },
+  getLocalDocumentData: async (id) => {
+    throw new Error("Not implemented");
+  },
+  setLocalDocumentData: async (id, data) => {
+    throw new Error("Not implemented");
+  },
+  saveImage: async (data) => {
+    throw new Error("Not implemented");
+  },
 });
