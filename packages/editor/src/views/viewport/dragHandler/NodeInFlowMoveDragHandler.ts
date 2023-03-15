@@ -51,6 +51,12 @@ export class NodeInFlowMoveDragHandler implements DragHandler {
   }
 
   end(event: ViewportEvent): void {
+    const offset = event.pos.sub(this.initPos);
+    const snappedRect = snapper.snapMoveRect(
+      this.initWholeBBox.translate(offset)
+    );
+    const snappedOffset = snappedRect.topLeft.sub(this.initWholeBBox.topLeft);
+
     snapper.clear();
     viewportState.dragPreviewRects = [];
     viewportState.dropDestination = undefined;
@@ -60,17 +66,31 @@ export class NodeInFlowMoveDragHandler implements DragHandler {
       return;
     }
 
-    const selectablesToInsert = [...this.targets]
-      .filter(([target, { absolute }]) => {
+    const selectablesToInsert = [...this.targets].filter(
+      ([target, { absolute }]) => {
         // do not move absolute elements that are already inside the destination
         if (absolute && dst.parent === target.parent) {
           return false;
         }
         return true;
-      })
-      .map(([target]) => target);
+      }
+    );
 
-    dst.parent.insertBefore(dst.ref, selectablesToInsert);
+    dst.parent.insertBefore(
+      dst.ref,
+      selectablesToInsert.map(([target]) => target)
+    );
+
+    if (dst.parent.style.layout === "none") {
+      for (const [target, { rect }] of this.targets) {
+        const newRect = rect.translate(snappedOffset);
+        resizeWithBoundingBox(target, newRect, {
+          x: true,
+          y: true,
+        });
+      }
+    }
+
     projectState.undoManager.stopCapturing();
   }
 
