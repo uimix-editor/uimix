@@ -14,6 +14,8 @@ const all: LocalDocument[] = [
   },
 ];
 
+const jsonPath = path.resolve(__dirname, "../../sandbox/src/uimix/data.json");
+
 export class LocalDocumentRepository {
   getLocalDocuments(): LocalDocument[] {
     return all;
@@ -36,15 +38,11 @@ export class LocalDocumentRepository {
   }
 
   getLocalDocumentData(id: string): ProjectJSON {
-    const jsonPath = path.resolve(
-      __dirname,
-      "../../sandbox/src/uimix/data.json"
-    );
     return JSON.parse(fs.readFileSync(jsonPath, { encoding: "utf-8" }));
   }
 
   setLocalDocumentData(id: string, data: ProjectJSON): void {
-    return;
+    fs.writeFileSync(jsonPath, JSON.stringify(data, null, 2));
   }
 
   saveImage(data: Uint8Array): string {
