@@ -140,9 +140,16 @@ const DocumentCard = ({
                         "Are you sure you want to delete this document?"
                       );
                       if (ok) {
-                        await documentDeleteMutation.mutateAsync({
-                          id: document.data.id,
-                        });
+                        try {
+                          await documentDeleteMutation.mutateAsync({
+                            id: document.data.id,
+                          });
+                        } catch (err) {
+                          toastController.show({
+                            type: "error",
+                            message: "Failed to delete document",
+                          });
+                        }
                       }
                     }}
                     className="hover:bg-blue-500 rounded px-4 py-1 hover:text-white outline-none text-red-500"
