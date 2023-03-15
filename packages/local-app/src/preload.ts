@@ -36,7 +36,7 @@ const api: UIMixDesktopAPI = {
   },
 };
 
-contextBridge.exposeInMainWorld("myAPI", api);
+contextBridge.exposeInMainWorld("uimixDesktopAPI", api);
 
 function invoke<T extends keyof IPCMainAPI>(
   name: T,
