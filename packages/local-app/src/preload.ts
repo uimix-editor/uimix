@@ -22,6 +22,8 @@ interface UIMixDesktopAPI {
 
   getLocalDocumentData(id: string): Promise<Uint8Array>;
   setLocalDocumentData(id: string, data: Uint8Array): Promise<void>;
+
+  // TODO: store image
 }
 
 const api: UIMixDesktopAPI = {
