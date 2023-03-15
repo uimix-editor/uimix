@@ -22,3 +22,12 @@ export interface DesktopAPI {
 
   saveImage(data: Uint8Array): Promise<string>;
 }
+
+export function getDesktopAPI(): DesktopAPI | undefined {
+  if (typeof window === "undefined") {
+    return undefined;
+  }
+
+  // @ts-ignore
+  return window.uimixDesktopAPI;
+}
