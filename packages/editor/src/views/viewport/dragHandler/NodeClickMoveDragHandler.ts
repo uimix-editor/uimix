@@ -1,6 +1,6 @@
 import { Vec2 } from "paintvec";
 import { DragHandler } from "./DragHandler";
-import { NodeInFlowMoveDragHandler } from "./NodeInFlowMoveDragHandler";
+import { NodeMoveDragHandler } from "./NodeMoveDragHandler";
 import { dragStartThreshold } from "../constants";
 import { ViewportEvent } from "./ViewportEvent";
 import { Selectable } from "../../../models/Selectable";
@@ -34,7 +34,7 @@ export class NodeClickMoveDragHandler implements DragHandler {
         return;
       }
 
-      this.handler = new NodeInFlowMoveDragHandler(
+      this.handler = new NodeMoveDragHandler(
         projectState.selectedSelectables,
         this.initPos
       );

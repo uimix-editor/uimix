@@ -10,7 +10,7 @@ import { DragHandler } from "./DragHandler";
 import { assertNonNull } from "../../../utils/Assert";
 import { resizeWithBoundingBox } from "../../../services/Resize";
 
-export class NodeInFlowMoveDragHandler implements DragHandler {
+export class NodeMoveDragHandler implements DragHandler {
   constructor(overrides: Selectable[], initPos: Vec2) {
     if (!overrides.length) {
       throw new Error("No elements to move");
