@@ -7,4 +7,7 @@ import { contextBridge } from "electron";
 
 contextBridge.exposeInMainWorld("myAPI", {
   desktop: true,
+  wait: async (ms: number) => {
+    await new Promise((resolve) => setTimeout(resolve, ms));
+  },
 });
