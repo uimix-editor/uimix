@@ -3,6 +3,11 @@ import React from "react";
 import dynamic from "next/dynamic";
 import Head from "next/head";
 
+const LocalEditor = dynamic(
+  () => import("../../../components/editor/LocalEditor"),
+  { ssr: false }
+);
+
 const LocalDocument = () => {
   const router = useRouter();
   const { id } = router.query;
@@ -17,7 +22,7 @@ const LocalDocument = () => {
           }
       `}</style>
       </Head>
-      <>TODO</>
+      <LocalEditor documentId={id as string} />
     </>
   );
 };

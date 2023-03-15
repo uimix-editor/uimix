@@ -68,6 +68,9 @@ handleIPC({
   getLocalDocuments: async () => {
     return localDocumentRepository.getLocalDocuments();
   },
+  getLocalDocument: async (id) => {
+    return localDocumentRepository.getLocalDocument(id);
+  },
   createLocalDocument: async () => {
     return localDocumentRepository.createLocalDocument();
   },

@@ -15,6 +15,9 @@ const api: DesktopAPI = {
   getLocalDocuments: () => {
     return invoke("getLocalDocuments");
   },
+  getLocalDocument: (id) => {
+    return invoke("getLocalDocument", id);
+  },
   createLocalDocument: () => {
     return invoke("createLocalDocument");
   },

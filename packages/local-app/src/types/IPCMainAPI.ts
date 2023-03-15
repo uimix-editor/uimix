@@ -5,6 +5,7 @@ import {
 
 export interface IPCMainAPI {
   getLocalDocuments(): LocalDocument[];
+  getLocalDocument(id: string): LocalDocument | undefined;
   createLocalDocument(): LocalDocument | undefined;
   addExistingLocalDocument(): LocalDocument | undefined;
   deleteLocalDocument(id: string): void;

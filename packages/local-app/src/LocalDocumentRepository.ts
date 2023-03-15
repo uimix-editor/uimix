@@ -18,6 +18,10 @@ export class LocalDocumentRepository {
     return all;
   }
 
+  getLocalDocument(id: string): LocalDocument | undefined {
+    return all.find((doc) => doc.id === id);
+  }
+
   createLocalDocument(): LocalDocument | undefined {
     return undefined;
   }
