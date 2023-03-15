@@ -17,12 +17,49 @@ import {
   ProjectJSON,
 } from "../../types/DesktopAPI";
 
+// TODO: test
+
 function loadProjectJSON(ydoc: Y.Doc, projectJSON: ProjectJSON): void {
-  throw new Error("Not implemented");
+  // TODO: support overwrite
+
+  const nodes = ydoc.getMap("nodes");
+  for (const [id, json] of Object.entries(projectJSON.nodes)) {
+    const data = new Y.Map();
+    for (const [key, value] of Object.entries(json)) {
+      data.set(key, value);
+    }
+    nodes.set(id, data);
+  }
+
+  const selectables = ydoc.getMap("selectables");
+  for (const [id, json] of Object.entries(projectJSON.styles)) {
+    const data = new Y.Map();
+    for (const [key, value] of Object.entries(json)) {
+      data.set(key, value);
+    }
+    selectables.set(id, data);
+  }
+
+  const componentURLs = ydoc.getArray("componentURLs");
+  componentURLs.delete(0, componentURLs.length);
+  for (const url of projectJSON.componentURLs ?? []) {
+    componentURLs.push([url]);
+  }
+
+  const images = ydoc.getMap("images");
+  images.clear();
+  for (const [hash, url] of Object.entries(projectJSON.images ?? {})) {
+    images.set(hash, url);
+  }
 }
 
 function toProjectJSON(ydoc: Y.Doc): ProjectJSON {
-  throw new Error("Not implemented");
+  return {
+    nodes: ydoc.getMap("nodes").toJSON(),
+    styles: ydoc.getMap("styles").toJSON(),
+    componentURLs: ydoc.getArray("componentURLs").toJSON(),
+    images: ydoc.getMap("images").toJSON(),
+  };
 }
 
 class Connection extends TypedEmitter<{
