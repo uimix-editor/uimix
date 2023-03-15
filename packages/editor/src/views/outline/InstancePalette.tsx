@@ -9,7 +9,7 @@ import {
 } from "../viewport/renderer/NodeRenderer";
 import { usePointerStroke } from "../../components/hooks/usePointerStroke";
 import { scrollState } from "../../state/ScrollState";
-import { NodeAbsoluteMoveDragHandler } from "../viewport/dragHandler/NodeAbsoluteMoveDragHandler";
+import { NodeMoveDragHandler } from "../viewport/dragHandler/NodeMoveDragHandler";
 import { ReactNode, useRef, useState } from "react";
 import { DragHandler } from "../viewport/dragHandler/DragHandler";
 import { Vec2 } from "paintvec";
@@ -256,7 +256,7 @@ const ComponentThumbnail: React.FC<{
 
           status.current.creating = true;
           setTimeout(() => {
-            status.current.dragHandler = new NodeAbsoluteMoveDragHandler(
+            status.current.dragHandler = new NodeMoveDragHandler(
               [instanceNode.selectable],
               pos
             );

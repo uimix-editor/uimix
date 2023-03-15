@@ -8,31 +8,47 @@ import { viewportState } from "../../../state/ViewportState";
 import { ViewportEvent } from "./ViewportEvent";
 import { DragHandler } from "./DragHandler";
 import { assertNonNull } from "../../../utils/Assert";
+import { resizeWithBoundingBox } from "../../../services/Resize";
 
-export class NodeInFlowMoveDragHandler implements DragHandler {
-  constructor(overrides: Selectable[], initPos: Vec2) {
-    if (!overrides.length) {
+export class NodeMoveDragHandler implements DragHandler {
+  constructor(selectables: Selectable[], initPos: Vec2) {
+    if (!selectables.length) {
       throw new Error("No elements to move");
     }
 
     this.initPos = initPos;
-    for (const o of overrides) {
-      this.targets.set(o, o.computedRect);
+    for (const s of selectables) {
+      this.targets.set(s, { rect: s.computedRect, absolute: s.isAbsolute });
     }
+    const rects = [...this.targets.values()].map(({ rect }) => rect);
+    this.initWholeBBox = assertNonNull(Rect.union(...rects));
   }
 
   move(event: ViewportEvent): void {
-    const offset = event.pos.sub(this.initPos);
+    const offset = this.getSnappedOffset(event);
 
-    viewportState.dragPreviewRects = [...this.targets.values()].map((rect) =>
-      rect.translate(offset)
-    );
+    const dragPreviewRects: Rect[] = [];
+    for (const [target, { absolute, rect }] of this.targets) {
+      if (absolute) {
+        const newRect = rect.translate(offset);
+        resizeWithBoundingBox(target, newRect, {
+          x: true,
+          y: true,
+        });
+      } else {
+        dragPreviewRects.push(rect.translate(offset));
+      }
+    }
+    viewportState.dragPreviewRects = dragPreviewRects;
 
-    const dst = findDropDestination(event, [...this.targets.keys()]);
-    viewportState.dropDestination = dst;
+    viewportState.dropDestination = findDropDestination(event, [
+      ...this.targets.keys(),
+    ]);
   }
 
   end(event: ViewportEvent): void {
+    const offset = this.getSnappedOffset(event);
+
     snapper.clear();
     viewportState.dragPreviewRects = [];
     viewportState.dropDestination = undefined;
@@ -42,12 +58,52 @@ export class NodeInFlowMoveDragHandler implements DragHandler {
       return;
     }
 
-    dst.parent.insertBefore(dst.ref, [...this.targets.keys()]);
+    const selectablesToInsert = [...this.targets].filter(
+      ([target, { absolute }]) => {
+        // do not move absolute elements that are already inside the destination
+        if (absolute && dst.parent === target.parent) {
+          return false;
+        }
+        return true;
+      }
+    );
+
+    dst.parent.insertBefore(
+      dst.ref,
+      selectablesToInsert.map(([target]) => target)
+    );
+
+    if (dst.parent.style.layout === "none") {
+      for (const [target, { rect }] of this.targets) {
+        const newRect = rect.translate(offset);
+        resizeWithBoundingBox(target, newRect, {
+          x: true,
+          y: true,
+        });
+      }
+    }
+
     projectState.undoManager.stopCapturing();
   }
 
+  private getSnappedOffset(event: ViewportEvent) {
+    const offset = event.pos.sub(this.initPos);
+    const snappedRect = snapper.snapMoveRect(
+      this.initWholeBBox.translate(offset)
+    );
+    const snappedOffset = snappedRect.topLeft.sub(this.initWholeBBox.topLeft);
+    return snappedOffset;
+  }
+
   private readonly initPos: Vec2;
-  private readonly targets = new Map<Selectable, Rect>();
+  private readonly initWholeBBox: Rect;
+  private readonly targets = new Map<
+    Selectable,
+    {
+      rect: Rect;
+      absolute: boolean;
+    }
+  >();
 }
 
 export function findDropDestination(
