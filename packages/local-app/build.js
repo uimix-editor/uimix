@@ -10,7 +10,7 @@ const externals = [
 const options = {
   entryPoints: ["./src/index.ts", "./src/preload.ts"],
   bundle: true,
-  format: "esm",
+  format: "cjs",
   platform: "node",
   outdir: "dist",
   outbase: "src",
