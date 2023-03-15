@@ -11,6 +11,10 @@ function dropDestinationIndicator(
 ): [Vec2, Vec2] | undefined {
   const { parent, ref } = dst;
 
+  if (parent.style.layout === "none") {
+    return;
+  }
+
   const direction = parent.style.stackDirection;
   const inFlowChildren = parent.inFlowChildren;
 
