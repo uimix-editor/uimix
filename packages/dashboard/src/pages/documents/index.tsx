@@ -10,7 +10,16 @@ import Router from "next/router";
 import TimeAgo from "javascript-time-ago";
 import en from "javascript-time-ago/locale/en";
 import { getDesktopAPI, LocalDocument } from "../../types/DesktopAPI";
+import { twMerge } from "tailwind-merge";
 TimeAgo.addDefaultLocale(en);
+
+const dropdownContentClasses =
+  "bg-white border border-gray-200 rounded-lg p-1 text-xs outline-none shadow-xl";
+
+const dropdownItemClasses =
+  "hover:bg-blue-500 rounded px-4 py-1 hover:text-white outline-none";
+
+const dropdownSeparatorClasses = "my-1 border-gray-200 border-t";
 
 // TODO: move to layout?
 const Header = () => {
@@ -35,7 +44,7 @@ const Header = () => {
             <DropdownMenu.Content
               align="end"
               sideOffset={4}
-              className="bg-white border border-gray-200 rounded-lg p-1 text-xs outline-none shadow-xl"
+              className={dropdownContentClasses}
             >
               <DropdownMenu.Item
                 onClick={() => {
@@ -43,13 +52,13 @@ const Header = () => {
                     callbackUrl: "/",
                   });
                 }}
-                className="hover:bg-blue-500 rounded px-4 py-1 hover:text-white outline-none"
+                className={dropdownItemClasses}
               >
                 Sign Out
               </DropdownMenu.Item>
-              <DropdownMenu.Separator className="my-1 border-gray-200 border-t" />
+              <DropdownMenu.Separator className={dropdownSeparatorClasses} />
               <DropdownMenu.Item
-                className="hover:bg-blue-500 rounded px-4 py-1 hover:text-white outline-none"
+                className={dropdownItemClasses}
                 onClick={() => {
                   signIn("github", {
                     callbackUrl: "/documents",
@@ -59,7 +68,7 @@ const Header = () => {
                 Connect GitHub
               </DropdownMenu.Item>
               <DropdownMenu.Item
-                className="hover:bg-blue-500 rounded px-4 py-1 hover:text-white outline-none"
+                className={dropdownItemClasses}
                 onClick={() => {
                   signIn("google", {
                     callbackUrl: "/documents",
@@ -132,30 +141,57 @@ const DocumentCard = ({
                 <DropdownMenu.Content
                   align="end"
                   sideOffset={4}
-                  className="bg-white border border-gray-200 rounded-lg p-1 text-xs outline-none shadow-xl"
+                  className={dropdownContentClasses}
                 >
-                  <DropdownMenu.Item
-                    onClick={async () => {
-                      const ok = confirm(
-                        "Are you sure you want to delete this document?"
-                      );
-                      if (ok) {
-                        try {
-                          await documentDeleteMutation.mutateAsync({
-                            id: document.data.id,
-                          });
-                        } catch (err) {
+                  {document.type === "cloud" ? (
+                    <DropdownMenu.Item
+                      onClick={async () => {
+                        const ok = confirm(
+                          "Are you sure you want to delete this document?"
+                        );
+                        if (ok) {
+                          try {
+                            await documentDeleteMutation.mutateAsync({
+                              id: document.data.id,
+                            });
+                          } catch (err) {
+                            toastController.show({
+                              type: "error",
+                              message: "Failed to delete document",
+                            });
+                          }
+                        }
+                      }}
+                      className={twMerge(dropdownItemClasses, "text-red-500")}
+                    >
+                      Delete...
+                    </DropdownMenu.Item>
+                  ) : (
+                    <>
+                      <DropdownMenu.Item
+                        className={dropdownItemClasses}
+                        onClick={() => {
                           toastController.show({
                             type: "error",
-                            message: "Failed to delete document",
+                            message: "Not implemented yet",
                           });
-                        }
-                      }
-                    }}
-                    className="hover:bg-blue-500 rounded px-4 py-1 hover:text-white outline-none text-red-500"
-                  >
-                    Delete...
-                  </DropdownMenu.Item>
+                        }}
+                      >
+                        Reveal in Finder
+                      </DropdownMenu.Item>
+                      <DropdownMenu.Item
+                        className={dropdownItemClasses}
+                        onClick={() => {
+                          toastController.show({
+                            type: "error",
+                            message: "Not implemented yet",
+                          });
+                        }}
+                      >
+                        Remove from List
+                      </DropdownMenu.Item>
+                    </>
+                  )}
                 </DropdownMenu.Content>
               </DropdownMenu.Portal>
             </DropdownMenu.Root>
