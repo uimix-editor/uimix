@@ -7,9 +7,9 @@ import path from "path";
 const all: LocalDocument[] = [
   {
     id: "1",
-    name: "sandbox",
+    title: "sandbox",
     path: path.resolve(__dirname, "../../sandbox"),
-    updatedAt: Date.now(),
+    updatedAt: new Date().toString(),
   },
 ];
 

@@ -4,9 +4,9 @@ export { ProjectJSON };
 
 export interface LocalDocument {
   id: string;
-  name: string;
+  title: string;
   path: string;
-  updatedAt: number;
+  updatedAt: string;
 }
 
 export interface DesktopAPI {

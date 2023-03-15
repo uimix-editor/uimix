@@ -79,29 +79,43 @@ const Header = () => {
 const DocumentCard = ({
   document,
 }: {
-  document: {
-    id: string;
-    title: string;
-    updatedAt: string;
-  };
+  document:
+    | {
+        type: "cloud";
+        data: {
+          id: string;
+          title: string;
+          updatedAt: string;
+        };
+      }
+    | {
+        type: "local";
+        data: LocalDocument;
+      };
 }) => {
   const documentDeleteMutation = trpc.document.delete.useMutation();
 
   return (
     <li>
       <Link
-        href={`/documents/${document.id}`}
+        href={`/documents/${document.data.id}`}
         className="block border border-gray-200 rounded-lg hover:bg-gray-50 overflow-hidden"
       >
         <div className="aspect-video w-full bg-gray-100" />
         <div className="p-4 flex justify-between items-center">
           <div>
             <div className="text-sm text-gray-900 font-medium mb-1">
-              {document.title}
+              {document.data.title}
+
+              {document.type === "local" && (
+                <span className="text-xs text-amber-600 ml-2 bg-amber-100 p-0.5 px-1 rounded">
+                  Local
+                </span>
+              )}
             </div>
             <div className="text-gray-500">
               Edited{" "}
-              {new TimeAgo("en-US").format(Date.parse(document.updatedAt))}
+              {new TimeAgo("en-US").format(Date.parse(document.data.updatedAt))}
             </div>
           </div>
           <div onClick={(e) => e.stopPropagation()}>
@@ -127,7 +141,7 @@ const DocumentCard = ({
                       );
                       if (ok) {
                         await documentDeleteMutation.mutateAsync({
-                          id: document.id,
+                          id: document.data.id,
                         });
                       }
                     }}
@@ -206,7 +220,19 @@ export default function Documents() {
             </div>
             <ul className="grid grid-cols-3 gap-4">
               {documents.data?.map((document) => (
-                <DocumentCard key={document.id} document={document} />
+                <DocumentCard
+                  key={document.id}
+                  document={{ type: "cloud", data: document }}
+                />
+              ))}
+              {localDocuments.map((doc) => (
+                <DocumentCard
+                  key={doc.id}
+                  document={{
+                    type: "local",
+                    data: doc,
+                  }}
+                />
               ))}
             </ul>
           </div>
