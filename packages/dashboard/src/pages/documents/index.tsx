@@ -179,6 +179,9 @@ const DocumentCard = ({
                       >
                         Reveal in Finder
                       </DropdownMenu.Item>
+                      <DropdownMenu.Separator
+                        className={dropdownSeparatorClasses}
+                      />
                       <DropdownMenu.Item
                         className={dropdownItemClasses}
                         onClick={() => {
