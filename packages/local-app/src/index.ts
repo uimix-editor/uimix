@@ -1,5 +1,6 @@
 import { app, BrowserWindow, ipcMain } from "electron";
 import path from "path";
+import { localDocumentRepository } from "./LocalDocumentRepository";
 import { IPCMainAPI } from "./types/IPCMainAPI";
 
 // Handle creating/removing shortcuts on Windows when installing/uninstalling.
@@ -65,24 +66,24 @@ function handleIPC(handler: {
 
 handleIPC({
   getLocalDocuments: async () => {
-    return [];
+    return localDocumentRepository.getLocalDocuments();
   },
   createLocalDocument: async () => {
-    throw new Error("Not implemented");
+    return localDocumentRepository.createLocalDocument();
   },
   addExistingLocalDocument: async () => {
-    throw new Error("Not implemented");
+    return localDocumentRepository.addExistingLocalDocument();
   },
-  deleteLocalDocument: async () => {
-    throw new Error("Not implemented");
+  deleteLocalDocument: async (id) => {
+    return localDocumentRepository.deleteLocalDocument(id);
   },
   getLocalDocumentData: async (id) => {
-    throw new Error("Not implemented");
+    return localDocumentRepository.getLocalDocumentData(id);
   },
   setLocalDocumentData: async (id, data) => {
-    throw new Error("Not implemented");
+    return localDocumentRepository.setLocalDocumentData(id, data);
   },
   saveImage: async (data) => {
-    throw new Error("Not implemented");
+    return localDocumentRepository.saveImage(data);
   },
 });
