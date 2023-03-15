@@ -1,5 +1,6 @@
-import { app, BrowserWindow } from "electron";
+import { app, BrowserWindow, ipcMain } from "electron";
 import path from "path";
+import { IPCMainAPI } from "./types/IPCMainAPI";
 
 // Handle creating/removing shortcuts on Windows when installing/uninstalling.
 if (require("electron-squirrel-startup")) {
@@ -48,3 +49,17 @@ app.on("activate", () => {
 
 // In this file you can include the rest of your app's specific main process
 // code. You can also put them in separate files and import them here.
+
+function handleIPC<T extends keyof IPCMainAPI>(
+  name: T,
+  handler: (
+    event: Electron.IpcMainInvokeEvent,
+    ...args: Parameters<IPCMainAPI[T]>
+  ) => Promise<ReturnType<IPCMainAPI[T]>>
+) {
+  ipcMain.handle(name, handler as any);
+}
+
+handleIPC("getLocalDocuments", async (event) => {
+  return [];
+});

@@ -1,13 +1,13 @@
 import { LocalDocument } from "./LocalDocument";
 
 export interface IPCMainAPI {
-  getLocalDocuments(): Promise<LocalDocument[]>;
-  createLocalDocument(): Promise<LocalDocument | undefined>;
-  addExistingLocalDocument(): Promise<LocalDocument | undefined>;
-  deleteLocalDocument(id: string): Promise<void>;
+  getLocalDocuments(): LocalDocument[];
+  createLocalDocument(): LocalDocument | undefined;
+  addExistingLocalDocument(): LocalDocument | undefined;
+  deleteLocalDocument(id: string): void;
 
-  getLocalDocumentData(id: string): Promise<Uint8Array>;
-  setLocalDocumentData(id: string, data: Uint8Array): Promise<void>;
+  getLocalDocumentData(id: string): Uint8Array;
+  setLocalDocumentData(id: string, data: Uint8Array): void;
 
-  saveImage(data: Uint8Array): Promise<string>;
+  saveImage(data: Uint8Array): string;
 }

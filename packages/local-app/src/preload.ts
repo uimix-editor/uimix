@@ -40,6 +40,6 @@ contextBridge.exposeInMainWorld("myAPI", api);
 function invoke<T extends keyof IPCMainAPI>(
   name: T,
   ...args: Parameters<IPCMainAPI[T]>
-): ReturnType<IPCMainAPI[T]> {
-  return ipcRenderer.invoke(name, ...args) as ReturnType<IPCMainAPI[T]>;
+): Promise<ReturnType<IPCMainAPI[T]>> {
+  return ipcRenderer.invoke(name, ...args);
 }
