@@ -5,7 +5,7 @@
 
 import { contextBridge, ipcRenderer } from "electron";
 import { IPCMainAPI } from "./types/IPCMainAPI";
-import { ProjectJSON, DesktopAPI } from "../../editor/src/types/DesktopAPI";
+import { ProjectJSON, DesktopAPI } from "../../dashboard/src/types/DesktopAPI";
 
 const api: DesktopAPI = {
   desktop: true,
