@@ -76,22 +76,8 @@ export class NodePicker {
   // }
 }
 
-export class NodePickResult {
+export class ViewportEvent {
   constructor(
-    all: readonly Selectable[],
-    clientPos: Vec2,
-    pos: Vec2,
-    event: MouseEvent | DragEvent,
-    mode: "click" | "doubleClick"
-  ) {
-    this.all = all;
-    this.clientPos = clientPos;
-    this.pos = pos;
-    this.event = event;
-    this.mode = mode;
-  }
-
-  static create(
     event: MouseEvent | DragEvent,
     options: {
       all?: readonly Selectable[];
@@ -102,43 +88,43 @@ export class NodePickResult {
   ) {
     const clientPos =
       options.clientPos ?? new Vec2(event.clientX, event.clientY);
-    return new NodePickResult(
-      options.all ?? nodePicker.instancesFromPoint(clientPos.x, clientPos.y),
-      clientPos,
-      scrollState.documentPosForClientPos(clientPos),
-      event,
-      options.mode ?? "click"
-    );
+
+    this.selectables =
+      options.all ?? nodePicker.instancesFromPoint(clientPos.x, clientPos.y);
+    this.clientPos = clientPos;
+    this.pos = options.pos ?? scrollState.documentPosForClientPos(clientPos);
+    this.event = event;
+    this.mode = options.mode ?? "click";
   }
 
-  readonly all: readonly Selectable[];
+  readonly selectables: readonly Selectable[];
   readonly clientPos: Vec2;
   readonly pos: Vec2;
   readonly event: MouseEvent | DragEvent;
   readonly mode: "click" | "doubleClick";
 
-  get clickable(): Selectable | undefined {
-    const instance = this.all[0];
+  get clickableSelectable(): Selectable | undefined {
+    const instance = this.selectables[0];
     if (instance) {
       return clickableAncestor(instance, "click");
     }
   }
 
-  get doubleClickable(): Selectable | undefined {
-    const instance = this.all[0];
+  get doubleClickableSelectable(): Selectable | undefined {
+    const instance = this.selectables[0];
     if (instance) {
       return clickableAncestor(instance, "doubleClick");
     }
   }
 
-  get default(): Selectable | undefined {
+  get selectable(): Selectable | undefined {
     if (this.mode === "doubleClick") {
-      return this.doubleClickable;
+      return this.doubleClickableSelectable;
     }
 
     return this.event.metaKey || this.event.ctrlKey
-      ? this.all[0]
-      : this.clickable;
+      ? this.selectables[0]
+      : this.clickableSelectable;
   }
 }
 

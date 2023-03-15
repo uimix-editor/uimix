@@ -9,7 +9,7 @@ import { Icon, IconifyIcon } from "@iconify/react";
 import { usePointerStroke } from "../../components/hooks/usePointerStroke";
 import { DragHandler } from "./dragHandler/DragHandler";
 import { NodeClickMoveDragHandler } from "./dragHandler/NodeClickMoveDragHandler";
-import { NodePickResult } from "./renderer/NodePicker";
+import { ViewportEvent } from "./renderer/NodePicker";
 import { action } from "mobx";
 import { viewportState } from "../../state/ViewportState";
 import { DropdownMenu } from "../../components/Menu";
@@ -73,7 +73,7 @@ export const ComponentSections: React.FC = observer(function VariantLabels() {
 });
 
 class ComponentLabelDragHandler implements DragHandler {
-  constructor(event: NodePickResult, component: Selectable) {
+  constructor(event: ViewportEvent, component: Selectable) {
     this.initPos = event.pos;
     this.targets = component.children.map((c) => [c.computedRect, c]);
 
@@ -86,7 +86,7 @@ class ComponentLabelDragHandler implements DragHandler {
   initPos: Vec2;
   targets: [Rect, Selectable][];
 
-  move(event: NodePickResult) {
+  move(event: ViewportEvent) {
     const pos = event.pos;
     const offset = pos.sub(this.initPos);
 
@@ -117,15 +117,15 @@ const ComponentLabel: React.FC<{
         return;
       }
       return new ComponentLabelDragHandler(
-        NodePickResult.create(e.nativeEvent),
+        new ViewportEvent(e.nativeEvent),
         component
       );
     }),
     onMove: action((e, { initData: dragHandler }) => {
-      dragHandler?.move(NodePickResult.create(e.nativeEvent));
+      dragHandler?.move(new ViewportEvent(e.nativeEvent));
     }),
     onEnd: action((e, { initData: dragHandler }) => {
-      dragHandler?.end(NodePickResult.create(e.nativeEvent));
+      dragHandler?.end(new ViewportEvent(e.nativeEvent));
     }),
     onHover: action(() => {
       viewportState.hoveredSelectable = component;
@@ -181,21 +181,21 @@ const VariantLabel: React.FC<{
     onBegin: action((e) => {
       return new NodeClickMoveDragHandler(
         variantSelectable,
-        NodePickResult.create(e.nativeEvent, {
+        new ViewportEvent(e.nativeEvent, {
           all: [variantSelectable],
         })
       );
     }),
     onMove: action((e, { initData: dragHandler }) => {
       dragHandler?.move(
-        NodePickResult.create(e.nativeEvent, {
+        new ViewportEvent(e.nativeEvent, {
           all: [variantSelectable],
         })
       );
     }),
     onEnd: action((e, { initData: dragHandler }) => {
       dragHandler?.end(
-        NodePickResult.create(e.nativeEvent, {
+        new ViewportEvent(e.nativeEvent, {
           all: [variantSelectable],
         })
       );

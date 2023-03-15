@@ -23,7 +23,7 @@ import { Color } from "../../utils/Color";
 import { FontLoader } from "../viewport/renderer/FontLoader";
 import { dialogState } from "../../state/DialogState";
 import { ForeignComponent } from "../../types/ForeignComponent";
-import { NodePickResult } from "../viewport/renderer/NodePicker";
+import { ViewportEvent } from "../viewport/renderer/NodePicker";
 
 class InstancePaletteState {
   constructor() {
@@ -264,7 +264,7 @@ const ComponentThumbnail: React.FC<{
         }
       }
       status.current.dragHandler?.move(
-        NodePickResult.create(e.nativeEvent, {
+        new ViewportEvent(e.nativeEvent, {
           clientPos,
         })
       );
@@ -275,7 +275,7 @@ const ComponentThumbnail: React.FC<{
         const clientY = e.clientY + iframe.getBoundingClientRect().top;
 
         status.current.dragHandler.end(
-          NodePickResult.create(e.nativeEvent, {
+          new ViewportEvent(e.nativeEvent, {
             clientPos: new Vec2(clientX, clientY),
           })
         );

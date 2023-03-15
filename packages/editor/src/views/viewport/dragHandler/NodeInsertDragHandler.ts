@@ -6,21 +6,18 @@ import { snapper } from "../../../state/Snapper";
 import { viewportState } from "../../../state/ViewportState";
 import { Color } from "../../../utils/Color";
 import { dragStartThreshold } from "../constants";
-import { NodePickResult } from "../renderer/NodePicker";
+import { ViewportEvent } from "../renderer/NodePicker";
 import { DragHandler } from "./DragHandler";
 import { resizeWithBoundingBox } from "../../../services/Resize";
 import { action } from "mobx";
 import { assertNonNull } from "../../../utils/Assert";
 
 export class NodeInsertDragHandler implements DragHandler {
-  constructor(mode: InsertMode, pickResult: NodePickResult) {
+  constructor(mode: InsertMode, event: ViewportEvent) {
     this.mode = mode;
 
-    this.initClientPos = new Vec2(
-      pickResult.event.clientX,
-      pickResult.event.clientY
-    );
-    this.initPos = snapper.snapInsertPoint(pickResult.pos);
+    this.initClientPos = new Vec2(event.event.clientX, event.event.clientY);
+    this.initPos = snapper.snapInsertPoint(event.pos);
 
     if (!projectState.page) {
       const page = projectState.project.nodes.create("page");
@@ -30,7 +27,7 @@ export class NodeInsertDragHandler implements DragHandler {
     }
 
     const parent =
-      pickResult.default ?? assertNonNull(projectState.page).selectable;
+      event.selectable ?? assertNonNull(projectState.page).selectable;
 
     if (mode.type === "text") {
       const selectable = parent.append("text");
@@ -73,16 +70,16 @@ export class NodeInsertDragHandler implements DragHandler {
     this.instance.select();
   }
 
-  move(pickResult: NodePickResult): void {
+  move(event: ViewportEvent): void {
     if (
       !this.dragStarted &&
-      pickResult.clientPos.sub(this.initClientPos).length < dragStartThreshold
+      event.clientPos.sub(this.initClientPos).length < dragStartThreshold
     ) {
       return;
     }
     this.dragStarted = true;
 
-    const pos = snapper.snapResizePoint(pickResult.pos);
+    const pos = snapper.snapResizePoint(event.pos);
     const rect = Rect.boundingRect([pos, this.initPos]);
 
     resizeWithBoundingBox(this.instance, rect, {

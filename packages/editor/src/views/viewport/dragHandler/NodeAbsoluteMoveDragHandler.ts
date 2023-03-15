@@ -4,7 +4,7 @@ import { resizeWithBoundingBox } from "../../../services/Resize";
 import { projectState } from "../../../state/ProjectState";
 import { snapper } from "../../../state/Snapper";
 import { assertNonNull } from "../../../utils/Assert";
-import { NodePickResult } from "../renderer/NodePicker";
+import { ViewportEvent } from "../renderer/NodePicker";
 import { DragHandler } from "./DragHandler";
 
 export class NodeAbsoluteMoveDragHandler implements DragHandler {
@@ -16,8 +16,8 @@ export class NodeAbsoluteMoveDragHandler implements DragHandler {
     this.initPos = initPos;
   }
 
-  move(pickResult: NodePickResult): void {
-    const pos = pickResult.pos;
+  move(event: ViewportEvent): void {
+    const pos = event.pos;
     const offset = pos.sub(this.initPos);
 
     const snappedRect = snapper.snapMoveRect(
@@ -34,9 +34,9 @@ export class NodeAbsoluteMoveDragHandler implements DragHandler {
     }
   }
 
-  end(pickResult: NodePickResult): void {
-    const pos = pickResult.pos;
-    const overridesAtPos = pickResult.all;
+  end(event: ViewportEvent): void {
+    const pos = event.pos;
+    const overridesAtPos = event.selectables;
     const offset = pos.sub(this.initPos);
 
     const snappedRect = snapper.snapMoveRect(
