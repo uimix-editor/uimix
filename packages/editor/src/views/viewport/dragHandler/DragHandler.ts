@@ -1,4 +1,6 @@
+import { NodePickResult } from "../renderer/NodePicker";
+
 export interface DragHandler {
-  move(event: MouseEvent | DragEvent): void;
-  end(event: MouseEvent | DragEvent): void;
+  move(pickResult: NodePickResult): void;
+  end(pickResult: NodePickResult): void;
 }

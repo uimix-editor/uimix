@@ -2,7 +2,6 @@ import { Rect, Vec2 } from "paintvec";
 import { Selectable } from "../../../models/Selectable";
 import { projectState } from "../../../state/ProjectState";
 import { InsertMode } from "../../../state/InsertMode";
-import { scrollState } from "../../../state/ScrollState";
 import { snapper } from "../../../state/Snapper";
 import { viewportState } from "../../../state/ViewportState";
 import { Color } from "../../../utils/Color";
@@ -21,9 +20,7 @@ export class NodeInsertDragHandler implements DragHandler {
       pickResult.event.clientX,
       pickResult.event.clientY
     );
-    this.initPos = snapper.snapInsertPoint(
-      scrollState.documentPosForEvent(pickResult.event)
-    );
+    this.initPos = snapper.snapInsertPoint(pickResult.pos);
 
     if (!projectState.page) {
       const page = projectState.project.nodes.create("page");
@@ -76,17 +73,16 @@ export class NodeInsertDragHandler implements DragHandler {
     this.instance.select();
   }
 
-  move(event: MouseEvent | DragEvent): void {
-    const clientPos = new Vec2(event.clientX, event.clientY);
+  move(pickResult: NodePickResult): void {
     if (
       !this.dragStarted &&
-      clientPos.sub(this.initClientPos).length < dragStartThreshold
+      pickResult.clientPos.sub(this.initClientPos).length < dragStartThreshold
     ) {
       return;
     }
     this.dragStarted = true;
 
-    const pos = snapper.snapResizePoint(scrollState.documentPosForEvent(event));
+    const pos = snapper.snapResizePoint(pickResult.pos);
     const rect = Rect.boundingRect([pos, this.initPos]);
 
     resizeWithBoundingBox(this.instance, rect, {
@@ -97,8 +93,7 @@ export class NodeInsertDragHandler implements DragHandler {
     });
   }
 
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  end(event: MouseEvent | DragEvent): void {
+  end(): void {
     viewportState.tool = undefined;
     projectState.undoManager.stopCapturing();
   }

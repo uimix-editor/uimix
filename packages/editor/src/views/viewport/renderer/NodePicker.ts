@@ -46,7 +46,7 @@ function clickableAncestor(
 export class NodePicker {
   document: Document | undefined;
 
-  private instancesFromPoint(clientX: number, clientY: number): Selectable[] {
+  instancesFromPoint(clientX: number, clientY: number): Selectable[] {
     if (!this.document) {
       return [];
     }
@@ -61,33 +61,58 @@ export class NodePicker {
     ];
   }
 
-  pick(
-    event: MouseEvent | DragEvent,
-    mode: "click" | "doubleClick" = "click"
-  ): NodePickResult {
-    return new NodePickResult(
-      this.instancesFromPoint(event.clientX, event.clientY),
-      scrollState.documentPosForEvent(event),
-      event,
-      mode
-    );
-  }
+  // pick(
+  //   event: MouseEvent | DragEvent,
+  //   mode: "click" | "doubleClick" = "click",
+  //   clientPos = new Vec2(event.clientX, event.clientY)
+  // ): NodePickResult {
+  //   return new NodePickResult(
+  //     this.instancesFromPoint(clientPos.x, clientPos.y),
+  //     clientPos,
+  //     scrollState.documentPosForClientPos(clientPos),
+  //     event,
+  //     mode
+  //   );
+  // }
 }
 
 export class NodePickResult {
   constructor(
     all: readonly Selectable[],
+    clientPos: Vec2,
     pos: Vec2,
     event: MouseEvent | DragEvent,
     mode: "click" | "doubleClick"
   ) {
     this.all = all;
+    this.clientPos = clientPos;
     this.pos = pos;
     this.event = event;
     this.mode = mode;
   }
 
+  static create(
+    event: MouseEvent | DragEvent,
+    options: {
+      all?: readonly Selectable[];
+      clientPos?: Vec2;
+      pos?: Vec2;
+      mode?: "click" | "doubleClick";
+    } = {}
+  ) {
+    const clientPos =
+      options.clientPos ?? new Vec2(event.clientX, event.clientY);
+    return new NodePickResult(
+      options.all ?? nodePicker.instancesFromPoint(clientPos.x, clientPos.y),
+      clientPos,
+      scrollState.documentPosForClientPos(clientPos),
+      event,
+      options.mode ?? "click"
+    );
+  }
+
   readonly all: readonly Selectable[];
+  readonly clientPos: Vec2;
   readonly pos: Vec2;
   readonly event: MouseEvent | DragEvent;
   readonly mode: "click" | "doubleClick";

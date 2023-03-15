@@ -23,6 +23,7 @@ import { Color } from "../../utils/Color";
 import { FontLoader } from "../viewport/renderer/FontLoader";
 import { dialogState } from "../../state/DialogState";
 import { ForeignComponent } from "../../types/ForeignComponent";
+import { NodePickResult } from "../viewport/renderer/NodePicker";
 
 class InstancePaletteState {
   constructor() {
@@ -203,23 +204,14 @@ const ComponentThumbnail: React.FC<{
     onMove: (e, {}) => {
       const clientX = e.clientX + iframe.getBoundingClientRect().left;
       const clientY = e.clientY + iframe.getBoundingClientRect().top;
-
-      const proxiedEvent = new Proxy(e.nativeEvent, {
-        get(target, property) {
-          if (property === "clientX") return clientX;
-          if (property === "clientY") return clientY;
-
-          // @ts-ignore
-          return target[property];
-        },
-      });
+      const clientPos = new Vec2(clientX, clientY);
 
       if (!status.current.dragHandler && !status.current.creating) {
         const isInViewport = scrollState.viewportDOMClientRect.includes(
           new Vec2(clientX, clientY)
         );
         if (isInViewport) {
-          const pos = scrollState.documentPosForEvent(proxiedEvent);
+          const pos = scrollState.documentPosForClientPos(clientPos);
 
           const project = projectState.project;
           const page = projectState.page;
@@ -271,11 +263,22 @@ const ComponentThumbnail: React.FC<{
           }, 100); // TODO: avoid magic number
         }
       }
-      status.current.dragHandler?.move(proxiedEvent);
+      status.current.dragHandler?.move(
+        NodePickResult.create(e.nativeEvent, {
+          clientPos,
+        })
+      );
     },
     onEnd: (e) => {
       if (status.current.dragHandler) {
-        status.current.dragHandler.end(e.nativeEvent);
+        const clientX = e.clientX + iframe.getBoundingClientRect().left;
+        const clientY = e.clientY + iframe.getBoundingClientRect().top;
+
+        status.current.dragHandler.end(
+          NodePickResult.create(e.nativeEvent, {
+            clientPos: new Vec2(clientX, clientY),
+          })
+        );
         status.current.dragHandler = undefined;
       }
     },

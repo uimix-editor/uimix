@@ -3,7 +3,6 @@ import { DragHandler } from "./DragHandler";
 import { NodeInFlowMoveDragHandler } from "./NodeInFlowMoveDragHandler";
 import { NodeAbsoluteMoveDragHandler } from "./NodeAbsoluteMoveDragHandler";
 import { dragStartThreshold } from "../constants";
-import { scrollState } from "../../../state/ScrollState";
 import { NodePickResult } from "../renderer/NodePicker";
 import { Selectable } from "../../../models/Selectable";
 import { projectState } from "../../../state/ProjectState";
@@ -23,7 +22,7 @@ export class NodeClickMoveDragHandler implements DragHandler {
       pickResult.event.clientX,
       pickResult.event.clientY
     );
-    this.initPos = scrollState.documentPosForEvent(pickResult.event);
+    this.initPos = pickResult.pos;
     this.override = override;
     this.additive = pickResult.event.shiftKey;
 
@@ -35,10 +34,11 @@ export class NodeClickMoveDragHandler implements DragHandler {
     }
   }
 
-  move(event: MouseEvent | DragEvent): void {
+  move(pickResult: NodePickResult): void {
     if (!this.handler) {
-      const clientPos = new Vec2(event.clientX, event.clientY);
-      if (clientPos.sub(this.initClientPos).length < dragStartThreshold) {
+      if (
+        pickResult.clientPos.sub(this.initClientPos).length < dragStartThreshold
+      ) {
         return;
       }
 
@@ -65,11 +65,11 @@ export class NodeClickMoveDragHandler implements DragHandler {
       }
     }
 
-    this.handler?.move(event);
+    this.handler?.move(pickResult);
   }
 
-  end(event: MouseEvent | DragEvent): void {
-    this.handler?.end(event);
+  end(pickResult: NodePickResult): void {
+    this.handler?.end(pickResult);
     if (!this.handler) {
       // do click
       if (!this.additive) {

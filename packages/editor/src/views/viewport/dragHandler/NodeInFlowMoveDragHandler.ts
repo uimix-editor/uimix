@@ -5,7 +5,7 @@ import { DropDestination } from "../../../state/DropDestination";
 import { scrollState } from "../../../state/ScrollState";
 import { snapper } from "../../../state/Snapper";
 import { viewportState } from "../../../state/ViewportState";
-import { nodePicker, NodePickResult } from "../renderer/NodePicker";
+import { NodePickResult } from "../renderer/NodePicker";
 import { DragHandler } from "./DragHandler";
 import { assertNonNull } from "../../../utils/Assert";
 
@@ -21,9 +21,7 @@ export class NodeInFlowMoveDragHandler implements DragHandler {
     }
   }
 
-  move(event: MouseEvent | DragEvent): void {
-    const pickResult = nodePicker.pick(event);
-
+  move(pickResult: NodePickResult): void {
     const offset = pickResult.pos.sub(this.initPos);
 
     viewportState.dragPreviewRects = [...this.targets.values()].map((rect) =>
@@ -34,14 +32,12 @@ export class NodeInFlowMoveDragHandler implements DragHandler {
     viewportState.dropDestination = dst;
   }
 
-  end(event: MouseEvent | DragEvent): void {
+  end(pickResult: NodePickResult): void {
     snapper.clear();
     viewportState.dragPreviewRects = [];
     viewportState.dropDestination = undefined;
 
-    const dst = findDropDestination(nodePicker.pick(event), [
-      ...this.targets.keys(),
-    ]);
+    const dst = findDropDestination(pickResult, [...this.targets.keys()]);
     if (!dst) {
       return;
     }
