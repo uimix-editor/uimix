@@ -1,4 +1,4 @@
-import { ProjectJSON } from "@uimix/node-data/src/project";
+import type { ProjectJSON } from "@uimix/node-data/src/project";
 
 export { ProjectJSON };
 

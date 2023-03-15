@@ -4,11 +4,12 @@ import Head from "next/head";
 import Link from "next/link";
 import { trpc } from "../../utils/trpc";
 import * as DropdownMenu from "@radix-ui/react-dropdown-menu";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { toastController } from "../../components/toast/ToastController";
 import Router from "next/router";
 import TimeAgo from "javascript-time-ago";
 import en from "javascript-time-ago/locale/en";
+import { getDesktopAPI, LocalDocument } from "../../types/DesktopAPI";
 TimeAgo.addDefaultLocale(en);
 
 export default function Documents() {
@@ -41,6 +42,17 @@ export default function Documents() {
       });
     }
   }, [isError]);
+
+  const [localDocuments, setLocalDocuments] = useState<LocalDocument[]>([]);
+  useEffect(() => {
+    getDesktopAPI()
+      ?.getLocalDocuments()
+      .then((docs) => {
+        setLocalDocuments(docs);
+      });
+  }, []);
+
+  console.log(localDocuments);
 
   return (
     <>
