@@ -12,11 +12,142 @@ import en from "javascript-time-ago/locale/en";
 import { getDesktopAPI, LocalDocument } from "../../types/DesktopAPI";
 TimeAgo.addDefaultLocale(en);
 
-export default function Documents() {
+// TODO: move to layout?
+const Header = () => {
   const session = useSession().data;
+
+  return (
+    <div className="border-b border-neutral-200 relative">
+      <div className="max-w-[960px] h-10 mx-auto flex items-center justify-end">
+        <DropdownMenu.Root>
+          <DropdownMenu.Trigger asChild>
+            <button className="outline-none">
+              <img
+                className="rounded-full"
+                src={session?.user?.image ?? undefined}
+                alt={session?.user?.name ?? undefined}
+                width={28}
+                height={28}
+              />
+            </button>
+          </DropdownMenu.Trigger>
+          <DropdownMenu.Portal>
+            <DropdownMenu.Content
+              align="end"
+              sideOffset={4}
+              className="bg-white border border-gray-200 rounded-lg p-1 text-xs outline-none shadow-xl"
+            >
+              <DropdownMenu.Item
+                onClick={() => {
+                  signOut({
+                    callbackUrl: "/",
+                  });
+                }}
+                className="hover:bg-blue-500 rounded px-4 py-1 hover:text-white outline-none"
+              >
+                Sign Out
+              </DropdownMenu.Item>
+              <DropdownMenu.Separator className="my-1 border-gray-200 border-t" />
+              <DropdownMenu.Item
+                className="hover:bg-blue-500 rounded px-4 py-1 hover:text-white outline-none"
+                onClick={() => {
+                  signIn("github", {
+                    callbackUrl: "/documents",
+                  });
+                }}
+              >
+                Connect GitHub
+              </DropdownMenu.Item>
+              <DropdownMenu.Item
+                className="hover:bg-blue-500 rounded px-4 py-1 hover:text-white outline-none"
+                onClick={() => {
+                  signIn("google", {
+                    callbackUrl: "/documents",
+                  });
+                }}
+              >
+                Connect Google
+              </DropdownMenu.Item>
+            </DropdownMenu.Content>
+          </DropdownMenu.Portal>
+        </DropdownMenu.Root>
+      </div>
+    </div>
+  );
+};
+
+const DocumentCard = ({
+  document,
+}: {
+  document: {
+    id: string;
+    title: string;
+    updatedAt: string;
+  };
+}) => {
+  const documentDeleteMutation = trpc.document.delete.useMutation();
+
+  return (
+    <li>
+      <Link
+        href={`/documents/${document.id}`}
+        className="block border border-gray-200 rounded-lg hover:bg-gray-50 overflow-hidden"
+      >
+        <div className="aspect-video w-full bg-gray-100" />
+        <div className="p-4 flex justify-between items-center">
+          <div>
+            <div className="text-sm text-gray-900 font-medium mb-1">
+              {document.title}
+            </div>
+            <div className="text-gray-500">
+              Edited{" "}
+              {new TimeAgo("en-US").format(Date.parse(document.updatedAt))}
+            </div>
+          </div>
+          <div onClick={(e) => e.stopPropagation()}>
+            <DropdownMenu.Root>
+              <DropdownMenu.Trigger asChild>
+                <button className="p-2 hover:bg-gray-100 aria-expanded:bg-gray-100 rounded outline-none">
+                  <Icon
+                    icon="material-symbols:more-vert"
+                    className="text-base"
+                  />
+                </button>
+              </DropdownMenu.Trigger>
+              <DropdownMenu.Portal>
+                <DropdownMenu.Content
+                  align="end"
+                  sideOffset={4}
+                  className="bg-white border border-gray-200 rounded-lg p-1 text-xs outline-none shadow-xl"
+                >
+                  <DropdownMenu.Item
+                    onClick={async () => {
+                      const ok = confirm(
+                        "Are you sure you want to delete this document?"
+                      );
+                      if (ok) {
+                        await documentDeleteMutation.mutateAsync({
+                          id: document.id,
+                        });
+                      }
+                    }}
+                    className="hover:bg-blue-500 rounded px-4 py-1 hover:text-white outline-none text-red-500"
+                  >
+                    Delete...
+                  </DropdownMenu.Item>
+                </DropdownMenu.Content>
+              </DropdownMenu.Portal>
+            </DropdownMenu.Root>
+          </div>
+        </div>
+      </Link>
+    </li>
+  );
+};
+
+export default function Documents() {
   const documents = trpc.document.all.useQuery();
   const documentCreateMutation = trpc.document.create.useMutation();
-  const documentDeleteMutation = trpc.document.delete.useMutation();
 
   const onAddClick = async () => {
     try {
@@ -60,62 +191,7 @@ export default function Documents() {
         <title>Documents</title>
       </Head>
       <div className="text-xs">
-        <div className="border-b border-neutral-200 relative">
-          <div className="max-w-[960px] h-10 mx-auto flex items-center justify-end">
-            <DropdownMenu.Root>
-              <DropdownMenu.Trigger asChild>
-                <button className="outline-none">
-                  <img
-                    className="rounded-full"
-                    src={session?.user?.image ?? undefined}
-                    alt={session?.user?.name ?? undefined}
-                    width={28}
-                    height={28}
-                  />
-                </button>
-              </DropdownMenu.Trigger>
-              <DropdownMenu.Portal>
-                <DropdownMenu.Content
-                  align="end"
-                  sideOffset={4}
-                  className="bg-white border border-gray-200 rounded-lg p-1 text-xs outline-none shadow-xl"
-                >
-                  <DropdownMenu.Item
-                    onClick={() => {
-                      signOut({
-                        callbackUrl: "/",
-                      });
-                    }}
-                    className="hover:bg-blue-500 rounded px-4 py-1 hover:text-white outline-none"
-                  >
-                    Sign Out
-                  </DropdownMenu.Item>
-                  <DropdownMenu.Separator className="my-1 border-gray-200 border-t" />
-                  <DropdownMenu.Item
-                    className="hover:bg-blue-500 rounded px-4 py-1 hover:text-white outline-none"
-                    onClick={() => {
-                      signIn("github", {
-                        callbackUrl: "/documents",
-                      });
-                    }}
-                  >
-                    Connect GitHub
-                  </DropdownMenu.Item>
-                  <DropdownMenu.Item
-                    className="hover:bg-blue-500 rounded px-4 py-1 hover:text-white outline-none"
-                    onClick={() => {
-                      signIn("google", {
-                        callbackUrl: "/documents",
-                      });
-                    }}
-                  >
-                    Connect Google
-                  </DropdownMenu.Item>
-                </DropdownMenu.Content>
-              </DropdownMenu.Portal>
-            </DropdownMenu.Root>
-          </div>
-        </div>
+        <Header />
         <main className="px-4 pb-8">
           <div className="max-w-[960px] mx-auto">
             <div className="flex justify-between items-center">
@@ -130,62 +206,7 @@ export default function Documents() {
             </div>
             <ul className="grid grid-cols-3 gap-4">
               {documents.data?.map((document) => (
-                <li key={document.id}>
-                  <Link
-                    href={`/documents/${document.id}`}
-                    className="block border border-gray-200 rounded-lg hover:bg-gray-50 overflow-hidden"
-                  >
-                    <div className="aspect-video w-full bg-gray-100" />
-                    <div className="p-4 flex justify-between items-center">
-                      <div>
-                        <div className="text-sm text-gray-900 font-medium mb-1">
-                          {document.title}
-                        </div>
-                        <div className="text-gray-500">
-                          Edited{" "}
-                          {new TimeAgo("en-US").format(
-                            Date.parse(document.updatedAt)
-                          )}
-                        </div>
-                      </div>
-                      <div onClick={(e) => e.stopPropagation()}>
-                        <DropdownMenu.Root>
-                          <DropdownMenu.Trigger asChild>
-                            <button className="p-2 hover:bg-gray-100 aria-expanded:bg-gray-100 rounded outline-none">
-                              <Icon
-                                icon="material-symbols:more-vert"
-                                className="text-base"
-                              />
-                            </button>
-                          </DropdownMenu.Trigger>
-                          <DropdownMenu.Portal>
-                            <DropdownMenu.Content
-                              align="end"
-                              sideOffset={4}
-                              className="bg-white border border-gray-200 rounded-lg p-1 text-xs outline-none shadow-xl"
-                            >
-                              <DropdownMenu.Item
-                                onClick={async () => {
-                                  const ok = confirm(
-                                    "Are you sure you want to delete this document?"
-                                  );
-                                  if (ok) {
-                                    await documentDeleteMutation.mutateAsync({
-                                      id: document.id,
-                                    });
-                                  }
-                                }}
-                                className="hover:bg-blue-500 rounded px-4 py-1 hover:text-white outline-none text-red-500"
-                              >
-                                Delete...
-                              </DropdownMenu.Item>
-                            </DropdownMenu.Content>
-                          </DropdownMenu.Portal>
-                        </DropdownMenu.Root>
-                      </div>
-                    </div>
-                  </Link>
-                </li>
+                <DocumentCard key={document.id} document={document} />
               ))}
             </ul>
           </div>
