@@ -4,6 +4,15 @@ import {
 } from "../../dashboard/src/types/DesktopAPI";
 import path from "path";
 import fs from "fs";
+import prettier from "prettier/standalone";
+import parserBabel from "prettier/parser-babel";
+
+function formatJSON(text: string): string {
+  return prettier.format(text, {
+    parser: "json",
+    plugins: [parserBabel],
+  });
+}
 
 const all: LocalDocument[] = [
   {
@@ -38,11 +47,12 @@ export class LocalDocumentRepository {
   }
 
   getLocalDocumentData(id: string): ProjectJSON {
+    // TODO: error handling
     return JSON.parse(fs.readFileSync(jsonPath, { encoding: "utf-8" }));
   }
 
   setLocalDocumentData(id: string, data: ProjectJSON): void {
-    fs.writeFileSync(jsonPath, JSON.stringify(data, null, 2));
+    fs.writeFileSync(jsonPath, formatJSON(JSON.stringify(data)));
   }
 
   saveImage(data: Uint8Array): string {
