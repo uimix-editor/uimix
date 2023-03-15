@@ -3,31 +3,25 @@ import { DragHandler } from "./DragHandler";
 import { NodeInFlowMoveDragHandler } from "./NodeInFlowMoveDragHandler";
 import { NodeAbsoluteMoveDragHandler } from "./NodeAbsoluteMoveDragHandler";
 import { dragStartThreshold } from "../constants";
-import { scrollState } from "../../../state/ScrollState";
-import { NodePickResult } from "../renderer/NodePicker";
+import { ViewportEvent } from "./ViewportEvent";
 import { Selectable } from "../../../models/Selectable";
 import { projectState } from "../../../state/ProjectState";
 
 export class NodeClickMoveDragHandler implements DragHandler {
-  static create(
-    pickResult: NodePickResult
-  ): NodeClickMoveDragHandler | undefined {
-    const override = pickResult.default;
+  static create(event: ViewportEvent): NodeClickMoveDragHandler | undefined {
+    const override = event.selectable;
     if (override) {
-      return new NodeClickMoveDragHandler(override, pickResult);
+      return new NodeClickMoveDragHandler(override, event);
     }
   }
 
-  constructor(override: Selectable, pickResult: NodePickResult) {
-    this.initClientPos = new Vec2(
-      pickResult.event.clientX,
-      pickResult.event.clientY
-    );
-    this.initPos = scrollState.documentPosForEvent(pickResult.event);
+  constructor(override: Selectable, event: ViewportEvent) {
+    this.initClientPos = new Vec2(event.event.clientX, event.event.clientY);
+    this.initPos = event.pos;
     this.override = override;
-    this.additive = pickResult.event.shiftKey;
+    this.additive = event.event.shiftKey;
 
-    if (pickResult.all.every((o) => !o.ancestorSelected)) {
+    if (event.selectables.every((o) => !o.ancestorSelected)) {
       if (!this.additive) {
         projectState.page?.selectable.deselect();
       }
@@ -35,10 +29,9 @@ export class NodeClickMoveDragHandler implements DragHandler {
     }
   }
 
-  move(event: MouseEvent | DragEvent): void {
+  move(event: ViewportEvent): void {
     if (!this.handler) {
-      const clientPos = new Vec2(event.clientX, event.clientY);
-      if (clientPos.sub(this.initClientPos).length < dragStartThreshold) {
+      if (event.clientPos.sub(this.initClientPos).length < dragStartThreshold) {
         return;
       }
 
@@ -68,7 +61,7 @@ export class NodeClickMoveDragHandler implements DragHandler {
     this.handler?.move(event);
   }
 
-  end(event: MouseEvent | DragEvent): void {
+  end(event: ViewportEvent): void {
     this.handler?.end(event);
     if (!this.handler) {
       // do click

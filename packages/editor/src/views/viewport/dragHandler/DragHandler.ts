@@ -1,4 +1,6 @@
+import { ViewportEvent } from "./ViewportEvent";
+
 export interface DragHandler {
-  move(event: MouseEvent | DragEvent): void;
-  end(event: MouseEvent | DragEvent): void;
+  move(event: ViewportEvent): void;
+  end(event: ViewportEvent): void;
 }

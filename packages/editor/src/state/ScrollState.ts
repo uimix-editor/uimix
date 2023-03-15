@@ -112,8 +112,8 @@ export class ScrollState {
       .add(this.viewportSize.mulScalar(0.5));
   }
 
-  documentPosForEvent(e: { clientX: number; clientY: number }): Vec2 {
-    return new Vec2(e.clientX, e.clientY)
+  documentPosForClientPos(clientPos: Vec2): Vec2 {
+    return clientPos
       .sub(this.viewportDOMClientRect.topLeft)
       .transform(this.viewportToDocument).round;
   }

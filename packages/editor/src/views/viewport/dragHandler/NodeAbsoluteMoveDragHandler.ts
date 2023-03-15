@@ -2,10 +2,9 @@ import { Rect, Vec2 } from "paintvec";
 import { Selectable } from "../../../models/Selectable";
 import { resizeWithBoundingBox } from "../../../services/Resize";
 import { projectState } from "../../../state/ProjectState";
-import { scrollState } from "../../../state/ScrollState";
 import { snapper } from "../../../state/Snapper";
 import { assertNonNull } from "../../../utils/Assert";
-import { nodePicker } from "../renderer/NodePicker";
+import { ViewportEvent } from "./ViewportEvent";
 import { DragHandler } from "./DragHandler";
 
 export class NodeAbsoluteMoveDragHandler implements DragHandler {
@@ -17,8 +16,8 @@ export class NodeAbsoluteMoveDragHandler implements DragHandler {
     this.initPos = initPos;
   }
 
-  move(event: MouseEvent | DragEvent): void {
-    const pos = scrollState.documentPosForEvent(event);
+  move(event: ViewportEvent): void {
+    const pos = event.pos;
     const offset = pos.sub(this.initPos);
 
     const snappedRect = snapper.snapMoveRect(
@@ -35,9 +34,9 @@ export class NodeAbsoluteMoveDragHandler implements DragHandler {
     }
   }
 
-  end(event: MouseEvent | DragEvent): void {
-    const pos = scrollState.documentPosForEvent(event);
-    const overridesAtPos = nodePicker.pick(event).all;
+  end(event: ViewportEvent): void {
+    const pos = event.pos;
+    const overridesAtPos = event.selectables;
     const offset = pos.sub(this.initPos);
 
     const snappedRect = snapper.snapMoveRect(

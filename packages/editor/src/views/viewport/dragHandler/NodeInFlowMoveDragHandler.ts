@@ -5,7 +5,7 @@ import { DropDestination } from "../../../state/DropDestination";
 import { scrollState } from "../../../state/ScrollState";
 import { snapper } from "../../../state/Snapper";
 import { viewportState } from "../../../state/ViewportState";
-import { nodePicker, NodePickResult } from "../renderer/NodePicker";
+import { ViewportEvent } from "./ViewportEvent";
 import { DragHandler } from "./DragHandler";
 import { assertNonNull } from "../../../utils/Assert";
 
@@ -21,27 +21,23 @@ export class NodeInFlowMoveDragHandler implements DragHandler {
     }
   }
 
-  move(event: MouseEvent | DragEvent): void {
-    const pickResult = nodePicker.pick(event);
-
-    const offset = pickResult.pos.sub(this.initPos);
+  move(event: ViewportEvent): void {
+    const offset = event.pos.sub(this.initPos);
 
     viewportState.dragPreviewRects = [...this.targets.values()].map((rect) =>
       rect.translate(offset)
     );
 
-    const dst = findDropDestination(pickResult, [...this.targets.keys()]);
+    const dst = findDropDestination(event, [...this.targets.keys()]);
     viewportState.dropDestination = dst;
   }
 
-  end(event: MouseEvent | DragEvent): void {
+  end(event: ViewportEvent): void {
     snapper.clear();
     viewportState.dragPreviewRects = [];
     viewportState.dropDestination = undefined;
 
-    const dst = findDropDestination(nodePicker.pick(event), [
-      ...this.targets.keys(),
-    ]);
+    const dst = findDropDestination(event, [...this.targets.keys()]);
     if (!dst) {
       return;
     }
@@ -55,10 +51,10 @@ export class NodeInFlowMoveDragHandler implements DragHandler {
 }
 
 export function findDropDestination(
-  pickResult: NodePickResult,
+  event: ViewportEvent,
   subjects: Selectable[]
 ): DropDestination | undefined {
-  const parent = pickResult.all.find((dst) => {
+  const parent = event.selectables.find((dst) => {
     // cannot move inside itself
     if (subjects.some((target) => target.includes(dst))) {
       return false;
@@ -82,7 +78,7 @@ export function findDropDestination(
           Math.abs(bbox[edge] - parentBBox[edge]) < parentCloseThresh &&
           Math.abs(
             bbox[edge] -
-              pickResult.pos[edge === "left" || edge === "right" ? "x" : "y"]
+              event.pos[edge === "left" || edge === "right" ? "x" : "y"]
           ) < threshold
         ) {
           return false;
@@ -102,9 +98,7 @@ export function findDropDestination(
   const direction = parent.style.stackDirection;
   const inFlowChildren = parent.inFlowChildren;
   const centers = inFlowChildren.map((c) => c.computedRect.center);
-  const index = centers.findIndex(
-    (c) => c[direction] > pickResult.pos[direction]
-  );
+  const index = centers.findIndex((c) => c[direction] > event.pos[direction]);
   if (index < 0) {
     return { parent };
   }

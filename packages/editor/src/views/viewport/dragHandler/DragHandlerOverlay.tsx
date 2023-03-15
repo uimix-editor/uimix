@@ -5,9 +5,8 @@ import { NodeClickMoveDragHandler } from "./NodeClickMoveDragHandler";
 import { NodeInsertDragHandler } from "./NodeInsertDragHandler";
 import { Selectable } from "../../../models/Selectable";
 import { doubleClickInterval } from "../constants";
-import { nodePicker } from "../renderer/NodePicker";
+import { ViewportEvent } from "./ViewportEvent";
 import { projectState } from "../../../state/ProjectState";
-import { scrollState } from "../../../state/ScrollState";
 import { snapper } from "../../../state/Snapper";
 import { commands } from "../../../state/Commands";
 import { observer } from "mobx-react-lite";
@@ -41,10 +40,9 @@ export const DragHandlerOverlay: React.FC = observer(
         lastClickTimestampRef.current = e.timeStamp;
         const isDoubleClick = interval < doubleClickInterval;
 
-        const pickResult = nodePicker.pick(
-          e,
-          isDoubleClick ? "doubleClick" : "click"
-        );
+        const viewportEvent = new ViewportEvent(e, {
+          mode: isDoubleClick ? "doubleClick" : "click",
+        });
 
         viewportState.hoveredSelectable = undefined;
         viewportState.focusedSelectable = undefined;
@@ -52,19 +50,19 @@ export const DragHandlerOverlay: React.FC = observer(
         if (viewportState.tool?.type === "insert") {
           dragHandlerRef.current = new NodeInsertDragHandler(
             viewportState.tool.mode,
-            pickResult
+            viewportEvent
           );
           return;
         }
 
         if (isDoubleClick) {
-          const instance = pickResult.doubleClickable;
+          const instance = viewportEvent.doubleClickableSelectable;
           if (instance?.selected && isFocusable(instance)) {
             viewportState.focusedSelectable = instance;
           }
         }
 
-        const clickMove = NodeClickMoveDragHandler.create(pickResult);
+        const clickMove = NodeClickMoveDragHandler.create(viewportEvent);
         if (clickMove) {
           dragHandlerRef.current = clickMove;
           return;
@@ -78,24 +76,26 @@ export const DragHandlerOverlay: React.FC = observer(
           onEnd(e);
         }
 
+        const viewportEvent = new ViewportEvent(e);
+
         if (dragHandlerRef.current) {
-          dragHandlerRef.current.move(e);
+          dragHandlerRef.current.move(viewportEvent);
         } else {
-          onHover(e);
+          onHover(viewportEvent);
         }
       });
       const onEnd = action((e: PointerEvent) => {
         element.releasePointerCapture(e.pointerId);
-        dragHandlerRef.current?.end(e);
+        dragHandlerRef.current?.end(new ViewportEvent(e));
         dragHandlerRef.current = undefined;
       });
-      const onHover = action((e: PointerEvent) => {
-        viewportState.hoveredSelectable = nodePicker.pick(e).default;
+      const onHover = action((viewportEvent: ViewportEvent) => {
+        viewportState.hoveredSelectable = viewportEvent.selectable;
         viewportState.resizeBoxVisible = true;
 
         snapper.clear();
         if (viewportState.tool?.type === "insert") {
-          snapper.snapInsertPoint(scrollState.documentPosForEvent(e));
+          snapper.snapInsertPoint(viewportEvent.pos);
         }
       });
 
@@ -126,7 +126,7 @@ export const DragHandlerOverlay: React.FC = observer(
         return;
       }
 
-      const override = nodePicker.pick(e.nativeEvent).default;
+      const override = new ViewportEvent(e.nativeEvent).selectable;
       if (override) {
         if (!override.selected) {
           page.selectable.deselect();
