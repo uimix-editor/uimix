@@ -1,6 +1,6 @@
 {
   "nodes": {
-    "project": { "type": "project" },
+    "project": { "type": "project", "index": 0 },
     "1Bvi2ymHPmVHms6RDurmNN": {
       "type": "page",
       "name": "Page 1",
