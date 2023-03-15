@@ -29,23 +29,23 @@ export class NodeClickMoveDragHandler implements DragHandler {
   }
 
   move(event: ViewportEvent): void {
-    if (!this.handler) {
+    if (!this.moveHandler) {
       if (event.clientPos.sub(this.initClientPos).length < dragStartThreshold) {
         return;
       }
 
-      this.handler = new NodeMoveDragHandler(
+      this.moveHandler = new NodeMoveDragHandler(
         projectState.selectedSelectables,
         this.initPos
       );
     }
 
-    this.handler?.move(event);
+    this.moveHandler?.move(event);
   }
 
   end(event: ViewportEvent): void {
-    this.handler?.end(event);
-    if (!this.handler) {
+    this.moveHandler?.end(event);
+    if (!this.moveHandler) {
       // do click
       if (!this.additive) {
         projectState.page?.selectable.deselect();
@@ -59,5 +59,5 @@ export class NodeClickMoveDragHandler implements DragHandler {
   private readonly initClientPos: Vec2;
   private readonly override: Selectable;
   private readonly additive: boolean;
-  private handler: DragHandler | undefined;
+  private moveHandler: DragHandler | undefined;
 }
