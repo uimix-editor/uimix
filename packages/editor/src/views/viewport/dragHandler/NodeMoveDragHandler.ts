@@ -31,7 +31,7 @@ export class NodeMoveDragHandler implements DragHandler {
     );
     const snappedOffset = snappedRect.topLeft.sub(this.initWholeBBox.topLeft);
 
-    // move absolute elements
+    const dragPreviewRects: Rect[] = [];
     for (const [target, { absolute, rect }] of this.targets) {
       if (absolute) {
         const newRect = rect.translate(snappedOffset);
@@ -39,12 +39,11 @@ export class NodeMoveDragHandler implements DragHandler {
           x: true,
           y: true,
         });
+      } else {
+        dragPreviewRects.push(rect.translate(snappedOffset));
       }
     }
-
-    viewportState.dragPreviewRects = [...this.targets.values()]
-      .filter(({ absolute }) => !absolute)
-      .map(({ rect }) => rect.translate(offset));
+    viewportState.dragPreviewRects = dragPreviewRects;
 
     const dst = findDropDestination(event, [...this.targets.keys()]);
     viewportState.dropDestination = dst;
