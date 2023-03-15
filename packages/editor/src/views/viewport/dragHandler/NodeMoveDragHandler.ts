@@ -25,36 +25,29 @@ export class NodeMoveDragHandler implements DragHandler {
   }
 
   move(event: ViewportEvent): void {
-    const offset = event.pos.sub(this.initPos);
-    const snappedRect = snapper.snapMoveRect(
-      this.initWholeBBox.translate(offset)
-    );
-    const snappedOffset = snappedRect.topLeft.sub(this.initWholeBBox.topLeft);
+    const offset = this.getSnappedOffset(event);
 
     const dragPreviewRects: Rect[] = [];
     for (const [target, { absolute, rect }] of this.targets) {
       if (absolute) {
-        const newRect = rect.translate(snappedOffset);
+        const newRect = rect.translate(offset);
         resizeWithBoundingBox(target, newRect, {
           x: true,
           y: true,
         });
       } else {
-        dragPreviewRects.push(rect.translate(snappedOffset));
+        dragPreviewRects.push(rect.translate(offset));
       }
     }
     viewportState.dragPreviewRects = dragPreviewRects;
 
-    const dst = findDropDestination(event, [...this.targets.keys()]);
-    viewportState.dropDestination = dst;
+    viewportState.dropDestination = findDropDestination(event, [
+      ...this.targets.keys(),
+    ]);
   }
 
   end(event: ViewportEvent): void {
-    const offset = event.pos.sub(this.initPos);
-    const snappedRect = snapper.snapMoveRect(
-      this.initWholeBBox.translate(offset)
-    );
-    const snappedOffset = snappedRect.topLeft.sub(this.initWholeBBox.topLeft);
+    const offset = this.getSnappedOffset(event);
 
     snapper.clear();
     viewportState.dragPreviewRects = [];
@@ -82,7 +75,7 @@ export class NodeMoveDragHandler implements DragHandler {
 
     if (dst.parent.style.layout === "none") {
       for (const [target, { rect }] of this.targets) {
-        const newRect = rect.translate(snappedOffset);
+        const newRect = rect.translate(offset);
         resizeWithBoundingBox(target, newRect, {
           x: true,
           y: true,
@@ -91,6 +84,15 @@ export class NodeMoveDragHandler implements DragHandler {
     }
 
     projectState.undoManager.stopCapturing();
+  }
+
+  private getSnappedOffset(event: ViewportEvent) {
+    const offset = event.pos.sub(this.initPos);
+    const snappedRect = snapper.snapMoveRect(
+      this.initWholeBBox.translate(offset)
+    );
+    const snappedOffset = snappedRect.topLeft.sub(this.initWholeBBox.topLeft);
+    return snappedOffset;
   }
 
   private readonly initPos: Vec2;
