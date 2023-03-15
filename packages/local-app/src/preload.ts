@@ -5,6 +5,7 @@
 
 import { contextBridge, ipcRenderer } from "electron";
 import { IPCMainAPI } from "./types/IPCMainAPI";
+import { ProjectJSON } from "./types/LocalDocument";
 import { UIMixDesktopAPI } from "./types/UIMixDesktopAPI";
 
 const api: UIMixDesktopAPI = {
@@ -27,7 +28,7 @@ const api: UIMixDesktopAPI = {
   getLocalDocumentData: (id: string) => {
     return invoke("getLocalDocumentData", id);
   },
-  setLocalDocumentData: (id: string, data: Uint8Array) => {
+  setLocalDocumentData: (id: string, data: ProjectJSON) => {
     return invoke("setLocalDocumentData", id, data);
   },
   saveImage: (data: Uint8Array) => {

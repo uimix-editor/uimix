@@ -1,4 +1,4 @@
-import { LocalDocument } from "./types/LocalDocument";
+import { LocalDocument, ProjectJSON } from "./types/LocalDocument";
 import path from "path";
 
 const all: LocalDocument[] = [
@@ -27,11 +27,14 @@ export class LocalDocumentRepository {
     return;
   }
 
-  getLocalDocumentData(id: string): Uint8Array {
-    return new Uint8Array();
+  getLocalDocumentData(id: string): ProjectJSON {
+    return {
+      nodes: {},
+      styles: {},
+    };
   }
 
-  setLocalDocumentData(id: string, data: Uint8Array): void {
+  setLocalDocumentData(id: string, data: ProjectJSON): void {
     return;
   }
 

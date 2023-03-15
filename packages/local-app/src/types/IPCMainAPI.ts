@@ -1,4 +1,4 @@
-import { LocalDocument } from "./LocalDocument";
+import { LocalDocument, ProjectJSON } from "./LocalDocument";
 
 export interface IPCMainAPI {
   getLocalDocuments(): LocalDocument[];
@@ -6,8 +6,8 @@ export interface IPCMainAPI {
   addExistingLocalDocument(): LocalDocument | undefined;
   deleteLocalDocument(id: string): void;
 
-  getLocalDocumentData(id: string): Uint8Array;
-  setLocalDocumentData(id: string, data: Uint8Array): void;
+  getLocalDocumentData(id: string): ProjectJSON;
+  setLocalDocumentData(id: string, data: ProjectJSON): void;
 
   saveImage(data: Uint8Array): string;
 }

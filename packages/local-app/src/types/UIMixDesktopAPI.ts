@@ -1,4 +1,4 @@
-import { LocalDocument } from "./LocalDocument";
+import { LocalDocument, ProjectJSON } from "./LocalDocument";
 
 export interface UIMixDesktopAPI {
   desktop: true;
@@ -8,8 +8,8 @@ export interface UIMixDesktopAPI {
   addExistingLocalDocument(): Promise<LocalDocument | undefined>;
   deleteLocalDocument(id: string): Promise<void>;
 
-  getLocalDocumentData(id: string): Promise<Uint8Array>;
-  setLocalDocumentData(id: string, data: Uint8Array): Promise<void>;
+  getLocalDocumentData(id: string): Promise<ProjectJSON>;
+  setLocalDocumentData(id: string, data: ProjectJSON): Promise<void>;
 
   saveImage(data: Uint8Array): Promise<string>;
 }
