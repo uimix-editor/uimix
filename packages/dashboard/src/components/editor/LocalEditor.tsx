@@ -31,13 +31,13 @@ function loadProjectJSON(ydoc: Y.Doc, projectJSON: ProjectJSON): void {
     nodes.set(id, data);
   }
 
-  const selectables = ydoc.getMap("selectables");
+  const styles = ydoc.getMap("styles");
   for (const [id, json] of Object.entries(projectJSON.styles)) {
     const data = new Y.Map();
     for (const [key, value] of Object.entries(json)) {
       data.set(key, value);
     }
-    selectables.set(id, data);
+    styles.set(id, data);
   }
 
   const componentURLs = ydoc.getArray("componentURLs");
@@ -115,6 +115,7 @@ class Connection extends TypedEmitter<{
         if (this.fileReady) {
           return;
         }
+        console.log("got data", data);
         loadProjectJSON(this.doc, data);
         this.fileReady = true;
         if (this.iframeReady) {

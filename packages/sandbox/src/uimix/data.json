@@ -1,6 +1,12 @@
 {
   "nodes": {
-    "1Bvi2ymHPmVHms6RDurmNN": { "type": "page", "name": "Page 1", "index": 0 },
+    "project": { "type": "project" },
+    "1Bvi2ymHPmVHms6RDurmNN": {
+      "type": "page",
+      "name": "Page 1",
+      "parent": "project",
+      "index": 0
+    },
     "1Bvi2z3USBZi1pWrvPd6Ut": {
       "type": "component",
       "name": "Button",

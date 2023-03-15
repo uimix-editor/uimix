@@ -3,6 +3,7 @@ import {
   ProjectJSON,
 } from "../../dashboard/src/types/DesktopAPI";
 import path from "path";
+import fs from "fs";
 
 const all: LocalDocument[] = [
   {
@@ -35,10 +36,11 @@ export class LocalDocumentRepository {
   }
 
   getLocalDocumentData(id: string): ProjectJSON {
-    return {
-      nodes: {},
-      styles: {},
-    };
+    const jsonPath = path.resolve(
+      __dirname,
+      "../../sandbox/src/uimix/data.json"
+    );
+    return JSON.parse(fs.readFileSync(jsonPath, { encoding: "utf-8" }));
   }
 
   setLocalDocumentData(id: string, data: ProjectJSON): void {
