@@ -11,14 +11,14 @@ import { assertNonNull } from "../../../utils/Assert";
 import { resizeWithBoundingBox } from "../../../services/Resize";
 
 export class NodeMoveDragHandler implements DragHandler {
-  constructor(overrides: Selectable[], initPos: Vec2) {
-    if (!overrides.length) {
+  constructor(selectables: Selectable[], initPos: Vec2) {
+    if (!selectables.length) {
       throw new Error("No elements to move");
     }
 
     this.initPos = initPos;
-    for (const o of overrides) {
-      this.targets.set(o, { rect: o.computedRect, absolute: o.isAbsolute });
+    for (const s of selectables) {
+      this.targets.set(s, { rect: s.computedRect, absolute: s.isAbsolute });
     }
     const rects = [...this.targets.values()].map(({ rect }) => rect);
     this.initWholeBBox = assertNonNull(Rect.union(...rects));

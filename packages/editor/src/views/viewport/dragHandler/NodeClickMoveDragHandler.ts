@@ -8,23 +8,23 @@ import { projectState } from "../../../state/ProjectState";
 
 export class NodeClickMoveDragHandler implements DragHandler {
   static create(event: ViewportEvent): NodeClickMoveDragHandler | undefined {
-    const override = event.selectable;
-    if (override) {
-      return new NodeClickMoveDragHandler(override, event);
+    const selectable = event.selectable;
+    if (selectable) {
+      return new NodeClickMoveDragHandler(selectable, event);
     }
   }
 
-  constructor(override: Selectable, event: ViewportEvent) {
+  constructor(selectable: Selectable, event: ViewportEvent) {
     this.initClientPos = new Vec2(event.event.clientX, event.event.clientY);
     this.initPos = event.pos;
-    this.override = override;
+    this.selectable = selectable;
     this.additive = event.event.shiftKey;
 
-    if (event.selectables.every((o) => !o.ancestorSelected)) {
+    if (event.selectables.every((s) => !s.ancestorSelected)) {
       if (!this.additive) {
         projectState.page?.selectable.deselect();
       }
-      this.override.select();
+      this.selectable.select();
     }
   }
 
@@ -50,14 +50,14 @@ export class NodeClickMoveDragHandler implements DragHandler {
       if (!this.additive) {
         projectState.page?.selectable.deselect();
       }
-      this.override.select();
+      this.selectable.select();
     }
     projectState.undoManager.stopCapturing();
   }
 
   private readonly initPos: Vec2;
   private readonly initClientPos: Vec2;
-  private readonly override: Selectable;
+  private readonly selectable: Selectable;
   private readonly additive: boolean;
   private moveHandler: DragHandler | undefined;
 }
