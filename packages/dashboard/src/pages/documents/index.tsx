@@ -107,7 +107,11 @@ const DocumentCard = ({
   return (
     <li>
       <Link
-        href={`/documents/${document.data.id}`}
+        href={
+          document.type === "cloud"
+            ? `/documents/${document.data.id}`
+            : `/documents/local/${document.data.id}`
+        }
         className="block border border-gray-200 rounded-lg hover:bg-gray-50 overflow-hidden"
       >
         <div className="aspect-video w-full bg-gray-100" />
