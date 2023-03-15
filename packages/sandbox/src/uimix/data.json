@@ -283,5 +283,9 @@
     "1Bvi39mct9UNYZ9eTCCRdV:1Bvi2z3To8ddXo6R6ZftVD": {},
     "1Bvi39mct9UNYZ9eTCCRdV:1Bvi2z3UB1xUVg4Xz9WTpJ": {},
     "1Bvi39mct9UNYZ9eTCCRdV:1Bvi2z3U3SiK6r7gf9vh7N": {}
-  }
+  },
+  "componentURLs": [
+    "https://cdn.jsdelivr.net/gh/uimix-editor/uimix@ba0157d5/packages/sandbox/dist-components/components.js",
+    "https://cdn.jsdelivr.net/gh/uimix-editor/uimix@ba0157d5/packages/sandbox/dist-components/style.css"
+  ]
 }
