@@ -256,7 +256,7 @@ export default function Documents() {
       </Head>
       <div className="text-xs">
         <Header />
-        <main className="px-8 pb-20">
+        <main className="px-8 pb-8">
           <div className="max-w-[960px] mx-auto">
             <div className="flex justify-between items-center">
               <h1 className="font-bold text-lg py-8">Documents</h1>
