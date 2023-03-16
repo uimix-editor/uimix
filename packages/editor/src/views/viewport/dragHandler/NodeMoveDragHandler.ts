@@ -64,6 +64,11 @@ export class NodeMoveDragHandler implements DragHandler {
         if (absolute && dst.parent === target.parent) {
           return false;
         }
+        // don't change parent of component contents (root node and variant nodes)
+        if (target.originalNode.parent?.type === "component") {
+          return false;
+        }
+
         return true;
       }
     );
