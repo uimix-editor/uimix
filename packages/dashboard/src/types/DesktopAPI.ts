@@ -12,7 +12,7 @@ export interface LocalDocument {
 export interface DesktopAPI {
   desktop: true;
   wait(ms: number): Promise<void>;
-  getLocalDocuments(): Promise<LocalDocument[]>;
+  getLocalDocuments(): Promise<readonly LocalDocument[]>;
   getLocalDocument(id: string): Promise<LocalDocument | undefined>;
   createLocalDocument(): Promise<LocalDocument | undefined>;
   addExistingLocalDocument(): Promise<LocalDocument | undefined>;

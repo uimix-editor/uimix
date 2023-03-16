@@ -8,6 +8,11 @@ import prettier from "prettier/standalone";
 import parserBabel from "prettier/parser-babel";
 import { dialog } from "electron";
 import { createId } from "@paralleldrive/cuid2";
+import Store from "electron-store";
+
+const store = new Store<{
+  documents: LocalDocument[];
+}>();
 
 function formatJSON(text: string): string {
   return prettier.format(text, {
@@ -16,22 +21,22 @@ function formatJSON(text: string): string {
   });
 }
 
-const all: LocalDocument[] = [
-  {
-    id: "1",
-    title: "sandbox",
-    path: path.resolve(__dirname, "../../sandbox/src/components.uimix"),
-    updatedAt: new Date().toString(),
-  },
-];
-
 export class LocalDocumentRepository {
-  getLocalDocuments(): LocalDocument[] {
-    return all;
+  get documents(): readonly LocalDocument[] {
+    return store.get("documents", []);
+  }
+
+  set documents(documents: readonly LocalDocument[]) {
+    store.set("documents", documents);
+  }
+
+  getLocalDocuments(): readonly LocalDocument[] {
+    return this.documents;
   }
 
   getLocalDocument(id: string): LocalDocument | undefined {
-    return all.find((doc) => doc.id === id);
+    // TODO: index
+    return this.documents.find((doc) => doc.id === id);
   }
 
   async createLocalDocument(): Promise<LocalDocument | undefined> {
@@ -73,13 +78,41 @@ export class LocalDocumentRepository {
       path: filePath,
       updatedAt,
     };
-    all.push(document);
+    this.documents = [...this.documents, document];
 
     return document;
   }
 
-  addExistingLocalDocument(): LocalDocument | undefined {
-    return undefined;
+  async addExistingLocalDocument(): Promise<LocalDocument | undefined> {
+    // open file dialog
+    // add to store
+
+    const result = await dialog.showOpenDialog({
+      title: "Open Project",
+      defaultPath: path.resolve(__dirname, "../../sandbox/src"),
+      filters: [
+        {
+          name: "Uimix Project",
+          extensions: ["uimix"],
+        },
+      ],
+    });
+    const filePath = result.filePaths[0];
+    if (!filePath) {
+      return;
+    }
+
+    const title = path.basename(filePath, ".uimix");
+    const updatedAt = new Date().toString();
+    const document: LocalDocument = {
+      id: createId(),
+      title,
+      path: filePath,
+      updatedAt,
+    };
+    this.documents = [...this.documents, document];
+
+    return document;
   }
 
   deleteLocalDocument(id: string): void {

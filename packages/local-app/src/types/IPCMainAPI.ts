@@ -4,7 +4,7 @@ import {
 } from "../../../dashboard/src/types/DesktopAPI";
 
 export interface IPCMainAPI {
-  getLocalDocuments(): LocalDocument[];
+  getLocalDocuments(): readonly LocalDocument[];
   getLocalDocument(id: string): LocalDocument | undefined;
   createLocalDocument(): LocalDocument | undefined;
   addExistingLocalDocument(): LocalDocument | undefined;
