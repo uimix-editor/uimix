@@ -227,6 +227,34 @@ export default function Documents() {
     }
   };
 
+  const onLocalNewClick = async () => {
+    const api = getDesktopAPI();
+    if (!api) {
+      return;
+    }
+
+    try {
+      const doc = await api.createLocalDocument();
+      if (!doc) {
+        return;
+      }
+      Router.push(`/documents/local/${doc.id}`);
+    } catch (err) {
+      toastController.show({
+        type: "error",
+        message: "Failed to create document",
+      });
+      return;
+    }
+  };
+
+  const onLocalOpenCLick = async () => {
+    toastController.show({
+      type: "error",
+      message: "Not implemented yet",
+    });
+  };
+
   const isError = documents.status === "error";
 
   useEffect(() => {
@@ -285,13 +313,13 @@ export default function Documents() {
                       />
                       <DropdownMenu.Item
                         className={dropdownItemClasses}
-                        onClick={onAddClick}
+                        onClick={onLocalNewClick}
                       >
                         New Local Document...
                       </DropdownMenu.Item>
                       <DropdownMenu.Item
                         className={dropdownItemClasses}
-                        onClick={onAddClick}
+                        onClick={onLocalOpenCLick}
                       >
                         Add Existing Local Document...
                       </DropdownMenu.Item>
