@@ -58,7 +58,7 @@ function compileCommand(
 const cli = cac("uimix");
 
 cli
-  .command("[...files]", "compile UIMix files")
+  .command("compile [...files]", "compile UIMix files")
   .option("-w, --watch", `[boolean] watch for changes`)
   .option("-o, --output <outdir>", `[string] output directory`)
   .action(
