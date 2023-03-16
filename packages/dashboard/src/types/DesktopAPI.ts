@@ -6,6 +6,7 @@ export interface LocalDocument {
   id: string;
   title: string;
   path: string;
+  exists: boolean;
   updatedAt: string;
 }
 

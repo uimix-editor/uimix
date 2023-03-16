@@ -10,8 +10,13 @@ import { dialog } from "electron";
 import { createId } from "@paralleldrive/cuid2";
 import Store from "electron-store";
 
+interface LocalDocumentRef {
+  id: string;
+  path: string;
+}
+
 const store = new Store<{
-  documents: LocalDocument[];
+  documents: LocalDocumentRef[];
 }>();
 
 function formatJSON(text: string): string {
@@ -21,22 +26,43 @@ function formatJSON(text: string): string {
   });
 }
 
+function refToDocument(ref: LocalDocumentRef): LocalDocument {
+  let stats: fs.Stats | undefined;
+  try {
+    stats = fs.statSync(ref.path);
+  } catch {
+    // ignore
+  }
+
+  return {
+    id: ref.id,
+    title: path.basename(ref.path, ".uimix"),
+    path: ref.path,
+    exists: !!stats,
+    updatedAt: (stats?.mtime ?? new Date()).toString(),
+  };
+}
+
 export class LocalDocumentRepository {
-  get documents(): readonly LocalDocument[] {
+  get documents(): readonly LocalDocumentRef[] {
     return store.get("documents", []);
   }
 
-  set documents(documents: readonly LocalDocument[]) {
+  set documents(documents: readonly LocalDocumentRef[]) {
     store.set("documents", documents);
   }
 
   getLocalDocuments(): readonly LocalDocument[] {
-    return this.documents;
+    return this.documents.map(refToDocument);
   }
 
   getLocalDocument(id: string): LocalDocument | undefined {
     // TODO: index
-    return this.documents.find((doc) => doc.id === id);
+    const ref = this.documents.find((doc) => doc.id === id);
+    if (!ref) {
+      return;
+    }
+    return refToDocument(ref);
   }
 
   async createLocalDocument(): Promise<LocalDocument | undefined> {
@@ -70,17 +96,13 @@ export class LocalDocumentRepository {
 
     fs.writeFileSync(filePath, formatJSON(JSON.stringify(initialContent)));
 
-    const title = path.basename(filePath, ".uimix");
-    const updatedAt = new Date().toString();
-    const document: LocalDocument = {
+    const ref = {
       id: createId(),
-      title,
       path: filePath,
-      updatedAt,
     };
-    this.documents = [...this.documents, document];
 
-    return document;
+    this.documents = [...this.documents, ref];
+    return refToDocument(ref);
   }
 
   async addExistingLocalDocument(): Promise<LocalDocument | undefined> {
@@ -102,17 +124,18 @@ export class LocalDocumentRepository {
       return;
     }
 
-    const title = path.basename(filePath, ".uimix");
-    const updatedAt = new Date().toString();
-    const document: LocalDocument = {
-      id: createId(),
-      title,
-      path: filePath,
-      updatedAt,
-    };
-    this.documents = [...this.documents, document];
+    const existing = this.documents.find((doc) => doc.path === filePath);
+    if (existing) {
+      return refToDocument(existing);
+    }
 
-    return document;
+    const ref: LocalDocumentRef = {
+      id: createId(),
+      path: filePath,
+    };
+    this.documents = [...this.documents, ref];
+
+    return refToDocument(ref);
   }
 
   deleteLocalDocument(id: string): void {
