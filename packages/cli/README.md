@@ -1,35 +1,27 @@
-# UIMix local editor server
+# UIMix compiler CLI
 
-This is a local editor server for [UIMix](https://github.com/seanchas116/uimix).
-Launch it with `uimix` in your project directory.
-
-```sh
-npm install -g uimix
-uimix
-```
+This is the command line interface to compile [UIMix](https://github.com/uimix-editor/uimix) files to React components.
 
 ## Usage
 
 ```sh
-uimix [root directory] --port [port]
+uimix compile [...files]
 ```
 
-### [root directory] (optional)
+### [...files]
 
-The root directory the editor should open. Defaults to the current directory.
+The files (`*.uimix`) to compile.
 
-### --port (optional)
+### `-o, --output [output directory]`
 
-The port to listen on. Defaults to 4000.
+The output directory. (optional)
 
-## Roadmap
+### `-w, --watch`
 
-- [ ] Add a compiler command that just compiles UIMix code to JS.
-- [ ] Add a scaffolding command that creates a new project.
+Watch for changes and recompile. (optional)
 
 ## Develop
 
 ### Build
 
-- `pnpm dev` - Start the dev server.
 - `pnpm build` - Build the project.
