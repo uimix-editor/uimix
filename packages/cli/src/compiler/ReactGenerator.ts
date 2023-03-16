@@ -70,7 +70,10 @@ function getExternalModulePaths(components: Component[]): Set<string> {
 }
 
 export class ReactGenerator {
-  constructor(project: Project, imageFiles: string[]) {
+  constructor(
+    project: Project,
+    imageFiles: { hash: string; suffix: string }[]
+  ) {
     this.project = project;
     this.imageFiles = imageFiles;
 
@@ -86,7 +89,7 @@ export class ReactGenerator {
   }
 
   project: Project;
-  imageFiles: string[];
+  imageFiles: { hash: string; suffix: string }[];
   componentsWithNames: [Component, string][] = [];
   refIDs = new Map<string, string>();
   moduleVarNames = new Map<string, string>(); // path -> varName
@@ -111,9 +114,8 @@ export class ReactGenerator {
       this.moduleVarNames.set(modulePath, varName);
     }
 
-    for (const file of this.imageFiles) {
-      const importPath = `./images/${file}`;
-      const hash = path.basename(file, path.extname(file));
+    for (const { hash, suffix } of this.imageFiles) {
+      const importPath = `./images/${hash}${suffix}`;
       const varName = imageHashToVarName(hash);
       results.push(`import ${varName} from "${importPath}";`);
       this.imageVarNames.set(hash, varName);

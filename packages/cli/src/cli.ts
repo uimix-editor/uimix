@@ -6,21 +6,23 @@ import chokidar from "chokidar";
 import { globSync } from "glob";
 import minimatch from "minimatch";
 import { ProjectJSON } from "@uimix/node-data";
+import mkdirp from "mkdirp";
 
-function compileFile(
+async function compileFile(
   filePath: string,
   outDir: string = path.dirname(filePath)
 ) {
   const data = fs.readFileSync(filePath, "utf8");
   const json = ProjectJSON.parse(JSON.parse(data));
 
-  const outFiles = generateCode(json, []);
-
   const outBaseName = path.basename(filePath, path.extname(filePath));
+  const outFiles = await generateCode(outBaseName, json);
 
   for (const outFile of outFiles) {
-    const outPath = path.join(outDir, outBaseName + outFile.suffix);
-    fs.writeFileSync(outPath, outFile.content, "utf8");
+    const outPath = path.join(outDir, outFile.filePath);
+    const outPathDir = path.dirname(outPath);
+    mkdirp.sync(outPathDir);
+    fs.writeFileSync(outPath, outFile.content);
   }
 }
 

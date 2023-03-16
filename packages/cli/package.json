@@ -34,6 +34,7 @@
     "data-uri-to-buffer": "^4.0.1",
     "glob": "^9.2.1",
     "lodash-es": "^4.17.21",
+    "mime-types": "^2.1.35",
     "minimatch": "^7.4.2",
     "mkdirp": "^2.1.5",
     "prettier": "^2.8.4",
@@ -43,6 +44,7 @@
   "devDependencies": {
     "@types/glob": "^8.1.0",
     "@types/lodash-es": "^4.17.6",
+    "@types/mime-types": "^2.1.1",
     "@types/prettier": "^2.7.2",
     "@types/react": "^18.0.28",
     "@uimix/editor": "workspace:*",

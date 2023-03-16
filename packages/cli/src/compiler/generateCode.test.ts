@@ -9,10 +9,7 @@ describe(generateCode.name, () => {
     const json = JSON.parse(
       fs.readFileSync(path.resolve(__dirname, uimixPath, "data.json"), "utf8")
     );
-    const imageFiles = fs.readdirSync(
-      path.resolve(__dirname, uimixPath, "images")
-    );
-    const code = generateCode(json, imageFiles);
+    const code = generateCode("components", json);
     expect(code).toMatchSnapshot();
   });
 });
