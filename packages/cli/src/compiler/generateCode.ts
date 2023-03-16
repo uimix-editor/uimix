@@ -9,9 +9,9 @@ export function generateCode(
   projectJSON: ProjectJSON,
   imageFiles: string[]
 ): {
-  "index.tsx": string;
-  "index.css": string;
-} {
+  suffix: string;
+  content: string;
+}[] {
   const ydoc = new Y.Doc();
   const project = new Project(ydoc);
   project.loadJSON(projectJSON);
@@ -20,9 +20,14 @@ export function generateCode(
     new ReactGenerator(project, imageFiles).render().join("\n")
   );
   const cssContent = new CSSGenerator(project).generate();
-
-  return {
-    "index.tsx": tsContent,
-    "index.css": cssContent,
-  };
+  return [
+    {
+      suffix: ".tsx",
+      content: tsContent,
+    },
+    {
+      suffix: ".css",
+      content: cssContent,
+    },
+  ];
 }
