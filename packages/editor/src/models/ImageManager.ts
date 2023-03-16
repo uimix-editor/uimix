@@ -3,12 +3,7 @@ import { Buffer } from "buffer";
 import { encode } from "url-safe-base64";
 import { Project } from "./Project";
 import { ObservableYMap } from "../utils/ObservableYMap";
-
-interface Image {
-  width: number;
-  height: number;
-  url: string;
-}
+import { Image } from "@uimix/node-data";
 
 export class ImageManager {
   constructor(project: Project) {
