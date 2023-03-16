@@ -1,6 +1,6 @@
 {
-  "name": "@uimix/cli",
-  "version": "0.0.4",
+  "name": "uimix",
+  "version": "0.0.5",
   "description": "Compiler for UIMix",
   "homepage": "https://github.com/seanchas116/uimix",
   "bugs": {
