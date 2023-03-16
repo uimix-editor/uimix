@@ -6,6 +6,8 @@ import path from "path";
 import fs from "fs";
 import prettier from "prettier/standalone";
 import parserBabel from "prettier/parser-babel";
+import { dialog } from "electron";
+import { createId } from "@paralleldrive/cuid2";
 
 function formatJSON(text: string): string {
   return prettier.format(text, {
@@ -18,7 +20,7 @@ const all: LocalDocument[] = [
   {
     id: "1",
     title: "sandbox",
-    path: path.resolve(__dirname, "../../sandbox/src/uimix/data.json"),
+    path: path.resolve(__dirname, "../../sandbox/src/components.uimix"),
     updatedAt: new Date().toString(),
   },
 ];
@@ -32,8 +34,48 @@ export class LocalDocumentRepository {
     return all.find((doc) => doc.id === id);
   }
 
-  createLocalDocument(): LocalDocument | undefined {
-    return undefined;
+  async createLocalDocument(): Promise<LocalDocument | undefined> {
+    const result = await dialog.showSaveDialog({
+      title: "Save Project",
+      defaultPath: path.resolve(__dirname, "../../sandbox/src"),
+      filters: [
+        {
+          name: "Uimix Project",
+          extensions: ["uimix"],
+        },
+      ],
+    });
+    const filePath = result.filePath;
+    if (!filePath) {
+      return;
+    }
+
+    const initialContent: ProjectJSON = {
+      nodes: {
+        project: { type: "project", index: 0 },
+        [createId()]: {
+          type: "page",
+          name: "Page 1",
+          parent: "project",
+          index: 0,
+        },
+      },
+      styles: {},
+    };
+
+    fs.writeFileSync(filePath, formatJSON(JSON.stringify(initialContent)));
+
+    const title = path.basename(filePath, ".uimix");
+    const updatedAt = new Date().toString();
+    const document: LocalDocument = {
+      id: createId(),
+      title,
+      path: filePath,
+      updatedAt,
+    };
+    all.push(document);
+
+    return document;
   }
 
   addExistingLocalDocument(): LocalDocument | undefined {

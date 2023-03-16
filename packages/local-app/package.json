@@ -21,6 +21,7 @@
   },
   "license": "MIT",
   "dependencies": {
+    "@paralleldrive/cuid2": "^2.2.0",
     "electron-squirrel-startup": "^1.0.0",
     "prettier": "^2.8.4"
   },
