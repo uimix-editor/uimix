@@ -1,28 +1,20 @@
 import { cac } from "cac";
-import { startServer } from "./server.js";
 
 const cli = cac("uimix");
 
 cli
-  .command("[root]", "start the editor server")
-  .option("--port <port>", `[number] specify port`)
+  .command("[file]", "compile a UIMix file")
+  .option("-o, --output <outfile>", `[string] output file path`)
   .action(
     async (
       root: string | undefined,
       options: {
-        port?: number;
+        output?: string;
       }
     ) => {
-      startServer({
-        projectPath: root ?? ".",
-        port: options.port ?? 4000,
-      });
+      console.log(options);
     }
   );
-
-cli.command("build [root]", "build the UIMix files").action(() => {
-  console.log("TODO");
-});
 
 cli.help();
 cli.version("0.0.1");

@@ -8,6 +8,57 @@ importers:
     devDependencies:
       run-z: 1.11.0
 
+  packages/cli:
+    specifiers:
+      '@types/glob': ^8.1.0
+      '@types/lodash-es': ^4.17.6
+      '@types/prettier': ^2.7.2
+      '@types/react': ^18.0.28
+      '@uimix/editor': workspace:*
+      '@uimix/node-data': workspace:*
+      cac: ^6.7.14
+      chokidar: ^3.5.3
+      csstype: ^3.1.1
+      data-uri-to-buffer: ^4.0.1
+      esbuild: ^0.17.11
+      esbuild-node-externals: ^1.6.0
+      esbuild-register: ^3.4.2
+      glob: ^9.2.1
+      lodash-es: ^4.17.21
+      mkdirp: ^2.1.5
+      prettier: ^2.8.4
+      run-z: ^1.11.0
+      tiny-typed-emitter: ^2.1.0
+      typescript: ^4.9.5
+      vitest: ^0.29.2
+      yjs: ^13.5.50
+      zod: ^3.21.4
+    dependencies:
+      cac: 6.7.14
+      chokidar: 3.5.3
+      data-uri-to-buffer: 4.0.1
+      glob: 9.2.1
+      lodash-es: 4.17.21
+      mkdirp: 2.1.5
+      prettier: 2.8.4
+      tiny-typed-emitter: 2.1.0
+      zod: 3.21.4
+    devDependencies:
+      '@types/glob': 8.1.0
+      '@types/lodash-es': 4.17.6
+      '@types/prettier': 2.7.2
+      '@types/react': 18.0.28
+      '@uimix/editor': link:../editor
+      '@uimix/node-data': link:../node-data
+      csstype: 3.1.1
+      esbuild: 0.17.11
+      esbuild-node-externals: 1.6.0_esbuild@0.17.11
+      esbuild-register: 3.4.2_esbuild@0.17.11
+      run-z: 1.11.0
+      typescript: 4.9.5
+      vitest: 0.29.2
+      yjs: 13.5.50
+
   packages/collaborative-backend:
     specifiers:
       '@hocuspocus/extension-database': ^1.1.1
