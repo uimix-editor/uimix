@@ -211,7 +211,6 @@ importers:
       '@storybook/builder-vite': ^0.4.2
       '@storybook/react': ^6.5.16
       '@storybook/testing-library': ^0.0.13
-      '@trpc/client': ^10.15.0
       '@types/color-namer': ^1.3.0
       '@types/dedent': ^0.7.0
       '@types/lodash-es': ^4.17.6
@@ -288,7 +287,6 @@ importers:
       '@radix-ui/react-toggle-group': 1.0.3_biqbaboplfbrettd7655fr4n2y
       '@radix-ui/react-tooltip': 1.0.5_zula6vjvt3wdocc4mwcxqa6nzi
       '@seanchas116/design-icons': 1.0.1
-      '@trpc/client': 10.15.0
       '@uimix/node-data': link:../node-data
       '@uimix/typed-rpc': link:../typed-rpc
       any-base: 1.1.0
@@ -379,7 +377,6 @@ importers:
       '@types/react': ^18.0.28
       '@types/react-dom': ^18.0.11
       '@types/react-test-renderer': ^18.0.0
-      '@uimix/cli': workspace:*
       '@vitejs/plugin-react': ^3.1.0
       babel-loader: ^9.1.2
       react: ^18.2.0
@@ -387,6 +384,7 @@ importers:
       react-test-renderer: ^18.2.0
       run-z: ^1.11.0
       typescript: ^4.9.5
+      uimix: workspace:*
       vite: ^4.1.4
       vitest: ^0.29.2
     dependencies:
@@ -404,12 +402,12 @@ importers:
       '@types/react': 18.0.28
       '@types/react-dom': 18.0.11
       '@types/react-test-renderer': 18.0.0
-      '@uimix/cli': link:../cli
       '@vitejs/plugin-react': 3.1.0_vite@4.1.4
       babel-loader: 9.1.2_@babel+core@7.21.0
       react-test-renderer: 18.2.0_react@18.2.0
       run-z: 1.11.0
       typescript: 4.9.5
+      uimix: link:../cli
       vite: 4.1.4
       vitest: 0.29.2
 
@@ -6050,12 +6048,6 @@ packages:
       '@babel/runtime': 7.21.0
       '@testing-library/dom': 8.20.0
     dev: true
-
-  /@trpc/client/10.15.0:
-    resolution: {integrity: sha512-Tmm3N7jibEOZTsvHRU+tWCVvUf8F9/UcKOVTGAWuyasBpnjOZ7ClZ81F9wo4cg9+9tUxUhuJns+E96/HtATpyQ==}
-    peerDependencies:
-      '@trpc/server': 10.15.0
-    dev: false
 
   /@trpc/client/10.15.0_@trpc+server@10.15.0:
     resolution: {integrity: sha512-Tmm3N7jibEOZTsvHRU+tWCVvUf8F9/UcKOVTGAWuyasBpnjOZ7ClZ81F9wo4cg9+9tUxUhuJns+E96/HtATpyQ==}
