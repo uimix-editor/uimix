@@ -8,6 +8,7 @@ import dataUriToBuffer from "data-uri-to-buffer";
 import * as mime from "mime-types";
 
 export async function generateCode(
+  pathToPackageRoot: string,
   basename: string,
   projectJSON: ProjectJSON
 ): Promise<
@@ -47,7 +48,9 @@ export async function generateCode(
   }
 
   const tsContent = formatTypeScript(
-    new ReactGenerator(project, imageFiles).render().join("\n")
+    new ReactGenerator(pathToPackageRoot, project, imageFiles)
+      .render()
+      .join("\n")
   );
   const cssContent = new CSSGenerator(project).generate();
   return [

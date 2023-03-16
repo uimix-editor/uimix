@@ -9,7 +9,7 @@ describe(generateCode.name, () => {
     const json = JSON.parse(
       fs.readFileSync(path.resolve(__dirname, uimixPath, "data.json"), "utf8")
     );
-    const code = generateCode("components", json);
+    const code = generateCode(".", "components", json);
     expect(code).toMatchSnapshot();
   });
 });

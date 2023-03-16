@@ -71,9 +71,11 @@ function getExternalModulePaths(components: Component[]): Set<string> {
 
 export class ReactGenerator {
   constructor(
+    pathToPackageRoot: string,
     project: Project,
     imageFiles: { hash: string; suffix: string }[]
   ) {
+    this.pathToPackageRoot = pathToPackageRoot;
     this.project = project;
     this.imageFiles = imageFiles;
 
@@ -88,6 +90,7 @@ export class ReactGenerator {
     }
   }
 
+  pathToPackageRoot: string;
   project: Project;
   imageFiles: { hash: string; suffix: string }[];
   componentsWithNames: [Component, string][] = [];
@@ -106,10 +109,9 @@ export class ReactGenerator {
         path.basename(modulePath, path.extname(modulePath))
       );
       results.push(
-        `import * as ${varName} from "../../${modulePath.replace(
-          /\.[jt]sx?$/,
-          ""
-        )}";`
+        `import * as ${varName} from "${
+          this.pathToPackageRoot
+        }/${modulePath.replace(/\.[jt]sx?$/, "")}";`
       );
       this.moduleVarNames.set(modulePath, varName);
     }

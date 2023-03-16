@@ -8,6 +8,18 @@ import minimatch from "minimatch";
 import { ProjectJSON } from "@uimix/node-data";
 import mkdirp from "mkdirp";
 
+function getPackageJSONDirname(filePath: string) {
+  let dirPath = path.dirname(filePath);
+  while (dirPath !== "/") {
+    const packageJson = path.join(dirPath, "package.json");
+    if (fs.existsSync(packageJson)) {
+      return dirPath;
+    }
+    dirPath = path.dirname(dirPath);
+  }
+  return path.dirname(filePath);
+}
+
 async function compileFile(
   filePath: string,
   outDir: string = path.dirname(filePath)
@@ -15,8 +27,10 @@ async function compileFile(
   const data = fs.readFileSync(filePath, "utf8");
   const json = ProjectJSON.parse(JSON.parse(data));
 
+  const packageJSONDirname = getPackageJSONDirname(filePath);
+  const modulePathPrefix = path.relative(outDir, packageJSONDirname);
   const outBaseName = path.basename(filePath, path.extname(filePath));
-  const outFiles = await generateCode(outBaseName, json);
+  const outFiles = await generateCode(modulePathPrefix, outBaseName, json);
 
   for (const outFile of outFiles) {
     const outPath = path.join(outDir, outFile.filePath);
