@@ -11,7 +11,7 @@ exports[`generateCode > generates code 1`] = `
 import * as header from \\"../../src/stories/Header\\";
 import * as button from \\"../../src/stories/Button\\";
 import image_YmY$tuteU03QY$k_2ARy1uacNmXDNmOX$FFAlj2qCIo from \\"./images/YmY-tuteU03QY-k_2ARy1uacNmXDNmOX-FFAlj2qCIo=.png\\";
-import \\"./index.css\\";
+import \\"./components.css\\";
 
 function applyOverrides(
   rootProps: any,
