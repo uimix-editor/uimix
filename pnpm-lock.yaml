@@ -456,6 +456,7 @@ importers:
       '@types/react': ^18.0.28
       '@types/react-dom': ^18.0.11
       '@types/react-test-renderer': ^18.0.0
+      '@uimix/cli': workspace:*
       '@vitejs/plugin-react': ^3.1.0
       babel-loader: ^9.1.2
       react: ^18.2.0
@@ -463,7 +464,6 @@ importers:
       react-test-renderer: ^18.2.0
       run-z: ^1.11.0
       typescript: ^4.9.5
-      uimix: workspace:*
       vite: ^4.1.4
       vitest: ^0.29.2
     dependencies:
@@ -481,12 +481,12 @@ importers:
       '@types/react': 18.0.28
       '@types/react-dom': 18.0.11
       '@types/react-test-renderer': 18.0.0
+      '@uimix/cli': link:../cli
       '@vitejs/plugin-react': 3.1.0_vite@4.1.4
       babel-loader: 9.1.2_@babel+core@7.21.0
       react-test-renderer: 18.2.0_react@18.2.0
       run-z: 1.11.0
       typescript: 4.9.5
-      uimix: link:../devserver
       vite: 4.1.4
       vitest: 0.29.2
 
