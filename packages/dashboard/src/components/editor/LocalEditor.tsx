@@ -105,22 +105,10 @@ class Connection extends TypedEmitter<{
           contentType: string,
           data: Uint8Array
         ) => {
-          // TODO: save image to local folder
-
-          const { uploadURL, url } = await dynamicTrpc.image.getUploadURL.query(
-            {
-              hash,
-              contentType,
-            }
-          );
-          await fetch(uploadURL, {
-            method: "PUT",
-            headers: {
-              "Content-Type": contentType,
-            },
-            body: data,
-          });
-          return url;
+          // just return data url
+          return `data:${contentType};base64,${Buffer.from(data).toString(
+            "base64"
+          )}`;
         },
       }
     );
