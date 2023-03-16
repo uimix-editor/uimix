@@ -17,6 +17,10 @@
     "jsx": "react-jsx",
     "experimentalDecorators": true
   },
-  "include": ["src"],
+  "include": [
+    "src",
+    "../dashboard/src/types/DesktopAPI.ts",
+    "../dashboard/src/types/DesktopAPI.ts"
+  ],
   "references": [{ "path": "./tsconfig.node.json" }]
 }

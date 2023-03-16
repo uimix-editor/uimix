@@ -54,6 +54,7 @@ importers:
       '@types/react': 18.0.28
       '@types/react-dom': 18.0.11
       '@uimix/editor': workspace:*
+      '@uimix/node-data': workspace:*
       '@uimix/typed-rpc': workspace:*
       autoprefixer: ^10.4.14
       aws-sdk: ^2.1333.0
@@ -74,6 +75,7 @@ importers:
       react-dom: 18.2.0
       run-z: ^1.11.0
       superjson: ^1.12.2
+      tailwind-merge: ^1.10.0
       tailwindcss: ^3.2.7
       tiny-typed-emitter: ^2.1.0
       trpc-panel: ^1.2.8
@@ -113,6 +115,7 @@ importers:
       react: 18.2.0
       react-dom: 18.2.0_react@18.2.0
       superjson: 1.12.2
+      tailwind-merge: 1.10.0
       tiny-typed-emitter: 2.1.0
       trpc-panel: 1.2.8_opagenkvm5heysgwvmiaygs3w4
       typescript: 4.9.5
@@ -120,6 +123,7 @@ importers:
       zod: 3.21.4
     devDependencies:
       '@types/jsonwebtoken': 9.0.1
+      '@uimix/node-data': link:../node-data
       autoprefixer: 10.4.14_postcss@8.4.21
       postcss: 8.4.21
       prisma: 4.11.0

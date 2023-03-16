@@ -1,0 +1,16 @@
+{
+  "compilerOptions": {
+    "target": "ESNext",
+    "moduleResolution": "Node",
+    "module": "CommonJS",
+    "sourceMap": true,
+    "declaration": true,
+    "outDir": "dist",
+    "strict": true,
+    "lib": ["dom", "esnext"], // TODO: remove dom dependency
+    "esModuleInterop": true,
+    "skipLibCheck": true,
+    "experimentalDecorators": true,
+    "noEmit": true
+  }
+}

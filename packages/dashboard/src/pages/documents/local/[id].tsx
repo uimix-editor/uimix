@@ -3,11 +3,12 @@ import React from "react";
 import dynamic from "next/dynamic";
 import Head from "next/head";
 
-const Editor = dynamic(() => import("../../components/editor/Editor"), {
-  ssr: false,
-});
+const LocalEditor = dynamic(
+  () => import("../../../components/editor/LocalEditor"),
+  { ssr: false }
+);
 
-const Document = () => {
+const LocalDocument = () => {
   const router = useRouter();
   const { id } = router.query;
 
@@ -21,9 +22,9 @@ const Document = () => {
           }
       `}</style>
       </Head>
-      <Editor documentId={id as string} />
+      <LocalEditor documentId={id as string} />
     </>
   );
 };
 
-export default Document;
+export default LocalDocument;

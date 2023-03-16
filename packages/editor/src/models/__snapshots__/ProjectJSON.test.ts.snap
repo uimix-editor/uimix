@@ -1,0 +1,59 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`loadProjectJSON > works 1`] = `
+[
+  "project",
+  "1Bvi2ymHPmVHms6RDurmNN",
+  "1Bvi2z3USBZi1pWrvPd6Ut",
+  "1Bvi2z3UPfi6W3L8nDt5VA",
+  "1Bvi2z3UGTM64JtRT7Qc1S",
+  "1Bvi2z3UVsEskiSt2TcdL7",
+  "1Bvi2z3UaHFmaikKtfcmGX",
+  "1Bvi2zJALza4DrqmNaGYAk",
+  "1Bvi2z3TfkSpYXW29daTN8",
+  "1Bvi2z3TpKXtTJLTRPTEd8",
+  "1Bvi2z3To8ddXo6R6ZftVD",
+  "1Bvi2z3UB1xUVg4Xz9WTpJ",
+  "1Bvi2z3U3SiK6r7gf9vh7N",
+  "1Bvi3BSSb2oaHb1ZqUEk6H",
+  "1Bvi319YVxZELz4tEskN1S",
+  "1Bvi31VKu8gfy6XzJ8xrHA",
+  "1Bvi365mtWZmXKDPeJTB4s",
+  "1Bvi32d9RMi3ES5kk2UvuM",
+  "1Bvi2z3UrU9VkawwAteXs8",
+  "1Bvi392qBdMy93LGLcVymb",
+  "1Bvi39mct9UNYZ9eTCCRdV",
+]
+`;
+
+exports[`loadProjectJSON > works 2`] = `
+[
+  "1Bvi2ymHPmVHms6RDurmNN",
+  "1Bvi2z3USBZi1pWrvPd6Ut",
+  "1Bvi2z3UPfi6W3L8nDt5VA",
+  "1Bvi2z3UGTM64JtRT7Qc1S",
+  "1Bvi2z3UVsEskiSt2TcdL7",
+  "1Bvi2z3UVsEskiSt2TcdL7:1Bvi2z3UGTM64JtRT7Qc1S",
+  "1Bvi2z3UaHFmaikKtfcmGX",
+  "1Bvi2z3UaHFmaikKtfcmGX:1Bvi2z3UGTM64JtRT7Qc1S",
+  "1Bvi2zJALza4DrqmNaGYAk",
+  "1Bvi2z3TfkSpYXW29daTN8",
+  "1Bvi2z3TpKXtTJLTRPTEd8",
+  "1Bvi2z3To8ddXo6R6ZftVD",
+  "1Bvi2z3UB1xUVg4Xz9WTpJ",
+  "1Bvi2z3U3SiK6r7gf9vh7N",
+  "1Bvi3BSSb2oaHb1ZqUEk6H",
+  "1Bvi319YVxZELz4tEskN1S",
+  "1Bvi31VKu8gfy6XzJ8xrHA",
+  "1Bvi365mtWZmXKDPeJTB4s",
+  "1Bvi32d9RMi3ES5kk2UvuM",
+  "1Bvi2z3UrU9VkawwAteXs8",
+  "1Bvi2z3UrU9VkawwAteXs8:1Bvi2z3UGTM64JtRT7Qc1S",
+  "1Bvi392qBdMy93LGLcVymb",
+  "1Bvi39mct9UNYZ9eTCCRdV",
+  "1Bvi39mct9UNYZ9eTCCRdV:1Bvi2z3TpKXtTJLTRPTEd8",
+  "1Bvi39mct9UNYZ9eTCCRdV:1Bvi2z3To8ddXo6R6ZftVD",
+  "1Bvi39mct9UNYZ9eTCCRdV:1Bvi2z3UB1xUVg4Xz9WTpJ",
+  "1Bvi39mct9UNYZ9eTCCRdV:1Bvi2z3U3SiK6r7gf9vh7N",
+]
+`;

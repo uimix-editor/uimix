@@ -122,6 +122,12 @@
       "name": "Stack",
       "parent": "1Bvi365mtWZmXKDPeJTB4s",
       "index": 3
+    },
+    "1BwKKiQig1rULSLyeojV8x": {
+      "type": "frame",
+      "index": 15,
+      "parent": "1Bvi2ymHPmVHms6RDurmNN",
+      "name": "Frame"
     }
   },
   "styles": {
@@ -169,7 +175,7 @@
         "y": { "type": "start", "start": 184 }
       },
       "width": { "type": "hugContents" },
-      "height": { "type": "hugContents" },
+      "height": { "type": "fixed", "value": 117 },
       "fill": "#FFFFFF",
       "layout": "stack",
       "gap": 10,
@@ -282,7 +288,16 @@
     "1Bvi39mct9UNYZ9eTCCRdV:1Bvi2z3TpKXtTJLTRPTEd8": {},
     "1Bvi39mct9UNYZ9eTCCRdV:1Bvi2z3To8ddXo6R6ZftVD": {},
     "1Bvi39mct9UNYZ9eTCCRdV:1Bvi2z3UB1xUVg4Xz9WTpJ": {},
-    "1Bvi39mct9UNYZ9eTCCRdV:1Bvi2z3U3SiK6r7gf9vh7N": {}
+    "1Bvi39mct9UNYZ9eTCCRdV:1Bvi2z3U3SiK6r7gf9vh7N": {},
+    "1BwKKiQig1rULSLyeojV8x": {
+      "fill": "#FFFFFF",
+      "width": { "type": "fixed", "value": 103 },
+      "height": { "type": "fixed", "value": 43 },
+      "position": {
+        "x": { "type": "start", "start": 50 },
+        "y": { "type": "start", "start": 33 }
+      }
+    }
   },
   "componentURLs": [
     "https://cdn.jsdelivr.net/gh/uimix-editor/uimix@ba0157d5/packages/sandbox/dist-components/components.js",
