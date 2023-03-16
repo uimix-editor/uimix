@@ -25,6 +25,7 @@ importers:
       esbuild-register: ^3.4.2
       glob: ^9.2.1
       lodash-es: ^4.17.21
+      minimatch: ^7.4.2
       mkdirp: ^2.1.5
       prettier: ^2.8.4
       run-z: ^1.11.0
@@ -39,6 +40,7 @@ importers:
       data-uri-to-buffer: 4.0.1
       glob: 9.2.1
       lodash-es: 4.17.21
+      minimatch: 7.4.2
       mkdirp: 2.1.5
       prettier: 2.8.4
       tiny-typed-emitter: 2.1.0
