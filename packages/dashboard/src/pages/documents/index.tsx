@@ -249,10 +249,24 @@ export default function Documents() {
   };
 
   const onLocalOpenCLick = async () => {
-    toastController.show({
-      type: "error",
-      message: "Not implemented yet",
-    });
+    const api = getDesktopAPI();
+    if (!api) {
+      return;
+    }
+
+    try {
+      const doc = await api.addExistingLocalDocument();
+      if (!doc) {
+        return;
+      }
+      Router.push(`/documents/local/${doc.id}`);
+    } catch (err) {
+      toastController.show({
+        type: "error",
+        message: "Failed to create document",
+      });
+      return;
+    }
   };
 
   const isError = documents.status === "error";
@@ -266,7 +280,9 @@ export default function Documents() {
     }
   }, [isError]);
 
-  const [localDocuments, setLocalDocuments] = useState<LocalDocument[]>([]);
+  const [localDocuments, setLocalDocuments] = useState<
+    readonly LocalDocument[]
+  >([]);
   useEffect(() => {
     getDesktopAPI()
       ?.getLocalDocuments()
