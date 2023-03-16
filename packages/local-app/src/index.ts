@@ -1,4 +1,4 @@
-import { app, BrowserWindow, ipcMain } from "electron";
+import { app, BrowserWindow, ipcMain, shell } from "electron";
 import path from "path";
 import { localDocumentRepository } from "./LocalDocumentRepository";
 import { IPCMainAPI } from "./types/IPCMainAPI";
@@ -18,9 +18,18 @@ const createWindow = () => {
     },
   });
 
+  mainWindow.webContents.setWindowOpenHandler((details) => {
+    shell.openExternal(details.url);
+    return { action: "deny" };
+  });
+
   // and load the index.html of the app.
   // mainWindow.loadFile(path.join(__dirname, "index.html"));
-  mainWindow.loadURL("http://localhost:3000");
+  if (process.env.NODE_ENV === "development") {
+    mainWindow.loadURL("http://localhost:3000");
+  } else {
+    mainWindow.loadURL("https://www.uimix.app");
+  }
 
   // Open the DevTools.
   mainWindow.webContents.openDevTools();
