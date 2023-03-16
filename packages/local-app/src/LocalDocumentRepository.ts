@@ -139,7 +139,7 @@ export class LocalDocumentRepository {
   }
 
   deleteLocalDocument(id: string): void {
-    return;
+    this.documents = this.documents.filter((doc) => doc.id !== id);
   }
 
   getLocalDocumentData(id: string): ProjectJSON {
