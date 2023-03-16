@@ -27,12 +27,10 @@ const createWindow = () => {
   // mainWindow.loadFile(path.join(__dirname, "index.html"));
   if (process.env.NODE_ENV === "development") {
     mainWindow.loadURL("http://localhost:3000");
+    mainWindow.webContents.openDevTools();
   } else {
     mainWindow.loadURL("https://www.uimix.app");
   }
-
-  // Open the DevTools.
-  mainWindow.webContents.openDevTools();
 };
 
 // This method will be called when Electron has finished
