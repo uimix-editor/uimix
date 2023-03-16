@@ -13,11 +13,15 @@ describe(generateCode.name, () => {
       )
     );
     const code = await generateCode("../..", "components", json);
+    const result: Record<string, string> = {};
     for (const file of code) {
       if (file.content instanceof Buffer) {
-        file.content = "some binary data";
+        result[file.filePath] = "binary";
+      } else {
+        result[file.filePath] = file.content;
       }
     }
-    expect(code).toMatchSnapshot();
+
+    expect(result).toMatchSnapshot();
   });
 });
