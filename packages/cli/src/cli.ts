@@ -73,6 +73,8 @@ function compileCommand(
 
 const cli = cac("uimix");
 
+// TODO: output help if unknown command is passed
+
 cli
   .command("compile [...files]", "compile UIMix files")
   .option("-w, --watch", `[boolean] watch for changes`)
