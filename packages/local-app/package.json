@@ -9,6 +9,7 @@
     "watch": "node build.js --watch",
     "start": "electron-forge start",
     "dev": "NODE_ENV=development run-z build watch,start",
+    "prepackage": "npm run build",
     "package": "electron-forge package",
     "make": "electron-forge make",
     "publish": "electron-forge publish",
