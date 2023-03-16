@@ -134,10 +134,6 @@ export class LocalDocumentRepository {
     }
     fs.writeFileSync(document.path, formatJSON(JSON.stringify(data)));
   }
-
-  saveImage(data: Uint8Array): string {
-    return "";
-  }
 }
 
 export const localDocumentRepository = new LocalDocumentRepository();

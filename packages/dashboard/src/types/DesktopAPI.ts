@@ -20,8 +20,6 @@ export interface DesktopAPI {
 
   getLocalDocumentData(id: string): Promise<ProjectJSON>;
   setLocalDocumentData(id: string, data: ProjectJSON): Promise<void>;
-
-  saveImage(data: Uint8Array): Promise<string>;
 }
 
 export function getDesktopAPI(): DesktopAPI | undefined {

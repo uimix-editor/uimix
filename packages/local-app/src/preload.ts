@@ -33,9 +33,6 @@ const api: DesktopAPI = {
   setLocalDocumentData: (id: string, data: ProjectJSON) => {
     return invoke("setLocalDocumentData", id, data);
   },
-  saveImage: (data: Uint8Array) => {
-    return invoke("saveImage", data);
-  },
 };
 
 contextBridge.exposeInMainWorld("uimixDesktopAPI", api);

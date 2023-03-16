@@ -12,6 +12,4 @@ export interface IPCMainAPI {
 
   getLocalDocumentData(id: string): ProjectJSON;
   setLocalDocumentData(id: string, data: ProjectJSON): void;
-
-  saveImage(data: Uint8Array): string;
 }

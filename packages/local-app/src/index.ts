@@ -86,7 +86,4 @@ handleIPC({
   setLocalDocumentData: async (id, data) => {
     return localDocumentRepository.setLocalDocumentData(id, data);
   },
-  saveImage: async (data) => {
-    return localDocumentRepository.saveImage(data);
-  },
 });
