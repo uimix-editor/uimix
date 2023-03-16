@@ -8,7 +8,7 @@ const cli = cac("uimix");
 
 cli
   .command("<file>", "compile a UIMix file")
-  .option("-o, --output <outfile>", `[string] output file path`)
+  .option("-o, --output <outdir>", `[string] output directory`)
   .action(
     async (
       filePath: string,
@@ -21,14 +21,11 @@ cli
 
       const outFiles = generateCode(json, []);
 
-      const outPath = options.output ?? filePath;
-      const outPathExt = path.extname(outPath);
-      const basePath = outPathExt
-        ? outPath.slice(0, -outPathExt.length)
-        : outPath;
+      const outDir = path.resolve(options.output ?? path.dirname(filePath));
+      const outBaseName = path.basename(filePath, path.extname(filePath));
 
       for (const outFile of outFiles) {
-        const outPath = `${basePath}${outFile.suffix}`;
+        const outPath = path.join(outDir, outBaseName + outFile.suffix);
         fs.writeFileSync(outPath, outFile.content, "utf8");
       }
     }
