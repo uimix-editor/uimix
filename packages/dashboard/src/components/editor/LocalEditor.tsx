@@ -53,14 +53,29 @@ function loadProjectJSON(ydoc: Y.Doc, projectJSON: ProjectJSON): void {
   }
 }
 
-// TODO: garbage collect nodes/styles/images
 function toProjectJSON(ydoc: Y.Doc): ProjectJSON {
-  return {
+  const json: ProjectJSON = {
     nodes: ydoc.getMap("nodes").toJSON(),
     styles: ydoc.getMap("styles").toJSON(),
     componentURLs: ydoc.getArray("componentURLs").toJSON(),
     images: ydoc.getMap("images").toJSON(),
   };
+  // delete dangling nodes
+  for (const id of Object.keys(json.nodes)) {
+    if (json.nodes[id].type !== "project" && !json.nodes[id].parent) {
+      delete json.nodes[id];
+    }
+  }
+  // delete styles for deleted nodes
+  for (const styleID of Object.keys(json.styles)) {
+    const ids = styleID.split(":");
+    for (const id of ids) {
+      if (!json.nodes[id]) {
+        delete json.styles[styleID];
+      }
+    }
+  }
+  return json;
 }
 
 class Connection extends TypedEmitter<{
