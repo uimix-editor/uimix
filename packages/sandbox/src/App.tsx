@@ -1,7 +1,7 @@
 import { useState } from "react";
 import reactLogo from "./assets/react.svg";
 import "./App.css";
-import { Button, Page } from "./uimix";
+import { Button, Page } from "./uimix/components";
 
 function App() {
   const [count, setCount] = useState(0);
