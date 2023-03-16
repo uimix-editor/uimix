@@ -74,7 +74,7 @@ export class ReactGenerator {
     pathToPackageRoot: string,
     basename: string,
     project: Project,
-    imageFiles: { hash: string; suffix: string }[]
+    imageFiles: { filePath: string; hash: string }[]
   ) {
     this.pathToPackageRoot = pathToPackageRoot;
     this.basename = basename;
@@ -95,7 +95,7 @@ export class ReactGenerator {
   pathToPackageRoot: string;
   basename: string;
   project: Project;
-  imageFiles: { hash: string; suffix: string }[];
+  imageFiles: { filePath: string; hash: string }[];
   componentsWithNames: [Component, string][] = [];
   refIDs = new Map<string, string>();
   moduleVarNames = new Map<string, string>(); // path -> varName
@@ -119,8 +119,8 @@ export class ReactGenerator {
       this.moduleVarNames.set(modulePath, varName);
     }
 
-    for (const { hash, suffix } of this.imageFiles) {
-      const importPath = `./images/${hash}${suffix}`;
+    for (const { hash, filePath } of this.imageFiles) {
+      const importPath = "./" + filePath;
       const varName = imageHashToVarName(hash);
       results.push(`import ${varName} from "${importPath}";`);
       this.imageVarNames.set(hash, varName);

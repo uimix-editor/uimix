@@ -22,29 +22,19 @@ export async function generateCode(
   const project = new Project(ydoc);
   loadProjectJSON(ydoc, projectJSON);
 
-  const outFiles: {
+  const imageFiles: {
+    hash: string;
     filePath: string;
     content: string | Buffer;
   }[] = [];
 
-  const imageFiles: {
-    hash: string;
-    suffix: string;
-  }[] = [];
-
-  // get images
   for (const [hash, image] of Object.entries(projectJSON.images ?? {})) {
     const decoded = dataUriToBuffer(image.url);
-
     const suffix = mime.extension(decoded.type) ?? "bin";
-
-    outFiles.push({
-      filePath: `images/${hash}.${suffix}`,
-      content: decoded,
-    });
     imageFiles.push({
       hash,
-      suffix: `.${suffix}`,
+      filePath: `images/${hash}.${suffix}`,
+      content: decoded,
     });
   }
 
@@ -55,7 +45,7 @@ export async function generateCode(
   );
   const cssContent = new CSSGenerator(project).generate();
   return [
-    ...outFiles,
+    ...imageFiles,
     {
       filePath: basename + ".tsx",
       content: tsContent,
