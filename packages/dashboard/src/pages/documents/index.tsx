@@ -260,13 +260,53 @@ export default function Documents() {
           <div className="max-w-[960px] mx-auto">
             <div className="flex justify-between items-center">
               <h1 className="font-bold text-lg py-8">Documents</h1>
-              <button
-                className="h-fit bg-blue-500 hover:bg-blue-700 text-base text-white py-1 px-3 rounded flex items-center gap-1"
-                onClick={onAddClick}
-              >
-                <Icon icon="material-symbols:add" />
-                Add
-              </button>
+              {getDesktopAPI() ? (
+                <DropdownMenu.Root>
+                  <DropdownMenu.Trigger asChild>
+                    <button className="h-fit bg-blue-500 hover:bg-blue-700 text-base text-white py-1 px-3 rounded flex items-center gap-1">
+                      <Icon icon="material-symbols:add" />
+                      Add
+                    </button>
+                  </DropdownMenu.Trigger>
+                  <DropdownMenu.Portal>
+                    <DropdownMenu.Content
+                      align="end"
+                      sideOffset={4}
+                      className={dropdownContentClasses}
+                    >
+                      <DropdownMenu.Item
+                        className={dropdownItemClasses}
+                        onClick={onAddClick}
+                      >
+                        New Cloud Document
+                      </DropdownMenu.Item>
+                      <DropdownMenu.Separator
+                        className={dropdownSeparatorClasses}
+                      />
+                      <DropdownMenu.Item
+                        className={dropdownItemClasses}
+                        onClick={onAddClick}
+                      >
+                        New Local Document...
+                      </DropdownMenu.Item>
+                      <DropdownMenu.Item
+                        className={dropdownItemClasses}
+                        onClick={onAddClick}
+                      >
+                        Add Existing Local Document...
+                      </DropdownMenu.Item>
+                    </DropdownMenu.Content>
+                  </DropdownMenu.Portal>
+                </DropdownMenu.Root>
+              ) : (
+                <button
+                  className="h-fit bg-blue-500 hover:bg-blue-700 text-base text-white py-1 px-3 rounded flex items-center gap-1"
+                  onClick={onAddClick}
+                >
+                  <Icon icon="material-symbols:add" />
+                  Add
+                </button>
+              )}
             </div>
             <ul className="grid grid-cols-3 gap-4">
               {documents.data?.map((document) => (
