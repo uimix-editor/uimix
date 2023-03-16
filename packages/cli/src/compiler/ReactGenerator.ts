@@ -72,10 +72,12 @@ function getExternalModulePaths(components: Component[]): Set<string> {
 export class ReactGenerator {
   constructor(
     pathToPackageRoot: string,
+    basename: string,
     project: Project,
     imageFiles: { hash: string; suffix: string }[]
   ) {
     this.pathToPackageRoot = pathToPackageRoot;
+    this.basename = basename;
     this.project = project;
     this.imageFiles = imageFiles;
 
@@ -91,6 +93,7 @@ export class ReactGenerator {
   }
 
   pathToPackageRoot: string;
+  basename: string;
   project: Project;
   imageFiles: { hash: string; suffix: string }[];
   componentsWithNames: [Component, string][] = [];
@@ -123,7 +126,7 @@ export class ReactGenerator {
       this.imageVarNames.set(hash, varName);
     }
 
-    results.push(`import './index.css';`);
+    results.push(`import './${this.basename}.css';`);
 
     results.push(applyOverridesSnippet);
 

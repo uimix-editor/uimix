@@ -48,7 +48,7 @@ export async function generateCode(
   }
 
   const tsContent = formatTypeScript(
-    new ReactGenerator(pathToPackageRoot, project, imageFiles)
+    new ReactGenerator(pathToPackageRoot, basename, project, imageFiles)
       .render()
       .join("\n")
   );
