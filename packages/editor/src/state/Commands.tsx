@@ -1,8 +1,7 @@
 import { action, computed, runInAction } from "mobx";
 import { isTextInput } from "../utils/Focus";
-import { blobToDataURL } from "../utils/Blob";
 import { Shortcut } from "../utils/Shortcut";
-import { Selectable } from "../models/Selectable";
+import { Selectable, selectablesToProjectJSON } from "../models/Selectable";
 import { exportToJSON as exportJSON, importJSON } from "./JSONExport";
 import { viewportState } from "./ViewportState";
 import { projectState } from "./ProjectState";
@@ -18,7 +17,6 @@ import { createComponent } from "../services/CreateComponent";
 import { PageHierarchyEntry } from "../models/Project";
 import { posix as path } from "path-browserify";
 import { Node } from "../models/Node";
-import { selectablesToProjectJSON } from "../models/toProjectJSON";
 import { generateExampleNodes } from "../models/generateExampleNodes";
 import { dialogState } from "./DialogState";
 
