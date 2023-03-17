@@ -231,10 +231,10 @@ const ComponentThumbnail: React.FC<{
           };
           // TODO: exotic component
           if (component instanceof Component) {
-            instanceNodeStyle.mainComponentID = component.node.id;
+            instanceNodeStyle.mainComponent = component.node.id;
             instanceNode.name = component.node.name;
           } else {
-            instanceNodeStyle.foreignComponentID = {
+            instanceNodeStyle.foreignComponent = {
               type: "react",
               path: component.path,
               name: component.name,

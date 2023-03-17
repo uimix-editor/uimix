@@ -122,12 +122,6 @@
       "name": "Stack",
       "parent": "1Bvi365mtWZmXKDPeJTB4s",
       "index": 3
-    },
-    "1BwKKiQig1rULSLyeojV8x": {
-      "type": "frame",
-      "index": 15,
-      "parent": "1Bvi2ymHPmVHms6RDurmNN",
-      "name": "Frame"
     }
   },
   "styles": {
@@ -175,7 +169,7 @@
         "y": { "type": "start", "start": 184 }
       },
       "width": { "type": "hugContents" },
-      "height": { "type": "fixed", "value": 117 },
+      "height": { "type": "hugContents" },
       "fill": "#FFFFFF",
       "layout": "stack",
       "gap": 10,
@@ -222,7 +216,7 @@
     "1Bvi31VKu8gfy6XzJ8xrHA": {
       "width": { "type": "fillContainer", "value": 744 },
       "height": { "type": "hugContents" },
-      "foreignComponentID": {
+      "foreignComponent": {
         "type": "react",
         "path": "src/stories/Header.tsx",
         "name": "Header",
@@ -245,7 +239,7 @@
       },
       "width": { "type": "hugContents" },
       "height": { "type": "hugContents" },
-      "foreignComponentID": {
+      "foreignComponent": {
         "type": "react",
         "path": "src/stories/Button.tsx",
         "name": "Button",
@@ -263,7 +257,7 @@
         "y": { "type": "start", "start": 28 }
       },
       "fill": "#BABABA",
-      "mainComponentID": "1Bvi2z3USBZi1pWrvPd6Ut"
+      "mainComponent": "1Bvi2z3USBZi1pWrvPd6Ut"
     },
     "1Bvi2z3UrU9VkawwAteXs8:1Bvi2z3UGTM64JtRT7Qc1S": {
       "textContent": "Override Name"
@@ -283,21 +277,12 @@
         "x": { "type": "start", "start": 165 },
         "y": { "type": "start", "start": 86 }
       },
-      "mainComponentID": "1Bvi2zJALza4DrqmNaGYAk"
+      "mainComponent": "1Bvi2zJALza4DrqmNaGYAk"
     },
     "1Bvi39mct9UNYZ9eTCCRdV:1Bvi2z3TpKXtTJLTRPTEd8": {},
     "1Bvi39mct9UNYZ9eTCCRdV:1Bvi2z3To8ddXo6R6ZftVD": {},
     "1Bvi39mct9UNYZ9eTCCRdV:1Bvi2z3UB1xUVg4Xz9WTpJ": {},
-    "1Bvi39mct9UNYZ9eTCCRdV:1Bvi2z3U3SiK6r7gf9vh7N": {},
-    "1BwKKiQig1rULSLyeojV8x": {
-      "fill": "#FFFFFF",
-      "width": { "type": "fixed", "value": 103 },
-      "height": { "type": "fixed", "value": 43 },
-      "position": {
-        "x": { "type": "start", "start": 50 },
-        "y": { "type": "start", "start": 33 }
-      }
-    }
+    "1Bvi39mct9UNYZ9eTCCRdV:1Bvi2z3U3SiK6r7gf9vh7N": {}
   },
   "componentURLs": [
     "https://cdn.jsdelivr.net/gh/uimix-editor/uimix@ba0157d5/packages/sandbox/dist-components/components.js",

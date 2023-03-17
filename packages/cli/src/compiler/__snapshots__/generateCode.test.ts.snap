@@ -33,7 +33,7 @@ exports[`generateCode > generates code 1`] = `
 .uimix-1Bvi2z3TfkSpYXW29daTN8 {
   position: relative;
   width: max-content;
-  height: 117px;
+  height: max-content;
   display: flex;
   flex-direction: row;
   align-items: flex-start;

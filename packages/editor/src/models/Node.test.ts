@@ -151,7 +151,7 @@ describe(Node.name, () => {
     page.append([instance]);
 
     const instanceSelectable = proj.selectables.get([instance.id]);
-    instanceSelectable.style.mainComponentID = componentID;
+    instanceSelectable.style.mainComponent = componentID;
 
     const instanceTextSelectable = instanceSelectable.children[0];
 
@@ -201,7 +201,7 @@ describe(Node.name, () => {
     instance.name = "Instance";
     frame.append([instance]);
 
-    instance.selectable.style.mainComponentID = component.id;
+    instance.selectable.style.mainComponent = component.id;
 
     expect(instance.children.length).toBe(0);
   });

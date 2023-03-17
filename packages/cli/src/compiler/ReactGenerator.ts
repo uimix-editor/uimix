@@ -55,7 +55,7 @@ function getExternalModulePaths(components: Component[]): Set<string> {
 
   for (const component of components) {
     const visitSelectable = (selectable: Selectable) => {
-      const foreignComponentID = selectable.selfStyle.foreignComponentID;
+      const foreignComponentID = selectable.selfStyle.foreignComponent;
       if (foreignComponentID) {
         externalModules.add(foreignComponentID.path);
       }
@@ -146,7 +146,7 @@ export class ReactGenerator {
       const overrideProps = [...refIDs].map(([id, refID]) => {
         const node = this.project.nodes.get(id);
         const selectable = node?.selectable;
-        const foreignComponentID = selectable?.style.foreignComponentID;
+        const foreignComponentID = selectable?.style.foreignComponent;
         const tagName = selectable?.style.tagName ?? "div";
         if (node?.type === "foreign" && foreignComponentID) {
           const exportName = foreignComponentID.name;
@@ -228,7 +228,7 @@ export class ReactGenerator {
       ];
     }
     if (node.type === "foreign") {
-      const foreignComponentID = style.foreignComponentID;
+      const foreignComponentID = style.foreignComponent;
       if (!foreignComponentID) {
         return [];
       }

@@ -153,7 +153,7 @@ export function generateExampleNodes(page: Node) {
       x: { type: "start", start: 50 },
       y: { type: "start", start: 500 },
     };
-    instanceNodeStyle.mainComponentID = componentNode.id;
+    instanceNodeStyle.mainComponent = componentNode.id;
   }
 
   // TODO: shape nodes

@@ -278,7 +278,7 @@ exports[`selectablesToProjectJSON > works 1`] = `
     "1Bvi2z3UaHFmaikKtfcmGX:1Bvi2z3UGTM64JtRT7Qc1S": {},
     "1Bvi2z3UrU9VkawwAteXs8": {
       "fill": "#BABABA",
-      "mainComponentID": "1Bvi2z3USBZi1pWrvPd6Ut",
+      "mainComponent": "1Bvi2z3USBZi1pWrvPd6Ut",
       "position": {
         "x": {
           "start": 160,
@@ -319,7 +319,7 @@ exports[`selectablesToProjectJSON > works 1`] = `
       },
     },
     "1Bvi31VKu8gfy6XzJ8xrHA": {
-      "foreignComponentID": {
+      "foreignComponent": {
         "name": "Header",
         "path": "src/stories/Header.tsx",
         "props": {},
@@ -334,7 +334,7 @@ exports[`selectablesToProjectJSON > works 1`] = `
       },
     },
     "1Bvi32d9RMi3ES5kk2UvuM": {
-      "foreignComponentID": {
+      "foreignComponent": {
         "name": "Button",
         "path": "src/stories/Button.tsx",
         "props": {
@@ -406,7 +406,7 @@ exports[`selectablesToProjectJSON > works 1`] = `
       },
     },
     "1Bvi39mct9UNYZ9eTCCRdV": {
-      "mainComponentID": "1Bvi2zJALza4DrqmNaGYAk",
+      "mainComponent": "1Bvi2zJALza4DrqmNaGYAk",
       "position": {
         "x": {
           "start": 165,

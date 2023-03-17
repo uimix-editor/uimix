@@ -235,7 +235,7 @@ export class Selectable {
   @computed get mainComponent(): Component | undefined {
     const originalNode = this.originalNode;
     if (originalNode.type === "instance") {
-      const { mainComponentID } = this.originalStyle;
+      const mainComponentID = this.originalStyle.mainComponent;
       if (mainComponentID) {
         const ownerComponents = this.nodePath.map(
           (node) => node.ownerComponent?.node

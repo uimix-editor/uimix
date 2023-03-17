@@ -66,10 +66,10 @@ export const defaultStyle: StyleJSON = {
   imageHash: null,
 
   // instance
-  mainComponentID: null,
+  mainComponent: null,
 
   // foreign instance
-  foreignComponentID: null,
+  foreignComponent: null,
 
   // element
   tagName: null,
