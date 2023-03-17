@@ -6,7 +6,7 @@ import { SelectableMap } from "./Selectable";
 import { Node, NodeMap } from "./Node";
 import { computed, makeObservable } from "mobx";
 import { ProjectJSON } from "@uimix/node-data";
-import { toProjectJSON } from "./toProjectJSON";
+import { selectablesToProjectJSON } from "./toProjectJSON";
 import { ImageManager } from "./ImageManager";
 import { Component } from "./Component";
 import { ObservableYArray } from "../utils/ObservableYArray";
@@ -165,7 +165,7 @@ export class Project {
 
   toJSON(): ProjectJSON {
     return {
-      ...toProjectJSON(this.node.children.map((c) => c.selectable)),
+      ...selectablesToProjectJSON(this.node.children.map((c) => c.selectable)),
       componentURLs: this.componentURLs.toJSON(),
     };
   }

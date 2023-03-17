@@ -18,7 +18,7 @@ import { createComponent } from "../services/CreateComponent";
 import { PageHierarchyEntry } from "../models/Project";
 import { posix as path } from "path-browserify";
 import { Node } from "../models/Node";
-import { toProjectJSON } from "../models/toProjectJSON";
+import { selectablesToProjectJSON } from "../models/toProjectJSON";
 import { generateExampleNodes } from "../models/generateExampleNodes";
 import { dialogState } from "./DialogState";
 
@@ -45,7 +45,7 @@ class Commands {
 
   async copy() {
     // TODO: copy from instance contents
-    const json = toProjectJSON(
+    const json = selectablesToProjectJSON(
       projectState.selectedNodes.map((node) => node.selectable)
     );
     await Clipboard.writeNodes(json);

@@ -3,7 +3,9 @@ import { Selectable } from "./Selectable";
 import { IStyle } from "./Style";
 
 // TODO generate correctly from instance contents
-export function toProjectJSON(selectables: Selectable[]): ProjectJSON {
+export function selectablesToProjectJSON(
+  selectables: Selectable[]
+): ProjectJSON {
   const nodeJSONs: Record<string, NodeJSON> = {};
   const styles: Record<string, Partial<IStyle>> = {};
 
