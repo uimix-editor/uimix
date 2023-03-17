@@ -18,6 +18,5 @@
   "private": true,
   "devDependencies": {
     "run-z": "^1.11.0"
-  },
-  "packageManager": "^pnpm@7.29.1"
+  }
 }
