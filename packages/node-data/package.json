@@ -3,9 +3,7 @@
   "license": "MIT",
   "main": "src/index.ts",
   "type": "module",
-  "scripts": {
-    "build": "tsc"
-  },
+  "scripts": {},
   "dependencies": {
     "zod": "^3.21.4"
   }

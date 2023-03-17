@@ -6282,6 +6282,7 @@ class Oa {
 const Kf = [
   {
     framework: "react",
+    // relative to the package root (closest package.json)
     path: "src/stories/Button.tsx",
     name: "Button",
     props: [
@@ -6309,6 +6310,7 @@ const Kf = [
   },
   {
     framework: "react",
+    // relative to the package root (closest package.json)
     path: "src/stories/Header.tsx",
     name: "Header",
     props: [],
