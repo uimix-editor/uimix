@@ -26,7 +26,7 @@
     "build:tsc": "tsc",
     "dev:esbuild": "node build.cjs --watch",
     "dev": "run-z build:esbuild dev:esbuild",
-    "test": "vitest"
+    "test": "vitest run"
   },
   "dependencies": {
     "cac": "^6.7.14",

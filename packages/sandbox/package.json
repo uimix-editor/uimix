@@ -16,7 +16,7 @@
     "dev": "run-z dev:vite,dev:uimix,dev:components",
     "preview": "vite preview",
     "storybook": "start-storybook -p 6006",
-    "test": "vitest",
+    "test": "vitest run",
     "uimix": "uimix --port 4001"
   },
   "dependencies": {

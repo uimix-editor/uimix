@@ -13,7 +13,7 @@
     "lint": "eslint src",
     "preview": "vite preview",
     "storybook": "start-storybook -p 6006",
-    "test": "vitest"
+    "test": "vitest run"
   },
   "dependencies": {
     "@emotion/react": "^11.10.6",
