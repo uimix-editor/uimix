@@ -42,12 +42,14 @@ export function toProjectJSON(ydoc: Y.Doc): ProjectJSON {
     componentURLs: ydoc.getArray("componentURLs").toJSON(),
     images: ydoc.getMap("images").toJSON(),
   };
+
   // delete dangling nodes
   for (const id of Object.keys(json.nodes)) {
     if (json.nodes[id].type !== "project" && !json.nodes[id].parent) {
       delete json.nodes[id];
     }
   }
+
   // delete styles for deleted nodes
   for (const styleID of Object.keys(json.styles)) {
     const ids = styleID.split(":");
@@ -57,5 +59,8 @@ export function toProjectJSON(ydoc: Y.Doc): ProjectJSON {
       }
     }
   }
+
+  // TODO: delete dangling images
+
   return json;
 }

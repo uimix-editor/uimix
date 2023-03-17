@@ -10,6 +10,7 @@ import { selectablesToProjectJSON } from "./toProjectJSON";
 import { ImageManager } from "./ImageManager";
 import { Component } from "./Component";
 import { ObservableYArray } from "../utils/ObservableYArray";
+import { loadProjectJSON, toProjectJSON } from "./ProjectJSON";
 
 export interface PageHierarchyFolderEntry {
   type: "directory";
@@ -164,29 +165,11 @@ export class Project {
   }
 
   toJSON(): ProjectJSON {
-    return {
-      ...selectablesToProjectJSON(this.node.children.map((c) => c.selectable)),
-      componentURLs: this.componentURLs.toJSON(),
-    };
+    return toProjectJSON(this.doc);
   }
 
   loadJSON(json: ProjectJSON) {
-    this.node.clear();
-
-    for (const [id, nodeJSON] of Object.entries(json.nodes)) {
-      const node = this.nodes.getOrCreate(nodeJSON.type, id);
-      node.loadJSON(nodeJSON);
-      if (node.type === "page") {
-        this.node.append([node]);
-      }
-    }
-    for (const [id, style] of Object.entries(json.styles)) {
-      const selectable = this.selectables.get(id.split(":"));
-      selectable.selfStyle.loadJSON(style);
-    }
-
-    this.componentURLs.delete(0, this.componentURLs.length);
-    this.componentURLs.push(json.componentURLs ?? []);
+    loadProjectJSON(this.doc, json);
   }
 
   get components(): Component[] {
