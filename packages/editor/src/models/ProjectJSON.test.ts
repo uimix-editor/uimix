@@ -23,6 +23,8 @@ describe(loadProjectJSON.name, () => {
 
     expect([...project.nodes.data.keys()]).toMatchSnapshot();
     expect([...project.selectables.stylesData.keys()]).toMatchSnapshot();
+    expect(project.imageManager.images.toJSON()).toMatchSnapshot();
+    expect(project.componentURLs).toMatchSnapshot();
     expect(toProjectJSON(ydoc)).toEqual(projectJSON);
   });
 });
