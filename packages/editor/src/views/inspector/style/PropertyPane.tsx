@@ -22,7 +22,7 @@ export const PropertyPane: React.FC = observer(function PropertyPane() {
 
   // TODO: multiple components
   const selectable = selectables[0];
-  const componentID = selectable.style.foreignComponentID;
+  const componentID = selectable.style.foreignComponent;
   const component = componentID
     ? ForeignComponentManager.global?.get(componentID)
     : undefined;
@@ -49,7 +49,7 @@ export const PropertyPane: React.FC = observer(function PropertyPane() {
                   prop={prop}
                   value={componentID?.props?.[prop.name]}
                   onValueChange={action((value) => {
-                    const oldComponentID = selectable.style.foreignComponentID;
+                    const oldComponentID = selectable.style.foreignComponent;
                     if (!oldComponentID) {
                       return;
                     }
@@ -60,7 +60,7 @@ export const PropertyPane: React.FC = observer(function PropertyPane() {
                         [prop.name]: value,
                       },
                     };
-                    selectable.style.foreignComponentID = componentID;
+                    selectable.style.foreignComponent = componentID;
                   })}
                 />
               </>

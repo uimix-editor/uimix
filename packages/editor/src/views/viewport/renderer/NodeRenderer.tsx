@@ -171,7 +171,7 @@ export const NodeRenderer: React.FC<{
     }
 
     if (node.type === "foreign") {
-      const foreignComponentID = style.foreignComponentID;
+      const foreignComponentID = style.foreignComponent;
       const foreignComponent = foreignComponentID
         ? foreignComponentManager?.get(foreignComponentID)
         : undefined;

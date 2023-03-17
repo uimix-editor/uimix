@@ -1,21 +1,15 @@
 import { describe, expect, it } from "vitest";
-import * as fs from "fs";
-import * as path from "path";
 import * as Y from "yjs";
 import { ProjectJSON } from "@uimix/node-data";
 import { loadProjectJSON, toProjectJSON } from "./ProjectJSON";
 import { Project } from "./Project";
+// @ts-ignore
+// eslint-disable-next-line import/no-unresolved
+import uimixFile from "../../../sandbox/src/uimix/components.uimix?raw";
 
 describe(loadProjectJSON.name, () => {
   it("works", () => {
-    const projectJSON = ProjectJSON.parse(
-      JSON.parse(
-        fs.readFileSync(
-          path.join(__dirname, "__fixtures__/project.json"),
-          "utf8"
-        )
-      )
-    );
+    const projectJSON = ProjectJSON.parse(JSON.parse(uimixFile));
 
     const ydoc = new Y.Doc();
     const project = new Project(ydoc);

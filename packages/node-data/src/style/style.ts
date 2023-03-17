@@ -54,10 +54,10 @@ export const StyleJSON = z.object({
   imageHash: z.union([z.string(), z.null()]),
 
   // instance
-  mainComponentID: z.union([z.string(), z.null()]),
+  mainComponent: z.union([z.string(), z.null()]),
 
   // foreign
-  foreignComponentID: z.union([ForeignComponentRef, z.null()]),
+  foreignComponent: z.union([ForeignComponentRef, z.null()]),
 
   // tag name
   tagName: z.union([z.string(), z.null()]),
