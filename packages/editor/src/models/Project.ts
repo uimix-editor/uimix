@@ -6,7 +6,6 @@ import { SelectableMap } from "./Selectable";
 import { Node, NodeMap } from "./Node";
 import { computed, makeObservable } from "mobx";
 import { ProjectJSON } from "@uimix/node-data";
-import { selectablesToProjectJSON } from "./toProjectJSON";
 import { ImageManager } from "./ImageManager";
 import { Component } from "./Component";
 import { ObservableYArray } from "../utils/ObservableYArray";
