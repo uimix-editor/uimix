@@ -70,7 +70,14 @@ function getExternalModulePaths(components: Component[]): Set<string> {
 }
 
 export class ReactGenerator {
-  constructor(project: Project, imageFiles: string[]) {
+  constructor(
+    pathToPackageRoot: string,
+    basename: string,
+    project: Project,
+    imageFiles: { filePath: string; hash: string }[]
+  ) {
+    this.pathToPackageRoot = pathToPackageRoot;
+    this.basename = basename;
     this.project = project;
     this.imageFiles = imageFiles;
 
@@ -85,8 +92,10 @@ export class ReactGenerator {
     }
   }
 
+  pathToPackageRoot: string;
+  basename: string;
   project: Project;
-  imageFiles: string[];
+  imageFiles: { filePath: string; hash: string }[];
   componentsWithNames: [Component, string][] = [];
   refIDs = new Map<string, string>();
   moduleVarNames = new Map<string, string>(); // path -> varName
@@ -103,23 +112,21 @@ export class ReactGenerator {
         path.basename(modulePath, path.extname(modulePath))
       );
       results.push(
-        `import * as ${varName} from "../../${modulePath.replace(
-          /\.[jt]sx?$/,
-          ""
-        )}";`
+        `import * as ${varName} from "${
+          this.pathToPackageRoot
+        }/${modulePath.replace(/\.[jt]sx?$/, "")}";`
       );
       this.moduleVarNames.set(modulePath, varName);
     }
 
-    for (const file of this.imageFiles) {
-      const importPath = `./images/${file}`;
-      const hash = path.basename(file, path.extname(file));
+    for (const { hash, filePath } of this.imageFiles) {
+      const importPath = "./" + filePath;
       const varName = imageHashToVarName(hash);
       results.push(`import ${varName} from "${importPath}";`);
       this.imageVarNames.set(hash, varName);
     }
 
-    results.push(`import './index.css';`);
+    results.push(`import './${this.basename}.css';`);
 
     results.push(applyOverridesSnippet);
 

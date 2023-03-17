@@ -7,10 +7,9 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "dev:dashboard": "cd packages/dashboard && pnpm dev",
     "dev:collaborative-backend": "cd packages/collaborative-backend && pnpm dev",
-    "dev:devserver": "cd packages/devserver && pnpm dev",
     "dev:editor": "cd packages/editor && pnpm dev",
     "dev:sandbox": "cd packages/sandbox && pnpm dev",
-    "dev": "run-z dev:dashboard,dev:collaborative-backend,dev:devserver,dev:editor,dev:sandbox"
+    "dev": "run-z dev:dashboard,dev:collaborative-backend,dev:editor,dev:sandbox"
   },
   "keywords": [],
   "author": "",

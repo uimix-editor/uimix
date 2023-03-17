@@ -34,6 +34,7 @@ class ReactRenderer implements ForeignComponentRenderer {
 export const components: ForeignComponent[] = [
   {
     framework: "react",
+    // relative to the package root (closest package.json)
     path: "src/stories/Button.tsx",
     name: "Button",
     props: [
@@ -62,6 +63,7 @@ export const components: ForeignComponent[] = [
   },
   {
     framework: "react",
+    // relative to the package root (closest package.json)
     path: "src/stories/Header.tsx",
     name: "Header",
     props: [],

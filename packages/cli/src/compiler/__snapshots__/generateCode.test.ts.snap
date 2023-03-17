@@ -2,7 +2,7 @@
 
 exports[`generateCode > generates code 1`] = `
 {
-  "index.css": ".uimix-1Bvi2z3UPfi6W3L8nDt5VA {
+  "components.css": ".uimix-1Bvi2z3UPfi6W3L8nDt5VA {
   position: relative;
   width: max-content;
   height: max-content;
@@ -33,7 +33,7 @@ exports[`generateCode > generates code 1`] = `
 .uimix-1Bvi2z3TfkSpYXW29daTN8 {
   position: relative;
   width: max-content;
-  height: max-content;
+  height: 117px;
   display: flex;
   flex-direction: row;
   align-items: flex-start;
@@ -235,11 +235,11 @@ exports[`generateCode > generates code 1`] = `
 }
 .uimix-1Bvi39mct9UNYZ9eTCCRdV-1Bvi2z3U3SiK6r7gf9vh7N {
 }",
-  "index.tsx": "import React from \\"react\\";
+  "components.tsx": "import React from \\"react\\";
 import * as header from \\"../../src/stories/Header\\";
 import * as button from \\"../../src/stories/Button\\";
 import image_YmY$tuteU03QY$k_2ARy1uacNmXDNmOX$FFAlj2qCIo from \\"./images/YmY-tuteU03QY-k_2ARy1uacNmXDNmOX-FFAlj2qCIo=.png\\";
-import \\"./index.css\\";
+import \\"./components.css\\";
 
 function applyOverrides(
   rootProps: any,
@@ -398,5 +398,6 @@ export const Page = React.forwardRef((props, ref) => {
   }
 >;
 ",
+  "images/YmY-tuteU03QY-k_2ARy1uacNmXDNmOX-FFAlj2qCIo=.png": "binary",
 }
 `;

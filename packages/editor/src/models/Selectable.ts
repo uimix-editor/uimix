@@ -6,7 +6,7 @@ import { getOrCreate } from "../state/Collection";
 import { computed, makeObservable, observable } from "mobx";
 import { Rect } from "paintvec";
 import { resizeWithBoundingBox } from "../services/Resize";
-import { NodeType } from "@uimix/node-data";
+import { NodeJSON, NodeType, ProjectJSON } from "@uimix/node-data";
 import { Project } from "./Project";
 import { Component } from "./Component";
 
@@ -510,4 +510,36 @@ export class SelectableMap {
       return new Selectable(this.project, idPath);
     });
   }
+}
+
+// TODO generate correctly from instance contents
+export function selectablesToProjectJSON(
+  selectables: Selectable[]
+): ProjectJSON {
+  const nodeJSONs: Record<string, NodeJSON> = {};
+  const styles: Record<string, Partial<IStyle>> = {};
+
+  const addRecursively = (selectable: Selectable) => {
+    if (selectable.idPath.length === 1) {
+      const node = selectable.originalNode;
+      nodeJSONs[node.id] = node.toJSON();
+      if (selectables.includes(selectable)) {
+        nodeJSONs[node.id].parent = undefined;
+      }
+    }
+
+    styles[selectable.id] = selectable.selfStyle.toJSON();
+    for (const child of selectable.children) {
+      addRecursively(child);
+    }
+  };
+
+  for (const selected of selectables) {
+    addRecursively(selected);
+  }
+
+  return {
+    nodes: nodeJSONs,
+    styles,
+  };
 }

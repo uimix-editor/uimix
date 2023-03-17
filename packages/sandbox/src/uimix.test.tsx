@@ -1,6 +1,6 @@
 import reactRenderer from "react-test-renderer";
 import { describe, expect, it } from "vitest";
-import { Button, Page } from "./uimix";
+import { Button, Page } from "./uimix/components";
 
 describe(Button.name, () => {
   it("render", async () => {

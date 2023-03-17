@@ -1,12 +1,14 @@
 import { describe, expect, it } from "vitest";
-import * as Y from "yjs";
-import { Project } from "./Project";
 import * as fs from "fs";
 import * as path from "path";
+import * as Y from "yjs";
 import { ProjectJSON } from "@uimix/node-data";
+import { loadProjectJSON } from "./ProjectJSON";
+import { Project } from "./Project";
+import { selectablesToProjectJSON } from "./Selectable";
 
-describe(Project.name, () => {
-  it("loads example node snapshot", () => {
+describe(selectablesToProjectJSON.name, () => {
+  it("works", () => {
     const projectJSON = ProjectJSON.parse(
       JSON.parse(
         fs.readFileSync(
@@ -18,8 +20,12 @@ describe(Project.name, () => {
 
     const ydoc = new Y.Doc();
     const project = new Project(ydoc);
-    project.loadJSON(projectJSON);
+    loadProjectJSON(ydoc, projectJSON);
 
-    expect(project.toJSON()).toEqual(projectJSON);
+    const partial = selectablesToProjectJSON(
+      project.pages.all[0].selectable.children
+    );
+
+    expect(partial).toMatchSnapshot();
   });
 });
