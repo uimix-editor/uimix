@@ -306,18 +306,37 @@ export class Selectable {
     return this.computedRectProvider?.value ?? new Rect();
   }
 
+  @computed get computedPaddingRect(): Rect {
+    const { computedRect, style } = this;
+    const {
+      borderLeftWidth,
+      borderRightWidth,
+      borderTopWidth,
+      borderBottomWidth,
+    } = style;
+
+    return Rect.from({
+      left: computedRect.left + borderLeftWidth,
+      top: computedRect.top + borderTopWidth,
+      width: computedRect.width - borderLeftWidth - borderRightWidth,
+      height: computedRect.height - borderTopWidth - borderBottomWidth,
+    });
+  }
+
   @computed get computedOffsetRect(): Rect {
     const { offsetParent } = this;
     if (!offsetParent) {
       return this.computedRect;
     }
-    return this.computedRect.translate(offsetParent.computedRect.topLeft.neg);
+    return this.computedRect.translate(
+      offsetParent.computedPaddingRect.topLeft.neg
+    );
   }
 
   @computed get computedOffsetLeft(): number {
     const { offsetParent } = this;
     if (offsetParent) {
-      return this.computedRect.left - offsetParent.computedRect.left;
+      return this.computedRect.left - offsetParent.computedPaddingRect.left;
     }
     return this.computedRect.left;
   }
@@ -325,7 +344,7 @@ export class Selectable {
   @computed get computedOffsetTop(): number {
     const { offsetParent } = this;
     if (offsetParent) {
-      return this.computedRect.top - offsetParent.computedRect.top;
+      return this.computedRect.top - offsetParent.computedPaddingRect.top;
     }
     return this.computedRect.top;
   }
@@ -333,14 +352,14 @@ export class Selectable {
   @computed get computedOffsetRight(): number | undefined {
     const { offsetParent } = this;
     if (offsetParent) {
-      return offsetParent.computedRect.right - this.computedRect.right;
+      return offsetParent.computedPaddingRect.right - this.computedRect.right;
     }
   }
 
   @computed get computedOffsetBottom(): number | undefined {
     const { offsetParent } = this;
     if (offsetParent) {
-      return offsetParent.computedRect.bottom - this.computedRect.bottom;
+      return offsetParent.computedPaddingRect.bottom - this.computedRect.bottom;
     }
   }
 

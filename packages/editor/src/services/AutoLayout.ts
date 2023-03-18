@@ -57,7 +57,7 @@ export function ungroup(selectable: Selectable): void {
   selectable.remove();
 
   for (const child of children) {
-    const pos = child.computedRect.topLeft.sub(parent.computedRect.topLeft);
+    const pos = child.computedOffsetRect.topLeft;
 
     child.style.position = {
       x: {
@@ -80,12 +80,13 @@ export function autoLayout(selectable: Selectable): void {
     return;
   }
 
-  const width = selectable.computedRect.width;
-  const height = selectable.computedRect.height;
+  const paddingRect = selectable.computedPaddingRect;
 
   const flex = detectFlex(selectable.children);
 
-  const offsetBBox = flex.bbox.translate(selectable.computedRect.topLeft.neg);
+  const offsetBBox = flex.bbox.translate(paddingRect.topLeft.neg);
+  const width = paddingRect.width;
+  const height = paddingRect.height;
 
   selectable.style.stackDirection = flex.direction;
   selectable.style.stackAlign = flex.align;

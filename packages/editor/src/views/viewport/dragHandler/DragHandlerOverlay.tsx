@@ -12,6 +12,7 @@ import { commands } from "../../../state/Commands";
 import { observer } from "mobx-react-lite";
 import { showContextMenu } from "../../ContextMenu";
 import { viewportState } from "../../../state/ViewportState";
+import { assertNonNull } from "../../../utils/Assert";
 
 function isFocusable(selectable: Selectable) {
   return selectable.originalNode.type === "text";
@@ -95,7 +96,10 @@ export const DragHandlerOverlay: React.FC = observer(
 
         snapper.clear();
         if (viewportState.tool?.type === "insert") {
-          snapper.snapInsertPoint(viewportEvent.pos);
+          const parent =
+            viewportEvent.selectable ??
+            assertNonNull(projectState.page).selectable;
+          snapper.snapInsertPoint(parent, viewportEvent.pos);
         }
       });
 

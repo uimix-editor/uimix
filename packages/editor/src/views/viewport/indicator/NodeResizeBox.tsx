@@ -118,7 +118,7 @@ export const NodeResizeBox: React.FC = observer(function NodeResizeBox() {
       snap={action((p: Vec2) => {
         // TODO: avoid transform
         let pos = p.transform(scrollState.viewportToDocument).round;
-        pos = snapper.snapResizePoint(pos);
+        pos = snapper.snapResizePoint(state.selectedInstances, pos);
         return pos.transform(scrollState.documentToViewport);
       })}
       onChangeBegin={action(state.begin.bind(state))}

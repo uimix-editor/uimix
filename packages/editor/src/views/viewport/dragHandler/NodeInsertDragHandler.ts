@@ -16,8 +16,11 @@ export class NodeInsertDragHandler implements DragHandler {
   constructor(mode: InsertMode, event: ViewportEvent) {
     this.mode = mode;
 
+    const parent =
+      event.selectable ?? assertNonNull(projectState.page).selectable;
+
     this.initClientPos = new Vec2(event.event.clientX, event.event.clientY);
-    this.initPos = snapper.snapInsertPoint(event.pos);
+    this.initPos = snapper.snapInsertPoint(parent, event.pos);
 
     if (!projectState.page) {
       const page = projectState.project.nodes.create("page");
@@ -26,48 +29,45 @@ export class NodeInsertDragHandler implements DragHandler {
       projectState.pageID = page.id;
     }
 
-    const parent =
-      event.selectable ?? assertNonNull(projectState.page).selectable;
-
     if (mode.type === "text") {
       const selectable = parent.append("text");
       selectable.originalNode.name = "Text";
-      this.instance = selectable;
-      this.instance.style.textContent = "Type Something";
-      this.instance.style.fill = Color.from("black").toHex();
-      this.instance.style.width = { type: "hugContents" };
-      this.instance.style.height = { type: "hugContents" };
+      this.selectable = selectable;
+      this.selectable.style.textContent = "Type Something";
+      this.selectable.style.fill = Color.from("black").toHex();
+      this.selectable.style.width = { type: "hugContents" };
+      this.selectable.style.height = { type: "hugContents" };
     } else if (mode.type === "image") {
       // TODO: support image
       const selectable = parent.append("image");
       selectable.originalNode.name = "Image";
-      this.instance = selectable;
-      this.instance.style.fill = Color.from("white").toHex();
-      this.instance.style.width = { type: "fixed", value: 100 };
-      this.instance.style.height = { type: "fixed", value: 100 };
+      this.selectable = selectable;
+      this.selectable.style.fill = Color.from("white").toHex();
+      this.selectable.style.width = { type: "fixed", value: 100 };
+      this.selectable.style.height = { type: "fixed", value: 100 };
       projectState.project.imageManager.insert(mode.blob).then(
         action((hash) => {
           console.log(hash);
-          this.instance.style.imageHash = hash;
+          this.selectable.style.imageHash = hash;
         })
       );
     } else {
       const selectable = parent.append("frame");
       selectable.originalNode.name = "Frame";
-      this.instance = selectable;
-      this.instance.style.fill = Color.from("white").toHex();
-      this.instance.style.width = { type: "fixed", value: 100 };
-      this.instance.style.height = { type: "fixed", value: 100 };
+      this.selectable = selectable;
+      this.selectable.style.fill = Color.from("white").toHex();
+      this.selectable.style.width = { type: "fixed", value: 100 };
+      this.selectable.style.height = { type: "fixed", value: 100 };
     }
 
     resizeWithBoundingBox(
-      this.instance,
+      this.selectable,
       Rect.boundingRect([this.initPos, this.initPos]),
       { x: true, y: true }
     );
 
     projectState.page?.selectable.deselect();
-    this.instance.select();
+    this.selectable.select();
   }
 
   move(event: ViewportEvent): void {
@@ -79,10 +79,10 @@ export class NodeInsertDragHandler implements DragHandler {
     }
     this.dragStarted = true;
 
-    const pos = snapper.snapResizePoint(event.pos);
+    const pos = snapper.snapResizePoint([this.selectable], event.pos);
     const rect = Rect.boundingRect([pos, this.initPos]);
 
-    resizeWithBoundingBox(this.instance, rect, {
+    resizeWithBoundingBox(this.selectable, rect, {
       x: true,
       y: true,
       width: true,
@@ -96,7 +96,7 @@ export class NodeInsertDragHandler implements DragHandler {
   }
 
   private readonly mode: InsertMode;
-  private readonly instance: Selectable;
+  private readonly selectable: Selectable;
   private readonly initPos: Vec2;
   private readonly initClientPos: Vec2;
   private dragStarted = false;
