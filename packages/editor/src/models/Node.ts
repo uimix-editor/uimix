@@ -37,11 +37,11 @@ export class Node {
   readonly nodeMap: NodeMap;
   readonly id: string;
 
-  get data(): ObservableYMap<any> | undefined {
+  get data(): ObservableYMap<unknown> | undefined {
     return ObservableYMap.get(this.nodeMap.data.get(this.id));
   }
 
-  get dataForWrite(): ObservableYMap<any> {
+  get dataForWrite(): ObservableYMap<unknown> {
     return ObservableYMap.get(
       getOrCreate(this.nodeMap.data, this.id, () => new Y.Map())
     );
@@ -52,18 +52,18 @@ export class Node {
   }
 
   get parentID(): string | undefined {
-    return this.data?.get("parent");
+    return this.data?.get("parent") as string | undefined;
   }
 
   get index(): number {
-    return this.data?.get("index") ?? 0;
+    return (this.data?.get("index") ?? 0) as number;
   }
 
   lastParentID: string | undefined;
   lastIndex = 0;
 
   get type(): NodeType {
-    return this.data?.get("type") ?? "frame";
+    return (this.data?.get("type") ?? "frame") as NodeType;
   }
 
   get isAbstract(): boolean {
@@ -71,7 +71,7 @@ export class Node {
   }
 
   @computed get name(): string {
-    return this.data?.get("name") ?? "";
+    return (this.data?.get("name") ?? "") as string;
   }
 
   set name(name: string | undefined) {
@@ -85,7 +85,7 @@ export class Node {
   // Applicable only to variant nodes
 
   @computed get condition(): VariantCondition | undefined {
-    return this.data?.get("condition");
+    return this.data?.get("condition") as VariantCondition | undefined;
   }
 
   set condition(selector: VariantCondition | undefined) {
@@ -95,7 +95,7 @@ export class Node {
   // parent / children
 
   get parent(): Node | undefined {
-    return this.nodeMap.get(this.data?.get("parent"));
+    return this.nodeMap.get(this.data?.get("parent") as string | undefined);
   }
 
   get childCount(): number {
@@ -104,6 +104,7 @@ export class Node {
 
   get children(): Node[] {
     const childrenMap = this.nodeMap.getChildrenMap(this.id);
+    // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
     return [...childrenMap.keys()].map((key) => this.nodeMap.get(key.id)!);
   }
 
@@ -325,6 +326,7 @@ export class NodeMap {
 
   readonly project: Project;
 
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   get data(): ObservableYMap<Y.Map<any>> {
     return ObservableYMap.get(this.project.doc.getMap("nodes"));
   }
@@ -348,10 +350,11 @@ export class NodeMap {
   }
 
   create(type: NodeType, id: string = generateID()): Node {
-    const data = new Y.Map<any>();
+    const data = new Y.Map<unknown>();
     data.set("type", type);
     data.set("index", 0);
     this.data.set(id, data);
+    // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
     return this.nodeMap.get(id)!;
   }
 
@@ -383,16 +386,16 @@ export class NodeMap {
 
   private insertToParentChildrenMap(node: Node) {
     const data = node.data;
-    const parentID = data?.get("parent");
-    const index = data?.get("index");
+    const parentID = data?.get("parent") as string | undefined;
+    const index = (data?.get("index") ?? 0) as number;
 
-    if (parentID) {
+    if (parentID && index !== undefined) {
       const parentChildrenMap = this.getChildrenMap(parentID);
       parentChildrenMap.set({ index, id: node.id }, true);
     }
 
     node.lastParentID = parentID;
-    node.lastIndex = index;
+    node.lastIndex = index ?? 0;
   }
 }
 

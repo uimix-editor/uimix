@@ -2,6 +2,7 @@ import { createAtom, IAtom } from "mobx";
 import * as Y from "yjs";
 import { getOrCreate } from "../state/Collection";
 
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 const instances = new WeakMap<Y.Map<any>, ObservableYMap<any>>();
 
 export class ObservableYMap<V> {
@@ -16,7 +17,7 @@ export class ObservableYMap<V> {
       map = new ObservableYMap(target);
       instances.set(target, map);
     }
-    return map;
+    return map as ObservableYMap<V>;
   }
 
   readonly y: Y.Map<V>;
@@ -32,7 +33,7 @@ export class ObservableYMap<V> {
   private constructor(y: Y.Map<V>) {
     this.y = y;
     this.y.observe((event) => {
-      for (const [key, detail] of event.keys) {
+      for (const [key] of event.keys) {
         // TODO: removed key atoms?
         this.getValueAtom(key).reportChanged();
       }
@@ -75,12 +76,12 @@ export class ObservableYMap<V> {
 
   values(): IterableIterator<V> {
     this.wholeAtom.reportObserved();
-    return this.y.values();
+    return this.y.values() as IterableIterator<V>;
   }
 
   [Symbol.iterator](): IterableIterator<[string, V]> {
     this.wholeAtom.reportObserved();
-    return this.y[Symbol.iterator]();
+    return this.y[Symbol.iterator]() as IterableIterator<[string, V]>;
   }
 
   toJSON(): Record<string, V> {

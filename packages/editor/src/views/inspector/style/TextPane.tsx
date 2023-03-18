@@ -10,7 +10,6 @@ import verticalAlignCenterIcon from "@iconify-icons/ic/vertical-align-center";
 import verticalAlignBottomIcon from "@iconify-icons/ic/vertical-align-bottom";
 import spaceBarIcon from "@iconify-icons/ic/space-bar";
 import { InspectorHeading } from "../components/InspectorHeading";
-import { InspectorInput } from "./inputs/InspectorInput";
 import { InspectorNumberInput } from "./inputs/InspectorNumberInput";
 import { InspectorPane } from "../components/InspectorPane";
 import { InspectorToggleGroup } from "./inputs/InspectorToggleGroup";

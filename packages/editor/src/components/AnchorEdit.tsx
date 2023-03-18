@@ -4,7 +4,7 @@ import { PositionConstraintType } from "@uimix/node-data";
 import colors from "../colors";
 import { Color } from "../utils/Color";
 
-const active02Color = Color.from(colors.active)!.withAlpha(0.2).toString();
+const active02Color = Color.from(colors.active)?.withAlpha(0.2).toString();
 
 const unselectedColor = Color.from(colors.text)?.withAlpha(0.1).toString();
 

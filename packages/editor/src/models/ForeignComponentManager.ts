@@ -24,7 +24,8 @@ export class ForeignComponentManager {
               `<link rel="stylesheet" href=${JSON.stringify(url)}>`
             );
           } else {
-            window
+            // eslint-disable-next-line
+            void window
               // @ts-ignore
               .eval(`import(${JSON.stringify(url)})`)
               .then(

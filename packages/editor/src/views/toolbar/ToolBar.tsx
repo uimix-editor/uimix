@@ -105,8 +105,8 @@ export const ToolBar = observer(function ToolBar({
               viewportState.tool.mode.type === "image"
             }
             text="Image"
-            onClick={action(() => {
-              commands.insertImage();
+            onClick={action(async () => {
+              await commands.insertImage();
             })}
           />
         </div>

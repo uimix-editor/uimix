@@ -5,6 +5,7 @@ const crypto = globalThis.crypto ?? (await import("node:crypto")).webcrypto;
 
 const base58 = "123456789ABCDEFGHJKLMNPQRSTUVWXYZabcdefghijkmnopqrstuvwxyz";
 
+// eslint-disable-next-line
 const decimalToBase58: (dec: string) => string = anyBase(anyBase.DEC, base58);
 
 export function generateID(): string {

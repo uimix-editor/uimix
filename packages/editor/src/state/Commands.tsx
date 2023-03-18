@@ -285,8 +285,8 @@ class Commands {
   readonly insertImageCommand: MenuCommandDef = {
     type: "command",
     text: "Image",
-    onClick: action(() => {
-      this.insertImage();
+    onClick: action(async () => {
+      await this.insertImage();
     }),
   };
 

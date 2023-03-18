@@ -64,6 +64,7 @@ export const TextEditorBody: React.FC<{
           editor={editor}
           onChange={action((value) => {
             // @ts-ignore
+            // eslint-disable-next-line
             style.textContent = value[0].children[0].text;
           })}
           value={initialValue}

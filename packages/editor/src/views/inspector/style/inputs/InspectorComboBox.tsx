@@ -2,7 +2,6 @@ import { useContext } from "react";
 import { action } from "mobx";
 import { observer } from "mobx-react-lite";
 import { IconifyIcon } from "@iconify/react";
-import { Input } from "../../../../components/Input";
 import { Mixed, sameOrMixed } from "../../../../utils/Mixed";
 import { Selectable } from "../../../../models/Selectable";
 import { InspectorTargetContext } from "../../components/InspectorTargetContext";

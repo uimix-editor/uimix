@@ -55,8 +55,8 @@ export const VerticalToolBar = observer(() => {
             viewportState.tool?.type === "insert" &&
             viewportState.tool.mode.type === "image"
           }
-          onClick={action(() => {
-            commands.insertImage();
+          onClick={action(async () => {
+            await commands.insertImage();
           })}
         >
           <Icon icon={imageIcon} width={20} />

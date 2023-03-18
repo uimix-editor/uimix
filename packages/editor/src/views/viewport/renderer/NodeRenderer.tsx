@@ -238,7 +238,7 @@ export const ForeignComponentRenderer: React.FC<{
   useEffect(() => {
     const renderer = rendererRef.current;
     if (!renderer) return;
-    renderer.render(props).then(() => onRenderFinish?.());
+    void renderer.render(props).then(() => onRenderFinish?.());
   }, [props]);
 
   return (

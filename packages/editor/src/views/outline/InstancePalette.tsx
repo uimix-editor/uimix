@@ -198,7 +198,7 @@ const ComponentThumbnail: React.FC<{
   });
 
   const dragProps = usePointerStroke({
-    onBegin: async (e) => {
+    onBegin: async () => {
       status.current.creating = false;
     },
     onMove: (e, {}) => {
