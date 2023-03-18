@@ -16,8 +16,11 @@ export class NodeInsertDragHandler implements DragHandler {
   constructor(mode: InsertMode, event: ViewportEvent) {
     this.mode = mode;
 
+    const parent =
+      event.selectable ?? assertNonNull(projectState.page).selectable;
+
     this.initClientPos = new Vec2(event.event.clientX, event.event.clientY);
-    this.initPos = snapper.snapInsertPoint(event.pos);
+    this.initPos = snapper.snapInsertPoint(parent, event.pos);
 
     if (!projectState.page) {
       const page = projectState.project.nodes.create("page");
@@ -25,9 +28,6 @@ export class NodeInsertDragHandler implements DragHandler {
       projectState.project.node.append([page]);
       projectState.pageID = page.id;
     }
-
-    const parent =
-      event.selectable ?? assertNonNull(projectState.page).selectable;
 
     if (mode.type === "text") {
       const selectable = parent.append("text");

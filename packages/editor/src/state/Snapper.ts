@@ -154,11 +154,9 @@ export class Snapper {
     );
   }
 
-  snapInsertPoint(point: Vec2): Vec2 {
-    return this.snapPoint(
-      this.rectsForInstances(this.getInsertTargetInstances()),
-      point
-    );
+  snapInsertPoint(parent: Selectable, point: Vec2): Vec2 {
+    const rects = parent.offsetChildren.map((c) => c.computedRect);
+    return this.snapPoint(rects, point);
   }
 
   snapResizePoint(
