@@ -6,7 +6,7 @@ import { projectState } from "../../state/ProjectState";
 import { scrollState } from "../../state/ScrollState";
 import { PanOverlay } from "./PanOverlay";
 import { DragHandlerOverlay } from "./dragHandler/DragHandlerOverlay";
-import { Indicators } from "./indicator/Indicators";
+import { HUD } from "./hud/HUD";
 import { TextEditor } from "./TextEditor";
 import { ComponentSections, VariantLabels } from "./VariantLabels";
 import { RenderIFrame } from "./renderer/RenderIFrame";
@@ -74,7 +74,7 @@ export const Viewport: React.FC = observer(function Viewport() {
       <RenderIFrame />
       <DragHandlerOverlay />
       <VariantLabels />
-      <Indicators />
+      <HUD />
       <TextEditor />
       <PanOverlay />
       <ZoomControlController className="absolute bottom-3 left-1/2 transform -translate-x-1/2 shadow-lg" />
