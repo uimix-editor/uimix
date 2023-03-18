@@ -306,6 +306,23 @@ export class Selectable {
     return this.computedRectProvider?.value ?? new Rect();
   }
 
+  @computed get computedPaddingRect(): Rect {
+    const { computedRect, style } = this;
+    const {
+      borderLeftWidth,
+      borderRightWidth,
+      borderTopWidth,
+      borderBottomWidth,
+    } = style;
+
+    return Rect.from({
+      left: computedRect.left + borderLeftWidth,
+      top: computedRect.top + borderTopWidth,
+      width: computedRect.width - borderLeftWidth - borderRightWidth,
+      height: computedRect.height - borderTopWidth - borderBottomWidth,
+    });
+  }
+
   @computed get computedOffsetRect(): Rect {
     const { offsetParent } = this;
     if (!offsetParent) {

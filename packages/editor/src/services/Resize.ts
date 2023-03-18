@@ -10,7 +10,7 @@ export function resizeWithBoundingBox(
     width?: boolean;
     height?: boolean;
   },
-  offsetTopLeft = selectable.parent?.computedRect.topLeft ?? new Vec2(0)
+  offsetTopLeft = selectable.parent?.computedPaddingRect.topLeft ?? new Vec2(0)
 ) {
   if (targets.x) {
     selectable.style.position = {
