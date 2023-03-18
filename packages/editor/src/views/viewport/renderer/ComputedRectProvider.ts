@@ -1,5 +1,5 @@
 import { createAtom } from "mobx";
-import { Rect } from "paintvec";
+import { Rect, Vec2 } from "paintvec";
 import { IComputedRectProvider } from "../../../models/Selectable";
 import { scrollState } from "../../../state/ScrollState";
 
@@ -28,7 +28,19 @@ function getComputedRect(element: Element): Rect {
   }
 
   const parentRect = getComputedRect(offsetParent);
-  return localRect.translate(parentRect.topLeft);
+  const parentBorderLeft = parseInt(
+    window.getComputedStyle(offsetParent).borderLeftWidth
+  );
+  const parentBorderTop = parseInt(
+    window.getComputedStyle(offsetParent).borderTopWidth
+  );
+
+  return localRect.translate(
+    new Vec2(
+      parentRect.left + parentBorderLeft,
+      parentRect.top + parentBorderTop
+    )
+  );
 }
 
 export class ComputedRectProvider implements IComputedRectProvider {
