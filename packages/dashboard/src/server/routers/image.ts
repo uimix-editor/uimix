@@ -19,7 +19,7 @@ export const imageRouter = router({
     .query(async ({ ctx, input }) => {
       const currentUser = await authenticate(ctx.req);
 
-      const uploadURL = await s3.getSignedUrl("putObject", {
+      const uploadURL = s3.getSignedUrl("putObject", {
         Bucket: process.env.AWS_S3_BUCKET_NAME,
         Key: `images/${currentUser.id}/${input.hash}`,
         Expires: 60,
@@ -28,7 +28,10 @@ export const imageRouter = router({
       });
       return {
         uploadURL,
-        url: `https://${process.env.AWS_S3_BUCKET_NAME}.s3.amazonaws.com/images/${currentUser.id}/${input.hash}`,
+        url: `https://${process.env
+          .AWS_S3_BUCKET_NAME!}.s3.amazonaws.com/images/${currentUser.id}/${
+          input.hash
+        }`,
       };
     }),
 });

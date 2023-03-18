@@ -124,7 +124,7 @@ export default function Home() {
               <button
                 className="border border-gray-200 px-3 py-1 rounded shadow-sm text-sm flex items-center gap-2"
                 onClick={() => {
-                  signIn("google", { callbackUrl: "/documents" });
+                  void signIn("google", { callbackUrl: "/documents" });
                 }}
               >
                 <Icon icon="flat-color-icons:google" className="text-base" />
@@ -133,7 +133,7 @@ export default function Home() {
               <button
                 className="border border-gray-200 px-3 py-1 rounded shadow-sm text-sm flex items-center gap-2"
                 onClick={() => {
-                  signIn("github", { callbackUrl: "/documents" });
+                  void signIn("github", { callbackUrl: "/documents" });
                 }}
               >
                 <Icon icon="mdi:github" className="text-base" />

@@ -4,7 +4,7 @@ import { observer } from "mobx-react-lite";
 import { toastController } from "./ToastController";
 import styles from "./Toast.module.css";
 
-export const ToastPresenter: React.FC<{}> = observer(() => {
+export const ToastPresenter: React.FC = observer(() => {
   // TODO: more message types
 
   return (
