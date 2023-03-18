@@ -160,14 +160,33 @@ export class Snapper {
   }
 
   snapResizePoint(
+    selectables: Selectable[],
     point: Vec2,
     axes: { x?: boolean; y?: boolean } = { x: true, y: true }
   ): Vec2 {
-    return this.snapPoint(
-      this.rectsForInstances(this.getResizeTargetInstances()),
-      point,
-      axes
-    );
+    const parents = new Set<Selectable>();
+    for (const selectable of selectables) {
+      const { offsetParent } = selectable;
+      if (offsetParent) {
+        parents.add(offsetParent);
+      }
+    }
+    const siblings = new Set<Selectable>();
+    for (const parent of parents) {
+      for (const child of parent.offsetChildren) {
+        siblings.add(child);
+      }
+    }
+    for (const selectable of selectables) {
+      siblings.delete(selectable);
+    }
+
+    const rects = [
+      ...[...siblings].map((c) => c.computedRect),
+      ...[...parents].map((c) => c.computedPaddingRect),
+    ];
+
+    return this.snapPoint(rects, point, axes);
   }
 
   snapMoveRect(rect: Rect): Rect {
