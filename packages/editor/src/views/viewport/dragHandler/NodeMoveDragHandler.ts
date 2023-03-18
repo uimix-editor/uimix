@@ -25,7 +25,9 @@ export class NodeMoveDragHandler implements DragHandler {
   }
 
   move(event: ViewportEvent): void {
-    const offset = this.getSnappedOffset(event);
+    const dst = findDropDestination(event, [...this.targets.keys()]);
+
+    const offset = this.getSnappedOffset(dst.parent, event);
 
     const dragPreviewRects: Rect[] = [];
     for (const [target, { absolute, rect }] of this.targets) {
@@ -39,24 +41,19 @@ export class NodeMoveDragHandler implements DragHandler {
         dragPreviewRects.push(rect.translate(offset));
       }
     }
-    viewportState.dragPreviewRects = dragPreviewRects;
 
-    viewportState.dropDestination = findDropDestination(event, [
-      ...this.targets.keys(),
-    ]);
+    viewportState.dragPreviewRects = dragPreviewRects;
+    viewportState.dropDestination = dst;
   }
 
   end(event: ViewportEvent): void {
-    const offset = this.getSnappedOffset(event);
-
     snapper.clear();
     viewportState.dragPreviewRects = [];
     viewportState.dropDestination = undefined;
 
     const dst = findDropDestination(event, [...this.targets.keys()]);
-    if (!dst) {
-      return;
-    }
+
+    const offset = this.getSnappedOffset(dst.parent, event);
 
     const selectablesToInsert = [...this.targets].filter(
       ([target, { absolute }]) => {
@@ -91,9 +88,10 @@ export class NodeMoveDragHandler implements DragHandler {
     projectState.undoManager.stopCapturing();
   }
 
-  private getSnappedOffset(event: ViewportEvent) {
+  private getSnappedOffset(parent: Selectable, event: ViewportEvent) {
     const offset = event.pos.sub(this.initPos);
     const snappedRect = snapper.snapMoveRect(
+      parent,
       [...this.targets.keys()],
       this.initWholeBBox.translate(offset)
     );
@@ -115,7 +113,7 @@ export class NodeMoveDragHandler implements DragHandler {
 export function findDropDestination(
   event: ViewportEvent,
   subjects: Selectable[]
-): DropDestination | undefined {
+): DropDestination {
   const parent = event.selectables.find((dst) => {
     // cannot move inside itself
     if (subjects.some((target) => target.includes(dst))) {

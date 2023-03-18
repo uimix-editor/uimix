@@ -63,19 +63,13 @@ export class Snapper {
     return this.snapPoint(rects, point);
   }
 
-  private resizeTargetRects(selectables: Selectable[]): Rect[] {
-    const parents = new Set<Selectable>();
-    for (const selectable of selectables) {
-      const { offsetParent } = selectable;
-      if (offsetParent) {
-        parents.add(offsetParent);
-      }
-    }
+  private resizeTargetRects(
+    parent: Selectable,
+    selectables: Selectable[]
+  ): Rect[] {
     const siblings = new Set<Selectable>();
-    for (const parent of parents) {
-      for (const child of parent.offsetChildren) {
-        siblings.add(child);
-      }
+    for (const child of parent.offsetChildren) {
+      siblings.add(child);
     }
     for (const selectable of selectables) {
       siblings.delete(selectable);
@@ -83,7 +77,7 @@ export class Snapper {
 
     return [
       ...[...siblings].map((c) => c.computedRect),
-      ...[...parents].map((c) => c.computedPaddingRect),
+      parent.computedPaddingRect,
     ];
   }
 
@@ -92,15 +86,35 @@ export class Snapper {
     point: Vec2,
     axes: { x?: boolean; y?: boolean } = { x: true, y: true }
   ): Vec2 {
-    return this.snapPoint(this.resizeTargetRects(selectables), point, axes);
+    if (selectables.length === 0) {
+      return point;
+    }
+    const parent = selectables[0].offsetParent;
+    if (!parent) {
+      return point;
+    }
+
+    return this.snapPoint(
+      this.resizeTargetRects(parent, selectables),
+      point,
+      axes
+    );
   }
 
-  snapMoveRect(selectables: Selectable[], rect: Rect): Rect {
-    return this.snapRect(this.resizeTargetRects(selectables), rect);
+  snapMoveRect(
+    parent: Selectable,
+    selectables: Selectable[],
+    rect: Rect
+  ): Rect {
+    return this.snapRect(this.resizeTargetRects(parent, selectables), rect);
   }
 
-  exactSnapMoveRect(selectables: Selectable[], rect: Rect): void {
-    this.exactSnapRect(this.resizeTargetRects(selectables), rect);
+  exactSnapMoveRect(
+    parent: Selectable,
+    selectables: Selectable[],
+    rect: Rect
+  ): void {
+    this.exactSnapRect(this.resizeTargetRects(parent, selectables), rect);
   }
 
   get snappings(): readonly (PointSnapping | SameMarginSnapping)[] {
