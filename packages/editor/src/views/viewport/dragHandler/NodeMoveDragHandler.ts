@@ -94,6 +94,7 @@ export class NodeMoveDragHandler implements DragHandler {
   private getSnappedOffset(event: ViewportEvent) {
     const offset = event.pos.sub(this.initPos);
     const snappedRect = snapper.snapMoveRect(
+      [...this.targets.keys()],
       this.initWholeBBox.translate(offset)
     );
     const snappedOffset = snappedRect.topLeft.sub(this.initWholeBBox.topLeft);
