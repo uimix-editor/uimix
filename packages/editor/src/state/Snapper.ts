@@ -59,19 +59,15 @@ export class Snapper {
   }
 
   snapInsertPoint(parent: Selectable, point: Vec2): Vec2 {
-    const rects = parent.offsetChildren.map((c) => c.computedRect);
-    return this.snapPoint(rects, point);
+    return this.snapPoint(this.targetRects(parent, []), point);
   }
 
-  private resizeTargetRects(
-    parent: Selectable,
-    selectables: Selectable[]
-  ): Rect[] {
+  private targetRects(parent: Selectable, excludes: Selectable[]): Rect[] {
     const siblings = new Set<Selectable>();
     for (const child of parent.offsetChildren) {
       siblings.add(child);
     }
-    for (const selectable of selectables) {
+    for (const selectable of excludes) {
       siblings.delete(selectable);
     }
 
@@ -94,11 +90,7 @@ export class Snapper {
       return point;
     }
 
-    return this.snapPoint(
-      this.resizeTargetRects(parent, selectables),
-      point,
-      axes
-    );
+    return this.snapPoint(this.targetRects(parent, selectables), point, axes);
   }
 
   snapMoveRect(
@@ -106,7 +98,7 @@ export class Snapper {
     selectables: Selectable[],
     rect: Rect
   ): Rect {
-    return this.snapRect(this.resizeTargetRects(parent, selectables), rect);
+    return this.snapRect(this.targetRects(parent, selectables), rect);
   }
 
   exactSnapMoveRect(
@@ -114,7 +106,7 @@ export class Snapper {
     selectables: Selectable[],
     rect: Rect
   ): void {
-    this.exactSnapRect(this.resizeTargetRects(parent, selectables), rect);
+    this.exactSnapRect(this.targetRects(parent, selectables), rect);
   }
 
   get snappings(): readonly (PointSnapping | SameMarginSnapping)[] {
