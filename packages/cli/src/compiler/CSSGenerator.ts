@@ -55,12 +55,14 @@ export class CSSGenerator {
       const superCSS = superSelectable ? generateCSS(superSelectable) : {};
       const diffCSS = Object.fromEntries(
         Object.entries(css).filter(([key, value]) => {
+          // eslint-disable-next-line
           return (superCSS as any)[key] !== value;
         })
       );
 
       const body: string[] = [];
       for (const [key, value] of Object.entries(diffCSS)) {
+        // eslint-disable-next-line
         body.push(`  ${kebabCase(key)}: ${value};`);
       }
 

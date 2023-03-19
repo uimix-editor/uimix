@@ -24,8 +24,9 @@
     "build": "run-z build:tsc build:esbuild",
     "build:esbuild": "node build.cjs",
     "build:tsc": "tsc",
-    "dev:esbuild": "node build.cjs --watch",
     "dev": "run-z build:esbuild dev:esbuild",
+    "dev:esbuild": "node build.cjs --watch",
+    "lint": "eslint src",
     "test": "vitest run"
   },
   "dependencies": {

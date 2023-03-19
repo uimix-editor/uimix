@@ -1,3 +1,4 @@
+/* eslint-disable */
 function applyOverrides(props: any, element: React.ReactElement) {
   const refID = (element.props.refID ?? []) as string[];
 
