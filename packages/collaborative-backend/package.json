@@ -15,7 +15,8 @@
     "dev:esbuild": "node build.cjs --watch",
     "dev:node-dev": "node-dev dist/index.js",
     "prisma:generate": "prisma generate",
-    "start": "node dist/index.js"
+    "start": "node dist/index.js",
+    "lint": "eslint src"
   },
   "dependencies": {
     "@hocuspocus/extension-database": "^1.1.1",
