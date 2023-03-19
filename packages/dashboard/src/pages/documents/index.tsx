@@ -48,7 +48,7 @@ const Header = () => {
             >
               <DropdownMenu.Item
                 onClick={() => {
-                  signOut({
+                  void signOut({
                     callbackUrl: "/",
                   });
                 }}
@@ -60,7 +60,7 @@ const Header = () => {
               <DropdownMenu.Item
                 className={dropdownItemClasses}
                 onClick={() => {
-                  signIn("github", {
+                  void signIn("github", {
                     callbackUrl: "/documents",
                   });
                 }}
@@ -70,7 +70,7 @@ const Header = () => {
               <DropdownMenu.Item
                 className={dropdownItemClasses}
                 onClick={() => {
-                  signIn("google", {
+                  void signIn("google", {
                     callbackUrl: "/documents",
                   });
                 }}
@@ -218,7 +218,7 @@ export default function Documents() {
       const doc = await documentCreateMutation.mutateAsync({
         title: "New document",
       });
-      Router.push(`/documents/${doc.id}`);
+      await Router.push(`/documents/${doc.id}`);
     } catch (err) {
       toastController.show({
         type: "error",
@@ -238,7 +238,7 @@ export default function Documents() {
       if (!doc) {
         return;
       }
-      Router.push(`/documents/local/${doc.id}`);
+      await Router.push(`/documents/local/${doc.id}`);
     } catch (err) {
       toastController.show({
         type: "error",
@@ -259,7 +259,7 @@ export default function Documents() {
       if (!doc) {
         return;
       }
-      Router.push(`/documents/local/${doc.id}`);
+      await Router.push(`/documents/local/${doc.id}`);
     } catch (err) {
       toastController.show({
         type: "error",
@@ -284,7 +284,7 @@ export default function Documents() {
     readonly LocalDocument[]
   >([]);
   useEffect(() => {
-    getDesktopAPI()
+    void getDesktopAPI()
       ?.getLocalDocuments()
       .then((docs) => {
         setLocalDocuments(docs);

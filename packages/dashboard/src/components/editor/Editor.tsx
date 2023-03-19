@@ -27,7 +27,7 @@ class Connection extends TypedEmitter<{
         ready: async () => {
           this.iframeReady = true;
           if (this.hocuspocusReady) {
-            this.onReady();
+            void this.onReady();
           }
         },
         update: async (data: Uint8Array) => {
@@ -67,10 +67,9 @@ class Connection extends TypedEmitter<{
         if (this.hocuspocusReady) {
           return;
         }
-        const data = this.provider.document.getMap("project");
         this.hocuspocusReady = true;
         if (this.iframeReady) {
-          this.onReady();
+          void this.onReady();
         }
       },
     });
@@ -91,7 +90,7 @@ class Connection extends TypedEmitter<{
     const doc = this.provider.document;
 
     doc.on("update", (update) => {
-      this.rpc.remote.sync(update);
+      void this.rpc.remote.sync(update as never);
     });
     await this.rpc.remote.init(Y.encodeStateAsUpdate(doc));
     this.emit("readyToShow");
@@ -146,7 +145,7 @@ const Editor: React.FC<{
                 id: documentId,
                 title,
               });
-              documentQuery.refetch();
+              await documentQuery.refetch();
             } catch {
               toastController.show({
                 type: "error",

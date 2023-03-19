@@ -52,10 +52,10 @@ function compileCommand(
   if (options.watch) {
     const watcher = chokidar.watch(filePathOrGlobs);
 
-    const onChangeAdd = (filePath: string) => {
+    const onChangeAdd = async (filePath: string) => {
       try {
         if (filePathOrGlobs.some((p) => minimatch(filePath, p))) {
-          compileFile(filePath);
+          await compileFile(filePath);
         }
       } catch (e) {
         console.error(e);
@@ -67,7 +67,7 @@ function compileCommand(
   }
 
   for (const filePath of filePaths) {
-    compileFile(filePath);
+    void compileFile(filePath);
   }
 }
 

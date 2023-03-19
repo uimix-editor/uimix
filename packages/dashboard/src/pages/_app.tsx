@@ -17,7 +17,7 @@ function App({ Component, pageProps: { session, ...pageProps } }: AppProps) {
           }
         `}
       </style>
-      <SessionProvider session={session}>
+      <SessionProvider session={session as never}>
         <Component {...pageProps} />
       </SessionProvider>
       <ToastPresenter />

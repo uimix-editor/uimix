@@ -4,7 +4,7 @@ import type { AppRouter } from "../server/routers/_app";
 import { getBaseURL } from "./getBaseUrl";
 
 export const trpc = createTRPCNext<AppRouter>({
-  config({ ctx }) {
+  config({}) {
     return {
       links: [
         httpBatchLink({

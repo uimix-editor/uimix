@@ -1,5 +1,4 @@
 import React, { useEffect, useRef, useState } from "react";
-import { dynamicTrpc } from "../../utils/trpc";
 import * as Y from "yjs";
 import { TypedEmitter } from "tiny-typed-emitter";
 import { iframeTarget } from "@uimix/typed-rpc/browser";
@@ -15,11 +14,7 @@ import {
 import { Icon } from "@iconify/react";
 import Link from "next/link";
 import { LoadingErrorOverlay } from "./LoadingErrorOverlay";
-import {
-  getDesktopAPI,
-  LocalDocument,
-  ProjectJSON,
-} from "../../types/DesktopAPI";
+import { getDesktopAPI, LocalDocument } from "../../types/DesktopAPI";
 
 // TODO: test
 
@@ -35,12 +30,12 @@ class Connection extends TypedEmitter<{
         ready: async () => {
           this.iframeReady = true;
           if (this.fileReady) {
-            this.onReady();
+            await this.onReady();
           }
         },
         update: async (data: Uint8Array) => {
           Y.applyUpdate(this.doc, data);
-          getDesktopAPI()?.setLocalDocumentData(
+          await getDesktopAPI()?.setLocalDocumentData(
             documentId,
             toProjectJSON(this.doc)
           );
@@ -58,7 +53,7 @@ class Connection extends TypedEmitter<{
       }
     );
 
-    getDesktopAPI()
+    void getDesktopAPI()
       ?.getLocalDocumentData(documentId)
       .then((data) => {
         if (this.fileReady) {
@@ -68,7 +63,7 @@ class Connection extends TypedEmitter<{
         loadProjectJSON(this.doc, data);
         this.fileReady = true;
         if (this.iframeReady) {
-          this.onReady();
+          void this.onReady();
         }
       });
   }
@@ -85,7 +80,7 @@ class Connection extends TypedEmitter<{
 
   private onReady = async () => {
     this.doc.on("update", (update) => {
-      this.rpc.remote.sync(update);
+      void this.rpc.remote.sync(update as never);
     });
     await this.rpc.remote.init(Y.encodeStateAsUpdate(this.doc));
     this.emit("readyToShow");
@@ -102,7 +97,7 @@ const LocalEditor: React.FC<{
   useEffect(() => {
     const desktopApi = getDesktopAPI();
     if (desktopApi) {
-      desktopApi.getLocalDocument(documentId).then(setDocument);
+      void desktopApi.getLocalDocument(documentId).then(setDocument);
     }
   }, []);
 

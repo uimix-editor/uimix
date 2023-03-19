@@ -26,6 +26,7 @@ const RenderIFrameBody: React.FC = observer(() => {
         <NodeRenderer
           key={child.id}
           selectable={child}
+          // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
           foreignComponentManager={ForeignComponentManager.global!}
         />
       ))}

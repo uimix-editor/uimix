@@ -10,7 +10,7 @@ import { throttle } from "lodash-es";
 export class IFrameDataConnector {
   constructor(state: ProjectState) {
     this.state = state;
-    this.state.doc.on("update", (data) => {
+    this.state.doc.on("update", (data: Uint8Array) => {
       this.updates.push(data);
       this.sendUpdate();
     });
@@ -52,7 +52,7 @@ export class IFrameDataConnector {
       }),
     });
 
-    this.rpc.remote.ready();
+    void this.rpc.remote.ready();
   }
 
   private state: ProjectState;
@@ -61,7 +61,7 @@ export class IFrameDataConnector {
 
   private sendUpdate = throttle(() => {
     if (this.updates.length) {
-      this.rpc.remote.update(Y.mergeUpdates(this.updates));
+      void this.rpc.remote.update(Y.mergeUpdates(this.updates));
       this.updates = [];
     }
   }, 100);

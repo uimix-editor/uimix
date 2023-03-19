@@ -5,7 +5,7 @@ import { formatTypeScript } from "../format.js";
 import { CSSGenerator } from "./CSSGenerator.js";
 import * as Y from "yjs";
 import { ReactGenerator } from "./ReactGenerator.js";
-import dataUriToBuffer from "data-uri-to-buffer";
+import { dataUriToBuffer } from "data-uri-to-buffer";
 import * as mime from "mime-types";
 
 export async function generateCode(
@@ -30,7 +30,7 @@ export async function generateCode(
 
   for (const [hash, image] of Object.entries(projectJSON.images ?? {})) {
     const decoded = dataUriToBuffer(image.url);
-    const suffix = mime.extension(decoded.type) ?? "bin";
+    const suffix = mime.extension(decoded.type) || "bin";
     imageFiles.push({
       hash,
       filePath: `images/${hash}.${suffix}`,

@@ -3,7 +3,9 @@
   "version": "1.0.0",
   "description": "",
   "main": "index.ts",
-  "scripts": {},
+  "scripts": {
+    "lint": "eslint --ext .ts ."
+  },
   "author": "",
   "license": "MIT"
 }

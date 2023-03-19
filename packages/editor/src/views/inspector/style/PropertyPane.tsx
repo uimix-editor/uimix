@@ -117,10 +117,9 @@ const PropertyEdit: React.FC<{
         className={className}
         options={prop.type.values.map((value) => {
           try {
-            const rawValue = JSON.parse(value);
             return {
-              value: rawValue,
-              text: rawValue,
+              value: value,
+              text: value,
             };
           } catch {
             return {

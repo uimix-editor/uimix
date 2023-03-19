@@ -6,6 +6,7 @@ export function iframeTarget(iframe: HTMLIFrameElement): Target {
     subscribe: (handler) => {
       const onMessage = (event: MessageEvent) => {
         if (event.source === iframe.contentWindow) {
+          // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
           handler(event.data);
         }
       };
@@ -25,6 +26,7 @@ export function parentWindowTarget(): Target {
         if (event.source === window || event.source !== window.parent) {
           return;
         }
+        // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
         handler(event.data);
       };
       window.addEventListener("message", onMessage);

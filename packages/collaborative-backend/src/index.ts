@@ -80,4 +80,4 @@ const server = Server.configure({
   },
 });
 
-server.listen();
+void server.listen();

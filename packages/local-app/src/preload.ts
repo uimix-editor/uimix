@@ -41,5 +41,6 @@ function invoke<T extends keyof IPCMainAPI>(
   name: T,
   ...args: Parameters<IPCMainAPI[T]>
 ): Promise<ReturnType<IPCMainAPI[T]>> {
+  // eslint-disable-next-line @typescript-eslint/no-unsafe-return
   return ipcRenderer.invoke(name, ...args);
 }

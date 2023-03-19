@@ -31,13 +31,13 @@ class SelectablePartialStyle extends PartialStyle {
 
   selectable: Selectable;
 
-  get data(): ObservableYMap<any> | undefined {
+  get data(): ObservableYMap<unknown> | undefined {
     return ObservableYMap.get(
       this.selectable.selectableMap.stylesData.get(this.selectable.id)
     );
   }
 
-  get dataForWrite(): ObservableYMap<any> {
+  get dataForWrite(): ObservableYMap<unknown> {
     return ObservableYMap.get(
       getOrCreate(
         this.selectable.selectableMap.stylesData,
@@ -514,7 +514,7 @@ export class SelectableMap {
     this.project = project;
   }
 
-  get stylesData(): ObservableYMap<Y.Map<any>> {
+  get stylesData(): ObservableYMap<Y.Map<unknown>> {
     return ObservableYMap.get(this.project.doc.getMap("styles"));
   }
   get selectionData(): ObservableYMap<true> {

@@ -1,7 +1,6 @@
 import { isEqual } from "lodash-es";
 import { StyleJSON } from "@uimix/node-data";
 import { ObservableYMap } from "../utils/ObservableYMap";
-import * as Y from "yjs";
 
 export type IStyle = StyleJSON;
 
@@ -76,8 +75,8 @@ export const defaultStyle: StyleJSON = {
 };
 
 export abstract class PartialStyle implements Partial<IStyle> {
-  abstract get data(): ObservableYMap<any> | undefined;
-  abstract get dataForWrite(): ObservableYMap<any>;
+  abstract get data(): ObservableYMap<unknown> | undefined;
+  abstract get dataForWrite(): ObservableYMap<unknown>;
 
   toJSON(): Partial<IStyle> {
     return this.data?.toJSON() ?? {};

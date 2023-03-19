@@ -1,5 +1,4 @@
 import { observer } from "mobx-react-lite";
-import { ToolBar } from "./toolbar/ToolBar";
 import { useEffect } from "react";
 import { Viewport } from "./viewport/Viewport";
 import { InspectorSideBar } from "./inspector/InspectorSideBar";

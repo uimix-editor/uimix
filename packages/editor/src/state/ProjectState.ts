@@ -108,7 +108,7 @@ export const projectState = new ProjectState();
 
 // ProjectState does not support hot reloading
 if (import.meta.hot) {
-  import.meta.hot.accept((module) => {
+  import.meta.hot.accept(() => {
     import.meta.hot?.invalidate();
   });
 }

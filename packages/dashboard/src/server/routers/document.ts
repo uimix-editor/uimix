@@ -1,4 +1,3 @@
-import { TRPCError } from "@trpc/server";
 import { z } from "zod";
 import { authenticate } from "../../helpers/api/auth";
 import { db } from "../../lib/prismadb";

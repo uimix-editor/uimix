@@ -29,5 +29,6 @@ export function getDesktopAPI(): DesktopAPI | undefined {
   }
 
   // @ts-ignore
+  // eslint-disable-next-line @typescript-eslint/no-unsafe-return
   return window.uimixDesktopAPI;
 }

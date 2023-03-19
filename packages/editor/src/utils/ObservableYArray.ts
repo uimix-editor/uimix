@@ -1,6 +1,7 @@
 import { createAtom } from "mobx";
 import * as Y from "yjs";
 
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 const instances = new WeakMap<Y.Array<any>, ObservableYArray<any>>();
 
 export class ObservableYArray<V> {
@@ -10,7 +11,7 @@ export class ObservableYArray<V> {
       map = new ObservableYArray(target);
       instances.set(target, map);
     }
-    return map;
+    return map as ObservableYArray<V>;
   }
 
   readonly y: Y.Array<V>;
@@ -66,6 +67,6 @@ export class ObservableYArray<V> {
 
   toJSON(): V[] {
     this._atom.reportObserved();
-    return this.y.toJSON();
+    return this.y.toJSON() as V[];
   }
 }

@@ -1,9 +1,8 @@
-import * as RadixSelect from "@radix-ui/react-select";
 import downIcon from "@iconify-icons/ic/keyboard-arrow-down";
 import { Icon, IconifyIcon } from "@iconify/react";
 import { twMerge } from "tailwind-merge";
-import { CustomSelect, SelectOption } from "./Select";
-import { Input, UnstyledInput } from "./Input";
+import { SelectOption } from "./Select";
+import { UnstyledInput } from "./Input";
 import { useId } from "react";
 
 export function ComboBox({
@@ -12,7 +11,6 @@ export function ComboBox({
   placeholder,
   value,
   onChange,
-  icon,
 }: {
   className?: string;
   options: readonly SelectOption<string>[];
