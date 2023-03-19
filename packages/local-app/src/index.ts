@@ -19,17 +19,17 @@ const createWindow = () => {
   });
 
   mainWindow.webContents.setWindowOpenHandler((details) => {
-    shell.openExternal(details.url);
+    void shell.openExternal(details.url);
     return { action: "deny" };
   });
 
   // and load the index.html of the app.
   // mainWindow.loadFile(path.join(__dirname, "index.html"));
   if (process.env.NODE_ENV === "development") {
-    mainWindow.loadURL("http://localhost:3000");
+    void mainWindow.loadURL("http://localhost:3000");
     mainWindow.webContents.openDevTools();
   } else {
-    mainWindow.loadURL("https://www.uimix.app");
+    void mainWindow.loadURL("https://www.uimix.app");
   }
 };
 
@@ -66,6 +66,7 @@ function handleIPC(handler: {
   for (const key of Object.keys(handler)) {
     ipcMain.handle(key, (e, ...args) => {
       // @ts-ignore
+      // eslint-disable-next-line
       return handler[key](...args);
     });
   }

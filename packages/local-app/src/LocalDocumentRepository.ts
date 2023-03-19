@@ -1,7 +1,5 @@
-import {
-  LocalDocument,
-  ProjectJSON,
-} from "../../dashboard/src/types/DesktopAPI";
+import { LocalDocument } from "../../dashboard/src/types/DesktopAPI";
+import { ProjectJSON } from "../../node-data";
 import path from "path";
 import fs from "fs";
 import prettier from "prettier/standalone";
@@ -147,7 +145,9 @@ export class LocalDocumentRepository {
     if (!document) {
       throw new Error("Document not found");
     }
-    return JSON.parse(fs.readFileSync(document.path, { encoding: "utf-8" }));
+    return ProjectJSON.parse(
+      JSON.parse(fs.readFileSync(document.path, { encoding: "utf-8" }))
+    );
   }
 
   setLocalDocumentData(id: string, data: ProjectJSON): void {
