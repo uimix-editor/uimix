@@ -1,10 +1,10 @@
 type MessageData =
-  | { type: "call"; callID: number; name: string; args: any[] }
+  | { type: "call"; callID: number; name: string; args: unknown[] }
   | {
       type: "result";
       callID: number;
       status: "success" | "error";
-      value: any;
+      value: unknown;
     };
 
 export interface Target {
@@ -17,6 +17,7 @@ export class RPC<Remote, Self> {
     this.disposeHandler = target.subscribe(async (data) => {
       if (data.type === "call") {
         try {
+          // eslint-disable-next-line
           const result = await (handler as any)[data.name](...data.args);
           target.post({
             type: "result",
@@ -49,7 +50,7 @@ export class RPC<Remote, Self> {
       {},
       {
         get: (_, name: string) => {
-          return (...args: any[]) => {
+          return (...args: unknown[]) => {
             if (this.disposed) {
               console.error("RPC is disposed");
               return;
