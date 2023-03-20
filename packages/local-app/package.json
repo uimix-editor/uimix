@@ -1,7 +1,7 @@
 {
   "name": "local-app",
   "productName": "UIMix",
-  "version": "0.0.1",
+  "version": "0.6.0",
   "description": "My Electron application description",
   "main": "dist/index.js",
   "scripts": {
