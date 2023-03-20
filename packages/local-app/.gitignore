@@ -91,3 +91,5 @@ out/
 !/dist/
 /dist/index.js
 /dist/preload.js
+
+forge.secrets.json

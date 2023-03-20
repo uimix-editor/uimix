@@ -1,7 +1,7 @@
 {
   "name": "local-app",
   "productName": "UIMix",
-  "version": "1.0.0",
+  "version": "0.6.0",
   "description": "My Electron application description",
   "main": "dist/index.js",
   "scripts": {
@@ -33,6 +33,7 @@
     "@electron-forge/maker-rpm": "^6.0.5",
     "@electron-forge/maker-squirrel": "^6.0.5",
     "@electron-forge/maker-zip": "^6.0.5",
+    "@electron-forge/publisher-github": "^6.0.5",
     "@types/prettier": "^2.7.2",
     "electron": "23.1.4",
     "esbuild": "^0.17.12",
