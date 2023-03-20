@@ -6,6 +6,7 @@ import { StackAlign, StackDirection, StackJustify } from "./value/stack.js";
 import { TextHorizontalAlign, TextVerticalAlign } from "./value/text.js";
 
 export const StyleJSON = z.object({
+  hidden: z.boolean(),
   position: z.object({
     x: PositionConstraint,
     y: PositionConstraint,
@@ -25,6 +26,8 @@ export const StyleJSON = z.object({
   borderRightWidth: z.number(),
   borderBottomWidth: z.number(),
   borderLeftWidth: z.number(),
+
+  opacity: z.number(),
 
   // layout
 

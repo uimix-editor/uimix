@@ -1,6 +1,7 @@
 import { Buffer } from "buffer";
 import { MessageToCode, MessageToUI } from "../types/message";
 import { compact, IDGenerator, rgbaToHex, transformAngle } from "./util";
+import { StyleJSON } from "@uimix/node-data";
 
 const vectorLikeTypes: SceneNode["type"][] = [
   "LINE",
@@ -49,10 +50,10 @@ function getPositionStyle(
   node: SceneNode & LayoutMixin,
   parentLayout: BaseFrameMixin["layoutMode"],
   offset: [number, number]
-): Partial<Macaron.StyleJSON> {
-  const style: Partial<Macaron.StyleJSON> = {};
+): Partial<StyleJSON> {
+  const style: Partial<StyleJSON> = {};
 
-  style.visible = node.visible;
+  style.hidden = !node.visible;
 
   // TODO: more constraints
   if (parentLayout === "NONE") {
@@ -61,8 +62,8 @@ function getPositionStyle(
       y: { type: "start", start: node.y - offset[1] },
     };
   }
-  style.width = { type: "fixed", size: node.width };
-  style.height = { type: "fixed", size: node.height };
+  style.width = { type: "fixed", value: node.width };
+  style.height = { type: "fixed", value: node.height };
 
   if (parentLayout === "VERTICAL") {
     if (node.layoutGrow) {
@@ -97,6 +98,7 @@ function getPositionStyle(
   return style;
 }
 
+/*
 async function paintToMacaron(
   paint: Paint
 ): Promise<
@@ -186,11 +188,12 @@ async function paintsToMacaron(
   }
   return fills.reverse();
 }
+*/
 
 async function getFillBorderStyle(
   node: GeometryMixin & BlendMixin
-): Promise<Partial<Macaron.StyleJSON>> {
-  const style: Partial<Macaron.StyleJSON> = {};
+): Promise<Partial<StyleJSON>> {
+  const style: Partial<StyleJSON> = {};
 
   if (node.fills !== figma.mixed) {
     const fills = await paintsToMacaron(node.fills);
@@ -239,10 +242,8 @@ export function getFontNameStyle(font: FontName): {
   return { fontFamily, fontWeight, italic: italic || undefined };
 }
 
-async function getTextStyle(
-  node: TextNode
-): Promise<Partial<Macaron.StyleJSON>> {
-  const style: Partial<Macaron.StyleJSON> = {};
+async function getTextStyle(node: TextNode): Promise<Partial<StyleJSON>> {
+  const style: Partial<StyleJSON> = {};
 
   if (node.fontSize !== figma.mixed) {
     style.fontSize = node.fontSize;
@@ -337,21 +338,21 @@ function applyTextCase(text: string, textCase: TextCase): string {
 function getLayoutStyle(
   node: BaseFrameMixin,
   borderWidth: number
-): Partial<Macaron.StyleJSON> {
-  const style: Partial<Macaron.StyleJSON> = {};
+): Partial<StyleJSON> {
+  const style: Partial<StyleJSON> = {};
 
   if (node.layoutMode === "NONE") {
     return {};
   }
 
-  style.direction = node.layoutMode === "VERTICAL" ? "y" : "x";
+  style.stackDirection = node.layoutMode === "VERTICAL" ? "y" : "x";
   style.gap = node.itemSpacing;
   style.paddingLeft = Math.max(0, node.paddingLeft - borderWidth);
   style.paddingRight = Math.max(0, node.paddingRight - borderWidth);
   style.paddingTop = Math.max(0, node.paddingTop - borderWidth);
   style.paddingBottom = Math.max(0, node.paddingBottom - borderWidth);
 
-  style.justify = (() => {
+  style.stackJustify = (() => {
     switch (node.primaryAxisAlignItems) {
       case "CENTER":
         return "center";
@@ -363,7 +364,7 @@ function getLayoutStyle(
         return "spaceBetween";
     }
   })();
-  style.align = (() => {
+  style.stackAlign = (() => {
     switch (node.counterAxisAlignItems) {
       case "CENTER":
         return "center";
@@ -393,9 +394,7 @@ function getLayoutStyle(
   return style;
 }
 
-function getCornerStyle(
-  node: RectangleCornerMixin
-): Partial<Macaron.StyleJSON> {
+function getCornerStyle(node: RectangleCornerMixin): Partial<StyleJSON> {
   // TODO: separate radiuses
   return {
     cornerRadius: node.topLeftRadius,
