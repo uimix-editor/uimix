@@ -395,9 +395,11 @@ function getLayoutStyle(
 }
 
 function getCornerStyle(node: RectangleCornerMixin): Partial<StyleJSON> {
-  // TODO: separate radiuses
   return {
-    cornerRadius: node.topLeftRadius,
+    topLeftRadius: node.topLeftRadius,
+    topRightRadius: node.topLeftRadius,
+    bottomLeftRadius: node.topLeftRadius,
+    bottomRightRadius: node.topLeftRadius,
   };
 }
 
