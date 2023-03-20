@@ -144,10 +144,12 @@ exports[`selectablesToProjectJSON > works 1`] = `
   },
   "styles": {
     "1Bvi2z3TfkSpYXW29daTN8": {
-      "fill": {
-        "hex": "#FFFFFF",
-        "type": "solid",
-      },
+      "fills": [
+        {
+          "hex": "#FFFFFF",
+          "type": "solid",
+        },
+      ],
       "gap": 10,
       "height": {
         "type": "hugContents",
@@ -172,10 +174,12 @@ exports[`selectablesToProjectJSON > works 1`] = `
       },
     },
     "1Bvi2z3To8ddXo6R6ZftVD": {
-      "fill": {
-        "hex": "#22C55E",
-        "type": "solid",
-      },
+      "fills": [
+        {
+          "hex": "#22C55E",
+          "type": "solid",
+        },
+      ],
       "height": {
         "type": "fixed",
         "value": 80,
@@ -186,10 +190,12 @@ exports[`selectablesToProjectJSON > works 1`] = `
       },
     },
     "1Bvi2z3TpKXtTJLTRPTEd8": {
-      "fill": {
-        "hex": "#EF4444",
-        "type": "solid",
-      },
+      "fills": [
+        {
+          "hex": "#EF4444",
+          "type": "solid",
+        },
+      ],
       "height": {
         "type": "fixed",
         "value": 50,
@@ -200,10 +206,12 @@ exports[`selectablesToProjectJSON > works 1`] = `
       },
     },
     "1Bvi2z3U3SiK6r7gf9vh7N": {
-      "fill": {
-        "hex": "#000000",
-        "type": "solid",
-      },
+      "fills": [
+        {
+          "hex": "#000000",
+          "type": "solid",
+        },
+      ],
       "fontSize": 20,
       "height": {
         "type": "hugContents",
@@ -214,10 +222,12 @@ exports[`selectablesToProjectJSON > works 1`] = `
       },
     },
     "1Bvi2z3UB1xUVg4Xz9WTpJ": {
-      "fill": {
-        "hex": "#3B82F6",
-        "type": "solid",
-      },
+      "fills": [
+        {
+          "hex": "#3B82F6",
+          "type": "solid",
+        },
+      ],
       "height": {
         "type": "fixed",
         "value": 40,
@@ -228,10 +238,12 @@ exports[`selectablesToProjectJSON > works 1`] = `
       },
     },
     "1Bvi2z3UGTM64JtRT7Qc1S": {
-      "fill": {
-        "hex": "#111827",
-        "type": "solid",
-      },
+      "fills": [
+        {
+          "hex": "#111827",
+          "type": "solid",
+        },
+      ],
       "height": {
         "type": "hugContents",
       },
@@ -241,10 +253,12 @@ exports[`selectablesToProjectJSON > works 1`] = `
       },
     },
     "1Bvi2z3UPfi6W3L8nDt5VA": {
-      "fill": {
-        "hex": "#E5E7EB",
-        "type": "solid",
-      },
+      "fills": [
+        {
+          "hex": "#E5E7EB",
+          "type": "solid",
+        },
+      ],
       "height": {
         "type": "hugContents",
       },
@@ -269,10 +283,12 @@ exports[`selectablesToProjectJSON > works 1`] = `
     },
     "1Bvi2z3USBZi1pWrvPd6Ut": {},
     "1Bvi2z3UVsEskiSt2TcdL7": {
-      "fill": {
-        "hex": "#3B82F6",
-        "type": "solid",
-      },
+      "fills": [
+        {
+          "hex": "#3B82F6",
+          "type": "solid",
+        },
+      ],
       "position": {
         "x": {
           "start": 200,
@@ -285,10 +301,12 @@ exports[`selectablesToProjectJSON > works 1`] = `
       },
     },
     "1Bvi2z3UVsEskiSt2TcdL7:1Bvi2z3UGTM64JtRT7Qc1S": {
-      "fill": {
-        "hex": "#FFFFFF",
-        "type": "solid",
-      },
+      "fills": [
+        {
+          "hex": "#FFFFFF",
+          "type": "solid",
+        },
+      ],
     },
     "1Bvi2z3UaHFmaikKtfcmGX": {
       "position": {
@@ -304,10 +322,12 @@ exports[`selectablesToProjectJSON > works 1`] = `
     },
     "1Bvi2z3UaHFmaikKtfcmGX:1Bvi2z3UGTM64JtRT7Qc1S": {},
     "1Bvi2z3UrU9VkawwAteXs8": {
-      "fill": {
-        "hex": "#BABABA",
-        "type": "solid",
-      },
+      "fills": [
+        {
+          "hex": "#BABABA",
+          "type": "solid",
+        },
+      ],
       "mainComponent": "1Bvi2z3USBZi1pWrvPd6Ut",
       "position": {
         "x": {
@@ -325,10 +345,12 @@ exports[`selectablesToProjectJSON > works 1`] = `
     },
     "1Bvi2zJALza4DrqmNaGYAk": {},
     "1Bvi319YVxZELz4tEskN1S": {
-      "fill": {
-        "hex": "#FFFFFF",
-        "type": "solid",
-      },
+      "fills": [
+        {
+          "hex": "#FFFFFF",
+          "type": "solid",
+        },
+      ],
       "height": {
         "type": "fixed",
         "value": 456,
@@ -396,10 +418,12 @@ exports[`selectablesToProjectJSON > works 1`] = `
       },
     },
     "1Bvi365mtWZmXKDPeJTB4s": {
-      "fill": {
-        "hex": "#FFFFFF",
-        "type": "solid",
-      },
+      "fills": [
+        {
+          "hex": "#FFFFFF",
+          "type": "solid",
+        },
+      ],
       "height": {
         "type": "fillContainer",
         "value": 173,
@@ -420,10 +444,12 @@ exports[`selectablesToProjectJSON > works 1`] = `
       },
     },
     "1Bvi392qBdMy93LGLcVymb": {
-      "fill": {
-        "hex": "#FFFFFF",
-        "type": "solid",
-      },
+      "fills": [
+        {
+          "hex": "#FFFFFF",
+          "type": "solid",
+        },
+      ],
       "height": {
         "type": "fixed",
         "value": 100,
