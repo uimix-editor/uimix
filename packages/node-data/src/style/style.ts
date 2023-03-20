@@ -21,6 +21,7 @@ export const StyleJSON = z.object({
   bottomRightRadius: z.number(),
   bottomLeftRadius: z.number(),
 
+  fills: z.array(SolidFill),
   fill: z.union([SolidFill, z.null()]),
   border: z.union([SolidFill, z.null()]),
   borderTopWidth: z.number(),

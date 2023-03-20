@@ -134,7 +134,7 @@
       },
       "width": { "type": "hugContents" },
       "height": { "type": "hugContents" },
-      "fill": { "type": "solid", "hex": "#E5E7EB" },
+      "fills": [{ "type": "solid", "hex": "#E5E7EB" }],
       "layout": "stack",
       "paddingTop": 4,
       "paddingRight": 8,
@@ -144,7 +144,7 @@
     "1Bvi2z3UGTM64JtRT7Qc1S": {
       "width": { "type": "hugContents" },
       "height": { "type": "hugContents" },
-      "fill": { "type": "solid", "hex": "#111827" },
+      "fills": [{ "type": "solid", "hex": "#111827" }],
       "textContent": "Button"
     },
     "1Bvi2z3UVsEskiSt2TcdL7": {
@@ -152,10 +152,10 @@
         "x": { "type": "start", "start": 200 },
         "y": { "type": "start", "start": 400 }
       },
-      "fill": { "type": "solid", "hex": "#3B82F6" }
+      "fills": [{ "type": "solid", "hex": "#3B82F6" }]
     },
     "1Bvi2z3UVsEskiSt2TcdL7:1Bvi2z3UGTM64JtRT7Qc1S": {
-      "fill": { "type": "solid", "hex": "#FFFFFF" }
+      "fills": [{ "type": "solid", "hex": "#FFFFFF" }]
     },
     "1Bvi2z3UaHFmaikKtfcmGX": {
       "position": {
@@ -172,7 +172,7 @@
       },
       "width": { "type": "hugContents" },
       "height": { "type": "hugContents" },
-      "fill": { "type": "solid", "hex": "#FFFFFF" },
+      "fills": [{ "type": "solid", "hex": "#FFFFFF" }],
       "layout": "stack",
       "gap": 10,
       "paddingTop": 10,
@@ -183,22 +183,22 @@
     "1Bvi2z3TpKXtTJLTRPTEd8": {
       "width": { "type": "fixed", "value": 50 },
       "height": { "type": "fixed", "value": 50 },
-      "fill": { "type": "solid", "hex": "#EF4444" }
+      "fills": [{ "type": "solid", "hex": "#EF4444" }]
     },
     "1Bvi2z3To8ddXo6R6ZftVD": {
       "width": { "type": "fixed", "value": 40 },
       "height": { "type": "fixed", "value": 80 },
-      "fill": { "type": "solid", "hex": "#22C55E" }
+      "fills": [{ "type": "solid", "hex": "#22C55E" }]
     },
     "1Bvi2z3UB1xUVg4Xz9WTpJ": {
       "width": { "type": "fixed", "value": 80 },
       "height": { "type": "fixed", "value": 40 },
-      "fill": { "type": "solid", "hex": "#3B82F6" }
+      "fills": [{ "type": "solid", "hex": "#3B82F6" }]
     },
     "1Bvi2z3U3SiK6r7gf9vh7N": {
       "width": { "type": "hugContents" },
       "height": { "type": "hugContents" },
-      "fill": { "type": "solid", "hex": "#000000" },
+      "fills": [{ "type": "solid", "hex": "#000000" }],
       "textContent": "Hello, world!",
       "fontSize": 20
     },
@@ -210,7 +210,7 @@
       },
       "width": { "type": "fixed", "value": 744 },
       "height": { "type": "fixed", "value": 456 },
-      "fill": { "type": "solid", "hex": "#FFFFFF" },
+      "fills": [{ "type": "solid", "hex": "#FFFFFF" }],
       "layout": "stack",
       "stackDirection": "y",
       "stackAlign": "center"
@@ -232,7 +232,7 @@
       },
       "width": { "type": "fillContainer", "value": 428 },
       "height": { "type": "fillContainer", "value": 173 },
-      "fill": { "type": "solid", "hex": "#FFFFFF" }
+      "fills": [{ "type": "solid", "hex": "#FFFFFF" }]
     },
     "1Bvi32d9RMi3ES5kk2UvuM": {
       "position": {
@@ -258,7 +258,7 @@
         "x": { "type": "start", "start": 160 },
         "y": { "type": "start", "start": 28 }
       },
-      "fill": { "type": "solid", "hex": "#BABABA" },
+      "fills": [{ "type": "solid", "hex": "#BABABA" }],
       "mainComponent": "1Bvi2z3USBZi1pWrvPd6Ut"
     },
     "1Bvi2z3UrU9VkawwAteXs8:1Bvi2z3UGTM64JtRT7Qc1S": {
@@ -271,7 +271,7 @@
       },
       "width": { "type": "fixed", "value": 100 },
       "height": { "type": "fixed", "value": 100 },
-      "fill": { "type": "solid", "hex": "#FFFFFF" },
+      "fills": [{ "type": "solid", "hex": "#FFFFFF" }],
       "imageHash": "YmY-tuteU03QY-k_2ARy1uacNmXDNmOX-FFAlj2qCIo="
     },
     "1Bvi39mct9UNYZ9eTCCRdV": {
