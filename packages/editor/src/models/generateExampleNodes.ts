@@ -16,7 +16,10 @@ export function generateExampleNodes(page: Node) {
     };
     style.width = { type: "fixed", value: 50 };
     style.height = { type: "fixed", value: 50 };
-    style.fill = Color.from(colors.red[500])!.toHex();
+    style.fill = {
+      type: "solid",
+      hex: Color.from(colors.red[500])!.toHex(),
+    };
   }
 
   {
@@ -30,7 +33,7 @@ export function generateExampleNodes(page: Node) {
     };
     stackStyle.width = { type: "hugContents" };
     stackStyle.height = { type: "hugContents" };
-    stackStyle.fill = Color.white.toHex();
+    stackStyle.fill = { type: "solid", hex: Color.white.toHex() };
     stackStyle.layout = "stack";
     stackStyle.gap = 10;
     stackStyle.paddingTop = 10;
@@ -44,7 +47,10 @@ export function generateExampleNodes(page: Node) {
 
     stackItem0Style.width = { type: "fixed", value: 50 };
     stackItem0Style.height = { type: "fixed", value: 50 };
-    stackItem0Style.fill = Color.from(colors.red[500])!.toHex();
+    stackItem0Style.fill = {
+      type: "solid",
+      hex: Color.from(colors.red[500])!.toHex(),
+    };
 
     const stackItem1 = stackSelectable.append("frame");
     stackItem1.originalNode.name = "Item 1";
@@ -52,7 +58,10 @@ export function generateExampleNodes(page: Node) {
 
     stackItem1Style.width = { type: "fixed", value: 40 };
     stackItem1Style.height = { type: "fixed", value: 80 };
-    stackItem1Style.fill = Color.from(colors.green[500])!.toHex();
+    stackItem1Style.fill = {
+      type: "solid",
+      hex: Color.from(colors.green[500])!.toHex(),
+    };
 
     const stackItem2 = stackSelectable.append("frame");
     stackItem2.originalNode.name = "Item 2";
@@ -60,7 +69,10 @@ export function generateExampleNodes(page: Node) {
 
     stackItem2Style.width = { type: "fixed", value: 80 };
     stackItem2Style.height = { type: "fixed", value: 40 };
-    stackItem2Style.fill = Color.from(colors.blue[500])!.toHex();
+    stackItem2Style.fill = {
+      type: "solid",
+      hex: Color.from(colors.blue[500])!.toHex(),
+    };
 
     const text = stackSelectable.append("text");
     text.originalNode.name = "Text";
@@ -69,7 +81,7 @@ export function generateExampleNodes(page: Node) {
     textStyle.width = { type: "hugContents" };
     textStyle.height = { type: "hugContents" };
     textStyle.fontSize = 20;
-    textStyle.fill = Color.from("black").toHex();
+    textStyle.fill = { type: "solid", hex: Color.from("black").toHex() };
   }
 
   {
@@ -114,7 +126,10 @@ export function generateExampleNodes(page: Node) {
     };
     rootNodeStyle.width = { type: "hugContents" };
     rootNodeStyle.height = { type: "hugContents" };
-    rootNodeStyle.fill = Color.from(colors.gray[200])!.toHex();
+    rootNodeStyle.fill = {
+      type: "solid",
+      hex: Color.from(colors.gray[200])!.toHex(),
+    };
     rootNodeStyle.layout = "stack";
     rootNodeStyle.paddingLeft = 8;
     rootNodeStyle.paddingRight = 8;
@@ -124,14 +139,20 @@ export function generateExampleNodes(page: Node) {
     const textNodeStyle = textNode.selectable.style;
     textNodeStyle.width = { type: "hugContents" };
     textNodeStyle.height = { type: "hugContents" };
-    textNodeStyle.fill = Color.from(colors.gray[900])!.toHex();
+    textNodeStyle.fill = {
+      type: "solid",
+      hex: Color.from(colors.gray[900])!.toHex(),
+    };
 
     const hoverVariantStyle = hoverVariant.selectable.style;
     hoverVariantStyle.position = {
       x: { type: "start", start: 200 },
       y: { type: "start", start: 400 },
     };
-    hoverVariantStyle.fill = Color.from(colors.blue[500])!.toHex();
+    hoverVariantStyle.fill = {
+      type: "solid",
+      hex: Color.from(colors.blue[500])!.toHex(),
+    };
 
     const mobileVariantStyle = mobileVariant.selectable.style;
     mobileVariantStyle.position = {
@@ -143,7 +164,10 @@ export function generateExampleNodes(page: Node) {
       hoverVariant.id,
       textNode.id,
     ]).style;
-    hoverTextNodeStyle.fill = Color.from(colors.white)!.toHex();
+    hoverTextNodeStyle.fill = {
+      type: "solid",
+      hex: Color.from(colors.white)!.toHex(),
+    };
 
     const instanceNode = project.nodes.create("instance");
     instanceNode.name = "Instance";

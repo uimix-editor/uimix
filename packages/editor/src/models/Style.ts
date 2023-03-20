@@ -5,6 +5,7 @@ import { ObservableYMap } from "../utils/ObservableYMap";
 export type IStyle = StyleJSON;
 
 export const defaultStyle: StyleJSON = {
+  hidden: false,
   position: {
     x: {
       type: "start",
@@ -36,6 +37,8 @@ export const defaultStyle: StyleJSON = {
   borderRightWidth: 0,
   borderBottomWidth: 0,
   borderLeftWidth: 0,
+
+  opacity: 1,
 
   // stack (auto layout)
 
