@@ -85,7 +85,8 @@ export function buildNodeCSS(
     cssStyle.paddingTop = style.paddingTop + "px";
     cssStyle.paddingBottom = style.paddingBottom + "px";
 
-    cssStyle.background = style.fill?.hex ?? "transparent";
+    const fills = style.fills;
+    cssStyle.background = fills.length ? fills[0].hex : "transparent";
     cssStyle.borderStyle = "solid";
     cssStyle.borderColor = style.border?.hex ?? "transparent";
     cssStyle.borderTopWidth = style.borderTopWidth + "px";
@@ -98,7 +99,8 @@ export function buildNodeCSS(
     cssStyle.whiteSpace = "break-spaces";
     cssStyle.display = "flex";
     cssStyle.flexDirection = "column";
-    cssStyle.color = style.fill?.hex ?? "black";
+    const fills = style.fills;
+    cssStyle.color = fills.length ? fills[0].hex : "transparent";
     cssStyle.fontFamily = style.fontFamily;
     cssStyle.fontSize = style.fontSize + "px";
     cssStyle.fontWeight = style.fontWeight;

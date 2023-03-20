@@ -31,7 +31,7 @@ export const defaultStyle: StyleJSON = {
   bottomRightRadius: 0,
   bottomLeftRadius: 0,
 
-  fill: null,
+  fills: [],
   border: null,
   borderTopWidth: 0,
   borderRightWidth: 0,

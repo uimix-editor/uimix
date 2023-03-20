@@ -15,14 +15,15 @@ export const FillPane: React.FC = observer(function FillPane() {
   const selectables = projectState.selectedSelectables.filter(
     (s) => !s.node.isAbstract
   );
-  const fill = sameOrMixed(selectables.map((s) => s.style.fill));
-  const hasFill = fill && fill !== Mixed;
+  const fills = sameOrMixed(selectables.map((s) => s.style.fills));
+  const hasFill = fills && fills !== Mixed && fills.length;
+  const fill = hasFill ? fills[0] : undefined;
 
   const onChangeFill = action((fill: Color | undefined) => {
     for (const selectable of selectables) {
-      selectable.style.fill = fill
-        ? { type: "solid", hex: fill.toHex() }
-        : null;
+      selectable.style.fills = fill
+        ? [{ type: "solid", hex: fill.toHex() }]
+        : [];
     }
   });
   const onChangeEndFill = action(() => {
@@ -57,7 +58,7 @@ export const FillPane: React.FC = observer(function FillPane() {
           )
         }
       />
-      {fill === Mixed ? (
+      {fills === Mixed ? (
         <div className="text-macaron-disabledText">Mixed</div>
       ) : fill ? (
         <InspectorTargetContext.Provider value={selectables}>
