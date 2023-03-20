@@ -1,4 +1,5 @@
 import { z } from "zod";
+import { SolidFill } from "./value/fill.js";
 import { ForeignComponentRef } from "./value/instance.js";
 import { PositionConstraint } from "./value/position.js";
 import { SizeConstraint } from "./value/size.js";
@@ -20,8 +21,8 @@ export const StyleJSON = z.object({
   bottomRightRadius: z.number(),
   bottomLeftRadius: z.number(),
 
-  fill: z.union([z.string(), z.null()]),
-  border: z.union([z.string(), z.null()]),
+  fill: z.union([SolidFill, z.null()]),
+  border: z.union([SolidFill, z.null()]),
   borderTopWidth: z.number(),
   borderRightWidth: z.number(),
   borderBottomWidth: z.number(),
