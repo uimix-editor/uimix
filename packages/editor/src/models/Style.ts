@@ -64,8 +64,10 @@ export const defaultStyle: StyleJSON = {
   textVerticalAlign: "start",
 
   // image
-
   imageHash: null,
+
+  // svg
+  svgContent: "",
 
   // instance
   mainComponent: null,
