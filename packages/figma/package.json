@@ -19,14 +19,15 @@
   },
   "dependencies": {
     "@iconify/react": "^4.1.0",
+    "@paralleldrive/cuid2": "^2.2.0",
+    "@uimix/node-data": "workspace:*",
     "buffer": "^6.0.3",
     "clsx": "^1.2.1",
     "just-compare": "^2.3.0",
     "lodash-es": "^4.17.21",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
-    "tailwind-merge": "^1.10.0",
-    "@uimix/node-data": "workspace:*"
+    "tailwind-merge": "^1.10.0"
   },
   "devDependencies": {
     "@figma/plugin-typings": "^1.62.0",
