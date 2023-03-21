@@ -5,4 +5,5 @@
 body {
   /* prevent swipe to go back */
   overscroll-behavior: none;
+  -webkit-font-smoothing: antialiased;
 }
