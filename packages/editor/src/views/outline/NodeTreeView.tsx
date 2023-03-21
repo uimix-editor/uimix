@@ -132,6 +132,8 @@ const TreeRow: React.FC<{
         return textIcon;
       case "image":
         return imageIcon;
+      case "svg":
+        return "material-symbols:shapes-outline";
       case "component":
         return widgetsIcon;
       case "instance":
