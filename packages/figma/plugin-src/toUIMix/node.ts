@@ -24,6 +24,7 @@ interface NodeWithStyle extends Omit<UIMix.NodeJSON, "index" | "parent"> {
 }
 
 async function figmaToMacaron(
+  images: Map<string, UIMix.Image>,
   node: SceneNode,
   parentLayout: BaseFrameMixin["layoutMode"],
   offset: [number, number]
@@ -55,7 +56,7 @@ async function figmaToMacaron(
       id: createId(),
       type: "image",
       name: node.name,
-      style: await getImageStyle(node, parentLayout, offset),
+      style: await getImageStyle(images, node, parentLayout, offset),
       children: [],
     };
   }
@@ -92,7 +93,7 @@ async function figmaToMacaron(
         type: "frame",
         name: node.name,
         style: await getGroupStyle(node, parentLayout, offset),
-        children: await figmaNodesToMacaron(node.children, "NONE", [
+        children: await figmaNodesToMacaron(images, node.children, "NONE", [
           node.x,
           node.y,
         ]),
@@ -107,10 +108,12 @@ async function figmaToMacaron(
         type: "frame",
         name: node.name,
         style: await getFrameStyle(node, parentLayout, offset),
-        children: await figmaNodesToMacaron(node.children, node.layoutMode, [
-          node.strokeLeftWeight,
-          node.strokeTopWeight,
-        ]),
+        children: await figmaNodesToMacaron(
+          images,
+          node.children,
+          node.layoutMode,
+          [node.strokeLeftWeight, node.strokeTopWeight]
+        ),
       };
     }
     case "TEXT": {
@@ -126,13 +129,14 @@ async function figmaToMacaron(
 }
 
 export async function figmaNodesToMacaron(
+  images: Map<string, UIMix.Image>,
   nodes: readonly SceneNode[],
   parentLayout: BaseFrameMixin["layoutMode"],
   offset: [number, number]
 ): Promise<NodeWithStyle[]> {
   return compact(
     await Promise.all(
-      nodes.map((child) => figmaToMacaron(child, parentLayout, offset))
+      nodes.map((child) => figmaToMacaron(images, child, parentLayout, offset))
     )
   );
 }
