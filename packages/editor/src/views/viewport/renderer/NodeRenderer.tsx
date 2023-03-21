@@ -11,6 +11,7 @@ import {
 } from "../../../types/ForeignComponent";
 import { ForeignComponentManager } from "../../../models/ForeignComponentManager";
 import { buildNodeCSS } from "../../../models/buildNodeCSS";
+import htmlReactParser from "html-react-parser";
 
 export const selectableForDOM = new WeakMap<HTMLElement, Selectable>();
 export const domForSelectable = new WeakMap<Selectable, HTMLElement>();
@@ -168,6 +169,19 @@ export const NodeRenderer: React.FC<{
           src={dataURL}
         />
       );
+    }
+
+    if (node.type === "svg") {
+      const svg = style.svgContent;
+      const svgElement = svg ? htmlReactParser(svg) : undefined;
+      if (svgElement) {
+        // TODO: do not wrap in div?
+        return (
+          <div style={cssStyle} ref={ref}>
+            {svgElement}
+          </div>
+        );
+      }
     }
 
     if (node.type === "foreign") {
