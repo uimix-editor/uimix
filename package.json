@@ -9,11 +9,12 @@
   "main": "index.js",
   "scripts": {
     "build": "pnpm run-z ./packages// build '=if-present'",
-    "dev": "run-z dev:dashboard,dev:collaborative-backend,dev:editor,dev:sandbox",
+    "dev": "run-z dev:dashboard,dev:collaborative-backend,dev:editor,dev:sandbox,dev:figma",
     "dev:collaborative-backend": "cd packages/collaborative-backend && pnpm dev",
     "dev:dashboard": "cd packages/dashboard && pnpm dev",
     "dev:editor": "cd packages/editor && pnpm dev",
     "dev:sandbox": "cd packages/sandbox && pnpm dev",
+    "dev:figma": "cd packages/figma && pnpm dev",
     "lint": "pnpm run-z ./packages// lint '=if-present'",
     "test": "pnpm run-z ./packages// test '=if-present'"
   },
