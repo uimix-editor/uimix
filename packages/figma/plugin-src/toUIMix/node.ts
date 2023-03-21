@@ -1,6 +1,6 @@
 import { createId } from "@paralleldrive/cuid2";
 import { compact } from "../util";
-import { StyleJSON, NodeJSON } from "@uimix/node-data";
+import * as UIMix from "@uimix/node-data";
 import { svgLikeNodeChecker } from "./SVGLikeNodeChecker";
 import {
   getFrameStyle,
@@ -17,9 +17,9 @@ function isSingleImageFill(
   );
 }
 
-interface NodeWithStyle extends Omit<NodeJSON, "index" | "parent"> {
+interface NodeWithStyle extends Omit<UIMix.NodeJSON, "index" | "parent"> {
   id: string;
-  style: Partial<StyleJSON>;
+  style: Partial<UIMix.StyleJSON>;
   children: NodeWithStyle[];
 }
 
