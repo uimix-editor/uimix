@@ -21,7 +21,15 @@ function compareNodeKey(a: NodeKey, b: NodeKey) {
   return a.index - b.index;
 }
 
-export const abstractNodeTypes: NodeType[] = ["page", "component"];
+export const abstractNodeTypes: NodeType[] = ["project", "page", "component"];
+export const normalNodeTypes: NodeType[] = [
+  "frame",
+  "text",
+  "image",
+  "svg",
+  "instance",
+  "foreign",
+];
 
 export class Node {
   // Do not use this constructor directly
@@ -163,14 +171,6 @@ export class Node {
         return type === "variant";
       }
     }
-
-    const normalNodeTypes: NodeType[] = [
-      "frame",
-      "text",
-      "image",
-      "instance",
-      "foreign",
-    ];
 
     if (this.type === "page") {
       return type === "component" || normalNodeTypes.includes(type);
