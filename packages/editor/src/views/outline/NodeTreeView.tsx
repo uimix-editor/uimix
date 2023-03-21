@@ -234,7 +234,7 @@ const TreeRow: React.FC<{
             </span>
             <DoubleClickToEdit
               className={twMerge(
-                "flex-1 h-full",
+                "flex-1 h-full min-w-0",
                 isComponent && "font-semibold",
                 isInsideInstance && "italic opacity-60"
               )}
