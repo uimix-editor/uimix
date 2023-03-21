@@ -54,11 +54,11 @@ export class Clipboard {
     const items = await navigator.clipboard.read();
     const item = items.find((item) => item.types.includes(`web ${mimeType}`));
     if (!item) {
+      // try parsing text as JSOn
       const text = await navigator.clipboard.readText();
       if (!text) {
         return { nodes: {}, styles: {} };
       }
-
       try {
         const json = JSONClipboardData.parse(JSON.parse(text));
         return reassignNewIDs(json.uimixNodes);
