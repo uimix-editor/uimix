@@ -3,41 +3,7 @@ import { MessageToCode, MessageToUI } from "../types/message";
 import { createId } from "@paralleldrive/cuid2";
 import { compact, rgbaToHex } from "./util";
 import { StyleJSON, SolidFill } from "@uimix/node-data";
-
-const vectorLikeTypes: SceneNode["type"][] = [
-  "LINE",
-  "ELLIPSE",
-  "POLYGON",
-  "STAR",
-  "VECTOR",
-  "BOOLEAN_OPERATION",
-];
-
-const isVectorLikeNodeMemo = new WeakMap<SceneNode, boolean>();
-
-function isVectorLikeNode(node: SceneNode): boolean {
-  const memo = isVectorLikeNodeMemo.get(node);
-  if (memo != null) {
-    return memo;
-  }
-
-  let result = false;
-  if (vectorLikeTypes.includes(node.type)) {
-    result = true;
-  } else if (
-    // non-image rectangle
-    node.type === "RECTANGLE" &&
-    !isSingleImageFill(node.fills)
-  ) {
-    result = true;
-  } else if ("children" in node) {
-    result =
-      node.children.length !== 0 && node.children.every(isVectorLikeNode);
-  }
-
-  isVectorLikeNodeMemo.set(node, result);
-  return result;
-}
+import { svgLikeNodeChecker } from "./SVGLikeNodeChecker";
 
 function isSingleImageFill(
   fills: MinimalFillsMixin["fills"]
@@ -427,7 +393,7 @@ async function figmaToMacaron(
     return;
   }
 
-  if (isVectorLikeNode(node)) {
+  if (svgLikeNodeChecker.check(node)) {
     try {
       const svg = await node.exportAsync({ format: "SVG" });
       const svgText = String.fromCharCode(...svg);
