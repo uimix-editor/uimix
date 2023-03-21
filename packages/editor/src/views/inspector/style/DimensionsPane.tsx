@@ -17,6 +17,7 @@ import { Selectable } from "../../../models/Selectable";
 import { sameOrMixed } from "../../../utils/Mixed";
 import { InspectorHeading } from "../components/InspectorHeading";
 import { SeparableInput } from "../../../components/SeparableInput";
+import { InspectorCheckBox } from "./inputs/InspectorCheckBox";
 
 const verticalSizeConstraintOptions: ToggleGroupItem<SizeConstraintType>[] = [
   {
@@ -284,6 +285,15 @@ export const DimensionsPane: React.FC = observer(function DimensionPane() {
           </div>
         </div>
         <RadiusEdit />
+        <label className="flex items-center gap-2">
+          <InspectorCheckBox
+            get={(s) => s.style.overflowHidden}
+            set={(s, value) => {
+              s.style.overflowHidden = !!value;
+            }}
+          />
+          Hides Overflow
+        </label>
       </InspectorTargetContext.Provider>
     </InspectorPane>
   );
