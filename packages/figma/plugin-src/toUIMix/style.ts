@@ -204,13 +204,14 @@ async function getTextStylePartial(
     style.fontSize = node.fontSize;
   }
 
-  if (node.lineHeight !== figma.mixed && node.lineHeight.unit !== "AUTO") {
-    if (node.lineHeight.unit === "PERCENT") {
-      style.lineHeight = ((style.fontSize ?? 12) * node.lineHeight.value) / 100;
-    } else {
-      style.lineHeight = node.lineHeight.value;
-    }
-  }
+  // TODO: lineHeight
+  // if (node.lineHeight !== figma.mixed && node.lineHeight.unit !== "AUTO") {
+  //   if (node.lineHeight.unit === "PERCENT") {
+  //     style.lineHeight = ((style.fontSize ?? 12) * node.lineHeight.value) / 100;
+  //   } else {
+  //     style.lineHeight = node.lineHeight.value;
+  //   }
+  // }
 
   if (node.letterSpacing !== figma.mixed) {
     if (node.letterSpacing.unit === "PERCENT") {
