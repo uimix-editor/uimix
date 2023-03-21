@@ -378,7 +378,7 @@ export async function getGroupStyle(
   offset: [number, number]
 ): Promise<Partial<UIMix.StyleJSON>> {
   return {
-    ...getPositionStylePartial(node, parentLayout, [offset[0], offset[1]]),
+    ...getPositionStylePartial(node, parentLayout, offset),
   };
 }
 
@@ -388,7 +388,7 @@ export async function getFrameStyle(
   offset: [number, number]
 ): Promise<Partial<UIMix.StyleJSON>> {
   return {
-    ...getPositionStylePartial(node, parentLayout, [offset[0], offset[1]]),
+    ...getPositionStylePartial(node, parentLayout, offset),
     ...getLayoutStylePartial(node),
     ...getCornerStylePartial(node),
     ...(await getFillBorderStylePartial(node)),
@@ -401,7 +401,7 @@ export async function getTextStyle(
   offset: [number, number]
 ): Promise<Partial<UIMix.StyleJSON>> {
   return {
-    ...getPositionStylePartial(node, parentLayout, [offset[0], offset[1]]),
+    ...getPositionStylePartial(node, parentLayout, offset),
     ...(await getTextStylePartial(node)),
   };
 }
@@ -412,7 +412,7 @@ export async function getSVGStyle(
   offset: [number, number]
 ): Promise<Partial<UIMix.StyleJSON>> {
   return {
-    ...getPositionStylePartial(node, parentLayout, [offset[0], offset[1]]),
+    ...getPositionStylePartial(node, parentLayout, offset),
   };
 }
 
@@ -423,7 +423,7 @@ export async function getImageStyle(
   offset: [number, number]
 ): Promise<Partial<UIMix.StyleJSON>> {
   const baseStyle: Partial<UIMix.StyleJSON> = {
-    ...getPositionStylePartial(node, parentLayout, [offset[0], offset[1]]),
+    ...getPositionStylePartial(node, parentLayout, offset),
     ...getCornerStylePartial(node),
     ...(await getFillBorderStylePartial(node)),
   };
