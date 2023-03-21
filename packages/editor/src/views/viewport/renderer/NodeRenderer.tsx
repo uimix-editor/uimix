@@ -172,16 +172,18 @@ export const NodeRenderer: React.FC<{
     }
 
     if (node.type === "svg") {
-      const svg = style.svgContent;
+      const svg = style.svgContent.trim();
       const svgElement = svg ? htmlReactParser(svg) : undefined;
-      if (svgElement) {
-        // TODO: do not wrap in div?
-        return (
-          <div style={cssStyle} ref={ref}>
-            {svgElement}
-          </div>
-        );
+      if (!React.isValidElement(svgElement)) {
+        console.log("invalid svg", svg);
+        return <div style={cssStyle} ref={ref} />;
       }
+      // TODO: resolve this messy typing
+      return React.cloneElement(svgElement, {
+        // @ts-ignore
+        style: cssStyle,
+        ref,
+      });
     }
 
     if (node.type === "foreign") {
