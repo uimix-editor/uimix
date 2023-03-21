@@ -102,6 +102,68 @@ export class ProjectState {
   deselectAll() {
     this.page?.selectable.deselect();
   }
+
+  async pasteNodes(data: ProjectJSON) {
+    const getInsertionTarget = () => {
+      const defaultTarget = {
+        parent: this.page,
+        next: undefined,
+      };
+
+      const selectedSelectables = this.selectedSelectables;
+      let lastSelectable: Selectable | undefined =
+        selectedSelectables[selectedSelectables.length - 1];
+      while (lastSelectable && lastSelectable.idPath.length > 1) {
+        lastSelectable = lastSelectable.parent;
+      }
+      if (!lastSelectable) {
+        return defaultTarget;
+      }
+
+      const parent = lastSelectable?.parent;
+      if (!parent) {
+        return defaultTarget;
+      }
+
+      return {
+        parent: parent.originalNode,
+        next: lastSelectable.originalNode.nextSibling,
+      };
+    };
+
+    const insertionTarget = getInsertionTarget();
+    this.page?.selectable.deselect();
+
+    const nodes: Node[] = [];
+    for (const [id, nodeJSON] of Object.entries(data.nodes)) {
+      const node = this.project.nodes.create(nodeJSON.type, id);
+      node.loadJSON(nodeJSON);
+      nodes.push(node);
+    }
+    const topNodes = nodes.filter((node) => !node.parentID);
+
+    insertionTarget.parent?.insertBefore(topNodes, insertionTarget.next);
+
+    for (const [id, styleJSON] of Object.entries(data.styles)) {
+      const selectable = this.project.selectables.get(id.split(":"));
+      if (selectable) {
+        selectable.selfStyle.loadJSON(styleJSON);
+      }
+    }
+
+    for (const node of topNodes) {
+      node.selectable.select();
+    }
+
+    // load images
+    for (const [hash, image] of Object.entries(data.images ?? {})) {
+      if (this.project.imageManager.has(hash)) {
+        continue;
+      }
+      const blob = await fetch(image.url).then((res) => res.blob());
+      await this.project.imageManager.insert(blob);
+    }
+  }
 }
 
 export const projectState = new ProjectState();
