@@ -156,13 +156,15 @@ export class ProjectState {
     }
 
     // load images
-    for (const [hash, image] of Object.entries(data.images ?? {})) {
-      if (this.project.imageManager.has(hash)) {
-        continue;
-      }
-      const blob = await fetch(image.url).then((res) => res.blob());
-      await this.project.imageManager.insert(blob);
-    }
+    await Promise.all(
+      Object.entries(data.images ?? {}).map(async ([hash, image]) => {
+        if (this.project.imageManager.has(hash)) {
+          return;
+        }
+        const blob = await fetch(image.url).then((res) => res.blob());
+        await this.project.imageManager.insert(blob);
+      })
+    );
   }
 }
 
