@@ -37,6 +37,12 @@ const App: React.FC = () => {
       type: "copy-nodes",
     });
   };
+  const onPasteButtonClick = () => {
+    postPluginMessage({
+      type: "notify",
+      data: "Paste not implemented yet",
+    });
+  };
 
   return (
     <div className="p-2 flex gap-2 text-xs">
@@ -46,7 +52,10 @@ const App: React.FC = () => {
       >
         Copy
       </button>
-      <button className="px-2 py-1 bg-blue-500 text-white rounded-md">
+      <button
+        className="px-2 py-1 bg-blue-500 text-white rounded-md"
+        onClick={onPasteButtonClick}
+      >
         Paste
       </button>
     </div>
