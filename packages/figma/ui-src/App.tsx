@@ -39,9 +39,16 @@ const App: React.FC = () => {
   };
 
   return (
-    <div>
-      <button onClick={onCopyButtonClick}>Copy</button>
-      <button>Paste</button>
+    <div className="p-2 flex gap-2 text-xs">
+      <button
+        className="px-2 py-1 bg-blue-500 text-white rounded-md"
+        onClick={onCopyButtonClick}
+      >
+        Copy
+      </button>
+      <button className="px-2 py-1 bg-blue-500 text-white rounded-md">
+        Paste
+      </button>
     </div>
   );
 };
