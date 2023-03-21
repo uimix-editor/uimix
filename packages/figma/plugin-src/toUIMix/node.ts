@@ -6,6 +6,7 @@ import {
   getFrameStyle,
   getGroupStyle,
   getImageStyle,
+  getSVGStyle,
   getTextStyle,
 } from "./style";
 
@@ -68,17 +69,15 @@ async function figmaToMacaron(
 
       return {
         id: createId(),
-        type: "image",
+        type: "svg",
         name: node.name,
         style: {
-          ...getPositionStyle(node, parentLayout, offset),
+          ...getSVGStyle(node, parentLayout, offset),
           width: { type: "hugContents" },
           height: { type: "hugContents" },
-          image: {
-            type: "svg",
-            content: svgText,
-          },
+          svgContent: svgText,
         },
+        children: [],
       };
     } catch (error) {
       console.error(`error exporting ${node.name} to SVG`);

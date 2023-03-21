@@ -406,6 +406,16 @@ export async function getTextStyle(
   };
 }
 
+export async function getSVGStyle(
+  node: SceneNode & LayoutMixin,
+  parentLayout: BaseFrameMixin["layoutMode"],
+  offset: [number, number]
+): Promise<Partial<UIMix.StyleJSON>> {
+  return {
+    ...getPositionStylePartial(node, parentLayout, [offset[0], offset[1]]),
+  };
+}
+
 export async function getImageStyle(
   images: Map<string, UIMix.Image>,
   node: RectangleNode,

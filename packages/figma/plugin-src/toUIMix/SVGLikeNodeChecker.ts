@@ -11,7 +11,16 @@ const vectorLikeTypes: SceneNode["type"][] = [
 class SVGLikeNodeChecker {
   private readonly memo = new WeakMap<SceneNode, boolean>();
 
-  check(node: SceneNode): boolean {
+  check(
+    node: SceneNode
+  ): node is
+    | LineNode
+    | RectangleNode
+    | EllipseNode
+    | PolygonNode
+    | StarNode
+    | VectorNode
+    | BooleanOperationNode {
     const memo = this.memo.get(node);
     if (memo != null) {
       return memo;
