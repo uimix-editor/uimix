@@ -139,3 +139,38 @@ export async function figmaNodesToMacaron(
     )
   );
 }
+
+export function buildProjectJSON(
+  images: Map<string, UIMix.Image>,
+  nodes: NodeWithStyle[]
+): UIMix.ProjectJSON {
+  const projectJSON: UIMix.ProjectJSON = {
+    nodes: {},
+    styles: {},
+    images: Object.fromEntries(images),
+  };
+
+  const visitNode = (
+    node: NodeWithStyle,
+    parent: NodeWithStyle | undefined,
+    index: number
+  ) => {
+    projectJSON.nodes[node.id] = {
+      name: node.name,
+      type: node.type,
+      parent: parent?.id,
+      index,
+    };
+    projectJSON.styles[node.id] = node.style;
+
+    for (const [index, child] of node.children.entries()) {
+      visitNode(child, node, index);
+    }
+  };
+
+  for (const node of nodes) {
+    visitNode(node, undefined, 0);
+  }
+
+  return projectJSON;
+}

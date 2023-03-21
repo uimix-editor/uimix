@@ -1,5 +1,6 @@
 import { MessageToCode, MessageToUI } from "../types/message";
-import { figmaNodesToMacaron } from "./toUIMix/node";
+import { buildProjectJSON, figmaNodesToMacaron } from "./toUIMix/node";
+import * as UIMix from "@uimix/node-data";
 
 figma.showUI(__html__);
 
@@ -15,16 +16,18 @@ figma.ui.onmessage = async (msg: MessageToCode) => {
         break;
       }
 
+      const images = new Map<string, UIMix.Image>();
       const macaronLayers = await figmaNodesToMacaron(
+        images,
         figma.currentPage.selection,
         "NONE",
         [0, 0]
       );
+      const projectJSON = buildProjectJSON(images, macaronLayers);
+
       postMessage({
         type: "copy-data",
-        data: JSON.stringify({
-          "application/x-macaron-layers": macaronLayers,
-        }),
+        data: JSON.stringify(projectJSON),
       });
       break;
     }
