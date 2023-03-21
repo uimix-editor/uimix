@@ -29,6 +29,11 @@ async function figmaToMacaron(
   parentLayout: BaseFrameMixin["layoutMode"],
   offset: [number, number]
 ): Promise<NodeWithStyle | undefined> {
+  // TODO: export hidden nodes as well
+  if (!node.visible) {
+    return;
+  }
+
   const createId = () => {
     return Math.random().toString(36).substring(2, 15);
   };
