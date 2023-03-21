@@ -1,8 +1,13 @@
 import { Buffer } from "buffer";
 import { MessageToCode, MessageToUI } from "../types/message";
 import { createId } from "@paralleldrive/cuid2";
-import { compact, rgbaToHex } from "./util";
-import { StyleJSON, SolidFill } from "@uimix/node-data";
+import {
+  compact,
+  getURLSafeBase64Hash,
+  imageToDataURL,
+  rgbaToHex,
+} from "./util";
+import { StyleJSON, SolidFill, NodeJSON } from "@uimix/node-data";
 import { svgLikeNodeChecker } from "./SVGLikeNodeChecker";
 
 function isSingleImageFill(
@@ -371,11 +376,17 @@ function getCornerStyle(node: RectangleCornerMixin): Partial<StyleJSON> {
   };
 }
 
+interface NodeWithStyle extends Omit<NodeJSON, "index" | "parent"> {
+  id: string;
+  style: Partial<StyleJSON>;
+  children: NodeWithStyle[];
+}
+
 async function figmaToMacaron(
   node: SceneNode,
   parentLayout: BaseFrameMixin["layoutMode"],
   offset: [number, number]
-): Promise<Macaron.LayerJSON | undefined> {
+): Promise<NodeWithStyle | undefined> {
   // FigJam nodes are not supported
   if (
     node.type === "STICKY" ||
@@ -388,9 +399,37 @@ async function figmaToMacaron(
     node.type === "LINK_UNFURL" ||
     node.type === "MEDIA" ||
     node.type === "WASHI_TAPE" ||
-    node.type === "SECTION"
+    node.type === "SECTION" ||
+    node.type === "TABLE"
   ) {
     return;
+  }
+
+  if (
+    node.type === "RECTANGLE" &&
+    isSingleImageFill(node.fills) &&
+    node.fills[0].imageHash
+  ) {
+    // looks like a image
+    const image = figma.getImageByHash(node.fills[0].imageHash);
+    if (image) {
+      const data = await image.getBytesAsync();
+      const hash = getURLSafeBase64Hash(data);
+      const dataURL = imageToDataURL(data);
+      // TODO: add image to assets
+
+      return {
+        id: createId(),
+        type: "image",
+        name: node.name,
+        style: {
+          ...getPositionStyle(node, parentLayout, offset),
+          ...getCornerStyle(node),
+          ...(await getFillBorderStyle(node)),
+        },
+        children: [],
+      };
+    }
   }
 
   if (svgLikeNodeChecker.check(node)) {
@@ -399,14 +438,17 @@ async function figmaToMacaron(
       const svgText = String.fromCharCode(...svg);
 
       return {
+        id: createId(),
         type: "image",
-        name: idGenerator.generate(node.name),
-        ...getPositionStyle(node, parentLayout, offset),
-        width: { type: "hugContents" },
-        height: { type: "hugContents" },
-        image: {
-          type: "svg",
-          content: svgText,
+        name: node.name,
+        style: {
+          ...getPositionStyle(node, parentLayout, offset),
+          width: { type: "hugContents" },
+          height: { type: "hugContents" },
+          image: {
+            type: "svg",
+            content: svgText,
+          },
         },
       };
     } catch (error) {
@@ -418,15 +460,16 @@ async function figmaToMacaron(
   switch (node.type) {
     case "GROUP": {
       return {
+        id: createId(),
         type: "frame",
-        ...getPositionStyle(node, parentLayout, offset),
-        name: idGenerator.generate(node.name),
-        children: await figmaNodesToMacaron(
-          idGenerator,
-          node.children,
-          "NONE",
-          [node.x, node.y]
-        ),
+        name: node.name,
+        style: {
+          ...getPositionStyle(node, parentLayout, offset),
+        },
+        children: await figmaNodesToMacaron(node.children, "NONE", [
+          node.x,
+          node.y,
+        ]),
       };
     }
     case "COMPONENT":
@@ -435,19 +478,19 @@ async function figmaToMacaron(
     case "FRAME": {
       const fillBorderStyle = await getFillBorderStyle(node);
       return {
-        type: node.layoutMode === "NONE" ? "frame" : "stack",
-        name: idGenerator.generate(node.name),
-        ...getPositionStyle(node, parentLayout, [offset[0], offset[1]]),
-        ...getLayoutStyle(node),
-        ...getCornerStyle(node),
-        ...fillBorderStyle,
-        hideOverflow: node.clipsContent,
-        children: await figmaNodesToMacaron(
-          idGenerator,
-          node.children,
-          node.layoutMode,
-          [node.strokeLeftWeight, node.strokeTopWeight]
-        ),
+        type: "frame",
+        name: node.name,
+        style: {
+          ...getPositionStyle(node, parentLayout, [offset[0], offset[1]]),
+          ...getLayoutStyle(node),
+          ...getCornerStyle(node),
+          ...fillBorderStyle,
+          hideOverflow: node.clipsContent,
+        },
+        children: await figmaNodesToMacaron(node.children, node.layoutMode, [
+          node.strokeLeftWeight,
+          node.strokeTopWeight,
+        ]),
       };
     }
     case "RECTANGLE": {
@@ -472,40 +515,44 @@ async function figmaToMacaron(
       }
 
       return {
+        id: createId(),
         type: "frame",
-        name: idGenerator.generate(node.name),
-        ...getPositionStyle(node, parentLayout, offset),
-        ...getCornerStyle(node),
-        ...(await getFillBorderStyle(node)),
+        name: node.name,
+        style: {
+          ...getPositionStyle(node, parentLayout, offset),
+          ...getCornerStyle(node),
+          ...(await getFillBorderStyle(node)),
+        },
         children: [],
       };
     }
     case "TEXT": {
       return {
+        id: createId(),
         type: "text",
-        name: idGenerator.generate(node.name),
-        ...getPositionStyle(node, parentLayout, offset),
-        ...(await getTextStyle(node)),
-        textContent: applyTextCase(
-          node.characters,
-          node.textCase === figma.mixed ? "ORIGINAL" : node.textCase
-        ),
+        name: node.name,
+        style: {
+          ...getPositionStyle(node, parentLayout, offset),
+          ...(await getTextStyle(node)),
+          textContent: applyTextCase(
+            node.characters,
+            node.textCase === figma.mixed ? "ORIGINAL" : node.textCase
+          ),
+        },
+        children: [],
       };
     }
   }
 }
 
 async function figmaNodesToMacaron(
-  idGenerator: IDGenerator,
   nodes: readonly SceneNode[],
   parentLayout: BaseFrameMixin["layoutMode"],
   offset: [number, number]
-): Promise<Macaron.LayerJSON[]> {
+): Promise<NodeWithStyle[]> {
   return compact(
     await Promise.all(
-      nodes.map((child) =>
-        figmaToMacaron(idGenerator, child, parentLayout, offset)
-      )
+      nodes.map((child) => figmaToMacaron(child, parentLayout, offset))
     )
   );
 }
