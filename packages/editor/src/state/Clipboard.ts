@@ -4,12 +4,7 @@ import { generateID } from "../utils/ID";
 
 const mimeType = "application/x-macaron-nodes";
 
-interface NodeClipboardData {
-  nodes: Record<string, NodeJSON>;
-  styles: Record<string, Partial<IStyle>>;
-}
-
-function reassignNewIDs(data: NodeClipboardData): NodeClipboardData {
+function reassignNewIDs(data: ProjectJSON): ProjectJSON {
   const idMap = new Map<string, string>();
 
   const newNodes: Record<string, NodeJSON> = {};
@@ -32,13 +27,14 @@ function reassignNewIDs(data: NodeClipboardData): NodeClipboardData {
   }
 
   return {
+    ...data,
     nodes: newNodes,
     styles: newStyles,
   };
 }
 
 export class Clipboard {
-  static async writeNodes(nodes: NodeClipboardData) {
+  static async writeNodes(nodes: ProjectJSON) {
     const json = JSON.stringify(nodes);
 
     await navigator.clipboard.write([
@@ -50,7 +46,7 @@ export class Clipboard {
     ]);
   }
 
-  static async readNodes(): Promise<NodeClipboardData> {
+  static async readNodes(): Promise<ProjectJSON> {
     const items = await navigator.clipboard.read();
     const item = items.find((item) => item.types.includes(`web ${mimeType}`));
     if (!item) {

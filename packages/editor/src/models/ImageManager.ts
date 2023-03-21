@@ -52,4 +52,8 @@ export class ImageManager {
   get(hashBase64: string): Image | undefined {
     return this.images.get(hashBase64);
   }
+
+  has(hashBase64: string): boolean {
+    return this.images.has(hashBase64);
+  }
 }

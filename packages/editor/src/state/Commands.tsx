@@ -52,7 +52,7 @@ class Commands {
   async paste() {
     const data = await Clipboard.readNodes();
 
-    runInAction(() => {
+    await runInAction(async () => {
       const getInsertionTarget = () => {
         const defaultTarget = {
           parent: projectState.page,
@@ -98,6 +98,15 @@ class Commands {
         if (selectable) {
           selectable.selfStyle.loadJSON(styleJSON);
         }
+      }
+
+      // load images
+      for (const [hash, image] of Object.entries(data.images ?? {})) {
+        if (projectState.project.imageManager.has(hash)) {
+          continue;
+        }
+        const blob = await fetch(image.url).then((res) => res.blob());
+        await projectState.project.imageManager.insert(blob);
       }
 
       for (const node of topNodes) {
