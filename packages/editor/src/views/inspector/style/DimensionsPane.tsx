@@ -4,6 +4,8 @@ import { SizeConstraintType } from "@uimix/node-data";
 import hugContentsIcon from "@seanchas116/design-icons/json/hug-contents.json";
 import fixedSizeIcon from "@seanchas116/design-icons/json/fixed-size.json";
 import fillAreaIcon from "@seanchas116/design-icons/json/fill-area.json";
+import radiusIcon from "@seanchas116/design-icons/json/radius.json";
+import separateCornersIcon from "@seanchas116/design-icons/json/separate-corners.json";
 import { AnchorEdit } from "../../../components/AnchorEdit";
 import { InspectorNumberInput } from "./inputs/InspectorNumberInput";
 import { InspectorToggleGroup } from "./inputs/InspectorToggleGroup";
@@ -14,6 +16,7 @@ import { InspectorTargetContext } from "../components/InspectorTargetContext";
 import { Selectable } from "../../../models/Selectable";
 import { sameOrMixed } from "../../../utils/Mixed";
 import { InspectorHeading } from "../components/InspectorHeading";
+import { SeparableInput } from "../../../components/SeparableInput";
 
 const verticalSizeConstraintOptions: ToggleGroupItem<SizeConstraintType>[] = [
   {
@@ -74,6 +77,71 @@ const InspectorAnchorEdit = observer(function InspectorAnchorEdit({
     />
   );
 });
+
+function RadiusEdit() {
+  const selectables = useContext(InspectorTargetContext);
+  const topLeft = sameOrMixed(selectables.map((s) => s.style.topLeftRadius));
+  const topRight = sameOrMixed(selectables.map((s) => s.style.topRightRadius));
+  const bottomRight = sameOrMixed(
+    selectables.map((s) => s.style.bottomRightRadius)
+  );
+  const bottomLeft = sameOrMixed(
+    selectables.map((s) => s.style.bottomLeftRadius)
+  );
+
+  return (
+    <SeparableInput
+      title="Border Width"
+      values={{
+        top: String(topLeft),
+        right: String(topRight),
+        bottom: String(bottomRight),
+        left: String(bottomLeft),
+      }}
+      edgeIcons={{
+        all: radiusIcon,
+        top: radiusIcon,
+        right: radiusIcon,
+        bottom: radiusIcon,
+        left: radiusIcon,
+      }}
+      toggleIcon={separateCornersIcon}
+      onChange={(edge, value) => {
+        let numValue = Number.parseFloat(value);
+        if (isNaN(numValue) || numValue < 0) {
+          numValue = 0;
+        }
+
+        for (const selectable of selectables) {
+          switch (edge) {
+            case "top":
+              selectable.style.topLeftRadius = numValue;
+              break;
+            case "right":
+              selectable.style.topRightRadius = numValue;
+              break;
+            case "bottom":
+              selectable.style.bottomRightRadius = numValue;
+              break;
+            case "left":
+              selectable.style.bottomLeftRadius = numValue;
+              break;
+            case "all":
+              selectable.style.topLeftRadius = numValue;
+              selectable.style.topRightRadius = numValue;
+              selectable.style.bottomRightRadius = numValue;
+              selectable.style.bottomLeftRadius = numValue;
+              break;
+          }
+        }
+
+        projectState.undoManager.stopCapturing();
+
+        return true;
+      }}
+    />
+  );
+}
 
 export const DimensionsPane: React.FC = observer(function DimensionPane() {
   const selectables = projectState.selectedSelectables.filter(
@@ -215,6 +283,7 @@ export const DimensionsPane: React.FC = observer(function DimensionPane() {
             />
           </div>
         </div>
+        <RadiusEdit />
       </InspectorTargetContext.Provider>
     </InspectorPane>
   );

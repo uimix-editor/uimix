@@ -93,6 +93,11 @@ export function buildNodeCSS(
     cssStyle.borderRightWidth = style.borderRightWidth + "px";
     cssStyle.borderBottomWidth = style.borderBottomWidth + "px";
     cssStyle.borderLeftWidth = style.borderLeftWidth + "px";
+
+    cssStyle.borderTopLeftRadius = style.topLeftRadius + "px";
+    cssStyle.borderTopRightRadius = style.topRightRadius + "px";
+    cssStyle.borderBottomRightRadius = style.bottomRightRadius + "px";
+    cssStyle.borderBottomLeftRadius = style.bottomLeftRadius + "px";
   }
 
   if (nodeType === "text") {
