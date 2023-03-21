@@ -36,7 +36,7 @@ figma.ui.onmessage = async (msg: MessageToCode) => {
       break;
     }
     case "notify": {
-      figma.notify(msg.message);
+      figma.notify(msg.data);
       break;
     }
   }
