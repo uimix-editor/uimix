@@ -2,6 +2,7 @@ import { Buffer } from "buffer";
 import { MessageToCode, MessageToUI } from "../types/message";
 import { compact, IDGenerator, rgbaToHex, transformAngle } from "./util";
 import { StyleJSON } from "@uimix/node-data";
+import { createId } from "@paralleldrive/cuid2";
 
 const vectorLikeTypes: SceneNode["type"][] = [
   "LINE",
