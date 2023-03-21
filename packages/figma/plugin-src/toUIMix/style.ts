@@ -1,4 +1,4 @@
-import { SolidFill, StyleJSON } from "@uimix/node-data";
+import { SolidFill, StyleJSON, Image as ImageInfo } from "@uimix/node-data";
 import { getURLSafeBase64Hash, imageToDataURL, rgbaToHex } from "../util";
 
 function getPositionStylePartial(
@@ -401,19 +401,50 @@ export async function getTextStyle(
 }
 
 export async function getImageStyle(
+  images: Map<string, ImageInfo>,
   node: RectangleNode,
   parentLayout: BaseFrameMixin["layoutMode"],
   offset: [number, number]
 ): Promise<Partial<StyleJSON>> {
-  const image = figma.getImageByHash(node.fills[0].imageHash);
-
-  const hash = getURLSafeBase64Hash(data);
-  const dataURL = imageToDataURL(data);
-  // TODO: add image to assets
-
-  return {
+  const baseStyle: Partial<StyleJSON> = {
     ...getPositionStylePartial(node, parentLayout, [offset[0], offset[1]]),
     ...getCornerStylePartial(node),
     ...(await getFillBorderStylePartial(node)),
+  };
+
+  if (node.fills === figma.mixed || node.fills.length === 0) {
+    return baseStyle;
+  }
+
+  const fill = node.fills[0];
+  if (fill.type !== "IMAGE" || !fill.imageHash) {
+    return baseStyle;
+  }
+
+  const image = figma.getImageByHash(fill.imageHash);
+  if (!image) {
+    return baseStyle;
+  }
+
+  const [data, size] = await Promise.all([
+    image.getBytesAsync(),
+    image.getSizeAsync(),
+  ]);
+
+  const hash = getURLSafeBase64Hash(data);
+  const dataURL = imageToDataURL(data);
+  if (!dataURL) {
+    return baseStyle;
+  }
+
+  images.set(hash, {
+    width: size.width,
+    height: size.height,
+    url: dataURL,
+  });
+
+  return {
+    ...baseStyle,
+    imageHash: hash,
   };
 }
