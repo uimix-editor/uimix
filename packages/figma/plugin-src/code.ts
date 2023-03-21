@@ -27,7 +27,9 @@ figma.ui.onmessage = async (msg: MessageToCode) => {
 
       postMessage({
         type: "copy-data",
-        data: JSON.stringify(projectJSON),
+        data: JSON.stringify({
+          uimixNodes: projectJSON,
+        }),
       });
       break;
     }
