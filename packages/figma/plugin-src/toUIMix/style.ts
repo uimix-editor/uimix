@@ -50,6 +50,13 @@ function getPositionStylePartial(
     }
   }
 
+  if ("opacity" in node) {
+    style.opacity = node.opacity;
+  }
+  if ("clipsContent" in node) {
+    style.overflowHidden = node.clipsContent;
+  }
+
   return style;
 }
 
@@ -161,8 +168,6 @@ async function getFillBorderStylePartial(
     style.borderBottomWidth = node.strokeBottomWeight;
     style.borderLeftWidth = node.strokeLeftWeight;
   }
-
-  style.opacity = node.opacity;
 
   return style;
 }

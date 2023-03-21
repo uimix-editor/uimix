@@ -54,6 +54,9 @@ export function buildNodeCSS(
     }
   }
 
+  cssStyle.opacity = style.opacity;
+  cssStyle.overflow = style.overflowHidden ? "hidden" : "visible";
+
   if (nodeType === "frame") {
     cssStyle.display = "flex";
     cssStyle.flexDirection = style.stackDirection === "x" ? "row" : "column";

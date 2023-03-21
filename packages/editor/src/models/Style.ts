@@ -39,6 +39,7 @@ export const defaultStyle: StyleJSON = {
   borderLeftWidth: 0,
 
   opacity: 1,
+  overflowHidden: false,
 
   // stack (auto layout)
 

@@ -29,6 +29,7 @@ export const StyleJSON = z.object({
   borderLeftWidth: z.number(),
 
   opacity: z.number(),
+  overflowHidden: z.boolean(),
 
   // layout
 
