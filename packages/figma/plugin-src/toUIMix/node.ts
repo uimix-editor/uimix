@@ -1,4 +1,3 @@
-import { createId } from "@paralleldrive/cuid2";
 import { compact } from "../util";
 import * as UIMix from "@uimix/node-data";
 import { svgLikeNodeChecker } from "./SVGLikeNodeChecker";
@@ -30,6 +29,10 @@ async function figmaToMacaron(
   parentLayout: BaseFrameMixin["layoutMode"],
   offset: [number, number]
 ): Promise<NodeWithStyle | undefined> {
+  const createId = () => {
+    return Math.random().toString(36).substring(2, 15);
+  };
+
   // FigJam nodes are not supported
   if (
     node.type === "STICKY" ||
