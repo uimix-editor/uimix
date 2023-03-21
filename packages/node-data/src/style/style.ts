@@ -54,8 +54,10 @@ export const StyleJSON = z.object({
   textVerticalAlign: TextVerticalAlign,
 
   // image
-
   imageHash: z.union([z.string(), z.null()]),
+
+  // svg
+  svgContent: z.string(),
 
   // instance
   mainComponent: z.union([z.string(), z.null()]),
