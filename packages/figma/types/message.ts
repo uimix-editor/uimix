@@ -8,7 +8,7 @@ export type MessageToCode =
     }
   | {
       type: "notify";
-      message: string;
+      data: string;
     };
 
 export type MessageToUI = {
