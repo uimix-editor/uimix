@@ -299,6 +299,7 @@ function getLayoutStylePartial(
     return {};
   }
 
+  style.layout = "stack";
   style.stackDirection = node.layoutMode === "VERTICAL" ? "y" : "x";
   style.gap = node.itemSpacing;
   if (node.strokesIncludedInLayout) {
