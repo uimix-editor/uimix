@@ -372,6 +372,7 @@ importers:
       clsx: ^1.2.1
       concurrently: ^7.6.0
       esbuild: ^0.17.12
+      js-sha256: ^0.9.0
       just-compare: ^2.3.0
       lodash-es: ^4.17.21
       postcss: ^8.4.21
@@ -380,6 +381,7 @@ importers:
       tailwind-merge: ^1.10.0
       tailwindcss: ^3.2.7
       typescript: ^5.0.2
+      url-safe-base64: ^1.3.0
       vite: ^4.2.1
       vite-plugin-singlefile: ^0.13.3
     dependencies:
@@ -388,11 +390,13 @@ importers:
       '@uimix/node-data': link:../node-data
       buffer: 6.0.3
       clsx: 1.2.1
+      js-sha256: 0.9.0
       just-compare: 2.3.0
       lodash-es: 4.17.21
       react: 18.2.0
       react-dom: 18.2.0_react@18.2.0
       tailwind-merge: 1.10.0
+      url-safe-base64: 1.3.0
     devDependencies:
       '@figma/plugin-typings': 1.62.0
       '@types/lodash-es': 4.17.7
@@ -10643,6 +10647,10 @@ packages:
 
   /js-sdsl/4.3.0:
     resolution: {integrity: sha512-mifzlm2+5nZ+lEcLJMoBK0/IH/bDg8XnJfd/Wq6IP+xoCjLZsTOnV2QpxlVbX9bMnkl5PdEjNtBJ9Cj1NjifhQ==}
+
+  /js-sha256/0.9.0:
+    resolution: {integrity: sha512-sga3MHh9sgQN2+pJ9VYZ+1LPwXOxuBJBA5nrR5/ofPfuiJBE2hnjsaN8se8JznOmGLN2p49Pe5U/ttafcs/apA==}
+    dev: false
 
   /js-string-escape/1.0.1:
     resolution: {integrity: sha512-Smw4xcfIQ5LVjAOuJCvN/zIodzA/BBSsluuoSykP+lUvScIi4U6RJLfwHet5cxFnCswUjISV8oAXaqaJDY3chg==}

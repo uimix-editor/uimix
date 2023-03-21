@@ -1,5 +1,6 @@
-import sha256 from "crypto-js/sha256";
-import encodeBase64 from "crypto-js/enc-base64";
+import { encode } from "url-safe-base64";
+import sha256 from "js-sha256";
+import { Buffer } from "buffer";
 
 function componentToHex(c: number): string {
   const hex = Math.round(c * 255).toString(16);
@@ -49,5 +50,8 @@ export function imageToDataURL(data: Uint8Array): string | undefined {
 }
 
 export function getURLSafeBase64Hash(data: Uint8Array): string {
-  throw new Error("TODO: implement");
+  // @ts-ignore
+  // eslint-disable-next-line @typescript-eslint/no-unsafe-call
+  const hash = sha256.arrayBuffer(data) as ArrayBuffer;
+  return encode(Buffer.from(hash).toString("base64"));
 }
