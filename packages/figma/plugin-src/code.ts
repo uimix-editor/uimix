@@ -1,6 +1,7 @@
 import { MessageToCode, MessageToUI } from "../types/message";
 import { buildProjectJSON, figmaNodesToMacaron } from "./toUIMix/node";
 import * as UIMix from "@uimix/node-data";
+import { JSONClipboardData } from "@uimix/node-data";
 
 figma.showUI(__html__);
 
@@ -24,12 +25,13 @@ figma.ui.onmessage = async (msg: MessageToCode) => {
         [0, 0]
       );
       const projectJSON = buildProjectJSON(images, macaronLayers);
+      const clipboardJSON: JSONClipboardData = {
+        uimixNodes: projectJSON,
+      };
 
       postMessage({
         type: "copy-data",
-        data: JSON.stringify({
-          uimixNodes: projectJSON,
-        }),
+        data: JSON.stringify(clipboardJSON),
       });
       break;
     }

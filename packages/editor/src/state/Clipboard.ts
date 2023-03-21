@@ -1,4 +1,4 @@
-import { NodeJSON } from "@uimix/node-data";
+import { JSONClipboardData, NodeJSON, ProjectJSON } from "@uimix/node-data";
 import { IStyle } from "../models/Style";
 import { generateID } from "../utils/ID";
 
@@ -54,13 +54,20 @@ export class Clipboard {
     const items = await navigator.clipboard.read();
     const item = items.find((item) => item.types.includes(`web ${mimeType}`));
     if (!item) {
-      return {
-        nodes: {},
-        styles: {},
-      };
+      const text = await navigator.clipboard.readText();
+      if (!text) {
+        return { nodes: {}, styles: {} };
+      }
+
+      try {
+        const json = JSONClipboardData.parse(JSON.parse(text));
+        return reassignNewIDs(json.uimixNodes);
+      } catch (e) {
+        return { nodes: {}, styles: {} };
+      }
     }
     const blob = await item.getType(`web ${mimeType}`);
-    const json: unknown = JSON.parse(await blob.text());
-    return reassignNewIDs(json as NodeClipboardData); // TODO: validate
+    const json = ProjectJSON.parse(JSON.parse(await blob.text()));
+    return reassignNewIDs(json);
   }
 }

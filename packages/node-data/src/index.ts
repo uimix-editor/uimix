@@ -7,3 +7,4 @@ export * from "./style/value/fill.js";
 export * from "./style/style.js";
 export * from "./node/node.js";
 export * from "./project.js";
+export * from "./clipboard.js";
