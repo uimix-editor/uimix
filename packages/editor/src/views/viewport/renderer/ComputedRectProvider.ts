@@ -11,36 +11,16 @@ function getComputedRect(element: Element): Rect {
     return new Rect();
   }
 
-  const width =
-    (element as HTMLElement).getBoundingClientRect().width / scrollState.scale;
-  const height =
-    (element as HTMLElement).getBoundingClientRect().height / scrollState.scale;
-
-  const localRect = Rect.from({
-    left: (element as HTMLElement).offsetLeft,
-    top: (element as HTMLElement).offsetTop,
-    width,
-    height,
-  });
+  // TODO: avoid floating point errors
+  const localRect = Rect.from(
+    (element as HTMLElement).getBoundingClientRect()
+  ).transform(scrollState.viewportToDocument);
 
   if (offsetParent.hasAttribute(viewportRootMarker)) {
     return localRect;
   }
 
-  const parentRect = getComputedRect(offsetParent);
-  const parentBorderLeft = parseInt(
-    window.getComputedStyle(offsetParent).borderLeftWidth
-  );
-  const parentBorderTop = parseInt(
-    window.getComputedStyle(offsetParent).borderTopWidth
-  );
-
-  return localRect.translate(
-    new Vec2(
-      parentRect.left + parentBorderLeft,
-      parentRect.top + parentBorderTop
-    )
-  );
+  return localRect;
 }
 
 export class ComputedRectProvider implements IComputedRectProvider {
