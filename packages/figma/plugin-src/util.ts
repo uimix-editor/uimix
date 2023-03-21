@@ -1,7 +1,5 @@
-import { incrementAlphanumeric } from "@macaron-app/file-format";
-
 function componentToHex(c: number): string {
-  var hex = Math.round(c * 255).toString(16);
+  const hex = Math.round(c * 255).toString(16);
   return hex.length == 1 ? "0" + hex : hex;
 }
 
@@ -23,25 +21,4 @@ export function transformAngle(transform: Transform): number {
 
 export function compact<T>(arr: (T | undefined)[]): T[] {
   return arr.filter((x): x is T => !!x);
-}
-
-export function generateIDFromText(name: string): string {
-  let id = name.replace(/[^a-zA-Z0-9]/g, "");
-  if (/^[0-9]/.exec(id)) {
-    id = `_${id}`;
-  }
-  return id;
-}
-
-export class IDGenerator {
-  private ids = new Set<string>();
-
-  generate(text: string): string {
-    let id = generateIDFromText(text);
-    while (this.ids.has(id)) {
-      id = incrementAlphanumeric(id);
-    }
-    this.ids.add(id);
-    return id;
-  }
 }

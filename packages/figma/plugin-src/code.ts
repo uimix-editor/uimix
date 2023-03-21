@@ -1,8 +1,8 @@
 import { Buffer } from "buffer";
 import { MessageToCode, MessageToUI } from "../types/message";
-import { compact, IDGenerator, rgbaToHex, transformAngle } from "./util";
-import { StyleJSON } from "@uimix/node-data";
 import { createId } from "@paralleldrive/cuid2";
+import { compact, rgbaToHex } from "./util";
+import { StyleJSON, SolidFill } from "@uimix/node-data";
 
 const vectorLikeTypes: SceneNode["type"][] = [
   "LINE",
@@ -99,15 +99,7 @@ function getPositionStyle(
   return style;
 }
 
-/*
-async function paintToMacaron(
-  paint: Paint
-): Promise<
-  | Macaron.ColorFillJSON
-  | Macaron.LinearGradientFillJSON
-  | Macaron.ImageFillJSON
-  | undefined
-> {
+async function paintToUIMix(paint: Paint): Promise<SolidFill | undefined> {
   if (!paint.visible) {
     return;
   }
@@ -115,9 +107,10 @@ async function paintToMacaron(
   switch (paint.type) {
     case "SOLID":
       return {
-        type: "color",
-        color: rgbaToHex({ ...paint.color, a: paint.opacity }),
+        type: "solid",
+        hex: rgbaToHex({ ...paint.color, a: paint.opacity }),
       };
+    /* TODO
     case "GRADIENT_LINEAR": {
       return {
         type: "linear",
@@ -174,40 +167,41 @@ async function paintToMacaron(
         console.error("TODO: unsupported image data type");
       }
     }
+    */
   }
 }
 
-async function paintsToMacaron(
-  paints: readonly Paint[]
-): Promise<Macaron.FillJSON[]> {
-  const fills: Macaron.FillJSON[] = [];
+async function paintsToUIMix(paints: readonly Paint[]): Promise<SolidFill[]> {
+  const fills: SolidFill[] = [];
   for (const paint of paints) {
-    const fillStyle = await paintToMacaron(paint);
+    const fillStyle = await paintToUIMix(paint);
     if (fillStyle) {
       fills.push(fillStyle);
     }
   }
   return fills.reverse();
 }
-*/
 
 async function getFillBorderStyle(
-  node: GeometryMixin & BlendMixin
+  node: GeometryMixin & BlendMixin & IndividualStrokesMixin
 ): Promise<Partial<StyleJSON>> {
   const style: Partial<StyleJSON> = {};
 
   if (node.fills !== figma.mixed) {
-    const fills = await paintsToMacaron(node.fills);
+    const fills = await paintsToUIMix(node.fills);
     if (fills.length) {
-      style.fill = fills;
+      style.fills = fills;
     }
   }
   if (node.strokes.length) {
-    const border = await paintToMacaron(node.strokes[0]);
-    if (border?.type === "color") {
+    const border = await paintToUIMix(node.strokes[0]);
+    if (border?.type === "solid") {
       style.border = border;
     }
-    style.borderWidth = node.strokeWeight;
+    style.borderTopWidth = node.strokeTopWeight;
+    style.borderRightWidth = node.strokeRightWeight;
+    style.borderBottomWidth = node.strokeBottomWeight;
+    style.borderLeftWidth = node.strokeLeftWeight;
   }
 
   style.opacity = node.opacity;
@@ -272,13 +266,7 @@ async function getTextStyle(node: TextNode): Promise<Partial<StyleJSON>> {
     fills = node.getRangeFills(0, 1);
   }
   if (fills !== figma.mixed) {
-    const macaronFills = await paintsToMacaron(fills);
-    for (const fill of macaronFills) {
-      if (fill.type === "color") {
-        style.textColor = fill;
-        break;
-      }
-    }
+    style.fills = await paintsToUIMix(fills);
   }
 
   if (node.fontName !== figma.mixed) {
@@ -325,6 +313,7 @@ async function getTextStyle(node: TextNode): Promise<Partial<StyleJSON>> {
 
 function applyTextCase(text: string, textCase: TextCase): string {
   switch (textCase) {
+    default:
     case "ORIGINAL":
       return text;
     case "UPPER":
@@ -337,8 +326,7 @@ function applyTextCase(text: string, textCase: TextCase): string {
 }
 
 function getLayoutStyle(
-  node: BaseFrameMixin,
-  borderWidth: number
+  node: BaseFrameMixin & IndividualStrokesMixin
 ): Partial<StyleJSON> {
   const style: Partial<StyleJSON> = {};
 
@@ -348,10 +336,23 @@ function getLayoutStyle(
 
   style.stackDirection = node.layoutMode === "VERTICAL" ? "y" : "x";
   style.gap = node.itemSpacing;
-  style.paddingLeft = Math.max(0, node.paddingLeft - borderWidth);
-  style.paddingRight = Math.max(0, node.paddingRight - borderWidth);
-  style.paddingTop = Math.max(0, node.paddingTop - borderWidth);
-  style.paddingBottom = Math.max(0, node.paddingBottom - borderWidth);
+  if (node.strokesIncludedInLayout) {
+    style.paddingLeft = node.paddingLeft;
+    style.paddingRight = node.paddingRight;
+    style.paddingTop = node.paddingTop;
+    style.paddingBottom = node.paddingBottom;
+  } else {
+    style.paddingLeft = Math.max(0, node.paddingLeft - node.strokeLeftWeight);
+    style.paddingRight = Math.max(
+      0,
+      node.paddingRight - node.strokeRightWeight
+    );
+    style.paddingTop = Math.max(0, node.paddingTop - node.strokeTopWeight);
+    style.paddingBottom = Math.max(
+      0,
+      node.paddingBottom - node.strokeBottomWeight
+    );
+  }
 
   style.stackJustify = (() => {
     switch (node.primaryAxisAlignItems) {
@@ -405,7 +406,6 @@ function getCornerStyle(node: RectangleCornerMixin): Partial<StyleJSON> {
 }
 
 async function figmaToMacaron(
-  idGenerator: IDGenerator,
   node: SceneNode,
   parentLayout: BaseFrameMixin["layoutMode"],
   offset: [number, number]
@@ -468,12 +468,11 @@ async function figmaToMacaron(
     case "INSTANCE":
     case "FRAME": {
       const fillBorderStyle = await getFillBorderStyle(node);
-      const borderWidth = fillBorderStyle.borderWidth ?? 0;
       return {
         type: node.layoutMode === "NONE" ? "frame" : "stack",
         name: idGenerator.generate(node.name),
         ...getPositionStyle(node, parentLayout, [offset[0], offset[1]]),
-        ...getLayoutStyle(node, borderWidth),
+        ...getLayoutStyle(node),
         ...getCornerStyle(node),
         ...fillBorderStyle,
         hideOverflow: node.clipsContent,
@@ -481,7 +480,7 @@ async function figmaToMacaron(
           idGenerator,
           node.children,
           node.layoutMode,
-          [borderWidth, borderWidth]
+          [node.strokeLeftWeight, node.strokeTopWeight]
         ),
       };
     }
