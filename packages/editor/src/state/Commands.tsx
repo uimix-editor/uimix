@@ -54,6 +54,9 @@ class Commands {
     await runInAction(async () => {
       await projectState.pasteNodes(data);
     });
+    runInAction(() => {
+      projectState.undoManager.stopCapturing();
+    });
   }
 
   delete() {
