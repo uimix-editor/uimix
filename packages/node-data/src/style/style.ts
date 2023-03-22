@@ -50,7 +50,7 @@ export const StyleJSON = z.object({
   fontFamily: z.string(),
   fontWeight: z.number(),
   fontSize: PxValue,
-  lineHeight: PxPercentValue, // percent means relative to font size
+  lineHeight: z.union([PxPercentValue, z.null()]), // percent means relative to font size (null for auto)
   letterSpacing: PxPercentValue, // percent means relative to font size
   textHorizontalAlign: TextHorizontalAlign,
   textVerticalAlign: TextVerticalAlign,
