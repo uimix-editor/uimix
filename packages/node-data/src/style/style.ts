@@ -1,4 +1,5 @@
 import { z } from "zod";
+import { PxPercentValue, PxValue } from "./value/dimension.js";
 import { SolidFill } from "./value/fill.js";
 import { ForeignComponentRef } from "./value/instance.js";
 import { PositionConstraint } from "./value/position.js";
@@ -16,17 +17,17 @@ export const StyleJSON = z.object({
   width: SizeConstraint,
   height: SizeConstraint,
 
-  topLeftRadius: z.number(),
-  topRightRadius: z.number(),
-  bottomRightRadius: z.number(),
-  bottomLeftRadius: z.number(),
+  topLeftRadius: PxValue,
+  topRightRadius: PxValue,
+  bottomRightRadius: PxValue,
+  bottomLeftRadius: PxValue,
 
   fills: z.array(SolidFill),
   border: z.union([SolidFill, z.null()]),
-  borderTopWidth: z.number(),
-  borderRightWidth: z.number(),
-  borderBottomWidth: z.number(),
-  borderLeftWidth: z.number(),
+  borderTopWidth: PxValue,
+  borderRightWidth: PxValue,
+  borderBottomWidth: PxValue,
+  borderLeftWidth: PxValue,
 
   opacity: z.number(),
   overflowHidden: z.boolean(),
@@ -37,20 +38,20 @@ export const StyleJSON = z.object({
   stackDirection: StackDirection,
   stackAlign: StackAlign,
   stackJustify: StackJustify,
-  gap: z.number(),
-  paddingTop: z.number(),
-  paddingRight: z.number(),
-  paddingBottom: z.number(),
-  paddingLeft: z.number(),
+  gap: PxValue,
+  paddingTop: PxValue,
+  paddingRight: PxValue,
+  paddingBottom: PxValue,
+  paddingLeft: PxValue,
 
   // text
 
   textContent: z.string(),
   fontFamily: z.string(),
   fontWeight: z.number(),
-  fontSize: z.number(),
-  lineHeight: z.number(),
-  letterSpacing: z.number(),
+  fontSize: PxValue,
+  lineHeight: PxPercentValue,
+  letterSpacing: PxPercentValue,
   textHorizontalAlign: TextHorizontalAlign,
   textVerticalAlign: TextVerticalAlign,
 
