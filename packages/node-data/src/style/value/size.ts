@@ -1,4 +1,5 @@
 import { z } from "zod";
+import { PxValue } from "./dimension";
 
 export const SizeConstraint = z.union([
   z.object({
@@ -6,16 +7,16 @@ export const SizeConstraint = z.union([
   }),
   z.object({
     type: z.literal("fixed"),
-    value: z.number(),
+    value: PxValue,
   }),
   z.object({
     type: z.literal("fillContainer"),
-    min: z.number().optional(),
-    max: z.number().optional(),
+    min: PxValue.optional(),
+    max: PxValue.optional(),
     /**
      * Default size when the layer is not in a layout.
      */
-    value: z.number().optional(),
+    value: PxValue.optional(),
   }),
 ]);
 

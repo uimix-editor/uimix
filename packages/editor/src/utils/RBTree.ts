@@ -341,7 +341,7 @@ export class RBTree<K, V> implements IRBTree<K, V> {
     }
 
     this._print(x.left, depth + 1);
-    console.log(" ".repeat(depth) + x.key + (x.red ? "R" : "B"));
+    console.log(" ".repeat(depth) + String(x.key) + (x.red ? "R" : "B"));
     this._print(x.right, depth + 1);
   }
 

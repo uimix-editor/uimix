@@ -149,9 +149,9 @@ export const LayoutPane: React.FC = observer(function StackPane() {
               <InspectorNumberInput
                 icon={spaceBarIcon}
                 tooltip="Gap"
-                get={(s) => s.style.gap}
+                get={(s) => ({ value: s.style.gap[0] })}
                 set={(s, value) => {
-                  s.style.gap = value ?? 0;
+                  s.style.gap = [value?.value ?? 0, "px"];
                 }}
               />
             </div>
@@ -160,9 +160,9 @@ export const LayoutPane: React.FC = observer(function StackPane() {
                 icon={edgeTopIcon}
                 tooltip="Padding Top"
                 className="col-start-2 row-start-1"
-                get={(s) => s.style.paddingTop}
+                get={(s) => ({ value: s.style.paddingTop[0] })}
                 set={(s, value) => {
-                  s.style.paddingTop = value ?? 0;
+                  s.style.paddingTop = [value?.value ?? 0, "px"];
                 }}
               />
               <InspectorNumberInput
@@ -172,9 +172,9 @@ export const LayoutPane: React.FC = observer(function StackPane() {
                 }}
                 tooltip="Padding Right"
                 className="col-start-3 row-start-2"
-                get={(s) => s.style.paddingRight}
+                get={(s) => ({ value: s.style.paddingRight[0] })}
                 set={(s, value) => {
-                  s.style.paddingRight = value ?? 0;
+                  s.style.paddingRight = [value?.value ?? 0, "px"];
                 }}
               />
               <InspectorNumberInput
@@ -184,9 +184,9 @@ export const LayoutPane: React.FC = observer(function StackPane() {
                 }}
                 tooltip="Padding Bottom"
                 className="col-start-2 row-start-3"
-                get={(s) => s.style.paddingBottom}
+                get={(s) => ({ value: s.style.paddingBottom[0] })}
                 set={(s, value) => {
-                  s.style.paddingBottom = value ?? 0;
+                  s.style.paddingBottom = [value?.value ?? 0, "px"];
                 }}
               />
               <InspectorNumberInput
@@ -196,9 +196,9 @@ export const LayoutPane: React.FC = observer(function StackPane() {
                 }}
                 tooltip="Padding Left"
                 className="col-start-1 row-start-2"
-                get={(s) => s.style.paddingLeft}
+                get={(s) => ({ value: s.style.paddingLeft[0] })}
                 set={(s, value) => {
-                  s.style.paddingLeft = value ?? 0;
+                  s.style.paddingLeft = [value?.value ?? 0, "px"];
                 }}
               />
               <StackAlignmentEdit

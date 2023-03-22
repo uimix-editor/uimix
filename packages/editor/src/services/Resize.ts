@@ -17,7 +17,7 @@ export function resizeWithBoundingBox(
       ...selectable.style.position,
       x: {
         type: "start",
-        start: bbox.left - offsetTopLeft.x,
+        start: [bbox.left - offsetTopLeft.x, "px"],
       },
     };
   }
@@ -26,20 +26,20 @@ export function resizeWithBoundingBox(
       ...selectable.style.position,
       y: {
         type: "start",
-        start: bbox.top - offsetTopLeft.y,
+        start: [bbox.top - offsetTopLeft.y, "px"],
       },
     };
   }
   if (targets.width) {
     selectable.style.width = {
       type: "fixed",
-      value: bbox.width,
+      value: [bbox.width, "px"],
     };
   }
   if (targets.height) {
     selectable.style.height = {
       type: "fixed",
-      value: bbox.height,
+      value: [bbox.height, "px"],
     };
   }
 }

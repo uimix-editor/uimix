@@ -226,8 +226,8 @@ const ComponentThumbnail: React.FC<{
 
           const instanceNodeStyle = instanceNode.selectable.style;
           instanceNodeStyle.position = {
-            x: { type: "start", start: pos.x },
-            y: { type: "start", start: pos.y },
+            x: { type: "start", start: [pos.x, "px"] },
+            y: { type: "start", start: [pos.y, "px"] },
           };
           // TODO: exotic component
           if (component instanceof Component) {
@@ -368,7 +368,7 @@ const ThumbnailResizer: React.FC<{ children?: ReactNode }> = ({ children }) => {
         style={{
           transform: `scale(${scale})`,
           transformOrigin: "top left",
-          height: contentSize[1] * scale + "px",
+          height: `${contentSize[1] * scale}px`,
         }}
       >
         <div

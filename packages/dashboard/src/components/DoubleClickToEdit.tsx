@@ -1,3 +1,4 @@
+import clsx from "clsx";
 import { createRef, useEffect, useState } from "react";
 
 export function useDraftValue<T>(
@@ -55,7 +56,7 @@ export function DoubleClickToEdit({
     }
   }, [inputRef, endEditing]);
   return (
-    <div className={className + " relative"}>
+    <div className={clsx(className, "relative")}>
       <div
         className="h-full w-full flex items-center p-1"
         style={{

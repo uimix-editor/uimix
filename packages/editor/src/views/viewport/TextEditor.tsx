@@ -54,10 +54,10 @@ export const TextEditorBody: React.FC<{
         style={{
           ...cssStyle,
           position: "absolute",
-          left: computedRect.left + "px",
-          top: computedRect.top + "px",
-          width: fitWidth ? "max-content" : computedRect.width + "px",
-          height: computedRect.height + "px",
+          left: `${computedRect.left}px`,
+          top: `${computedRect.top}px`,
+          width: fitWidth ? "max-content" : `${computedRect.width}px`,
+          height: `${computedRect.height}px`,
         }}
       >
         <Slate

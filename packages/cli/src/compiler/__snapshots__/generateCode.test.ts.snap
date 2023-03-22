@@ -130,8 +130,8 @@ exports[`generateCode > generates code 1`] = `
   font-family: Inter;
   font-size: 16px;
   font-weight: 400;
-  line-height: 1.5;
-  letter-spacing: 0em;
+  line-height: auto;
+  letter-spacing: 0px;
   text-align: start;
   justify-content: flex-start;
 }
@@ -236,8 +236,8 @@ exports[`generateCode > generates code 1`] = `
   font-family: Inter;
   font-size: 20px;
   font-weight: 400;
-  line-height: 1.5;
-  letter-spacing: 0em;
+  line-height: auto;
+  letter-spacing: 0px;
   text-align: start;
   justify-content: flex-start;
 }
@@ -361,8 +361,8 @@ exports[`generateCode > generates code 1`] = `
   font-family: Satoshi;
   font-size: 20px;
   font-weight: 700;
-  line-height: 1.5;
-  letter-spacing: 0em;
+  line-height: auto;
+  letter-spacing: 0px;
   text-align: start;
   justify-content: flex-start;
 }
@@ -379,8 +379,8 @@ exports[`generateCode > generates code 1`] = `
   font-family: Inter;
   font-size: 16px;
   font-weight: 400;
-  line-height: 1.5;
-  letter-spacing: 0em;
+  line-height: auto;
+  letter-spacing: 0px;
   text-align: start;
   justify-content: flex-start;
 }",

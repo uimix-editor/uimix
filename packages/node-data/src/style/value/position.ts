@@ -1,22 +1,23 @@
 import { z } from "zod";
+import { PxValue } from "./dimension";
 
 export const PositionConstraint = z.union([
   z.object({
     type: z.literal("start"),
-    start: z.number(),
+    start: PxValue,
   }),
   z.object({
     type: z.literal("center"),
-    offset: z.number(),
+    offset: PxValue,
   }),
   z.object({
     type: z.literal("end"),
-    end: z.number(),
+    end: PxValue,
   }),
   z.object({
     type: z.literal("both"),
-    start: z.number(),
-    end: z.number(),
+    start: PxValue,
+    end: PxValue,
   }),
   z.object({
     type: z.literal("scale"),
