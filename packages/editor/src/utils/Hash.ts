@@ -1,6 +1,9 @@
 import { encode } from "url-safe-base64";
 import { Buffer } from "buffer";
 
+export const crypto =
+  globalThis.crypto ?? (await import("node:crypto")).webcrypto;
+
 export async function getURLSafeBase64Hash(
   buffer: ArrayBuffer
 ): Promise<string> {
