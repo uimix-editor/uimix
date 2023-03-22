@@ -7,6 +7,9 @@ import {
 } from "@uimix/editor/src/utils/Name";
 import { camelCase, compact } from "lodash-es";
 import * as path from "path";
+import htmlReactParser from "html-react-parser";
+import { default as reactElementToJSXString } from "react-element-to-jsx-string";
+import React from "react";
 
 const applyOverridesSnippet = `
 function applyOverrides(
@@ -201,12 +204,14 @@ export class ReactGenerator {
 
     const refIDPath = compact(idPath.map((id) => this.refIDs.get(id)));
 
-    const propTexts = [
-      `className="${className}"`,
-      ...(refIDPath.length
-        ? [`data-refID={${JSON.stringify(refIDPath)}}`]
-        : []),
-    ];
+    const props = {
+      className,
+      ...(refIDPath.length ? { "data-refID": refIDPath } : {}),
+    };
+
+    const propTexts = Object.entries(props).map(
+      ([key, value]) => `${key}={${JSON.stringify(value)}} `
+    );
 
     if (node.type === "text") {
       const tagName = style.tagName ?? "div";
@@ -227,6 +232,23 @@ export class ReactGenerator {
         `src={${src}} alt=${JSON.stringify(node.name)}/>`,
       ];
     }
+    if (node.type === "svg") {
+      const svg = style.svgContent.trim();
+      const svgElement = svg ? htmlReactParser(svg) : undefined;
+
+      if (!React.isValidElement(svgElement)) {
+        console.warn("invalid svg", svg);
+        return [];
+      }
+      const changedElement = React.cloneElement(svgElement, {
+        ...props,
+      });
+      console.log(reactElementToJSXString);
+      // @ts-ignore
+      // eslint-disable-next-line @typescript-eslint/no-unsafe-return
+      return [reactElementToJSXString.default(changedElement)];
+    }
+
     if (node.type === "foreign") {
       const foreignComponentID = style.foreignComponent;
       if (!foreignComponentID) {
