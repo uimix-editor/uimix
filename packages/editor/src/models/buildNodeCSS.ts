@@ -15,19 +15,19 @@ export function buildNodeCSS(
   cssStyle.position = position;
   if (position === "absolute") {
     if (style.position.x.type === "start") {
-      cssStyle.left = style.position.x.start + "px";
+      cssStyle.left = style.position.x.start.join("");
     } else if (style.position.x.type === "end") {
-      cssStyle.right = style.position.x.end + "px";
+      cssStyle.right = style.position.x.end.join("");
     }
     if (style.position.y.type === "start") {
-      cssStyle.top = style.position.y.start + "px";
+      cssStyle.top = style.position.y.start.join("");
     } else if (style.position.y.type === "end") {
-      cssStyle.bottom = style.position.y.end + "px";
+      cssStyle.bottom = style.position.y.end.join("");
     }
   }
 
   if (style.width.type === "fixed") {
-    cssStyle.width = style.width.value + "px";
+    cssStyle.width = style.width.value.join("");
   } else if (style.width.type === "hugContents") {
     cssStyle.width = "max-content";
   } else {
@@ -41,7 +41,7 @@ export function buildNodeCSS(
   }
 
   if (style.height.type === "fixed") {
-    cssStyle.height = style.height.value + "px";
+    cssStyle.height = style.height.value.join("");
   } else if (style.height.type === "hugContents") {
     cssStyle.height = "max-content";
   } else {
@@ -82,25 +82,25 @@ export function buildNodeCSS(
           return "space-between";
       }
     })();
-    cssStyle.gap = style.gap + "px";
-    cssStyle.paddingLeft = style.paddingLeft + "px";
-    cssStyle.paddingRight = style.paddingRight + "px";
-    cssStyle.paddingTop = style.paddingTop + "px";
-    cssStyle.paddingBottom = style.paddingBottom + "px";
+    cssStyle.gap = style.gap.join("");
+    cssStyle.paddingLeft = style.paddingLeft.join("");
+    cssStyle.paddingRight = style.paddingRight.join("");
+    cssStyle.paddingTop = style.paddingTop.join("");
+    cssStyle.paddingBottom = style.paddingBottom.join("");
 
     const fills = style.fills;
     cssStyle.background = fills.length ? fills[0].hex : "transparent";
     cssStyle.borderStyle = "solid";
     cssStyle.borderColor = style.border?.hex ?? "transparent";
-    cssStyle.borderTopWidth = style.borderTopWidth + "px";
-    cssStyle.borderRightWidth = style.borderRightWidth + "px";
-    cssStyle.borderBottomWidth = style.borderBottomWidth + "px";
-    cssStyle.borderLeftWidth = style.borderLeftWidth + "px";
+    cssStyle.borderTopWidth = style.borderTopWidth.join("");
+    cssStyle.borderRightWidth = style.borderRightWidth.join("");
+    cssStyle.borderBottomWidth = style.borderBottomWidth.join("");
+    cssStyle.borderLeftWidth = style.borderLeftWidth.join("");
 
-    cssStyle.borderTopLeftRadius = style.topLeftRadius + "px";
-    cssStyle.borderTopRightRadius = style.topRightRadius + "px";
-    cssStyle.borderBottomRightRadius = style.bottomRightRadius + "px";
-    cssStyle.borderBottomLeftRadius = style.bottomLeftRadius + "px";
+    cssStyle.borderTopLeftRadius = style.topLeftRadius.join("");
+    cssStyle.borderTopRightRadius = style.topRightRadius.join("");
+    cssStyle.borderBottomRightRadius = style.bottomRightRadius.join("");
+    cssStyle.borderBottomLeftRadius = style.bottomLeftRadius.join("");
   }
 
   if (nodeType === "text") {
@@ -110,10 +110,16 @@ export function buildNodeCSS(
     const fills = style.fills;
     cssStyle.color = fills.length ? fills[0].hex : "transparent";
     cssStyle.fontFamily = style.fontFamily;
-    cssStyle.fontSize = style.fontSize + "px";
+    cssStyle.fontSize = style.fontSize.join("");
     cssStyle.fontWeight = style.fontWeight;
-    cssStyle.lineHeight = style.lineHeight;
-    cssStyle.letterSpacing = style.letterSpacing + "em";
+    const lineHeight = style.lineHeight;
+    cssStyle.lineHeight =
+      lineHeight[1] === "%" ? `${lineHeight[0] / 100}` : lineHeight.join("");
+    const letterSpacing = style.letterSpacing;
+    cssStyle.letterSpacing =
+      letterSpacing[1] === "%"
+        ? `${letterSpacing[0] / 100}em`
+        : letterSpacing.join("");
     cssStyle.textAlign = style.textHorizontalAlign;
     cssStyle.justifyContent = (() => {
       switch (style.textVerticalAlign) {

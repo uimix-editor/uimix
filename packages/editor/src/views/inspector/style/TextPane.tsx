@@ -94,23 +94,25 @@ export const TextPane: React.FC = observer(function TextPane() {
           <div className="grid grid-cols-3 gap-2 items-center">
             <InspectorNumberInput
               icon={formatSizeIcon}
-              get={(s) => s.style.fontSize}
+              get={(s) => s.style.fontSize[0]}
               set={(s, value) => {
-                s.style.fontSize = value ?? 16;
+                s.style.fontSize = [value ?? 16, "px"];
               }}
             />
             <InspectorNumberInput
+              // TODO: support percentage
               icon={formatLineSpacingIcon}
-              get={(s) => s.style.lineHeight}
+              get={(s) => s.style.lineHeight[0]}
               set={(s, value) => {
-                s.style.lineHeight = value ?? 1.5;
+                s.style.lineHeight = [value ?? 24, "px"];
               }}
             />
             <InspectorNumberInput
+              // TODO: support percentage
               icon={spaceBarIcon}
-              get={(s) => s.style.letterSpacing}
+              get={(s) => s.style.letterSpacing[0]}
               set={(s, value) => {
-                s.style.letterSpacing = value ?? 0;
+                s.style.letterSpacing = [value ?? 0, "px"];
               }}
             />
           </div>

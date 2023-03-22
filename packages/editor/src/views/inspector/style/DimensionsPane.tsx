@@ -116,22 +116,22 @@ function RadiusEdit() {
         for (const selectable of selectables) {
           switch (edge) {
             case "top":
-              selectable.style.topLeftRadius = numValue;
+              selectable.style.topLeftRadius = [numValue, "px"];
               break;
             case "right":
-              selectable.style.topRightRadius = numValue;
+              selectable.style.topRightRadius = [numValue, "px"];
               break;
             case "bottom":
-              selectable.style.bottomRightRadius = numValue;
+              selectable.style.bottomRightRadius = [numValue, "px"];
               break;
             case "left":
-              selectable.style.bottomLeftRadius = numValue;
+              selectable.style.bottomLeftRadius = [numValue, "px"];
               break;
             case "all":
-              selectable.style.topLeftRadius = numValue;
-              selectable.style.topRightRadius = numValue;
-              selectable.style.bottomRightRadius = numValue;
-              selectable.style.bottomLeftRadius = numValue;
+              selectable.style.topLeftRadius = [numValue, "px"];
+              selectable.style.topRightRadius = [numValue, "px"];
+              selectable.style.bottomRightRadius = [numValue, "px"];
+              selectable.style.bottomLeftRadius = [numValue, "px"];
               break;
           }
         }
@@ -166,7 +166,7 @@ export const DimensionsPane: React.FC = observer(function DimensionPane() {
             className="col-start-2 row-start-1"
             get={(s) =>
               s.style.position.y.type === "start"
-                ? s.style.position.y.start
+                ? s.style.position.y.start[0]
                 : undefined
             }
             placeholder={(s) => s.computedOffsetTop}
@@ -175,7 +175,7 @@ export const DimensionsPane: React.FC = observer(function DimensionPane() {
                 ...s.style.position,
                 y: {
                   type: "start",
-                  start: value ?? 0,
+                  start: [value ?? 0, "px"],
                 },
               };
             }}
@@ -187,7 +187,7 @@ export const DimensionsPane: React.FC = observer(function DimensionPane() {
             placeholder={(s) => s.computedOffsetRight}
             get={(s) =>
               s.style.position.x.type === "end"
-                ? s.style.position.x.end
+                ? s.style.position.x.end[0]
                 : undefined
             }
             set={(s, value) => {
@@ -195,7 +195,7 @@ export const DimensionsPane: React.FC = observer(function DimensionPane() {
                 ...s.style.position,
                 x: {
                   type: "end",
-                  end: value ?? 0,
+                  end: [value ?? 0, "px"],
                 },
               };
             }}
@@ -206,7 +206,7 @@ export const DimensionsPane: React.FC = observer(function DimensionPane() {
             className="col-start-2 row-start-3"
             get={(s) =>
               s.style.position.y.type === "end"
-                ? s.style.position.y.end
+                ? s.style.position.y.end[0]
                 : undefined
             }
             placeholder={(s) => s.computedOffsetBottom}
@@ -215,7 +215,7 @@ export const DimensionsPane: React.FC = observer(function DimensionPane() {
                 ...s.style.position,
                 y: {
                   type: "end",
-                  end: value ?? 0,
+                  end: [value ?? 0, "px"],
                 },
               };
             }}
@@ -227,7 +227,7 @@ export const DimensionsPane: React.FC = observer(function DimensionPane() {
             placeholder={(s) => s.computedOffsetLeft}
             get={(s) =>
               s.style.position.x.type === "start"
-                ? s.style.position.x.start
+                ? s.style.position.x.start[0]
                 : undefined
             }
             set={(s, value) => {
@@ -235,7 +235,7 @@ export const DimensionsPane: React.FC = observer(function DimensionPane() {
                 ...s.style.position,
                 x: {
                   type: "start",
-                  start: value ?? 0,
+                  start: [value ?? 0, "px"],
                 },
               };
             }}
@@ -248,7 +248,7 @@ export const DimensionsPane: React.FC = observer(function DimensionPane() {
               icon="W"
               tooltip="Width"
               get={(s) =>
-                "value" in s.style.width ? s.style.width.value : undefined
+                "value" in s.style.width ? s.style.width.value?.[0] : undefined
               }
               placeholder={(s) => s.computedRect.width}
               set={(s, value) => {
@@ -268,7 +268,9 @@ export const DimensionsPane: React.FC = observer(function DimensionPane() {
               icon="H"
               tooltip="Height"
               get={(s) =>
-                "value" in s.style.height ? s.style.height.value : undefined
+                "value" in s.style.height
+                  ? s.style.height.value?.[0]
+                  : undefined
               }
               placeholder={(s) => s.computedRect.height}
               set={(s, value) => {
@@ -312,13 +314,13 @@ function setSizeConstraintValue(
     case "fixed":
       style[target] = {
         type: "fixed",
-        value: value ?? 0,
+        value: [value ?? 0, "px"],
       };
       break;
     case "fillContainer":
       style[target] = {
         ...constraint,
-        value,
+        value: value !== undefined ? [value, "px"] : undefined,
       };
       break;
   }
@@ -343,13 +345,13 @@ function setSizeConstraintType(
     case "fixed":
       style[target] = {
         type: "fixed",
-        value: oldValue ?? computedSize,
+        value: oldValue ?? [computedSize, "px"],
       };
       break;
     case "fillContainer":
       style[target] = {
         type: "fillContainer",
-        value: oldValue ?? computedSize,
+        value: oldValue ?? [computedSize, "px"],
       };
       break;
   }

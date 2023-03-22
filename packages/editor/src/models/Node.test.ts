@@ -39,7 +39,7 @@ describe(Node.name, () => {
 
     const selectable0 = proj.selectables.get([page.children[0].id]);
     const selectable1 = proj.selectables.get([page.children[1].id]);
-    selectable0.style.gap = 10;
+    selectable0.style.gap = [10, "px"];
     expect(selectable0.originalNode === page.children[0]).toBe(true);
     expect(selectable0.style.gap).toBe(10);
     expect(selectable1.originalNode === page.children[1]).toBe(true);
@@ -64,11 +64,11 @@ describe(Node.name, () => {
       const frameSelectable = frame.selectable;
       const style = frameSelectable.style;
       style.position = {
-        x: { type: "start", start: i * 100 + 50 },
-        y: { type: "start", start: 90 },
+        x: { type: "start", start: [i * 100 + 50, "px"] },
+        y: { type: "start", start: [90, "px"] },
       };
-      style.width = { type: "fixed", value: 50 };
-      style.height = { type: "fixed", value: 50 };
+      style.width = { type: "fixed", value: [50, "px"] };
+      style.height = { type: "fixed", value: [50, "px"] };
       style.fills = [{ type: "solid", hex: Color.from("red").toHex() }];
 
       frames.push(frame);
@@ -134,12 +134,12 @@ describe(Node.name, () => {
 
     const rootSelectable = proj.selectables.get([rootNode.id]);
     expect(rootSelectable.originalNode.type).toBe("frame");
-    rootSelectable.style.gap = 12;
+    rootSelectable.style.gap = [12, "px"];
 
     const textSelectable = rootSelectable.children[0];
     expect(textSelectable.originalNode === textNode).toBe(true);
     expect(textSelectable.originalNode.type).toBe("text");
-    textSelectable.style.fontSize = 24;
+    textSelectable.style.fontSize = [24, "px"];
 
     const hoverSelectable = proj.selectables.get([hoverVariant.id]);
     expect(hoverSelectable.originalNode === hoverVariant).toBe(true);
@@ -163,11 +163,11 @@ describe(Node.name, () => {
     expect(instanceTextSelectable.style.fontSize).toBe(24);
     expect(instanceTextSelectable.parent === instanceSelectable).toBe(true);
 
-    instanceSelectable.style.gap = 16;
+    instanceSelectable.style.gap = [16, "px"];
     expect(instanceSelectable.style.gap).toBe(16);
     expect(rootSelectable.style.gap).toBe(12);
 
-    instanceTextSelectable.style.fontSize = 32;
+    instanceTextSelectable.style.fontSize = [32, "px"];
     expect(instanceTextSelectable.style.fontSize).toBe(32);
     expect(textSelectable.style.fontSize).toBe(24);
 

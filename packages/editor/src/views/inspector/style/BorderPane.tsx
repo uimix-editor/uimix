@@ -52,22 +52,22 @@ function BorderWidthEdit() {
         for (const selectable of selectables) {
           switch (edge) {
             case "top":
-              selectable.style.borderTopWidth = numValue;
+              selectable.style.borderTopWidth = [numValue, "px"];
               break;
             case "right":
-              selectable.style.borderRightWidth = numValue;
+              selectable.style.borderRightWidth = [numValue, "px"];
               break;
             case "bottom":
-              selectable.style.borderBottomWidth = numValue;
+              selectable.style.borderBottomWidth = [numValue, "px"];
               break;
             case "left":
-              selectable.style.borderLeftWidth = numValue;
+              selectable.style.borderLeftWidth = [numValue, "px"];
               break;
             case "all":
-              selectable.style.borderTopWidth = numValue;
-              selectable.style.borderRightWidth = numValue;
-              selectable.style.borderBottomWidth = numValue;
-              selectable.style.borderLeftWidth = numValue;
+              selectable.style.borderTopWidth = [numValue, "px"];
+              selectable.style.borderRightWidth = [numValue, "px"];
+              selectable.style.borderBottomWidth = [numValue, "px"];
+              selectable.style.borderLeftWidth = [numValue, "px"];
               break;
           }
         }
@@ -94,16 +94,16 @@ export const BorderPane: React.FC = observer(function BorderPane() {
         ? { type: "solid", hex: border.toHex() }
         : null;
       if (adding) {
-        selectable.style.borderTopWidth = 1;
-        selectable.style.borderRightWidth = 1;
-        selectable.style.borderBottomWidth = 1;
-        selectable.style.borderLeftWidth = 1;
+        selectable.style.borderTopWidth = [1, "px"];
+        selectable.style.borderRightWidth = [1, "px"];
+        selectable.style.borderBottomWidth = [1, "px"];
+        selectable.style.borderLeftWidth = [1, "px"];
       }
       if (!border) {
-        selectable.style.borderTopWidth = 0;
-        selectable.style.borderRightWidth = 0;
-        selectable.style.borderBottomWidth = 0;
-        selectable.style.borderLeftWidth = 0;
+        selectable.style.borderTopWidth = [0, "px"];
+        selectable.style.borderRightWidth = [0, "px"];
+        selectable.style.borderBottomWidth = [0, "px"];
+        selectable.style.borderLeftWidth = [0, "px"];
       }
     }
   });
