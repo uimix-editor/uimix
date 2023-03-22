@@ -179,6 +179,7 @@ export const NodeRenderer: React.FC<{
         return <div style={cssStyle} ref={ref} />;
       }
 
+      // TODO: copy all presentation attributes to styles
       // @ts-ignore
       if (svgElement.props.fill) {
         // @ts-ignore
