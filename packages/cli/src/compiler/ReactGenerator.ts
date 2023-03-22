@@ -8,7 +8,7 @@ import {
 import { camelCase, compact } from "lodash-es";
 import * as path from "path";
 import htmlReactParser from "html-react-parser";
-import { default as reactElementToJSXString } from "react-element-to-jsx-string";
+import reactElementToJSXString from "react-element-to-jsx-string";
 import React from "react";
 
 const applyOverridesSnippet = `
@@ -244,8 +244,9 @@ export class ReactGenerator {
         ...props,
       });
       console.log(reactElementToJSXString);
+      // TODO: fix react-element-to-jsx-string
       // @ts-ignore
-      // eslint-disable-next-line @typescript-eslint/no-unsafe-return
+      // eslint-disable-next-line
       return [reactElementToJSXString.default(changedElement)];
     }
 
