@@ -1,4 +1,5 @@
 import { encode } from "url-safe-base64";
+import { Buffer } from "buffer";
 
 export async function getURLSafeBase64Hash(
   buffer: ArrayBuffer
