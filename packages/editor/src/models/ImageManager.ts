@@ -4,14 +4,6 @@ import { encode } from "url-safe-base64";
 import { Project } from "./Project";
 import { ObservableYMap } from "../utils/ObservableYMap";
 import { Image } from "@uimix/node-data";
-import sha256 from "js-sha256";
-
-function getURLSafeBase64Hash(data: ArrayBuffer): string {
-  // @ts-ignore
-  // eslint-disable-next-line @typescript-eslint/no-unsafe-call
-  const hash = sha256.arrayBuffer(data) as ArrayBuffer;
-  return encode(Buffer.from(hash).toString("base64"));
-}
 
 export class ImageManager {
   constructor(project: Project) {
@@ -32,7 +24,9 @@ export class ImageManager {
   async insert(blob: Blob): Promise<string> {
     const buffer = await blob.arrayBuffer();
 
-    const hash = getURLSafeBase64Hash(buffer);
+    // get hash of blob
+    const hashData = await crypto.subtle.digest("SHA-256", buffer);
+    const hash = encode(Buffer.from(hashData).toString("base64"));
 
     if (this.images.has(hash)) {
       return hash;
