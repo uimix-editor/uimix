@@ -9,12 +9,7 @@
   "main": "index.js",
   "scripts": {
     "build": "turbo build",
-    "dev": "run-z dev:dashboard,dev:collaborative-backend,dev:editor,dev:sandbox,dev:figma",
-    "dev:collaborative-backend": "cd packages/collaborative-backend && pnpm dev",
-    "dev:dashboard": "cd packages/dashboard && pnpm dev",
-    "dev:editor": "cd packages/editor && pnpm dev",
-    "dev:sandbox": "cd packages/sandbox && pnpm dev",
-    "dev:figma": "cd packages/figma && pnpm dev",
+    "dev": "turbo dev",
     "lint": "turbo lint",
     "test": "turbo test"
   },
@@ -23,7 +18,6 @@
     "@typescript-eslint/parser": "^5.55.0",
     "eslint": "8.36.0",
     "eslint-plugin-import": "^2.27.5",
-    "run-z": "^1.11.0",
     "turbo": "^1.8.5"
   }
 }
