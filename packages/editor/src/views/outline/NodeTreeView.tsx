@@ -132,6 +132,8 @@ const TreeRow: React.FC<{
         return textIcon;
       case "image":
         return imageIcon;
+      case "svg":
+        return "material-symbols:shapes-outline";
       case "component":
         return widgetsIcon;
       case "instance":
@@ -232,7 +234,7 @@ const TreeRow: React.FC<{
             </span>
             <DoubleClickToEdit
               className={twMerge(
-                "flex-1 h-full",
+                "flex-1 h-full min-w-0",
                 isComponent && "font-semibold",
                 isInsideInstance && "italic opacity-60"
               )}

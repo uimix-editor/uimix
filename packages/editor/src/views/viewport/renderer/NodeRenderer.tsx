@@ -11,6 +11,7 @@ import {
 } from "../../../types/ForeignComponent";
 import { ForeignComponentManager } from "../../../models/ForeignComponentManager";
 import { buildNodeCSS } from "../../../models/buildNodeCSS";
+import htmlReactParser from "html-react-parser";
 
 export const selectableForDOM = new WeakMap<HTMLElement, Selectable>();
 export const domForSelectable = new WeakMap<Selectable, HTMLElement>();
@@ -168,6 +169,36 @@ export const NodeRenderer: React.FC<{
           src={dataURL}
         />
       );
+    }
+
+    if (node.type === "svg") {
+      const svg = style.svgContent.trim();
+      const svgElement = svg ? htmlReactParser(svg) : undefined;
+      if (!React.isValidElement(svgElement)) {
+        console.log("invalid svg", svg);
+        return <div style={cssStyle} ref={ref} />;
+      }
+
+      // TODO: copy all presentation attributes to styles
+      // @ts-ignore
+      if (svgElement.props.fill) {
+        // @ts-ignore
+        // eslint-disable-next-line
+        cssStyle.fill = svgElement.props.fill;
+      }
+      // @ts-ignore
+      if (svgElement.props.stroke) {
+        // @ts-ignore
+        // eslint-disable-next-line
+        cssStyle.fill = svgElement.props.stroke;
+      }
+
+      // TODO: resolve this messy typing
+      return React.cloneElement(svgElement, {
+        // @ts-ignore
+        style: cssStyle,
+        ref,
+      });
     }
 
     if (node.type === "foreign") {

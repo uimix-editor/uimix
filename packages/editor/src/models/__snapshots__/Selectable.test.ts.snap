@@ -141,10 +141,57 @@ exports[`selectablesToProjectJSON > works 1`] = `
       "parent": undefined,
       "type": "component",
     },
+    "1BwWRgjHmYZ8qLKDj3Tvdy": {
+      "condition": undefined,
+      "index": 1,
+      "name": "title",
+      "parent": "1BwWRgjHrhVbbuTV7m36kM",
+      "type": "text",
+    },
+    "1BwWRgjHr8HNgX8BRooGv7": {
+      "condition": undefined,
+      "index": 0,
+      "name": "heroicons:code-bracket",
+      "parent": "1BwWRgjHyEzJjsehRefVBE",
+      "type": "svg",
+    },
+    "1BwWRgjHrhVbbuTV7m36kM": {
+      "condition": undefined,
+      "index": 0,
+      "name": "Frame 14",
+      "parent": "1BwWRiQqGA4gTdwZRLXFBh",
+      "type": "frame",
+    },
+    "1BwWRgjHuAe9UTxVhowwYu": {
+      "condition": undefined,
+      "index": 2,
+      "name": "description",
+      "parent": "1BwWRgjHrhVbbuTV7m36kM",
+      "type": "text",
+    },
+    "1BwWRgjHyEzJjsehRefVBE": {
+      "condition": undefined,
+      "index": 0,
+      "name": "icon",
+      "parent": "1BwWRgjHrhVbbuTV7m36kM",
+      "type": "frame",
+    },
+    "1BwWRiQqGA4gTdwZRLXFBh": {
+      "condition": undefined,
+      "index": 15,
+      "name": "Card",
+      "parent": undefined,
+      "type": "component",
+    },
   },
   "styles": {
     "1Bvi2z3TfkSpYXW29daTN8": {
-      "fill": "#FFFFFF",
+      "fills": [
+        {
+          "hex": "#FFFFFF",
+          "type": "solid",
+        },
+      ],
       "gap": 10,
       "height": {
         "type": "hugContents",
@@ -169,7 +216,12 @@ exports[`selectablesToProjectJSON > works 1`] = `
       },
     },
     "1Bvi2z3To8ddXo6R6ZftVD": {
-      "fill": "#22C55E",
+      "fills": [
+        {
+          "hex": "#22C55E",
+          "type": "solid",
+        },
+      ],
       "height": {
         "type": "fixed",
         "value": 80,
@@ -180,7 +232,12 @@ exports[`selectablesToProjectJSON > works 1`] = `
       },
     },
     "1Bvi2z3TpKXtTJLTRPTEd8": {
-      "fill": "#EF4444",
+      "fills": [
+        {
+          "hex": "#EF4444",
+          "type": "solid",
+        },
+      ],
       "height": {
         "type": "fixed",
         "value": 50,
@@ -191,7 +248,12 @@ exports[`selectablesToProjectJSON > works 1`] = `
       },
     },
     "1Bvi2z3U3SiK6r7gf9vh7N": {
-      "fill": "#000000",
+      "fills": [
+        {
+          "hex": "#000000",
+          "type": "solid",
+        },
+      ],
       "fontSize": 20,
       "height": {
         "type": "hugContents",
@@ -202,7 +264,12 @@ exports[`selectablesToProjectJSON > works 1`] = `
       },
     },
     "1Bvi2z3UB1xUVg4Xz9WTpJ": {
-      "fill": "#3B82F6",
+      "fills": [
+        {
+          "hex": "#3B82F6",
+          "type": "solid",
+        },
+      ],
       "height": {
         "type": "fixed",
         "value": 40,
@@ -213,7 +280,12 @@ exports[`selectablesToProjectJSON > works 1`] = `
       },
     },
     "1Bvi2z3UGTM64JtRT7Qc1S": {
-      "fill": "#111827",
+      "fills": [
+        {
+          "hex": "#111827",
+          "type": "solid",
+        },
+      ],
       "height": {
         "type": "hugContents",
       },
@@ -223,7 +295,12 @@ exports[`selectablesToProjectJSON > works 1`] = `
       },
     },
     "1Bvi2z3UPfi6W3L8nDt5VA": {
-      "fill": "#E5E7EB",
+      "fills": [
+        {
+          "hex": "#E5E7EB",
+          "type": "solid",
+        },
+      ],
       "height": {
         "type": "hugContents",
       },
@@ -248,7 +325,12 @@ exports[`selectablesToProjectJSON > works 1`] = `
     },
     "1Bvi2z3USBZi1pWrvPd6Ut": {},
     "1Bvi2z3UVsEskiSt2TcdL7": {
-      "fill": "#3B82F6",
+      "fills": [
+        {
+          "hex": "#3B82F6",
+          "type": "solid",
+        },
+      ],
       "position": {
         "x": {
           "start": 200,
@@ -261,7 +343,12 @@ exports[`selectablesToProjectJSON > works 1`] = `
       },
     },
     "1Bvi2z3UVsEskiSt2TcdL7:1Bvi2z3UGTM64JtRT7Qc1S": {
-      "fill": "#FFFFFF",
+      "fills": [
+        {
+          "hex": "#FFFFFF",
+          "type": "solid",
+        },
+      ],
     },
     "1Bvi2z3UaHFmaikKtfcmGX": {
       "position": {
@@ -277,7 +364,12 @@ exports[`selectablesToProjectJSON > works 1`] = `
     },
     "1Bvi2z3UaHFmaikKtfcmGX:1Bvi2z3UGTM64JtRT7Qc1S": {},
     "1Bvi2z3UrU9VkawwAteXs8": {
-      "fill": "#BABABA",
+      "fills": [
+        {
+          "hex": "#BABABA",
+          "type": "solid",
+        },
+      ],
       "mainComponent": "1Bvi2z3USBZi1pWrvPd6Ut",
       "position": {
         "x": {
@@ -295,7 +387,12 @@ exports[`selectablesToProjectJSON > works 1`] = `
     },
     "1Bvi2zJALza4DrqmNaGYAk": {},
     "1Bvi319YVxZELz4tEskN1S": {
-      "fill": "#FFFFFF",
+      "fills": [
+        {
+          "hex": "#FFFFFF",
+          "type": "solid",
+        },
+      ],
       "height": {
         "type": "fixed",
         "value": 456,
@@ -363,7 +460,12 @@ exports[`selectablesToProjectJSON > works 1`] = `
       },
     },
     "1Bvi365mtWZmXKDPeJTB4s": {
-      "fill": "#FFFFFF",
+      "fills": [
+        {
+          "hex": "#FFFFFF",
+          "type": "solid",
+        },
+      ],
       "height": {
         "type": "fillContainer",
         "value": 173,
@@ -384,7 +486,12 @@ exports[`selectablesToProjectJSON > works 1`] = `
       },
     },
     "1Bvi392qBdMy93LGLcVymb": {
-      "fill": "#FFFFFF",
+      "fills": [
+        {
+          "hex": "#FFFFFF",
+          "type": "solid",
+        },
+      ],
       "height": {
         "type": "fixed",
         "value": 100,
@@ -423,6 +530,138 @@ exports[`selectablesToProjectJSON > works 1`] = `
     "1Bvi39mct9UNYZ9eTCCRdV:1Bvi2z3U3SiK6r7gf9vh7N": {},
     "1Bvi39mct9UNYZ9eTCCRdV:1Bvi2z3UB1xUVg4Xz9WTpJ": {},
     "1Bvi3BSSb2oaHb1ZqUEk6H": {},
+    "1BwWRgjHmYZ8qLKDj3Tvdy": {
+      "fills": [
+        {
+          "hex": "#1f2937",
+          "type": "solid",
+        },
+      ],
+      "fontFamily": "Satoshi",
+      "fontSize": 20,
+      "fontWeight": 700,
+      "height": {
+        "type": "hugContents",
+      },
+      "hidden": false,
+      "letterSpacing": 0,
+      "opacity": 1,
+      "textContent": "React Components Import/Export",
+      "textHorizontalAlign": "start",
+      "textVerticalAlign": "start",
+      "width": {
+        "type": "fillContainer",
+        "value": 315.640625,
+      },
+    },
+    "1BwWRgjHr8HNgX8BRooGv7": {
+      "height": {
+        "type": "hugContents",
+      },
+      "svgContent": "<svg width=\\"24\\" height=\\"24\\" viewBox=\\"0 0 24 24\\" fill=\\"none\\" xmlns=\\"http://www.w3.org/2000/svg\\">
+<path d=\\"M17.25 6.75L22.5 12L17.25 17.25M6.75 17.25L1.5 12L6.75 6.75M14.25 3.75L9.75 20.25\\" stroke=\\"#0EA5E9\\" stroke-width=\\"1.5\\" stroke-linecap=\\"round\\" stroke-linejoin=\\"round\\"/>
+</svg>
+",
+      "width": {
+        "type": "hugContents",
+      },
+    },
+    "1BwWRgjHrhVbbuTV7m36kM": {
+      "bottomLeftRadius": 20,
+      "bottomRightRadius": 20,
+      "fills": [
+        {
+          "hex": "#ffffff",
+          "type": "solid",
+        },
+      ],
+      "gap": 20,
+      "height": {
+        "type": "hugContents",
+      },
+      "hidden": false,
+      "layout": "stack",
+      "opacity": 1,
+      "overflowHidden": false,
+      "paddingBottom": 19,
+      "paddingLeft": 19,
+      "paddingRight": 19,
+      "paddingTop": 19,
+      "position": {
+        "x": {
+          "start": 50,
+          "type": "start",
+        },
+        "y": {
+          "start": 1144,
+          "type": "start",
+        },
+      },
+      "stackAlign": "start",
+      "stackDirection": "y",
+      "stackJustify": "start",
+      "topLeftRadius": 20,
+      "topRightRadius": 20,
+      "width": {
+        "type": "fixed",
+        "value": 400,
+      },
+    },
+    "1BwWRgjHuAe9UTxVhowwYu": {
+      "fills": [
+        {
+          "hex": "#4b5563",
+          "type": "solid",
+        },
+      ],
+      "fontFamily": "Inter",
+      "fontSize": 16,
+      "fontWeight": 400,
+      "height": {
+        "type": "hugContents",
+      },
+      "hidden": false,
+      "letterSpacing": 0,
+      "opacity": 1,
+      "textContent": "Seamlessly work with React components, boosting your design-to-development workflow.
+",
+      "textHorizontalAlign": "start",
+      "textVerticalAlign": "start",
+      "width": {
+        "type": "fillContainer",
+      },
+    },
+    "1BwWRgjHyEzJjsehRefVBE": {
+      "bottomLeftRadius": 8,
+      "bottomRightRadius": 8,
+      "fills": [
+        {
+          "hex": "#f0f9ff",
+          "type": "solid",
+        },
+      ],
+      "gap": 10,
+      "height": {
+        "type": "hugContents",
+      },
+      "hidden": false,
+      "layout": "stack",
+      "opacity": 1,
+      "overflowHidden": false,
+      "paddingBottom": 3,
+      "paddingLeft": 3,
+      "paddingRight": 3,
+      "paddingTop": 3,
+      "stackAlign": "start",
+      "stackDirection": "x",
+      "stackJustify": "start",
+      "topLeftRadius": 8,
+      "topRightRadius": 8,
+      "width": {
+        "type": "hugContents",
+      },
+    },
+    "1BwWRiQqGA4gTdwZRLXFBh": {},
   },
 }
 `;

@@ -1,45 +1,14 @@
 import { createAtom } from "mobx";
-import { Rect, Vec2 } from "paintvec";
+import { Rect } from "paintvec";
 import { IComputedRectProvider } from "../../../models/Selectable";
 import { scrollState } from "../../../state/ScrollState";
 
 export const viewportRootMarker = "data-viewport-root";
 
 function getComputedRect(element: Element): Rect {
-  const offsetParent = (element as HTMLElement).offsetParent;
-  if (!offsetParent) {
-    return new Rect();
-  }
-
-  const width =
-    (element as HTMLElement).getBoundingClientRect().width / scrollState.scale;
-  const height =
-    (element as HTMLElement).getBoundingClientRect().height / scrollState.scale;
-
-  const localRect = Rect.from({
-    left: (element as HTMLElement).offsetLeft,
-    top: (element as HTMLElement).offsetTop,
-    width,
-    height,
-  });
-
-  if (offsetParent.hasAttribute(viewportRootMarker)) {
-    return localRect;
-  }
-
-  const parentRect = getComputedRect(offsetParent);
-  const parentBorderLeft = parseInt(
-    window.getComputedStyle(offsetParent).borderLeftWidth
-  );
-  const parentBorderTop = parseInt(
-    window.getComputedStyle(offsetParent).borderTopWidth
-  );
-
-  return localRect.translate(
-    new Vec2(
-      parentRect.left + parentBorderLeft,
-      parentRect.top + parentBorderTop
-    )
+  // TODO: avoid floating point errors when zoom scale is not a round number
+  return Rect.from((element as HTMLElement).getBoundingClientRect()).transform(
+    scrollState.viewportToDocument
   );
 }
 

@@ -1,0 +1,15 @@
+{
+  "name": "UIMix",
+  "id": "1219662302303457967",
+  "api": "1.0.0",
+  "main": "dist/code.js",
+  "editorType": ["figma"],
+  "ui": "dist/index.html",
+  "relaunchButtons": [
+    {
+      "command": "open",
+      "name": "Open UIMIx",
+      "multipleSelection": true
+    }
+  ]
+}

@@ -1,15 +1,10 @@
-import { NodeJSON } from "@uimix/node-data";
+import { JSONClipboardData, NodeJSON, ProjectJSON } from "@uimix/node-data";
 import { IStyle } from "../models/Style";
 import { generateID } from "../utils/ID";
 
 const mimeType = "application/x-macaron-nodes";
 
-interface NodeClipboardData {
-  nodes: Record<string, NodeJSON>;
-  styles: Record<string, Partial<IStyle>>;
-}
-
-function reassignNewIDs(data: NodeClipboardData): NodeClipboardData {
+function reassignNewIDs(data: ProjectJSON): ProjectJSON {
   const idMap = new Map<string, string>();
 
   const newNodes: Record<string, NodeJSON> = {};
@@ -32,35 +27,48 @@ function reassignNewIDs(data: NodeClipboardData): NodeClipboardData {
   }
 
   return {
+    ...data,
     nodes: newNodes,
     styles: newStyles,
   };
 }
 
 export class Clipboard {
-  static async writeNodes(nodes: NodeClipboardData) {
-    const json = JSON.stringify(nodes);
+  static async writeNodes(nodes: ProjectJSON) {
+    // const json = JSON.stringify(nodes);
 
-    await navigator.clipboard.write([
-      new ClipboardItem({
-        [`web ${mimeType}`]: new Blob([json], {
-          type: mimeType,
-        }),
-      }),
-    ]);
+    // await navigator.clipboard.write([
+    //   new ClipboardItem({
+    //     [`web ${mimeType}`]: new Blob([json], {
+    //       type: mimeType,
+    //     }),
+    //   }),
+    // ]);
+    const data: JSONClipboardData = {
+      uimixNodes: nodes,
+    };
+
+    await navigator.clipboard.writeText(JSON.stringify(data));
   }
 
-  static async readNodes(): Promise<NodeClipboardData> {
+  static async readNodes(): Promise<ProjectJSON> {
     const items = await navigator.clipboard.read();
     const item = items.find((item) => item.types.includes(`web ${mimeType}`));
     if (!item) {
-      return {
-        nodes: {},
-        styles: {},
-      };
+      // try parsing text as JSOn
+      const text = await navigator.clipboard.readText();
+      if (!text) {
+        return { nodes: {}, styles: {} };
+      }
+      try {
+        const json = JSONClipboardData.parse(JSON.parse(text));
+        return reassignNewIDs(json.uimixNodes);
+      } catch (e) {
+        return { nodes: {}, styles: {} };
+      }
     }
     const blob = await item.getType(`web ${mimeType}`);
-    const json: unknown = JSON.parse(await blob.text());
-    return reassignNewIDs(json as NodeClipboardData); // TODO: validate
+    const json = ProjectJSON.parse(JSON.parse(await blob.text()));
+    return reassignNewIDs(json);
   }
 }

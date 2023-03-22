@@ -50,7 +50,7 @@ export function DoubleClickToEdit({
         />
       ) : (
         <div
-          className="h-full w-full flex items-center"
+          className="h-full w-full min-w-0 flex items-center truncate"
           onDoubleClick={() => setEditing(true)}
         >
           {value}

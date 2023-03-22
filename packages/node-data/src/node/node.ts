@@ -6,6 +6,7 @@ export const NodeType = z.enum([
   "frame",
   "text",
   "image",
+  "svg",
   "component",
   "variant",
   "instance",

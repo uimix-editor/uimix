@@ -5,6 +5,7 @@ import { ObservableYMap } from "../utils/ObservableYMap";
 export type IStyle = StyleJSON;
 
 export const defaultStyle: StyleJSON = {
+  hidden: false,
   position: {
     x: {
       type: "start",
@@ -30,12 +31,15 @@ export const defaultStyle: StyleJSON = {
   bottomRightRadius: 0,
   bottomLeftRadius: 0,
 
-  fill: null,
+  fills: [],
   border: null,
   borderTopWidth: 0,
   borderRightWidth: 0,
   borderBottomWidth: 0,
   borderLeftWidth: 0,
+
+  opacity: 1,
+  overflowHidden: false,
 
   // stack (auto layout)
 
@@ -61,8 +65,10 @@ export const defaultStyle: StyleJSON = {
   textVerticalAlign: "start",
 
   // image
-
   imageHash: null,
+
+  // svg
+  svgContent: "",
 
   // instance
   mainComponent: null,

@@ -54,6 +54,9 @@ export function buildNodeCSS(
     }
   }
 
+  cssStyle.opacity = style.opacity;
+  cssStyle.overflow = style.overflowHidden ? "hidden" : "visible";
+
   if (nodeType === "frame") {
     cssStyle.display = "flex";
     cssStyle.flexDirection = style.stackDirection === "x" ? "row" : "column";
@@ -85,20 +88,27 @@ export function buildNodeCSS(
     cssStyle.paddingTop = style.paddingTop + "px";
     cssStyle.paddingBottom = style.paddingBottom + "px";
 
-    cssStyle.background = style.fill ?? "transparent";
+    const fills = style.fills;
+    cssStyle.background = fills.length ? fills[0].hex : "transparent";
     cssStyle.borderStyle = "solid";
-    cssStyle.borderColor = style.border ?? "transparent";
+    cssStyle.borderColor = style.border?.hex ?? "transparent";
     cssStyle.borderTopWidth = style.borderTopWidth + "px";
     cssStyle.borderRightWidth = style.borderRightWidth + "px";
     cssStyle.borderBottomWidth = style.borderBottomWidth + "px";
     cssStyle.borderLeftWidth = style.borderLeftWidth + "px";
+
+    cssStyle.borderTopLeftRadius = style.topLeftRadius + "px";
+    cssStyle.borderTopRightRadius = style.topRightRadius + "px";
+    cssStyle.borderBottomRightRadius = style.bottomRightRadius + "px";
+    cssStyle.borderBottomLeftRadius = style.bottomLeftRadius + "px";
   }
 
   if (nodeType === "text") {
     cssStyle.whiteSpace = "break-spaces";
     cssStyle.display = "flex";
     cssStyle.flexDirection = "column";
-    cssStyle.color = style.fill ?? "black";
+    const fills = style.fills;
+    cssStyle.color = fills.length ? fills[0].hex : "transparent";
     cssStyle.fontFamily = style.fontFamily;
     cssStyle.fontSize = style.fontSize + "px";
     cssStyle.fontWeight = style.fontWeight;

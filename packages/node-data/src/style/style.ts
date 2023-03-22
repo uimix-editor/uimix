@@ -1,4 +1,5 @@
 import { z } from "zod";
+import { SolidFill } from "./value/fill.js";
 import { ForeignComponentRef } from "./value/instance.js";
 import { PositionConstraint } from "./value/position.js";
 import { SizeConstraint } from "./value/size.js";
@@ -6,6 +7,7 @@ import { StackAlign, StackDirection, StackJustify } from "./value/stack.js";
 import { TextHorizontalAlign, TextVerticalAlign } from "./value/text.js";
 
 export const StyleJSON = z.object({
+  hidden: z.boolean(),
   position: z.object({
     x: PositionConstraint,
     y: PositionConstraint,
@@ -19,12 +21,15 @@ export const StyleJSON = z.object({
   bottomRightRadius: z.number(),
   bottomLeftRadius: z.number(),
 
-  fill: z.union([z.string(), z.null()]),
-  border: z.union([z.string(), z.null()]),
+  fills: z.array(SolidFill),
+  border: z.union([SolidFill, z.null()]),
   borderTopWidth: z.number(),
   borderRightWidth: z.number(),
   borderBottomWidth: z.number(),
   borderLeftWidth: z.number(),
+
+  opacity: z.number(),
+  overflowHidden: z.boolean(),
 
   // layout
 
@@ -50,8 +55,10 @@ export const StyleJSON = z.object({
   textVerticalAlign: TextVerticalAlign,
 
   // image
-
   imageHash: z.union([z.string(), z.null()]),
+
+  // svg
+  svgContent: z.string(),
 
   // instance
   mainComponent: z.union([z.string(), z.null()]),

@@ -34,7 +34,9 @@ export class NodeInsertDragHandler implements DragHandler {
       selectable.originalNode.name = "Text";
       this.selectable = selectable;
       this.selectable.style.textContent = "Type Something";
-      this.selectable.style.fill = Color.from("black").toHex();
+      this.selectable.style.fills = [
+        { type: "solid", hex: Color.from("black").toHex() },
+      ];
       this.selectable.style.width = { type: "hugContents" };
       this.selectable.style.height = { type: "hugContents" };
     } else if (mode.type === "image") {
@@ -42,7 +44,9 @@ export class NodeInsertDragHandler implements DragHandler {
       const selectable = parent.append("image");
       selectable.originalNode.name = "Image";
       this.selectable = selectable;
-      this.selectable.style.fill = Color.from("white").toHex();
+      this.selectable.style.fills = [
+        { type: "solid", hex: Color.from("white").toHex() },
+      ];
       this.selectable.style.width = { type: "fixed", value: 100 };
       this.selectable.style.height = { type: "fixed", value: 100 };
       void projectState.project.imageManager.insert(mode.blob).then(
@@ -55,7 +59,9 @@ export class NodeInsertDragHandler implements DragHandler {
       const selectable = parent.append("frame");
       selectable.originalNode.name = "Frame";
       this.selectable = selectable;
-      this.selectable.style.fill = Color.from("white").toHex();
+      this.selectable.style.fills = [
+        { type: "solid", hex: Color.from("white").toHex() },
+      ];
       this.selectable.style.width = { type: "fixed", value: 100 };
       this.selectable.style.height = { type: "fixed", value: 100 };
     }

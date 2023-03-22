@@ -122,6 +122,42 @@
       "name": "Stack",
       "parent": "1Bvi365mtWZmXKDPeJTB4s",
       "index": 3
+    },
+    "1BwWRgjHrhVbbuTV7m36kM": {
+      "type": "frame",
+      "index": 0,
+      "name": "Frame 14",
+      "parent": "1BwWRiQqGA4gTdwZRLXFBh"
+    },
+    "1BwWRgjHyEzJjsehRefVBE": {
+      "type": "frame",
+      "index": 0,
+      "name": "icon",
+      "parent": "1BwWRgjHrhVbbuTV7m36kM"
+    },
+    "1BwWRgjHr8HNgX8BRooGv7": {
+      "type": "svg",
+      "index": 0,
+      "name": "heroicons:code-bracket",
+      "parent": "1BwWRgjHyEzJjsehRefVBE"
+    },
+    "1BwWRgjHmYZ8qLKDj3Tvdy": {
+      "type": "text",
+      "index": 1,
+      "name": "title",
+      "parent": "1BwWRgjHrhVbbuTV7m36kM"
+    },
+    "1BwWRgjHuAe9UTxVhowwYu": {
+      "type": "text",
+      "index": 2,
+      "name": "description",
+      "parent": "1BwWRgjHrhVbbuTV7m36kM"
+    },
+    "1BwWRiQqGA4gTdwZRLXFBh": {
+      "type": "component",
+      "index": 15,
+      "name": "Card",
+      "parent": "1Bvi2ymHPmVHms6RDurmNN"
     }
   },
   "styles": {
@@ -134,7 +170,7 @@
       },
       "width": { "type": "hugContents" },
       "height": { "type": "hugContents" },
-      "fill": "#E5E7EB",
+      "fills": [{ "type": "solid", "hex": "#E5E7EB" }],
       "layout": "stack",
       "paddingTop": 4,
       "paddingRight": 8,
@@ -144,7 +180,7 @@
     "1Bvi2z3UGTM64JtRT7Qc1S": {
       "width": { "type": "hugContents" },
       "height": { "type": "hugContents" },
-      "fill": "#111827",
+      "fills": [{ "type": "solid", "hex": "#111827" }],
       "textContent": "Button"
     },
     "1Bvi2z3UVsEskiSt2TcdL7": {
@@ -152,9 +188,11 @@
         "x": { "type": "start", "start": 200 },
         "y": { "type": "start", "start": 400 }
       },
-      "fill": "#3B82F6"
+      "fills": [{ "type": "solid", "hex": "#3B82F6" }]
     },
-    "1Bvi2z3UVsEskiSt2TcdL7:1Bvi2z3UGTM64JtRT7Qc1S": { "fill": "#FFFFFF" },
+    "1Bvi2z3UVsEskiSt2TcdL7:1Bvi2z3UGTM64JtRT7Qc1S": {
+      "fills": [{ "type": "solid", "hex": "#FFFFFF" }]
+    },
     "1Bvi2z3UaHFmaikKtfcmGX": {
       "position": {
         "x": { "type": "start", "start": 350 },
@@ -170,7 +208,7 @@
       },
       "width": { "type": "hugContents" },
       "height": { "type": "hugContents" },
-      "fill": "#FFFFFF",
+      "fills": [{ "type": "solid", "hex": "#FFFFFF" }],
       "layout": "stack",
       "gap": 10,
       "paddingTop": 10,
@@ -181,22 +219,22 @@
     "1Bvi2z3TpKXtTJLTRPTEd8": {
       "width": { "type": "fixed", "value": 50 },
       "height": { "type": "fixed", "value": 50 },
-      "fill": "#EF4444"
+      "fills": [{ "type": "solid", "hex": "#EF4444" }]
     },
     "1Bvi2z3To8ddXo6R6ZftVD": {
       "width": { "type": "fixed", "value": 40 },
       "height": { "type": "fixed", "value": 80 },
-      "fill": "#22C55E"
+      "fills": [{ "type": "solid", "hex": "#22C55E" }]
     },
     "1Bvi2z3UB1xUVg4Xz9WTpJ": {
       "width": { "type": "fixed", "value": 80 },
       "height": { "type": "fixed", "value": 40 },
-      "fill": "#3B82F6"
+      "fills": [{ "type": "solid", "hex": "#3B82F6" }]
     },
     "1Bvi2z3U3SiK6r7gf9vh7N": {
       "width": { "type": "hugContents" },
       "height": { "type": "hugContents" },
-      "fill": "#000000",
+      "fills": [{ "type": "solid", "hex": "#000000" }],
       "textContent": "Hello, world!",
       "fontSize": 20
     },
@@ -208,7 +246,7 @@
       },
       "width": { "type": "fixed", "value": 744 },
       "height": { "type": "fixed", "value": 456 },
-      "fill": "#FFFFFF",
+      "fills": [{ "type": "solid", "hex": "#FFFFFF" }],
       "layout": "stack",
       "stackDirection": "y",
       "stackAlign": "center"
@@ -230,7 +268,7 @@
       },
       "width": { "type": "fillContainer", "value": 428 },
       "height": { "type": "fillContainer", "value": 173 },
-      "fill": "#FFFFFF"
+      "fills": [{ "type": "solid", "hex": "#FFFFFF" }]
     },
     "1Bvi32d9RMi3ES5kk2UvuM": {
       "position": {
@@ -256,7 +294,7 @@
         "x": { "type": "start", "start": 160 },
         "y": { "type": "start", "start": 28 }
       },
-      "fill": "#BABABA",
+      "fills": [{ "type": "solid", "hex": "#BABABA" }],
       "mainComponent": "1Bvi2z3USBZi1pWrvPd6Ut"
     },
     "1Bvi2z3UrU9VkawwAteXs8:1Bvi2z3UGTM64JtRT7Qc1S": {
@@ -269,7 +307,7 @@
       },
       "width": { "type": "fixed", "value": 100 },
       "height": { "type": "fixed", "value": 100 },
-      "fill": "#FFFFFF",
+      "fills": [{ "type": "solid", "hex": "#FFFFFF" }],
       "imageHash": "YmY-tuteU03QY-k_2ARy1uacNmXDNmOX-FFAlj2qCIo="
     },
     "1Bvi39mct9UNYZ9eTCCRdV": {
@@ -282,7 +320,86 @@
     "1Bvi39mct9UNYZ9eTCCRdV:1Bvi2z3TpKXtTJLTRPTEd8": {},
     "1Bvi39mct9UNYZ9eTCCRdV:1Bvi2z3To8ddXo6R6ZftVD": {},
     "1Bvi39mct9UNYZ9eTCCRdV:1Bvi2z3UB1xUVg4Xz9WTpJ": {},
-    "1Bvi39mct9UNYZ9eTCCRdV:1Bvi2z3U3SiK6r7gf9vh7N": {}
+    "1Bvi39mct9UNYZ9eTCCRdV:1Bvi2z3U3SiK6r7gf9vh7N": {},
+    "1BwWRgjHrhVbbuTV7m36kM": {
+      "hidden": false,
+      "position": {
+        "x": { "type": "start", "start": 50 },
+        "y": { "type": "start", "start": 1144 }
+      },
+      "width": { "type": "fixed", "value": 400 },
+      "height": { "type": "hugContents" },
+      "topLeftRadius": 20,
+      "topRightRadius": 20,
+      "bottomRightRadius": 20,
+      "bottomLeftRadius": 20,
+      "fills": [{ "type": "solid", "hex": "#ffffff" }],
+      "opacity": 1,
+      "overflowHidden": false,
+      "layout": "stack",
+      "stackDirection": "y",
+      "stackAlign": "start",
+      "stackJustify": "start",
+      "gap": 20,
+      "paddingTop": 19,
+      "paddingRight": 19,
+      "paddingBottom": 19,
+      "paddingLeft": 19
+    },
+    "1BwWRgjHyEzJjsehRefVBE": {
+      "hidden": false,
+      "width": { "type": "hugContents" },
+      "height": { "type": "hugContents" },
+      "topLeftRadius": 8,
+      "topRightRadius": 8,
+      "bottomRightRadius": 8,
+      "bottomLeftRadius": 8,
+      "fills": [{ "type": "solid", "hex": "#f0f9ff" }],
+      "opacity": 1,
+      "overflowHidden": false,
+      "layout": "stack",
+      "stackDirection": "x",
+      "stackAlign": "start",
+      "stackJustify": "start",
+      "gap": 10,
+      "paddingTop": 3,
+      "paddingRight": 3,
+      "paddingBottom": 3,
+      "paddingLeft": 3
+    },
+    "1BwWRgjHr8HNgX8BRooGv7": {
+      "width": { "type": "hugContents" },
+      "height": { "type": "hugContents" },
+      "svgContent": "<svg width=\"24\" height=\"24\" viewBox=\"0 0 24 24\" fill=\"none\" xmlns=\"http://www.w3.org/2000/svg\">\n<path d=\"M17.25 6.75L22.5 12L17.25 17.25M6.75 17.25L1.5 12L6.75 6.75M14.25 3.75L9.75 20.25\" stroke=\"#0EA5E9\" stroke-width=\"1.5\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/>\n</svg>\n"
+    },
+    "1BwWRgjHmYZ8qLKDj3Tvdy": {
+      "hidden": false,
+      "width": { "type": "fillContainer", "value": 315.640625 },
+      "height": { "type": "hugContents" },
+      "fills": [{ "type": "solid", "hex": "#1f2937" }],
+      "opacity": 1,
+      "textContent": "React Components Import/Export",
+      "fontFamily": "Satoshi",
+      "fontWeight": 700,
+      "fontSize": 20,
+      "letterSpacing": 0,
+      "textHorizontalAlign": "start",
+      "textVerticalAlign": "start"
+    },
+    "1BwWRgjHuAe9UTxVhowwYu": {
+      "hidden": false,
+      "width": { "type": "fillContainer" },
+      "height": { "type": "hugContents" },
+      "fills": [{ "type": "solid", "hex": "#4b5563" }],
+      "opacity": 1,
+      "textContent": "Seamlessly work with React components, boosting your design-to-development workflow.\n",
+      "fontFamily": "Inter",
+      "fontWeight": 400,
+      "fontSize": 16,
+      "letterSpacing": 0,
+      "textHorizontalAlign": "start",
+      "textVerticalAlign": "start"
+    }
   },
   "componentURLs": [
     "https://cdn.jsdelivr.net/gh/uimix-editor/uimix@ba0157d5/packages/sandbox/dist-components/components.js",

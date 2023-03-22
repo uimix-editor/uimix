@@ -51,58 +51,11 @@ class Commands {
 
   async paste() {
     const data = await Clipboard.readNodes();
-
+    await runInAction(async () => {
+      await projectState.pasteNodes(data);
+    });
     runInAction(() => {
-      const getInsertionTarget = () => {
-        const defaultTarget = {
-          parent: projectState.page,
-          next: undefined,
-        };
-
-        const selectedSelectables = projectState.selectedSelectables;
-        let lastSelectable: Selectable | undefined =
-          selectedSelectables[selectedSelectables.length - 1];
-        while (lastSelectable && lastSelectable.idPath.length > 1) {
-          lastSelectable = lastSelectable.parent;
-        }
-        if (!lastSelectable) {
-          return defaultTarget;
-        }
-
-        const parent = lastSelectable?.parent;
-        if (!parent) {
-          return defaultTarget;
-        }
-
-        return {
-          parent: parent.originalNode,
-          next: lastSelectable.originalNode.nextSibling,
-        };
-      };
-
-      const insertionTarget = getInsertionTarget();
-      projectState.page?.selectable.deselect();
-
-      const nodes: Node[] = [];
-      for (const [id, nodeJSON] of Object.entries(data.nodes)) {
-        const node = projectState.project.nodes.create(nodeJSON.type, id);
-        node.loadJSON(nodeJSON);
-        nodes.push(node);
-      }
-      const topNodes = nodes.filter((node) => !node.parentID);
-
-      insertionTarget.parent?.insertBefore(topNodes, insertionTarget.next);
-
-      for (const [id, styleJSON] of Object.entries(data.styles)) {
-        const selectable = projectState.project.selectables.get(id.split(":"));
-        if (selectable) {
-          selectable.selfStyle.loadJSON(styleJSON);
-        }
-      }
-
-      for (const node of topNodes) {
-        node.selectable.select();
-      }
+      projectState.undoManager.stopCapturing();
     });
   }
 

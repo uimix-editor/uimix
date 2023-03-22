@@ -1,9 +1,8 @@
 import { imageFromURL } from "../utils/Blob";
-import { Buffer } from "buffer";
-import { encode } from "url-safe-base64";
 import { Project } from "./Project";
 import { ObservableYMap } from "../utils/ObservableYMap";
 import { Image } from "@uimix/node-data";
+import { getURLSafeBase64Hash } from "../utils/Hash";
 
 export class ImageManager {
   constructor(project: Project) {
@@ -24,9 +23,7 @@ export class ImageManager {
   async insert(blob: Blob): Promise<string> {
     const buffer = await blob.arrayBuffer();
 
-    // get hash of blob
-    const hashData = await crypto.subtle.digest("SHA-256", buffer);
-    const hash = encode(Buffer.from(hashData).toString("base64"));
+    const hash = await getURLSafeBase64Hash(buffer);
 
     if (this.images.has(hash)) {
       return hash;
@@ -51,5 +48,9 @@ export class ImageManager {
 
   get(hashBase64: string): Image | undefined {
     return this.images.get(hashBase64);
+  }
+
+  has(hashBase64: string): boolean {
+    return this.images.has(hashBase64);
   }
 }
