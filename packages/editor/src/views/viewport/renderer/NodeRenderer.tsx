@@ -178,6 +178,20 @@ export const NodeRenderer: React.FC<{
         console.log("invalid svg", svg);
         return <div style={cssStyle} ref={ref} />;
       }
+
+      // @ts-ignore
+      if (svgElement.props.fill) {
+        // @ts-ignore
+        // eslint-disable-next-line
+        cssStyle.fill = svgElement.props.fill;
+      }
+      // @ts-ignore
+      if (svgElement.props.stroke) {
+        // @ts-ignore
+        // eslint-disable-next-line
+        cssStyle.fill = svgElement.props.stroke;
+      }
+
       // TODO: resolve this messy typing
       return React.cloneElement(svgElement, {
         // @ts-ignore
