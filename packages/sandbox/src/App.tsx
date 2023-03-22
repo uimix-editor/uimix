@@ -1,12 +1,15 @@
-import { Page } from "./uimix/components";
+import { Card, Page } from "./uimix/components";
 
 function App() {
   return (
-    <Page
-      style={{
-        width: "100%",
-      }}
-    />
+    <>
+      <Page
+        style={{
+          width: "100%",
+        }}
+      />
+      <Card />
+    </>
   );
 }
 
