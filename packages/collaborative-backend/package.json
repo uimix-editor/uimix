@@ -13,7 +13,7 @@
     "build:tsc": "tsc",
     "dev": "run-z build:esbuild dev:esbuild,dev:node-dev",
     "dev:esbuild": "node build.cjs --watch",
-    "dev:node-dev": "node-dev dist/index.js",
+    "dev:node-dev": "forever -w dist/index.js",
     "prisma:generate": "prisma generate",
     "start": "node dist/index.js",
     "lint": "eslint src"
@@ -28,7 +28,7 @@
   "devDependencies": {
     "@types/jsonwebtoken": "^9.0.1",
     "esbuild": "^0.17.12",
-    "node-dev": "^8.0.0",
+    "forever": "^4.0.3",
     "prisma": "^4.11.0",
     "run-z": "^1.11.0",
     "typescript": "^5.0.2"
