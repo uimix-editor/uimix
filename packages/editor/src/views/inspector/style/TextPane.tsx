@@ -102,9 +102,11 @@ export const TextPane: React.FC = observer(function TextPane() {
             <InspectorNumberInput
               // TODO: support percentage
               icon={formatLineSpacingIcon}
-              get={(s) => s.style.lineHeight[0]}
+              get={(s) => {
+                return s.style.lineHeight?.[0];
+              }}
               set={(s, value) => {
-                s.style.lineHeight = [value ?? 24, "px"];
+                s.style.lineHeight = value === undefined ? null : [value, "px"];
               }}
             />
             <InspectorNumberInput
