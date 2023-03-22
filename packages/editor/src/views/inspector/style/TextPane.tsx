@@ -85,36 +85,57 @@ export const TextPane: React.FC = observer(function TextPane() {
           />
           <div className="grid grid-cols-2 gap-2">
             <InspectorNumberInput
-              get={(s) => s.style.fontWeight}
+              get={(s) => ({ value: s.style.fontWeight })}
               set={(s, value) => {
-                s.style.fontWeight = value ?? 400;
+                s.style.fontWeight = value?.value ?? 400;
               }}
             />
           </div>
           <div className="grid grid-cols-3 gap-2 items-center">
             <InspectorNumberInput
               icon={formatSizeIcon}
-              get={(s) => s.style.fontSize[0]}
+              get={(s) => ({ value: s.style.fontSize[0] })}
               set={(s, value) => {
-                s.style.fontSize = [value ?? 16, "px"];
+                s.style.fontSize = [value?.value ?? 16, "px"];
               }}
             />
             <InspectorNumberInput
-              // TODO: support percentage
               icon={formatLineSpacingIcon}
               get={(s) => {
-                return s.style.lineHeight?.[0];
+                const lineHeight = s.style.lineHeight;
+                if (!lineHeight) {
+                  return;
+                }
+                return {
+                  value: lineHeight[0],
+                  unit: lineHeight[1] === "px" ? undefined : "%",
+                };
               }}
+              allowedUnits={["%"]}
               set={(s, value) => {
-                s.style.lineHeight = value === undefined ? null : [value, "px"];
+                s.style.lineHeight =
+                  value === undefined
+                    ? null
+                    : [value.value, value.unit === "%" ? "%" : "px"];
               }}
             />
             <InspectorNumberInput
-              // TODO: support percentage
               icon={spaceBarIcon}
-              get={(s) => s.style.letterSpacing[0]}
+              get={(s) => {
+                const letterSpacing = s.style.letterSpacing;
+                if (!letterSpacing) {
+                  return;
+                }
+                return {
+                  value: letterSpacing[0],
+                  unit: letterSpacing[1] === "px" ? undefined : "%",
+                };
+              }}
               set={(s, value) => {
-                s.style.letterSpacing = [value ?? 0, "px"];
+                s.style.letterSpacing =
+                  value === undefined
+                    ? [0, "px"]
+                    : [value.value, value.unit === "%" ? "%" : "px"];
               }}
             />
           </div>

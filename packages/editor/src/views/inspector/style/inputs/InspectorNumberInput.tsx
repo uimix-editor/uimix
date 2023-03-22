@@ -12,13 +12,21 @@ export const InspectorNumberInput = observer(function InspectorNumberInput({
   className,
   get,
   set,
+  allowedUnits,
   placeholder: getPlaceholder,
   icon,
   tooltip,
 }: {
   className?: string;
-  get: (selectable: Selectable) => number | undefined;
-  set: (selectable: Selectable, value?: number) => void;
+  get: (selectable: Selectable) => { value: number; unit?: string } | undefined;
+  set: (
+    selectable: Selectable,
+    value?: {
+      value: number;
+      unit?: string;
+    }
+  ) => void;
+  allowedUnits?: string[];
   placeholder?: (selectable: Selectable) => number | undefined;
   icon?: string | IconifyIcon;
   tooltip?: React.ReactNode;
@@ -32,20 +40,44 @@ export const InspectorNumberInput = observer(function InspectorNumberInput({
       icon={icon}
       tooltip={tooltip}
       className={className}
-      value={typeof value === "number" ? String(value) : value}
+      value={
+        typeof value === "object"
+          ? String(value.value) + (value.unit ?? "")
+          : value
+      }
       placeholder={
         typeof placeholder === "number" ? String(placeholder) : undefined
       }
       onChange={action((valueText: string) => {
-        let value = valueText ? Number.parseFloat(valueText) : undefined;
-        if (Number.isNaN(value)) {
-          value = undefined;
-        }
+        const dim = parseDimension(valueText, allowedUnits);
         for (const selectable of selectables) {
-          set(selectable, value);
+          set(selectable, dim);
         }
         projectState.undoManager.stopCapturing();
       })}
     />
   );
 });
+
+function parseDimension(
+  text: string,
+  allowedUnits?: string[]
+):
+  | {
+      value: number;
+      unit?: string;
+    }
+  | undefined {
+  const value = Number.parseFloat(text);
+
+  if (Number.isNaN(value)) {
+    return;
+  }
+
+  let unit = text.replace(/^-?\d*\.?\d*/, "") || undefined;
+  if (unit && !allowedUnits?.includes(unit)) {
+    unit = undefined;
+  }
+
+  return { value, unit };
+}

@@ -166,7 +166,7 @@ export const DimensionsPane: React.FC = observer(function DimensionPane() {
             className="col-start-2 row-start-1"
             get={(s) =>
               s.style.position.y.type === "start"
-                ? s.style.position.y.start[0]
+                ? { value: s.style.position.y.start[0] }
                 : undefined
             }
             placeholder={(s) => s.computedOffsetTop}
@@ -175,7 +175,7 @@ export const DimensionsPane: React.FC = observer(function DimensionPane() {
                 ...s.style.position,
                 y: {
                   type: "start",
-                  start: [value ?? 0, "px"],
+                  start: [value?.value ?? 0, "px"],
                 },
               };
             }}
@@ -187,7 +187,7 @@ export const DimensionsPane: React.FC = observer(function DimensionPane() {
             placeholder={(s) => s.computedOffsetRight}
             get={(s) =>
               s.style.position.x.type === "end"
-                ? s.style.position.x.end[0]
+                ? { value: s.style.position.x.end[0] }
                 : undefined
             }
             set={(s, value) => {
@@ -195,7 +195,7 @@ export const DimensionsPane: React.FC = observer(function DimensionPane() {
                 ...s.style.position,
                 x: {
                   type: "end",
-                  end: [value ?? 0, "px"],
+                  end: [value?.value ?? 0, "px"],
                 },
               };
             }}
@@ -206,7 +206,7 @@ export const DimensionsPane: React.FC = observer(function DimensionPane() {
             className="col-start-2 row-start-3"
             get={(s) =>
               s.style.position.y.type === "end"
-                ? s.style.position.y.end[0]
+                ? { value: s.style.position.y.end[0] }
                 : undefined
             }
             placeholder={(s) => s.computedOffsetBottom}
@@ -215,7 +215,7 @@ export const DimensionsPane: React.FC = observer(function DimensionPane() {
                 ...s.style.position,
                 y: {
                   type: "end",
-                  end: [value ?? 0, "px"],
+                  end: [value?.value ?? 0, "px"],
                 },
               };
             }}
@@ -227,7 +227,7 @@ export const DimensionsPane: React.FC = observer(function DimensionPane() {
             placeholder={(s) => s.computedOffsetLeft}
             get={(s) =>
               s.style.position.x.type === "start"
-                ? s.style.position.x.start[0]
+                ? { value: s.style.position.x.start[0] }
                 : undefined
             }
             set={(s, value) => {
@@ -235,7 +235,7 @@ export const DimensionsPane: React.FC = observer(function DimensionPane() {
                 ...s.style.position,
                 x: {
                   type: "start",
-                  start: [value ?? 0, "px"],
+                  start: [value?.value ?? 0, "px"],
                 },
               };
             }}
@@ -247,12 +247,17 @@ export const DimensionsPane: React.FC = observer(function DimensionPane() {
             <InspectorNumberInput
               icon="W"
               tooltip="Width"
-              get={(s) =>
-                "value" in s.style.width ? s.style.width.value?.[0] : undefined
-              }
+              get={(s) => {
+                const width = s.style.width;
+                if (width && "value" in width && width.value) {
+                  return {
+                    value: width.value[0],
+                  };
+                }
+              }}
               placeholder={(s) => s.computedRect.width}
               set={(s, value) => {
-                setSizeConstraintValue(s, "width", value);
+                setSizeConstraintValue(s, "width", value?.value);
               }}
             />
             <InspectorToggleGroup
@@ -267,14 +272,17 @@ export const DimensionsPane: React.FC = observer(function DimensionPane() {
             <InspectorNumberInput
               icon="H"
               tooltip="Height"
-              get={(s) =>
-                "value" in s.style.height
-                  ? s.style.height.value?.[0]
-                  : undefined
-              }
+              get={(s) => {
+                const height = s.style.height;
+                if (height && "value" in height && height.value) {
+                  return {
+                    value: height.value[0],
+                  };
+                }
+              }}
               placeholder={(s) => s.computedRect.height}
               set={(s, value) => {
-                setSizeConstraintValue(s, "height", value);
+                setSizeConstraintValue(s, "height", value?.value);
               }}
             />
             <InspectorToggleGroup
