@@ -41,9 +41,9 @@ describe(Node.name, () => {
     const selectable1 = proj.selectables.get([page.children[1].id]);
     selectable0.style.gap = [10, "px"];
     expect(selectable0.originalNode === page.children[0]).toBe(true);
-    expect(selectable0.style.gap).toBe(10);
+    expect(selectable0.style.gap).toStrictEqual([10, "px"]);
     expect(selectable1.originalNode === page.children[1]).toBe(true);
-    expect(selectable1.style.gap).toBe(0);
+    expect(selectable1.style.gap).toStrictEqual([0, "px"]);
 
     text.remove();
 
@@ -144,7 +144,7 @@ describe(Node.name, () => {
     const hoverSelectable = proj.selectables.get([hoverVariant.id]);
     expect(hoverSelectable.originalNode === hoverVariant).toBe(true);
     expect(hoverSelectable.node === rootNode).toBe(true);
-    expect(hoverSelectable.style.gap).toBe(12);
+    expect(hoverSelectable.style.gap).toStrictEqual([12, "px"]);
 
     const instance = proj.nodes.create("instance");
     instance.name = "Instance";
@@ -156,20 +156,20 @@ describe(Node.name, () => {
     const instanceTextSelectable = instanceSelectable.children[0];
 
     expect(instanceSelectable.mainComponent?.rootNode === rootNode).toBe(true);
-    expect(instanceSelectable.style.gap).toBe(12);
+    expect(instanceSelectable.style.gap).toStrictEqual([12, "px"]);
     expect(instanceSelectable.parent === page.selectable).toBe(true);
 
     expect(instanceTextSelectable.originalNode === textNode).toBe(true);
-    expect(instanceTextSelectable.style.fontSize).toBe(24);
+    expect(instanceTextSelectable.style.fontSize).toStrictEqual([24, "px"]);
     expect(instanceTextSelectable.parent === instanceSelectable).toBe(true);
 
     instanceSelectable.style.gap = [16, "px"];
-    expect(instanceSelectable.style.gap).toBe(16);
-    expect(rootSelectable.style.gap).toBe(12);
+    expect(instanceSelectable.style.gap).toStrictEqual([16, "px"]);
+    expect(rootSelectable.style.gap).toStrictEqual([12, "px"]);
 
     instanceTextSelectable.style.fontSize = [32, "px"];
-    expect(instanceTextSelectable.style.fontSize).toBe(32);
-    expect(textSelectable.style.fontSize).toBe(24);
+    expect(instanceTextSelectable.style.fontSize).toStrictEqual([32, "px"]);
+    expect(textSelectable.style.fontSize).toStrictEqual([24, "px"]);
 
     rootSelectable.select();
     expect(rootSelectable.selected).toBe(true);
