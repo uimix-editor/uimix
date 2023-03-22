@@ -114,7 +114,11 @@ export function buildNodeCSS(
     cssStyle.fontWeight = style.fontWeight;
     const lineHeight = style.lineHeight;
     cssStyle.lineHeight =
-      lineHeight[1] === "%" ? `${lineHeight[0] / 100}` : lineHeight.join("");
+      lineHeight === null
+        ? "auto"
+        : lineHeight[1] === "%"
+        ? `${lineHeight[0] / 100}`
+        : lineHeight.join("");
     const letterSpacing = style.letterSpacing;
     cssStyle.letterSpacing =
       letterSpacing[1] === "%"
