@@ -81,13 +81,15 @@ const InspectorAnchorEdit = observer(function InspectorAnchorEdit({
 
 function RadiusEdit() {
   const selectables = useContext(InspectorTargetContext);
-  const topLeft = sameOrMixed(selectables.map((s) => s.style.topLeftRadius));
-  const topRight = sameOrMixed(selectables.map((s) => s.style.topRightRadius));
+  const topLeft = sameOrMixed(selectables.map((s) => s.style.topLeftRadius[0]));
+  const topRight = sameOrMixed(
+    selectables.map((s) => s.style.topRightRadius[0])
+  );
   const bottomRight = sameOrMixed(
-    selectables.map((s) => s.style.bottomRightRadius)
+    selectables.map((s) => s.style.bottomRightRadius[0])
   );
   const bottomLeft = sameOrMixed(
-    selectables.map((s) => s.style.bottomLeftRadius)
+    selectables.map((s) => s.style.bottomLeftRadius[0])
   );
 
   return (

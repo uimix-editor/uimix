@@ -21,10 +21,14 @@ import { useContext } from "react";
 
 function BorderWidthEdit() {
   const selectables = useContext(InspectorTargetContext);
-  const top = sameOrMixed(selectables.map((s) => s.style.borderTopWidth));
-  const right = sameOrMixed(selectables.map((s) => s.style.borderRightWidth));
-  const bottom = sameOrMixed(selectables.map((s) => s.style.borderBottomWidth));
-  const left = sameOrMixed(selectables.map((s) => s.style.borderLeftWidth));
+  const top = sameOrMixed(selectables.map((s) => s.style.borderTopWidth[0]));
+  const right = sameOrMixed(
+    selectables.map((s) => s.style.borderRightWidth[0])
+  );
+  const bottom = sameOrMixed(
+    selectables.map((s) => s.style.borderBottomWidth[0])
+  );
+  const left = sameOrMixed(selectables.map((s) => s.style.borderLeftWidth[0]));
 
   return (
     <SeparableInput
