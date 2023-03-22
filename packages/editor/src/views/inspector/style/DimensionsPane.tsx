@@ -102,9 +102,9 @@ function RadiusEdit() {
       edgeIcons={{
         all: radiusIcon,
         top: radiusIcon,
-        right: radiusIcon,
-        bottom: radiusIcon,
-        left: radiusIcon,
+        right: { ...radiusIcon, rotate: 1 },
+        bottom: { ...radiusIcon, rotate: 2 },
+        left: { ...radiusIcon, rotate: 3 },
       }}
       toggleIcon={separateCornersIcon}
       onChange={(edge, value) => {
