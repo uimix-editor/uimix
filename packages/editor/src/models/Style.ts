@@ -59,7 +59,7 @@ export const defaultStyle: StyleJSON = {
   fontFamily: "Inter",
   fontWeight: 400,
   fontSize: [16, "px"],
-  lineHeight: [24, "px"],
+  lineHeight: null,
   letterSpacing: [0, "px"],
   textHorizontalAlign: "start",
   textVerticalAlign: "start",
