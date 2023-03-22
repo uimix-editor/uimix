@@ -12,6 +12,7 @@
     "dev": "concurrently -n tsc,build,vite 'npm:tsc:watch' 'npm:build:watch' 'vite'",
     "format": "prettier --write .",
     "lint": "eslint plugin-src ui-src",
+    "test": "vitest run -r .",
     "tsc": "npm run tsc:main && npm run tsc:ui",
     "tsc:main": "tsc --noEmit -p plugin-src",
     "tsc:ui": "tsc --noEmit -p ui-src",
@@ -41,6 +42,7 @@
     "tailwindcss": "^3.2.7",
     "typescript": "^5.0.2",
     "vite": "^4.2.1",
-    "vite-plugin-singlefile": "^0.13.3"
+    "vite-plugin-singlefile": "^0.13.3",
+    "vitest": "^0.29.3"
   }
 }
