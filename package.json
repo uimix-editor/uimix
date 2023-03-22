@@ -8,21 +8,22 @@
   "author": "",
   "main": "index.js",
   "scripts": {
-    "build": "pnpm run-z ./packages// build '=if-present'",
+    "build": "turbo build",
     "dev": "run-z dev:dashboard,dev:collaborative-backend,dev:editor,dev:sandbox,dev:figma",
     "dev:collaborative-backend": "cd packages/collaborative-backend && pnpm dev",
     "dev:dashboard": "cd packages/dashboard && pnpm dev",
     "dev:editor": "cd packages/editor && pnpm dev",
     "dev:sandbox": "cd packages/sandbox && pnpm dev",
     "dev:figma": "cd packages/figma && pnpm dev",
-    "lint": "pnpm run-z ./packages// lint '=if-present'",
-    "test": "pnpm run-z ./packages// test '=if-present'"
+    "lint": "turbo lint",
+    "test": "turbo test"
   },
   "devDependencies": {
     "@typescript-eslint/eslint-plugin": "^5.55.0",
     "@typescript-eslint/parser": "^5.55.0",
     "eslint": "8.36.0",
     "eslint-plugin-import": "^2.27.5",
-    "run-z": "^1.11.0"
+    "run-z": "^1.11.0",
+    "turbo": "^1.8.5"
   }
 }
