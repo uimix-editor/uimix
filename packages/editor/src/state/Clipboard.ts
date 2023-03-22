@@ -35,15 +35,20 @@ function reassignNewIDs(data: ProjectJSON): ProjectJSON {
 
 export class Clipboard {
   static async writeNodes(nodes: ProjectJSON) {
-    const json = JSON.stringify(nodes);
+    // const json = JSON.stringify(nodes);
 
-    await navigator.clipboard.write([
-      new ClipboardItem({
-        [`web ${mimeType}`]: new Blob([json], {
-          type: mimeType,
-        }),
-      }),
-    ]);
+    // await navigator.clipboard.write([
+    //   new ClipboardItem({
+    //     [`web ${mimeType}`]: new Blob([json], {
+    //       type: mimeType,
+    //     }),
+    //   }),
+    // ]);
+    const data: JSONClipboardData = {
+      uimixNodes: nodes,
+    };
+
+    await navigator.clipboard.writeText(JSON.stringify(data));
   }
 
   static async readNodes(): Promise<ProjectJSON> {
