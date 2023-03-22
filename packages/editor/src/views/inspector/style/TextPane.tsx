@@ -131,6 +131,7 @@ export const TextPane: React.FC = observer(function TextPane() {
                   unit: letterSpacing[1] === "px" ? undefined : "%",
                 };
               }}
+              allowedUnits={["%"]}
               set={(s, value) => {
                 s.style.letterSpacing =
                   value === undefined
