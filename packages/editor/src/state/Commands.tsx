@@ -16,7 +16,6 @@ import {
 import { createComponent } from "../services/CreateComponent";
 import { PageHierarchyEntry } from "../models/Project";
 import { posix as path } from "path-browserify";
-import { Node } from "../models/Node";
 import { generateExampleNodes } from "../models/generateExampleNodes";
 import { dialogState } from "./DialogState";
 

@@ -43,14 +43,14 @@ const ComponentSection: React.FC<{
       )}
       style={{
         position: "absolute",
-        left: bboxInView.left - componentSectionPadding + "px",
-        top: bboxInView.top - componentSectionTopPadding + "px",
-        width: bboxInView.width + componentSectionPadding * 2 + "px",
-        height:
+        left: `${bboxInView.left - componentSectionPadding}px`,
+        top: `${bboxInView.top - componentSectionTopPadding}px`,
+        width: `${bboxInView.width + componentSectionPadding * 2}px`,
+        height: `${
           bboxInView.height +
           componentSectionPadding +
-          componentSectionTopPadding +
-          "px",
+          componentSectionTopPadding
+        }px`,
         pointerEvents: "none",
       }}
     />
@@ -143,8 +143,8 @@ const ComponentLabel: React.FC<{
         component.selected && "text-macaron-active"
       )}
       style={{
-        left: bboxInView.left - componentSectionPadding + "px",
-        top: bboxInView.top - componentSectionTopPadding - 20 + "px",
+        left: `${bboxInView.left - componentSectionPadding}px`,
+        top: `${bboxInView.top - componentSectionTopPadding - 20}px`,
       }}
       {...dragProps}
       onPointerLeave={onPointerLeave}
