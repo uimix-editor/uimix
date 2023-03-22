@@ -11,6 +11,16 @@ import htmlReactParser from "html-react-parser";
 import reactElementToJSXString from "react-element-to-jsx-string";
 import React from "react";
 
+// TODO: remove this when react-element-to-jsx-string is fixed
+const reactElementToJSXStringFixed =
+  typeof reactElementToJSXString === "function"
+    ? reactElementToJSXString
+    : (
+        reactElementToJSXString as {
+          default: typeof reactElementToJSXString;
+        }
+      ).default;
+
 const applyOverridesSnippet = `
 function applyOverrides(
   rootProps: any,
@@ -243,11 +253,7 @@ export class ReactGenerator {
       const changedElement = React.cloneElement(svgElement, {
         ...props,
       });
-      console.log(reactElementToJSXString);
-      // TODO: fix react-element-to-jsx-string
-      // @ts-ignore
-      // eslint-disable-next-line
-      return [reactElementToJSXString.default(changedElement)];
+      return [reactElementToJSXStringFixed(changedElement)];
     }
 
     if (node.type === "foreign") {

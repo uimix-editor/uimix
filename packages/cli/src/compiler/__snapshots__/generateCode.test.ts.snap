@@ -6,6 +6,8 @@ exports[`generateCode > generates code 1`] = `
   position: relative;
   width: max-content;
   height: max-content;
+  opacity: 1;
+  overflow: visible;
   display: flex;
   flex-direction: row;
   align-items: flex-start;
@@ -22,6 +24,10 @@ exports[`generateCode > generates code 1`] = `
   border-right-width: 0px;
   border-bottom-width: 0px;
   border-left-width: 0px;
+  border-top-left-radius: 0px;
+  border-top-right-radius: 0px;
+  border-bottom-right-radius: 0px;
+  border-bottom-left-radius: 0px;
 }
 .uimix-1Bvi2z3UPfi6W3L8nDt5VA:hover {
   background: #3B82F6;
@@ -34,6 +40,8 @@ exports[`generateCode > generates code 1`] = `
   position: relative;
   width: max-content;
   height: max-content;
+  opacity: 1;
+  overflow: visible;
   display: flex;
   flex-direction: row;
   align-items: flex-start;
@@ -50,11 +58,17 @@ exports[`generateCode > generates code 1`] = `
   border-right-width: 0px;
   border-bottom-width: 0px;
   border-left-width: 0px;
+  border-top-left-radius: 0px;
+  border-top-right-radius: 0px;
+  border-bottom-right-radius: 0px;
+  border-bottom-left-radius: 0px;
 }
 .uimix-1Bvi319YVxZELz4tEskN1S {
   position: relative;
   width: 744px;
   height: 456px;
+  opacity: 1;
+  overflow: visible;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -71,11 +85,44 @@ exports[`generateCode > generates code 1`] = `
   border-right-width: 0px;
   border-bottom-width: 0px;
   border-left-width: 0px;
+  border-top-left-radius: 0px;
+  border-top-right-radius: 0px;
+  border-bottom-right-radius: 0px;
+  border-bottom-left-radius: 0px;
+}
+.uimix-1BwWRgjHrhVbbuTV7m36kM {
+  position: relative;
+  width: 400px;
+  height: max-content;
+  opacity: 1;
+  overflow: visible;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: flex-start;
+  gap: 20px;
+  padding-left: 19px;
+  padding-right: 19px;
+  padding-top: 19px;
+  padding-bottom: 19px;
+  background: #ffffff;
+  border-style: solid;
+  border-color: transparent;
+  border-top-width: 0px;
+  border-right-width: 0px;
+  border-bottom-width: 0px;
+  border-left-width: 0px;
+  border-top-left-radius: 20px;
+  border-top-right-radius: 20px;
+  border-bottom-right-radius: 20px;
+  border-bottom-left-radius: 20px;
 }
 .uimix-1Bvi2z3UGTM64JtRT7Qc1S {
   position: relative;
   width: max-content;
   height: max-content;
+  opacity: 1;
+  overflow: visible;
   white-space: break-spaces;
   display: flex;
   flex-direction: column;
@@ -99,6 +146,8 @@ exports[`generateCode > generates code 1`] = `
   position: relative;
   width: 50px;
   height: 50px;
+  opacity: 1;
+  overflow: visible;
   display: flex;
   flex-direction: row;
   align-items: flex-start;
@@ -115,11 +164,17 @@ exports[`generateCode > generates code 1`] = `
   border-right-width: 0px;
   border-bottom-width: 0px;
   border-left-width: 0px;
+  border-top-left-radius: 0px;
+  border-top-right-radius: 0px;
+  border-bottom-right-radius: 0px;
+  border-bottom-left-radius: 0px;
 }
 .uimix-1Bvi2z3To8ddXo6R6ZftVD {
   position: relative;
   width: 40px;
   height: 80px;
+  opacity: 1;
+  overflow: visible;
   display: flex;
   flex-direction: row;
   align-items: flex-start;
@@ -136,11 +191,17 @@ exports[`generateCode > generates code 1`] = `
   border-right-width: 0px;
   border-bottom-width: 0px;
   border-left-width: 0px;
+  border-top-left-radius: 0px;
+  border-top-right-radius: 0px;
+  border-bottom-right-radius: 0px;
+  border-bottom-left-radius: 0px;
 }
 .uimix-1Bvi2z3UB1xUVg4Xz9WTpJ {
   position: relative;
   width: 80px;
   height: 40px;
+  opacity: 1;
+  overflow: visible;
   display: flex;
   flex-direction: row;
   align-items: flex-start;
@@ -157,11 +218,17 @@ exports[`generateCode > generates code 1`] = `
   border-right-width: 0px;
   border-bottom-width: 0px;
   border-left-width: 0px;
+  border-top-left-radius: 0px;
+  border-top-right-radius: 0px;
+  border-bottom-right-radius: 0px;
+  border-bottom-left-radius: 0px;
 }
 .uimix-1Bvi2z3U3SiK6r7gf9vh7N {
   position: relative;
   width: max-content;
   height: max-content;
+  opacity: 1;
+  overflow: visible;
   white-space: break-spaces;
   display: flex;
   flex-direction: column;
@@ -178,11 +245,15 @@ exports[`generateCode > generates code 1`] = `
   position: relative;
   align-self: stretch;
   height: max-content;
+  opacity: 1;
+  overflow: visible;
 }
 .uimix-1Bvi365mtWZmXKDPeJTB4s {
   position: relative;
   align-self: stretch;
   flex: 1;
+  opacity: 1;
+  overflow: visible;
   display: flex;
   flex-direction: row;
   align-items: flex-start;
@@ -199,6 +270,10 @@ exports[`generateCode > generates code 1`] = `
   border-right-width: 0px;
   border-bottom-width: 0px;
   border-left-width: 0px;
+  border-top-left-radius: 0px;
+  border-top-right-radius: 0px;
+  border-bottom-right-radius: 0px;
+  border-bottom-left-radius: 0px;
 }
 .uimix-1Bvi32d9RMi3ES5kk2UvuM {
   position: absolute;
@@ -206,6 +281,8 @@ exports[`generateCode > generates code 1`] = `
   top: 28px;
   width: max-content;
   height: max-content;
+  opacity: 1;
+  overflow: visible;
 }
 .uimix-1Bvi2z3UrU9VkawwAteXs8 {
   position: absolute;
@@ -221,6 +298,8 @@ exports[`generateCode > generates code 1`] = `
   top: 97px;
   width: 100px;
   height: 100px;
+  opacity: 1;
+  overflow: visible;
 }
 .uimix-1Bvi39mct9UNYZ9eTCCRdV {
   position: absolute;
@@ -234,6 +313,76 @@ exports[`generateCode > generates code 1`] = `
 .uimix-1Bvi39mct9UNYZ9eTCCRdV-1Bvi2z3UB1xUVg4Xz9WTpJ {
 }
 .uimix-1Bvi39mct9UNYZ9eTCCRdV-1Bvi2z3U3SiK6r7gf9vh7N {
+}
+.uimix-1BwWRgjHyEzJjsehRefVBE {
+  position: relative;
+  width: max-content;
+  height: max-content;
+  opacity: 1;
+  overflow: visible;
+  display: flex;
+  flex-direction: row;
+  align-items: flex-start;
+  justify-content: flex-start;
+  gap: 10px;
+  padding-left: 3px;
+  padding-right: 3px;
+  padding-top: 3px;
+  padding-bottom: 3px;
+  background: #f0f9ff;
+  border-style: solid;
+  border-color: transparent;
+  border-top-width: 0px;
+  border-right-width: 0px;
+  border-bottom-width: 0px;
+  border-left-width: 0px;
+  border-top-left-radius: 8px;
+  border-top-right-radius: 8px;
+  border-bottom-right-radius: 8px;
+  border-bottom-left-radius: 8px;
+}
+.uimix-1BwWRgjHr8HNgX8BRooGv7 {
+  position: relative;
+  width: max-content;
+  height: max-content;
+  opacity: 1;
+  overflow: visible;
+}
+.uimix-1BwWRgjHmYZ8qLKDj3Tvdy {
+  position: relative;
+  align-self: stretch;
+  height: max-content;
+  opacity: 1;
+  overflow: visible;
+  white-space: break-spaces;
+  display: flex;
+  flex-direction: column;
+  color: #1f2937;
+  font-family: Satoshi;
+  font-size: 20px;
+  font-weight: 700;
+  line-height: 1.5;
+  letter-spacing: 0em;
+  text-align: start;
+  justify-content: flex-start;
+}
+.uimix-1BwWRgjHuAe9UTxVhowwYu {
+  position: relative;
+  align-self: stretch;
+  height: max-content;
+  opacity: 1;
+  overflow: visible;
+  white-space: break-spaces;
+  display: flex;
+  flex-direction: column;
+  color: #4b5563;
+  font-family: Inter;
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 1.5;
+  letter-spacing: 0em;
+  text-align: start;
+  justify-content: flex-start;
 }",
   "components.tsx": "import React from \\"react\\";
 import * as header from \\"../../src/stories/Header\\";
@@ -282,8 +431,8 @@ function applyOverrides(
 export const Button = React.forwardRef((props, ref) => {
   return applyOverrides(
     { ...props, ref },
-    <div className=\\"uimix-1Bvi2z3UPfi6W3L8nDt5VA\\">
-      <div className=\\"uimix-1Bvi2z3UGTM64JtRT7Qc1S\\" data-refID={[\\"text\\"]}>
+    <div className={\\"uimix-1Bvi2z3UPfi6W3L8nDt5VA\\"}>
+      <div className={\\"uimix-1Bvi2z3UGTM64JtRT7Qc1S\\"} data-refID={[\\"text\\"]}>
         Button
       </div>
     </div>
@@ -297,20 +446,20 @@ export const Button = React.forwardRef((props, ref) => {
 export const Stack = React.forwardRef((props, ref) => {
   return applyOverrides(
     { ...props, ref },
-    <div className=\\"uimix-1Bvi2z3TfkSpYXW29daTN8\\">
+    <div className={\\"uimix-1Bvi2z3TfkSpYXW29daTN8\\"}>
       <div
-        className=\\"uimix-1Bvi2z3TpKXtTJLTRPTEd8\\"
+        className={\\"uimix-1Bvi2z3TpKXtTJLTRPTEd8\\"}
         data-refID={[\\"item_0\\"]}
       ></div>
       <div
-        className=\\"uimix-1Bvi2z3To8ddXo6R6ZftVD\\"
+        className={\\"uimix-1Bvi2z3To8ddXo6R6ZftVD\\"}
         data-refID={[\\"item_1\\"]}
       ></div>
       <div
-        className=\\"uimix-1Bvi2z3UB1xUVg4Xz9WTpJ\\"
+        className={\\"uimix-1Bvi2z3UB1xUVg4Xz9WTpJ\\"}
         data-refID={[\\"item_2\\"]}
       ></div>
-      <div className=\\"uimix-1Bvi2z3U3SiK6r7gf9vh7N\\" data-refID={[\\"text\\"]}>
+      <div className={\\"uimix-1Bvi2z3U3SiK6r7gf9vh7N\\"} data-refID={[\\"text\\"]}>
         Hello, world!
       </div>
     </div>
@@ -327,15 +476,15 @@ export const Stack = React.forwardRef((props, ref) => {
 export const Page = React.forwardRef((props, ref) => {
   return applyOverrides(
     { ...props, ref },
-    <div className=\\"uimix-1Bvi319YVxZELz4tEskN1S\\">
+    <div className={\\"uimix-1Bvi319YVxZELz4tEskN1S\\"}>
       <header.Header
-        className=\\"uimix-1Bvi31VKu8gfy6XzJ8xrHA\\"
+        className={\\"uimix-1Bvi31VKu8gfy6XzJ8xrHA\\"}
         data-refID={[\\"header\\"]}
         {...{}}
       />
-      <div className=\\"uimix-1Bvi365mtWZmXKDPeJTB4s\\" data-refID={[\\"frame\\"]}>
+      <div className={\\"uimix-1Bvi365mtWZmXKDPeJTB4s\\"} data-refID={[\\"frame\\"]}>
         <button.Button
-          className=\\"uimix-1Bvi32d9RMi3ES5kk2UvuM\\"
+          className={\\"uimix-1Bvi32d9RMi3ES5kk2UvuM\\"}
           data-refID={[\\"button\\"]}
           {...{
             label: \\"Button1\\",
@@ -345,40 +494,54 @@ export const Page = React.forwardRef((props, ref) => {
           }}
         />
         <div
-          className=\\"uimix-1Bvi2z3UrU9VkawwAteXs8 uimix-1Bvi2z3UPfi6W3L8nDt5VA\\"
+          className={
+            \\"uimix-1Bvi2z3UrU9VkawwAteXs8 uimix-1Bvi2z3UPfi6W3L8nDt5VA\\"
+          }
           data-refID={[\\"instance\\"]}
         >
           <div
-            className=\\"uimix-1Bvi2z3UrU9VkawwAteXs8-1Bvi2z3UGTM64JtRT7Qc1S uimix-1Bvi2z3UGTM64JtRT7Qc1S\\"
+            className={
+              \\"uimix-1Bvi2z3UrU9VkawwAteXs8-1Bvi2z3UGTM64JtRT7Qc1S uimix-1Bvi2z3UGTM64JtRT7Qc1S\\"
+            }
             data-refID={[\\"instance\\", \\"text\\"]}
           >
             Override Name
           </div>
         </div>
         <img
-          className=\\"uimix-1Bvi392qBdMy93LGLcVymb\\"
+          className={\\"uimix-1Bvi392qBdMy93LGLcVymb\\"}
           data-refID={[\\"image\\"]}
           src={image_YmY$tuteU03QY$k_2ARy1uacNmXDNmOX$FFAlj2qCIo}
           alt=\\"Image\\"
         />
         <div
-          className=\\"uimix-1Bvi39mct9UNYZ9eTCCRdV uimix-1Bvi2z3TfkSpYXW29daTN8\\"
+          className={
+            \\"uimix-1Bvi39mct9UNYZ9eTCCRdV uimix-1Bvi2z3TfkSpYXW29daTN8\\"
+          }
           data-refID={[\\"stack\\"]}
         >
           <div
-            className=\\"uimix-1Bvi39mct9UNYZ9eTCCRdV-1Bvi2z3TpKXtTJLTRPTEd8 uimix-1Bvi2z3TpKXtTJLTRPTEd8\\"
+            className={
+              \\"uimix-1Bvi39mct9UNYZ9eTCCRdV-1Bvi2z3TpKXtTJLTRPTEd8 uimix-1Bvi2z3TpKXtTJLTRPTEd8\\"
+            }
             data-refID={[\\"stack\\", \\"item_0\\"]}
           ></div>
           <div
-            className=\\"uimix-1Bvi39mct9UNYZ9eTCCRdV-1Bvi2z3To8ddXo6R6ZftVD uimix-1Bvi2z3To8ddXo6R6ZftVD\\"
+            className={
+              \\"uimix-1Bvi39mct9UNYZ9eTCCRdV-1Bvi2z3To8ddXo6R6ZftVD uimix-1Bvi2z3To8ddXo6R6ZftVD\\"
+            }
             data-refID={[\\"stack\\", \\"item_1\\"]}
           ></div>
           <div
-            className=\\"uimix-1Bvi39mct9UNYZ9eTCCRdV-1Bvi2z3UB1xUVg4Xz9WTpJ uimix-1Bvi2z3UB1xUVg4Xz9WTpJ\\"
+            className={
+              \\"uimix-1Bvi39mct9UNYZ9eTCCRdV-1Bvi2z3UB1xUVg4Xz9WTpJ uimix-1Bvi2z3UB1xUVg4Xz9WTpJ\\"
+            }
             data-refID={[\\"stack\\", \\"item_2\\"]}
           ></div>
           <div
-            className=\\"uimix-1Bvi39mct9UNYZ9eTCCRdV-1Bvi2z3U3SiK6r7gf9vh7N uimix-1Bvi2z3U3SiK6r7gf9vh7N\\"
+            className={
+              \\"uimix-1Bvi39mct9UNYZ9eTCCRdV-1Bvi2z3U3SiK6r7gf9vh7N uimix-1Bvi2z3U3SiK6r7gf9vh7N\\"
+            }
             data-refID={[\\"stack\\", \\"text\\"]}
           >
             Hello, world!
@@ -395,6 +558,50 @@ export const Page = React.forwardRef((props, ref) => {
     instanceProps?: JSX.IntrinsicElements[\\"div\\"];
     imageProps?: JSX.IntrinsicElements[\\"div\\"];
     stackProps?: JSX.IntrinsicElements[\\"div\\"];
+  }
+>;
+
+export const Card = React.forwardRef((props, ref) => {
+  return applyOverrides(
+    { ...props, ref },
+    <div className={\\"uimix-1BwWRgjHrhVbbuTV7m36kM\\"}>
+      <div className={\\"uimix-1BwWRgjHyEzJjsehRefVBE\\"} data-refID={[\\"icon\\"]}>
+        <svg
+          className=\\"uimix-1BwWRgjHr8HNgX8BRooGv7\\"
+          data-refID={[\\"heroicons_code_bracket\\"]}
+          fill=\\"none\\"
+          height=\\"24\\"
+          viewBox=\\"0 0 24 24\\"
+          width=\\"24\\"
+          xmlns=\\"http://www.w3.org/2000/svg\\"
+        >
+          <path
+            d=\\"M17.25 6.75L22.5 12L17.25 17.25M6.75 17.25L1.5 12L6.75 6.75M14.25 3.75L9.75 20.25\\"
+            stroke=\\"#0EA5E9\\"
+            strokeLinecap=\\"round\\"
+            strokeLinejoin=\\"round\\"
+            strokeWidth=\\"1.5\\"
+          />
+        </svg>
+      </div>
+      <div className={\\"uimix-1BwWRgjHmYZ8qLKDj3Tvdy\\"} data-refID={[\\"title\\"]}>
+        React Components Import/Export
+      </div>
+      <div
+        className={\\"uimix-1BwWRgjHuAe9UTxVhowwYu\\"}
+        data-refID={[\\"description\\"]}
+      >
+        Seamlessly work with React components, boosting your
+        design-to-development workflow.
+      </div>
+    </div>
+  );
+}) as React.FC<
+  JSX.IntrinsicElements[\\"div\\"] & {
+    iconProps?: JSX.IntrinsicElements[\\"div\\"];
+    heroicons_code_bracketProps?: JSX.IntrinsicElements[\\"div\\"];
+    titleProps?: JSX.IntrinsicElements[\\"div\\"];
+    descriptionProps?: JSX.IntrinsicElements[\\"div\\"];
   }
 >;
 ",
