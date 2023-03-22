@@ -1,5 +1,5 @@
 import { LocalDocument } from "../../dashboard/src/types/DesktopAPI";
-import { ProjectJSON } from "../../node-data";
+import { ProjectJSON } from "../../node-data/src";
 import path from "path";
 import fs from "fs";
 import prettier from "prettier/standalone";
