@@ -16,7 +16,6 @@ module.exports = {
     "@typescript-eslint/no-this-alias": "off",
     "@typescript-eslint/no-inferrable-types": "off",
     "@typescript-eslint/ban-ts-comment": "off",
-    "@typescript-eslint/restrict-plus-operands": "off",
     "@typescript-eslint/no-misused-promises": "off",
     "@typescript-eslint/require-await": "off",
     "react-hooks/exhaustive-deps": "off",
