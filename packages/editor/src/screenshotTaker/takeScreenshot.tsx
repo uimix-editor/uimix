@@ -18,18 +18,19 @@ export async function takeScreenshot(
   const ctx = canvas.getContext("2d")!;
 
   const contentBBox = Rect.union(
-    ...firstPage.selectable.children.map((child) => child.computedRect)
+    ...firstPage.selectable.offsetChildren.map((child) => child.computedRect)
   );
   if (!contentBBox) {
     return;
   }
+  console.log(contentBBox.toString());
 
   const scale = Math.min(
     thumbSize.x / contentBBox.width,
     thumbSize.y / contentBBox.height
   );
 
-  for (const selectable of firstPage.selectable.children) {
+  for (const selectable of firstPage.selectable.offsetChildren) {
     const dom = domForSelectable.get(selectable);
     if (!dom) {
       return;
@@ -37,12 +38,18 @@ export async function takeScreenshot(
 
     const domCanvas = await htmlToImage.toCanvas(dom, {
       skipFonts: true,
+      style: {
+        position: "static",
+      },
     });
+    if (domCanvas.width === 0 || domCanvas.height === 0) {
+      continue;
+    }
 
     ctx.drawImage(
       domCanvas,
       (selectable.computedRect.left - contentBBox.left) * scale,
-      (selectable.computedRect.left - contentBBox.left) * scale,
+      (selectable.computedRect.top - contentBBox.top) * scale,
       selectable.computedRect.width * scale,
       selectable.computedRect.height * scale
     );
