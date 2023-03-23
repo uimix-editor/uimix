@@ -8,7 +8,10 @@ import {
 } from "../screenshotTaker/ScreenshotTakerRPC";
 
 export class ScreenshotTakerHost {
-  constructor(project: Project) {
+  constructor(
+    project: Project,
+    updateScreenshot: (pngData: Uint8Array) => void
+  ) {
     const iframe = document.createElement("iframe");
     iframe.setAttribute("sandbox", "allow-scripts");
     iframe.src = "/screenshot-taker.html";
@@ -25,7 +28,7 @@ export class ScreenshotTakerHost {
           onUpdate(Y.encodeStateAsUpdate(project.doc));
         },
         sendScreenshot: async (data: Uint8Array) => {
-          console.log("TODO: set screenshot data in project");
+          updateScreenshot(data);
         },
       }
     );

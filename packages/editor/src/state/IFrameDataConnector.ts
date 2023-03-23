@@ -53,7 +53,9 @@ export class IFrameDataConnector {
       }),
     });
 
-    new ScreenshotTakerHost(state.project);
+    new ScreenshotTakerHost(state.project, (pngData) => {
+      void this.rpc.remote.updateThumbnail(pngData);
+    });
 
     void this.rpc.remote.ready();
   }
