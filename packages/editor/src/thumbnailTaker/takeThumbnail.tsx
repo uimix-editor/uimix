@@ -51,9 +51,9 @@ export async function takeThumbnail(
 
       ctx.drawImage(
         domCanvas,
-        (selectable.computedRect.center.x - contentBBox.center.x) * scale +
+        (selectable.computedRect.left - contentBBox.center.x) * scale +
           thumbSize.x / 2,
-        (selectable.computedRect.center.y - contentBBox.center.y) * scale +
+        (selectable.computedRect.top - contentBBox.center.y) * scale +
           thumbSize.y / 2,
         selectable.computedRect.width * scale,
         selectable.computedRect.height * scale
