@@ -4,5 +4,5 @@ export interface IRootToScreenshotTakerRPC {
 
 export interface IScreenshotTakerToRootRPC {
   ready(): Promise<void>;
-  sendScreenshot(data: Uint8Array): Promise<void>;
+  sendScreenshot(data: ArrayBuffer): Promise<void>;
 }

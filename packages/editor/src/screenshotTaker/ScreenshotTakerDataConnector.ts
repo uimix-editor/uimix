@@ -21,7 +21,7 @@ export class ScreenshotDataConnector {
           "screenshot taker sync",
           this.state.project.pages.all.length
         );
-        this.takeScreenshot();
+        void this.takeScreenshot();
       }),
     });
 
@@ -34,5 +34,8 @@ export class ScreenshotDataConnector {
   takeScreenshot = debounce(async () => {
     const result = await takeScreenshot(this.state.project);
     console.log(result);
+    if (result) {
+      await this.rpc.remote.sendScreenshot(result);
+    }
   }, 1000);
 }

@@ -3,7 +3,9 @@ import { domForSelectable } from "../views/viewport/renderer/NodeRenderer";
 import * as htmlToImage from "html-to-image";
 import { Rect, Vec2 } from "paintvec";
 
-export async function takeScreenshot(project: Project) {
+export async function takeScreenshot(
+  project: Project
+): Promise<ArrayBuffer | undefined> {
   const firstPage = project.pages.all[0];
   if (!firstPage) {
     return;
@@ -46,5 +48,10 @@ export async function takeScreenshot(project: Project) {
     );
   }
 
-  return canvas.toDataURL();
+  const blob = await new Promise<Blob>((resolve) => {
+    canvas.toBlob((blob) => {
+      resolve(blob!);
+    });
+  });
+  return blob.arrayBuffer();
 }
