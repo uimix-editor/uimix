@@ -51,8 +51,10 @@ export async function takeScreenshot(
 
       ctx.drawImage(
         domCanvas,
-        (selectable.computedRect.left - contentBBox.left) * scale,
-        (selectable.computedRect.top - contentBBox.top) * scale,
+        (selectable.computedRect.center.x - contentBBox.center.x) * scale +
+          thumbSize.x / 2,
+        (selectable.computedRect.center.y - contentBBox.center.y) * scale +
+          thumbSize.y / 2,
         selectable.computedRect.width * scale,
         selectable.computedRect.height * scale
       );
