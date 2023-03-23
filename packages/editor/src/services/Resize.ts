@@ -62,7 +62,7 @@ export function resizeWithBoundingBox(
   console.log("resize", targets);
   const parent = selectable.offsetParent;
   if (parent) {
-    const parentRect = parent.computedOffsetRect;
+    const parentRect = parent.computedPaddingRect;
     if (targets.x) {
       setPositionConstraintValue(selectable, "x", bbox, parentRect);
     }
