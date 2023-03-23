@@ -180,7 +180,13 @@ export const DimensionsPane: React.FC = observer(function DimensionPane() {
             }
             placeholder={(s) => s.computedOffsetTop}
             set={(s, value) => {
-              setPositionStartConstraintValue(s, "y", value?.value ?? 0);
+              s.style.position = {
+                ...s.style.position,
+                y: {
+                  type: "start",
+                  start: [value?.value ?? 0, "px"],
+                },
+              };
             }}
           />
           <InspectorNumberInput
@@ -234,7 +240,13 @@ export const DimensionsPane: React.FC = observer(function DimensionPane() {
                 : undefined
             }
             set={(s, value) => {
-              setPositionStartConstraintValue(s, "x", value?.value ?? 0);
+              s.style.position = {
+                ...s.style.position,
+                x: {
+                  type: "start",
+                  start: [value?.value ?? 0, "px"],
+                },
+              };
             }}
           />
           <InspectorAnchorEdit className="col-start-2 row-start-2" />
@@ -362,6 +374,7 @@ function setSizeConstraintType(
   }
 }
 
+/*
 function setPositionStartConstraintValue(
   selectable: Selectable,
   axis: "x" | "y",
@@ -439,6 +452,7 @@ function setPositionStartConstraintValue(
     [axis]: newConstraint,
   };
 }
+*/
 
 function setPositionStartConstraintType(
   selectable: Selectable,
