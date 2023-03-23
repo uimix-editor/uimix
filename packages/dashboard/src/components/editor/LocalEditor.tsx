@@ -50,6 +50,12 @@ class Connection extends TypedEmitter<{
             "base64"
           )}`;
         },
+        updateThumbnail: async (pngData) => {
+          await getDesktopAPI()?.updateLocalDocumentThumbnail(
+            documentId,
+            pngData
+          );
+        },
       }
     );
 

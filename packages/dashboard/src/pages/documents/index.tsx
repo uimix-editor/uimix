@@ -100,9 +100,7 @@ const DocumentCard = ({
       }
     | {
         type: "local";
-        data: LocalDocument & {
-          thumbnail: string | null;
-        };
+        data: LocalDocument;
       };
 }) => {
   const documentDeleteMutation = trpc.document.delete.useMutation();

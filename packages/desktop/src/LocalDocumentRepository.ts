@@ -11,6 +11,7 @@ import Store from "electron-store";
 interface LocalDocumentRef {
   id: string;
   path: string;
+  thumbnail?: string;
 }
 
 const store = new Store<{
@@ -138,6 +139,16 @@ export class LocalDocumentRepository {
 
   deleteLocalDocument(id: string): void {
     this.documents = this.documents.filter((doc) => doc.id !== id);
+  }
+
+  updateLocalDocumentThumbnail(id: string, pngData: Uint8Array): void {
+    const document = this.documents.find((doc) => doc.id === id);
+    if (!document) {
+      throw new Error("Document not found");
+    }
+    document.thumbnail = `data:image/png;base64,${Buffer.from(pngData).toString(
+      "base64"
+    )}`;
   }
 
   getLocalDocumentData(id: string): ProjectJSON {
