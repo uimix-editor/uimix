@@ -497,12 +497,7 @@ export class Selectable {
 
         if (absolute) {
           const bbox = selectable.computedRect;
-          resizeWithBoundingBox(
-            selectable,
-            bbox,
-            { x: true, y: true },
-            this.computedRect.topLeft
-          );
+          resizeWithBoundingBox(selectable, bbox, { x: true, y: true });
         }
       }
     }
