@@ -8,7 +8,7 @@ export const PositionConstraint = z.union([
   }),
   z.object({
     type: z.literal("center"),
-    offset: PxValue,
+    center: PxValue,
   }),
   z.object({
     type: z.literal("end"),
