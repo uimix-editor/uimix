@@ -11,18 +11,22 @@ export function buildNodeCSS(
 
   const cssStyle: React.CSSProperties = {};
 
-  const position = parentStackDirection ? "relative" : "absolute";
-  cssStyle.position = position;
-  if (position === "absolute") {
-    if (style.position.x.type === "start") {
-      cssStyle.left = style.position.x.start.join("");
-    } else if (style.position.x.type === "end") {
-      cssStyle.right = style.position.x.end.join("");
+  const cssPosition = parentStackDirection ? "relative" : "absolute";
+  cssStyle.position = cssPosition;
+  if (cssPosition === "absolute") {
+    const position = style.position;
+    if ("start" in position.x) {
+      cssStyle.left = position.x.start.join("");
     }
-    if (style.position.y.type === "start") {
-      cssStyle.top = style.position.y.start.join("");
-    } else if (style.position.y.type === "end") {
-      cssStyle.bottom = style.position.y.end.join("");
+    if ("end" in position.x) {
+      cssStyle.right = position.x.end.join("");
+    }
+
+    if ("start" in position.y) {
+      cssStyle.top = position.y.start.join("");
+    }
+    if ("end" in position.y) {
+      cssStyle.bottom = position.y.end.join("");
     }
   }
 
@@ -36,7 +40,7 @@ export function buildNodeCSS(
     } else if (parentStackDirection === "y") {
       cssStyle.alignSelf = "stretch";
     } else {
-      cssStyle.width = "100%";
+      cssStyle.width = "auto";
     }
   }
 
@@ -50,7 +54,7 @@ export function buildNodeCSS(
     } else if (parentStackDirection === "x") {
       cssStyle.alignSelf = "stretch";
     } else {
-      cssStyle.height = "100%";
+      cssStyle.height = "auto";
     }
   }
 

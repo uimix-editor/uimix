@@ -1,12 +1,15 @@
 import { useContext } from "react";
 import { observer } from "mobx-react-lite";
-import { SizeConstraintType } from "@uimix/node-data";
+import {
+  PositionConstraint,
+  PositionConstraintType,
+  SizeConstraintType,
+} from "@uimix/node-data";
 import hugContentsIcon from "@seanchas116/design-icons/json/hug-contents.json";
 import fixedSizeIcon from "@seanchas116/design-icons/json/fixed-size.json";
 import fillAreaIcon from "@seanchas116/design-icons/json/fill-area.json";
 import radiusIcon from "@seanchas116/design-icons/json/radius.json";
 import separateCornersIcon from "@seanchas116/design-icons/json/separate-corners.json";
-import { AnchorEdit } from "../../../components/AnchorEdit";
 import { InspectorNumberInput } from "./inputs/InspectorNumberInput";
 import { InspectorToggleGroup } from "./inputs/InspectorToggleGroup";
 import { ToggleGroupItem } from "../../../components/ToggleGroup";
@@ -18,6 +21,8 @@ import { sameOrMixed } from "../../../utils/Mixed";
 import { InspectorHeading } from "../components/InspectorHeading";
 import { SeparableInput } from "../../../components/SeparableInput";
 import { InspectorCheckBox } from "./inputs/InspectorCheckBox";
+import { action } from "mobx";
+import { SimpleAnchorEdit } from "../../../components/SimpleAnchorEdit";
 
 const verticalSizeConstraintOptions: ToggleGroupItem<SizeConstraintType>[] = [
   {
@@ -65,16 +70,22 @@ const InspectorAnchorEdit = observer(function InspectorAnchorEdit({
   const yValue = sameOrMixed(selectables.map((s) => s.style.position.y.type));
 
   return (
-    <AnchorEdit
+    <SimpleAnchorEdit
       className={className}
-      xValue={typeof xValue === "string" ? xValue : "scale"}
-      yValue={typeof yValue === "string" ? yValue : "scale"}
-      onXChange={() => {
-        // TODO
-      }}
-      onYChange={() => {
-        // TODO
-      }}
+      xValue={typeof xValue === "string" ? xValue : "start"}
+      yValue={typeof yValue === "string" ? yValue : "start"}
+      onXChange={action((value) => {
+        for (const selectable of selectables) {
+          setPositionStartConstraintType(selectable, "x", value);
+        }
+        projectState.undoManager.stopCapturing();
+      })}
+      onYChange={action((value) => {
+        for (const selectable of selectables) {
+          setPositionStartConstraintType(selectable, "y", value);
+        }
+        projectState.undoManager.stopCapturing();
+      })}
     />
   );
 });
@@ -166,20 +177,24 @@ export const DimensionsPane: React.FC = observer(function DimensionPane() {
             icon="T"
             tooltip="Top"
             className="col-start-2 row-start-1"
-            get={(s) =>
-              s.style.position.y.type === "start"
-                ? { value: s.style.position.y.start[0] }
-                : undefined
-            }
+            get={(s) => {
+              const y = s.style.position.y;
+              if ("start" in y) {
+                return { value: y.start[0] };
+              }
+            }}
             placeholder={(s) => s.computedOffsetTop}
             set={(s, value) => {
-              s.style.position = {
-                ...s.style.position,
-                y: {
-                  type: "start",
-                  start: [value?.value ?? 0, "px"],
-                },
-              };
+              const y = s.style.position.y;
+              const newY: PositionConstraint =
+                y.type === "both"
+                  ? {
+                      type: "both",
+                      start: [value?.value ?? 0, "px"],
+                      end: y.end,
+                    }
+                  : { type: "start", start: [value?.value ?? 0, "px"] };
+              s.style.position = { ...s.style.position, y: newY };
             }}
           />
           <InspectorNumberInput
@@ -187,39 +202,47 @@ export const DimensionsPane: React.FC = observer(function DimensionPane() {
             tooltip="Right"
             className="col-start-3 row-start-2"
             placeholder={(s) => s.computedOffsetRight}
-            get={(s) =>
-              s.style.position.x.type === "end"
-                ? { value: s.style.position.x.end[0] }
-                : undefined
-            }
+            get={(s) => {
+              const x = s.style.position.x;
+              if ("end" in x) {
+                return { value: x.end[0] };
+              }
+            }}
             set={(s, value) => {
-              s.style.position = {
-                ...s.style.position,
-                x: {
-                  type: "end",
-                  end: [value?.value ?? 0, "px"],
-                },
-              };
+              const x = s.style.position.x;
+              const newX: PositionConstraint =
+                x.type === "both"
+                  ? {
+                      type: "both",
+                      start: x.start,
+                      end: [value?.value ?? 0, "px"],
+                    }
+                  : { type: "end", end: [value?.value ?? 0, "px"] };
+              s.style.position = { ...s.style.position, x: newX };
             }}
           />
           <InspectorNumberInput
             icon="B"
             tooltip="Bottom"
             className="col-start-2 row-start-3"
-            get={(s) =>
-              s.style.position.y.type === "end"
-                ? { value: s.style.position.y.end[0] }
-                : undefined
-            }
+            get={(s) => {
+              const y = s.style.position.y;
+              if ("end" in y) {
+                return { value: y.end[0] };
+              }
+            }}
             placeholder={(s) => s.computedOffsetBottom}
             set={(s, value) => {
-              s.style.position = {
-                ...s.style.position,
-                y: {
-                  type: "end",
-                  end: [value?.value ?? 0, "px"],
-                },
-              };
+              const y = s.style.position.y;
+              const newY: PositionConstraint =
+                y.type === "both"
+                  ? {
+                      type: "both",
+                      start: y.start,
+                      end: [value?.value ?? 0, "px"],
+                    }
+                  : { type: "end", end: [value?.value ?? 0, "px"] };
+              s.style.position = { ...s.style.position, y: newY };
             }}
           />
           <InspectorNumberInput
@@ -227,19 +250,23 @@ export const DimensionsPane: React.FC = observer(function DimensionPane() {
             tooltip="Left"
             className="col-start-1 row-start-2"
             placeholder={(s) => s.computedOffsetLeft}
-            get={(s) =>
-              s.style.position.x.type === "start"
-                ? { value: s.style.position.x.start[0] }
-                : undefined
-            }
+            get={(s) => {
+              const x = s.style.position.x;
+              if ("start" in x) {
+                return { value: x.start[0] };
+              }
+            }}
             set={(s, value) => {
-              s.style.position = {
-                ...s.style.position,
-                x: {
-                  type: "start",
-                  start: [value?.value ?? 0, "px"],
-                },
-              };
+              const x = s.style.position.x;
+              const newX: PositionConstraint =
+                x.type === "both"
+                  ? {
+                      type: "both",
+                      start: [value?.value ?? 0, "px"],
+                      end: x.end,
+                    }
+                  : { type: "start", start: [value?.value ?? 0, "px"] };
+              s.style.position = { ...s.style.position, x: newX };
             }}
           />
           <InspectorAnchorEdit className="col-start-2 row-start-2" />
@@ -365,4 +392,141 @@ function setSizeConstraintType(
       };
       break;
   }
+}
+
+/*
+function setPositionStartConstraintValue(
+  selectable: Selectable,
+  axis: "x" | "y",
+  start: number
+) {
+  const { style } = selectable;
+  const parent = selectable.offsetParent;
+  if (!parent) {
+    // top-level
+
+    const newConstraint = {
+      type: "start",
+      start: [start, "px"],
+    };
+    style.position = {
+      ...style.position,
+      [axis]: newConstraint,
+    };
+    return;
+  }
+
+  const constraint = style.position[axis];
+  const rect = selectable.computedRect;
+  const parentRect = parent.computedRect;
+  const size = rect[axis === "x" ? "width" : "height"];
+  const parentSize = parentRect[axis === "x" ? "width" : "height"];
+
+  let newConstraint = constraint;
+
+  switch (constraint.type) {
+    case "start": {
+      newConstraint = {
+        type: "start",
+        start: [start, "px"],
+      };
+      break;
+    }
+    case "end": {
+      newConstraint = {
+        type: "end",
+        end: [parentSize - start - size, "px"],
+      };
+      break;
+    }
+    case "both": {
+      newConstraint = {
+        type: "both",
+        start: [start, "px"],
+        end: constraint.end,
+      };
+      break;
+    }
+    case "center": {
+      const center = start + size / 2;
+      const centerOffset = center - parentSize / 2;
+      newConstraint = {
+        type: "center",
+        center: [centerOffset, "px"],
+      };
+      break;
+    }
+    case "scale": {
+      const startRatio = start / parentSize;
+      newConstraint = {
+        type: "scale",
+        startRatio,
+        sizeRatio: constraint.sizeRatio,
+      };
+      break;
+    }
+  }
+
+  style.position = {
+    ...style.position,
+    [axis]: newConstraint,
+  };
+}
+*/
+
+function setPositionStartConstraintType(
+  selectable: Selectable,
+  axis: "x" | "y",
+  type: PositionConstraintType
+) {
+  const style = selectable.style;
+  const constraint = style.position[axis];
+  if (constraint.type === type) {
+    return;
+  }
+
+  const parent = selectable.offsetParent;
+  if (!parent) {
+    // top-level, only "start" is allowed
+    return;
+  }
+
+  const rect = selectable.computedRect;
+  const parentRect = parent.computedRect;
+  const size = rect[axis === "x" ? "width" : "height"];
+  const parentSize = parentRect[axis === "x" ? "width" : "height"];
+  const start =
+    rect[axis === "x" ? "left" : "top"] -
+    parentRect[axis === "x" ? "left" : "top"];
+  let newConstraint = constraint;
+
+  switch (type) {
+    case "start": {
+      newConstraint = {
+        type: "start",
+        start: [start, "px"],
+      };
+      break;
+    }
+    case "end": {
+      newConstraint = {
+        type: "end",
+        end: [parentSize - start - size, "px"],
+      };
+      break;
+    }
+    case "both": {
+      newConstraint = {
+        type: "both",
+        start: [start, "px"],
+        end: [parentSize - start - size, "px"],
+      };
+      break;
+    }
+  }
+
+  style.position = {
+    ...style.position,
+    [axis]: newConstraint,
+  };
 }

@@ -1,5 +1,5 @@
 import { ObservableYMap } from "../utils/ObservableYMap";
-import { Node } from "./Node";
+import { abstractNodeTypes, Node } from "./Node";
 import { CascadedStyle, defaultStyle, IStyle, PartialStyle } from "./Style";
 import * as Y from "yjs";
 import { getOrCreate } from "../state/Collection";
@@ -116,7 +116,7 @@ export class Selectable {
 
   @computed get offsetParent(): Selectable | undefined {
     const parent = this.parent;
-    if (parent?.node.type === "component") {
+    if (parent && abstractNodeTypes.includes(parent.node.type)) {
       return parent.offsetParent;
     }
     return parent;
@@ -126,7 +126,7 @@ export class Selectable {
     const children: Selectable[] = [];
 
     for (const child of this.children) {
-      if (child.originalNode.type === "component") {
+      if (abstractNodeTypes.includes(child.originalNode.type)) {
         children.push(...child.children);
       } else {
         children.push(child);
@@ -497,12 +497,7 @@ export class Selectable {
 
         if (absolute) {
           const bbox = selectable.computedRect;
-          resizeWithBoundingBox(
-            selectable,
-            bbox,
-            { x: true, y: true },
-            this.computedRect.topLeft
-          );
+          resizeWithBoundingBox(selectable, bbox, { x: true, y: true });
         }
       }
     }
