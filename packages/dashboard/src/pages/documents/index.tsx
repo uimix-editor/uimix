@@ -95,6 +95,7 @@ const DocumentCard = ({
           id: string;
           title: string;
           updatedAt: string;
+          thumbnail: string | null;
         };
       }
     | {
@@ -114,7 +115,10 @@ const DocumentCard = ({
         }
         className="block border border-gray-200 rounded-lg hover:bg-gray-50 overflow-hidden"
       >
-        <div className="aspect-video w-full bg-gray-100" />
+        <img
+          className="aspect-video w-full bg-gray-100"
+          src={document.data.thumbnail ?? undefined}
+        />
         <div className="p-4 flex justify-between items-center">
           <div>
             <div className="text-sm text-gray-900 font-medium mb-1">

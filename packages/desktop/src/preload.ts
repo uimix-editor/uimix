@@ -27,6 +27,9 @@ const api: DesktopAPI = {
   deleteLocalDocument: (id: string) => {
     return invoke("deleteLocalDocument", id);
   },
+  updateLocalDocumentThumbnail: (id: string, pngData: Uint8Array) => {
+    return invoke("updateLocalDocumentThumbnail", id, pngData);
+  },
   getLocalDocumentData: (id: string) => {
     return invoke("getLocalDocumentData", id);
   },

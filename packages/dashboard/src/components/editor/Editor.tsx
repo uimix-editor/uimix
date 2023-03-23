@@ -54,6 +54,23 @@ class Connection extends TypedEmitter<{
           });
           return url;
         },
+        updateThumbnail: async (pngData) => {
+          const { uploadURL, url } =
+            await dynamicTrpc.image.getDocumentThumbnailUploadURL.query({
+              documentId,
+            });
+          await fetch(uploadURL, {
+            method: "PUT",
+            headers: {
+              "Content-Type": "image/png",
+            },
+            body: pngData,
+          });
+          await dynamicTrpc.document.update.mutate({
+            id: documentId,
+            thumbnail: url,
+          });
+        },
       }
     );
 

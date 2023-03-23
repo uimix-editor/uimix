@@ -11,4 +11,5 @@ export interface IEditorToRootRPCHandler {
     contentType: string,
     data: Uint8Array
   ): Promise<string>;
+  updateThumbnail(pngData: Uint8Array): Promise<void>;
 }

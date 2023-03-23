@@ -69,6 +69,7 @@ model Document {
   owner     User     @relation(fields: [ownerId], references: [id], onDelete: Cascade)
   ownerId   String
   data      Bytes?
+  thumbnail String?
 
   @@index([ownerId])
 }

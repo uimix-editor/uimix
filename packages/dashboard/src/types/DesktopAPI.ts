@@ -8,6 +8,7 @@ export interface LocalDocument {
   path: string;
   exists: boolean;
   updatedAt: string;
+  thumbnail?: string;
 }
 
 export interface DesktopAPI {
@@ -18,6 +19,7 @@ export interface DesktopAPI {
   createLocalDocument(): Promise<LocalDocument | undefined>;
   addExistingLocalDocument(): Promise<LocalDocument | undefined>;
   deleteLocalDocument(id: string): Promise<void>;
+  updateLocalDocumentThumbnail(id: string, pngData: Uint8Array): Promise<void>;
 
   getLocalDocumentData(id: string): Promise<ProjectJSON>;
   setLocalDocumentData(id: string, data: ProjectJSON): Promise<void>;

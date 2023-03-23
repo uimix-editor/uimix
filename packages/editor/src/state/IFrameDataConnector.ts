@@ -6,24 +6,25 @@ import { ProjectState } from "./ProjectState";
 import { action } from "mobx";
 import { IEditorToRootRPCHandler, IRootToEditorRPCHandler } from "./IFrameRPC";
 import { throttle } from "lodash-es";
+import { ThumbnailTakerHost } from "./ThumbnailTakerHost";
 
 export class IFrameDataConnector {
   constructor(state: ProjectState) {
     this.state = state;
+    this.updates.push(Y.encodeStateAsUpdate(state.doc));
+
     this.state.doc.on("update", (data: Uint8Array) => {
       this.updates.push(data);
       this.sendUpdate();
     });
 
-    queueMicrotask(() => {
-      this.state.project.imageManager.uploadImage = async (
-        hash: string,
-        contentType: string,
-        data: Uint8Array
-      ) => {
-        return this.rpc.remote.uploadImage(hash, contentType, data);
-      };
-    });
+    this.state.project.imageManager.uploadImage = async (
+      hash: string,
+      contentType: string,
+      data: Uint8Array
+    ) => {
+      return this.rpc.remote.uploadImage(hash, contentType, data);
+    };
 
     this.rpc = new RPC(parentWindowTarget(), {
       sync: action((data: Uint8Array) => {
@@ -50,6 +51,10 @@ export class IFrameDataConnector {
         }
         state.undoManager.clear();
       }),
+    });
+
+    new ThumbnailTakerHost(state.project, (pngData) => {
+      void this.rpc.remote.updateThumbnail(pngData);
     });
 
     void this.rpc.remote.ready();

@@ -88,6 +88,9 @@ handleIPC({
   deleteLocalDocument: async (id) => {
     return localDocumentRepository.deleteLocalDocument(id);
   },
+  updateLocalDocumentThumbnail: async (id, pngData) => {
+    localDocumentRepository.updateLocalDocumentThumbnail(id, pngData);
+  },
   getLocalDocumentData: async (id) => {
     return localDocumentRepository.getLocalDocumentData(id);
   },

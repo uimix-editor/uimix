@@ -5,11 +5,9 @@ import { Project } from "../models/Project";
 import { Selectable } from "../models/Selectable";
 import { Node } from "../models/Node";
 import { getIncrementalUniqueName } from "../utils/Name";
-import { IFrameDataConnector } from "./IFrameDataConnector";
 
 export class ProjectState {
   constructor() {
-    new IFrameDataConnector(this);
     this.project = new Project(this.doc);
     this.undoManager = this.project.createUndoManager();
     makeObservable(this);
