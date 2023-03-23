@@ -9,10 +9,10 @@ import { IFrameDataConnector } from "./IFrameDataConnector";
 
 export class ProjectState {
   constructor() {
-    new IFrameDataConnector(this);
     this.project = new Project(this.doc);
     this.undoManager = this.project.createUndoManager();
     makeObservable(this);
+    new IFrameDataConnector(this);
   }
 
   loadJSON(projectJSON: ProjectJSON) {

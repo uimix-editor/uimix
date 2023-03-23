@@ -10,6 +10,8 @@ import { throttle } from "lodash-es";
 export class IFrameDataConnector {
   constructor(state: ProjectState) {
     this.state = state;
+    this.updates.push(Y.encodeStateAsUpdate(state.doc));
+
     this.state.doc.on("update", (data: Uint8Array) => {
       this.updates.push(data);
       this.sendUpdate();
