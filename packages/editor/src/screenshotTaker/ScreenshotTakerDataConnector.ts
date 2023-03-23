@@ -3,12 +3,13 @@ import { generateExampleNodes } from "../models/generateExampleNodes";
 import { parentWindowTarget } from "@uimix/typed-rpc/browser";
 import { RPC } from "@uimix/typed-rpc";
 import { action } from "mobx";
-import { throttle } from "lodash-es";
+import { debounce, throttle } from "lodash-es";
 import { ProjectState } from "../state/ProjectState";
 import {
   IRootToScreenshotTakerRPC,
   IScreenshotTakerToRootRPC,
 } from "./ScreenshotTakerRPC";
+import { takeScreenshot } from "./takeScreenshot";
 
 export class ScreenshotDataConnector {
   constructor(state: ProjectState) {
@@ -20,6 +21,7 @@ export class ScreenshotDataConnector {
           "screenshot taker sync",
           this.state.project.pages.all.length
         );
+        this.takeScreenshot();
       }),
     });
 
@@ -28,4 +30,8 @@ export class ScreenshotDataConnector {
 
   private state: ProjectState;
   private rpc: RPC<IScreenshotTakerToRootRPC, IRootToScreenshotTakerRPC>;
+
+  takeScreenshot = debounce(() => {
+    takeScreenshot(this.state.project);
+  }, 1000);
 }
