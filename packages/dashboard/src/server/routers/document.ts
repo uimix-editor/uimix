@@ -10,6 +10,7 @@ const selectKeys = {
   ownerId: true,
   updatedAt: true,
   createdAt: true,
+  thumbnail: true,
 } as const;
 
 export const documentRouter = router({
