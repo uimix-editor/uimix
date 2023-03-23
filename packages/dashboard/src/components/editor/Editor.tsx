@@ -14,7 +14,6 @@ import Link from "next/link";
 import { DoubleClickToEdit } from "../DoubleClickToEdit";
 import { toastController } from "../toast/ToastController";
 import { LoadingErrorOverlay } from "./LoadingErrorOverlay";
-import { createId } from "@paralleldrive/cuid2";
 
 class Connection extends TypedEmitter<{
   readyToShow(): void;
@@ -56,14 +55,10 @@ class Connection extends TypedEmitter<{
           return url;
         },
         updateThumbnail: async (pngData) => {
-          const hash = createId();
-
-          const { uploadURL, url } = await dynamicTrpc.image.getUploadURL.query(
-            {
-              hash,
-              contentType: "image/png",
-            }
-          );
+          const { uploadURL, url } =
+            await dynamicTrpc.image.getDocumentThumbnailUploadURL.query({
+              documentId,
+            });
           await fetch(uploadURL, {
             method: "PUT",
             headers: {
