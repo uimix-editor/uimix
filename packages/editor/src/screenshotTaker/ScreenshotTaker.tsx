@@ -2,6 +2,7 @@ import { state } from "./State";
 import { Node } from "../models/Node";
 import { observer } from "mobx-react-lite";
 import { NodeRenderer } from "../views/viewport/renderer/NodeRenderer";
+import { ForeignComponentManager } from "../models/ForeignComponentManager";
 
 export const ScreenshotTaker: React.FC = observer(() => {
   const page: Node | undefined = state.project.pages.all[0];
@@ -9,7 +10,13 @@ export const ScreenshotTaker: React.FC = observer(() => {
   return (
     <div>
       {page?.selectable.children.map((child) => {
-        return <NodeRenderer key={child.id} selectable={child} />;
+        return (
+          <NodeRenderer
+            key={child.id}
+            selectable={child}
+            foreignComponentManager={ForeignComponentManager.global!}
+          />
+        );
       })}
     </div>
   );
