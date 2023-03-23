@@ -173,13 +173,7 @@ export const DimensionsPane: React.FC = observer(function DimensionPane() {
             }
             placeholder={(s) => s.computedOffsetTop}
             set={(s, value) => {
-              s.style.position = {
-                ...s.style.position,
-                y: {
-                  type: "start",
-                  start: [value?.value ?? 0, "px"],
-                },
-              };
+              setPositionStartConstraintValue(s, "y", value?.value ?? 0);
             }}
           />
           <InspectorNumberInput
@@ -233,13 +227,7 @@ export const DimensionsPane: React.FC = observer(function DimensionPane() {
                 : undefined
             }
             set={(s, value) => {
-              s.style.position = {
-                ...s.style.position,
-                x: {
-                  type: "start",
-                  start: [value?.value ?? 0, "px"],
-                },
-              };
+              setPositionStartConstraintValue(s, "x", value?.value ?? 0);
             }}
           />
           <InspectorAnchorEdit className="col-start-2 row-start-2" />
@@ -365,4 +353,82 @@ function setSizeConstraintType(
       };
       break;
   }
+}
+
+function setPositionStartConstraintValue(
+  selectable: Selectable,
+  axis: "x" | "y",
+  start: number
+) {
+  const { style } = selectable;
+  const parent = selectable.offsetParent;
+  if (!parent) {
+    // top-level
+
+    const newConstraint = {
+      type: "start",
+      start: [start, "px"],
+    };
+    style.position = {
+      ...style.position,
+      [axis]: newConstraint,
+    };
+    return;
+  }
+
+  const constraint = style.position[axis];
+  const computedRect = selectable.computedRect;
+  const parentRect = parent.computedRect;
+  const size = computedRect[axis === "x" ? "width" : "height"];
+  const parentSize = parentRect[axis === "x" ? "width" : "height"];
+
+  let newConstraint = constraint;
+
+  switch (constraint.type) {
+    case "start": {
+      newConstraint = {
+        type: "start",
+        start: [start, "px"],
+      };
+      break;
+    }
+    case "end": {
+      newConstraint = {
+        type: "end",
+        end: [parentSize - start - size, "px"],
+      };
+      break;
+    }
+    case "both": {
+      newConstraint = {
+        type: "both",
+        start: [start, "px"],
+        end: constraint.end,
+      };
+      break;
+    }
+    case "center": {
+      const center = start + size / 2;
+      const centerOffset = center - parentSize / 2;
+      newConstraint = {
+        type: "center",
+        center: [centerOffset, "px"],
+      };
+      break;
+    }
+    case "scale": {
+      const startRatio = start / parentSize;
+      newConstraint = {
+        type: "scale",
+        startRatio,
+        sizeRatio: constraint.sizeRatio,
+      };
+      break;
+    }
+  }
+
+  style.position = {
+    ...style.position,
+    [axis]: newConstraint,
+  };
 }
