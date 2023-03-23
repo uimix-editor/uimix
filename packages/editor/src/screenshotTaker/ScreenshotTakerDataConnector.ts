@@ -31,7 +31,8 @@ export class ScreenshotDataConnector {
   private state: ProjectState;
   private rpc: RPC<IScreenshotTakerToRootRPC, IRootToScreenshotTakerRPC>;
 
-  takeScreenshot = debounce(() => {
-    takeScreenshot(this.state.project);
+  takeScreenshot = debounce(async () => {
+    const result = await takeScreenshot(this.state.project);
+    console.log(result);
   }, 1000);
 }
