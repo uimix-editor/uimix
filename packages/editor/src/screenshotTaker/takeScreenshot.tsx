@@ -17,8 +17,10 @@ export async function takeScreenshot(
   canvas.height = thumbSize.y;
   const ctx = canvas.getContext("2d")!;
 
+  const selectables = firstPage.selectable.offsetChildren;
+
   const contentBBox = Rect.union(
-    ...firstPage.selectable.offsetChildren.map((child) => child.computedRect)
+    ...selectables.map((child) => child.computedRect)
   );
   if (!contentBBox) {
     return;
@@ -30,30 +32,32 @@ export async function takeScreenshot(
     thumbSize.y / contentBBox.height
   );
 
-  for (const selectable of firstPage.selectable.offsetChildren) {
-    const dom = domForSelectable.get(selectable);
-    if (!dom) {
-      return;
-    }
+  await Promise.all(
+    selectables.map(async (selectable) => {
+      const dom = domForSelectable.get(selectable);
+      if (!dom) {
+        return;
+      }
 
-    const domCanvas = await htmlToImage.toCanvas(dom, {
-      skipFonts: true,
-      style: {
-        position: "static",
-      },
-    });
-    if (domCanvas.width === 0 || domCanvas.height === 0) {
-      continue;
-    }
+      const domCanvas = await htmlToImage.toCanvas(dom, {
+        skipFonts: true,
+        style: {
+          position: "static",
+        },
+      });
+      if (domCanvas.width === 0 || domCanvas.height === 0) {
+        return;
+      }
 
-    ctx.drawImage(
-      domCanvas,
-      (selectable.computedRect.left - contentBBox.left) * scale,
-      (selectable.computedRect.top - contentBBox.top) * scale,
-      selectable.computedRect.width * scale,
-      selectable.computedRect.height * scale
-    );
-  }
+      ctx.drawImage(
+        domCanvas,
+        (selectable.computedRect.left - contentBBox.left) * scale,
+        (selectable.computedRect.top - contentBBox.top) * scale,
+        selectable.computedRect.width * scale,
+        selectable.computedRect.height * scale
+      );
+    })
+  );
 
   const blob = await new Promise<Blob>((resolve) => {
     canvas.toBlob((blob) => {
