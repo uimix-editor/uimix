@@ -1,6 +1,6 @@
 import { useContext } from "react";
 import { observer } from "mobx-react-lite";
-import { SizeConstraintType } from "@uimix/node-data";
+import { PositionConstraintType, SizeConstraintType } from "@uimix/node-data";
 import hugContentsIcon from "@seanchas116/design-icons/json/hug-contents.json";
 import fixedSizeIcon from "@seanchas116/design-icons/json/fixed-size.json";
 import fillAreaIcon from "@seanchas116/design-icons/json/fill-area.json";
@@ -18,6 +18,7 @@ import { sameOrMixed } from "../../../utils/Mixed";
 import { InspectorHeading } from "../components/InspectorHeading";
 import { SeparableInput } from "../../../components/SeparableInput";
 import { InspectorCheckBox } from "./inputs/InspectorCheckBox";
+import { action } from "mobx";
 
 const verticalSizeConstraintOptions: ToggleGroupItem<SizeConstraintType>[] = [
   {
@@ -69,12 +70,18 @@ const InspectorAnchorEdit = observer(function InspectorAnchorEdit({
       className={className}
       xValue={typeof xValue === "string" ? xValue : "scale"}
       yValue={typeof yValue === "string" ? yValue : "scale"}
-      onXChange={() => {
-        // TODO
-      }}
-      onYChange={() => {
-        // TODO
-      }}
+      onXChange={action((value) => {
+        for (const selectable of selectables) {
+          setPositionStartConstraintType(selectable, "x", value);
+        }
+        projectState.undoManager.stopCapturing();
+      })}
+      onYChange={action((value) => {
+        for (const selectable of selectables) {
+          setPositionStartConstraintType(selectable, "y", value);
+        }
+        projectState.undoManager.stopCapturing();
+      })}
     />
   );
 });
@@ -377,9 +384,9 @@ function setPositionStartConstraintValue(
   }
 
   const constraint = style.position[axis];
-  const computedRect = selectable.computedRect;
+  const rect = selectable.computedRect;
   const parentRect = parent.computedRect;
-  const size = computedRect[axis === "x" ? "width" : "height"];
+  const size = rect[axis === "x" ? "width" : "height"];
   const parentSize = parentRect[axis === "x" ? "width" : "height"];
 
   let newConstraint = constraint;
@@ -422,6 +429,82 @@ function setPositionStartConstraintValue(
         type: "scale",
         startRatio,
         sizeRatio: constraint.sizeRatio,
+      };
+      break;
+    }
+  }
+
+  style.position = {
+    ...style.position,
+    [axis]: newConstraint,
+  };
+}
+
+function setPositionStartConstraintType(
+  selectable: Selectable,
+  axis: "x" | "y",
+  type: PositionConstraintType
+) {
+  const style = selectable.style;
+  const constraint = style.position[axis];
+  if (constraint.type === type) {
+    return;
+  }
+
+  const parent = selectable.offsetParent;
+  if (!parent) {
+    // top-level, only "start" is allowed
+    return;
+  }
+
+  const rect = selectable.computedRect;
+  const parentRect = parent.computedRect;
+  const size = rect[axis === "x" ? "width" : "height"];
+  const parentSize = parentRect[axis === "x" ? "width" : "height"];
+  const start =
+    rect[axis === "x" ? "left" : "top"] -
+    parentRect[axis === "x" ? "left" : "top"];
+  let newConstraint = constraint;
+
+  switch (type) {
+    case "start": {
+      newConstraint = {
+        type: "start",
+        start: [start, "px"],
+      };
+      break;
+    }
+    case "end": {
+      newConstraint = {
+        type: "end",
+        end: [parentSize - start - size, "px"],
+      };
+      break;
+    }
+    case "both": {
+      newConstraint = {
+        type: "both",
+        start: [start, "px"],
+        end: [parentSize - start - size, "px"],
+      };
+      break;
+    }
+    case "center": {
+      const center = start + size / 2;
+      const centerOffset = center - parentSize / 2;
+      newConstraint = {
+        type: "center",
+        center: [centerOffset, "px"],
+      };
+      break;
+    }
+    case "scale": {
+      const startRatio = start / parentSize;
+      const sizeRatio = size / parentSize;
+      newConstraint = {
+        type: "scale",
+        startRatio,
+        sizeRatio,
       };
       break;
     }
