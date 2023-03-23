@@ -10,7 +10,6 @@ import fixedSizeIcon from "@seanchas116/design-icons/json/fixed-size.json";
 import fillAreaIcon from "@seanchas116/design-icons/json/fill-area.json";
 import radiusIcon from "@seanchas116/design-icons/json/radius.json";
 import separateCornersIcon from "@seanchas116/design-icons/json/separate-corners.json";
-import { AnchorEdit } from "../../../components/AnchorEdit";
 import { InspectorNumberInput } from "./inputs/InspectorNumberInput";
 import { InspectorToggleGroup } from "./inputs/InspectorToggleGroup";
 import { ToggleGroupItem } from "../../../components/ToggleGroup";
@@ -23,6 +22,7 @@ import { InspectorHeading } from "../components/InspectorHeading";
 import { SeparableInput } from "../../../components/SeparableInput";
 import { InspectorCheckBox } from "./inputs/InspectorCheckBox";
 import { action } from "mobx";
+import { SimpleAnchorEdit } from "../../../components/SimpleAnchorEdit";
 
 const verticalSizeConstraintOptions: ToggleGroupItem<SizeConstraintType>[] = [
   {
@@ -70,10 +70,10 @@ const InspectorAnchorEdit = observer(function InspectorAnchorEdit({
   const yValue = sameOrMixed(selectables.map((s) => s.style.position.y.type));
 
   return (
-    <AnchorEdit
+    <SimpleAnchorEdit
       className={className}
-      xValue={typeof xValue === "string" ? xValue : "scale"}
-      yValue={typeof yValue === "string" ? yValue : "scale"}
+      xValue={typeof xValue === "string" ? xValue : "start"}
+      yValue={typeof yValue === "string" ? yValue : "start"}
       onXChange={action((value) => {
         for (const selectable of selectables) {
           setPositionStartConstraintType(selectable, "x", value);
@@ -520,25 +520,6 @@ function setPositionStartConstraintType(
         type: "both",
         start: [start, "px"],
         end: [parentSize - start - size, "px"],
-      };
-      break;
-    }
-    case "center": {
-      const center = start + size / 2;
-      const centerOffset = center - parentSize / 2;
-      newConstraint = {
-        type: "center",
-        center: [centerOffset, "px"],
-      };
-      break;
-    }
-    case "scale": {
-      const startRatio = start / parentSize;
-      const sizeRatio = size / parentSize;
-      newConstraint = {
-        type: "scale",
-        startRatio,
-        sizeRatio,
       };
       break;
     }

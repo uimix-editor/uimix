@@ -1,5 +1,5 @@
 import { Selectable } from "../models/Selectable";
-import { Rect, Vec2 } from "paintvec";
+import { Rect } from "paintvec";
 
 function setPositionConstraintValue(
   selectable: Selectable,
@@ -38,24 +38,6 @@ function setPositionConstraintValue(
         type: "both",
         start: [start, "px"],
         end: constraint.end,
-      };
-      break;
-    }
-    case "center": {
-      const center = start + size / 2;
-      const centerOffset = center - parentSize / 2;
-      newConstraint = {
-        type: "center",
-        center: [centerOffset, "px"],
-      };
-      break;
-    }
-    case "scale": {
-      const startRatio = start / parentSize;
-      newConstraint = {
-        type: "scale",
-        startRatio,
-        sizeRatio: constraint.sizeRatio,
       };
       break;
     }

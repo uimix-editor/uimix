@@ -15,48 +15,18 @@ export function buildNodeCSS(
   cssStyle.position = cssPosition;
   if (cssPosition === "absolute") {
     const position = style.position;
-
-    if ("center" in position.x) {
-      cssStyle.left = `calc(50% + ${position.x.center.join("")})`;
+    if ("start" in position.x) {
+      cssStyle.left = position.x.start.join("");
     }
-    if (position.x.type === "scale") {
-      cssStyle.left = `${position.x.startRatio * 100}%`;
-      cssStyle.right = `${
-        (1 - position.x.sizeRatio - position.x.startRatio) * 100
-      }%`;
-    } else if (position.x.type === "center") {
-      cssStyle.left = `calc(50% + ${position.x.center.join("")})`;
-    } else {
-      if ("start" in position.x) {
-        cssStyle.left = position.x.start.join("");
-      }
-      if ("end" in position.x) {
-        cssStyle.right = position.x.end.join("");
-      }
+    if ("end" in position.x) {
+      cssStyle.right = position.x.end.join("");
     }
 
-    if (position.y.type === "scale") {
-      cssStyle.top = `${position.y.startRatio * 100}%`;
-      cssStyle.bottom = `${
-        (1 - position.y.sizeRatio - position.y.startRatio) * 100
-      }%`;
-    } else if (position.y.type === "center") {
-      cssStyle.top = `calc(50% + ${position.y.center.join("")})`;
-    } else {
-      if ("start" in position.y) {
-        cssStyle.top = position.y.start.join("");
-      }
-      if ("end" in position.y) {
-        cssStyle.bottom = position.y.end.join("");
-      }
+    if ("start" in position.y) {
+      cssStyle.top = position.y.start.join("");
     }
-
-    if (position.x.type === "center" && position.y.type === "center") {
-      cssStyle.transform = `translate(-50%, -50%)`;
-    } else if (position.x.type === "center") {
-      cssStyle.transform = `translateX(-50%)`;
-    } else if (position.y.type === "center") {
-      cssStyle.transform = `translateY(-50%)`;
+    if ("end" in position.y) {
+      cssStyle.bottom = position.y.end.join("");
     }
   }
 

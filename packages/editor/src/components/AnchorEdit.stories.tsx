@@ -1,6 +1,5 @@
 import React, { useState } from "react";
-import { PositionConstraintType } from "@uimix/node-data";
-import { AnchorEdit } from "./AnchorEdit";
+import { AnchorEdit, AnchorType } from "./AnchorEdit";
 
 export default {
   title: "AnchorEdit",
@@ -8,8 +7,8 @@ export default {
 };
 
 export const Basic: React.FC = () => {
-  const [xValue, setXValue] = useState<PositionConstraintType>("start");
-  const [yValue, setYValue] = useState<PositionConstraintType>("start");
+  const [xValue, setXValue] = useState<AnchorType>("start");
+  const [yValue, setYValue] = useState<AnchorType>("start");
 
   return (
     <AnchorEdit

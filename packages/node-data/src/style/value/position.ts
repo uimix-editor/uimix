@@ -7,10 +7,6 @@ export const PositionConstraint = z.union([
     start: PxValue,
   }),
   z.object({
-    type: z.literal("center"),
-    center: PxValue,
-  }),
-  z.object({
     type: z.literal("end"),
     end: PxValue,
   }),
@@ -19,11 +15,15 @@ export const PositionConstraint = z.union([
     start: PxValue,
     end: PxValue,
   }),
-  z.object({
-    type: z.literal("scale"),
-    startRatio: z.number(),
-    sizeRatio: z.number(),
-  }),
+  // z.object({
+  //   type: z.literal("center"),
+  //   center: PxValue,
+  // }),
+  // z.object({
+  //   type: z.literal("scale"),
+  //   startRatio: z.number(),
+  //   sizeRatio: z.number(),
+  // }),
 ]);
 export type PositionConstraint = z.infer<typeof PositionConstraint>;
 
