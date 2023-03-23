@@ -5,7 +5,7 @@ import { ForeignComponentManager } from "../models/ForeignComponentManager";
 import { projectState } from "../state/ProjectState";
 import { assertNonNull } from "../utils/Assert";
 
-export const ScreenshotTaker: React.FC = observer(() => {
+export const ThumbnailTaker: React.FC = observer(() => {
   const page: Node | undefined = projectState.project.pages.all[0];
   const foreignComponentManager = assertNonNull(ForeignComponentManager.global);
 

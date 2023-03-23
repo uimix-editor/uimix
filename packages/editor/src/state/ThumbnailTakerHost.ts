@@ -3,21 +3,21 @@ import { iframeTarget } from "@uimix/typed-rpc/browser";
 import * as Y from "yjs";
 import { Project } from "../models/Project";
 import {
-  IRootToScreenshotTakerRPC,
-  IScreenshotTakerToRootRPC,
-} from "../screenshotTaker/ScreenshotTakerRPC";
+  IRootToThumbnailTakerRPC,
+  IThumbnailTakerToRootRPC,
+} from "../thumbnailTaker/ThumbnailTakerRPC";
 
-export class ScreenshotTakerHost {
+export class ThumbnailTakerHost {
   constructor(
     project: Project,
     updateScreenshot: (pngData: Uint8Array) => void
   ) {
     const iframe = document.createElement("iframe");
     iframe.setAttribute("sandbox", "allow-scripts");
-    iframe.src = "/screenshot-taker.html";
+    iframe.src = "/thumbnail-taker.html";
     document.body.appendChild(iframe);
 
-    this.rpc = new RPC<IRootToScreenshotTakerRPC, IScreenshotTakerToRootRPC>(
+    this.rpc = new RPC<IRootToThumbnailTakerRPC, IThumbnailTakerToRootRPC>(
       iframeTarget(iframe),
       {
         ready: async () => {
@@ -34,5 +34,5 @@ export class ScreenshotTakerHost {
     );
   }
 
-  rpc: RPC<IRootToScreenshotTakerRPC, IScreenshotTakerToRootRPC>;
+  rpc: RPC<IRootToThumbnailTakerRPC, IThumbnailTakerToRootRPC>;
 }

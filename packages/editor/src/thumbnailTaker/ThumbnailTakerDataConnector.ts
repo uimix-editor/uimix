@@ -5,18 +5,18 @@ import { action } from "mobx";
 import { debounce } from "lodash-es";
 import { ProjectState } from "../state/ProjectState";
 import {
-  IRootToScreenshotTakerRPC,
-  IScreenshotTakerToRootRPC,
-} from "./ScreenshotTakerRPC";
-import { takeScreenshot } from "./takeScreenshot";
+  IRootToThumbnailTakerRPC,
+  IThumbnailTakerToRootRPC,
+} from "./ThumbnailTakerRPC";
+import { takeThumbnail } from "./takeThumbnail";
 
-export class ScreenshotDataConnector {
+export class ThumbnailTakerDataConnector {
   constructor(state: ProjectState) {
     this.state = state;
     this.rpc = new RPC(parentWindowTarget(), {
       sync: action((data: Uint8Array) => {
         Y.applyUpdate(state.doc, data);
-        void this.takeScreenshot();
+        void this.takeThumbnail();
       }),
     });
 
@@ -24,10 +24,10 @@ export class ScreenshotDataConnector {
   }
 
   private state: ProjectState;
-  private rpc: RPC<IScreenshotTakerToRootRPC, IRootToScreenshotTakerRPC>;
+  private rpc: RPC<IThumbnailTakerToRootRPC, IRootToThumbnailTakerRPC>;
 
-  takeScreenshot = debounce(async () => {
-    const result = await takeScreenshot(this.state.project);
+  takeThumbnail = debounce(async () => {
+    const result = await takeThumbnail(this.state.project);
     if (result) {
       await this.rpc.remote.sendScreenshot(result);
       console.log("taken thumbnail");

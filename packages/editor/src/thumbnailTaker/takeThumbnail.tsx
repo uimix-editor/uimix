@@ -4,7 +4,7 @@ import * as htmlToImage from "html-to-image";
 import { Rect, Vec2 } from "paintvec";
 import { assertNonNull } from "../utils/Assert";
 
-export async function takeScreenshot(
+export async function takeThumbnail(
   project: Project
 ): Promise<ArrayBuffer | undefined> {
   const firstPage = project.pages.all[0];

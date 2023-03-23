@@ -6,7 +6,7 @@ import { ProjectState } from "./ProjectState";
 import { action } from "mobx";
 import { IEditorToRootRPCHandler, IRootToEditorRPCHandler } from "./IFrameRPC";
 import { throttle } from "lodash-es";
-import { ScreenshotTakerHost } from "./ScreenshotTakerHost";
+import { ThumbnailTakerHost } from "./ThumbnailTakerHost";
 
 export class IFrameDataConnector {
   constructor(state: ProjectState) {
@@ -53,7 +53,7 @@ export class IFrameDataConnector {
       }),
     });
 
-    new ScreenshotTakerHost(state.project, (pngData) => {
+    new ThumbnailTakerHost(state.project, (pngData) => {
       void this.rpc.remote.updateThumbnail(pngData);
     });
 
