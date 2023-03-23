@@ -17,15 +17,13 @@ export class IFrameDataConnector {
       this.sendUpdate();
     });
 
-    queueMicrotask(() => {
-      this.state.project.imageManager.uploadImage = async (
-        hash: string,
-        contentType: string,
-        data: Uint8Array
-      ) => {
-        return this.rpc.remote.uploadImage(hash, contentType, data);
-      };
-    });
+    this.state.project.imageManager.uploadImage = async (
+      hash: string,
+      contentType: string,
+      data: Uint8Array
+    ) => {
+      return this.rpc.remote.uploadImage(hash, contentType, data);
+    };
 
     this.rpc = new RPC(parentWindowTarget(), {
       sync: action((data: Uint8Array) => {
