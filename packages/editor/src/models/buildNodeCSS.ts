@@ -70,7 +70,7 @@ export function buildNodeCSS(
     } else if (parentStackDirection === "y") {
       cssStyle.alignSelf = "stretch";
     } else {
-      cssStyle.width = "100%";
+      cssStyle.width = "auto";
     }
   }
 
@@ -84,7 +84,7 @@ export function buildNodeCSS(
     } else if (parentStackDirection === "x") {
       cssStyle.alignSelf = "stretch";
     } else {
-      cssStyle.height = "100%";
+      cssStyle.height = "auto";
     }
   }
 
