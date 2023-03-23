@@ -43,13 +43,10 @@ function refToDocument(ref: LocalDocumentRef): LocalDocument {
 
 export class LocalDocumentRepository {
   get documents(): readonly LocalDocumentRef[] {
-    const documents = store.get("documents", []);
-    console.log(documents);
-    return documents;
+    return store.get("documents", []);
   }
 
   set documents(documents: readonly LocalDocumentRef[]) {
-    console.log("set", documents);
     store.set("documents", documents);
   }
 

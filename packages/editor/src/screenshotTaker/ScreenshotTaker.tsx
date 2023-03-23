@@ -3,9 +3,11 @@ import { observer } from "mobx-react-lite";
 import { NodeRenderer } from "../views/viewport/renderer/NodeRenderer";
 import { ForeignComponentManager } from "../models/ForeignComponentManager";
 import { projectState } from "../state/ProjectState";
+import { assertNonNull } from "../utils/Assert";
 
 export const ScreenshotTaker: React.FC = observer(() => {
   const page: Node | undefined = projectState.project.pages.all[0];
+  const foreignComponentManager = assertNonNull(ForeignComponentManager.global);
 
   return (
     <div>
@@ -14,7 +16,7 @@ export const ScreenshotTaker: React.FC = observer(() => {
           <NodeRenderer
             key={child.id}
             selectable={child}
-            foreignComponentManager={ForeignComponentManager.global!}
+            foreignComponentManager={foreignComponentManager}
           />
         );
       })}

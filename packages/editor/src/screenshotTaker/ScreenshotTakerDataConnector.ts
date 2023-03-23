@@ -1,9 +1,8 @@
 import * as Y from "yjs";
-import { generateExampleNodes } from "../models/generateExampleNodes";
 import { parentWindowTarget } from "@uimix/typed-rpc/browser";
 import { RPC } from "@uimix/typed-rpc";
 import { action } from "mobx";
-import { debounce, throttle } from "lodash-es";
+import { debounce } from "lodash-es";
 import { ProjectState } from "../state/ProjectState";
 import {
   IRootToScreenshotTakerRPC,
@@ -17,10 +16,6 @@ export class ScreenshotDataConnector {
     this.rpc = new RPC(parentWindowTarget(), {
       sync: action((data: Uint8Array) => {
         Y.applyUpdate(state.doc, data);
-        console.log(
-          "screenshot taker sync",
-          this.state.project.pages.all.length
-        );
         void this.takeScreenshot();
       }),
     });
@@ -33,9 +28,9 @@ export class ScreenshotDataConnector {
 
   takeScreenshot = debounce(async () => {
     const result = await takeScreenshot(this.state.project);
-    console.log(result);
     if (result) {
       await this.rpc.remote.sendScreenshot(result);
+      console.log("taken thumbnail");
     }
   }, 1000);
 }

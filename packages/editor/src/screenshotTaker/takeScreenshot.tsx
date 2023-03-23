@@ -2,6 +2,7 @@ import { Project } from "../models/Project";
 import { domForSelectable } from "../views/viewport/renderer/NodeRenderer";
 import * as htmlToImage from "html-to-image";
 import { Rect, Vec2 } from "paintvec";
+import { assertNonNull } from "../utils/Assert";
 
 export async function takeScreenshot(
   project: Project
@@ -15,7 +16,7 @@ export async function takeScreenshot(
   const canvas = document.createElement("canvas");
   canvas.width = thumbSize.x;
   canvas.height = thumbSize.y;
-  const ctx = canvas.getContext("2d")!;
+  const ctx = assertNonNull(canvas.getContext("2d"));
 
   const selectables = firstPage.selectable.offsetChildren;
 
@@ -25,7 +26,6 @@ export async function takeScreenshot(
   if (!contentBBox) {
     return;
   }
-  console.log(contentBBox.toString());
 
   const scale = Math.min(
     thumbSize.x / contentBBox.width,
@@ -63,7 +63,7 @@ export async function takeScreenshot(
 
   const blob = await new Promise<Blob>((resolve) => {
     canvas.toBlob((blob) => {
-      resolve(blob!);
+      resolve(assertNonNull(blob));
     });
   });
   return blob.arrayBuffer();
