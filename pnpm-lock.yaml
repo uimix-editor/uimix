@@ -251,6 +251,7 @@ importers:
       dedent: ^0.7.0
       html-react-parser: ^3.0.12
       html-tags: ^3.2.0
+      html-to-image: ^1.11.11
       lodash-es: ^4.17.21
       material-symbols: ^0.5.0
       mobx: ^6.8.0
@@ -307,6 +308,7 @@ importers:
       css-color-names: 1.0.1
       dedent: 0.7.0
       html-react-parser: 3.0.13_react@18.2.0
+      html-to-image: 1.11.11
       lodash-es: 4.17.21
       material-symbols: 0.5.0
       mobx: 6.8.0
@@ -10126,6 +10128,10 @@ packages:
     resolution: {integrity: sha512-vy7ClnArOZwCnqZgvv+ddgHgJiAFXe3Ge9ML5/mBctVJoUoYPCdxVucOywjDARn6CVoh3dRSFdPHy2sX80L0Wg==}
     engines: {node: '>=8'}
     dev: true
+
+  /html-to-image/1.11.11:
+    resolution: {integrity: sha512-9gux8QhvjRO/erSnDPv28noDZcPZmYE7e1vFsBLKLlRlKDSqNJYebj6Qz1TGd5lsRV+X+xYyjCKjuZdABinWjA==}
+    dev: false
 
   /html-void-elements/1.0.5:
     resolution: {integrity: sha512-uE/TxKuyNIcx44cIWnjr/rfIATDH7ZaOMmstu0CwhFG1Dunhlp4OC6/NMbhiwoq5BpW0ubi303qnEk/PZj614w==}
