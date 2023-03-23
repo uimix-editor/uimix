@@ -15,6 +15,9 @@ export class ThumbnailTakerHost {
     const iframe = document.createElement("iframe");
     iframe.setAttribute("sandbox", "allow-scripts");
     iframe.src = "/thumbnail-taker.html";
+    iframe.style.position = "fixed";
+    iframe.style.top = "-10000px";
+    iframe.style.left = "-10000px";
     document.body.appendChild(iframe);
 
     this.rpc = new RPC<IRootToThumbnailTakerRPC, IThumbnailTakerToRootRPC>(
