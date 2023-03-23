@@ -88,7 +88,8 @@ export const documentRouter = router({
     .input(
       z.object({
         id: z.string(),
-        title: z.string(),
+        title: z.string().optional(),
+        thumbnail: z.string().nullable().optional(),
       })
     )
     .mutation(async ({ ctx, input }) => {
@@ -100,6 +101,7 @@ export const documentRouter = router({
         },
         data: {
           title: input.title,
+          thumbnail: input.thumbnail,
         },
       });
     }),
