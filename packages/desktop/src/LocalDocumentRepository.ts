@@ -34,9 +34,8 @@ function refToDocument(ref: LocalDocumentRef): LocalDocument {
   }
 
   return {
-    id: ref.id,
+    ...ref,
     title: path.basename(ref.path, ".uimix"),
-    path: ref.path,
     exists: !!stats,
     updatedAt: (stats?.mtime ?? new Date()).toString(),
   };
@@ -44,10 +43,13 @@ function refToDocument(ref: LocalDocumentRef): LocalDocument {
 
 export class LocalDocumentRepository {
   get documents(): readonly LocalDocumentRef[] {
-    return store.get("documents", []);
+    const documents = store.get("documents", []);
+    console.log(documents);
+    return documents;
   }
 
   set documents(documents: readonly LocalDocumentRef[]) {
+    console.log("set", documents);
     store.set("documents", documents);
   }
 
@@ -146,9 +148,12 @@ export class LocalDocumentRepository {
     if (!document) {
       throw new Error("Document not found");
     }
-    document.thumbnail = `data:image/png;base64,${Buffer.from(pngData).toString(
+    const thumbnail = `data:image/png;base64,${Buffer.from(pngData).toString(
       "base64"
     )}`;
+    this.documents = this.documents.map((doc) =>
+      doc.id === id ? { ...doc, thumbnail } : doc
+    );
   }
 
   getLocalDocumentData(id: string): ProjectJSON {
