@@ -1,6 +1,10 @@
 import { useContext } from "react";
 import { observer } from "mobx-react-lite";
-import { PositionConstraintType, SizeConstraintType } from "@uimix/node-data";
+import {
+  PositionConstraint,
+  PositionConstraintType,
+  SizeConstraintType,
+} from "@uimix/node-data";
 import hugContentsIcon from "@seanchas116/design-icons/json/hug-contents.json";
 import fixedSizeIcon from "@seanchas116/design-icons/json/fixed-size.json";
 import fillAreaIcon from "@seanchas116/design-icons/json/fill-area.json";
@@ -173,20 +177,24 @@ export const DimensionsPane: React.FC = observer(function DimensionPane() {
             icon="T"
             tooltip="Top"
             className="col-start-2 row-start-1"
-            get={(s) =>
-              s.style.position.y.type === "start"
-                ? { value: s.style.position.y.start[0] }
-                : undefined
-            }
+            get={(s) => {
+              const y = s.style.position.y;
+              if ("start" in y) {
+                return { value: y.start[0] };
+              }
+            }}
             placeholder={(s) => s.computedOffsetTop}
             set={(s, value) => {
-              s.style.position = {
-                ...s.style.position,
-                y: {
-                  type: "start",
-                  start: [value?.value ?? 0, "px"],
-                },
-              };
+              const y = s.style.position.y;
+              const newY: PositionConstraint =
+                y.type === "both"
+                  ? {
+                      type: "both",
+                      start: [value?.value ?? 0, "px"],
+                      end: y.end,
+                    }
+                  : { type: "start", start: [value?.value ?? 0, "px"] };
+              s.style.position = { ...s.style.position, y: newY };
             }}
           />
           <InspectorNumberInput
@@ -194,39 +202,47 @@ export const DimensionsPane: React.FC = observer(function DimensionPane() {
             tooltip="Right"
             className="col-start-3 row-start-2"
             placeholder={(s) => s.computedOffsetRight}
-            get={(s) =>
-              s.style.position.x.type === "end"
-                ? { value: s.style.position.x.end[0] }
-                : undefined
-            }
+            get={(s) => {
+              const x = s.style.position.x;
+              if ("end" in x) {
+                return { value: x.end[0] };
+              }
+            }}
             set={(s, value) => {
-              s.style.position = {
-                ...s.style.position,
-                x: {
-                  type: "end",
-                  end: [value?.value ?? 0, "px"],
-                },
-              };
+              const x = s.style.position.x;
+              const newX: PositionConstraint =
+                x.type === "both"
+                  ? {
+                      type: "both",
+                      start: x.start,
+                      end: [value?.value ?? 0, "px"],
+                    }
+                  : { type: "end", end: [value?.value ?? 0, "px"] };
+              s.style.position = { ...s.style.position, x: newX };
             }}
           />
           <InspectorNumberInput
             icon="B"
             tooltip="Bottom"
             className="col-start-2 row-start-3"
-            get={(s) =>
-              s.style.position.y.type === "end"
-                ? { value: s.style.position.y.end[0] }
-                : undefined
-            }
+            get={(s) => {
+              const y = s.style.position.y;
+              if ("end" in y) {
+                return { value: y.end[0] };
+              }
+            }}
             placeholder={(s) => s.computedOffsetBottom}
             set={(s, value) => {
-              s.style.position = {
-                ...s.style.position,
-                y: {
-                  type: "end",
-                  end: [value?.value ?? 0, "px"],
-                },
-              };
+              const y = s.style.position.y;
+              const newY: PositionConstraint =
+                y.type === "both"
+                  ? {
+                      type: "both",
+                      start: y.start,
+                      end: [value?.value ?? 0, "px"],
+                    }
+                  : { type: "end", end: [value?.value ?? 0, "px"] };
+              s.style.position = { ...s.style.position, y: newY };
             }}
           />
           <InspectorNumberInput
@@ -234,19 +250,23 @@ export const DimensionsPane: React.FC = observer(function DimensionPane() {
             tooltip="Left"
             className="col-start-1 row-start-2"
             placeholder={(s) => s.computedOffsetLeft}
-            get={(s) =>
-              s.style.position.x.type === "start"
-                ? { value: s.style.position.x.start[0] }
-                : undefined
-            }
+            get={(s) => {
+              const x = s.style.position.x;
+              if ("start" in x) {
+                return { value: x.start[0] };
+              }
+            }}
             set={(s, value) => {
-              s.style.position = {
-                ...s.style.position,
-                x: {
-                  type: "start",
-                  start: [value?.value ?? 0, "px"],
-                },
-              };
+              const x = s.style.position.x;
+              const newX: PositionConstraint =
+                x.type === "both"
+                  ? {
+                      type: "both",
+                      start: [value?.value ?? 0, "px"],
+                      end: x.end,
+                    }
+                  : { type: "start", start: [value?.value ?? 0, "px"] };
+              s.style.position = { ...s.style.position, x: newX };
             }}
           />
           <InspectorAnchorEdit className="col-start-2 row-start-2" />
