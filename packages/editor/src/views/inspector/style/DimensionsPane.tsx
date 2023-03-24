@@ -458,7 +458,17 @@ const PositionEdit = observer(() => {
 const MarginEdit = observer(() => {
   return (
     <div className="grid grid-cols-3 gap-2 items-center">
-      <AbsoluteToggle />
+      <InspectorToggleGroup
+        get={(s) => (s.style.absolute ? "absolute" : "relative")}
+        items={positionTypeOptions}
+        set={(s, value) => {
+          if (value === "absolute") {
+            s.style.absolute = true;
+          } else if (value === "relative") {
+            s.style.absolute = false;
+          }
+        }}
+      />
       <InspectorNumberInput
         icon={edgeTopIcon}
         tooltip="Margin Top"
