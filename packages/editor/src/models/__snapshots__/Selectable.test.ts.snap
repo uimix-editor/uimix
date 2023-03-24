@@ -266,14 +266,30 @@ exports[`selectablesToProjectJSON > works 1`] = `
         },
       ],
       "height": {
-        "type": "fixed",
+        "max": [
+          60,
+          "px",
+        ],
+        "min": [
+          20,
+          "px",
+        ],
+        "type": "fillContainer",
         "value": [
           50,
           "px",
         ],
       },
       "width": {
-        "type": "fixed",
+        "max": [
+          100,
+          "px",
+        ],
+        "min": [
+          25,
+          "px",
+        ],
+        "type": "fillContainer",
         "value": [
           50,
           "px",
