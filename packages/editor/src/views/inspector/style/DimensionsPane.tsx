@@ -273,6 +273,13 @@ export const DimensionsPane: React.FC = observer(function DimensionPane() {
         </div>
         <div className="flex flex-col gap-2">
           <div className="grid grid-cols-3 gap-2 items-center">
+            <InspectorToggleGroup
+              get={(s) => s.style.width.type}
+              set={(s, value) => {
+                setSizeConstraintType(s, "width", value);
+              }}
+              items={horizontalSizeConstraintOptions}
+            />
             <InspectorNumberInput
               icon="W"
               tooltip="Width"
@@ -289,15 +296,31 @@ export const DimensionsPane: React.FC = observer(function DimensionPane() {
                 setSizeConstraintValue(s, "width", value?.value);
               }}
             />
-            <InspectorToggleGroup
-              get={(s) => s.style.width.type}
-              set={(s, value) => {
-                setSizeConstraintType(s, "width", value);
+            <InspectorNumberInput
+              icon="Max"
+              tooltip="Max Width"
+              get={(s) => {
+                const width = s.style.width;
+                if (width && "value" in width && width.value) {
+                  return {
+                    value: width.value[0],
+                  };
+                }
               }}
-              items={horizontalSizeConstraintOptions}
+              placeholder={(s) => s.computedRect.width}
+              set={(s, value) => {
+                setSizeConstraintValue(s, "width", value?.value);
+              }}
             />
           </div>
           <div className="grid grid-cols-3 gap-2 items-center">
+            <InspectorToggleGroup
+              get={(s) => s.style.height.type}
+              set={(s, value) => {
+                setSizeConstraintType(s, "height", value);
+              }}
+              items={verticalSizeConstraintOptions}
+            />
             <InspectorNumberInput
               icon="H"
               tooltip="Height"
@@ -314,12 +337,21 @@ export const DimensionsPane: React.FC = observer(function DimensionPane() {
                 setSizeConstraintValue(s, "height", value?.value);
               }}
             />
-            <InspectorToggleGroup
-              get={(s) => s.style.height.type}
-              set={(s, value) => {
-                setSizeConstraintType(s, "height", value);
+            <InspectorNumberInput
+              icon="Max"
+              tooltip="Max Height"
+              get={(s) => {
+                const height = s.style.height;
+                if (height && "value" in height && height.value) {
+                  return {
+                    value: height.value[0],
+                  };
+                }
               }}
-              items={verticalSizeConstraintOptions}
+              placeholder={(s) => s.computedRect.height}
+              set={(s, value) => {
+                setSizeConstraintValue(s, "height", value?.value);
+              }}
             />
           </div>
         </div>
