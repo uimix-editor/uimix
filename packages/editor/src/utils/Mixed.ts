@@ -17,3 +17,11 @@ export function sameOrMixed<T>(values: readonly T[]): T | Mixed | undefined {
   }
   return first;
 }
+
+export function sameOrNone<T>(values: readonly T[]): T | undefined {
+  const result = sameOrMixed(values);
+  if (result === Mixed) {
+    return;
+  }
+  return result;
+}
