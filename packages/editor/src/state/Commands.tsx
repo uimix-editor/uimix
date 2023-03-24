@@ -18,6 +18,7 @@ import { PageHierarchyEntry } from "../models/Project";
 import { posix as path } from "path-browserify";
 import { generateExampleNodes } from "../models/generateExampleNodes";
 import { dialogState } from "./DialogState";
+import { scrollState } from "./ScrollState";
 
 class Commands {
   @computed get canUndo(): boolean {
@@ -174,14 +175,17 @@ class Commands {
   readonly undoCommand: MenuCommandDef = {
     type: "command",
     text: "Undo",
-    shortcut: new Shortcut(["Mod"], "KeyZ"),
+    shortcuts: [new Shortcut(["Mod"], "KeyZ")],
     disabled: !this.canUndo,
     onClick: action(() => this.undo()),
   };
   readonly redoCommand: MenuCommandDef = {
     type: "command",
     text: "Redo",
-    shortcut: new Shortcut(["Shift", "Mod"], "KeyZ"), // TODO: Mod+Y in Windows?
+    shortcuts: [
+      new Shortcut(["Shift", "Mod"], "KeyZ"),
+      new Shortcut(["Mod"], "KeyY"),
+    ],
     disabled: !this.canRedo,
     onClick: action(() => this.redo()),
   };
@@ -189,7 +193,7 @@ class Commands {
   readonly cutCommand: MenuCommandDef = {
     type: "command",
     text: "Cut",
-    shortcut: new Shortcut(["Mod"], "KeyX"),
+    shortcuts: [new Shortcut(["Mod"], "KeyX")],
     onClick: action(() => {
       void this.cut();
     }),
@@ -197,7 +201,7 @@ class Commands {
   readonly copyCommand: MenuCommandDef = {
     type: "command",
     text: "Copy",
-    shortcut: new Shortcut(["Mod"], "KeyC"),
+    shortcuts: [new Shortcut(["Mod"], "KeyC")],
     onClick: action(() => {
       void this.copy();
     }),
@@ -205,7 +209,7 @@ class Commands {
   readonly pasteCommand: MenuCommandDef = {
     type: "command",
     text: "Paste",
-    shortcut: new Shortcut(["Mod"], "KeyV"),
+    shortcuts: [new Shortcut(["Mod"], "KeyV")],
     onClick: action(() => {
       void this.paste();
     }),
@@ -221,7 +225,7 @@ class Commands {
   readonly insertFrameCommand: MenuCommandDef = {
     type: "command",
     text: "Frame",
-    shortcut: new Shortcut([], "KeyF"),
+    shortcuts: [new Shortcut([], "KeyF")],
     onClick: action(() => {
       this.insertFrame();
     }),
@@ -229,7 +233,7 @@ class Commands {
   readonly insertTextCommand: MenuCommandDef = {
     type: "command",
     text: "Text",
-    shortcut: new Shortcut([], "KeyT"),
+    shortcuts: [new Shortcut([], "KeyT")],
     onClick: action(() => {
       this.insertText();
     }),
@@ -245,7 +249,7 @@ class Commands {
   readonly createComponentCommand: MenuCommandDef = {
     type: "command",
     text: "Create Component",
-    shortcut: new Shortcut(["Mod", "Alt"], "KeyK"),
+    shortcuts: [new Shortcut(["Mod", "Alt"], "KeyK")],
     onClick: action(() => {
       this.createComponent();
     }),
@@ -253,7 +257,7 @@ class Commands {
   readonly autoLayoutCommand: MenuCommandDef = {
     type: "command",
     text: "Auto Layout",
-    shortcut: new Shortcut(["Shift"], "KeyA"),
+    shortcuts: [new Shortcut(["Shift"], "KeyA")],
     onClick: action(() => {
       this.autoLayout();
     }),
@@ -268,7 +272,7 @@ class Commands {
   readonly groupCommand: MenuCommandDef = {
     type: "command",
     text: "Group",
-    shortcut: new Shortcut(["Mod"], "KeyG"),
+    shortcuts: [new Shortcut(["Mod"], "KeyG")],
     onClick: action(() => {
       this.group();
     }),
@@ -276,9 +280,50 @@ class Commands {
   readonly ungroupCommand: MenuCommandDef = {
     type: "command",
     text: "Ungroup",
-    shortcut: new Shortcut(["Shift", "Mod"], "KeyG"),
+    shortcuts: [new Shortcut(["Shift", "Mod"], "KeyG")],
     onClick: action(() => {
       this.ungroup();
+    }),
+  };
+  readonly zoomInCommand: MenuCommandDef = {
+    type: "command",
+    text: "Zoom In",
+    shortcuts: [
+      new Shortcut([], "Equal"),
+      new Shortcut([], "NumpadAdd"),
+      new Shortcut(["Mod"], "Equal"),
+      new Shortcut(["Mod"], "NumpadAdd"),
+      new Shortcut(["Shift"], "Equal"),
+      new Shortcut(["Shift", "Mod"], "Equal"),
+    ],
+    onClick: action(() => {
+      scrollState.zoomIn();
+    }),
+  };
+  readonly zoomOutCommand: MenuCommandDef = {
+    type: "command",
+    text: "Zoom Out",
+    shortcuts: [
+      new Shortcut([], "Minus"),
+      new Shortcut([], "NumpadSubtract"),
+      new Shortcut(["Mod"], "Minus"),
+      new Shortcut(["Mod"], "NumpadSubtract"),
+      new Shortcut(["Shift"], "Minus"),
+      new Shortcut(["Shift", "Mod"], "Minus"),
+    ],
+    onClick: action(() => {
+      scrollState.zoomOut();
+    }),
+  };
+  readonly resetZoomCommand: MenuCommandDef = {
+    type: "command",
+    text: "Reset Zoom",
+    shortcuts: [
+      new Shortcut(["Mod"], "Digit0"),
+      new Shortcut(["Mod"], "Numpad0"),
+    ],
+    onClick: action(() => {
+      scrollState.resetZoom();
     }),
   };
 
@@ -335,6 +380,15 @@ class Commands {
           { type: "separator" },
           this.autoLayoutCommand,
           this.removeLayoutCommand,
+        ],
+      },
+      {
+        type: "submenu",
+        text: "View",
+        children: [
+          this.zoomInCommand,
+          this.zoomOutCommand,
+          this.resetZoomCommand,
         ],
       },
     ];

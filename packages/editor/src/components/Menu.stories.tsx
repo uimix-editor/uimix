@@ -35,17 +35,17 @@ function useExampleMenu(): MenuItemDef[] {
     {
       type: "command",
       text: "New Tab",
-      shortcut: new Shortcut(["Mod"], "KeyT"),
+      shortcuts: [new Shortcut(["Mod"], "KeyT")],
     },
     {
       type: "command",
       text: "New Window",
-      shortcut: new Shortcut(["Mod"], "KeyN"),
+      shortcuts: [new Shortcut(["Mod"], "KeyN")],
     },
     {
       type: "command",
       text: "New Private Window",
-      shortcut: new Shortcut(["Shift", "Mod"], "KeyN"),
+      shortcuts: [new Shortcut(["Shift", "Mod"], "KeyN")],
       disabled: true,
     },
     {
@@ -55,7 +55,7 @@ function useExampleMenu(): MenuItemDef[] {
         {
           type: "command",
           text: "Save Page As...",
-          shortcut: new Shortcut(["Mod"], "KeyS"),
+          shortcuts: [new Shortcut(["Mod"], "KeyS")],
         },
         {
           type: "command",
@@ -80,7 +80,7 @@ function useExampleMenu(): MenuItemDef[] {
     {
       type: "command",
       text: "Show Bookmarks",
-      shortcut: new Shortcut(["Mod"], "KeyB"),
+      shortcuts: [new Shortcut(["Mod"], "KeyB")],
       checked: showsBookmarks,
       onClick: () => {
         setShowsBookmarks(!showsBookmarks);

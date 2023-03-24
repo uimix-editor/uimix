@@ -53,8 +53,10 @@ function MenuItem({ def }: { def: MenuItemDef }) {
             </div>
           )}
           {def.text}
-          {def.shortcut && (
-            <span className={shortcutClassNames}>{def.shortcut.toText()}</span>
+          {!!def.shortcuts?.length && (
+            <span className={shortcutClassNames}>
+              {def.shortcuts[0].toText()}
+            </span>
           )}
         </AriakitMenu.MenuItem>
       );
