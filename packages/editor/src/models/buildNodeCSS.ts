@@ -30,9 +30,10 @@ export function buildNodeCSS(
     }
   }
 
-  if (style.width.type === "fixed") {
-    cssStyle.width = style.width.value.join("");
-  } else if (style.width.type === "hugContents") {
+  const width = style.width;
+  if (width.type === "fixed") {
+    cssStyle.width = width.value.join("");
+  } else if (width.type === "hugContents") {
     cssStyle.width = "max-content";
   } else {
     if (parentStackDirection === "x") {
@@ -42,11 +43,14 @@ export function buildNodeCSS(
     } else {
       cssStyle.width = "auto";
     }
+    cssStyle.minWidth = width.min?.join("");
+    cssStyle.maxWidth = width.max?.join("");
   }
 
-  if (style.height.type === "fixed") {
-    cssStyle.height = style.height.value.join("");
-  } else if (style.height.type === "hugContents") {
+  const height = style.height;
+  if (height.type === "fixed") {
+    cssStyle.height = height.value.join("");
+  } else if (height.type === "hugContents") {
     cssStyle.height = "max-content";
   } else {
     if (parentStackDirection === "y") {
@@ -56,6 +60,8 @@ export function buildNodeCSS(
     } else {
       cssStyle.height = "auto";
     }
+    cssStyle.minHeight = height.min?.join("");
+    cssStyle.maxHeight = height.max?.join("");
   }
 
   cssStyle.opacity = style.opacity;

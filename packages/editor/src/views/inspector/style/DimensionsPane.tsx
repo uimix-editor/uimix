@@ -158,8 +158,11 @@ function RadiusEdit() {
 }
 
 const WidthEdit = observer(function WidthEdit() {
+  const targets = useContext(InspectorTargetContext);
+  const constraint = sameOrMixed(targets.map((s) => s.style.width.type));
+
   return (
-    <div className="grid grid-cols-3 gap-2 items-center">
+    <div className="grid grid-cols-3 gap-2 items-center h-7">
       <InspectorToggleGroup
         get={(s) => s.style.width.type}
         set={(s, value) => {
@@ -167,43 +170,79 @@ const WidthEdit = observer(function WidthEdit() {
         }}
         items={horizontalSizeConstraintOptions}
       />
-      <InspectorNumberInput
-        icon="W"
-        tooltip="Width"
-        get={(s) => {
-          const width = s.style.width;
-          if (width && "value" in width && width.value) {
-            return {
-              value: width.value[0],
-            };
-          }
-        }}
-        placeholder={(s) => s.computedRect.width}
-        set={(s, value) => {
-          setSizeConstraintValue(s, "width", value?.value);
-        }}
-      />
-      <InspectorNumberInput
-        icon="Max"
-        tooltip="Max Width"
-        get={(s) => {
-          const width = s.style.width;
-          if (width && "value" in width && width.value) {
-            return {
-              value: width.value[0],
-            };
-          }
-        }}
-        placeholder={(s) => s.computedRect.width}
-        set={(s, value) => {
-          setSizeConstraintValue(s, "width", value?.value);
-        }}
-      />
+      {constraint === "fixed" && (
+        <InspectorNumberInput
+          icon="W"
+          tooltip="Width"
+          get={(s) => {
+            const width = s.style.width;
+            if (width && "value" in width && width.value) {
+              return {
+                value: width.value[0],
+              };
+            }
+          }}
+          placeholder={(s) => s.computedRect.width}
+          set={(s, value) => {
+            setSizeConstraintValue(s, "width", value?.value);
+          }}
+        />
+      )}
+      {constraint === "fillContainer" && (
+        <>
+          <InspectorNumberInput
+            icon="Min"
+            tooltip="Min Width"
+            get={(s) => {
+              const width = s.style.width;
+              if (width.type === "fillContainer" && width.min) {
+                return {
+                  value: width.min[0],
+                };
+              }
+            }}
+            placeholder={() => 0}
+            set={(s, value) => {
+              const width = s.style.width;
+              if (width.type === "fillContainer") {
+                s.style.width = {
+                  ...width,
+                  min: value?.value ? [value.value, "px"] : undefined,
+                };
+              }
+            }}
+          />
+          <InspectorNumberInput
+            icon="Max"
+            tooltip="Max Width"
+            get={(s) => {
+              const width = s.style.width;
+              if (width.type === "fillContainer" && width.max) {
+                return {
+                  value: width.max[0],
+                };
+              }
+            }}
+            set={(s, value) => {
+              const width = s.style.width;
+              if (width.type === "fillContainer") {
+                s.style.width = {
+                  ...width,
+                  max: value?.value ? [value.value, "px"] : undefined,
+                };
+              }
+            }}
+          />
+        </>
+      )}
     </div>
   );
 });
 
 const HeightEdit: React.FC = observer(function HeightEdit() {
+  const targets = useContext(InspectorTargetContext);
+  const constraint = sameOrMixed(targets.map((s) => s.style.height.type));
+
   return (
     <div className="grid grid-cols-3 gap-2 items-center">
       <InspectorToggleGroup
@@ -213,38 +252,71 @@ const HeightEdit: React.FC = observer(function HeightEdit() {
         }}
         items={verticalSizeConstraintOptions}
       />
-      <InspectorNumberInput
-        icon="H"
-        tooltip="Height"
-        get={(s) => {
-          const height = s.style.height;
-          if (height && "value" in height && height.value) {
-            return {
-              value: height.value[0],
-            };
-          }
-        }}
-        placeholder={(s) => s.computedRect.height}
-        set={(s, value) => {
-          setSizeConstraintValue(s, "height", value?.value);
-        }}
-      />
-      <InspectorNumberInput
-        icon="Max"
-        tooltip="Max Height"
-        get={(s) => {
-          const height = s.style.height;
-          if (height && "value" in height && height.value) {
-            return {
-              value: height.value[0],
-            };
-          }
-        }}
-        placeholder={(s) => s.computedRect.height}
-        set={(s, value) => {
-          setSizeConstraintValue(s, "height", value?.value);
-        }}
-      />
+      {constraint === "fixed" && (
+        <InspectorNumberInput
+          icon="H"
+          tooltip="Height"
+          get={(s) => {
+            const height = s.style.height;
+            if (height && "value" in height && height.value) {
+              return {
+                value: height.value[0],
+              };
+            }
+          }}
+          placeholder={(s) => s.computedRect.height}
+          set={(s, value) => {
+            setSizeConstraintValue(s, "height", value?.value);
+          }}
+        />
+      )}
+      {constraint === "fillContainer" && (
+        <>
+          <InspectorNumberInput
+            icon="Min"
+            tooltip="Min Height"
+            get={(s) => {
+              const height = s.style.height;
+              if (height.type === "fillContainer" && height.min) {
+                return {
+                  value: height.min[0],
+                };
+              }
+            }}
+            placeholder={() => 0}
+            set={(s, value) => {
+              const height = s.style.height;
+              if (height.type === "fillContainer") {
+                s.style.height = {
+                  ...height,
+                  min: value?.value ? [value.value, "px"] : undefined,
+                };
+              }
+            }}
+          />
+          <InspectorNumberInput
+            icon="Max"
+            tooltip="Max Height"
+            get={(s) => {
+              const height = s.style.height;
+              if (height.type === "fillContainer" && height.max) {
+                return {
+                  value: height.max[0],
+                };
+              }
+            }}
+            set={(s, value) => {
+              const height = s.style.height;
+              if (height.type === "fillContainer") {
+                s.style.height = {
+                  ...height,
+                  max: value?.value ? [value.value, "px"] : undefined,
+                };
+              }
+            }}
+          />
+        </>
+      )}
     </div>
   );
 });
