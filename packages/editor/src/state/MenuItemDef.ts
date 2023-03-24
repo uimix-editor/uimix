@@ -3,7 +3,7 @@ import { Shortcut } from "../utils/Shortcut";
 export interface MenuCommandDef {
   type: "command";
   text: string;
-  shortcut?: Shortcut;
+  shortcuts?: Shortcut[];
   disabled?: boolean;
   checked?: boolean;
   radioChecked?: boolean;
@@ -13,7 +13,7 @@ export interface MenuCommandDef {
 export interface MenuCheckBoxDef {
   type: "checkbox";
   text: string;
-  shortcut?: Shortcut;
+  shortcuts?: Shortcut[];
   disabled?: boolean;
   checked: boolean | "indeterminate";
   onChange?: (checked: boolean | "indeterminate") => void;
@@ -26,7 +26,7 @@ export interface MenuRadioGroupDef {
   items: {
     value: string;
     text: string;
-    shortcut?: Shortcut;
+    shortcuts?: Shortcut[];
   }[];
 }
 
@@ -58,9 +58,13 @@ export function handleShortcut(
   event: KeyboardEvent
 ): boolean {
   for (const def of menu) {
-    if (def.type === "command" && def.shortcut?.matches(event)) {
-      def.onClick?.();
-      return true;
+    if (def.type === "command") {
+      for (const shortcut of def.shortcuts ?? []) {
+        if (shortcut.matches(event)) {
+          def.onClick?.();
+          return true;
+        }
+      }
     } else if (def.type === "submenu") {
       if (handleShortcut(def.children, event)) {
         return true;
