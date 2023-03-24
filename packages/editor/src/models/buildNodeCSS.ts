@@ -11,7 +11,8 @@ export function buildNodeCSS(
 
   const cssStyle: React.CSSProperties = {};
 
-  const cssPosition = parentStackDirection ? "relative" : "absolute";
+  const cssPosition =
+    parentStackDirection && !style.absolute ? "relative" : "absolute";
   cssStyle.position = cssPosition;
   if (cssPosition === "absolute") {
     const position = style.position;
