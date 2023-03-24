@@ -358,7 +358,7 @@ export const DimensionsPane: React.FC = observer(function DimensionPane() {
             set={(s: Selectable, value?: boolean) => {
               s.style.absolute = !!value;
             }}
-            tooltip="Absolute Positioning"
+            tooltip="Keep Absolute Positioning in Layouts"
           />
           <InspectorNumberInput
             icon="T"
