@@ -65,10 +65,12 @@ const horizontalSizeConstraintOptions: ToggleGroupItem<SizeConstraintType>[] = [
 const positionTypeOptions: ToggleGroupItem<"absolute" | "relative">[] = [
   {
     value: "relative",
+    tooltip: "Relative",
     icon: staticPositionIcon,
   },
   {
     value: "absolute",
+    tooltip: "Absolute",
     icon: pinIcon,
   },
 ];
