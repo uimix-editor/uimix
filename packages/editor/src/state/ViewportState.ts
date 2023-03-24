@@ -17,6 +17,7 @@ export class ViewportState {
   @observable.ref tool: Tool | undefined = undefined;
   @observable panMode = false;
   @observable resizeBoxVisible = false;
+  @observable measureMode = false;
 }
 
 export const viewportState = new ViewportState();

@@ -417,6 +417,9 @@ class Commands {
         viewportState.tool = undefined;
         return true;
       }
+      if (event.key === "Alt") {
+        viewportState.measureMode = true;
+      }
 
       return handleShortcut(this.menu, event);
     }
@@ -427,6 +430,9 @@ class Commands {
   handleKeyUp(event: KeyboardEvent): void {
     if (event.key === " ") {
       viewportState.panMode = false;
+    }
+    if (event.key === "Alt") {
+      viewportState.measureMode = false;
     }
   }
 }
