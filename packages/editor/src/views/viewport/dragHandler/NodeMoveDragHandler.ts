@@ -44,6 +44,15 @@ export class NodeMoveDragHandler implements DragHandler {
 
     viewportState.dragPreviewRects = dragPreviewRects;
     viewportState.dropDestination = dst;
+
+    const isRelativeOnly = [...this.targets.values()].every(
+      ({ absolute }) => !absolute
+    );
+
+    if (isRelativeOnly && dst.parent.style.layout !== "none") {
+      // don't show snappings
+      snapper.clear();
+    }
   }
 
   end(event: ViewportEvent): void {
