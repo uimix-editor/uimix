@@ -25,6 +25,8 @@ import { SeparableInput } from "../../../components/SeparableInput";
 import { InspectorCheckBox } from "./inputs/InspectorCheckBox";
 import { action } from "mobx";
 import { SimpleAnchorEdit } from "../../../components/SimpleAnchorEdit";
+import { IconButton } from "../../../components/IconButton";
+import { InspectorToggleButton } from "./inputs/InspectorToggleButton";
 
 const verticalSizeConstraintOptions: ToggleGroupItem<SizeConstraintType>[] = [
   {
@@ -350,21 +352,14 @@ export const DimensionsPane: React.FC = observer(function DimensionPane() {
       />
       <InspectorTargetContext.Provider value={selectables}>
         <div className="grid grid-cols-3 gap-2 items-center">
-          <InspectorToggleGroup
-            get={(s) => (s.style.absolute ? "absolute" : "relative")}
-            items={positionTypeOptions}
-            set={function (
-              s: Selectable,
-              value?: "absolute" | "relative" | undefined
-            ): void {
-              if (value === "absolute") {
-                s.style.absolute = true;
-              } else if (value === "relative") {
-                s.style.absolute = false;
-              }
+          <InspectorToggleButton
+            icon={pinIcon}
+            get={(s) => s.style.absolute}
+            set={(s: Selectable, value?: boolean) => {
+              s.style.absolute = !!value;
             }}
+            tooltip="Absolute Positioning"
           />
-
           <InspectorNumberInput
             icon="T"
             tooltip="Top"
