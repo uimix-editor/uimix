@@ -7,6 +7,7 @@ import { useContext } from "react";
 import { InspectorTargetContext } from "../../components/InspectorTargetContext";
 import { Selectable } from "../../../../models/Selectable";
 import { projectState } from "../../../../state/ProjectState";
+import { roundToFixed } from "../../../../utils/Math";
 
 export const InspectorNumberInput = observer(function InspectorNumberInput({
   className,
@@ -42,11 +43,13 @@ export const InspectorNumberInput = observer(function InspectorNumberInput({
       className={className}
       value={
         typeof value === "object"
-          ? String(value.value) + (value.unit ?? "")
+          ? String(roundToFixed(value.value, 2)) + (value.unit ?? "")
           : value
       }
       placeholder={
-        typeof placeholder === "number" ? String(placeholder) : undefined
+        typeof placeholder === "number"
+          ? String(roundToFixed(placeholder, 2))
+          : undefined
       }
       onChange={action((valueText: string) => {
         const dim = parseDimension(valueText, allowedUnits);
