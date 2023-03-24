@@ -1,10 +1,9 @@
 import { observer } from "mobx-react-lite";
 import { Mixed, sameOrMixed } from "../../../../utils/Mixed";
 import { InspectorTargetContext } from "../../components/InspectorTargetContext";
-import { useContext, useEffect, useRef } from "react";
+import { useContext } from "react";
 import { Selectable } from "../../../../models/Selectable";
 import { projectState } from "../../../../state/ProjectState";
-import { twMerge } from "tailwind-merge";
 import { action } from "mobx";
 import { IconButton } from "../../../../components/IconButton";
 import { IconProps } from "@iconify/react";
