@@ -162,7 +162,23 @@ const WidthEdit = observer(function WidthEdit() {
   const constraint = sameOrMixed(targets.map((s) => s.style.width.type));
 
   return (
-    <div className="grid grid-cols-3 gap-2 items-center h-7">
+    <div className="grid grid-cols-3 gap-2 items-center">
+      <InspectorNumberInput
+        icon="W"
+        tooltip="Width"
+        get={(s) => {
+          const width = s.style.width;
+          if (width && "value" in width && width.value) {
+            return {
+              value: width.value[0],
+            };
+          }
+        }}
+        placeholder={(s) => s.computedRect.width}
+        set={(s, value) => {
+          setSizeConstraintValue(s, "width", value?.value);
+        }}
+      />
       <InspectorToggleGroup
         get={(s) => s.style.width.type}
         set={(s, value) => {
@@ -170,26 +186,9 @@ const WidthEdit = observer(function WidthEdit() {
         }}
         items={horizontalSizeConstraintOptions}
       />
-      {constraint === "fixed" && (
-        <InspectorNumberInput
-          icon="W"
-          tooltip="Width"
-          get={(s) => {
-            const width = s.style.width;
-            if (width && "value" in width && width.value) {
-              return {
-                value: width.value[0],
-              };
-            }
-          }}
-          placeholder={(s) => s.computedRect.width}
-          set={(s, value) => {
-            setSizeConstraintValue(s, "width", value?.value);
-          }}
-        />
-      )}
       {constraint === "fillContainer" && (
         <>
+          <div />
           <InspectorNumberInput
             icon="Min"
             tooltip="Min Width"
@@ -244,7 +243,23 @@ const HeightEdit: React.FC = observer(function HeightEdit() {
   const constraint = sameOrMixed(targets.map((s) => s.style.height.type));
 
   return (
-    <div className="grid grid-cols-3 gap-2 items-center h-7">
+    <div className="grid grid-cols-3 gap-2 items-center">
+      <InspectorNumberInput
+        icon="H"
+        tooltip="Height"
+        get={(s) => {
+          const height = s.style.height;
+          if (height && "value" in height && height.value) {
+            return {
+              value: height.value[0],
+            };
+          }
+        }}
+        placeholder={(s) => s.computedRect.height}
+        set={(s, value) => {
+          setSizeConstraintValue(s, "height", value?.value);
+        }}
+      />
       <InspectorToggleGroup
         get={(s) => s.style.height.type}
         set={(s, value) => {
@@ -252,26 +267,9 @@ const HeightEdit: React.FC = observer(function HeightEdit() {
         }}
         items={verticalSizeConstraintOptions}
       />
-      {constraint === "fixed" && (
-        <InspectorNumberInput
-          icon="H"
-          tooltip="Height"
-          get={(s) => {
-            const height = s.style.height;
-            if (height && "value" in height && height.value) {
-              return {
-                value: height.value[0],
-              };
-            }
-          }}
-          placeholder={(s) => s.computedRect.height}
-          set={(s, value) => {
-            setSizeConstraintValue(s, "height", value?.value);
-          }}
-        />
-      )}
       {constraint === "fillContainer" && (
         <>
+          <div />
           <InspectorNumberInput
             icon="Min"
             tooltip="Min Height"
