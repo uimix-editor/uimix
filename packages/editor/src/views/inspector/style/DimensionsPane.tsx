@@ -10,6 +10,8 @@ import fixedSizeIcon from "@seanchas116/design-icons/json/fixed-size.json";
 import fillAreaIcon from "@seanchas116/design-icons/json/fill-area.json";
 import radiusIcon from "@seanchas116/design-icons/json/radius.json";
 import separateCornersIcon from "@seanchas116/design-icons/json/separate-corners.json";
+import pinIcon from "@iconify-icons/ic/outline-location-on";
+import staticPositionIcon from "@seanchas116/design-icons/json/static-position.json";
 import { InspectorNumberInput } from "./inputs/InspectorNumberInput";
 import { InspectorToggleGroup } from "./inputs/InspectorToggleGroup";
 import { ToggleGroupItem } from "../../../components/ToggleGroup";
@@ -57,6 +59,17 @@ const horizontalSizeConstraintOptions: ToggleGroupItem<SizeConstraintType>[] = [
     value: "fillContainer",
     tooltip: "Fill Container",
     icon: fillAreaIcon,
+  },
+];
+
+const positionTypeOptions: ToggleGroupItem<"absolute" | "relative">[] = [
+  {
+    value: "relative",
+    icon: staticPositionIcon,
+  },
+  {
+    value: "absolute",
+    icon: pinIcon,
   },
 ];
 
@@ -335,6 +348,17 @@ export const DimensionsPane: React.FC = observer(function DimensionPane() {
       />
       <InspectorTargetContext.Provider value={selectables}>
         <div className="grid grid-cols-3 gap-2 items-center">
+          <InspectorToggleGroup
+            get={(s) => (s.style.absolute ? "absolute" : "relative")}
+            items={positionTypeOptions}
+            set={function (
+              s: Selectable,
+              value?: "absolute" | "relative" | undefined
+            ): void {
+              //TODO
+            }}
+          />
+
           <InspectorNumberInput
             icon="T"
             tooltip="Top"
