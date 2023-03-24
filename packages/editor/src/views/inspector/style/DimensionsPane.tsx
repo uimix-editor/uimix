@@ -355,7 +355,11 @@ export const DimensionsPane: React.FC = observer(function DimensionPane() {
               s: Selectable,
               value?: "absolute" | "relative" | undefined
             ): void {
-              //TODO
+              if (value === "absolute") {
+                s.style.absolute = true;
+              } else if (value === "relative") {
+                s.style.absolute = false;
+              }
             }}
           />
 
