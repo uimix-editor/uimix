@@ -244,7 +244,7 @@ const HeightEdit: React.FC = observer(function HeightEdit() {
   const constraint = sameOrMixed(targets.map((s) => s.style.height.type));
 
   return (
-    <div className="grid grid-cols-3 gap-2 items-center">
+    <div className="grid grid-cols-3 gap-2 items-center h-7">
       <InspectorToggleGroup
         get={(s) => s.style.height.type}
         set={(s, value) => {
