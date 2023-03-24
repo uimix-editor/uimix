@@ -338,6 +338,27 @@ const HeightEdit: React.FC = observer(function HeightEdit() {
 });
 
 const AbsoluteToggle = observer(() => {
+  const parentHasLayout = useContext(InspectorTargetContext).some((s) => {
+    const parent = s.parent;
+    return parent && parent.style.layout !== "none";
+  });
+
+  if (parentHasLayout) {
+    return (
+      <InspectorToggleGroup
+        get={(s) => (s.style.absolute ? "absolute" : "relative")}
+        items={positionTypeOptions}
+        set={(s, value) => {
+          if (value === "absolute") {
+            s.style.absolute = true;
+          } else if (value === "relative") {
+            s.style.absolute = false;
+          }
+        }}
+      />
+    );
+  }
+
   return (
     <InspectorToggleButton
       icon={pinIcon}
@@ -458,17 +479,7 @@ const PositionEdit = observer(() => {
 const MarginEdit = observer(() => {
   return (
     <div className="grid grid-cols-3 gap-2 items-center">
-      <InspectorToggleGroup
-        get={(s) => (s.style.absolute ? "absolute" : "relative")}
-        items={positionTypeOptions}
-        set={(s, value) => {
-          if (value === "absolute") {
-            s.style.absolute = true;
-          } else if (value === "relative") {
-            s.style.absolute = false;
-          }
-        }}
-      />
+      <AbsoluteToggle />
       <InspectorNumberInput
         icon={edgeTopIcon}
         tooltip="Margin Top"
