@@ -29,6 +29,11 @@ export function buildNodeCSS(
     if ("end" in position.y) {
       cssStyle.bottom = position.y.end.join("");
     }
+  } else {
+    cssStyle.marginTop = style.marginTop.join("");
+    cssStyle.marginRight = style.marginRight.join("");
+    cssStyle.marginBottom = style.marginBottom.join("");
+    cssStyle.marginLeft = style.marginLeft.join("");
   }
 
   const width = style.width;
