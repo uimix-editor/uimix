@@ -157,6 +157,98 @@ function RadiusEdit() {
   );
 }
 
+const WidthEdit = observer(function WidthEdit() {
+  return (
+    <div className="grid grid-cols-3 gap-2 items-center">
+      <InspectorToggleGroup
+        get={(s) => s.style.width.type}
+        set={(s, value) => {
+          setSizeConstraintType(s, "width", value);
+        }}
+        items={horizontalSizeConstraintOptions}
+      />
+      <InspectorNumberInput
+        icon="W"
+        tooltip="Width"
+        get={(s) => {
+          const width = s.style.width;
+          if (width && "value" in width && width.value) {
+            return {
+              value: width.value[0],
+            };
+          }
+        }}
+        placeholder={(s) => s.computedRect.width}
+        set={(s, value) => {
+          setSizeConstraintValue(s, "width", value?.value);
+        }}
+      />
+      <InspectorNumberInput
+        icon="Max"
+        tooltip="Max Width"
+        get={(s) => {
+          const width = s.style.width;
+          if (width && "value" in width && width.value) {
+            return {
+              value: width.value[0],
+            };
+          }
+        }}
+        placeholder={(s) => s.computedRect.width}
+        set={(s, value) => {
+          setSizeConstraintValue(s, "width", value?.value);
+        }}
+      />
+    </div>
+  );
+});
+
+const HeightEdit: React.FC = observer(function HeightEdit() {
+  return (
+    <div className="grid grid-cols-3 gap-2 items-center">
+      <InspectorToggleGroup
+        get={(s) => s.style.height.type}
+        set={(s, value) => {
+          setSizeConstraintType(s, "height", value);
+        }}
+        items={verticalSizeConstraintOptions}
+      />
+      <InspectorNumberInput
+        icon="H"
+        tooltip="Height"
+        get={(s) => {
+          const height = s.style.height;
+          if (height && "value" in height && height.value) {
+            return {
+              value: height.value[0],
+            };
+          }
+        }}
+        placeholder={(s) => s.computedRect.height}
+        set={(s, value) => {
+          setSizeConstraintValue(s, "height", value?.value);
+        }}
+      />
+      <InspectorNumberInput
+        icon="Max"
+        tooltip="Max Height"
+        get={(s) => {
+          const height = s.style.height;
+          if (height && "value" in height && height.value) {
+            return {
+              value: height.value[0],
+            };
+          }
+        }}
+        placeholder={(s) => s.computedRect.height}
+        set={(s, value) => {
+          setSizeConstraintValue(s, "height", value?.value);
+        }}
+      />
+    </div>
+  );
+});
+
 export const DimensionsPane: React.FC = observer(function DimensionPane() {
   const selectables = projectState.selectedSelectables.filter(
     (s) => !s.node.isAbstract
@@ -272,88 +364,8 @@ export const DimensionsPane: React.FC = observer(function DimensionPane() {
           <InspectorAnchorEdit className="col-start-2 row-start-2" />
         </div>
         <div className="flex flex-col gap-2">
-          <div className="grid grid-cols-3 gap-2 items-center">
-            <InspectorToggleGroup
-              get={(s) => s.style.width.type}
-              set={(s, value) => {
-                setSizeConstraintType(s, "width", value);
-              }}
-              items={horizontalSizeConstraintOptions}
-            />
-            <InspectorNumberInput
-              icon="W"
-              tooltip="Width"
-              get={(s) => {
-                const width = s.style.width;
-                if (width && "value" in width && width.value) {
-                  return {
-                    value: width.value[0],
-                  };
-                }
-              }}
-              placeholder={(s) => s.computedRect.width}
-              set={(s, value) => {
-                setSizeConstraintValue(s, "width", value?.value);
-              }}
-            />
-            <InspectorNumberInput
-              icon="Max"
-              tooltip="Max Width"
-              get={(s) => {
-                const width = s.style.width;
-                if (width && "value" in width && width.value) {
-                  return {
-                    value: width.value[0],
-                  };
-                }
-              }}
-              placeholder={(s) => s.computedRect.width}
-              set={(s, value) => {
-                setSizeConstraintValue(s, "width", value?.value);
-              }}
-            />
-          </div>
-          <div className="grid grid-cols-3 gap-2 items-center">
-            <InspectorToggleGroup
-              get={(s) => s.style.height.type}
-              set={(s, value) => {
-                setSizeConstraintType(s, "height", value);
-              }}
-              items={verticalSizeConstraintOptions}
-            />
-            <InspectorNumberInput
-              icon="H"
-              tooltip="Height"
-              get={(s) => {
-                const height = s.style.height;
-                if (height && "value" in height && height.value) {
-                  return {
-                    value: height.value[0],
-                  };
-                }
-              }}
-              placeholder={(s) => s.computedRect.height}
-              set={(s, value) => {
-                setSizeConstraintValue(s, "height", value?.value);
-              }}
-            />
-            <InspectorNumberInput
-              icon="Max"
-              tooltip="Max Height"
-              get={(s) => {
-                const height = s.style.height;
-                if (height && "value" in height && height.value) {
-                  return {
-                    value: height.value[0],
-                  };
-                }
-              }}
-              placeholder={(s) => s.computedRect.height}
-              set={(s, value) => {
-                setSizeConstraintValue(s, "height", value?.value);
-              }}
-            />
-          </div>
+          <WidthEdit />
+          <HeightEdit />
         </div>
         <RadiusEdit />
         <label className="flex items-center gap-2">
