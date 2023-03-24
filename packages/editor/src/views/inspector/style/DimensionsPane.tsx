@@ -28,17 +28,17 @@ const verticalSizeConstraintOptions: ToggleGroupItem<SizeConstraintType>[] = [
   {
     value: "hugContents",
     tooltip: "Hug Contents",
-    content: { ...hugContentsIcon, rotate: 1 },
+    icon: { ...hugContentsIcon, rotate: 1 },
   },
   {
     value: "fixed",
     tooltip: "Fixed",
-    content: { ...fixedSizeIcon, rotate: 1 },
+    icon: { ...fixedSizeIcon, rotate: 1 },
   },
   {
     value: "fillContainer",
     tooltip: "Fill Container",
-    content: { ...fillAreaIcon, rotate: 1 },
+    icon: { ...fillAreaIcon, rotate: 1 },
   },
 ];
 
@@ -46,17 +46,17 @@ const horizontalSizeConstraintOptions: ToggleGroupItem<SizeConstraintType>[] = [
   {
     value: "hugContents",
     tooltip: "Hug Contents",
-    content: hugContentsIcon,
+    icon: hugContentsIcon,
   },
   {
     value: "fixed",
     tooltip: "Fixed",
-    content: fixedSizeIcon,
+    icon: fixedSizeIcon,
   },
   {
     value: "fillContainer",
     tooltip: "Fill Container",
-    content: fillAreaIcon,
+    icon: fillAreaIcon,
   },
 ];
 
