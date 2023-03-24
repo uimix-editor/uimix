@@ -125,7 +125,7 @@ export function buildNodeCSS(
     const lineHeight = style.lineHeight;
     cssStyle.lineHeight =
       lineHeight === null
-        ? "auto"
+        ? "normal"
         : lineHeight[1] === "%"
         ? `${lineHeight[0] / 100}`
         : lineHeight.join("");
