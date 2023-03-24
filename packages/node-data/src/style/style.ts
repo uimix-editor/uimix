@@ -32,6 +32,12 @@ export const StyleJSON = z.object({
   opacity: z.number(),
   overflowHidden: z.boolean(),
 
+  // only for non-absolute layers
+  marginTop: PxValue,
+  marginRight: PxValue,
+  marginBottom: PxValue,
+  marginLeft: PxValue,
+
   // layout
 
   layout: z.enum(["none", "stack"]),
