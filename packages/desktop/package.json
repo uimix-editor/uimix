@@ -16,6 +16,7 @@
     "make": "electron-forge make",
     "prepackage": "npm run build",
     "package": "electron-forge package",
+    "package:dev": "NODE_ENV=development electron-forge package",
     "publish": "electron-forge publish",
     "start": "electron-forge start",
     "watch": "node build.js --watch"
