@@ -1,4 +1,11 @@
-import { app, BrowserWindow, dialog, ipcMain } from "electron";
+import {
+  app,
+  BrowserWindow,
+  ipcMain,
+  Menu,
+  MenuItemConstructorOptions,
+  shell,
+} from "electron";
 import { File } from "./File";
 import { IPCMainAPI } from "./types/IPCMainAPI";
 import { Window, windows } from "./Window";
@@ -82,3 +89,121 @@ handleIPC({
     return;
   },
 });
+
+const isMac = process.platform === "darwin";
+
+const template: MenuItemConstructorOptions[] = [
+  // { role: 'appMenu' }
+  ...(isMac
+    ? [
+        {
+          label: app.name,
+          submenu: [
+            { role: "about" },
+            { type: "separator" },
+            { role: "services" },
+            { type: "separator" },
+            { role: "hide" },
+            { role: "hideOthers" },
+            { role: "unhide" },
+            { type: "separator" },
+            { role: "quit" },
+          ],
+        },
+      ]
+    : []),
+  // { role: 'fileMenu' }
+  {
+    label: "File",
+    submenu: [
+      {
+        label: "New",
+        accelerator: "CmdOrCtrl+N",
+      },
+      {
+        label: "Open",
+        accelerator: "CmdOrCtrl+O",
+      },
+      { type: "separator" },
+      {
+        label: "Save",
+        accelerator: "CmdOrCtrl+S",
+      },
+      {
+        label: "Save As",
+        accelerator: "CmdOrCtrl+Shift+S",
+      },
+      { type: "separator" },
+      ...[isMac ? { role: "close" } : { role: "quit" }],
+    ],
+  },
+  // { role: 'editMenu' }
+  {
+    label: "Edit",
+    submenu: [
+      { role: "undo" },
+      { role: "redo" },
+      { type: "separator" },
+      { role: "cut" },
+      { role: "copy" },
+      { role: "paste" },
+      ...(isMac
+        ? [
+            { role: "pasteAndMatchStyle" },
+            { role: "delete" },
+            { role: "selectAll" },
+            { type: "separator" },
+            {
+              label: "Speech",
+              submenu: [{ role: "startSpeaking" }, { role: "stopSpeaking" }],
+            },
+          ]
+        : [{ role: "delete" }, { type: "separator" }, { role: "selectAll" }]),
+    ],
+  },
+  // { role: 'viewMenu' }
+  {
+    label: "View",
+    submenu: [
+      { role: "reload" },
+      { role: "forceReload" },
+      { role: "toggleDevTools" },
+      { type: "separator" },
+      { role: "resetZoom" },
+      { role: "zoomIn" },
+      { role: "zoomOut" },
+      { type: "separator" },
+      { role: "togglefullscreen" },
+    ],
+  },
+  // { role: 'windowMenu' }
+  {
+    label: "Window",
+    submenu: [
+      { role: "minimize" },
+      { role: "zoom" },
+      ...(isMac
+        ? [
+            { type: "separator" },
+            { role: "front" },
+            { type: "separator" },
+            { role: "window" },
+          ]
+        : [{ role: "close" }]),
+    ],
+  },
+  {
+    role: "help",
+    submenu: [
+      {
+        label: "Learn More",
+        click: async () => {
+          await shell.openExternal("https://electronjs.org");
+        },
+      },
+    ],
+  },
+];
+
+const menu = Menu.buildFromTemplate(template);
+Menu.setApplicationMenu(menu);
