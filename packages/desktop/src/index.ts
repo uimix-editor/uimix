@@ -1,4 +1,5 @@
 import { app, BrowserWindow, dialog, ipcMain } from "electron";
+import { File } from "./File";
 import { IPCMainAPI } from "./types/IPCMainAPI";
 import { Window, windows } from "./Window";
 
@@ -8,15 +9,8 @@ if (require("electron-squirrel-startup")) {
 }
 
 const createWindow = () => {
-  const filePath = dialog.showOpenDialogSync({
-    properties: ["openFile"],
-    filters: [{ name: "UI Mix", extensions: ["uimix"] }],
-  })?.[0];
-  if (!filePath) {
-    return;
-  }
-
-  new Window(filePath);
+  const file = File.open() ?? new File(undefined);
+  new Window(file);
 };
 
 // This method will be called when Electron has finished
@@ -35,7 +29,7 @@ app.on("window-all-closed", () => {
 
 app.on("open-file", (event, filePath) => {
   event.preventDefault();
-  new Window(filePath);
+  new Window(new File(filePath));
 });
 
 app.on("activate", () => {
@@ -84,7 +78,7 @@ handleIPC({
     if (!window) {
       throw new Error("Window not found");
     }
-    window.file.save(data);
+    window.file.data = data;
     return;
   },
 });

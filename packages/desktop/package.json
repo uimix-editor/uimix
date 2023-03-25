@@ -25,7 +25,8 @@
     "@paralleldrive/cuid2": "^2.2.0",
     "electron-squirrel-startup": "^1.0.0",
     "electron-store": "^8.1.0",
-    "prettier": "^2.8.4"
+    "prettier": "^2.8.4",
+    "tiny-typed-emitter": "^2.1.0"
   },
   "devDependencies": {
     "@electron-forge/cli": "^6.0.5",

@@ -3,8 +3,8 @@ import path from "path";
 import { File } from "./File";
 
 export class Window {
-  constructor(filePath: string) {
-    this.file = new File(filePath);
+  constructor(file: File) {
+    this.file = file;
     this.window = new BrowserWindow({
       width: 1280,
       height: 720,
