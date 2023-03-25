@@ -1,17 +1,13 @@
-import { useRouter } from "next/router";
 import React from "react";
 import dynamic from "next/dynamic";
 import Head from "next/head";
 
 const LocalEditor = dynamic(
-  () => import("../../../components/editor/LocalEditor"),
+  () => import("../../components/editor/LocalEditor"),
   { ssr: false }
 );
 
 const LocalDocument = () => {
-  const router = useRouter();
-  const { id } = router.query;
-
   return (
     <>
       <Head>
@@ -22,7 +18,7 @@ const LocalDocument = () => {
           }
       `}</style>
       </Head>
-      <LocalEditor documentId={id as string} />
+      <LocalEditor />
     </>
   );
 };
