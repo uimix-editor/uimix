@@ -116,8 +116,23 @@ export class File extends TypedEmitter<{
 
     const watcher = chokidar.watch(filePath);
     watcher.on("change", () => {
-      // TODO
-      console.log("changed");
+      try {
+        const json = ProjectJSON.parse(
+          JSON.parse(fs.readFileSync(filePath, { encoding: "utf-8" }))
+        );
+        if (isEqual(json, this._data)) {
+          return;
+        }
+        if (this.edited) {
+          // TODO: warn
+          return;
+        }
+        this._data = json;
+        this.savedData = json;
+        this.emit("dataChange", json);
+      } catch (e) {
+        console.error(e);
+      }
     });
     this.watchDisposer = () => {
       void watcher.close();

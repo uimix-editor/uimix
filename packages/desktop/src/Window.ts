@@ -31,7 +31,9 @@ export class Window {
 
     file.on("metadataChange", () => {
       this.window.webContents.send("documentMetadataChange", file.metadata);
-      this.window.setDocumentEdited(file.edited);
+    });
+    file.on("dataChange", (data) => {
+      this.window.webContents.send("documentDataChange", data);
     });
     file.on("editedChange", (edited) => {
       this.window.setDocumentEdited(edited);
