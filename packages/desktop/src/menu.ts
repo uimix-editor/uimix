@@ -59,6 +59,20 @@ export function setApplicationMenu() {
           },
         },
         { type: "separator" },
+        {
+          label: "Revert File",
+          click: (menuItem, browserWindow) => {
+            if (!browserWindow) {
+              return;
+            }
+            const window = windows.get(browserWindow.webContents);
+            if (!window) {
+              return;
+            }
+            window.file.revert();
+          },
+        },
+        { type: "separator" },
         ...[isMac ? { role: "close" as const } : { role: "quit" as const }],
       ],
     },
