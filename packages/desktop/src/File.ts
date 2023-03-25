@@ -9,6 +9,15 @@ import { dialog } from "electron";
 import { isEqual } from "lodash";
 import chokidar from "chokidar";
 
+export function compareProjectJSONs(a: ProjectJSON, b: ProjectJSON): boolean {
+  return (
+    JSON.stringify(a.nodes) === JSON.stringify(b.nodes) &&
+    JSON.stringify(a.styles) === JSON.stringify(b.styles) &&
+    JSON.stringify(a.componentURLs) === JSON.stringify(b.componentURLs)
+    // do not compare images because they are too big
+  );
+}
+
 export class File extends TypedEmitter<{
   editedChange: (edited: boolean) => void;
   metadataChange: (metadata: DocumentMetadata) => void;
@@ -54,8 +63,7 @@ export class File extends TypedEmitter<{
   }
   setData(data: ProjectJSON) {
     this._data = data;
-    // TODO: don't compare image data
-    this.edited = !isEqual(this.savedData, this._data);
+    this.edited = !compareProjectJSONs(this.savedData, this._data);
     this.emit("editedChange", this.edited);
   }
 
