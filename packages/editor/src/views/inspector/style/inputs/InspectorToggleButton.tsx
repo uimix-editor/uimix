@@ -5,9 +5,9 @@ import { useContext } from "react";
 import { Selectable } from "../../../../models/Selectable";
 import { projectState } from "../../../../state/ProjectState";
 import { action } from "mobx";
-import { IconButton } from "../../../../components/IconButton";
 import { IconProps } from "@iconify/react";
 import { Tooltip } from "../../../../components/Tooltip";
+import { ToggleButton } from "../../../../components/ToggleButton";
 
 export const InspectorToggleButton = observer(function InspectorCheckBox({
   className,
@@ -27,18 +27,17 @@ export const InspectorToggleButton = observer(function InspectorCheckBox({
   const indeterminate = value === Mixed;
 
   return (
-    <Tooltip text={tooltip}>
-      <IconButton
-        className={className}
-        aria-pressed={value && !indeterminate}
-        icon={icon}
-        onClick={action((e) => {
-          for (const selectable of selectables) {
-            set(selectable, !value);
-          }
-          projectState.undoManager.stopCapturing();
-        })}
-      />
-    </Tooltip>
+    <ToggleButton
+      className={className}
+      value={value && !indeterminate}
+      icon={icon}
+      tooltip={tooltip}
+      onChange={action((value) => {
+        for (const selectable of selectables) {
+          set(selectable, value);
+        }
+        projectState.undoManager.stopCapturing();
+      })}
+    />
   );
 });

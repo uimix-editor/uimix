@@ -25,7 +25,6 @@ import { SeparableInput } from "../../../components/SeparableInput";
 import { InspectorCheckBox } from "./inputs/InspectorCheckBox";
 import { action } from "mobx";
 import { SimpleAnchorEdit } from "../../../components/SimpleAnchorEdit";
-import { IconButton } from "../../../components/IconButton";
 import { InspectorToggleButton } from "./inputs/InspectorToggleButton";
 import edgeTopIcon from "@seanchas116/design-icons/json/edge-top.json";
 
@@ -366,7 +365,7 @@ const AbsoluteToggle = observer(() => {
       set={(s: Selectable, value?: boolean) => {
         s.style.absolute = !!value;
       }}
-      tooltip="Keep Absolute Positioning in Layouts"
+      tooltip="Keep Absolute on Auto Layout"
     />
   );
 });
