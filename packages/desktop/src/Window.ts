@@ -22,10 +22,10 @@ export class Window {
     // and load the index.html of the app.
     // this.window.loadFile(path.join(__dirname, "index.html"));
     if (process.env.NODE_ENV === "development") {
-      void this.window.loadURL("http://localhost:3000/local");
+      void this.window.loadURL("http://localhost:3000/local-editor");
       this.window.webContents.openDevTools();
     } else {
-      void this.window.loadURL("https://www.uimix.app/local");
+      void this.window.loadURL("https://www.uimix.app/local-editor");
     }
   }
 
