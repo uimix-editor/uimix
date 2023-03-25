@@ -15,6 +15,11 @@ const options = {
   outdir: "dist",
   outbase: "src",
   external: externals,
+  define: {
+    "process.env.NODE_ENV": JSON.stringify(
+      process.env.NODE_ENV || "production"
+    ),
+  },
 };
 
 if (process.argv.includes("--watch")) {

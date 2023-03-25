@@ -2,9 +2,8 @@ import { ProjectJSON } from "@uimix/node-data";
 import * as Y from "yjs";
 
 export function loadProjectJSON(ydoc: Y.Doc, projectJSON: ProjectJSON): void {
-  // TODO: support overwrite
-
   const nodes = ydoc.getMap("nodes");
+  nodes.clear();
   for (const [id, json] of Object.entries(projectJSON.nodes)) {
     const data = new Y.Map();
     for (const [key, value] of Object.entries(json)) {
@@ -14,6 +13,7 @@ export function loadProjectJSON(ydoc: Y.Doc, projectJSON: ProjectJSON): void {
   }
 
   const styles = ydoc.getMap("styles");
+  styles.clear();
   for (const [id, json] of Object.entries(projectJSON.styles)) {
     const data = new Y.Map();
     for (const [key, value] of Object.entries(json)) {

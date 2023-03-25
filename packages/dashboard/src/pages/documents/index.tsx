@@ -4,12 +4,11 @@ import Head from "next/head";
 import Link from "next/link";
 import { trpc } from "../../utils/trpc";
 import * as DropdownMenu from "@radix-ui/react-dropdown-menu";
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { toastController } from "../../components/toast/ToastController";
 import Router from "next/router";
 import TimeAgo from "javascript-time-ago";
 import en from "javascript-time-ago/locale/en";
-import { getDesktopAPI, LocalDocument } from "../../types/DesktopAPI";
 import { twMerge } from "tailwind-merge";
 TimeAgo.addDefaultLocale(en);
 
@@ -88,31 +87,22 @@ const Header = () => {
 const DocumentCard = ({
   document,
 }: {
-  document:
-    | {
-        type: "cloud";
-        data: {
-          id: string;
-          title: string;
-          updatedAt: string;
-          thumbnail: string | null;
-        };
-      }
-    | {
-        type: "local";
-        data: LocalDocument;
-      };
+  document: {
+    type: "cloud";
+    data: {
+      id: string;
+      title: string;
+      updatedAt: string;
+      thumbnail: string | null;
+    };
+  };
 }) => {
   const documentDeleteMutation = trpc.document.delete.useMutation();
 
   return (
     <li>
       <Link
-        href={
-          document.type === "cloud"
-            ? `/documents/${document.data.id}`
-            : `/documents/local/${document.data.id}`
-        }
+        href={`/documents/${document.data.id}`}
         className="block border border-gray-200 rounded-lg hover:bg-gray-50 overflow-hidden"
       >
         <img
@@ -123,12 +113,6 @@ const DocumentCard = ({
           <div>
             <div className="text-sm text-gray-900 font-medium mb-1">
               {document.data.title}
-
-              {document.type === "local" && (
-                <span className="text-xs text-amber-600 ml-2 bg-amber-100 p-0.5 px-1 rounded">
-                  Local
-                </span>
-              )}
             </div>
             <div className="text-gray-500">
               Edited{" "}
@@ -231,48 +215,6 @@ export default function Documents() {
     }
   };
 
-  const onLocalNewClick = async () => {
-    const api = getDesktopAPI();
-    if (!api) {
-      return;
-    }
-
-    try {
-      const doc = await api.createLocalDocument();
-      if (!doc) {
-        return;
-      }
-      await Router.push(`/documents/local/${doc.id}`);
-    } catch (err) {
-      toastController.show({
-        type: "error",
-        message: "Failed to create document",
-      });
-      return;
-    }
-  };
-
-  const onLocalOpenCLick = async () => {
-    const api = getDesktopAPI();
-    if (!api) {
-      return;
-    }
-
-    try {
-      const doc = await api.addExistingLocalDocument();
-      if (!doc) {
-        return;
-      }
-      await Router.push(`/documents/local/${doc.id}`);
-    } catch (err) {
-      toastController.show({
-        type: "error",
-        message: "Failed to create document",
-      });
-      return;
-    }
-  };
-
   const isError = documents.status === "error";
 
   useEffect(() => {
@@ -283,19 +225,6 @@ export default function Documents() {
       });
     }
   }, [isError]);
-
-  const [localDocuments, setLocalDocuments] = useState<
-    readonly LocalDocument[]
-  >([]);
-  useEffect(() => {
-    void getDesktopAPI()
-      ?.getLocalDocuments()
-      .then((docs) => {
-        setLocalDocuments(docs);
-      });
-  }, []);
-
-  console.log(localDocuments);
 
   return (
     <>
@@ -308,68 +237,19 @@ export default function Documents() {
           <div className="max-w-[960px] mx-auto">
             <div className="flex justify-between items-center">
               <h1 className="font-bold text-lg py-8">Documents</h1>
-              {getDesktopAPI() ? (
-                <DropdownMenu.Root>
-                  <DropdownMenu.Trigger asChild>
-                    <button className="h-fit bg-blue-500 hover:bg-blue-700 text-base text-white py-1 px-3 rounded flex items-center gap-1">
-                      <Icon icon="material-symbols:add" />
-                      Add
-                    </button>
-                  </DropdownMenu.Trigger>
-                  <DropdownMenu.Portal>
-                    <DropdownMenu.Content
-                      align="end"
-                      sideOffset={4}
-                      className={dropdownContentClasses}
-                    >
-                      <DropdownMenu.Item
-                        className={dropdownItemClasses}
-                        onClick={onAddClick}
-                      >
-                        New Cloud Document
-                      </DropdownMenu.Item>
-                      <DropdownMenu.Separator
-                        className={dropdownSeparatorClasses}
-                      />
-                      <DropdownMenu.Item
-                        className={dropdownItemClasses}
-                        onClick={onLocalNewClick}
-                      >
-                        New Local Document...
-                      </DropdownMenu.Item>
-                      <DropdownMenu.Item
-                        className={dropdownItemClasses}
-                        onClick={onLocalOpenCLick}
-                      >
-                        Add Existing Local Document...
-                      </DropdownMenu.Item>
-                    </DropdownMenu.Content>
-                  </DropdownMenu.Portal>
-                </DropdownMenu.Root>
-              ) : (
-                <button
-                  className="h-fit bg-blue-500 hover:bg-blue-700 text-base text-white py-1 px-3 rounded flex items-center gap-1"
-                  onClick={onAddClick}
-                >
-                  <Icon icon="material-symbols:add" />
-                  Add
-                </button>
-              )}
+              <button
+                className="h-fit bg-blue-500 hover:bg-blue-700 text-base text-white py-1 px-3 rounded flex items-center gap-1"
+                onClick={onAddClick}
+              >
+                <Icon icon="material-symbols:add" />
+                Add
+              </button>
             </div>
             <ul className="grid grid-cols-3 gap-4">
               {documents.data?.map((document) => (
                 <DocumentCard
                   key={document.id}
                   document={{ type: "cloud", data: document }}
-                />
-              ))}
-              {localDocuments.map((doc) => (
-                <DocumentCard
-                  key={doc.id}
-                  document={{
-                    type: "local",
-                    data: doc,
-                  }}
                 />
               ))}
             </ul>

@@ -245,12 +245,12 @@
       "width": { "type": "hugContents" },
       "height": { "type": "hugContents" },
       "fills": [{ "type": "solid", "hex": "#000000" }],
-      "textContent": "Hello, world!",
-      "fontSize": [20, "px"],
-      "marginLeft": [40, "px"],
       "marginTop": [10, "px"],
       "marginRight": [20, "px"],
-      "marginBottom": [30, "px"]
+      "marginBottom": [30, "px"],
+      "marginLeft": [40, "px"],
+      "textContent": "Hello, world!",
+      "fontSize": [20, "px"]
     },
     "1Bvi3BSSb2oaHb1ZqUEk6H": {},
     "1Bvi319YVxZELz4tEskN1S": {

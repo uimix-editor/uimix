@@ -6,7 +6,9 @@ module.exports = {
       execSync("npm run build", { stdio: "inherit" });
     },
   },
-  packagerConfig: {},
+  packagerConfig: {
+    name: process.env.NODE_ENV === "development" ? "UIMix Dev" : "UIMix",
+  },
   rebuildConfig: {},
   makers: [
     {

@@ -3,38 +3,56 @@
 
 // @ts-ignore
 
-import { contextBridge, ipcRenderer } from "electron";
+import { contextBridge, ipcRenderer, ipcRenderer } from "electron";
 import { IPCMainAPI } from "./types/IPCMainAPI";
-import { ProjectJSON, DesktopAPI } from "../../dashboard/src/types/DesktopAPI";
+import {
+  ProjectJSON,
+  DesktopAPI,
+  DocumentMetadata,
+} from "../../dashboard/src/types/DesktopAPI";
+import { TypedEmitter } from "tiny-typed-emitter";
+
+const emitter = new TypedEmitter<{
+  documentMetadataChange: (metadata: DocumentMetadata) => void;
+  documentDataChange: (data: ProjectJSON) => void;
+}>();
+
+ipcRenderer.on(
+  "documentMetadataChange",
+  (event, metadata: DocumentMetadata) => {
+    emitter.emit("documentMetadataChange", metadata);
+  }
+);
+ipcRenderer.on("documentDataChange", (event, data: ProjectJSON) => {
+  emitter.emit("documentDataChange", data);
+});
+
+console.log("preload init", ipcRenderer);
 
 const api: DesktopAPI = {
-  desktop: true,
-  wait: async (ms: number) => {
-    await new Promise((resolve) => setTimeout(resolve, ms));
+  getDocumentMetadata: async () => {
+    return await invoke("getDocumentMetadata");
   },
-  getLocalDocuments: () => {
-    return invoke("getLocalDocuments");
+  onDocumentMetadataChange: (
+    callback: (metadata: DocumentMetadata) => void
+  ) => {
+    emitter.on("documentMetadataChange", callback);
+    return () => {
+      emitter.off("documentMetadataChange", callback);
+    };
   },
-  getLocalDocument: (id) => {
-    return invoke("getLocalDocument", id);
+
+  getDocumentData: async () => {
+    return await invoke("getDocumentData");
   },
-  createLocalDocument: () => {
-    return invoke("createLocalDocument");
+  setDocumentData: async (data: ProjectJSON) => {
+    await invoke("setDocumentData", data);
   },
-  addExistingLocalDocument: () => {
-    return invoke("addExistingLocalDocument");
-  },
-  deleteLocalDocument: (id: string) => {
-    return invoke("deleteLocalDocument", id);
-  },
-  updateLocalDocumentThumbnail: (id: string, pngData: Uint8Array) => {
-    return invoke("updateLocalDocumentThumbnail", id, pngData);
-  },
-  getLocalDocumentData: (id: string) => {
-    return invoke("getLocalDocumentData", id);
-  },
-  setLocalDocumentData: (id: string, data: ProjectJSON) => {
-    return invoke("setLocalDocumentData", id, data);
+  onDocumentDataChange: (callback: (data: ProjectJSON) => void) => {
+    emitter.on("documentDataChange", callback);
+    return () => {
+      emitter.off("documentDataChange", callback);
+    };
   },
 };
 

@@ -1,28 +1,29 @@
 {
   "name": "desktop",
-  "productName": "UIMix",
   "version": "0.6.0",
   "description": "My Electron application description",
-  "main": "dist/index.js",
-  "scripts": {
-    "build": "node build.js",
-    "watch": "node build.js --watch",
-    "start": "electron-forge start",
-    "dev": "NODE_ENV=development run-z build watch,start",
-    "prepackage": "npm run build",
-    "package": "electron-forge package",
-    "make": "electron-forge make",
-    "publish": "electron-forge publish",
-    "lint": "eslint src"
-  },
   "keywords": [],
+  "license": "MIT",
   "author": {
     "name": "Ryohei Ikegami",
     "email": "iofg2100@gmail.com"
   },
-  "license": "MIT",
+  "main": "dist/index.js",
+  "scripts": {
+    "build": "node build.js",
+    "dev": "NODE_ENV=development run-z build start",
+    "lint": "eslint src",
+    "make": "electron-forge make",
+    "prepackage": "npm run build",
+    "package": "electron-forge package",
+    "package:dev": "NODE_ENV=development electron-forge package",
+    "publish": "electron-forge publish",
+    "start": "electron-forge start",
+    "watch": "node build.js --watch"
+  },
   "dependencies": {
     "@paralleldrive/cuid2": "^2.2.0",
+    "chokidar": "^3.5.3",
     "electron-squirrel-startup": "^1.0.0",
     "electron-store": "^8.1.0",
     "prettier": "^2.8.4"
@@ -34,10 +35,14 @@
     "@electron-forge/maker-squirrel": "^6.0.5",
     "@electron-forge/maker-zip": "^6.0.5",
     "@electron-forge/publisher-github": "^6.0.5",
+    "@types/lodash": "^4.14.191",
     "@types/prettier": "^2.7.2",
     "electron": "23.1.4",
     "esbuild": "^0.17.12",
+    "lodash": "^4.17.21",
     "run-z": "^1.11.0",
+    "tiny-typed-emitter": "^2.1.0",
     "typescript": "^5.0.2"
-  }
+  },
+  "productName": "UIMix"
 }

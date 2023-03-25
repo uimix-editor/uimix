@@ -11,17 +11,15 @@ import {
   loadProjectJSON,
   toProjectJSON,
 } from "@uimix/editor/src/models/ProjectJSON";
-import { Icon } from "@iconify/react";
-import Link from "next/link";
 import { LoadingErrorOverlay } from "./LoadingErrorOverlay";
-import { getDesktopAPI, LocalDocument } from "../../types/DesktopAPI";
+import { DocumentMetadata, getDesktopAPI } from "../../types/DesktopAPI";
 
 // TODO: test
 
 class Connection extends TypedEmitter<{
   readyToShow(): void;
 }> {
-  constructor(iframe: HTMLIFrameElement, documentId: string) {
+  constructor(iframe: HTMLIFrameElement) {
     super();
     this.iframe = iframe;
     this.rpc = new RPC<IRootToEditorRPCHandler, IEditorToRootRPCHandler>(
@@ -35,10 +33,7 @@ class Connection extends TypedEmitter<{
         },
         update: async (data: Uint8Array) => {
           Y.applyUpdate(this.doc, data);
-          await getDesktopAPI()?.setLocalDocumentData(
-            documentId,
-            toProjectJSON(this.doc)
-          );
+          await getDesktopAPI()?.setDocumentData(toProjectJSON(this.doc));
         },
         uploadImage: async (
           hash: string,
@@ -50,28 +45,34 @@ class Connection extends TypedEmitter<{
             "base64"
           )}`;
         },
+        // eslint-disable-next-line @typescript-eslint/no-unused-vars
         updateThumbnail: async (pngData) => {
-          await getDesktopAPI()?.updateLocalDocumentThumbnail(
-            documentId,
-            pngData
-          );
+          // TODO: set thumbnail for file
         },
       }
     );
 
-    void getDesktopAPI()
-      ?.getLocalDocumentData(documentId)
-      .then((data) => {
-        if (this.fileReady) {
-          return;
-        }
-        console.log("got data", data);
-        loadProjectJSON(this.doc, data);
-        this.fileReady = true;
-        if (this.iframeReady) {
-          void this.onReady();
-        }
-      });
+    const api = getDesktopAPI();
+    if (!api) {
+      throw new Error("Desktop API not available");
+    }
+
+    void api.getDocumentData().then((data) => {
+      if (this.fileReady) {
+        return;
+      }
+      console.log("got data", data);
+      loadProjectJSON(this.doc, data);
+      this.fileReady = true;
+      if (this.iframeReady) {
+        void this.onReady();
+      }
+    });
+
+    this.dataChangeDisposer = api.onDocumentDataChange((data) => {
+      console.log("got data change", data);
+      loadProjectJSON(this.doc, data);
+    });
   }
 
   private rpc: RPC<IRootToEditorRPCHandler, IEditorToRootRPCHandler>;
@@ -79,9 +80,11 @@ class Connection extends TypedEmitter<{
   private doc = new Y.Doc();
   private fileReady = false;
   private iframeReady = false;
+  private dataChangeDisposer: () => void;
 
   dispose() {
     this.rpc.dispose();
+    this.dataChangeDisposer();
   }
 
   private onReady = async () => {
@@ -93,48 +96,48 @@ class Connection extends TypedEmitter<{
   };
 }
 
-const LocalEditor: React.FC<{
-  documentId: string;
-}> = ({ documentId }) => {
+const LocalEditor: React.FC = () => {
   const iframeRef = useRef<HTMLIFrameElement>(null);
   const [loading, setLoading] = useState(true);
-  const [document, setDocument] = useState<LocalDocument>();
-
-  useEffect(() => {
-    const desktopApi = getDesktopAPI();
-    if (desktopApi) {
-      void desktopApi.getLocalDocument(documentId).then(setDocument);
-    }
-  }, []);
+  const [metadata, setMetadata] = useState<DocumentMetadata>({
+    name: "",
+  });
 
   useEffect(() => {
     const iframe = iframeRef.current;
     if (!iframe) {
       return;
     }
-    const connection = new Connection(iframe, documentId);
+    const connection = new Connection(iframe);
     connection.on("readyToShow", () => {
       setLoading(false);
     });
     return () => connection.dispose();
   }, []);
 
+  useEffect(() => {
+    const api = getDesktopAPI();
+    if (!api) {
+      return;
+    }
+    const listener = (metadata: DocumentMetadata) => {
+      setMetadata(metadata);
+    };
+
+    void api.getDocumentMetadata().then(setMetadata);
+    return api.onDocumentMetadataChange(listener);
+  }, []);
+
   const editorSrc = process.env.NEXT_PUBLIC_EDITOR_URL?.replace(
     "://",
-    // adds subdomain to the editor url
-    `://${documentId}.`
+    // TODO: use unique ID for subdomain?
+    `://local.`
   );
 
   return (
     <div className="text-neutral-800 flex flex-col text-xs">
-      <div className="z-10 fixed top-0 left-0 right-0 h-10 border-b border-neutral-200 flex items-center justify-center">
-        <Link
-          className="absolute left-0 top-0 h-10 w-10 flex items-center justify-center"
-          href="/documents"
-        >
-          <Icon icon="material-symbols:chevron-left" className="text-base" />
-        </Link>
-        <div className="text-xs font-medium">{document?.title}</div>
+      <div className="z-10 fixed top-0 left-0 right-0 h-10 border-b border-neutral-200 flex items-center justify-center uimix-titlebar">
+        <div className="text-xs font-medium">{metadata.name}</div>
       </div>
       <iframe
         ref={iframeRef}
