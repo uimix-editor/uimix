@@ -52,19 +52,22 @@ class Connection extends TypedEmitter<{
       }
     );
 
-    void getDesktopAPI()
-      ?.getDocumentData()
-      .then((data) => {
-        if (this.fileReady) {
-          return;
-        }
-        console.log("got data", data);
-        loadProjectJSON(this.doc, data);
-        this.fileReady = true;
-        if (this.iframeReady) {
-          void this.onReady();
-        }
-      });
+    const api = getDesktopAPI();
+    if (!api) {
+      throw new Error("Desktop API not available");
+    }
+
+    void api.getDocumentData().then((data) => {
+      if (this.fileReady) {
+        return;
+      }
+      console.log("got data", data);
+      loadProjectJSON(this.doc, data);
+      this.fileReady = true;
+      if (this.iframeReady) {
+        void this.onReady();
+      }
+    });
   }
 
   private rpc: RPC<IRootToEditorRPCHandler, IEditorToRootRPCHandler>;
