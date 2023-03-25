@@ -1,8 +1,10 @@
-import { BrowserWindow, shell } from "electron";
+import { BrowserWindow, shell, WebContents } from "electron";
 import path from "path";
+import { File } from "./File";
 
 export class Window {
-  constructor() {
+  constructor(filePath: string) {
+    this.file = new File(filePath);
     this.window = new BrowserWindow({
       width: 1280,
       height: 720,
@@ -10,7 +12,7 @@ export class Window {
         preload: path.join(__dirname, "preload.js"),
       },
     });
-    windows.set(this.window, this);
+    windows.set(this.window.webContents, this);
 
     this.window.webContents.setWindowOpenHandler((details) => {
       void shell.openExternal(details.url);
@@ -20,14 +22,15 @@ export class Window {
     // and load the index.html of the app.
     // this.window.loadFile(path.join(__dirname, "index.html"));
     if (process.env.NODE_ENV === "development") {
-      void this.window.loadURL("http://localhost:3000");
+      void this.window.loadURL("http://localhost:3000/local");
       this.window.webContents.openDevTools();
     } else {
-      void this.window.loadURL("https://www.uimix.app");
+      void this.window.loadURL("https://www.uimix.app/local");
     }
   }
 
+  readonly file: File;
   readonly window: BrowserWindow;
 }
 
-export const windows = new WeakMap<BrowserWindow, Window>();
+export const windows = new WeakMap<WebContents, Window>();

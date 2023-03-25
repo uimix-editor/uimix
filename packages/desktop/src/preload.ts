@@ -8,33 +8,16 @@ import { IPCMainAPI } from "./types/IPCMainAPI";
 import { ProjectJSON, DesktopAPI } from "../../dashboard/src/types/DesktopAPI";
 
 const api: DesktopAPI = {
-  desktop: true,
-  wait: async (ms: number) => {
-    await new Promise((resolve) => setTimeout(resolve, ms));
+  getDocumentData: async () => {
+    return await invoke("getDocumentData");
   },
-  getLocalDocuments: () => {
-    return invoke("getLocalDocuments");
+  setDocumentData: async (data: ProjectJSON) => {
+    await invoke("setDocumentData", data);
   },
-  getLocalDocument: (id) => {
-    return invoke("getLocalDocument", id);
-  },
-  createLocalDocument: () => {
-    return invoke("createLocalDocument");
-  },
-  addExistingLocalDocument: () => {
-    return invoke("addExistingLocalDocument");
-  },
-  deleteLocalDocument: (id: string) => {
-    return invoke("deleteLocalDocument", id);
-  },
-  updateLocalDocumentThumbnail: (id: string, pngData: Uint8Array) => {
-    return invoke("updateLocalDocumentThumbnail", id, pngData);
-  },
-  getLocalDocumentData: (id: string) => {
-    return invoke("getLocalDocumentData", id);
-  },
-  setLocalDocumentData: (id: string, data: ProjectJSON) => {
-    return invoke("setLocalDocumentData", id, data);
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  onDocumentDataChange: (callback: (data: ProjectJSON) => void) => {
+    // TODO: implement
+    return () => {};
   },
 };
 

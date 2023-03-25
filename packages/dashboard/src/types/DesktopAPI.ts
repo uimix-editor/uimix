@@ -12,7 +12,6 @@ export interface LocalDocument {
 }
 
 export interface DesktopAPI {
-  getDocumentMetadata(): Promise<LocalDocument>;
   getDocumentData(): Promise<ProjectJSON>;
   setDocumentData(data: ProjectJSON): Promise<void>;
   onDocumentDataChange(callback: (data: ProjectJSON) => void): () => void;

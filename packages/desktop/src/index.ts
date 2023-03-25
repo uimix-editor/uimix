@@ -1,7 +1,6 @@
-import { app, BrowserWindow, ipcMain, shell } from "electron";
-import path from "path";
-import { localDocumentRepository } from "./LocalDocumentRepository";
+import { app, BrowserWindow, dialog, ipcMain } from "electron";
 import { IPCMainAPI } from "./types/IPCMainAPI";
+import { Window, windows } from "./Window";
 
 // Handle creating/removing shortcuts on Windows when installing/uninstalling.
 if (require("electron-squirrel-startup")) {
@@ -9,28 +8,15 @@ if (require("electron-squirrel-startup")) {
 }
 
 const createWindow = () => {
-  // Create the browser window.
-  const mainWindow = new BrowserWindow({
-    width: 1280,
-    height: 720,
-    webPreferences: {
-      preload: path.join(__dirname, "preload.js"),
-    },
-  });
-
-  mainWindow.webContents.setWindowOpenHandler((details) => {
-    void shell.openExternal(details.url);
-    return { action: "deny" };
-  });
-
-  // and load the index.html of the app.
-  // mainWindow.loadFile(path.join(__dirname, "index.html"));
-  if (process.env.NODE_ENV === "development") {
-    void mainWindow.loadURL("http://localhost:3000");
-    mainWindow.webContents.openDevTools();
-  } else {
-    void mainWindow.loadURL("https://www.uimix.app");
+  const filePath = dialog.showOpenDialogSync({
+    properties: ["openFile"],
+    filters: [{ name: "UI Mix", extensions: ["uimix"] }],
+  })?.[0];
+  if (!filePath) {
+    return;
   }
+
+  new Window(filePath);
 };
 
 // This method will be called when Electron has finished
@@ -47,6 +33,11 @@ app.on("window-all-closed", () => {
   }
 });
 
+app.on("open-file", (event, filePath) => {
+  event.preventDefault();
+  new Window(filePath);
+});
+
 app.on("activate", () => {
   // On OS X it's common to re-create a window in the app when the
   // dock icon is clicked and there are no other windows open.
@@ -60,6 +51,7 @@ app.on("activate", () => {
 
 function handleIPC(handler: {
   [K in keyof IPCMainAPI]: (
+    e: Electron.IpcMainInvokeEvent,
     ...args: Parameters<IPCMainAPI[K]>
   ) => Promise<ReturnType<IPCMainAPI[K]>>;
 }) {
@@ -67,34 +59,25 @@ function handleIPC(handler: {
     ipcMain.handle(key, (e, ...args) => {
       // @ts-ignore
       // eslint-disable-next-line
-      return handler[key](...args);
+      return handler[key](e, ...args);
     });
   }
 }
 
 handleIPC({
-  getLocalDocuments: async () => {
-    return localDocumentRepository.getLocalDocuments();
+  getDocumentData: async (e) => {
+    const window = windows.get(e.sender);
+    if (!window) {
+      throw new Error("Window not found");
+    }
+    return window.file.data;
   },
-  getLocalDocument: async (id) => {
-    return localDocumentRepository.getLocalDocument(id);
-  },
-  createLocalDocument: async () => {
-    return localDocumentRepository.createLocalDocument();
-  },
-  addExistingLocalDocument: async () => {
-    return localDocumentRepository.addExistingLocalDocument();
-  },
-  deleteLocalDocument: async (id) => {
-    return localDocumentRepository.deleteLocalDocument(id);
-  },
-  updateLocalDocumentThumbnail: async (id, pngData) => {
-    localDocumentRepository.updateLocalDocumentThumbnail(id, pngData);
-  },
-  getLocalDocumentData: async (id) => {
-    return localDocumentRepository.getLocalDocumentData(id);
-  },
-  setLocalDocumentData: async (id, data) => {
-    return localDocumentRepository.setLocalDocumentData(id, data);
+  setDocumentData: async (e, data) => {
+    const window = windows.get(e.sender);
+    if (!window) {
+      throw new Error("Window not found");
+    }
+    window.file.save(data);
+    return;
   },
 });
