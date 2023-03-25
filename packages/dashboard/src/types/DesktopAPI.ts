@@ -2,7 +2,12 @@ import type { ProjectJSON } from "@uimix/node-data/src/project";
 
 export { ProjectJSON };
 
+export interface DocumentMetadata {
+  name: string;
+}
+
 export interface DesktopAPI {
+  getDocumentMetadata(): Promise<DocumentMetadata>;
   getDocumentData(): Promise<ProjectJSON>;
   setDocumentData(data: ProjectJSON): Promise<void>;
   onDocumentDataChange(callback: (data: ProjectJSON) => void): () => void;

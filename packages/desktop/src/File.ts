@@ -1,7 +1,9 @@
-import { ProjectJSON } from "../../node-data/src";
 import fs from "fs";
+import path from "path";
 import prettier from "prettier/standalone";
 import parserBabel from "prettier/parser-babel";
+import { ProjectJSON } from "../../node-data/src";
+import { DocumentMetadata } from "../../dashboard/src/types/DesktopAPI";
 
 export class File {
   constructor(filePath: string) {
@@ -11,6 +13,16 @@ export class File {
     );
 
     // TODO: watch file
+  }
+
+  get name(): string {
+    return path.basename(this.filePath);
+  }
+
+  get metadata(): DocumentMetadata {
+    return {
+      name: this.name,
+    };
   }
 
   filePath: string;

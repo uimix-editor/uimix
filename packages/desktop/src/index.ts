@@ -65,6 +65,13 @@ function handleIPC(handler: {
 }
 
 handleIPC({
+  getDocumentMetadata: async (e) => {
+    const window = windows.get(e.sender);
+    if (!window) {
+      throw new Error("Window not found");
+    }
+    return window.file.metadata;
+  },
   getDocumentData: async (e) => {
     const window = windows.get(e.sender);
     if (!window) {

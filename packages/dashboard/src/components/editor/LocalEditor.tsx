@@ -12,7 +12,7 @@ import {
   toProjectJSON,
 } from "@uimix/editor/src/models/ProjectJSON";
 import { LoadingErrorOverlay } from "./LoadingErrorOverlay";
-import { getDesktopAPI } from "../../types/DesktopAPI";
+import { DocumentMetadata, getDesktopAPI } from "../../types/DesktopAPI";
 
 // TODO: test
 
@@ -89,6 +89,9 @@ class Connection extends TypedEmitter<{
 const LocalEditor: React.FC = () => {
   const iframeRef = useRef<HTMLIFrameElement>(null);
   const [loading, setLoading] = useState(true);
+  const [metadata, setMetadata] = useState<DocumentMetadata>({
+    name: "",
+  });
 
   useEffect(() => {
     const iframe = iframeRef.current;
@@ -102,6 +105,19 @@ const LocalEditor: React.FC = () => {
     return () => connection.dispose();
   }, []);
 
+  useEffect(() => {
+    const api = getDesktopAPI();
+    if (!api) {
+      return;
+    }
+    const listener = (metadata: DocumentMetadata) => {
+      setMetadata(metadata);
+    };
+
+    // TODO: listen for changes
+    void api.getDocumentMetadata().then(listener);
+  }, []);
+
   const editorSrc = process.env.NEXT_PUBLIC_EDITOR_URL?.replace(
     "://",
     // TODO: use unique ID for subdomain?
@@ -111,7 +127,7 @@ const LocalEditor: React.FC = () => {
   return (
     <div className="text-neutral-800 flex flex-col text-xs">
       <div className="z-10 fixed top-0 left-0 right-0 h-10 border-b border-neutral-200 flex items-center justify-center uimix-titlebar">
-        <div className="text-xs font-medium">Title</div>
+        <div className="text-xs font-medium">{metadata.name}</div>
       </div>
       <iframe
         ref={iframeRef}

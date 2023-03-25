@@ -8,6 +8,9 @@ import { IPCMainAPI } from "./types/IPCMainAPI";
 import { ProjectJSON, DesktopAPI } from "../../dashboard/src/types/DesktopAPI";
 
 const api: DesktopAPI = {
+  getDocumentMetadata: async () => {
+    return await invoke("getDocumentMetadata");
+  },
   getDocumentData: async () => {
     return await invoke("getDocumentData");
   },
