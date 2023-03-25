@@ -110,7 +110,9 @@ const LocalEditor: React.FC = () => {
 
   return (
     <div className="text-neutral-800 flex flex-col text-xs">
-      <div className="z-10 fixed top-0 left-0 right-0 h-10 border-b border-neutral-200 flex items-center justify-center"></div>
+      <div className="z-10 fixed top-0 left-0 right-0 h-10 border-b border-neutral-200 flex items-center justify-center uimix-titlebar">
+        <div className="text-xs font-medium">Title</div>
+      </div>
       <iframe
         ref={iframeRef}
         // looks like Chrome sends wrong coordinates in pointerrawupdate events inside iframes (TODO: report)

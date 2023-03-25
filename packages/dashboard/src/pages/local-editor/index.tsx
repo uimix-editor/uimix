@@ -16,6 +16,9 @@ const LocalDocument = () => {
           body {
             overscroll-behavior: none;
           }
+          .uimix-titlebar {
+            -webkit-app-region: drag;
+          }
       `}</style>
       </Head>
       <LocalEditor />
