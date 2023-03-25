@@ -158,12 +158,6 @@
       "name": "Card",
       "parent": "1Bvi2ymHPmVHms6RDurmNN",
       "index": 15
-    },
-    "1BwcZ9uihntTKz4Fiay6Lf": {
-      "type": "frame",
-      "name": "Frame",
-      "parent": "1Bvi2ymHPmVHms6RDurmNN",
-      "index": 16
     }
   },
   "styles": {
@@ -419,15 +413,6 @@
       "letterSpacing": [0, "px"],
       "textHorizontalAlign": "start",
       "textVerticalAlign": "start"
-    },
-    "1BwcZ9uihntTKz4Fiay6Lf": {
-      "position": {
-        "x": { "type": "start", "start": [50, "px"] },
-        "y": { "type": "start", "start": [11, "px"] }
-      },
-      "width": { "type": "fixed", "value": [285, "px"] },
-      "height": { "type": "fixed", "value": [102, "px"] },
-      "fills": [{ "type": "solid", "hex": "#FFFFFF" }]
     }
   },
   "componentURLs": [
