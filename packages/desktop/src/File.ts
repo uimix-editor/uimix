@@ -63,6 +63,7 @@ export class File extends TypedEmitter<{
 
   revert() {
     this.setData(this.savedData);
+    this.emit("dataChange", this.data);
   }
 
   save() {

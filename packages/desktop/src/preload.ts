@@ -14,18 +14,17 @@ import { TypedEmitter } from "tiny-typed-emitter";
 
 const emitter = new TypedEmitter<{
   documentMetadataChange: (metadata: DocumentMetadata) => void;
-  dataChange: (data: ProjectJSON) => void;
+  documentDataChange: (data: ProjectJSON) => void;
 }>();
 
 ipcRenderer.on(
   "documentMetadataChange",
   (event, metadata: DocumentMetadata) => {
-    console.log("preload documentMetadataChange", metadata);
     emitter.emit("documentMetadataChange", metadata);
   }
 );
-ipcRenderer.on("dataChange", (event, data: ProjectJSON) => {
-  emitter.emit("dataChange", data);
+ipcRenderer.on("documentDataChange", (event, data: ProjectJSON) => {
+  emitter.emit("documentDataChange", data);
 });
 
 console.log("preload init", ipcRenderer);
@@ -50,9 +49,9 @@ const api: DesktopAPI = {
     await invoke("setDocumentData", data);
   },
   onDocumentDataChange: (callback: (data: ProjectJSON) => void) => {
-    emitter.on("dataChange", callback);
+    emitter.on("documentDataChange", callback);
     return () => {
-      emitter.off("dataChange", callback);
+      emitter.off("documentDataChange", callback);
     };
   },
 };

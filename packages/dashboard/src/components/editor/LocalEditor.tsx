@@ -69,7 +69,10 @@ class Connection extends TypedEmitter<{
       }
     });
 
-    // TODO: on local file change
+    this.dataChangeDisposer = api.onDocumentDataChange((data) => {
+      console.log("got data change", data);
+      loadProjectJSON(this.doc, data);
+    });
   }
 
   private rpc: RPC<IRootToEditorRPCHandler, IEditorToRootRPCHandler>;
@@ -77,9 +80,11 @@ class Connection extends TypedEmitter<{
   private doc = new Y.Doc();
   private fileReady = false;
   private iframeReady = false;
+  private dataChangeDisposer: () => void;
 
   dispose() {
     this.rpc.dispose();
+    this.dataChangeDisposer();
   }
 
   private onReady = async () => {
