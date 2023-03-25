@@ -10,7 +10,7 @@ import { dialog } from "electron";
 export class File extends TypedEmitter<{
   metadataChanged: (metadata: DocumentMetadata) => void;
 }> {
-  constructor(filePath: string | undefined) {
+  constructor(filePath?: string) {
     super();
 
     this.filePath = filePath;

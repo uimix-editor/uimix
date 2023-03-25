@@ -10,8 +10,7 @@ if (require("electron-squirrel-startup")) {
 }
 
 const createWindow = () => {
-  const file = File.open() ?? new File(undefined);
-  new Window(file);
+  new Window(new File());
 };
 
 // This method will be called when Electron has finished
