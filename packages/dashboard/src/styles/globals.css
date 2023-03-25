@@ -5,3 +5,7 @@
 .contain-strict {
   contain: strict;
 }
+
+body {
+  -webkit-font-smoothing: antialiased;
+}
