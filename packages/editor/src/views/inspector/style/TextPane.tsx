@@ -28,34 +28,34 @@ const googleFontOptions = googleFonts.items.map((item) => ({
 const textAlignOptions: ToggleGroupItem<TextHorizontalAlign>[] = [
   {
     value: "start",
-    content: formatAlignLeftIcon,
+    icon: formatAlignLeftIcon,
   },
   {
     value: "center",
-    content: formatAlignCenterIcon,
+    icon: formatAlignCenterIcon,
   },
   {
     value: "end",
-    content: formatAlignRightIcon,
+    icon: formatAlignRightIcon,
   },
   {
     value: "justify",
-    content: formatAlignJustifyIcon,
+    icon: formatAlignJustifyIcon,
   },
 ];
 
 const verticalAlignOptions: ToggleGroupItem<TextVerticalAlign>[] = [
   {
     value: "start",
-    content: verticalAlignTopIcon,
+    icon: verticalAlignTopIcon,
   },
   {
     value: "center",
-    content: verticalAlignCenterIcon,
+    icon: verticalAlignCenterIcon,
   },
   {
     value: "end",
-    content: verticalAlignBottomIcon,
+    icon: verticalAlignBottomIcon,
   },
 ];
 

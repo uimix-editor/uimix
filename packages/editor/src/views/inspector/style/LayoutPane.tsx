@@ -52,12 +52,12 @@ const stackDirectionOptions: ToggleGroupItem<StackDirection>[] = [
   {
     value: "x",
     tooltip: "Horizontal",
-    content: arrowForwardIcon,
+    icon: arrowForwardIcon,
   },
   {
     value: "y",
     tooltip: "Vertical",
-    content: {
+    icon: {
       ...arrowForwardIcon,
       rotate: 1,
     },
@@ -131,7 +131,7 @@ export const LayoutPane: React.FC = observer(function StackPane() {
                   {
                     value: "packed",
                     tooltip: "Packed",
-                    content: {
+                    icon: {
                       ...verticalAlignTopIcon,
                       rotate: direction === "x" ? 3 : 0,
                     },
@@ -139,7 +139,7 @@ export const LayoutPane: React.FC = observer(function StackPane() {
                   {
                     value: "between",
                     tooltip: "Space Between",
-                    content: {
+                    icon: {
                       ...verticalDistributeIcon,
                       rotate: direction === "x" ? 1 : 0,
                     },

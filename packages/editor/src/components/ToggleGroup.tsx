@@ -1,10 +1,11 @@
-import { Icon, IconifyIcon } from "@iconify/react";
+import { Icon } from "@iconify/react";
 import * as RadixToggleGroup from "@radix-ui/react-toggle-group";
 import { twMerge } from "tailwind-merge";
 import { Tooltip } from "./Tooltip";
 
 export interface ToggleGroupItem<T extends string> {
-  content: IconifyIcon | React.ReactNode;
+  icon?: React.ComponentProps<typeof Icon>["icon"];
+  text?: React.ReactNode;
   value: T;
   tooltip?: React.ReactNode;
 }
@@ -43,13 +44,7 @@ export function ToggleGroup<T extends string>({
               value={item.value}
               className="aria-checked:bg-macaron-active aria-checked:text-macaron-activeText w-6 h-6 flex items-center justify-center rounded"
             >
-              {typeof item.content === "object" &&
-              item.content &&
-              "body" in item.content ? (
-                <Icon icon={item.content} width={16} />
-              ) : (
-                item.content
-              )}
+              {item.icon ? <Icon icon={item.icon} width={16} /> : item.text}
             </RadixToggleGroup.Item>
           </Tooltip>
         );

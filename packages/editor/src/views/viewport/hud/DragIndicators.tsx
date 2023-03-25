@@ -11,7 +11,7 @@ function dropDestinationIndicator(
 ): [Vec2, Vec2] | undefined {
   const { parent, ref } = dst;
 
-  if (parent.style.layout === "none") {
+  if (!dst.shouldShowInsertionLine) {
     return;
   }
 

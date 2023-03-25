@@ -323,6 +323,53 @@ export class Selectable {
     });
   }
 
+  @computed get computedContentRect(): Rect {
+    const { computedRect, style } = this;
+    const {
+      borderLeftWidth,
+      borderRightWidth,
+      borderTopWidth,
+      borderBottomWidth,
+      paddingLeft,
+      paddingRight,
+      paddingTop,
+      paddingBottom,
+    } = style;
+
+    return Rect.from({
+      left: computedRect.left + borderLeftWidth[0] + paddingLeft[0],
+      top: computedRect.top + borderTopWidth[0] + paddingTop[0],
+      width:
+        computedRect.width -
+        borderLeftWidth[0] -
+        borderRightWidth[0] -
+        paddingLeft[0] -
+        paddingRight[0],
+      height:
+        computedRect.height -
+        borderTopWidth[0] -
+        borderBottomWidth[0] -
+        paddingTop[0] -
+        paddingBottom[0],
+    });
+  }
+
+  @computed get computedMarginRect(): Rect {
+    if (this.isAbsolute) {
+      return this.computedRect;
+    }
+
+    const { computedRect, style } = this;
+    const { marginLeft, marginRight, marginTop, marginBottom } = style;
+
+    return Rect.from({
+      left: computedRect.left - marginLeft[0],
+      top: computedRect.top - marginTop[0],
+      width: computedRect.width + marginLeft[0] + marginRight[0],
+      height: computedRect.height + marginTop[0] + marginBottom[0],
+    });
+  }
+
   @computed get computedOffsetRect(): Rect {
     const { offsetParent } = this;
     if (!offsetParent) {

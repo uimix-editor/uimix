@@ -2,7 +2,6 @@ import React, { useState } from "react";
 import alignLeftIcon from "@iconify-icons/ic/format-align-left";
 import alignCenterIcon from "@iconify-icons/ic/format-align-center";
 import alignRightIcon from "@iconify-icons/ic/format-align-right";
-import { Icon } from "@iconify/react";
 import { ToggleGroup } from "./ToggleGroup";
 
 export default {
@@ -23,15 +22,15 @@ export const Basic: React.FC = () => {
         items={[
           {
             value: "left",
-            content: <Icon icon={alignLeftIcon} width={16} />,
+            icon: alignLeftIcon,
           },
           {
             value: "center",
-            content: <Icon icon={alignCenterIcon} width={16} />,
+            icon: alignCenterIcon,
           },
           {
             value: "right",
-            content: <Icon icon={alignRightIcon} width={16} />,
+            icon: alignRightIcon,
           },
         ]}
       />

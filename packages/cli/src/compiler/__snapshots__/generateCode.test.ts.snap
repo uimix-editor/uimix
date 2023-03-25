@@ -119,6 +119,10 @@ exports[`generateCode > generates code 1`] = `
 }
 .uimix-1Bvi2z3UGTM64JtRT7Qc1S {
   position: relative;
+  margin-top: 0px;
+  margin-right: 0px;
+  margin-bottom: 0px;
+  margin-left: 0px;
   width: max-content;
   height: max-content;
   opacity: 1;
@@ -144,6 +148,10 @@ exports[`generateCode > generates code 1`] = `
 }
 .uimix-1Bvi2z3TpKXtTJLTRPTEd8 {
   position: relative;
+  margin-top: 0px;
+  margin-right: 0px;
+  margin-bottom: 0px;
+  margin-left: 0px;
   flex: 1;
   min-width: 25px;
   max-width: 100px;
@@ -175,6 +183,10 @@ exports[`generateCode > generates code 1`] = `
 }
 .uimix-1Bvi2z3To8ddXo6R6ZftVD {
   position: relative;
+  margin-top: 0px;
+  margin-right: 0px;
+  margin-bottom: 0px;
+  margin-left: 0px;
   width: 40px;
   height: 80px;
   opacity: 1;
@@ -202,6 +214,10 @@ exports[`generateCode > generates code 1`] = `
 }
 .uimix-1Bvi2z3UB1xUVg4Xz9WTpJ {
   position: relative;
+  margin-top: 0px;
+  margin-right: 0px;
+  margin-bottom: 0px;
+  margin-left: 0px;
   width: 80px;
   height: 40px;
   opacity: 1;
@@ -229,6 +245,10 @@ exports[`generateCode > generates code 1`] = `
 }
 .uimix-1Bvi2z3U3SiK6r7gf9vh7N {
   position: relative;
+  margin-top: 10px;
+  margin-right: 20px;
+  margin-bottom: 30px;
+  margin-left: 40px;
   width: max-content;
   height: max-content;
   opacity: 1;
@@ -247,6 +267,10 @@ exports[`generateCode > generates code 1`] = `
 }
 .uimix-1Bvi31VKu8gfy6XzJ8xrHA {
   position: relative;
+  margin-top: 0px;
+  margin-right: 0px;
+  margin-bottom: 0px;
+  margin-left: 0px;
   align-self: stretch;
   height: max-content;
   opacity: 1;
@@ -254,6 +278,10 @@ exports[`generateCode > generates code 1`] = `
 }
 .uimix-1Bvi365mtWZmXKDPeJTB4s {
   position: relative;
+  margin-top: 0px;
+  margin-right: 0px;
+  margin-bottom: 0px;
+  margin-left: 0px;
   align-self: stretch;
   flex: 1;
   opacity: 1;
@@ -320,6 +348,10 @@ exports[`generateCode > generates code 1`] = `
 }
 .uimix-1BwWRgjHyEzJjsehRefVBE {
   position: relative;
+  margin-top: 0px;
+  margin-right: 0px;
+  margin-bottom: 0px;
+  margin-left: 0px;
   width: max-content;
   height: max-content;
   opacity: 1;
@@ -347,6 +379,10 @@ exports[`generateCode > generates code 1`] = `
 }
 .uimix-1BwWRgjHr8HNgX8BRooGv7 {
   position: relative;
+  margin-top: 0px;
+  margin-right: 0px;
+  margin-bottom: 0px;
+  margin-left: 0px;
   width: max-content;
   height: max-content;
   opacity: 1;
@@ -354,6 +390,10 @@ exports[`generateCode > generates code 1`] = `
 }
 .uimix-1BwWRgjHmYZ8qLKDj3Tvdy {
   position: relative;
+  margin-top: 0px;
+  margin-right: 0px;
+  margin-bottom: 0px;
+  margin-left: 0px;
   align-self: stretch;
   height: max-content;
   opacity: 1;
@@ -372,6 +412,10 @@ exports[`generateCode > generates code 1`] = `
 }
 .uimix-1BwWRgjHuAe9UTxVhowwYu {
   position: relative;
+  margin-top: 0px;
+  margin-right: 0px;
+  margin-bottom: 0px;
+  margin-left: 0px;
   align-self: stretch;
   height: max-content;
   opacity: 1;

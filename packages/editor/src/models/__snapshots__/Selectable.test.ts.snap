@@ -310,6 +310,22 @@ exports[`selectablesToProjectJSON > works 1`] = `
       "height": {
         "type": "hugContents",
       },
+      "marginBottom": [
+        30,
+        "px",
+      ],
+      "marginLeft": [
+        40,
+        "px",
+      ],
+      "marginRight": [
+        20,
+        "px",
+      ],
+      "marginTop": [
+        10,
+        "px",
+      ],
       "textContent": "Hello, world!",
       "width": {
         "type": "hugContents",

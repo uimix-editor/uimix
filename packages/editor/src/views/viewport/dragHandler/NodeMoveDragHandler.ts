@@ -44,6 +44,25 @@ export class NodeMoveDragHandler implements DragHandler {
 
     viewportState.dragPreviewRects = dragPreviewRects;
     viewportState.dropDestination = dst;
+
+    // don't show snappings if all move is relative
+    const allRelative = [...this.targets.values()].every(
+      ({ absolute }) => !absolute
+    );
+    if (allRelative && dst.parent.style.layout !== "none") {
+      snapper.clear();
+    }
+
+    // don't show insertion line if all targets prefer absolute position
+    const allPrefersAbsolute = [...this.targets.keys()].every(
+      (target) => target.style.absolute
+    );
+    if (allPrefersAbsolute) {
+      viewportState.dropDestination = {
+        ...dst,
+        shouldShowInsertionLine: false,
+      };
+    }
   }
 
   end(event: ViewportEvent): void {
@@ -152,6 +171,7 @@ export function findDropDestination(
   if (!parent) {
     return {
       parent: assertNonNull(projectState.page).selectable,
+      shouldShowInsertionLine: false,
     };
   }
 
@@ -159,11 +179,13 @@ export function findDropDestination(
   const inFlowChildren = parent.inFlowChildren;
   const centers = inFlowChildren.map((c) => c.computedRect.center);
   const index = centers.findIndex((c) => c[direction] > event.pos[direction]);
+  const shouldShowInsertionLine = parent.style.layout !== "none";
   if (index < 0) {
-    return { parent };
+    return { parent, shouldShowInsertionLine };
   }
   return {
     parent,
     ref: inFlowChildren[index],
+    shouldShowInsertionLine,
   };
 }
