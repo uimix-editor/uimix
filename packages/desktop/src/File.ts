@@ -7,10 +7,12 @@ import { DocumentMetadata } from "../../dashboard/src/types/DesktopAPI";
 import { TypedEmitter } from "tiny-typed-emitter";
 import { dialog } from "electron";
 import { isEqual } from "lodash";
+import chokidar from "chokidar";
 
 export class File extends TypedEmitter<{
   editedChange: (edited: boolean) => void;
   metadataChange: (metadata: DocumentMetadata) => void;
+  dataChange: (data: ProjectJSON) => void;
 }> {
   constructor(filePath?: string) {
     super();
@@ -28,6 +30,9 @@ export class File extends TypedEmitter<{
           styles: {},
         };
     this.savedData = this._data;
+    if (filePath) {
+      this.watch();
+    }
   }
 
   get name(): string {
@@ -68,6 +73,7 @@ export class File extends TypedEmitter<{
     fs.writeFileSync(this.filePath, formatJSON(JSON.stringify(this.data)));
     this.savedData = this.data;
     this.edited = false;
+    this.emit("editedChange", this.edited);
   }
 
   saveAs() {
@@ -81,6 +87,7 @@ export class File extends TypedEmitter<{
 
     this.filePath = newPath;
     this.save();
+    this.watch();
 
     this.emit("metadataChange", this.metadata);
   }
@@ -95,6 +102,28 @@ export class File extends TypedEmitter<{
     }
     return new File(filePath);
   }
+
+  watch() {
+    if (this.watchDisposer) {
+      this.watchDisposer();
+      this.watchDisposer = undefined;
+    }
+
+    if (!this.filePath) {
+      return;
+    }
+    const filePath = this.filePath;
+
+    const watcher = chokidar.watch(filePath);
+    watcher.on("change", () => {
+      // TODO
+      console.log("changed");
+    });
+    this.watchDisposer = () => {
+      void watcher.close();
+    };
+  }
+  private watchDisposer?: () => void;
 }
 
 function formatJSON(text: string): string {
