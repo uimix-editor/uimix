@@ -1,4 +1,4 @@
-import { BrowserWindow, shell, WebContents } from "electron";
+import { BrowserWindow, ipcMain, shell, WebContents } from "electron";
 import path from "path";
 import { File } from "./File";
 
@@ -28,6 +28,10 @@ export class Window {
     } else {
       void this.window.loadURL("https://www.uimix.app/local-editor");
     }
+
+    file.on("metadataChange", () => {
+      this.window.webContents.send("documentMetadataChange", file.metadata);
+    });
   }
 
   readonly file: File;

@@ -114,8 +114,8 @@ const LocalEditor: React.FC = () => {
       setMetadata(metadata);
     };
 
-    // TODO: listen for changes
-    void api.getDocumentMetadata().then(listener);
+    void api.getDocumentMetadata().then(setMetadata);
+    return api.onDocumentMetadataChange(listener);
   }, []);
 
   const editorSrc = process.env.NEXT_PUBLIC_EDITOR_URL?.replace(

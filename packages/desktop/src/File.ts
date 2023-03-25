@@ -8,7 +8,7 @@ import { TypedEmitter } from "tiny-typed-emitter";
 import { dialog } from "electron";
 
 export class File extends TypedEmitter<{
-  metadataChanged: (metadata: DocumentMetadata) => void;
+  metadataChange: (metadata: DocumentMetadata) => void;
 }> {
   constructor(filePath?: string) {
     super();
@@ -51,15 +51,16 @@ export class File extends TypedEmitter<{
   saveAs() {
     const newPath = dialog.showSaveDialogSync({
       filters: [{ name: "UI Mix", extensions: ["uimix"] }],
-    })?.[0];
+    });
     if (!newPath) {
       return;
     }
+    console.log("newPath", newPath);
 
     this.filePath = newPath;
     this.save();
 
-    this.emit("metadataChanged", this.metadata);
+    this.emit("metadataChange", this.metadata);
   }
 
   static open() {

@@ -8,6 +8,10 @@ export interface DocumentMetadata {
 
 export interface DesktopAPI {
   getDocumentMetadata(): Promise<DocumentMetadata>;
+  onDocumentMetadataChange(
+    callback: (metadata: DocumentMetadata) => void
+  ): () => void;
+
   getDocumentData(): Promise<ProjectJSON>;
   setDocumentData(data: ProjectJSON): Promise<void>;
   onDocumentDataChange(callback: (data: ProjectJSON) => void): () => void;
