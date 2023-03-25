@@ -68,6 +68,8 @@ class Connection extends TypedEmitter<{
         void this.onReady();
       }
     });
+
+    // TODO: on local file change
   }
 
   private rpc: RPC<IRootToEditorRPCHandler, IEditorToRootRPCHandler>;
