@@ -9,7 +9,7 @@
     "build:tsc": "tsc",
     "build:vite": "vite build",
     "dev:vite": "vite",
-    "dev": "run-z dev:vite storybook",
+    "dev": "run-z dev:vite,storybook",
     "format": "prettier --write src",
     "lint": "eslint src",
     "preview": "vite preview",
