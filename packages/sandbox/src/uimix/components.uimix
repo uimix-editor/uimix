@@ -219,15 +219,15 @@
     "1Bvi2z3TpKXtTJLTRPTEd8": {
       "width": {
         "type": "fillContainer",
-        "value": [50, "px"],
         "min": [25, "px"],
-        "max": [100, "px"]
+        "max": [100, "px"],
+        "value": [50, "px"]
       },
       "height": {
         "type": "fillContainer",
-        "value": [50, "px"],
         "min": [20, "px"],
-        "max": [60, "px"]
+        "max": [60, "px"],
+        "value": [50, "px"]
       },
       "fills": [{ "type": "solid", "hex": "#EF4444" }]
     },
@@ -246,7 +246,11 @@
       "height": { "type": "hugContents" },
       "fills": [{ "type": "solid", "hex": "#000000" }],
       "textContent": "Hello, world!",
-      "fontSize": [20, "px"]
+      "fontSize": [20, "px"],
+      "marginLeft": [40, "px"],
+      "marginTop": [10, "px"],
+      "marginRight": [20, "px"],
+      "marginBottom": [30, "px"]
     },
     "1Bvi3BSSb2oaHb1ZqUEk6H": {},
     "1Bvi319YVxZELz4tEskN1S": {
