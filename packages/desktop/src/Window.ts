@@ -1,4 +1,4 @@
-import { BrowserWindow, shell, WebContents } from "electron";
+import { BrowserWindow, dialog, shell, WebContents } from "electron";
 import path from "path";
 import { File } from "./File";
 
@@ -35,6 +35,30 @@ export class Window {
     });
     file.on("editedChange", (edited) => {
       this.window.setDocumentEdited(edited);
+    });
+
+    this.window.on("close", (event) => {
+      if (this.file.edited) {
+        event.preventDefault();
+
+        const choice = dialog.showMessageBoxSync(this.window, {
+          type: "question",
+          buttons: ["Save", "Discard", "Cancel"],
+          defaultId: 0,
+          cancelId: 2,
+          title: "Unsaved Changes",
+          message: "Do you want to save the changes you made?",
+          detail: "Your changes will be lost if you don't save them.",
+        });
+        if (choice === 0) {
+          this.file.save();
+          this.window.close();
+        }
+        if (choice === 1) {
+          this.file.revert();
+          this.window.close();
+        }
+      }
     });
   }
 

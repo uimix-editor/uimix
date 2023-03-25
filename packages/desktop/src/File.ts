@@ -56,6 +56,10 @@ export class File extends TypedEmitter<{
 
   private savedData: ProjectJSON;
 
+  revert() {
+    this.setData(this.savedData);
+  }
+
   save() {
     if (!this.filePath) {
       this.saveAs();
