@@ -8,6 +8,7 @@ export class Window {
     this.window = new BrowserWindow({
       width: 1280,
       height: 720,
+      titleBarStyle: "hiddenInset",
       webPreferences: {
         preload: path.join(__dirname, "preload.js"),
       },
