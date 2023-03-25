@@ -8,13 +8,14 @@ import { TypedEmitter } from "tiny-typed-emitter";
 import { dialog } from "electron";
 
 export class File extends TypedEmitter<{
+  editedChange: (edited: boolean) => void;
   metadataChange: (metadata: DocumentMetadata) => void;
 }> {
   constructor(filePath?: string) {
     super();
 
     this.filePath = filePath;
-    this.data = filePath
+    this._data = filePath
       ? ProjectJSON.parse(
           JSON.parse(fs.readFileSync(filePath, { encoding: "utf-8" }))
         )
@@ -38,7 +39,17 @@ export class File extends TypedEmitter<{
   }
 
   filePath?: string;
-  data: ProjectJSON;
+  edited = false;
+
+  private _data: ProjectJSON;
+  get data(): ProjectJSON {
+    return this._data;
+  }
+  setData(data: ProjectJSON) {
+    this._data = data;
+    this.edited = true;
+    this.emit("editedChange", this.edited);
+  }
 
   save() {
     if (!this.filePath) {

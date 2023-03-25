@@ -1,4 +1,4 @@
-import { BrowserWindow, ipcMain, shell, WebContents } from "electron";
+import { BrowserWindow, shell, WebContents } from "electron";
 import path from "path";
 import { File } from "./File";
 
@@ -31,6 +31,10 @@ export class Window {
 
     file.on("metadataChange", () => {
       this.window.webContents.send("documentMetadataChange", file.metadata);
+      this.window.setDocumentEdited(file.edited);
+    });
+    file.on("editedChange", (edited) => {
+      this.window.setDocumentEdited(edited);
     });
   }
 

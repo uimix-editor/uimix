@@ -78,7 +78,7 @@ handleIPC({
     if (!window) {
       throw new Error("Window not found");
     }
-    window.file.data = data;
+    window.file.setData(data);
     return;
   },
 });
