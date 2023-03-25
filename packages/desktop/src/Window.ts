@@ -41,8 +41,6 @@ export class Window {
 
     this.window.on("close", (event) => {
       if (this.file.edited) {
-        event.preventDefault();
-
         const choice = dialog.showMessageBoxSync(this.window, {
           type: "question",
           buttons: ["Save", "Discard", "Cancel"],
@@ -54,11 +52,9 @@ export class Window {
         });
         if (choice === 0) {
           this.file.save();
-          this.window.close();
         }
-        if (choice === 1) {
-          this.file.revert();
-          this.window.close();
+        if (choice === 2) {
+          event.preventDefault();
         }
       }
     });

@@ -50,7 +50,7 @@ app.on("activate", () => {
   }
 });
 
-app.on("will-quit", () => {
+app.on("before-quit", () => {
   // save last opened files
 
   const browserWindows = BrowserWindow.getAllWindows();
