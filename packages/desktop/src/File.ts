@@ -6,6 +6,7 @@ import { ProjectJSON } from "../../node-data/src";
 import { DocumentMetadata } from "../../dashboard/src/types/DesktopAPI";
 import { TypedEmitter } from "tiny-typed-emitter";
 import { dialog } from "electron";
+import { isEqual } from "lodash";
 
 export class File extends TypedEmitter<{
   editedChange: (edited: boolean) => void;
@@ -26,6 +27,7 @@ export class File extends TypedEmitter<{
           },
           styles: {},
         };
+    this.savedData = this._data;
   }
 
   get name(): string {
@@ -47,9 +49,12 @@ export class File extends TypedEmitter<{
   }
   setData(data: ProjectJSON) {
     this._data = data;
-    this.edited = true;
+    // TODO: don't compare image data
+    this.edited = !isEqual(this.savedData, this._data);
     this.emit("editedChange", this.edited);
   }
+
+  private savedData: ProjectJSON;
 
   save() {
     if (!this.filePath) {
@@ -57,6 +62,8 @@ export class File extends TypedEmitter<{
       return;
     }
     fs.writeFileSync(this.filePath, formatJSON(JSON.stringify(this.data)));
+    this.savedData = this.data;
+    this.edited = false;
   }
 
   saveAs() {
