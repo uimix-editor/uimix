@@ -135,6 +135,13 @@ export class Selectable {
     return children;
   }
 
+  @computed get pageSelectable(): Selectable | undefined {
+    if (this.originalNode.type === "page") {
+      return this;
+    }
+    return this.parent?.pageSelectable;
+  }
+
   // ancestors ([root, ..., parent, this])
   @computed get ancestors(): readonly Selectable[] {
     const result: Selectable[] = [];
