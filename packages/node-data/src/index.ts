@@ -4,6 +4,7 @@ export * from "./style/value/stack.js";
 export * from "./style/value/text.js";
 export * from "./style/value/instance.js";
 export * from "./style/value/fill.js";
+export * from "./style/value/shadow.js";
 export * from "./style/style.js";
 export * from "./node/node.js";
 export * from "./project.js";
