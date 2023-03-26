@@ -1,6 +1,5 @@
 import { observer } from "mobx-react-lite";
 import addIcon from "@iconify-icons/ic/add";
-import removeIcon from "@iconify-icons/ic/remove";
 import { Color } from "../../../utils/Color";
 import { ColorInput } from "../components/ColorInput";
 import { Mixed, sameOrMixed } from "../../../utils/Mixed";
@@ -24,17 +23,6 @@ export const ShadowPane: React.FC = observer(function ShadowPane() {
   );
   const shadows = sameOrMixed(selectables.map((s) => s.style.shadows));
   const hasShadow = !!(shadows && shadows !== Mixed && shadows.length);
-
-  // const onChangeFill = action((fill: Color | undefined) => {
-  //   for (const selectable of selectables) {
-  //     selectable.style.fills = fill
-  //       ? [{ type: "solid", hex: fill.toHex() }]
-  //       : [];
-  //   }
-  // });
-  // const onChangeEndFill = action(() => {
-  //   projectState.undoManager.stopCapturing();
-  // });
 
   const onChangeShadow = action((shadow: Shadow, index: number) => {
     for (const selectable of selectables) {
