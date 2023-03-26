@@ -65,6 +65,28 @@ class Commands {
     }
   }
 
+  selectAll() {
+    // select all siblings of the first selected node
+
+    const firstSelected = projectState.selectedSelectables[0];
+    if (!firstSelected) {
+      // select all top level nodes
+      for (const selectable of projectState.page?.selectable.children ?? []) {
+        selectable.select();
+      }
+    } else {
+      const parent = firstSelected.parent;
+      if (!parent) {
+        return;
+      }
+      for (const selectable of parent.children) {
+        selectable.select();
+      }
+    }
+
+    projectState.undoManager.stopCapturing();
+  }
+
   insertFrame() {
     viewportState.tool = {
       type: "insert",
@@ -221,6 +243,14 @@ class Commands {
       this.delete();
     }),
   };
+  readonly selectAllCommand: MenuCommandDef = {
+    type: "command",
+    text: "Select All",
+    shortcuts: [new Shortcut(["Mod"], "KeyA")],
+    onClick: action(() => {
+      this.selectAll();
+    }),
+  };
 
   readonly insertFrameCommand: MenuCommandDef = {
     type: "command",
@@ -345,6 +375,8 @@ class Commands {
           this.copyCommand,
           this.pasteCommand,
           this.deleteCommand,
+          { type: "separator" },
+          this.selectAllCommand,
         ],
       },
       {
