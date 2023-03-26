@@ -173,11 +173,11 @@ async function getFillBorderStylePartial(
     if (effect.type === "DROP_SHADOW" && effect.visible) {
       return [
         {
-          hex: rgbaToHex(effect.color),
-          x: [effect.offset.x, "px"],
-          y: [effect.offset.y, "px"],
-          blur: [effect.radius, "px"],
-          spread: [effect.spread ?? 0, "px"],
+          color: rgbaToHex(effect.color),
+          x: effect.offset.x,
+          y: effect.offset.y,
+          blur: effect.radius,
+          spread: effect.spread ?? 0,
         },
       ];
     }

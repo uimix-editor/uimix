@@ -59,15 +59,15 @@ export const ShadowPane: React.FC = observer(function ShadowPane() {
               <div className="flex gap-2 items-center">
                 <div className="flex flex-col gap-2">
                   <ColorInput
-                    value={Color.from(shadow.hex) ?? Color.black}
+                    value={Color.from(shadow.color) ?? Color.black}
                     // onChange={onChangeFill}
                     // onChangeEnd={onChangeEndFill}
                   />
                   <div className="grid grid-cols-4 gap-1">
-                    <Input icon="X" />
-                    <Input icon="Y" />
-                    <Input icon="B" />
-                    <Input icon="S" />
+                    <Input icon="X" value={String(shadow.x)} />
+                    <Input icon="Y" value={String(shadow.y)} />
+                    <Input icon="B" value={String(shadow.blur)} />
+                    <Input icon="S" value={String(shadow.spread)} />
                   </div>
                 </div>
                 <DropdownMenu

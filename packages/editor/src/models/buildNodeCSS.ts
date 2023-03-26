@@ -126,12 +126,12 @@ export function buildNodeCSS(
     } else {
       cssStyle.boxShadow = shadows
         .map((shadow) => {
-          const x = shadow.x.join("");
-          const y = shadow.y.join("");
-          const blur = shadow.blur.join("");
-          const spread = shadow.spread.join("");
-          const hex = shadow.hex;
-          return `${x} ${y} ${blur} ${spread} ${hex}`;
+          const x = `${shadow.x}px`;
+          const y = `${shadow.y}px`;
+          const blur = `${shadow.blur}px`;
+          const spread = `${shadow.spread}px`;
+          const color = shadow.color;
+          return `${x} ${y} ${blur} ${spread} ${color}`;
         })
         .join(", ");
     }
