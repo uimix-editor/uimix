@@ -91,7 +91,7 @@ export const BorderPane: React.FC = observer(function BorderPane() {
     for (const selectable of selectables) {
       const adding = border && !selectable.style.border;
       selectable.style.border = border
-        ? { type: "solid", hex: border.toHex() }
+        ? { type: "solid", color: border.toHex() }
         : null;
       if (adding) {
         selectable.style.borderTopWidth = 1;
@@ -145,7 +145,7 @@ export const BorderPane: React.FC = observer(function BorderPane() {
         <InspectorTargetContext.Provider value={selectables}>
           <div className="flex flex-col gap-2">
             <ColorInput
-              value={Color.from(border.hex) ?? Color.black}
+              value={Color.from(border.color) ?? Color.black}
               onChange={onChangeBorder}
               onChangeEnd={onChangeEndBorder}
             />

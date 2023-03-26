@@ -170,7 +170,7 @@
       },
       "width": { "type": "hug" },
       "height": { "type": "hug" },
-      "fills": [{ "type": "solid", "hex": "#E5E7EB" }],
+      "fills": [{ "type": "solid", "color": "#E5E7EB" }],
       "layout": "stack",
       "paddingTop": 4,
       "paddingRight": 8,
@@ -180,7 +180,7 @@
     "1Bvi2z3UGTM64JtRT7Qc1S": {
       "width": { "type": "hug" },
       "height": { "type": "hug" },
-      "fills": [{ "type": "solid", "hex": "#111827" }],
+      "fills": [{ "type": "solid", "color": "#111827" }],
       "textContent": "Button"
     },
     "1Bvi2z3UVsEskiSt2TcdL7": {
@@ -188,10 +188,10 @@
         "x": { "type": "start", "start": 200 },
         "y": { "type": "start", "start": 400 }
       },
-      "fills": [{ "type": "solid", "hex": "#3B82F6" }]
+      "fills": [{ "type": "solid", "color": "#3B82F6" }]
     },
     "1Bvi2z3UVsEskiSt2TcdL7:1Bvi2z3UGTM64JtRT7Qc1S": {
-      "fills": [{ "type": "solid", "hex": "#FFFFFF" }]
+      "fills": [{ "type": "solid", "color": "#FFFFFF" }]
     },
     "1Bvi2z3UaHFmaikKtfcmGX": {
       "position": {
@@ -208,7 +208,7 @@
       },
       "width": { "type": "hug" },
       "height": { "type": "hug" },
-      "fills": [{ "type": "solid", "hex": "#FFFFFF" }],
+      "fills": [{ "type": "solid", "color": "#FFFFFF" }],
       "layout": "stack",
       "gap": 10,
       "paddingTop": 10,
@@ -229,22 +229,22 @@
         "max": 60,
         "value": 50
       },
-      "fills": [{ "type": "solid", "hex": "#EF4444" }]
+      "fills": [{ "type": "solid", "color": "#EF4444" }]
     },
     "1Bvi2z3To8ddXo6R6ZftVD": {
       "width": { "type": "fixed", "value": 40 },
       "height": { "type": "fixed", "value": 80 },
-      "fills": [{ "type": "solid", "hex": "#22C55E" }]
+      "fills": [{ "type": "solid", "color": "#22C55E" }]
     },
     "1Bvi2z3UB1xUVg4Xz9WTpJ": {
       "width": { "type": "fixed", "value": 80 },
       "height": { "type": "fixed", "value": 40 },
-      "fills": [{ "type": "solid", "hex": "#3B82F6" }]
+      "fills": [{ "type": "solid", "color": "#3B82F6" }]
     },
     "1Bvi2z3U3SiK6r7gf9vh7N": {
       "width": { "type": "hug" },
       "height": { "type": "hug" },
-      "fills": [{ "type": "solid", "hex": "#000000" }],
+      "fills": [{ "type": "solid", "color": "#000000" }],
       "marginTop": 10,
       "marginRight": 20,
       "marginBottom": 30,
@@ -260,7 +260,7 @@
       },
       "width": { "type": "fixed", "value": 744 },
       "height": { "type": "fixed", "value": 456 },
-      "fills": [{ "type": "solid", "hex": "#FFFFFF" }],
+      "fills": [{ "type": "solid", "color": "#FFFFFF" }],
       "layout": "stack",
       "stackDirection": "y",
       "stackAlign": "center"
@@ -282,7 +282,7 @@
       },
       "width": { "type": "fill", "value": 428 },
       "height": { "type": "fill", "value": 173 },
-      "fills": [{ "type": "solid", "hex": "#FFFFFF" }]
+      "fills": [{ "type": "solid", "color": "#FFFFFF" }]
     },
     "1Bvi32d9RMi3ES5kk2UvuM": {
       "position": {
@@ -308,7 +308,7 @@
         "x": { "type": "start", "start": 160 },
         "y": { "type": "start", "start": 28 }
       },
-      "fills": [{ "type": "solid", "hex": "#BABABA" }],
+      "fills": [{ "type": "solid", "color": "#BABABA" }],
       "mainComponent": "1Bvi2z3USBZi1pWrvPd6Ut"
     },
     "1Bvi2z3UrU9VkawwAteXs8:1Bvi2z3UGTM64JtRT7Qc1S": {
@@ -321,7 +321,7 @@
       },
       "width": { "type": "fixed", "value": 100 },
       "height": { "type": "fixed", "value": 100 },
-      "fills": [{ "type": "solid", "hex": "#FFFFFF" }],
+      "fills": [{ "type": "solid", "color": "#FFFFFF" }],
       "imageHash": "YmY-tuteU03QY-k_2ARy1uacNmXDNmOX-FFAlj2qCIo="
     },
     "1Bvi39mct9UNYZ9eTCCRdV": {
@@ -347,7 +347,7 @@
       "topRightRadius": 20,
       "bottomRightRadius": 20,
       "bottomLeftRadius": 20,
-      "fills": [{ "type": "solid", "hex": "#ffffff" }],
+      "fills": [{ "type": "solid", "color": "#ffffff" }],
       "opacity": 1,
       "overflowHidden": false,
       "layout": "stack",
@@ -368,7 +368,7 @@
       "topRightRadius": 8,
       "bottomRightRadius": 8,
       "bottomLeftRadius": 8,
-      "fills": [{ "type": "solid", "hex": "#f0f9ff" }],
+      "fills": [{ "type": "solid", "color": "#f0f9ff" }],
       "opacity": 1,
       "overflowHidden": false,
       "layout": "stack",
@@ -390,7 +390,7 @@
       "hidden": false,
       "width": { "type": "fill", "value": 315.640625 },
       "height": { "type": "hug" },
-      "fills": [{ "type": "solid", "hex": "#1f2937" }],
+      "fills": [{ "type": "solid", "color": "#1f2937" }],
       "opacity": 1,
       "textContent": "React Components Import/Export",
       "fontFamily": "Satoshi",
@@ -404,7 +404,7 @@
       "hidden": false,
       "width": { "type": "fill" },
       "height": { "type": "hug" },
-      "fills": [{ "type": "solid", "hex": "#4b5563" }],
+      "fills": [{ "type": "solid", "color": "#4b5563" }],
       "opacity": 1,
       "textContent": "Seamlessly work with React components, boosting your design-to-development workflow.\n",
       "fontFamily": "Inter",

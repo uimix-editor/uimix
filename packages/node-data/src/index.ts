@@ -3,6 +3,7 @@ export * from "./style/value/size.js";
 export * from "./style/value/stack.js";
 export * from "./style/value/text.js";
 export * from "./style/value/instance.js";
+export * from "./style/value/color.js";
 export * from "./style/value/fill.js";
 export * from "./style/value/shadow.js";
 export * from "./style/style.js";

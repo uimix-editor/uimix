@@ -188,7 +188,7 @@ exports[`selectablesToProjectJSON > works 1`] = `
     "1Bvi2z3TfkSpYXW29daTN8": {
       "fills": [
         {
-          "hex": "#FFFFFF",
+          "color": "#FFFFFF",
           "type": "solid",
         },
       ],
@@ -218,7 +218,7 @@ exports[`selectablesToProjectJSON > works 1`] = `
     "1Bvi2z3To8ddXo6R6ZftVD": {
       "fills": [
         {
-          "hex": "#22C55E",
+          "color": "#22C55E",
           "type": "solid",
         },
       ],
@@ -234,7 +234,7 @@ exports[`selectablesToProjectJSON > works 1`] = `
     "1Bvi2z3TpKXtTJLTRPTEd8": {
       "fills": [
         {
-          "hex": "#EF4444",
+          "color": "#EF4444",
           "type": "solid",
         },
       ],
@@ -254,7 +254,7 @@ exports[`selectablesToProjectJSON > works 1`] = `
     "1Bvi2z3U3SiK6r7gf9vh7N": {
       "fills": [
         {
-          "hex": "#000000",
+          "color": "#000000",
           "type": "solid",
         },
       ],
@@ -274,7 +274,7 @@ exports[`selectablesToProjectJSON > works 1`] = `
     "1Bvi2z3UB1xUVg4Xz9WTpJ": {
       "fills": [
         {
-          "hex": "#3B82F6",
+          "color": "#3B82F6",
           "type": "solid",
         },
       ],
@@ -290,7 +290,7 @@ exports[`selectablesToProjectJSON > works 1`] = `
     "1Bvi2z3UGTM64JtRT7Qc1S": {
       "fills": [
         {
-          "hex": "#111827",
+          "color": "#111827",
           "type": "solid",
         },
       ],
@@ -305,7 +305,7 @@ exports[`selectablesToProjectJSON > works 1`] = `
     "1Bvi2z3UPfi6W3L8nDt5VA": {
       "fills": [
         {
-          "hex": "#E5E7EB",
+          "color": "#E5E7EB",
           "type": "solid",
         },
       ],
@@ -335,7 +335,7 @@ exports[`selectablesToProjectJSON > works 1`] = `
     "1Bvi2z3UVsEskiSt2TcdL7": {
       "fills": [
         {
-          "hex": "#3B82F6",
+          "color": "#3B82F6",
           "type": "solid",
         },
       ],
@@ -353,7 +353,7 @@ exports[`selectablesToProjectJSON > works 1`] = `
     "1Bvi2z3UVsEskiSt2TcdL7:1Bvi2z3UGTM64JtRT7Qc1S": {
       "fills": [
         {
-          "hex": "#FFFFFF",
+          "color": "#FFFFFF",
           "type": "solid",
         },
       ],
@@ -374,7 +374,7 @@ exports[`selectablesToProjectJSON > works 1`] = `
     "1Bvi2z3UrU9VkawwAteXs8": {
       "fills": [
         {
-          "hex": "#BABABA",
+          "color": "#BABABA",
           "type": "solid",
         },
       ],
@@ -397,7 +397,7 @@ exports[`selectablesToProjectJSON > works 1`] = `
     "1Bvi319YVxZELz4tEskN1S": {
       "fills": [
         {
-          "hex": "#FFFFFF",
+          "color": "#FFFFFF",
           "type": "solid",
         },
       ],
@@ -470,7 +470,7 @@ exports[`selectablesToProjectJSON > works 1`] = `
     "1Bvi365mtWZmXKDPeJTB4s": {
       "fills": [
         {
-          "hex": "#FFFFFF",
+          "color": "#FFFFFF",
           "type": "solid",
         },
       ],
@@ -496,7 +496,7 @@ exports[`selectablesToProjectJSON > works 1`] = `
     "1Bvi392qBdMy93LGLcVymb": {
       "fills": [
         {
-          "hex": "#FFFFFF",
+          "color": "#FFFFFF",
           "type": "solid",
         },
       ],
@@ -541,7 +541,7 @@ exports[`selectablesToProjectJSON > works 1`] = `
     "1BwWRgjHmYZ8qLKDj3Tvdy": {
       "fills": [
         {
-          "hex": "#1f2937",
+          "color": "#1f2937",
           "type": "solid",
         },
       ],
@@ -579,7 +579,7 @@ exports[`selectablesToProjectJSON > works 1`] = `
       "bottomRightRadius": 20,
       "fills": [
         {
-          "hex": "#ffffff",
+          "color": "#ffffff",
           "type": "solid",
         },
       ],
@@ -618,7 +618,7 @@ exports[`selectablesToProjectJSON > works 1`] = `
     "1BwWRgjHuAe9UTxVhowwYu": {
       "fills": [
         {
-          "hex": "#4b5563",
+          "color": "#4b5563",
           "type": "solid",
         },
       ],
@@ -644,7 +644,7 @@ exports[`selectablesToProjectJSON > works 1`] = `
       "bottomRightRadius": 8,
       "fills": [
         {
-          "hex": "#f0f9ff",
+          "color": "#f0f9ff",
           "type": "solid",
         },
       ],

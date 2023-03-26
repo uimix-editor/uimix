@@ -69,7 +69,7 @@ describe(Node.name, () => {
       };
       style.width = { type: "fixed", value: 50 };
       style.height = { type: "fixed", value: 50 };
-      style.fills = [{ type: "solid", hex: Color.from("red").toHex() }];
+      style.fills = [{ type: "solid", color: Color.from("red").toHex() }];
 
       frames.push(frame);
     }

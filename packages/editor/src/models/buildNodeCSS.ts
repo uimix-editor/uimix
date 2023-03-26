@@ -109,9 +109,9 @@ export function buildNodeCSS(
 
   if (nodeType === "frame" || nodeType === "image" || nodeType === "svg") {
     const fills = style.fills;
-    cssStyle.background = fills.length ? fills[0].hex : "transparent";
+    cssStyle.background = fills.length ? fills[0].color : "transparent";
     cssStyle.borderStyle = "solid";
-    cssStyle.borderColor = style.border?.hex ?? "transparent";
+    cssStyle.borderColor = style.border?.color ?? "transparent";
     cssStyle.borderTopWidth = `${style.borderTopWidth}px`;
     cssStyle.borderRightWidth = `${style.borderRightWidth}px`;
     cssStyle.borderBottomWidth = `${style.borderBottomWidth}px`;
@@ -144,7 +144,7 @@ export function buildNodeCSS(
     cssStyle.display = "flex";
     cssStyle.flexDirection = "column";
     const fills = style.fills;
-    cssStyle.color = fills.length ? fills[0].hex : "transparent";
+    cssStyle.color = fills.length ? fills[0].color : "transparent";
     cssStyle.fontFamily = style.fontFamily;
     cssStyle.fontSize = `${style.fontSize}px`;
     cssStyle.fontWeight = style.fontWeight;

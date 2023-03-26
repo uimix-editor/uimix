@@ -35,7 +35,7 @@ export class NodeInsertDragHandler implements DragHandler {
       this.selectable = selectable;
       this.selectable.style.textContent = "Type Something";
       this.selectable.style.fills = [
-        { type: "solid", hex: Color.from("black").toHex() },
+        { type: "solid", color: Color.from("black").toHex() },
       ];
       this.selectable.style.width = { type: "hug" };
       this.selectable.style.height = { type: "hug" };
@@ -45,7 +45,7 @@ export class NodeInsertDragHandler implements DragHandler {
       selectable.originalNode.name = "Image";
       this.selectable = selectable;
       this.selectable.style.fills = [
-        { type: "solid", hex: Color.from("white").toHex() },
+        { type: "solid", color: Color.from("white").toHex() },
       ];
       this.selectable.style.width = { type: "fixed", value: 100 };
       this.selectable.style.height = { type: "fixed", value: 100 };
@@ -60,7 +60,7 @@ export class NodeInsertDragHandler implements DragHandler {
       selectable.originalNode.name = "Frame";
       this.selectable = selectable;
       this.selectable.style.fills = [
-        { type: "solid", hex: Color.from("white").toHex() },
+        { type: "solid", color: Color.from("white").toHex() },
       ];
       this.selectable.style.width = { type: "fixed", value: 100 };
       this.selectable.style.height = { type: "fixed", value: 100 };

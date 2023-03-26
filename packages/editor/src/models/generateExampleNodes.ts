@@ -17,7 +17,7 @@ export function generateExampleNodes(page: Node) {
     style.width = { type: "fixed", value: 50 };
     style.height = { type: "fixed", value: 50 };
     style.fills = [
-      { type: "solid", hex: Color.from(colors.red[500])!.toHex() },
+      { type: "solid", color: Color.from(colors.red[500])!.toHex() },
     ];
   }
 
@@ -32,7 +32,7 @@ export function generateExampleNodes(page: Node) {
     };
     stackStyle.width = { type: "hug" };
     stackStyle.height = { type: "hug" };
-    stackStyle.fills = [{ type: "solid", hex: Color.white.toHex() }];
+    stackStyle.fills = [{ type: "solid", color: Color.white.toHex() }];
     stackStyle.layout = "stack";
     stackStyle.gap = 10;
     stackStyle.paddingTop = 10;
@@ -47,7 +47,7 @@ export function generateExampleNodes(page: Node) {
     stackItem0Style.width = { type: "fixed", value: 50 };
     stackItem0Style.height = { type: "fixed", value: 50 };
     stackItem0Style.fills = [
-      { type: "solid", hex: Color.from(colors.red[500])!.toHex() },
+      { type: "solid", color: Color.from(colors.red[500])!.toHex() },
     ];
 
     const stackItem1 = stackSelectable.append("frame");
@@ -57,7 +57,7 @@ export function generateExampleNodes(page: Node) {
     stackItem1Style.width = { type: "fixed", value: 40 };
     stackItem1Style.height = { type: "fixed", value: 80 };
     stackItem1Style.fills = [
-      { type: "solid", hex: Color.from(colors.green[500])!.toHex() },
+      { type: "solid", color: Color.from(colors.green[500])!.toHex() },
     ];
 
     const stackItem2 = stackSelectable.append("frame");
@@ -67,7 +67,7 @@ export function generateExampleNodes(page: Node) {
     stackItem2Style.width = { type: "fixed", value: 80 };
     stackItem2Style.height = { type: "fixed", value: 40 };
     stackItem2Style.fills = [
-      { type: "solid", hex: Color.from(colors.blue[500])!.toHex() },
+      { type: "solid", color: Color.from(colors.blue[500])!.toHex() },
     ];
 
     const text = stackSelectable.append("text");
@@ -77,7 +77,7 @@ export function generateExampleNodes(page: Node) {
     textStyle.width = { type: "hug" };
     textStyle.height = { type: "hug" };
     textStyle.fontSize = 20;
-    textStyle.fills = [{ type: "solid", hex: Color.from("black").toHex() }];
+    textStyle.fills = [{ type: "solid", color: Color.from("black").toHex() }];
   }
 
   {
@@ -123,7 +123,7 @@ export function generateExampleNodes(page: Node) {
     rootNodeStyle.width = { type: "hug" };
     rootNodeStyle.height = { type: "hug" };
     rootNodeStyle.fills = [
-      { type: "solid", hex: Color.from(colors.gray[200])!.toHex() },
+      { type: "solid", color: Color.from(colors.gray[200])!.toHex() },
     ];
     rootNodeStyle.layout = "stack";
     rootNodeStyle.paddingLeft = 8;
@@ -135,7 +135,7 @@ export function generateExampleNodes(page: Node) {
     textNodeStyle.width = { type: "hug" };
     textNodeStyle.height = { type: "hug" };
     textNodeStyle.fills = [
-      { type: "solid", hex: Color.from(colors.gray[900])!.toHex() },
+      { type: "solid", color: Color.from(colors.gray[900])!.toHex() },
     ];
 
     const hoverVariantStyle = hoverVariant.selectable.style;
@@ -144,7 +144,7 @@ export function generateExampleNodes(page: Node) {
       y: { type: "start", start: 400 },
     };
     hoverVariantStyle.fills = [
-      { type: "solid", hex: Color.from(colors.blue[500])!.toHex() },
+      { type: "solid", color: Color.from(colors.blue[500])!.toHex() },
     ];
 
     const mobileVariantStyle = mobileVariant.selectable.style;
@@ -158,7 +158,7 @@ export function generateExampleNodes(page: Node) {
       textNode.id,
     ]).style;
     hoverTextNodeStyle.fills = [
-      { type: "solid", hex: Color.from(colors.white)!.toHex() },
+      { type: "solid", color: Color.from(colors.white)!.toHex() },
     ];
 
     const instanceNode = project.nodes.create("instance");

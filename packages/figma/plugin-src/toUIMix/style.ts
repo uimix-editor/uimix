@@ -71,7 +71,7 @@ async function paintToUIMix(
     case "SOLID":
       return {
         type: "solid",
-        hex: rgbaToHex({ ...paint.color, a: paint.opacity }),
+        color: rgbaToHex({ ...paint.color, a: paint.opacity }),
       };
     /* TODO
     case "GRADIENT_LINEAR": {
