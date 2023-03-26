@@ -13,12 +13,12 @@ function getPositionStylePartial(
   // TODO: more constraints
   if (parentLayout === "NONE") {
     style.position = {
-      x: { type: "start", start: [node.x - offset[0], "px"] },
-      y: { type: "start", start: [node.y - offset[1], "px"] },
+      x: { type: "start", start: node.x - offset[0] },
+      y: { type: "start", start: node.y - offset[1] },
     };
   }
-  style.width = { type: "fixed", value: [node.width, "px"] };
-  style.height = { type: "fixed", value: [node.height, "px"] };
+  style.width = { type: "fixed", value: node.width };
+  style.height = { type: "fixed", value: node.height };
 
   if (parentLayout === "VERTICAL") {
     if (node.layoutGrow) {
@@ -163,10 +163,10 @@ async function getFillBorderStylePartial(
     if (border?.type === "solid") {
       style.border = border;
     }
-    style.borderTopWidth = [node.strokeTopWeight, "px"];
-    style.borderRightWidth = [node.strokeRightWeight, "px"];
-    style.borderBottomWidth = [node.strokeBottomWeight, "px"];
-    style.borderLeftWidth = [node.strokeLeftWeight, "px"];
+    style.borderTopWidth = node.strokeTopWeight;
+    style.borderRightWidth = node.strokeRightWeight;
+    style.borderBottomWidth = node.strokeBottomWeight;
+    style.borderLeftWidth = node.strokeLeftWeight;
   }
 
   style.shadows = node.effects.flatMap((effect) => {
@@ -221,7 +221,7 @@ async function getTextStylePartial(
   const style: Partial<UIMix.StyleJSON> = {};
 
   if (node.fontSize !== figma.mixed) {
-    style.fontSize = [node.fontSize, "px"];
+    style.fontSize = node.fontSize;
   }
 
   if (node.lineHeight !== figma.mixed) {
@@ -230,7 +230,7 @@ async function getTextStylePartial(
     } else if (node.lineHeight.unit === "PERCENT") {
       style.lineHeight = [node.lineHeight.value, "%"];
     } else {
-      style.lineHeight = [node.lineHeight.value, "px"];
+      style.lineHeight = node.lineHeight.value;
     }
   }
 
@@ -238,7 +238,7 @@ async function getTextStylePartial(
     if (node.letterSpacing.unit === "PERCENT") {
       style.letterSpacing = [node.letterSpacing.value, "%"];
     } else {
-      style.letterSpacing = [node.letterSpacing.value, "px"];
+      style.letterSpacing = node.letterSpacing.value;
     }
   }
 
@@ -322,32 +322,26 @@ function getLayoutStylePartial(
 
   style.layout = "stack";
   style.stackDirection = node.layoutMode === "VERTICAL" ? "y" : "x";
-  style.gap = [node.itemSpacing, "px"];
+  style.gap = node.itemSpacing;
   if (
     node.strokesIncludedInLayout ||
     node.strokes.filter((s) => s.visible).length === 0
   ) {
-    style.paddingLeft = [node.paddingLeft, "px"];
-    style.paddingRight = [node.paddingRight, "px"];
-    style.paddingTop = [node.paddingTop, "px"];
-    style.paddingBottom = [node.paddingBottom, "px"];
+    style.paddingLeft = node.paddingLeft;
+    style.paddingRight = node.paddingRight;
+    style.paddingTop = node.paddingTop;
+    style.paddingBottom = node.paddingBottom;
   } else {
-    style.paddingLeft = [
-      Math.max(0, node.paddingLeft - node.strokeLeftWeight),
-      "px",
-    ];
-    style.paddingRight = [
-      Math.max(0, node.paddingRight - node.strokeRightWeight),
-      "px",
-    ];
-    style.paddingTop = [
-      Math.max(0, node.paddingTop - node.strokeTopWeight),
-      "px",
-    ];
-    style.paddingBottom = [
-      Math.max(0, node.paddingBottom - node.strokeBottomWeight),
-      "px",
-    ];
+    style.paddingLeft = Math.max(0, node.paddingLeft - node.strokeLeftWeight);
+    style.paddingRight = Math.max(
+      0,
+      node.paddingRight - node.strokeRightWeight
+    );
+    style.paddingTop = Math.max(0, node.paddingTop - node.strokeTopWeight);
+    style.paddingBottom = Math.max(
+      0,
+      node.paddingBottom - node.strokeBottomWeight
+    );
   }
 
   style.stackJustify = (() => {
@@ -396,10 +390,10 @@ function getCornerStylePartial(
   node: RectangleCornerMixin
 ): Partial<UIMix.StyleJSON> {
   return {
-    topLeftRadius: [node.topLeftRadius, "px"],
-    topRightRadius: [node.topLeftRadius, "px"],
-    bottomLeftRadius: [node.topLeftRadius, "px"],
-    bottomRightRadius: [node.topLeftRadius, "px"],
+    topLeftRadius: node.topLeftRadius,
+    topRightRadius: node.topRightRadius,
+    bottomLeftRadius: node.bottomLeftRadius,
+    bottomRightRadius: node.bottomRightRadius,
   };
 }
 

@@ -165,17 +165,17 @@
     "1Bvi2z3USBZi1pWrvPd6Ut": {},
     "1Bvi2z3UPfi6W3L8nDt5VA": {
       "position": {
-        "x": { "type": "start", "start": [50, "px"] },
-        "y": { "type": "start", "start": [400, "px"] }
+        "x": { "type": "start", "start": 50 },
+        "y": { "type": "start", "start": 400 }
       },
       "width": { "type": "hugContents" },
       "height": { "type": "hugContents" },
       "fills": [{ "type": "solid", "hex": "#E5E7EB" }],
       "layout": "stack",
-      "paddingTop": [4, "px"],
-      "paddingRight": [8, "px"],
-      "paddingBottom": [4, "px"],
-      "paddingLeft": [8, "px"]
+      "paddingTop": 4,
+      "paddingRight": 8,
+      "paddingBottom": 4,
+      "paddingLeft": 8
     },
     "1Bvi2z3UGTM64JtRT7Qc1S": {
       "width": { "type": "hugContents" },
@@ -185,8 +185,8 @@
     },
     "1Bvi2z3UVsEskiSt2TcdL7": {
       "position": {
-        "x": { "type": "start", "start": [200, "px"] },
-        "y": { "type": "start", "start": [400, "px"] }
+        "x": { "type": "start", "start": 200 },
+        "y": { "type": "start", "start": 400 }
       },
       "fills": [{ "type": "solid", "hex": "#3B82F6" }]
     },
@@ -195,78 +195,78 @@
     },
     "1Bvi2z3UaHFmaikKtfcmGX": {
       "position": {
-        "x": { "type": "start", "start": [350, "px"] },
-        "y": { "type": "start", "start": [400, "px"] }
+        "x": { "type": "start", "start": 350 },
+        "y": { "type": "start", "start": 400 }
       }
     },
     "1Bvi2z3UaHFmaikKtfcmGX:1Bvi2z3UGTM64JtRT7Qc1S": {},
     "1Bvi2zJALza4DrqmNaGYAk": {},
     "1Bvi2z3TfkSpYXW29daTN8": {
       "position": {
-        "x": { "type": "start", "start": [50, "px"] },
-        "y": { "type": "start", "start": [184, "px"] }
+        "x": { "type": "start", "start": 50 },
+        "y": { "type": "start", "start": 184 }
       },
       "width": { "type": "hugContents" },
       "height": { "type": "hugContents" },
       "fills": [{ "type": "solid", "hex": "#FFFFFF" }],
       "layout": "stack",
-      "gap": [10, "px"],
-      "paddingTop": [10, "px"],
-      "paddingRight": [20, "px"],
-      "paddingBottom": [30, "px"],
-      "paddingLeft": [40, "px"]
+      "gap": 10,
+      "paddingTop": 10,
+      "paddingRight": 20,
+      "paddingBottom": 30,
+      "paddingLeft": 40
     },
     "1Bvi2z3TpKXtTJLTRPTEd8": {
       "width": {
         "type": "fillContainer",
-        "min": [25, "px"],
-        "max": [100, "px"],
-        "value": [50, "px"]
+        "min": 25,
+        "max": 100,
+        "value": 50
       },
       "height": {
         "type": "fillContainer",
-        "min": [20, "px"],
-        "max": [60, "px"],
-        "value": [50, "px"]
+        "min": 20,
+        "max": 60,
+        "value": 50
       },
       "fills": [{ "type": "solid", "hex": "#EF4444" }]
     },
     "1Bvi2z3To8ddXo6R6ZftVD": {
-      "width": { "type": "fixed", "value": [40, "px"] },
-      "height": { "type": "fixed", "value": [80, "px"] },
+      "width": { "type": "fixed", "value": 40 },
+      "height": { "type": "fixed", "value": 80 },
       "fills": [{ "type": "solid", "hex": "#22C55E" }]
     },
     "1Bvi2z3UB1xUVg4Xz9WTpJ": {
-      "width": { "type": "fixed", "value": [80, "px"] },
-      "height": { "type": "fixed", "value": [40, "px"] },
+      "width": { "type": "fixed", "value": 80 },
+      "height": { "type": "fixed", "value": 40 },
       "fills": [{ "type": "solid", "hex": "#3B82F6" }]
     },
     "1Bvi2z3U3SiK6r7gf9vh7N": {
       "width": { "type": "hugContents" },
       "height": { "type": "hugContents" },
       "fills": [{ "type": "solid", "hex": "#000000" }],
-      "marginTop": [10, "px"],
-      "marginRight": [20, "px"],
-      "marginBottom": [30, "px"],
-      "marginLeft": [40, "px"],
+      "marginTop": 10,
+      "marginRight": 20,
+      "marginBottom": 30,
+      "marginLeft": 40,
       "textContent": "Hello, world!",
-      "fontSize": [20, "px"]
+      "fontSize": 20
     },
     "1Bvi3BSSb2oaHb1ZqUEk6H": {},
     "1Bvi319YVxZELz4tEskN1S": {
       "position": {
-        "x": { "type": "start", "start": [50, "px"] },
-        "y": { "type": "start", "start": [585, "px"] }
+        "x": { "type": "start", "start": 50 },
+        "y": { "type": "start", "start": 585 }
       },
-      "width": { "type": "fixed", "value": [744, "px"] },
-      "height": { "type": "fixed", "value": [456, "px"] },
+      "width": { "type": "fixed", "value": 744 },
+      "height": { "type": "fixed", "value": 456 },
       "fills": [{ "type": "solid", "hex": "#FFFFFF" }],
       "layout": "stack",
       "stackDirection": "y",
       "stackAlign": "center"
     },
     "1Bvi31VKu8gfy6XzJ8xrHA": {
-      "width": { "type": "fillContainer", "value": [744, "px"] },
+      "width": { "type": "fillContainer", "value": 744 },
       "height": { "type": "hugContents" },
       "foreignComponent": {
         "type": "react",
@@ -277,17 +277,17 @@
     },
     "1Bvi365mtWZmXKDPeJTB4s": {
       "position": {
-        "x": { "type": "start", "start": [210, "px"] },
-        "y": { "type": "start", "start": [142, "px"] }
+        "x": { "type": "start", "start": 210 },
+        "y": { "type": "start", "start": 142 }
       },
-      "width": { "type": "fillContainer", "value": [428, "px"] },
-      "height": { "type": "fillContainer", "value": [173, "px"] },
+      "width": { "type": "fillContainer", "value": 428 },
+      "height": { "type": "fillContainer", "value": 173 },
       "fills": [{ "type": "solid", "hex": "#FFFFFF" }]
     },
     "1Bvi32d9RMi3ES5kk2UvuM": {
       "position": {
-        "x": { "type": "start", "start": [33, "px"] },
-        "y": { "type": "start", "start": [28, "px"] }
+        "x": { "type": "start", "start": 33 },
+        "y": { "type": "start", "start": 28 }
       },
       "width": { "type": "hugContents" },
       "height": { "type": "hugContents" },
@@ -305,8 +305,8 @@
     },
     "1Bvi2z3UrU9VkawwAteXs8": {
       "position": {
-        "x": { "type": "start", "start": [160, "px"] },
-        "y": { "type": "start", "start": [28, "px"] }
+        "x": { "type": "start", "start": 160 },
+        "y": { "type": "start", "start": 28 }
       },
       "fills": [{ "type": "solid", "hex": "#BABABA" }],
       "mainComponent": "1Bvi2z3USBZi1pWrvPd6Ut"
@@ -316,18 +316,18 @@
     },
     "1Bvi392qBdMy93LGLcVymb": {
       "position": {
-        "x": { "type": "start", "start": [33, "px"] },
-        "y": { "type": "start", "start": [97, "px"] }
+        "x": { "type": "start", "start": 33 },
+        "y": { "type": "start", "start": 97 }
       },
-      "width": { "type": "fixed", "value": [100, "px"] },
-      "height": { "type": "fixed", "value": [100, "px"] },
+      "width": { "type": "fixed", "value": 100 },
+      "height": { "type": "fixed", "value": 100 },
       "fills": [{ "type": "solid", "hex": "#FFFFFF" }],
       "imageHash": "YmY-tuteU03QY-k_2ARy1uacNmXDNmOX-FFAlj2qCIo="
     },
     "1Bvi39mct9UNYZ9eTCCRdV": {
       "position": {
-        "x": { "type": "start", "start": [165, "px"] },
-        "y": { "type": "start", "start": [86, "px"] }
+        "x": { "type": "start", "start": 165 },
+        "y": { "type": "start", "start": 86 }
       },
       "mainComponent": "1Bvi2zJALza4DrqmNaGYAk"
     },
@@ -338,15 +338,15 @@
     "1BwWRgjHrhVbbuTV7m36kM": {
       "hidden": false,
       "position": {
-        "x": { "type": "start", "start": [50, "px"] },
-        "y": { "type": "start", "start": [1144, "px"] }
+        "x": { "type": "start", "start": 50 },
+        "y": { "type": "start", "start": 1144 }
       },
-      "width": { "type": "fixed", "value": [400, "px"] },
+      "width": { "type": "fixed", "value": 400 },
       "height": { "type": "hugContents" },
-      "topLeftRadius": [20, "px"],
-      "topRightRadius": [20, "px"],
-      "bottomRightRadius": [20, "px"],
-      "bottomLeftRadius": [20, "px"],
+      "topLeftRadius": 20,
+      "topRightRadius": 20,
+      "bottomRightRadius": 20,
+      "bottomLeftRadius": 20,
       "fills": [{ "type": "solid", "hex": "#ffffff" }],
       "opacity": 1,
       "overflowHidden": false,
@@ -354,20 +354,20 @@
       "stackDirection": "y",
       "stackAlign": "start",
       "stackJustify": "start",
-      "gap": [20, "px"],
-      "paddingTop": [19, "px"],
-      "paddingRight": [19, "px"],
-      "paddingBottom": [19, "px"],
-      "paddingLeft": [19, "px"]
+      "gap": 20,
+      "paddingTop": 19,
+      "paddingRight": 19,
+      "paddingBottom": 19,
+      "paddingLeft": 19
     },
     "1BwWRgjHyEzJjsehRefVBE": {
       "hidden": false,
       "width": { "type": "hugContents" },
       "height": { "type": "hugContents" },
-      "topLeftRadius": [8, "px"],
-      "topRightRadius": [8, "px"],
-      "bottomRightRadius": [8, "px"],
-      "bottomLeftRadius": [8, "px"],
+      "topLeftRadius": 8,
+      "topRightRadius": 8,
+      "bottomRightRadius": 8,
+      "bottomLeftRadius": 8,
       "fills": [{ "type": "solid", "hex": "#f0f9ff" }],
       "opacity": 1,
       "overflowHidden": false,
@@ -375,11 +375,11 @@
       "stackDirection": "x",
       "stackAlign": "start",
       "stackJustify": "start",
-      "gap": [10, "px"],
-      "paddingTop": [3, "px"],
-      "paddingRight": [3, "px"],
-      "paddingBottom": [3, "px"],
-      "paddingLeft": [3, "px"]
+      "gap": 10,
+      "paddingTop": 3,
+      "paddingRight": 3,
+      "paddingBottom": 3,
+      "paddingLeft": 3
     },
     "1BwWRgjHr8HNgX8BRooGv7": {
       "width": { "type": "hugContents" },
@@ -388,15 +388,15 @@
     },
     "1BwWRgjHmYZ8qLKDj3Tvdy": {
       "hidden": false,
-      "width": { "type": "fillContainer", "value": [315.640625, "px"] },
+      "width": { "type": "fillContainer", "value": 315.640625 },
       "height": { "type": "hugContents" },
       "fills": [{ "type": "solid", "hex": "#1f2937" }],
       "opacity": 1,
       "textContent": "React Components Import/Export",
       "fontFamily": "Satoshi",
       "fontWeight": 700,
-      "fontSize": [20, "px"],
-      "letterSpacing": [0, "px"],
+      "fontSize": 20,
+      "letterSpacing": 0,
       "textHorizontalAlign": "start",
       "textVerticalAlign": "start"
     },
@@ -409,8 +409,8 @@
       "textContent": "Seamlessly work with React components, boosting your design-to-development workflow.\n",
       "fontFamily": "Inter",
       "fontWeight": 400,
-      "fontSize": [16, "px"],
-      "letterSpacing": [0, "px"],
+      "fontSize": 16,
+      "letterSpacing": 0,
       "textHorizontalAlign": "start",
       "textVerticalAlign": "start"
     }

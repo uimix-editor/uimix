@@ -39,11 +39,11 @@ describe(Node.name, () => {
 
     const selectable0 = proj.selectables.get([page.children[0].id]);
     const selectable1 = proj.selectables.get([page.children[1].id]);
-    selectable0.style.gap = [10, "px"];
+    selectable0.style.gap = 10;
     expect(selectable0.originalNode === page.children[0]).toBe(true);
-    expect(selectable0.style.gap).toStrictEqual([10, "px"]);
+    expect(selectable0.style.gap).toStrictEqual(10);
     expect(selectable1.originalNode === page.children[1]).toBe(true);
-    expect(selectable1.style.gap).toStrictEqual([0, "px"]);
+    expect(selectable1.style.gap).toStrictEqual(0);
 
     text.remove();
 
@@ -64,11 +64,11 @@ describe(Node.name, () => {
       const frameSelectable = frame.selectable;
       const style = frameSelectable.style;
       style.position = {
-        x: { type: "start", start: [i * 100 + 50, "px"] },
-        y: { type: "start", start: [90, "px"] },
+        x: { type: "start", start: i * 100 + 50 },
+        y: { type: "start", start: 90 },
       };
-      style.width = { type: "fixed", value: [50, "px"] };
-      style.height = { type: "fixed", value: [50, "px"] };
+      style.width = { type: "fixed", value: 50 };
+      style.height = { type: "fixed", value: 50 };
       style.fills = [{ type: "solid", hex: Color.from("red").toHex() }];
 
       frames.push(frame);
@@ -134,17 +134,17 @@ describe(Node.name, () => {
 
     const rootSelectable = proj.selectables.get([rootNode.id]);
     expect(rootSelectable.originalNode.type).toBe("frame");
-    rootSelectable.style.gap = [12, "px"];
+    rootSelectable.style.gap = 12;
 
     const textSelectable = rootSelectable.children[0];
     expect(textSelectable.originalNode === textNode).toBe(true);
     expect(textSelectable.originalNode.type).toBe("text");
-    textSelectable.style.fontSize = [24, "px"];
+    textSelectable.style.fontSize = 24;
 
     const hoverSelectable = proj.selectables.get([hoverVariant.id]);
     expect(hoverSelectable.originalNode === hoverVariant).toBe(true);
     expect(hoverSelectable.node === rootNode).toBe(true);
-    expect(hoverSelectable.style.gap).toStrictEqual([12, "px"]);
+    expect(hoverSelectable.style.gap).toStrictEqual(12);
 
     const instance = proj.nodes.create("instance");
     instance.name = "Instance";
@@ -156,20 +156,20 @@ describe(Node.name, () => {
     const instanceTextSelectable = instanceSelectable.children[0];
 
     expect(instanceSelectable.mainComponent?.rootNode === rootNode).toBe(true);
-    expect(instanceSelectable.style.gap).toStrictEqual([12, "px"]);
+    expect(instanceSelectable.style.gap).toStrictEqual(12);
     expect(instanceSelectable.parent === page.selectable).toBe(true);
 
     expect(instanceTextSelectable.originalNode === textNode).toBe(true);
-    expect(instanceTextSelectable.style.fontSize).toStrictEqual([24, "px"]);
+    expect(instanceTextSelectable.style.fontSize).toStrictEqual(24);
     expect(instanceTextSelectable.parent === instanceSelectable).toBe(true);
 
-    instanceSelectable.style.gap = [16, "px"];
-    expect(instanceSelectable.style.gap).toStrictEqual([16, "px"]);
-    expect(rootSelectable.style.gap).toStrictEqual([12, "px"]);
+    instanceSelectable.style.gap = 16;
+    expect(instanceSelectable.style.gap).toStrictEqual(16);
+    expect(rootSelectable.style.gap).toStrictEqual(12);
 
-    instanceTextSelectable.style.fontSize = [32, "px"];
-    expect(instanceTextSelectable.style.fontSize).toStrictEqual([32, "px"]);
-    expect(textSelectable.style.fontSize).toStrictEqual([24, "px"]);
+    instanceTextSelectable.style.fontSize = 32;
+    expect(instanceTextSelectable.style.fontSize).toStrictEqual(32);
+    expect(textSelectable.style.fontSize).toStrictEqual(24);
 
     rootSelectable.select();
     expect(rootSelectable.selected).toBe(true);

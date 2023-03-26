@@ -1,7 +1,7 @@
 import { z } from "zod";
 
-export const PxValue = z.tuple([z.number(), z.literal("px")]);
-export const PxPercentValue = z.tuple([
+export const PxValue = z.number();
+export const PxPercentValue = z.union([
   z.number(),
-  z.union([z.literal("px"), z.literal("%")]),
+  z.tuple([z.number(), z.literal("%")]),
 ]);

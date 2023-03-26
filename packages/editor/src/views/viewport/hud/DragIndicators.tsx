@@ -25,10 +25,10 @@ function dropDestinationIndicator(
 
   const parentRect = parent.computedRect;
   const parentPaddings = {
-    left: parent.style.paddingLeft[0],
-    top: parent.style.paddingTop[0],
-    right: parent.style.paddingRight[0],
-    bottom: parent.style.paddingBottom[0],
+    left: parent.style.paddingLeft,
+    top: parent.style.paddingTop,
+    right: parent.style.paddingRight,
+    bottom: parent.style.paddingBottom,
   };
 
   if (direction === "x") {
