@@ -11,6 +11,7 @@ import { InspectorPane } from "../components/InspectorPane";
 import { action } from "mobx";
 import { InspectorTargetContext } from "../components/InspectorTargetContext";
 import { Input } from "../../../components/Input";
+import { DropdownMenu } from "../../../components/Menu";
 
 export const ShadowPane: React.FC = observer(function ShadowPane() {
   const selectables = projectState.selectedSelectables.filter(
@@ -53,7 +54,7 @@ export const ShadowPane: React.FC = observer(function ShadowPane() {
         {shadows === Mixed ? (
           <div className="text-macaron-disabledText">Mixed</div>
         ) : (
-          shadows?.map((shadow) => {
+          shadows?.map((shadow, i) => {
             return (
               <div className="flex gap-2 items-center">
                 <div className="flex flex-col gap-2">
@@ -69,7 +70,28 @@ export const ShadowPane: React.FC = observer(function ShadowPane() {
                     <Input icon="S" />
                   </div>
                 </div>
-                <IconButton icon={removeIcon} />
+                <DropdownMenu
+                  trigger={(props) => (
+                    <IconButton {...props} icon="material-symbols:more-horiz" />
+                  )}
+                  defs={[
+                    {
+                      type: "command",
+                      text: "Move Up",
+                    },
+                    {
+                      type: "command",
+                      text: "Move Down",
+                    },
+                    {
+                      type: "separator",
+                    },
+                    {
+                      type: "command",
+                      text: "Remove",
+                    },
+                  ]}
+                />
               </div>
             );
           })
