@@ -5,7 +5,11 @@ import "./index.css";
 import { IFrameDataConnector } from "./state/IFrameDataConnector";
 import { projectState } from "./state/ProjectState";
 
-new IFrameDataConnector(projectState);
+if (window.parent !== window) {
+  new IFrameDataConnector(projectState);
+} else {
+  projectState.setupInitContent();
+}
 
 ReactDOM.createRoot(document.getElementById("root") as HTMLElement).render(
   <React.StrictMode>

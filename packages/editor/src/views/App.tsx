@@ -45,6 +45,12 @@ function useKeyHandling() {
 //   }, []);
 // }
 
+// get title bar padding from query string
+
+const titleBarPadding = Number.parseInt(
+  new URLSearchParams(window.location.search).get("titleBarPadding") ?? "0"
+);
+
 export const App = observer(function App() {
   useKeyHandling();
   //useWindowTitle();
@@ -52,7 +58,12 @@ export const App = observer(function App() {
   return (
     <TooltipProvider>
       <FontLoader />
-      <div className="flex flex-col fixed inset-0 top-10 text-macaron-base bg-macaron-background text-macaron-text select-none">
+      <div
+        className="flex flex-col fixed inset-0 text-macaron-base bg-macaron-background text-macaron-text select-none"
+        style={{
+          top: `${titleBarPadding}px`,
+        }}
+      >
         <div className="flex flex-1">
           <OutlineSideBar />
           <div className="bg-macaron-separator w-px" />

@@ -1,5 +1,4 @@
 import * as Y from "yjs";
-import { generateExampleNodes } from "../models/generateExampleNodes";
 import { parentWindowTarget } from "@uimix/typed-rpc/browser";
 import { RPC } from "@uimix/typed-rpc";
 import { ProjectState } from "./ProjectState";
@@ -32,24 +31,7 @@ export class IFrameDataConnector {
       }),
       init: action((data: Uint8Array) => {
         Y.applyUpdate(state.doc, data);
-
-        const pages = state.project.pages.all;
-        if (pages.length === 0) {
-          const page = state.project.nodes.create("page");
-          page.name = "Page 1";
-          state.project.node.append([page]);
-          state.pageID = page.id;
-          generateExampleNodes(page);
-          if (state.project.componentURLs.length === 0) {
-            state.project.componentURLs.push([
-              "https://cdn.jsdelivr.net/gh/uimix-editor/uimix@ba0157d5/packages/sandbox/dist-components/components.js",
-              "https://cdn.jsdelivr.net/gh/uimix-editor/uimix@ba0157d5/packages/sandbox/dist-components/style.css",
-            ]);
-          }
-        } else {
-          state.pageID = pages[0].id;
-        }
-        state.undoManager.clear();
+        state.setupInitContent();
       }),
     });
 

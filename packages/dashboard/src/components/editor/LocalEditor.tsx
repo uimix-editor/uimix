@@ -13,6 +13,7 @@ import {
 } from "@uimix/editor/src/models/ProjectJSON";
 import { LoadingErrorOverlay } from "./LoadingErrorOverlay";
 import { DocumentMetadata, getDesktopAPI } from "../../types/DesktopAPI";
+import { assertNonNull } from "../../utils/assertNonNull";
 
 // TODO: test
 
@@ -128,11 +129,12 @@ const LocalEditor: React.FC = () => {
     return api.onDocumentMetadataChange(listener);
   }, []);
 
-  const editorSrc = process.env.NEXT_PUBLIC_EDITOR_URL?.replace(
-    "://",
-    // TODO: use unique ID for subdomain?
-    `://local.`
-  );
+  const editorSrc =
+    assertNonNull(process.env.NEXT_PUBLIC_EDITOR_URL).replace(
+      "://",
+      // TODO: use unique ID for subdomain?
+      `://local.`
+    ) + "?titleBarPadding=40";
 
   return (
     <div className="text-neutral-800 flex flex-col text-xs">
