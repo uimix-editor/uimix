@@ -10,7 +10,7 @@ import { viewportState } from "../../state/ViewportState";
 import { action } from "mobx";
 import { Tooltip } from "../../components/Tooltip";
 
-export const VerticalToolBar = observer(() => {
+export const ToolBar = observer(() => {
   // TODO: use material symbols instead of SVGs
 
   return (

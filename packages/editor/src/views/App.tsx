@@ -8,7 +8,7 @@ import { commands } from "../state/Commands";
 import { action } from "mobx";
 import { OutlineSideBar } from "./outline/OutlineSideBar";
 import { FontLoader } from "./viewport/renderer/FontLoader";
-import { VerticalToolBar } from "./toolbar/VerticalToolBar";
+import { ToolBar } from "./toolbar/ToolBar";
 import { InstancePaletteOverlay } from "./viewport/InstancePaletteOverlay";
 import { ForeignComponentListDialog } from "./dialog/ForeignComponentListDialog";
 
@@ -67,7 +67,7 @@ export const App = observer(function App() {
         <div className="flex flex-1">
           <OutlineSideBar />
           <div className="bg-macaron-separator w-px" />
-          <VerticalToolBar />
+          <ToolBar />
           <div className="flex flex-1 border-l border-r border-macaron-separator relative">
             <Viewport />
             <InstancePaletteOverlay />
