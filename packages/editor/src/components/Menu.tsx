@@ -13,7 +13,9 @@ const itemClassNames =
   "aria-disabled:text-macaron-disabledText h-6 outline-0 rounded [&[data-active-item]]:bg-macaron-active [&[data-active-item]]:text-macaron-activeText pr-4 pl-6 flex items-center";
 
 function Submenu({ def }: { def: MenuSubmenuDef }) {
-  const menu = AriakitMenu.useMenuState();
+  const menu = AriakitMenu.useMenuState({
+    shift: -4,
+  });
 
   return (
     <>
