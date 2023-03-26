@@ -41,6 +41,8 @@ export const defaultStyle: StyleJSON = {
   opacity: 1,
   overflowHidden: false,
 
+  shadows: [],
+
   marginTop: [0, "px"],
   marginRight: [0, "px"],
   marginBottom: [0, "px"],
