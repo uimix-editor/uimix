@@ -243,10 +243,10 @@ const ComponentThumbnail: React.FC<{
               },
             };
             instanceNodeStyle.width = {
-              type: "hugContents",
+              type: "hug",
             };
             instanceNodeStyle.height = {
-              type: "hugContents",
+              type: "hug",
             };
             instanceNode.name = component.name;
           }

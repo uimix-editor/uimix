@@ -30,7 +30,7 @@ import edgeTopIcon from "@seanchas116/design-icons/json/edge-top.json";
 
 const verticalSizeConstraintOptions: ToggleGroupItem<SizeConstraintType>[] = [
   {
-    value: "hugContents",
+    value: "hug",
     tooltip: "Hug Contents",
     icon: { ...hugContentsIcon, rotate: 1 },
   },
@@ -40,7 +40,7 @@ const verticalSizeConstraintOptions: ToggleGroupItem<SizeConstraintType>[] = [
     icon: { ...fixedSizeIcon, rotate: 1 },
   },
   {
-    value: "fillContainer",
+    value: "fill",
     tooltip: "Fill Container",
     icon: { ...fillAreaIcon, rotate: 1 },
   },
@@ -48,7 +48,7 @@ const verticalSizeConstraintOptions: ToggleGroupItem<SizeConstraintType>[] = [
 
 const horizontalSizeConstraintOptions: ToggleGroupItem<SizeConstraintType>[] = [
   {
-    value: "hugContents",
+    value: "hug",
     tooltip: "Hug Contents",
     icon: hugContentsIcon,
   },
@@ -58,7 +58,7 @@ const horizontalSizeConstraintOptions: ToggleGroupItem<SizeConstraintType>[] = [
     icon: fixedSizeIcon,
   },
   {
-    value: "fillContainer",
+    value: "fill",
     tooltip: "Fill Container",
     icon: fillAreaIcon,
   },
@@ -201,7 +201,7 @@ const WidthEdit = observer(function WidthEdit() {
         }}
         items={horizontalSizeConstraintOptions}
       />
-      {constraint === "fillContainer" && (
+      {constraint === "fill" && (
         <>
           <div />
           <InspectorNumberInput
@@ -209,7 +209,7 @@ const WidthEdit = observer(function WidthEdit() {
             tooltip="Min Width"
             get={(s) => {
               const width = s.style.width;
-              if (width.type === "fillContainer" && width.min) {
+              if (width.type === "fill" && width.min) {
                 return {
                   value: width.min,
                 };
@@ -218,7 +218,7 @@ const WidthEdit = observer(function WidthEdit() {
             placeholder={() => 0}
             set={(s, value) => {
               const width = s.style.width;
-              if (width.type === "fillContainer") {
+              if (width.type === "fill") {
                 s.style.width = {
                   ...width,
                   min: value?.value,
@@ -231,7 +231,7 @@ const WidthEdit = observer(function WidthEdit() {
             tooltip="Max Width"
             get={(s) => {
               const width = s.style.width;
-              if (width.type === "fillContainer" && width.max) {
+              if (width.type === "fill" && width.max) {
                 return {
                   value: width.max,
                 };
@@ -239,7 +239,7 @@ const WidthEdit = observer(function WidthEdit() {
             }}
             set={(s, value) => {
               const width = s.style.width;
-              if (width.type === "fillContainer") {
+              if (width.type === "fill") {
                 s.style.width = {
                   ...width,
                   max: value?.value,
@@ -282,7 +282,7 @@ const HeightEdit: React.FC = observer(function HeightEdit() {
         }}
         items={verticalSizeConstraintOptions}
       />
-      {constraint === "fillContainer" && (
+      {constraint === "fill" && (
         <>
           <div />
           <InspectorNumberInput
@@ -290,7 +290,7 @@ const HeightEdit: React.FC = observer(function HeightEdit() {
             tooltip="Min Height"
             get={(s) => {
               const height = s.style.height;
-              if (height.type === "fillContainer" && height.min) {
+              if (height.type === "fill" && height.min) {
                 return {
                   value: height.min,
                 };
@@ -299,7 +299,7 @@ const HeightEdit: React.FC = observer(function HeightEdit() {
             placeholder={() => 0}
             set={(s, value) => {
               const height = s.style.height;
-              if (height.type === "fillContainer") {
+              if (height.type === "fill") {
                 s.style.height = {
                   ...height,
                   min: value?.value,
@@ -312,7 +312,7 @@ const HeightEdit: React.FC = observer(function HeightEdit() {
             tooltip="Max Height"
             get={(s) => {
               const height = s.style.height;
-              if (height.type === "fillContainer" && height.max) {
+              if (height.type === "fill" && height.max) {
                 return {
                   value: height.max,
                 };
@@ -320,7 +320,7 @@ const HeightEdit: React.FC = observer(function HeightEdit() {
             }}
             set={(s, value) => {
               const height = s.style.height;
-              if (height.type === "fillContainer") {
+              if (height.type === "fill") {
                 s.style.height = {
                   ...height,
                   max: value?.value,
@@ -575,14 +575,14 @@ function setSizeConstraintValue(
   const constraint = style[target];
 
   switch (constraint.type) {
-    case "hugContents":
+    case "hug":
     case "fixed":
       style[target] = {
         type: "fixed",
         value: value ?? 0,
       };
       break;
-    case "fillContainer":
+    case "fill":
       style[target] = {
         ...constraint,
         value,
@@ -604,8 +604,8 @@ function setSizeConstraintType(
   const computedSize = selectable.computedRect[target];
 
   switch (type) {
-    case "hugContents":
-      style[target] = { type: "hugContents" };
+    case "hug":
+      style[target] = { type: "hug" };
       break;
     case "fixed":
       style[target] = {
@@ -613,9 +613,9 @@ function setSizeConstraintType(
         value: oldValue ?? computedSize,
       };
       break;
-    case "fillContainer":
+    case "fill":
       style[target] = {
-        type: "fillContainer",
+        type: "fill",
         value: oldValue ?? computedSize,
       };
       break;

@@ -37,8 +37,8 @@ export class NodeInsertDragHandler implements DragHandler {
       this.selectable.style.fills = [
         { type: "solid", hex: Color.from("black").toHex() },
       ];
-      this.selectable.style.width = { type: "hugContents" };
-      this.selectable.style.height = { type: "hugContents" };
+      this.selectable.style.width = { type: "hug" };
+      this.selectable.style.height = { type: "hug" };
     } else if (mode.type === "image") {
       // TODO: support image
       const selectable = parent.append("image");

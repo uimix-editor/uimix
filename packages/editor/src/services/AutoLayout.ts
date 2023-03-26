@@ -25,13 +25,13 @@ export function removeLayout(selectable: Selectable): void {
     };
   }
 
-  if (selectable.style.width.type === "hugContents") {
+  if (selectable.style.width.type === "hug") {
     selectable.style.width = {
       type: "fixed",
       value: selectable.computedRect.width,
     };
   }
-  if (selectable.style.height.type === "hugContents") {
+  if (selectable.style.height.type === "hug") {
     selectable.style.height = {
       type: "fixed",
       value: selectable.computedRect.height,

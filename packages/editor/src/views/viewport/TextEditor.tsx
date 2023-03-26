@@ -16,7 +16,7 @@ export const TextEditorBody: React.FC<{
   const cssStyle = buildNodeCSS("text", style);
   const computedRect = selectable.computedRect;
 
-  const fitWidth = style.width.type === "hugContents";
+  const fitWidth = style.width.type === "hug";
 
   const editor = useMemo(() => withReact(createEditor()), []);
 

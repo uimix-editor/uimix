@@ -168,8 +168,8 @@
         "x": { "type": "start", "start": 50 },
         "y": { "type": "start", "start": 400 }
       },
-      "width": { "type": "hugContents" },
-      "height": { "type": "hugContents" },
+      "width": { "type": "hug" },
+      "height": { "type": "hug" },
       "fills": [{ "type": "solid", "hex": "#E5E7EB" }],
       "layout": "stack",
       "paddingTop": 4,
@@ -178,8 +178,8 @@
       "paddingLeft": 8
     },
     "1Bvi2z3UGTM64JtRT7Qc1S": {
-      "width": { "type": "hugContents" },
-      "height": { "type": "hugContents" },
+      "width": { "type": "hug" },
+      "height": { "type": "hug" },
       "fills": [{ "type": "solid", "hex": "#111827" }],
       "textContent": "Button"
     },
@@ -206,8 +206,8 @@
         "x": { "type": "start", "start": 50 },
         "y": { "type": "start", "start": 184 }
       },
-      "width": { "type": "hugContents" },
-      "height": { "type": "hugContents" },
+      "width": { "type": "hug" },
+      "height": { "type": "hug" },
       "fills": [{ "type": "solid", "hex": "#FFFFFF" }],
       "layout": "stack",
       "gap": 10,
@@ -218,13 +218,13 @@
     },
     "1Bvi2z3TpKXtTJLTRPTEd8": {
       "width": {
-        "type": "fillContainer",
+        "type": "fill",
         "min": 25,
         "max": 100,
         "value": 50
       },
       "height": {
-        "type": "fillContainer",
+        "type": "fill",
         "min": 20,
         "max": 60,
         "value": 50
@@ -242,8 +242,8 @@
       "fills": [{ "type": "solid", "hex": "#3B82F6" }]
     },
     "1Bvi2z3U3SiK6r7gf9vh7N": {
-      "width": { "type": "hugContents" },
-      "height": { "type": "hugContents" },
+      "width": { "type": "hug" },
+      "height": { "type": "hug" },
       "fills": [{ "type": "solid", "hex": "#000000" }],
       "marginTop": 10,
       "marginRight": 20,
@@ -266,8 +266,8 @@
       "stackAlign": "center"
     },
     "1Bvi31VKu8gfy6XzJ8xrHA": {
-      "width": { "type": "fillContainer", "value": 744 },
-      "height": { "type": "hugContents" },
+      "width": { "type": "fill", "value": 744 },
+      "height": { "type": "hug" },
       "foreignComponent": {
         "type": "react",
         "path": "src/stories/Header.tsx",
@@ -280,8 +280,8 @@
         "x": { "type": "start", "start": 210 },
         "y": { "type": "start", "start": 142 }
       },
-      "width": { "type": "fillContainer", "value": 428 },
-      "height": { "type": "fillContainer", "value": 173 },
+      "width": { "type": "fill", "value": 428 },
+      "height": { "type": "fill", "value": 173 },
       "fills": [{ "type": "solid", "hex": "#FFFFFF" }]
     },
     "1Bvi32d9RMi3ES5kk2UvuM": {
@@ -289,8 +289,8 @@
         "x": { "type": "start", "start": 33 },
         "y": { "type": "start", "start": 28 }
       },
-      "width": { "type": "hugContents" },
-      "height": { "type": "hugContents" },
+      "width": { "type": "hug" },
+      "height": { "type": "hug" },
       "foreignComponent": {
         "type": "react",
         "path": "src/stories/Button.tsx",
@@ -342,7 +342,7 @@
         "y": { "type": "start", "start": 1144 }
       },
       "width": { "type": "fixed", "value": 400 },
-      "height": { "type": "hugContents" },
+      "height": { "type": "hug" },
       "topLeftRadius": 20,
       "topRightRadius": 20,
       "bottomRightRadius": 20,
@@ -362,8 +362,8 @@
     },
     "1BwWRgjHyEzJjsehRefVBE": {
       "hidden": false,
-      "width": { "type": "hugContents" },
-      "height": { "type": "hugContents" },
+      "width": { "type": "hug" },
+      "height": { "type": "hug" },
       "topLeftRadius": 8,
       "topRightRadius": 8,
       "bottomRightRadius": 8,
@@ -382,14 +382,14 @@
       "paddingLeft": 3
     },
     "1BwWRgjHr8HNgX8BRooGv7": {
-      "width": { "type": "hugContents" },
-      "height": { "type": "hugContents" },
+      "width": { "type": "hug" },
+      "height": { "type": "hug" },
       "svgContent": "<svg width=\"24\" height=\"24\" viewBox=\"0 0 24 24\" fill=\"none\" xmlns=\"http://www.w3.org/2000/svg\">\n<path d=\"M17.25 6.75L22.5 12L17.25 17.25M6.75 17.25L1.5 12L6.75 6.75M14.25 3.75L9.75 20.25\" stroke=\"#0EA5E9\" stroke-width=\"1.5\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/>\n</svg>\n"
     },
     "1BwWRgjHmYZ8qLKDj3Tvdy": {
       "hidden": false,
-      "width": { "type": "fillContainer", "value": 315.640625 },
-      "height": { "type": "hugContents" },
+      "width": { "type": "fill", "value": 315.640625 },
+      "height": { "type": "hug" },
       "fills": [{ "type": "solid", "hex": "#1f2937" }],
       "opacity": 1,
       "textContent": "React Components Import/Export",
@@ -402,8 +402,8 @@
     },
     "1BwWRgjHuAe9UTxVhowwYu": {
       "hidden": false,
-      "width": { "type": "fillContainer" },
-      "height": { "type": "hugContents" },
+      "width": { "type": "fill" },
+      "height": { "type": "hug" },
       "fills": [{ "type": "solid", "hex": "#4b5563" }],
       "opacity": 1,
       "textContent": "Seamlessly work with React components, boosting your design-to-development workflow.\n",

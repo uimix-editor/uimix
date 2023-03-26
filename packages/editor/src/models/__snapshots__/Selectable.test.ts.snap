@@ -194,7 +194,7 @@ exports[`selectablesToProjectJSON > works 1`] = `
       ],
       "gap": 10,
       "height": {
-        "type": "hugContents",
+        "type": "hug",
       },
       "layout": "stack",
       "paddingBottom": 30,
@@ -212,7 +212,7 @@ exports[`selectablesToProjectJSON > works 1`] = `
         },
       },
       "width": {
-        "type": "hugContents",
+        "type": "hug",
       },
     },
     "1Bvi2z3To8ddXo6R6ZftVD": {
@@ -241,13 +241,13 @@ exports[`selectablesToProjectJSON > works 1`] = `
       "height": {
         "max": 60,
         "min": 20,
-        "type": "fillContainer",
+        "type": "fill",
         "value": 50,
       },
       "width": {
         "max": 100,
         "min": 25,
-        "type": "fillContainer",
+        "type": "fill",
         "value": 50,
       },
     },
@@ -260,7 +260,7 @@ exports[`selectablesToProjectJSON > works 1`] = `
       ],
       "fontSize": 20,
       "height": {
-        "type": "hugContents",
+        "type": "hug",
       },
       "marginBottom": 30,
       "marginLeft": 40,
@@ -268,7 +268,7 @@ exports[`selectablesToProjectJSON > works 1`] = `
       "marginTop": 10,
       "textContent": "Hello, world!",
       "width": {
-        "type": "hugContents",
+        "type": "hug",
       },
     },
     "1Bvi2z3UB1xUVg4Xz9WTpJ": {
@@ -295,11 +295,11 @@ exports[`selectablesToProjectJSON > works 1`] = `
         },
       ],
       "height": {
-        "type": "hugContents",
+        "type": "hug",
       },
       "textContent": "Button",
       "width": {
-        "type": "hugContents",
+        "type": "hug",
       },
     },
     "1Bvi2z3UPfi6W3L8nDt5VA": {
@@ -310,7 +310,7 @@ exports[`selectablesToProjectJSON > works 1`] = `
         },
       ],
       "height": {
-        "type": "hugContents",
+        "type": "hug",
       },
       "layout": "stack",
       "paddingBottom": 4,
@@ -328,7 +328,7 @@ exports[`selectablesToProjectJSON > works 1`] = `
         },
       },
       "width": {
-        "type": "hugContents",
+        "type": "hug",
       },
     },
     "1Bvi2z3USBZi1pWrvPd6Ut": {},
@@ -431,10 +431,10 @@ exports[`selectablesToProjectJSON > works 1`] = `
         "type": "react",
       },
       "height": {
-        "type": "hugContents",
+        "type": "hug",
       },
       "width": {
-        "type": "fillContainer",
+        "type": "fill",
         "value": 744,
       },
     },
@@ -451,7 +451,7 @@ exports[`selectablesToProjectJSON > works 1`] = `
         "type": "react",
       },
       "height": {
-        "type": "hugContents",
+        "type": "hug",
       },
       "position": {
         "x": {
@@ -464,7 +464,7 @@ exports[`selectablesToProjectJSON > works 1`] = `
         },
       },
       "width": {
-        "type": "hugContents",
+        "type": "hug",
       },
     },
     "1Bvi365mtWZmXKDPeJTB4s": {
@@ -475,7 +475,7 @@ exports[`selectablesToProjectJSON > works 1`] = `
         },
       ],
       "height": {
-        "type": "fillContainer",
+        "type": "fill",
         "value": 173,
       },
       "position": {
@@ -489,7 +489,7 @@ exports[`selectablesToProjectJSON > works 1`] = `
         },
       },
       "width": {
-        "type": "fillContainer",
+        "type": "fill",
         "value": 428,
       },
     },
@@ -549,7 +549,7 @@ exports[`selectablesToProjectJSON > works 1`] = `
       "fontSize": 20,
       "fontWeight": 700,
       "height": {
-        "type": "hugContents",
+        "type": "hug",
       },
       "hidden": false,
       "letterSpacing": 0,
@@ -558,20 +558,20 @@ exports[`selectablesToProjectJSON > works 1`] = `
       "textHorizontalAlign": "start",
       "textVerticalAlign": "start",
       "width": {
-        "type": "fillContainer",
+        "type": "fill",
         "value": 315.640625,
       },
     },
     "1BwWRgjHr8HNgX8BRooGv7": {
       "height": {
-        "type": "hugContents",
+        "type": "hug",
       },
       "svgContent": "<svg width=\\"24\\" height=\\"24\\" viewBox=\\"0 0 24 24\\" fill=\\"none\\" xmlns=\\"http://www.w3.org/2000/svg\\">
 <path d=\\"M17.25 6.75L22.5 12L17.25 17.25M6.75 17.25L1.5 12L6.75 6.75M14.25 3.75L9.75 20.25\\" stroke=\\"#0EA5E9\\" stroke-width=\\"1.5\\" stroke-linecap=\\"round\\" stroke-linejoin=\\"round\\"/>
 </svg>
 ",
       "width": {
-        "type": "hugContents",
+        "type": "hug",
       },
     },
     "1BwWRgjHrhVbbuTV7m36kM": {
@@ -585,7 +585,7 @@ exports[`selectablesToProjectJSON > works 1`] = `
       ],
       "gap": 20,
       "height": {
-        "type": "hugContents",
+        "type": "hug",
       },
       "hidden": false,
       "layout": "stack",
@@ -626,7 +626,7 @@ exports[`selectablesToProjectJSON > works 1`] = `
       "fontSize": 16,
       "fontWeight": 400,
       "height": {
-        "type": "hugContents",
+        "type": "hug",
       },
       "hidden": false,
       "letterSpacing": 0,
@@ -636,7 +636,7 @@ exports[`selectablesToProjectJSON > works 1`] = `
       "textHorizontalAlign": "start",
       "textVerticalAlign": "start",
       "width": {
-        "type": "fillContainer",
+        "type": "fill",
       },
     },
     "1BwWRgjHyEzJjsehRefVBE": {
@@ -650,7 +650,7 @@ exports[`selectablesToProjectJSON > works 1`] = `
       ],
       "gap": 10,
       "height": {
-        "type": "hugContents",
+        "type": "hug",
       },
       "hidden": false,
       "layout": "stack",
@@ -666,7 +666,7 @@ exports[`selectablesToProjectJSON > works 1`] = `
       "topLeftRadius": 8,
       "topRightRadius": 8,
       "width": {
-        "type": "hugContents",
+        "type": "hug",
       },
     },
     "1BwWRiQqGA4gTdwZRLXFBh": {},

@@ -22,28 +22,28 @@ function getPositionStylePartial(
 
   if (parentLayout === "VERTICAL") {
     if (node.layoutGrow) {
-      style.height = { type: "fillContainer" };
+      style.height = { type: "fill" };
     }
     if (node.layoutAlign === "STRETCH") {
-      style.width = { type: "fillContainer" };
+      style.width = { type: "fill" };
     }
   } else if (parentLayout === "HORIZONTAL") {
     if (node.layoutGrow) {
-      style.width = { type: "fillContainer" };
+      style.width = { type: "fill" };
     }
     if (node.layoutAlign === "STRETCH") {
-      style.height = { type: "fillContainer" };
+      style.height = { type: "fill" };
     }
   }
 
   if (node.type === "TEXT") {
     switch (node.textAutoResize) {
       case "WIDTH_AND_HEIGHT":
-        style.width = { type: "hugContents" };
-        style.height = { type: "hugContents" };
+        style.width = { type: "hug" };
+        style.height = { type: "hug" };
         break;
       case "HEIGHT":
-        style.height = { type: "hugContents" };
+        style.height = { type: "hug" };
         break;
       case "NONE":
         break;
@@ -281,11 +281,11 @@ async function getTextStylePartial(
     case "NONE":
       break;
     case "HEIGHT":
-      style.height = { type: "hugContents" };
+      style.height = { type: "hug" };
       break;
     case "WIDTH_AND_HEIGHT":
-      style.width = { type: "hugContents" };
-      style.height = { type: "hugContents" };
+      style.width = { type: "hug" };
+      style.height = { type: "hug" };
       break;
   }
 
@@ -369,17 +369,17 @@ function getLayoutStylePartial(
 
   if (node.layoutMode === "VERTICAL") {
     if (node.primaryAxisSizingMode == "AUTO") {
-      style.height = { type: "hugContents" };
+      style.height = { type: "hug" };
     }
     if (node.counterAxisSizingMode == "AUTO") {
-      style.width = { type: "hugContents" };
+      style.width = { type: "hug" };
     }
   } else {
     if (node.primaryAxisSizingMode == "AUTO") {
-      style.width = { type: "hugContents" };
+      style.width = { type: "hug" };
     }
     if (node.counterAxisSizingMode == "AUTO") {
-      style.height = { type: "hugContents" };
+      style.height = { type: "hug" };
     }
   }
 

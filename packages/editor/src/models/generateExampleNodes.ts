@@ -30,8 +30,8 @@ export function generateExampleNodes(page: Node) {
       x: { type: "start", start: 50 },
       y: { type: "start", start: 200 },
     };
-    stackStyle.width = { type: "hugContents" };
-    stackStyle.height = { type: "hugContents" };
+    stackStyle.width = { type: "hug" };
+    stackStyle.height = { type: "hug" };
     stackStyle.fills = [{ type: "solid", hex: Color.white.toHex() }];
     stackStyle.layout = "stack";
     stackStyle.gap = 10;
@@ -74,8 +74,8 @@ export function generateExampleNodes(page: Node) {
     text.originalNode.name = "Text";
     const textStyle = text.style;
     textStyle.textContent = "Hello, world!";
-    textStyle.width = { type: "hugContents" };
-    textStyle.height = { type: "hugContents" };
+    textStyle.width = { type: "hug" };
+    textStyle.height = { type: "hug" };
     textStyle.fontSize = 20;
     textStyle.fills = [{ type: "solid", hex: Color.from("black").toHex() }];
   }
@@ -120,8 +120,8 @@ export function generateExampleNodes(page: Node) {
       x: { type: "start", start: 50 },
       y: { type: "start", start: 400 },
     };
-    rootNodeStyle.width = { type: "hugContents" };
-    rootNodeStyle.height = { type: "hugContents" };
+    rootNodeStyle.width = { type: "hug" };
+    rootNodeStyle.height = { type: "hug" };
     rootNodeStyle.fills = [
       { type: "solid", hex: Color.from(colors.gray[200])!.toHex() },
     ];
@@ -132,8 +132,8 @@ export function generateExampleNodes(page: Node) {
     rootNodeStyle.paddingBottom = 4;
 
     const textNodeStyle = textNode.selectable.style;
-    textNodeStyle.width = { type: "hugContents" };
-    textNodeStyle.height = { type: "hugContents" };
+    textNodeStyle.width = { type: "hug" };
+    textNodeStyle.height = { type: "hug" };
     textNodeStyle.fills = [
       { type: "solid", hex: Color.from(colors.gray[900])!.toHex() },
     ];

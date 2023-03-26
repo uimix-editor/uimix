@@ -39,7 +39,7 @@ export function buildNodeCSS(
   const width = style.width;
   if (width.type === "fixed") {
     cssStyle.width = `${width.value}px`;
-  } else if (width.type === "hugContents") {
+  } else if (width.type === "hug") {
     cssStyle.width = "max-content";
   } else {
     if (parentStackDirection === "x") {
@@ -56,7 +56,7 @@ export function buildNodeCSS(
   const height = style.height;
   if (height.type === "fixed") {
     cssStyle.height = `${height.value}px`;
-  } else if (height.type === "hugContents") {
+  } else if (height.type === "hug") {
     cssStyle.height = "max-content";
   } else {
     if (parentStackDirection === "y") {
