@@ -28,6 +28,7 @@ exports[`generateCode > generates code 1`] = `
   border-top-right-radius: 0px;
   border-bottom-right-radius: 0px;
   border-bottom-left-radius: 0px;
+  box-shadow: none;
 }
 .uimix-1Bvi2z3UPfi6W3L8nDt5VA:hover {
   background: #3B82F6;
@@ -62,6 +63,7 @@ exports[`generateCode > generates code 1`] = `
   border-top-right-radius: 0px;
   border-bottom-right-radius: 0px;
   border-bottom-left-radius: 0px;
+  box-shadow: none;
 }
 .uimix-1Bvi319YVxZELz4tEskN1S {
   position: relative;
@@ -89,6 +91,7 @@ exports[`generateCode > generates code 1`] = `
   border-top-right-radius: 0px;
   border-bottom-right-radius: 0px;
   border-bottom-left-radius: 0px;
+  box-shadow: none;
 }
 .uimix-1BwWRgjHrhVbbuTV7m36kM {
   position: relative;
@@ -116,6 +119,7 @@ exports[`generateCode > generates code 1`] = `
   border-top-right-radius: 20px;
   border-bottom-right-radius: 20px;
   border-bottom-left-radius: 20px;
+  box-shadow: none;
 }
 .uimix-1Bvi2z3UGTM64JtRT7Qc1S {
   position: relative;
@@ -180,6 +184,7 @@ exports[`generateCode > generates code 1`] = `
   border-top-right-radius: 0px;
   border-bottom-right-radius: 0px;
   border-bottom-left-radius: 0px;
+  box-shadow: none;
 }
 .uimix-1Bvi2z3To8ddXo6R6ZftVD {
   position: relative;
@@ -211,6 +216,7 @@ exports[`generateCode > generates code 1`] = `
   border-top-right-radius: 0px;
   border-bottom-right-radius: 0px;
   border-bottom-left-radius: 0px;
+  box-shadow: none;
 }
 .uimix-1Bvi2z3UB1xUVg4Xz9WTpJ {
   position: relative;
@@ -242,6 +248,7 @@ exports[`generateCode > generates code 1`] = `
   border-top-right-radius: 0px;
   border-bottom-right-radius: 0px;
   border-bottom-left-radius: 0px;
+  box-shadow: none;
 }
 .uimix-1Bvi2z3U3SiK6r7gf9vh7N {
   position: relative;
@@ -306,6 +313,7 @@ exports[`generateCode > generates code 1`] = `
   border-top-right-radius: 0px;
   border-bottom-right-radius: 0px;
   border-bottom-left-radius: 0px;
+  box-shadow: none;
 }
 .uimix-1Bvi32d9RMi3ES5kk2UvuM {
   position: absolute;
@@ -332,6 +340,18 @@ exports[`generateCode > generates code 1`] = `
   height: 100px;
   opacity: 1;
   overflow: visible;
+  background: #FFFFFF;
+  border-style: solid;
+  border-color: transparent;
+  border-top-width: 0px;
+  border-right-width: 0px;
+  border-bottom-width: 0px;
+  border-left-width: 0px;
+  border-top-left-radius: 0px;
+  border-top-right-radius: 0px;
+  border-bottom-right-radius: 0px;
+  border-bottom-left-radius: 0px;
+  box-shadow: none;
 }
 .uimix-1Bvi39mct9UNYZ9eTCCRdV {
   position: absolute;
@@ -376,6 +396,7 @@ exports[`generateCode > generates code 1`] = `
   border-top-right-radius: 8px;
   border-bottom-right-radius: 8px;
   border-bottom-left-radius: 8px;
+  box-shadow: none;
 }
 .uimix-1BwWRgjHr8HNgX8BRooGv7 {
   position: relative;
@@ -387,6 +408,18 @@ exports[`generateCode > generates code 1`] = `
   height: max-content;
   opacity: 1;
   overflow: visible;
+  background: transparent;
+  border-style: solid;
+  border-color: transparent;
+  border-top-width: 0px;
+  border-right-width: 0px;
+  border-bottom-width: 0px;
+  border-left-width: 0px;
+  border-top-left-radius: 0px;
+  border-top-right-radius: 0px;
+  border-bottom-right-radius: 0px;
+  border-bottom-left-radius: 0px;
+  box-shadow: none;
 }
 .uimix-1BwWRgjHmYZ8qLKDj3Tvdy {
   position: relative;
