@@ -3,6 +3,7 @@ import { PxPercentValue, PxValue } from "./value/dimension.js";
 import { SolidFill } from "./value/fill.js";
 import { ForeignComponentRef } from "./value/instance.js";
 import { PositionConstraint } from "./value/position.js";
+import { Shadow } from "./value/shadow.js";
 import { SizeConstraint } from "./value/size.js";
 import { StackAlign, StackDirection, StackJustify } from "./value/stack.js";
 import { TextHorizontalAlign, TextVerticalAlign } from "./value/text.js";
@@ -31,6 +32,8 @@ export const StyleJSON = z.object({
 
   opacity: z.number(),
   overflowHidden: z.boolean(),
+
+  shadows: z.array(Shadow),
 
   // only for non-absolute layers
   marginTop: PxValue,

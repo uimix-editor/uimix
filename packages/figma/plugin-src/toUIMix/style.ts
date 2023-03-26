@@ -169,6 +169,21 @@ async function getFillBorderStylePartial(
     style.borderLeftWidth = [node.strokeLeftWeight, "px"];
   }
 
+  style.shadows = node.effects.flatMap((effect) => {
+    if (effect.type === "DROP_SHADOW" && effect.visible) {
+      return [
+        {
+          color: rgbaToHex(effect.color),
+          x: effect.offset.x,
+          y: effect.offset.y,
+          blur: effect.radius,
+          spread: effect.spread ?? 0,
+        },
+      ];
+    }
+    return [];
+  });
+
   return style;
 }
 
@@ -442,6 +457,7 @@ export async function getImageStyle(
     ...getPositionStylePartial(node, parentLayout, offset),
     ...getCornerStylePartial(node),
     ...(await getFillBorderStylePartial(node)),
+    overflowHidden: true,
   };
 
   if (node.fills === figma.mixed || node.fills.length === 0) {
