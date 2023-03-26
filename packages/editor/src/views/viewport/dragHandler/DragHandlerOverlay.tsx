@@ -69,7 +69,7 @@ export const DragHandlerOverlay: React.FC = observer(
           return;
         }
 
-        projectState.page?.selectable.deselect();
+        projectState.project.clearSelection();
         dragHandlerRef.current = undefined;
       };
       const onPointerMove = action((e: PointerEvent) => {
@@ -133,11 +133,11 @@ export const DragHandlerOverlay: React.FC = observer(
       const override = new ViewportEvent(e.nativeEvent).selectable;
       if (override) {
         if (!override.selected) {
-          page.selectable.deselect();
+          projectState.project.clearSelection();
           override.select();
         }
       } else {
-        page.selectable.deselect();
+        projectState.project.clearSelection();
       }
 
       showContextMenu(

@@ -251,7 +251,7 @@ const ComponentThumbnail: React.FC<{
             instanceNode.name = component.name;
           }
 
-          page.selectable.deselect();
+          project.clearSelection();
           instanceNode.selectable.select();
 
           status.current.creating = true;

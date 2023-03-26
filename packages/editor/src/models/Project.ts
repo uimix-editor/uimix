@@ -189,4 +189,8 @@ export class Project {
   get componentURLs(): ObservableYArray<string> {
     return ObservableYArray.get(this.doc.getArray("componentURLs"));
   }
+
+  clearSelection() {
+    this.selectables.selectionData.clear();
+  }
 }

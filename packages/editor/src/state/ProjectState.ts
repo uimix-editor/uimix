@@ -42,10 +42,6 @@ export class ProjectState {
     return nodes;
   }
 
-  deselectAll() {
-    this.page?.selectable.deselect();
-  }
-
   // MARK: Collapsing
 
   readonly collapsedPaths = observable.set<string>();
@@ -117,7 +113,7 @@ export class ProjectState {
     };
 
     const insertionTarget = getInsertionTarget();
-    this.page?.selectable.deselect();
+    this.project.clearSelection();
 
     const nodes: Node[] = [];
     for (const [id, nodeJSON] of Object.entries(data.nodes)) {

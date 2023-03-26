@@ -134,7 +134,7 @@ class Commands {
     }
     const group = groupAndAutoLayout(selectables);
     if (group) {
-      projectState.deselectAll();
+      projectState.project.clearSelection();
       group.select();
     }
 
@@ -144,7 +144,7 @@ class Commands {
   ungroup() {
     const selectables = projectState.selectedSelectables;
 
-    projectState.deselectAll();
+    projectState.project.clearSelection();
 
     for (const selectable of selectables) {
       const children = selectable.children;

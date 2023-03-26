@@ -82,7 +82,7 @@ const TreeRow: React.FC<{
         rows[i].item.selectable.select();
       }
     } else {
-      projectState.page?.selectable.deselect();
+      projectState.project.clearSelection();
       selectable.select();
     }
   });
@@ -147,7 +147,7 @@ const TreeRow: React.FC<{
     e.preventDefault();
 
     if (!selectable.selected) {
-      projectState.page?.selectable.deselect();
+      projectState.project.clearSelection();
       selectable.select();
     }
 
@@ -297,7 +297,7 @@ export const NodeTreeView: React.FC = observer(() => {
             inset: 0,
           }}
           onClick={action(() => {
-            rootItem.selectable.deselect();
+            projectState.project.clearSelection();
           })}
           onContextMenu={action((e) => {
             const page = projectState.page;
@@ -321,7 +321,7 @@ export const NodeTreeView: React.FC = observer(() => {
         // }
 
         if (!item.selectable.selected) {
-          projectState.page?.selectable.deselect();
+          projectState.project.clearSelection();
           item.selectable.select();
         }
         return true;

@@ -72,7 +72,7 @@ export class NodeInsertDragHandler implements DragHandler {
       { x: true, y: true }
     );
 
-    projectState.page?.selectable.deselect();
+    projectState.project.clearSelection();
     this.selectable.select();
   }
 

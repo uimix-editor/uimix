@@ -22,7 +22,7 @@ export class NodeClickMoveDragHandler implements DragHandler {
 
     if (event.selectables.every((s) => !s.ancestorSelected)) {
       if (!this.additive) {
-        projectState.page?.selectable.deselect();
+        projectState.project.clearSelection();
       }
       this.selectable.select();
     }
@@ -48,7 +48,7 @@ export class NodeClickMoveDragHandler implements DragHandler {
     if (!this.moveHandler) {
       // do click
       if (!this.additive) {
-        projectState.page?.selectable.deselect();
+        projectState.project.clearSelection();
       }
       this.selectable.select();
     }

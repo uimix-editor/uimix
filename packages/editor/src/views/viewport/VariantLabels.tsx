@@ -78,7 +78,7 @@ class ComponentLabelDragHandler implements DragHandler {
     this.targets = component.children.map((c) => [c.computedRect, c]);
 
     if (!(event.event.shiftKey || event.event.metaKey)) {
-      projectState.page?.selectable.deselect();
+      projectState.project.clearSelection();
     }
     component.select();
   }
@@ -299,7 +299,7 @@ const VariantLabel: React.FC<{
               };
               component.append([variant]);
 
-              projectState.page?.selectable.deselect();
+              projectState.project.clearSelection();
               variant.selectable.select();
               projectState.undoManager.stopCapturing();
             }),
@@ -315,7 +315,7 @@ const VariantLabel: React.FC<{
               };
               component.append([variant]);
 
-              projectState.page?.selectable.deselect();
+              projectState.project.clearSelection();
               variant.selectable.select();
               projectState.undoManager.stopCapturing();
             }),
