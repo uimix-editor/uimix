@@ -5,9 +5,11 @@ export const TooltipProvider = RadixTooltip.Provider;
 export function Tooltip({
   children,
   text,
+  side,
 }: {
   children: React.ReactNode;
   text: React.ReactNode;
+  side?: "top" | "right" | "bottom" | "left";
 }) {
   if (!text) {
     return <>{children}</>;
@@ -20,6 +22,7 @@ export function Tooltip({
         <RadixTooltip.Content
           sideOffset={5}
           className="pointer-events-none bg-white text-black rounded shadow text-macaron-base px-2 py-1"
+          side={side}
         >
           {text}
           <RadixTooltip.Arrow className="fill-white" />

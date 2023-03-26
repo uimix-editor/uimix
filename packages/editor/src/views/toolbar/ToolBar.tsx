@@ -1,138 +1,106 @@
-import React, { useCallback } from "react";
-import { Icon, IconProps } from "@iconify/react";
-import menuIcon from "@iconify-icons/ic/menu";
-import rectIcon from "@seanchas116/design-icons/json/rect.json";
-import textIcon from "@seanchas116/design-icons/json/text.json";
-import imageIcon from "@seanchas116/design-icons/json/image.json";
+import { Icon } from "@iconify/react";
 import { observer } from "mobx-react-lite";
-import { ZoomControl } from "../../components/ZoomControl";
-import { scrollState } from "../../state/ScrollState";
-import { action } from "mobx";
-import { twMerge } from "tailwind-merge";
 import { DropdownMenu } from "../../components/Menu";
 import { ToolButton } from "../../components/ToolButton";
 import { commands } from "../../state/Commands";
+import rectIcon from "@seanchas116/design-icons/json/rect.json";
+import textIcon from "@seanchas116/design-icons/json/text.json";
+import imageIcon from "@seanchas116/design-icons/json/image.json";
 import { viewportState } from "../../state/ViewportState";
+import { action } from "mobx";
+import { Tooltip } from "../../components/Tooltip";
 
-const LargeToolButton: React.FC<{
-  icon: IconProps["icon"];
-  selected?: boolean;
-  text: string;
-  onClick?: () => void;
-}> = ({ icon, selected, text, onClick }) => {
-  return (
-    <div
-      onClick={onClick}
-      aria-selected={selected}
-      className="flex w-fit gap-1 p-2 items-center rounded
-      hover:bg-macaron-uiBackground
-      aria-selected:bg-macaron-active
-      aria-selected:text-macaron-activeText
-      text-neutral-800"
-    >
-      <Icon icon={icon} className="text-base" />
-      <div className="font-medium text-macaron-base">{text}</div>
-    </div>
-  );
-};
-
-export const ToolBar = observer(function ToolBar({
-  className,
-}: {
-  className?: string;
-}) {
-  const onZoomOut = useCallback(
-    action(() => scrollState.zoomOut()),
-    []
-  );
-  const onZoomIn = useCallback(
-    action(() => scrollState.zoomIn()),
-    []
-  );
-  const onChangeZoomPercent = useCallback(
-    action((percent: number) => scrollState.zoomAroundCenter(percent / 100)),
-    []
-  );
+export const ToolBar = observer(() => {
+  // TODO: use material symbols instead of SVGs
 
   return (
-    <div
-      className={twMerge(
-        "box-content h-10 border-b border-macaron-separator bg-macaron-background text-macaron-text flex items-center justify-center relative",
-        className
-      )}
-    >
-      <div className="absolute left-3 top-0 bottom-0 flex gap-4 items-center">
-        <DropdownMenu
-          defs={commands.menu}
-          trigger={(props) => (
-            <ToolButton {...props}>
-              <Icon icon={menuIcon} width={20} />
-            </ToolButton>
-          )}
-        />
-        <div className="flex">
-          <LargeToolButton
-            icon="material-symbols:widgets-outline-rounded"
-            //selected={viewportState.insertMode?.type === "component"}
-            text="Assets"
-          />
-          <LargeToolButton
-            icon={textIcon}
-            selected={
-              viewportState.tool?.type === "insert" &&
-              viewportState.tool.mode.type === "text"
-            }
-            text="Text"
+    <div className="w-10 flex flex-col items-center p-1.5">
+      <DropdownMenu
+        defs={commands.menu}
+        placement="right-start"
+        trigger={(props) => (
+          <ToolButton {...props}>
+            <Icon icon="ic:menu" width={16} />
+          </ToolButton>
+        )}
+      />
+      <div className="flex flex-col items-center gap-1 mt-2">
+        <Tooltip text="Select" side="right">
+          <ToolButton
+            aria-pressed={!viewportState.tool}
             onClick={action(() => {
-              commands.insertText();
+              viewportState.tool = undefined;
             })}
-          />
-          <LargeToolButton
-            icon={rectIcon}
-            selected={
+          >
+            <svg width="20" height="20" viewBox="0 0 20 20">
+              <path
+                d="M6.39601 12.083L8.33301 9.604H12.104L6.39601 4.938V12.083ZM11.062 17.229L8.31201 11.333L5.31201 15.042V2.625L15.125 10.688H9.75001L12.5 16.562L11.062 17.229Z"
+                fill="currentColor"
+              />
+            </svg>
+          </ToolButton>
+        </Tooltip>
+        <Tooltip text="Frame (F)" side="right">
+          <ToolButton
+            aria-pressed={
               viewportState.tool?.type === "insert" &&
               viewportState.tool.mode.type === "frame"
             }
-            text="Frame"
             onClick={action(() => {
               commands.insertFrame();
             })}
-          />
-          <LargeToolButton
-            icon={imageIcon}
-            selected={
+          >
+            <Icon icon={rectIcon} width={20} />
+          </ToolButton>
+        </Tooltip>
+        <Tooltip text="Text (T)" side="right">
+          <ToolButton
+            aria-pressed={
+              viewportState.tool?.type === "insert" &&
+              viewportState.tool.mode.type === "text"
+            }
+            onClick={action(() => {
+              commands.insertText();
+            })}
+          >
+            <Icon icon={textIcon} width={20} />
+          </ToolButton>
+        </Tooltip>
+        <Tooltip text="Image" side="right">
+          <ToolButton
+            aria-pressed={
               viewportState.tool?.type === "insert" &&
               viewportState.tool.mode.type === "image"
             }
-            text="Image"
             onClick={action(async () => {
               await commands.insertImage();
             })}
-          />
-        </div>
-      </div>
-
-      <div className="flex">
-        {
-          // TODO: title?
-        }
-      </div>
-
-      <div className="absolute right-3 top-0 bottom-0 flex items-center gap-4">
-        <ZoomControl
-          percentage={Math.round(scrollState.scale * 100)}
-          onZoomOut={onZoomOut}
-          onZoomIn={onZoomIn}
-          onChangePercentage={onChangeZoomPercent}
-        />
-        <a
-          className="bg-macaron-active rounded px-2 py-1.5 text-xs hover:bg-macaron-activeHover text-macaron-activeText flex items-center gap-1"
-          target="_blank"
-          href="https://github.com/seanchas116/uimix"
-        >
-          <Icon icon="mdi:github" className="text-base" />
-          GitHub
-        </a>
+          >
+            <Icon icon={imageIcon} width={20} />
+          </ToolButton>
+        </Tooltip>
+        <Tooltip text="Instance" side="right">
+          <ToolButton
+            aria-pressed={viewportState.tool?.type === "instancePalette"}
+            onClick={action(() => {
+              viewportState.tool = {
+                type: "instancePalette",
+              };
+            })}
+          >
+            <svg width="20" height="20" viewBox="0 0 20 20">
+              <path
+                d="M13.25 11L9 6.75L13.25 2.5L17.479 6.75L13.25 11ZM3 9V3H9V9H3ZM11 17V11H17V17H11ZM3 17V11H9V17H3ZM4.5 7.5H7.5V4.5H4.5V7.5ZM13.25 8.875L15.354 6.75L13.25 4.625L11.125 6.75L13.25 8.875ZM12.5 15.5H15.5V12.5H12.5V15.5ZM4.5 15.5H7.5V12.5H4.5V15.5Z"
+                fill="currentColor"
+              />
+            </svg>
+          </ToolButton>
+        </Tooltip>
+        <Tooltip text="Generate with AI (TODO)" side="right">
+          <ToolButton>
+            <Icon icon="carbon:machine-learning" width={20} />
+          </ToolButton>
+        </Tooltip>
       </div>
     </div>
   );
