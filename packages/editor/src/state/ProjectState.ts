@@ -13,22 +13,6 @@ export class ProjectState {
     makeObservable(this);
   }
 
-  loadJSON(projectJSON: ProjectJSON) {
-    if (Object.keys(projectJSON.nodes).length) {
-      this.project.loadJSON(projectJSON);
-      const allPages = this.project.pages.all;
-      if (!allPages.some((p) => p.id === this.pageID)) {
-        this.pageID = allPages[0]?.id;
-      }
-    } else {
-      this.project.node.clear();
-      const page = this.project.nodes.create("page");
-      page.name = "Page 1";
-      this.project.node.append([page]);
-      this.pageID = page.id;
-    }
-  }
-
   readonly doc = new Y.Doc();
   readonly project: Project;
   @observable pageID: string | undefined;
@@ -37,6 +21,8 @@ export class ProjectState {
   }
 
   readonly undoManager: Y.UndoManager;
+
+  // MARK: Selection
 
   @computed get selectedSelectables(): Selectable[] {
     return (
@@ -55,7 +41,13 @@ export class ProjectState {
     return nodes;
   }
 
+  deselectAll() {
+    this.page?.selectable.deselect();
+  }
+
   readonly collapsedPaths = observable.set<string>();
+
+  // MARK: Pages
 
   openPage(page: Node) {
     this.pageID = page.id;
@@ -97,8 +89,22 @@ export class ProjectState {
     this.undoManager.stopCapturing();
   }
 
-  deselectAll() {
-    this.page?.selectable.deselect();
+  // MARK: Modify Nodes
+
+  loadJSON(projectJSON: ProjectJSON) {
+    if (Object.keys(projectJSON.nodes).length) {
+      this.project.loadJSON(projectJSON);
+      const allPages = this.project.pages.all;
+      if (!allPages.some((p) => p.id === this.pageID)) {
+        this.pageID = allPages[0]?.id;
+      }
+    } else {
+      this.project.node.clear();
+      const page = this.project.nodes.create("page");
+      page.name = "Page 1";
+      this.project.node.append([page]);
+      this.pageID = page.id;
+    }
   }
 
   async pasteNodes(data: ProjectJSON) {
