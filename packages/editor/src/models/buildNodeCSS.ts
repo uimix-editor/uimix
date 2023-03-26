@@ -103,7 +103,9 @@ export function buildNodeCSS(
     cssStyle.paddingRight = style.paddingRight.join("");
     cssStyle.paddingTop = style.paddingTop.join("");
     cssStyle.paddingBottom = style.paddingBottom.join("");
+  }
 
+  if (nodeType === "frame" || nodeType === "image" || nodeType === "svg") {
     const fills = style.fills;
     cssStyle.background = fills.length ? fills[0].hex : "transparent";
     cssStyle.borderStyle = "solid";
@@ -117,6 +119,22 @@ export function buildNodeCSS(
     cssStyle.borderTopRightRadius = style.topRightRadius.join("");
     cssStyle.borderBottomRightRadius = style.bottomRightRadius.join("");
     cssStyle.borderBottomLeftRadius = style.bottomLeftRadius.join("");
+
+    const shadows = style.shadows;
+    if (shadows.length === 0) {
+      cssStyle.boxShadow = "none";
+    } else {
+      cssStyle.boxShadow = shadows
+        .map((shadow) => {
+          const x = shadow.x.join("");
+          const y = shadow.y.join("");
+          const blur = shadow.blur.join("");
+          const spread = shadow.spread.join("");
+          const hex = shadow.hex;
+          return `${x} ${y} ${blur} ${spread} ${hex}`;
+        })
+        .join(", ");
+    }
   }
 
   if (nodeType === "text") {
