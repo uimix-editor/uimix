@@ -308,7 +308,10 @@ function getLayoutStylePartial(
   style.layout = "stack";
   style.stackDirection = node.layoutMode === "VERTICAL" ? "y" : "x";
   style.gap = [node.itemSpacing, "px"];
-  if (node.strokesIncludedInLayout) {
+  if (
+    node.strokesIncludedInLayout ||
+    node.strokes.filter((s) => s.visible).length === 0
+  ) {
     style.paddingLeft = [node.paddingLeft, "px"];
     style.paddingRight = [node.paddingRight, "px"];
     style.paddingTop = [node.paddingTop, "px"];
