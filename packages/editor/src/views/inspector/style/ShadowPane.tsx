@@ -12,6 +12,11 @@ import { action } from "mobx";
 import { InspectorTargetContext } from "../components/InspectorTargetContext";
 import { Input } from "../../../components/Input";
 import { DropdownMenu } from "../../../components/Menu";
+import { Shadow } from "@uimix/node-data";
+
+function nanToZero(value: number) {
+  return isNaN(value) ? 0 : value;
+}
 
 export const ShadowPane: React.FC = observer(function ShadowPane() {
   const selectables = projectState.selectedSelectables.filter(
@@ -31,6 +36,14 @@ export const ShadowPane: React.FC = observer(function ShadowPane() {
   //   projectState.undoManager.stopCapturing();
   // });
 
+  const onChangeShadow = action((shadow: Shadow, index: number) => {
+    for (const selectable of selectables) {
+      const shadows = [...(selectable.style.shadows ?? [])];
+      shadows[index] = shadow;
+      selectable.style.shadows = shadows;
+    }
+  });
+
   if (!selectables.length) {
     return null;
   }
@@ -45,9 +58,22 @@ export const ShadowPane: React.FC = observer(function ShadowPane() {
           buttons={
             <IconButton
               icon={addIcon}
-              onClick={() => {
-                //onChangeFill(Color.from("gray"));
-              }}
+              onClick={action(() => {
+                for (const selectable of selectables) {
+                  const newShadow: Shadow = {
+                    color: Color.black.withAlpha(0.25).toHex(),
+                    x: 0,
+                    y: 0,
+                    blur: 16,
+                    spread: 0,
+                  };
+                  selectable.style.shadows = [
+                    ...selectable.style.shadows,
+                    newShadow,
+                  ];
+                }
+                projectState.undoManager.stopCapturing();
+              })}
             />
           }
         />
@@ -60,14 +86,64 @@ export const ShadowPane: React.FC = observer(function ShadowPane() {
                 <div className="flex flex-col gap-2">
                   <ColorInput
                     value={Color.from(shadow.color) ?? Color.black}
-                    // onChange={onChangeFill}
-                    // onChangeEnd={onChangeEndFill}
+                    onChange={action((color) => {
+                      const newShadow = { ...shadow, color: color.toHex() };
+                      onChangeShadow(newShadow, i);
+                    })}
+                    onChangeEnd={action(() => {
+                      projectState.undoManager.stopCapturing();
+                    })}
                   />
                   <div className="grid grid-cols-4 gap-1">
-                    <Input icon="X" value={String(shadow.x)} />
-                    <Input icon="Y" value={String(shadow.y)} />
-                    <Input icon="B" value={String(shadow.blur)} />
-                    <Input icon="S" value={String(shadow.spread)} />
+                    <Input
+                      // TODO: refactor to NumberInput?
+                      icon="X"
+                      value={String(shadow.x)}
+                      onChange={action((value) => {
+                        const newShadow = {
+                          ...shadow,
+                          x: nanToZero(Number(value)),
+                        };
+                        onChangeShadow(newShadow, i);
+                        projectState.undoManager.stopCapturing();
+                      })}
+                    />
+                    <Input
+                      icon="Y"
+                      value={String(shadow.y)}
+                      onChange={action((value) => {
+                        const newShadow = {
+                          ...shadow,
+                          y: nanToZero(Number(value)),
+                        };
+                        onChangeShadow(newShadow, i);
+                        projectState.undoManager.stopCapturing();
+                      })}
+                    />
+                    <Input
+                      icon="B"
+                      value={String(shadow.blur)}
+                      onChange={action((value) => {
+                        const newShadow = {
+                          ...shadow,
+                          blur: nanToZero(Number(value)),
+                        };
+                        onChangeShadow(newShadow, i);
+                        projectState.undoManager.stopCapturing();
+                      })}
+                    />
+                    <Input
+                      icon="S"
+                      value={String(shadow.spread)}
+                      onChange={action((value) => {
+                        const newShadow = {
+                          ...shadow,
+                          spread: nanToZero(Number(value)),
+                        };
+                        onChangeShadow(newShadow, i);
+                        projectState.undoManager.stopCapturing();
+                      })}
+                    />
                   </div>
                 </div>
                 <DropdownMenu
@@ -78,10 +154,36 @@ export const ShadowPane: React.FC = observer(function ShadowPane() {
                     {
                       type: "command",
                       text: "Move Up",
+                      onClick: action(() => {
+                        if (i === 0 || shadows.length === 1) {
+                          return;
+                        }
+                        const newShadows = [...shadows];
+                        const shadow = newShadows[i];
+                        newShadows.splice(i, 1);
+                        newShadows.splice(i - 1, 0, shadow);
+                        for (const selectable of selectables) {
+                          selectable.style.shadows = newShadows;
+                        }
+                        projectState.undoManager.stopCapturing();
+                      }),
                     },
                     {
                       type: "command",
                       text: "Move Down",
+                      onClick: action(() => {
+                        if (i === shadows.length - 1 || shadows.length === 1) {
+                          return;
+                        }
+                        const newShadows = [...shadows];
+                        const shadow = newShadows[i];
+                        newShadows.splice(i, 1);
+                        newShadows.splice(i + 1, 0, shadow);
+                        for (const selectable of selectables) {
+                          selectable.style.shadows = newShadows;
+                        }
+                        projectState.undoManager.stopCapturing();
+                      }),
                     },
                     {
                       type: "separator",
@@ -89,6 +191,14 @@ export const ShadowPane: React.FC = observer(function ShadowPane() {
                     {
                       type: "command",
                       text: "Remove",
+                      onClick: action(() => {
+                        const newShadows = [...shadows];
+                        newShadows.splice(i, 1);
+                        for (const selectable of selectables) {
+                          selectable.style.shadows = newShadows;
+                        }
+                        projectState.undoManager.stopCapturing();
+                      }),
                     },
                   ]}
                 />
