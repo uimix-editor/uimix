@@ -5,6 +5,7 @@ import { ElementPane } from "./ElementPane";
 import { FillPane } from "./FillPane";
 import { LayoutPane } from "./LayoutPane";
 import { PropertyPane } from "./PropertyPane";
+import { ShadowPane } from "./ShadowPane";
 import { TextPane } from "./TextPane";
 
 export function StyleInspector(): JSX.Element {
@@ -14,6 +15,7 @@ export function StyleInspector(): JSX.Element {
       <LayoutPane />
       <FillPane />
       <BorderPane />
+      <ShadowPane />
       <TextPane />
       <PropertyPane />
       <ElementPane />
