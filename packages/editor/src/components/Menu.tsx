@@ -2,6 +2,7 @@ import * as AriakitMenu from "ariakit/menu";
 import checkIcon from "@iconify-icons/ic/check";
 import chevronRightIcon from "@iconify-icons/ic/chevron-right";
 import { MenuItemDef, MenuSubmenuDef } from "../state/MenuItemDef";
+import { PopoverState } from "ariakit/popover";
 import { Icon } from "@iconify/react";
 
 const shortcutClassNames = `text-macaron-disabledText text-macaron-base ml-auto pl-4`;
@@ -100,8 +101,11 @@ type UseMenuButtonResult = ReturnType<
 export const DropdownMenu: React.FC<{
   defs: readonly MenuItemDef[];
   trigger: (props: Omit<UseMenuButtonResult, "children">) => JSX.Element;
-}> = ({ defs, trigger }) => {
-  const state = AriakitMenu.useMenuState();
+  placement?: PopoverState["placement"];
+}> = ({ defs, trigger, placement }) => {
+  const state = AriakitMenu.useMenuState({
+    placement,
+  });
   const menuButtunProps = AriakitMenu.useMenuButton<"button">({ state });
 
   return (

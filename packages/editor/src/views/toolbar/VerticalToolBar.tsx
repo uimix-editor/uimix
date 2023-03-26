@@ -14,8 +14,17 @@ export const VerticalToolBar = observer(() => {
   // TODO: use material symbols instead of SVGs
 
   return (
-    <div className="w-10 flex flex-col items-center p-1.5 justify-between">
-      <div className="flex flex-col items-center gap-1">
+    <div className="w-10 flex flex-col items-center p-1.5">
+      <DropdownMenu
+        defs={commands.menu}
+        placement="right-start"
+        trigger={(props) => (
+          <ToolButton {...props}>
+            <Icon icon="ic:menu" width={16} />
+          </ToolButton>
+        )}
+      />
+      <div className="flex flex-col items-center gap-1 mt-2">
         <Tooltip text="Select" side="right">
           <ToolButton
             aria-pressed={!viewportState.tool}
@@ -93,14 +102,6 @@ export const VerticalToolBar = observer(() => {
           </ToolButton>
         </Tooltip>
       </div>
-      <DropdownMenu
-        defs={commands.menu}
-        trigger={(props) => (
-          <ToolButton {...props}>
-            <Icon icon="ic:menu" width={20} />
-          </ToolButton>
-        )}
-      />
     </div>
   );
 });
