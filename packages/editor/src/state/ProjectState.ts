@@ -5,6 +5,7 @@ import { Project } from "../models/Project";
 import { Selectable } from "../models/Selectable";
 import { Node } from "../models/Node";
 import { getIncrementalUniqueName } from "../utils/Name";
+import { generateExampleNodes } from "../models/generateExampleNodes";
 
 export class ProjectState {
   constructor() {
@@ -45,51 +46,31 @@ export class ProjectState {
     this.page?.selectable.deselect();
   }
 
+  // MARK: Collapsing
+
   readonly collapsedPaths = observable.set<string>();
 
-  // MARK: Pages
+  // MARK: Nodes
 
-  openPage(page: Node) {
-    this.pageID = page.id;
-  }
-
-  createPage(name: string) {
-    const existingFilePaths = new Set(
-      this.project.pages.all.map((d) => d.name)
-    );
-    const newPath = getIncrementalUniqueName(existingFilePaths, name);
-
-    const page = this.project.nodes.create("page");
-    page.name = newPath;
-    this.project.node.append([page]);
-
-    this.undoManager.stopCapturing();
-  }
-
-  deletePageOrPageFolder(path: string) {
-    const affectedPages = this.project.pages.affectedPagesForPath(path);
-    const deletingCurrent = this.page
-      ? affectedPages.includes(this.page)
-      : false;
-
-    // if (this.project.pages.count === affectedPages.length) {
-    //   return;
-    // }
-    this.project.pages.deletePageOrPageFolder(path);
-
-    if (deletingCurrent) {
-      this.pageID = this.project.pages.all[0]?.id;
+  setupInitContent() {
+    const pages = this.project.pages.all;
+    if (pages.length === 0) {
+      const page = this.project.nodes.create("page");
+      page.name = "Page 1";
+      this.project.node.append([page]);
+      this.pageID = page.id;
+      generateExampleNodes(page);
+      if (this.project.componentURLs.length === 0) {
+        this.project.componentURLs.push([
+          "https://cdn.jsdelivr.net/gh/uimix-editor/uimix@ba0157d5/packages/sandbox/dist-components/components.js",
+          "https://cdn.jsdelivr.net/gh/uimix-editor/uimix@ba0157d5/packages/sandbox/dist-components/style.css",
+        ]);
+      }
+    } else {
+      this.pageID = pages[0].id;
     }
-
-    this.undoManager.stopCapturing();
+    this.undoManager.clear();
   }
-
-  renamePageOrPageFolder(path: string, newPath: string) {
-    this.project.pages.renamePageOrPageFolder(path, newPath);
-    this.undoManager.stopCapturing();
-  }
-
-  // MARK: Modify Nodes
 
   loadJSON(projectJSON: ProjectJSON) {
     if (Object.keys(projectJSON.nodes).length) {
@@ -169,6 +150,48 @@ export class ProjectState {
         await this.project.imageManager.insert(blob);
       })
     );
+  }
+
+  // MARK: Pages
+
+  openPage(page: Node) {
+    this.pageID = page.id;
+  }
+
+  createPage(name: string) {
+    const existingFilePaths = new Set(
+      this.project.pages.all.map((d) => d.name)
+    );
+    const newPath = getIncrementalUniqueName(existingFilePaths, name);
+
+    const page = this.project.nodes.create("page");
+    page.name = newPath;
+    this.project.node.append([page]);
+
+    this.undoManager.stopCapturing();
+  }
+
+  deletePageOrPageFolder(path: string) {
+    const affectedPages = this.project.pages.affectedPagesForPath(path);
+    const deletingCurrent = this.page
+      ? affectedPages.includes(this.page)
+      : false;
+
+    // if (this.project.pages.count === affectedPages.length) {
+    //   return;
+    // }
+    this.project.pages.deletePageOrPageFolder(path);
+
+    if (deletingCurrent) {
+      this.pageID = this.project.pages.all[0]?.id;
+    }
+
+    this.undoManager.stopCapturing();
+  }
+
+  renamePageOrPageFolder(path: string, newPath: string) {
+    this.project.pages.renamePageOrPageFolder(path, newPath);
+    this.undoManager.stopCapturing();
   }
 }
 
