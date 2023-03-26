@@ -14,6 +14,7 @@ import Link from "next/link";
 import { DoubleClickToEdit } from "../DoubleClickToEdit";
 import { toastController } from "../toast/ToastController";
 import { LoadingErrorOverlay } from "./LoadingErrorOverlay";
+import { assertNonNull } from "../../utils/assertNonNull";
 
 class Connection extends TypedEmitter<{
   readyToShow(): void;
@@ -138,11 +139,12 @@ const Editor: React.FC<{
 
   const isError = documentQuery.status === "error";
 
-  const editorSrc = process.env.NEXT_PUBLIC_EDITOR_URL?.replace(
-    "://",
-    // adds subdomain to the editor url
-    `://${documentId}.`
-  );
+  const editorSrc =
+    assertNonNull(process.env.NEXT_PUBLIC_EDITOR_URL).replace(
+      "://",
+      // adds subdomain to the editor url
+      `://${documentId}.`
+    ) + "?titleBarPadding=40";
 
   return (
     <div className="text-neutral-800 flex flex-col text-xs">
