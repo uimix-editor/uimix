@@ -27,8 +27,6 @@ ipcRenderer.on("documentDataChange", (event, data: ProjectJSON) => {
   emitter.emit("documentDataChange", data);
 });
 
-console.log("preload init", ipcRenderer);
-
 const api: DesktopAPI = {
   getDocumentMetadata: async () => {
     return await invoke("getDocumentMetadata");
