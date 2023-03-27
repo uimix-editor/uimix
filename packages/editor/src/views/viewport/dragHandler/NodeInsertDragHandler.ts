@@ -59,9 +59,11 @@ export class NodeInsertDragHandler implements DragHandler {
       const selectable = parent.append("frame");
       selectable.originalNode.name = "Frame";
       this.selectable = selectable;
-      this.selectable.style.fills = [
-        { type: "solid", color: Color.from("white").toHex() },
-      ];
+      if (parent.originalNode.type === "page") {
+        this.selectable.style.fills = [
+          { type: "solid", color: Color.from("white").toHex() },
+        ];
+      }
       this.selectable.style.width = { type: "fixed", value: 100 };
       this.selectable.style.height = { type: "fixed", value: 100 };
     }
@@ -98,6 +100,22 @@ export class NodeInsertDragHandler implements DragHandler {
 
   end(): void {
     viewportState.tool = undefined;
+
+    // auto-include children
+    for (const sibling of this.selectable.parent?.children ?? []) {
+      if (sibling === this.selectable) {
+        continue;
+      }
+      if (!sibling.isAbsolute) {
+        continue;
+      }
+      const included =
+        this.selectable.computedRect.includes(sibling.computedRect.topLeft) &&
+        this.selectable.computedRect.includes(sibling.computedRect.bottomRight);
+      if (included) {
+        this.selectable.insertBefore([sibling], undefined);
+      }
+    }
     projectState.undoManager.stopCapturing();
   }
 
