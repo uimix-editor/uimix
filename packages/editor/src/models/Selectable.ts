@@ -575,7 +575,7 @@ export class Selectable {
         type: originalNode.type,
         condition: originalNode.condition,
       },
-      style: this.style.toJSON(),
+      style: this.style.toPartialJSON(),
       selfStyle: this.selfStyle.toJSON(),
       children: this.children.map((child) => child.toJSON()),
     };
