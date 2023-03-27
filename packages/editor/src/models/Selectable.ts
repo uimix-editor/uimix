@@ -563,13 +563,18 @@ export class Selectable {
   }
 
   toJSON(): SelectableJSON {
-    const node = this.originalNode;
+    const originalNode = this.originalNode;
+    const node = this.node;
 
     return {
-      id: node.id,
+      id: this.id,
       name: node.name,
-      condition: node.condition,
       type: node.type,
+      original: {
+        id: originalNode.id,
+        type: originalNode.type,
+        condition: originalNode.condition,
+      },
       style: this.selfStyle.toJSON(), // TODO: include inherited styles
       children: this.children.map((child) => child.toJSON()),
     };
@@ -578,7 +583,6 @@ export class Selectable {
   static fromJSON(project: Project, json: SelectableJSON): Selectable {
     const node = project.nodes.create(json.type);
     node.name = json.name;
-    node.condition = json.condition;
     const selectable = node.selectable;
     selectable.selfStyle.loadJSON(json.style);
 

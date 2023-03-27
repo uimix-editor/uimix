@@ -7,7 +7,13 @@ const SelectableJSONBase = z.object({
   id: z.string(),
   type: NodeType,
   name: z.string().optional(),
-  condition: VariantCondition.optional(),
+  original: z
+    .object({
+      condition: VariantCondition.optional(),
+      id: z.string(),
+      type: NodeType,
+    })
+    .optional(),
   style: StyleJSON.partial(),
 });
 
