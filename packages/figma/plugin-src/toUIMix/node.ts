@@ -22,7 +22,7 @@ async function figmaToMacaron(
   node: SceneNode,
   parentLayout: BaseFrameMixin["layoutMode"],
   offset: [number, number]
-): Promise<UIMix.NodeHierarchy | undefined> {
+): Promise<UIMix.SelectableJSON | undefined> {
   // TODO: export hidden nodes as well
   if (!node.visible) {
     return;
@@ -134,7 +134,7 @@ export async function figmaNodesToMacaron(
   nodes: readonly SceneNode[],
   parentLayout: BaseFrameMixin["layoutMode"],
   offset: [number, number]
-): Promise<UIMix.NodeHierarchy[]> {
+): Promise<UIMix.SelectableJSON[]> {
   return compact(
     await Promise.all(
       nodes.map((child) => figmaToMacaron(images, child, parentLayout, offset))
@@ -144,7 +144,7 @@ export async function figmaNodesToMacaron(
 
 export function buildProjectJSON(
   images: Map<string, UIMix.Image>,
-  nodes: UIMix.NodeHierarchy[]
+  nodes: UIMix.SelectableJSON[]
 ): UIMix.ProjectJSON {
   const projectJSON: UIMix.ProjectJSON = {
     nodes: {},
@@ -153,8 +153,8 @@ export function buildProjectJSON(
   };
 
   const visitNode = (
-    node: UIMix.NodeHierarchy,
-    parent: UIMix.NodeHierarchy | undefined,
+    node: UIMix.SelectableJSON,
+    parent: UIMix.SelectableJSON | undefined,
     index: number
   ) => {
     projectJSON.nodes[node.id] = {

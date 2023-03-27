@@ -1,30 +1,29 @@
 import { z } from "zod";
-import { NodeJSON } from "./node/node";
+import { NodeType, VariantCondition } from "./node/node";
 import { Image } from "./project";
 import { StyleJSON } from "./style/style";
 
-const NodeHierarchyBase = NodeJSON.omit({
-  index: true,
-  parent: true,
-}).extend({
+const SelectableJSONBase = z.object({
   id: z.string(),
+  type: NodeType,
+  name: z.string().optional(),
+  condition: VariantCondition.optional(),
   style: StyleJSON.partial(),
 });
 
-export type NodeHierarchy = z.infer<typeof NodeHierarchyBase> & {
-  children: NodeHierarchy[];
+export type SelectableJSON = z.infer<typeof SelectableJSONBase> & {
+  children: SelectableJSON[];
 };
 
-export const NodeHierarchy: z.ZodType<NodeHierarchy> = NodeHierarchyBase.extend(
-  {
-    children: z.lazy(() => z.array(NodeHierarchy)),
-  }
-);
+export const SelectableJSON: z.ZodType<SelectableJSON> =
+  SelectableJSONBase.extend({
+    children: z.lazy(() => z.array(SelectableJSON)),
+  });
 
 export const NodeClipboardData = z.object({
   uimixClipboardVersion: z.literal("0.0.1"),
   type: z.literal("nodes"),
-  nodes: z.array(NodeHierarchy),
+  nodes: z.array(SelectableJSON),
   images: z.record(Image), // URLs must be data URLs
 });
 

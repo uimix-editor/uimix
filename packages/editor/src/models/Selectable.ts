@@ -7,7 +7,7 @@ import { computed, makeObservable, observable } from "mobx";
 import { Rect } from "paintvec";
 import { resizeWithBoundingBox } from "../services/Resize";
 import {
-  NodeHierarchy,
+  SelectableJSON,
   NodeJSON,
   NodeType,
   ProjectJSON,
@@ -562,7 +562,7 @@ export class Selectable {
     }
   }
 
-  toJSON(): NodeHierarchy {
+  toJSON(): SelectableJSON {
     const node = this.originalNode;
 
     return {
@@ -575,7 +575,7 @@ export class Selectable {
     };
   }
 
-  static fromJSON(project: Project, json: NodeHierarchy): Selectable {
+  static fromJSON(project: Project, json: SelectableJSON): Selectable {
     const node = project.nodes.create(json.type);
     node.name = json.name;
     node.condition = json.condition;
