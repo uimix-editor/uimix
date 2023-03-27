@@ -9,9 +9,9 @@ const SelectableJSONBase = z.object({
   name: z.string().optional(),
   original: z
     .object({
-      condition: VariantCondition.optional(),
       id: z.string(),
       type: NodeType,
+      condition: VariantCondition.optional(),
     })
     .optional(),
   style: StyleJSON.partial(),
