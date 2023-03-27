@@ -188,254 +188,164 @@ exports[`selectablesToProjectJSON > works 1`] = `
     "1Bvi2z3TfkSpYXW29daTN8": {
       "fills": [
         {
-          "hex": "#FFFFFF",
+          "color": "#FFFFFF",
           "type": "solid",
         },
       ],
-      "gap": [
-        10,
-        "px",
-      ],
+      "gap": 10,
       "height": {
-        "type": "hugContents",
+        "type": "hug",
       },
       "layout": "stack",
-      "paddingBottom": [
-        30,
-        "px",
-      ],
-      "paddingLeft": [
-        40,
-        "px",
-      ],
-      "paddingRight": [
-        20,
-        "px",
-      ],
-      "paddingTop": [
-        10,
-        "px",
-      ],
+      "paddingBottom": 30,
+      "paddingLeft": 40,
+      "paddingRight": 20,
+      "paddingTop": 10,
       "position": {
         "x": {
-          "start": [
-            50,
-            "px",
-          ],
+          "start": 50,
           "type": "start",
         },
         "y": {
-          "start": [
-            184,
-            "px",
-          ],
+          "start": 184,
           "type": "start",
         },
       },
       "width": {
-        "type": "hugContents",
+        "type": "hug",
       },
     },
     "1Bvi2z3To8ddXo6R6ZftVD": {
       "fills": [
         {
-          "hex": "#22C55E",
+          "color": "#22C55E",
           "type": "solid",
         },
       ],
       "height": {
         "type": "fixed",
-        "value": [
-          80,
-          "px",
-        ],
+        "value": 80,
       },
       "width": {
         "type": "fixed",
-        "value": [
-          40,
-          "px",
-        ],
+        "value": 40,
       },
     },
     "1Bvi2z3TpKXtTJLTRPTEd8": {
       "fills": [
         {
-          "hex": "#EF4444",
+          "color": "#EF4444",
           "type": "solid",
         },
       ],
       "height": {
-        "max": [
-          60,
-          "px",
-        ],
-        "min": [
-          20,
-          "px",
-        ],
-        "type": "fillContainer",
-        "value": [
-          50,
-          "px",
-        ],
+        "max": 60,
+        "min": 20,
+        "type": "fill",
+        "value": 50,
       },
       "width": {
-        "max": [
-          100,
-          "px",
-        ],
-        "min": [
-          25,
-          "px",
-        ],
-        "type": "fillContainer",
-        "value": [
-          50,
-          "px",
-        ],
+        "max": 100,
+        "min": 25,
+        "type": "fill",
+        "value": 50,
       },
     },
     "1Bvi2z3U3SiK6r7gf9vh7N": {
       "fills": [
         {
-          "hex": "#000000",
+          "color": "#000000",
           "type": "solid",
         },
       ],
-      "fontSize": [
-        20,
-        "px",
-      ],
+      "fontSize": 20,
       "height": {
-        "type": "hugContents",
+        "type": "hug",
       },
-      "marginBottom": [
-        30,
-        "px",
-      ],
-      "marginLeft": [
-        40,
-        "px",
-      ],
-      "marginRight": [
-        20,
-        "px",
-      ],
-      "marginTop": [
-        10,
-        "px",
-      ],
+      "marginBottom": 30,
+      "marginLeft": 40,
+      "marginRight": 20,
+      "marginTop": 10,
       "textContent": "Hello, world!",
       "width": {
-        "type": "hugContents",
+        "type": "hug",
       },
     },
     "1Bvi2z3UB1xUVg4Xz9WTpJ": {
       "fills": [
         {
-          "hex": "#3B82F6",
+          "color": "#3B82F6",
           "type": "solid",
         },
       ],
       "height": {
         "type": "fixed",
-        "value": [
-          40,
-          "px",
-        ],
+        "value": 40,
       },
       "width": {
         "type": "fixed",
-        "value": [
-          80,
-          "px",
-        ],
+        "value": 80,
       },
     },
     "1Bvi2z3UGTM64JtRT7Qc1S": {
       "fills": [
         {
-          "hex": "#111827",
+          "color": "#111827",
           "type": "solid",
         },
       ],
       "height": {
-        "type": "hugContents",
+        "type": "hug",
       },
       "textContent": "Button",
       "width": {
-        "type": "hugContents",
+        "type": "hug",
       },
     },
     "1Bvi2z3UPfi6W3L8nDt5VA": {
       "fills": [
         {
-          "hex": "#E5E7EB",
+          "color": "#E5E7EB",
           "type": "solid",
         },
       ],
       "height": {
-        "type": "hugContents",
+        "type": "hug",
       },
       "layout": "stack",
-      "paddingBottom": [
-        4,
-        "px",
-      ],
-      "paddingLeft": [
-        8,
-        "px",
-      ],
-      "paddingRight": [
-        8,
-        "px",
-      ],
-      "paddingTop": [
-        4,
-        "px",
-      ],
+      "paddingBottom": 4,
+      "paddingLeft": 8,
+      "paddingRight": 8,
+      "paddingTop": 4,
       "position": {
         "x": {
-          "start": [
-            50,
-            "px",
-          ],
+          "start": 50,
           "type": "start",
         },
         "y": {
-          "start": [
-            400,
-            "px",
-          ],
+          "start": 400,
           "type": "start",
         },
       },
       "width": {
-        "type": "hugContents",
+        "type": "hug",
       },
     },
     "1Bvi2z3USBZi1pWrvPd6Ut": {},
     "1Bvi2z3UVsEskiSt2TcdL7": {
       "fills": [
         {
-          "hex": "#3B82F6",
+          "color": "#3B82F6",
           "type": "solid",
         },
       ],
       "position": {
         "x": {
-          "start": [
-            200,
-            "px",
-          ],
+          "start": 200,
           "type": "start",
         },
         "y": {
-          "start": [
-            400,
-            "px",
-          ],
+          "start": 400,
           "type": "start",
         },
       },
@@ -443,7 +353,7 @@ exports[`selectablesToProjectJSON > works 1`] = `
     "1Bvi2z3UVsEskiSt2TcdL7:1Bvi2z3UGTM64JtRT7Qc1S": {
       "fills": [
         {
-          "hex": "#FFFFFF",
+          "color": "#FFFFFF",
           "type": "solid",
         },
       ],
@@ -451,17 +361,11 @@ exports[`selectablesToProjectJSON > works 1`] = `
     "1Bvi2z3UaHFmaikKtfcmGX": {
       "position": {
         "x": {
-          "start": [
-            350,
-            "px",
-          ],
+          "start": 350,
           "type": "start",
         },
         "y": {
-          "start": [
-            400,
-            "px",
-          ],
+          "start": 400,
           "type": "start",
         },
       },
@@ -470,24 +374,18 @@ exports[`selectablesToProjectJSON > works 1`] = `
     "1Bvi2z3UrU9VkawwAteXs8": {
       "fills": [
         {
-          "hex": "#BABABA",
+          "color": "#BABABA",
           "type": "solid",
         },
       ],
       "mainComponent": "1Bvi2z3USBZi1pWrvPd6Ut",
       "position": {
         "x": {
-          "start": [
-            160,
-            "px",
-          ],
+          "start": 160,
           "type": "start",
         },
         "y": {
-          "start": [
-            28,
-            "px",
-          ],
+          "start": 28,
           "type": "start",
         },
       },
@@ -499,31 +397,22 @@ exports[`selectablesToProjectJSON > works 1`] = `
     "1Bvi319YVxZELz4tEskN1S": {
       "fills": [
         {
-          "hex": "#FFFFFF",
+          "color": "#FFFFFF",
           "type": "solid",
         },
       ],
       "height": {
         "type": "fixed",
-        "value": [
-          456,
-          "px",
-        ],
+        "value": 456,
       },
       "layout": "stack",
       "position": {
         "x": {
-          "start": [
-            50,
-            "px",
-          ],
+          "start": 50,
           "type": "start",
         },
         "y": {
-          "start": [
-            585,
-            "px",
-          ],
+          "start": 585,
           "type": "start",
         },
       },
@@ -531,10 +420,7 @@ exports[`selectablesToProjectJSON > works 1`] = `
       "stackDirection": "y",
       "width": {
         "type": "fixed",
-        "value": [
-          744,
-          "px",
-        ],
+        "value": 744,
       },
     },
     "1Bvi31VKu8gfy6XzJ8xrHA": {
@@ -545,14 +431,11 @@ exports[`selectablesToProjectJSON > works 1`] = `
         "type": "react",
       },
       "height": {
-        "type": "hugContents",
+        "type": "hug",
       },
       "width": {
-        "type": "fillContainer",
-        "value": [
-          744,
-          "px",
-        ],
+        "type": "fill",
+        "value": 744,
       },
     },
     "1Bvi32d9RMi3ES5kk2UvuM": {
@@ -568,120 +451,84 @@ exports[`selectablesToProjectJSON > works 1`] = `
         "type": "react",
       },
       "height": {
-        "type": "hugContents",
+        "type": "hug",
       },
       "position": {
         "x": {
-          "start": [
-            33,
-            "px",
-          ],
+          "start": 33,
           "type": "start",
         },
         "y": {
-          "start": [
-            28,
-            "px",
-          ],
+          "start": 28,
           "type": "start",
         },
       },
       "width": {
-        "type": "hugContents",
+        "type": "hug",
       },
     },
     "1Bvi365mtWZmXKDPeJTB4s": {
       "fills": [
         {
-          "hex": "#FFFFFF",
+          "color": "#FFFFFF",
           "type": "solid",
         },
       ],
       "height": {
-        "type": "fillContainer",
-        "value": [
-          173,
-          "px",
-        ],
+        "type": "fill",
+        "value": 173,
       },
       "position": {
         "x": {
-          "start": [
-            210,
-            "px",
-          ],
+          "start": 210,
           "type": "start",
         },
         "y": {
-          "start": [
-            142,
-            "px",
-          ],
+          "start": 142,
           "type": "start",
         },
       },
       "width": {
-        "type": "fillContainer",
-        "value": [
-          428,
-          "px",
-        ],
+        "type": "fill",
+        "value": 428,
       },
     },
     "1Bvi392qBdMy93LGLcVymb": {
       "fills": [
         {
-          "hex": "#FFFFFF",
+          "color": "#FFFFFF",
           "type": "solid",
         },
       ],
       "height": {
         "type": "fixed",
-        "value": [
-          100,
-          "px",
-        ],
+        "value": 100,
       },
       "imageHash": "YmY-tuteU03QY-k_2ARy1uacNmXDNmOX-FFAlj2qCIo=",
       "position": {
         "x": {
-          "start": [
-            33,
-            "px",
-          ],
+          "start": 33,
           "type": "start",
         },
         "y": {
-          "start": [
-            97,
-            "px",
-          ],
+          "start": 97,
           "type": "start",
         },
       },
       "width": {
         "type": "fixed",
-        "value": [
-          100,
-          "px",
-        ],
+        "value": 100,
       },
     },
     "1Bvi39mct9UNYZ9eTCCRdV": {
       "mainComponent": "1Bvi2zJALza4DrqmNaGYAk",
       "position": {
         "x": {
-          "start": [
-            165,
-            "px",
-          ],
+          "start": 165,
           "type": "start",
         },
         "y": {
-          "start": [
-            86,
-            "px",
-          ],
+          "start": 86,
           "type": "start",
         },
       },
@@ -694,210 +541,132 @@ exports[`selectablesToProjectJSON > works 1`] = `
     "1BwWRgjHmYZ8qLKDj3Tvdy": {
       "fills": [
         {
-          "hex": "#1f2937",
+          "color": "#1f2937",
           "type": "solid",
         },
       ],
       "fontFamily": "Satoshi",
-      "fontSize": [
-        20,
-        "px",
-      ],
+      "fontSize": 20,
       "fontWeight": 700,
       "height": {
-        "type": "hugContents",
+        "type": "hug",
       },
       "hidden": false,
-      "letterSpacing": [
-        0,
-        "px",
-      ],
+      "letterSpacing": 0,
       "opacity": 1,
       "textContent": "React Components Import/Export",
       "textHorizontalAlign": "start",
       "textVerticalAlign": "start",
       "width": {
-        "type": "fillContainer",
-        "value": [
-          315.640625,
-          "px",
-        ],
+        "type": "fill",
+        "value": 315.640625,
       },
     },
     "1BwWRgjHr8HNgX8BRooGv7": {
       "height": {
-        "type": "hugContents",
+        "type": "hug",
       },
       "svgContent": "<svg width=\\"24\\" height=\\"24\\" viewBox=\\"0 0 24 24\\" fill=\\"none\\" xmlns=\\"http://www.w3.org/2000/svg\\">
 <path d=\\"M17.25 6.75L22.5 12L17.25 17.25M6.75 17.25L1.5 12L6.75 6.75M14.25 3.75L9.75 20.25\\" stroke=\\"#0EA5E9\\" stroke-width=\\"1.5\\" stroke-linecap=\\"round\\" stroke-linejoin=\\"round\\"/>
 </svg>
 ",
       "width": {
-        "type": "hugContents",
+        "type": "hug",
       },
     },
     "1BwWRgjHrhVbbuTV7m36kM": {
-      "bottomLeftRadius": [
-        20,
-        "px",
-      ],
-      "bottomRightRadius": [
-        20,
-        "px",
-      ],
+      "bottomLeftRadius": 20,
+      "bottomRightRadius": 20,
       "fills": [
         {
-          "hex": "#ffffff",
+          "color": "#ffffff",
           "type": "solid",
         },
       ],
-      "gap": [
-        20,
-        "px",
-      ],
+      "gap": 20,
       "height": {
-        "type": "hugContents",
+        "type": "hug",
       },
       "hidden": false,
       "layout": "stack",
       "opacity": 1,
       "overflowHidden": false,
-      "paddingBottom": [
-        19,
-        "px",
-      ],
-      "paddingLeft": [
-        19,
-        "px",
-      ],
-      "paddingRight": [
-        19,
-        "px",
-      ],
-      "paddingTop": [
-        19,
-        "px",
-      ],
+      "paddingBottom": 19,
+      "paddingLeft": 19,
+      "paddingRight": 19,
+      "paddingTop": 19,
       "position": {
         "x": {
-          "start": [
-            50,
-            "px",
-          ],
+          "start": 50,
           "type": "start",
         },
         "y": {
-          "start": [
-            1144,
-            "px",
-          ],
+          "start": 1144,
           "type": "start",
         },
       },
       "stackAlign": "start",
       "stackDirection": "y",
       "stackJustify": "start",
-      "topLeftRadius": [
-        20,
-        "px",
-      ],
-      "topRightRadius": [
-        20,
-        "px",
-      ],
+      "topLeftRadius": 20,
+      "topRightRadius": 20,
       "width": {
         "type": "fixed",
-        "value": [
-          400,
-          "px",
-        ],
+        "value": 400,
       },
     },
     "1BwWRgjHuAe9UTxVhowwYu": {
       "fills": [
         {
-          "hex": "#4b5563",
+          "color": "#4b5563",
           "type": "solid",
         },
       ],
       "fontFamily": "Inter",
-      "fontSize": [
-        16,
-        "px",
-      ],
+      "fontSize": 16,
       "fontWeight": 400,
       "height": {
-        "type": "hugContents",
+        "type": "hug",
       },
       "hidden": false,
-      "letterSpacing": [
-        0,
-        "px",
-      ],
+      "letterSpacing": 0,
       "opacity": 1,
       "textContent": "Seamlessly work with React components, boosting your design-to-development workflow.
 ",
       "textHorizontalAlign": "start",
       "textVerticalAlign": "start",
       "width": {
-        "type": "fillContainer",
+        "type": "fill",
       },
     },
     "1BwWRgjHyEzJjsehRefVBE": {
-      "bottomLeftRadius": [
-        8,
-        "px",
-      ],
-      "bottomRightRadius": [
-        8,
-        "px",
-      ],
+      "bottomLeftRadius": 8,
+      "bottomRightRadius": 8,
       "fills": [
         {
-          "hex": "#f0f9ff",
+          "color": "#f0f9ff",
           "type": "solid",
         },
       ],
-      "gap": [
-        10,
-        "px",
-      ],
+      "gap": 10,
       "height": {
-        "type": "hugContents",
+        "type": "hug",
       },
       "hidden": false,
       "layout": "stack",
       "opacity": 1,
       "overflowHidden": false,
-      "paddingBottom": [
-        3,
-        "px",
-      ],
-      "paddingLeft": [
-        3,
-        "px",
-      ],
-      "paddingRight": [
-        3,
-        "px",
-      ],
-      "paddingTop": [
-        3,
-        "px",
-      ],
+      "paddingBottom": 3,
+      "paddingLeft": 3,
+      "paddingRight": 3,
+      "paddingTop": 3,
       "stackAlign": "start",
       "stackDirection": "x",
       "stackJustify": "start",
-      "topLeftRadius": [
-        8,
-        "px",
-      ],
-      "topRightRadius": [
-        8,
-        "px",
-      ],
+      "topLeftRadius": 8,
+      "topRightRadius": 8,
       "width": {
-        "type": "hugContents",
+        "type": "hug",
       },
     },
     "1BwWRiQqGA4gTdwZRLXFBh": {},

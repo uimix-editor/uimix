@@ -22,7 +22,7 @@ export const FillPane: React.FC = observer(function FillPane() {
   const onChangeFill = action((fill: Color | undefined) => {
     for (const selectable of selectables) {
       selectable.style.fills = fill
-        ? [{ type: "solid", hex: fill.toHex() }]
+        ? [{ type: "solid", color: fill.toHex() }]
         : [];
     }
   });
@@ -64,7 +64,7 @@ export const FillPane: React.FC = observer(function FillPane() {
         <InspectorTargetContext.Provider value={selectables}>
           <div>
             <ColorInput
-              value={Color.from(fill.hex) ?? Color.black}
+              value={Color.from(fill.color) ?? Color.black}
               onChange={onChangeFill}
               onChangeEnd={onChangeEndFill}
             />

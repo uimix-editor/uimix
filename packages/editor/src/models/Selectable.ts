@@ -323,10 +323,10 @@ export class Selectable {
     } = style;
 
     return Rect.from({
-      left: computedRect.left + borderLeftWidth[0],
-      top: computedRect.top + borderTopWidth[0],
-      width: computedRect.width - borderLeftWidth[0] - borderRightWidth[0],
-      height: computedRect.height - borderTopWidth[0] - borderBottomWidth[0],
+      left: computedRect.left + borderLeftWidth,
+      top: computedRect.top + borderTopWidth,
+      width: computedRect.width - borderLeftWidth - borderRightWidth,
+      height: computedRect.height - borderTopWidth - borderBottomWidth,
     });
   }
 
@@ -344,20 +344,20 @@ export class Selectable {
     } = style;
 
     return Rect.from({
-      left: computedRect.left + borderLeftWidth[0] + paddingLeft[0],
-      top: computedRect.top + borderTopWidth[0] + paddingTop[0],
+      left: computedRect.left + borderLeftWidth + paddingLeft,
+      top: computedRect.top + borderTopWidth + paddingTop,
       width:
         computedRect.width -
-        borderLeftWidth[0] -
-        borderRightWidth[0] -
-        paddingLeft[0] -
-        paddingRight[0],
+        borderLeftWidth -
+        borderRightWidth -
+        paddingLeft -
+        paddingRight,
       height:
         computedRect.height -
-        borderTopWidth[0] -
-        borderBottomWidth[0] -
-        paddingTop[0] -
-        paddingBottom[0],
+        borderTopWidth -
+        borderBottomWidth -
+        paddingTop -
+        paddingBottom,
     });
   }
 
@@ -370,10 +370,10 @@ export class Selectable {
     const { marginLeft, marginRight, marginTop, marginBottom } = style;
 
     return Rect.from({
-      left: computedRect.left - marginLeft[0],
-      top: computedRect.top - marginTop[0],
-      width: computedRect.width + marginLeft[0] + marginRight[0],
-      height: computedRect.height + marginTop[0] + marginBottom[0],
+      left: computedRect.left - marginLeft,
+      top: computedRect.top - marginTop,
+      width: computedRect.width + marginLeft + marginRight,
+      height: computedRect.height + marginTop + marginBottom,
     });
   }
 

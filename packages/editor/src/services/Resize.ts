@@ -22,21 +22,21 @@ function setPositionConstraintValue(
     case "start": {
       newConstraint = {
         type: "start",
-        start: [start, "px"],
+        start,
       };
       break;
     }
     case "end": {
       newConstraint = {
         type: "end",
-        end: [parentSize - start - size, "px"],
+        end: parentSize - start - size,
       };
       break;
     }
     case "both": {
       newConstraint = {
         type: "both",
-        start: [start, "px"],
+        start,
         end: constraint.end,
       };
       break;
@@ -75,7 +75,7 @@ export function resizeWithBoundingBox(
         ...selectable.style.position,
         x: {
           type: "start",
-          start: [bbox.left, "px"],
+          start: bbox.left,
         },
       };
     }
@@ -84,7 +84,7 @@ export function resizeWithBoundingBox(
         ...selectable.style.position,
         y: {
           type: "start",
-          start: [bbox.top, "px"],
+          start: bbox.top,
         },
       };
     }
@@ -93,13 +93,13 @@ export function resizeWithBoundingBox(
   if (targets.width) {
     selectable.style.width = {
       type: "fixed",
-      value: [bbox.width, "px"],
+      value: bbox.width,
     };
   }
   if (targets.height) {
     selectable.style.height = {
       type: "fixed",
-      value: [bbox.height, "px"],
+      value: bbox.height,
     };
   }
 }

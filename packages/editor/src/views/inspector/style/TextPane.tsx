@@ -94,21 +94,26 @@ export const TextPane: React.FC = observer(function TextPane() {
           <div className="grid grid-cols-3 gap-2 items-center">
             <InspectorNumberInput
               icon={formatSizeIcon}
-              get={(s) => ({ value: s.style.fontSize[0] })}
+              get={(s) => ({ value: s.style.fontSize })}
               set={(s, value) => {
-                s.style.fontSize = [value?.value ?? 16, "px"];
+                s.style.fontSize = value?.value ?? 16;
               }}
             />
             <InspectorNumberInput
               icon={formatLineSpacingIcon}
               get={(s) => {
-                const lineHeight = s.style.lineHeight;
-                if (!lineHeight) {
+                const value = s.style.lineHeight;
+                if (value === null) {
                   return;
                 }
+                if (typeof value === "number") {
+                  return {
+                    value: value,
+                  };
+                }
                 return {
-                  value: lineHeight[0],
-                  unit: lineHeight[1] === "px" ? undefined : "%",
+                  value: value[0],
+                  unit: value[1],
                 };
               }}
               allowedUnits={["%"]}
@@ -116,27 +121,33 @@ export const TextPane: React.FC = observer(function TextPane() {
                 s.style.lineHeight =
                   value === undefined
                     ? null
-                    : [value.value, value.unit === "%" ? "%" : "px"];
+                    : value.unit === "%"
+                    ? [value.value, "%"]
+                    : value.value;
               }}
             />
             <InspectorNumberInput
               icon={spaceBarIcon}
               get={(s) => {
-                const letterSpacing = s.style.letterSpacing;
-                if (!letterSpacing) {
-                  return;
+                const value = s.style.letterSpacing;
+                if (typeof value === "number") {
+                  return {
+                    value: value,
+                  };
                 }
                 return {
-                  value: letterSpacing[0],
-                  unit: letterSpacing[1] === "px" ? undefined : "%",
+                  value: value[0],
+                  unit: value[1],
                 };
               }}
               allowedUnits={["%"]}
               set={(s, value) => {
                 s.style.letterSpacing =
                   value === undefined
-                    ? [0, "px"]
-                    : [value.value, value.unit === "%" ? "%" : "px"];
+                    ? 0
+                    : value.unit === "%"
+                    ? [value.value, "%"]
+                    : value.value;
               }}
             />
           </div>

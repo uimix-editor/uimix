@@ -30,7 +30,7 @@ import edgeTopIcon from "@seanchas116/design-icons/json/edge-top.json";
 
 const verticalSizeConstraintOptions: ToggleGroupItem<SizeConstraintType>[] = [
   {
-    value: "hugContents",
+    value: "hug",
     tooltip: "Hug Contents",
     icon: { ...hugContentsIcon, rotate: 1 },
   },
@@ -40,7 +40,7 @@ const verticalSizeConstraintOptions: ToggleGroupItem<SizeConstraintType>[] = [
     icon: { ...fixedSizeIcon, rotate: 1 },
   },
   {
-    value: "fillContainer",
+    value: "fill",
     tooltip: "Fill Container",
     icon: { ...fillAreaIcon, rotate: 1 },
   },
@@ -48,7 +48,7 @@ const verticalSizeConstraintOptions: ToggleGroupItem<SizeConstraintType>[] = [
 
 const horizontalSizeConstraintOptions: ToggleGroupItem<SizeConstraintType>[] = [
   {
-    value: "hugContents",
+    value: "hug",
     tooltip: "Hug Contents",
     icon: hugContentsIcon,
   },
@@ -58,7 +58,7 @@ const horizontalSizeConstraintOptions: ToggleGroupItem<SizeConstraintType>[] = [
     icon: fixedSizeIcon,
   },
   {
-    value: "fillContainer",
+    value: "fill",
     tooltip: "Fill Container",
     icon: fillAreaIcon,
   },
@@ -109,15 +109,13 @@ const InspectorAnchorEdit = observer(function InspectorAnchorEdit({
 
 function RadiusEdit() {
   const selectables = useContext(InspectorTargetContext);
-  const topLeft = sameOrMixed(selectables.map((s) => s.style.topLeftRadius[0]));
-  const topRight = sameOrMixed(
-    selectables.map((s) => s.style.topRightRadius[0])
-  );
+  const topLeft = sameOrMixed(selectables.map((s) => s.style.topLeftRadius));
+  const topRight = sameOrMixed(selectables.map((s) => s.style.topRightRadius));
   const bottomRight = sameOrMixed(
-    selectables.map((s) => s.style.bottomRightRadius[0])
+    selectables.map((s) => s.style.bottomRightRadius)
   );
   const bottomLeft = sameOrMixed(
-    selectables.map((s) => s.style.bottomLeftRadius[0])
+    selectables.map((s) => s.style.bottomLeftRadius)
   );
 
   return (
@@ -146,22 +144,22 @@ function RadiusEdit() {
         for (const selectable of selectables) {
           switch (edge) {
             case "top":
-              selectable.style.topLeftRadius = [numValue, "px"];
+              selectable.style.topLeftRadius = numValue;
               break;
             case "right":
-              selectable.style.topRightRadius = [numValue, "px"];
+              selectable.style.topRightRadius = numValue;
               break;
             case "bottom":
-              selectable.style.bottomRightRadius = [numValue, "px"];
+              selectable.style.bottomRightRadius = numValue;
               break;
             case "left":
-              selectable.style.bottomLeftRadius = [numValue, "px"];
+              selectable.style.bottomLeftRadius = numValue;
               break;
             case "all":
-              selectable.style.topLeftRadius = [numValue, "px"];
-              selectable.style.topRightRadius = [numValue, "px"];
-              selectable.style.bottomRightRadius = [numValue, "px"];
-              selectable.style.bottomLeftRadius = [numValue, "px"];
+              selectable.style.topLeftRadius = numValue;
+              selectable.style.topRightRadius = numValue;
+              selectable.style.bottomRightRadius = numValue;
+              selectable.style.bottomLeftRadius = numValue;
               break;
           }
         }
@@ -187,7 +185,7 @@ const WidthEdit = observer(function WidthEdit() {
           const width = s.style.width;
           if (width && "value" in width && width.value) {
             return {
-              value: width.value[0],
+              value: width.value,
             };
           }
         }}
@@ -203,7 +201,7 @@ const WidthEdit = observer(function WidthEdit() {
         }}
         items={horizontalSizeConstraintOptions}
       />
-      {constraint === "fillContainer" && (
+      {constraint === "fill" && (
         <>
           <div />
           <InspectorNumberInput
@@ -211,19 +209,19 @@ const WidthEdit = observer(function WidthEdit() {
             tooltip="Min Width"
             get={(s) => {
               const width = s.style.width;
-              if (width.type === "fillContainer" && width.min) {
+              if (width.type === "fill" && width.min) {
                 return {
-                  value: width.min[0],
+                  value: width.min,
                 };
               }
             }}
             placeholder={() => 0}
             set={(s, value) => {
               const width = s.style.width;
-              if (width.type === "fillContainer") {
+              if (width.type === "fill") {
                 s.style.width = {
                   ...width,
-                  min: value?.value ? [value.value, "px"] : undefined,
+                  min: value?.value,
                 };
               }
             }}
@@ -233,18 +231,18 @@ const WidthEdit = observer(function WidthEdit() {
             tooltip="Max Width"
             get={(s) => {
               const width = s.style.width;
-              if (width.type === "fillContainer" && width.max) {
+              if (width.type === "fill" && width.max) {
                 return {
-                  value: width.max[0],
+                  value: width.max,
                 };
               }
             }}
             set={(s, value) => {
               const width = s.style.width;
-              if (width.type === "fillContainer") {
+              if (width.type === "fill") {
                 s.style.width = {
                   ...width,
-                  max: value?.value ? [value.value, "px"] : undefined,
+                  max: value?.value,
                 };
               }
             }}
@@ -268,7 +266,7 @@ const HeightEdit: React.FC = observer(function HeightEdit() {
           const height = s.style.height;
           if (height && "value" in height && height.value) {
             return {
-              value: height.value[0],
+              value: height.value,
             };
           }
         }}
@@ -284,7 +282,7 @@ const HeightEdit: React.FC = observer(function HeightEdit() {
         }}
         items={verticalSizeConstraintOptions}
       />
-      {constraint === "fillContainer" && (
+      {constraint === "fill" && (
         <>
           <div />
           <InspectorNumberInput
@@ -292,19 +290,19 @@ const HeightEdit: React.FC = observer(function HeightEdit() {
             tooltip="Min Height"
             get={(s) => {
               const height = s.style.height;
-              if (height.type === "fillContainer" && height.min) {
+              if (height.type === "fill" && height.min) {
                 return {
-                  value: height.min[0],
+                  value: height.min,
                 };
               }
             }}
             placeholder={() => 0}
             set={(s, value) => {
               const height = s.style.height;
-              if (height.type === "fillContainer") {
+              if (height.type === "fill") {
                 s.style.height = {
                   ...height,
-                  min: value?.value ? [value.value, "px"] : undefined,
+                  min: value?.value,
                 };
               }
             }}
@@ -314,18 +312,18 @@ const HeightEdit: React.FC = observer(function HeightEdit() {
             tooltip="Max Height"
             get={(s) => {
               const height = s.style.height;
-              if (height.type === "fillContainer" && height.max) {
+              if (height.type === "fill" && height.max) {
                 return {
-                  value: height.max[0],
+                  value: height.max,
                 };
               }
             }}
             set={(s, value) => {
               const height = s.style.height;
-              if (height.type === "fillContainer") {
+              if (height.type === "fill") {
                 s.style.height = {
                   ...height,
-                  max: value?.value ? [value.value, "px"] : undefined,
+                  max: value?.value,
                 };
               }
             }}
@@ -381,7 +379,7 @@ const PositionEdit = observer(() => {
         get={(s) => {
           const y = s.style.position.y;
           if ("start" in y) {
-            return { value: y.start[0] };
+            return { value: y.start };
           }
         }}
         placeholder={(s) => s.computedOffsetTop}
@@ -391,10 +389,10 @@ const PositionEdit = observer(() => {
             y.type === "both"
               ? {
                   type: "both",
-                  start: [value?.value ?? 0, "px"],
+                  start: value?.value ?? 0,
                   end: y.end,
                 }
-              : { type: "start", start: [value?.value ?? 0, "px"] };
+              : { type: "start", start: value?.value ?? 0 };
           s.style.position = { ...s.style.position, y: newY };
         }}
       />
@@ -406,7 +404,7 @@ const PositionEdit = observer(() => {
         get={(s) => {
           const x = s.style.position.x;
           if ("end" in x) {
-            return { value: x.end[0] };
+            return { value: x.end };
           }
         }}
         set={(s, value) => {
@@ -416,9 +414,9 @@ const PositionEdit = observer(() => {
               ? {
                   type: "both",
                   start: x.start,
-                  end: [value?.value ?? 0, "px"],
+                  end: value?.value ?? 0,
                 }
-              : { type: "end", end: [value?.value ?? 0, "px"] };
+              : { type: "end", end: value?.value ?? 0 };
           s.style.position = { ...s.style.position, x: newX };
         }}
       />
@@ -429,7 +427,7 @@ const PositionEdit = observer(() => {
         get={(s) => {
           const y = s.style.position.y;
           if ("end" in y) {
-            return { value: y.end[0] };
+            return { value: y.end };
           }
         }}
         placeholder={(s) => s.computedOffsetBottom}
@@ -440,9 +438,9 @@ const PositionEdit = observer(() => {
               ? {
                   type: "both",
                   start: y.start,
-                  end: [value?.value ?? 0, "px"],
+                  end: value?.value ?? 0,
                 }
-              : { type: "end", end: [value?.value ?? 0, "px"] };
+              : { type: "end", end: value?.value ?? 0 };
           s.style.position = { ...s.style.position, y: newY };
         }}
       />
@@ -454,7 +452,7 @@ const PositionEdit = observer(() => {
         get={(s) => {
           const x = s.style.position.x;
           if ("start" in x) {
-            return { value: x.start[0] };
+            return { value: x.start };
           }
         }}
         set={(s, value) => {
@@ -463,10 +461,10 @@ const PositionEdit = observer(() => {
             x.type === "both"
               ? {
                   type: "both",
-                  start: [value?.value ?? 0, "px"],
+                  start: value?.value ?? 0,
                   end: x.end,
                 }
-              : { type: "start", start: [value?.value ?? 0, "px"] };
+              : { type: "start", start: value?.value ?? 0 };
           s.style.position = { ...s.style.position, x: newX };
         }}
       />
@@ -484,10 +482,10 @@ const MarginEdit = observer(() => {
         tooltip="Margin Top"
         className="col-start-2 row-start-1"
         get={(s) => ({
-          value: s.style.marginTop[0],
+          value: s.style.marginTop,
         })}
         set={(s, value) => {
-          s.style.marginTop = [value?.value ?? 0, "px"];
+          s.style.marginTop = value?.value ?? 0;
         }}
       />
       <InspectorNumberInput
@@ -497,9 +495,9 @@ const MarginEdit = observer(() => {
         }}
         tooltip="Margin Right"
         className="col-start-3 row-start-2"
-        get={(s) => ({ value: s.style.marginRight[0] })}
+        get={(s) => ({ value: s.style.marginRight })}
         set={(s, value) => {
-          s.style.marginRight = [value?.value ?? 0, "px"];
+          s.style.marginRight = value?.value ?? 0;
         }}
       />
       <InspectorNumberInput
@@ -509,9 +507,9 @@ const MarginEdit = observer(() => {
         }}
         tooltip="Margin Bottom"
         className="col-start-2 row-start-3"
-        get={(s) => ({ value: s.style.marginBottom[0] })}
+        get={(s) => ({ value: s.style.marginBottom })}
         set={(s, value) => {
-          s.style.marginBottom = [value?.value ?? 0, "px"];
+          s.style.marginBottom = value?.value ?? 0;
         }}
       />
       <InspectorNumberInput
@@ -521,9 +519,9 @@ const MarginEdit = observer(() => {
         }}
         tooltip="Margin Left"
         className="col-start-1 row-start-2"
-        get={(s) => ({ value: s.style.marginLeft[0] })}
+        get={(s) => ({ value: s.style.marginLeft })}
         set={(s, value) => {
-          s.style.marginLeft = [value?.value ?? 0, "px"];
+          s.style.marginLeft = value?.value ?? 0;
         }}
       />
       <div className="col-start-2 row-start-2 bg-macaron-uiBackground w-full rounded aspect-square" />
@@ -577,17 +575,17 @@ function setSizeConstraintValue(
   const constraint = style[target];
 
   switch (constraint.type) {
-    case "hugContents":
+    case "hug":
     case "fixed":
       style[target] = {
         type: "fixed",
-        value: [value ?? 0, "px"],
+        value: value ?? 0,
       };
       break;
-    case "fillContainer":
+    case "fill":
       style[target] = {
         ...constraint,
-        value: value !== undefined ? [value, "px"] : undefined,
+        value,
       };
       break;
   }
@@ -606,19 +604,19 @@ function setSizeConstraintType(
   const computedSize = selectable.computedRect[target];
 
   switch (type) {
-    case "hugContents":
-      style[target] = { type: "hugContents" };
+    case "hug":
+      style[target] = { type: "hug" };
       break;
     case "fixed":
       style[target] = {
         type: "fixed",
-        value: oldValue ?? [computedSize, "px"],
+        value: oldValue ?? computedSize,
       };
       break;
-    case "fillContainer":
+    case "fill":
       style[target] = {
-        type: "fillContainer",
-        value: oldValue ?? [computedSize, "px"],
+        type: "fill",
+        value: oldValue ?? computedSize,
       };
       break;
   }
@@ -734,22 +732,22 @@ function setPositionStartConstraintType(
     case "start": {
       newConstraint = {
         type: "start",
-        start: [start, "px"],
+        start,
       };
       break;
     }
     case "end": {
       newConstraint = {
         type: "end",
-        end: [parentSize - start - size, "px"],
+        end: parentSize - start - size,
       };
       break;
     }
     case "both": {
       newConstraint = {
         type: "both",
-        start: [start, "px"],
-        end: [parentSize - start - size, "px"],
+        start: start,
+        end: parentSize - start - size,
       };
       break;
     }

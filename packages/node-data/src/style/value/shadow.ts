@@ -1,11 +1,13 @@
 import { z } from "zod";
+import { Color } from "./color";
+import { PxValue } from "./dimension";
 
 export const Shadow = z.object({
-  color: z.string(),
-  x: z.number(),
-  y: z.number(),
-  blur: z.number(),
-  spread: z.number(),
+  color: Color,
+  x: PxValue,
+  y: PxValue,
+  blur: PxValue,
+  spread: PxValue,
 });
 
 export type Shadow = z.infer<typeof Shadow>;

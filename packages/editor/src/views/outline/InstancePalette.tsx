@@ -226,8 +226,8 @@ const ComponentThumbnail: React.FC<{
 
           const instanceNodeStyle = instanceNode.selectable.style;
           instanceNodeStyle.position = {
-            x: { type: "start", start: [pos.x, "px"] },
-            y: { type: "start", start: [pos.y, "px"] },
+            x: { type: "start", start: pos.x },
+            y: { type: "start", start: pos.y },
           };
           // TODO: exotic component
           if (component instanceof Component) {
@@ -243,10 +243,10 @@ const ComponentThumbnail: React.FC<{
               },
             };
             instanceNodeStyle.width = {
-              type: "hugContents",
+              type: "hug",
             };
             instanceNodeStyle.height = {
-              type: "hugContents",
+              type: "hug",
             };
             instanceNode.name = component.name;
           }

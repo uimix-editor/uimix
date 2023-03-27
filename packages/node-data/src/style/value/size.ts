@@ -3,14 +3,14 @@ import { PxValue } from "./dimension";
 
 export const SizeConstraint = z.union([
   z.object({
-    type: z.literal("hugContents"),
+    type: z.literal("hug"),
   }),
   z.object({
     type: z.literal("fixed"),
     value: PxValue,
   }),
   z.object({
-    type: z.literal("fillContainer"),
+    type: z.literal("fill"),
     min: PxValue.optional(),
     max: PxValue.optional(),
     /**

@@ -81,8 +81,8 @@ async function figmaToMacaron(
         name: node.name,
         style: {
           ...getSVGStyle(node, parentLayout, offset),
-          width: { type: "hugContents" },
-          height: { type: "hugContents" },
+          width: { type: "hug" },
+          height: { type: "hug" },
           svgContent: svgText,
         },
         children: [],

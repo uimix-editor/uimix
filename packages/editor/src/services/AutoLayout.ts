@@ -16,25 +16,25 @@ export function removeLayout(selectable: Selectable): void {
     child.style.position = {
       x: {
         type: "start",
-        start: [child.computedOffsetRect.left, "px"],
+        start: child.computedOffsetRect.left,
       },
       y: {
         type: "start",
-        start: [child.computedOffsetRect.top, "px"],
+        start: child.computedOffsetRect.top,
       },
     };
   }
 
-  if (selectable.style.width.type === "hugContents") {
+  if (selectable.style.width.type === "hug") {
     selectable.style.width = {
       type: "fixed",
-      value: [selectable.computedRect.width, "px"],
+      value: selectable.computedRect.width,
     };
   }
-  if (selectable.style.height.type === "hugContents") {
+  if (selectable.style.height.type === "hug") {
     selectable.style.height = {
       type: "fixed",
-      value: [selectable.computedRect.height, "px"],
+      value: selectable.computedRect.height,
     };
   }
 
@@ -62,11 +62,11 @@ export function ungroup(selectable: Selectable): void {
     child.style.position = {
       x: {
         type: "start",
-        start: [pos.x, "px"],
+        start: pos.x,
       },
       y: {
         type: "start",
-        start: [pos.y, "px"],
+        start: pos.y,
       },
     };
   }
@@ -90,14 +90,11 @@ export function autoLayout(selectable: Selectable): void {
 
   selectable.style.stackDirection = flex.direction;
   selectable.style.stackAlign = flex.align;
-  selectable.style.gap = [flex.gap, "px"];
-  selectable.style.paddingLeft = [Math.max(0, offsetBBox.left), "px"];
-  selectable.style.paddingTop = [Math.max(0, offsetBBox.top), "px"];
-  selectable.style.paddingRight = [Math.max(0, width - offsetBBox.right), "px"];
-  selectable.style.paddingBottom = [
-    Math.max(0, height - offsetBBox.bottom),
-    "px",
-  ];
+  selectable.style.gap = flex.gap;
+  selectable.style.paddingLeft = Math.max(0, offsetBBox.left);
+  selectable.style.paddingTop = Math.max(0, offsetBBox.top);
+  selectable.style.paddingRight = Math.max(0, width - offsetBBox.right);
+  selectable.style.paddingBottom = Math.max(0, height - offsetBBox.bottom);
 
   selectable.originalNode.append(flex.elements.map((e) => e.originalNode));
 
@@ -125,26 +122,26 @@ export function groupAndAutoLayout(
   frame.style.position = {
     x: {
       type: "start",
-      start: [offsetBBox.left, "px"],
+      start: offsetBBox.left,
     },
     y: {
       type: "start",
-      start: [offsetBBox.top, "px"],
+      start: offsetBBox.top,
     },
   };
   frame.style.width = {
     type: "fixed",
-    value: [offsetBBox.width, "px"],
+    value: offsetBBox.width,
   };
   frame.style.height = {
     type: "fixed",
-    value: [offsetBBox.height, "px"],
+    value: offsetBBox.height,
   };
 
   frame.style.layout = "stack";
   frame.style.stackDirection = flex.direction;
   frame.style.stackAlign = flex.align;
-  frame.style.gap = [flex.gap, "px"];
+  frame.style.gap = flex.gap;
 
   frame.computedRectProvider = new StubComputedRectProvider(flex.bbox);
 

@@ -9,44 +9,44 @@ export const defaultStyle: StyleJSON = {
   position: {
     x: {
       type: "start",
-      start: [0, "px"],
+      start: 0,
     },
     y: {
       type: "start",
-      start: [0, "px"],
+      start: 0,
     },
   },
   absolute: false,
   width: {
     type: "fixed",
-    value: [0, "px"],
+    value: 0,
   },
   height: {
     type: "fixed",
-    value: [0, "px"],
+    value: 0,
   },
 
-  topLeftRadius: [0, "px"],
-  topRightRadius: [0, "px"],
-  bottomRightRadius: [0, "px"],
-  bottomLeftRadius: [0, "px"],
+  topLeftRadius: 0,
+  topRightRadius: 0,
+  bottomRightRadius: 0,
+  bottomLeftRadius: 0,
 
   fills: [],
   border: null,
-  borderTopWidth: [0, "px"],
-  borderRightWidth: [0, "px"],
-  borderBottomWidth: [0, "px"],
-  borderLeftWidth: [0, "px"],
+  borderTopWidth: 0,
+  borderRightWidth: 0,
+  borderBottomWidth: 0,
+  borderLeftWidth: 0,
 
   opacity: 1,
   overflowHidden: false,
 
   shadows: [],
 
-  marginTop: [0, "px"],
-  marginRight: [0, "px"],
-  marginBottom: [0, "px"],
-  marginLeft: [0, "px"],
+  marginTop: 0,
+  marginRight: 0,
+  marginBottom: 0,
+  marginLeft: 0,
 
   // stack (auto layout)
 
@@ -54,20 +54,20 @@ export const defaultStyle: StyleJSON = {
   stackDirection: "x",
   stackAlign: "start",
   stackJustify: "start",
-  gap: [0, "px"],
-  paddingTop: [0, "px"],
-  paddingRight: [0, "px"],
-  paddingBottom: [0, "px"],
-  paddingLeft: [0, "px"],
+  gap: 0,
+  paddingTop: 0,
+  paddingRight: 0,
+  paddingBottom: 0,
+  paddingLeft: 0,
 
   // text
 
   textContent: "",
   fontFamily: "Inter",
   fontWeight: 400,
-  fontSize: [16, "px"],
+  fontSize: 16,
   lineHeight: null,
-  letterSpacing: [0, "px"],
+  letterSpacing: 0,
   textHorizontalAlign: "start",
   textVerticalAlign: "start",
 
