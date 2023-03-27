@@ -199,10 +199,10 @@ export class Selectable {
     return this.originalNode;
   }
 
-  @computed get style(): IStyle {
+  @computed get style(): CascadedStyle {
     return this.getStyle("displayed");
   }
-  @computed get originalStyle(): IStyle {
+  @computed get originalStyle(): CascadedStyle {
     return this.getStyle("original");
   }
 
@@ -218,7 +218,7 @@ export class Selectable {
   }
 
   // resolveMainComponent=false to get main component ID of an instance
-  private getStyle(type: "original" | "displayed"): IStyle {
+  private getStyle(type: "original" | "displayed"): CascadedStyle {
     const { nodePath } = this;
 
     let superStyle: IStyle;
@@ -575,7 +575,8 @@ export class Selectable {
         type: originalNode.type,
         condition: originalNode.condition,
       },
-      style: this.selfStyle.toJSON(), // TODO: include inherited styles
+      style: this.style.toJSON(),
+      selfStyle: this.selfStyle.toJSON(),
       children: this.children.map((child) => child.toJSON()),
     };
   }

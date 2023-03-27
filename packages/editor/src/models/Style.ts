@@ -1,4 +1,4 @@
-import { isEqual } from "lodash-es";
+import { defaultTo, isEqual } from "lodash-es";
 import { StyleJSON } from "@uimix/node-data";
 import { ObservableYMap } from "../utils/ObservableYMap";
 
@@ -128,6 +128,19 @@ export class CascadedStyle implements IStyle {
   }
   style: PartialStyle;
   parent: IStyle;
+
+  toJSON(): Partial<StyleJSON> {
+    const ret: Partial<StyleJSON> = {};
+
+    const keys = Object.keys(defaultStyle) as (keyof StyleJSON)[];
+    for (const key of keys) {
+      if (!isEqual(this[key], defaultStyle[key])) {
+        // @ts-ignore
+        ret[key] = this[key];
+      }
+    }
+    return ret;
+  }
 }
 
 // eslint-disable-next-line @typescript-eslint/no-empty-interface
