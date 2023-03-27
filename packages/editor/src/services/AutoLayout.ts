@@ -82,7 +82,9 @@ export function autoLayout(selectable: Selectable): void {
 
   const paddingRect = selectable.computedPaddingRect;
 
-  const flex = detectFlex(selectable.children);
+  const flex = detectFlex(
+    selectable.children.filter((child) => !child.style.absolute)
+  );
 
   const offsetBBox = flex.bbox.translate(paddingRect.topLeft.neg);
   const width = paddingRect.width;
