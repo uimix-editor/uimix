@@ -585,9 +585,10 @@ export class Selectable {
     const children = json.children.map((child) =>
       Selectable.fromJSON(project, child)
     );
-    selectable.insertBefore(children, undefined, {
-      fixPosition: false,
-    });
+    node.insertBefore(
+      children.map((c) => c.originalNode),
+      undefined
+    );
     return selectable;
   }
 }
