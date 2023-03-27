@@ -13,7 +13,10 @@ import {
   removeLayout,
   ungroup,
 } from "../services/AutoLayout";
-import { createComponent } from "../services/CreateComponent";
+import {
+  canCreateComponent,
+  createComponent,
+} from "../services/CreateComponent";
 import { PageHierarchyEntry } from "../models/Project";
 import { posix as path } from "path-browserify";
 import { generateExampleNodes } from "../models/generateExampleNodes";
@@ -280,6 +283,9 @@ class Commands {
     type: "command",
     text: "Create Component",
     shortcuts: [new Shortcut(["Mod", "Alt"], "KeyK")],
+    get disabled() {
+      return !projectState.selectedSelectables.some(canCreateComponent);
+    },
     onClick: action(() => {
       this.createComponent();
     }),

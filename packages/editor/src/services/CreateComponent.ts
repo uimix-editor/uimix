@@ -1,17 +1,29 @@
 import { Selectable } from "../models/Selectable";
 import { projectState } from "../state/ProjectState";
 
+export function canCreateComponent(selectable: Selectable) {
+  // inside instance
+  if (selectable.idPath.length > 1) {
+    return false;
+  }
+  // non-frame node (TODO: allow?)
+  if (selectable.originalNode.type !== "frame") {
+    return false;
+  }
+  // already a component root
+  if (selectable.originalNode.parent?.type === "component") {
+    return false;
+  }
+
+  return true;
+}
+
 export function createComponent(selectable: Selectable) {
   const { page } = projectState;
   if (!page) {
     return;
   }
-
-  if (selectable.idPath.length > 1) {
-    return;
-  }
-  if (selectable.originalNode.type !== "frame") {
-    // TODO: allow non-frame components?
+  if (!canCreateComponent(selectable)) {
     return;
   }
 
