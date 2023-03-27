@@ -129,7 +129,16 @@ export class CascadedStyle implements IStyle {
   style: PartialStyle;
   parent: IStyle;
 
-  toPartialJSON(): Partial<StyleJSON> {
+  loadJSON(json: Partial<StyleJSON>) {
+    for (const [key, value] of Object.entries(json)) {
+      if (key in this && value !== undefined) {
+        // @ts-ignore
+        this[key] = value;
+      }
+    }
+  }
+
+  toJSON(): Partial<StyleJSON> {
     const ret: Partial<StyleJSON> = {};
 
     const keys = Object.keys(defaultStyle) as (keyof StyleJSON)[];

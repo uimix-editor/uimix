@@ -575,13 +575,27 @@ export class Selectable {
         type: originalNode.type,
         condition: originalNode.condition,
       },
-      style: this.style.toPartialJSON(),
+      style: this.style.toJSON(),
       selfStyle: this.selfStyle.toJSON(),
       children: this.children.map((child) => child.toJSON()),
     };
   }
 
   static fromJSON(project: Project, json: SelectableJSON): Selectable {
+    if (json.original?.type === "instance") {
+      const mainComponent = json.style.mainComponent;
+      if (mainComponent && project.nodes.get(mainComponent)) {
+        // original component exists in the project
+
+        const node = project.nodes.create("instance");
+        node.name = json.name;
+        const selectable = node.selectable;
+        selectable.selfStyle.loadJSON(json.selfStyle ?? {});
+        // TODO: load inner nodes
+        return selectable;
+      }
+    }
+
     const node = project.nodes.create(json.type);
     node.name = json.name;
     const selectable = node.selectable;
