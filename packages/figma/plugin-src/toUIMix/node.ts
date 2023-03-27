@@ -17,18 +17,12 @@ function isSingleImageFill(
   );
 }
 
-interface NodeWithStyle extends Omit<UIMix.NodeJSON, "index" | "parent"> {
-  id: string;
-  style: Partial<UIMix.StyleJSON>;
-  children: NodeWithStyle[];
-}
-
 async function figmaToMacaron(
   images: Map<string, UIMix.Image>,
   node: SceneNode,
   parentLayout: BaseFrameMixin["layoutMode"],
   offset: [number, number]
-): Promise<NodeWithStyle | undefined> {
+): Promise<UIMix.SelectableJSON | undefined> {
   // TODO: export hidden nodes as well
   if (!node.visible) {
     return;
@@ -140,45 +134,10 @@ export async function figmaNodesToMacaron(
   nodes: readonly SceneNode[],
   parentLayout: BaseFrameMixin["layoutMode"],
   offset: [number, number]
-): Promise<NodeWithStyle[]> {
+): Promise<UIMix.SelectableJSON[]> {
   return compact(
     await Promise.all(
       nodes.map((child) => figmaToMacaron(images, child, parentLayout, offset))
     )
   );
-}
-
-export function buildProjectJSON(
-  images: Map<string, UIMix.Image>,
-  nodes: NodeWithStyle[]
-): UIMix.ProjectJSON {
-  const projectJSON: UIMix.ProjectJSON = {
-    nodes: {},
-    styles: {},
-    images: Object.fromEntries(images),
-  };
-
-  const visitNode = (
-    node: NodeWithStyle,
-    parent: NodeWithStyle | undefined,
-    index: number
-  ) => {
-    projectJSON.nodes[node.id] = {
-      name: node.name,
-      type: node.type,
-      parent: parent?.id,
-      index,
-    };
-    projectJSON.styles[node.id] = node.style;
-
-    for (const [index, child] of node.children.entries()) {
-      visitNode(child, node, index);
-    }
-  };
-
-  for (const node of nodes) {
-    visitNode(node, undefined, 0);
-  }
-
-  return projectJSON;
 }

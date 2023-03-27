@@ -1,6 +1,10 @@
 import { computed, makeObservable, observable } from "mobx";
 import * as Y from "yjs";
-import { ProjectJSON } from "@uimix/node-data";
+import {
+  NodeClipboardData,
+  ProjectJSON,
+  SelectableJSON,
+} from "@uimix/node-data";
 import { Project } from "../models/Project";
 import { Selectable } from "../models/Selectable";
 import { Node } from "../models/Node";
@@ -84,7 +88,29 @@ export class ProjectState {
     }
   }
 
-  async pasteNodes(data: ProjectJSON) {
+  getNodeClipboardData(): NodeClipboardData | undefined {
+    const selection = this.selectedSelectables;
+    if (selection.length === 0) {
+      return undefined;
+    }
+
+    const nodes = selection.map((s) => {
+      if (s.originalNode.type === "component") {
+        // TODO: improve component copy/paste
+        // serialize component root instead
+        return s.children[0].toJSON();
+      }
+      return s.toJSON();
+    });
+    return {
+      uimixClipboardVersion: "0.0.1",
+      type: "nodes",
+      nodes,
+      images: {}, // TODO
+    };
+  }
+
+  async pasteNodeClipboardData(data: NodeClipboardData) {
     const getInsertionTarget = () => {
       const defaultTarget = {
         parent: this.page,
@@ -112,28 +138,65 @@ export class ProjectState {
       };
     };
 
+    const hydrateJSON = (json: SelectableJSON): Selectable => {
+      const project = this.project;
+      if (json.original?.type === "component") {
+        // create instance
+
+        const node = project.nodes.create("instance");
+        node.name = json.name;
+        const selectable = node.selectable;
+        // TODO: position
+        selectable.style.mainComponent = json.original.id;
+
+        return selectable;
+      }
+
+      if (json.original?.type === "variant") {
+        throw new Error("TODO: pasting variant");
+      }
+
+      if (json.original?.type === "instance") {
+        const mainComponent = json.style.mainComponent;
+        if (mainComponent && project.nodes.get(mainComponent)) {
+          // original component exists in the project
+
+          const node = project.nodes.create("instance");
+          node.name = json.name;
+          const selectable = node.selectable;
+
+          const loadOverride = (json: SelectableJSON) => {
+            const idPath = json.id.split(":");
+            idPath[0] = node.id;
+            const selectable = project.selectables.get(idPath);
+            selectable.selfStyle.loadJSON(json.selfStyle ?? {});
+
+            for (const child of json.children) {
+              loadOverride(child);
+            }
+          };
+          loadOverride(json);
+
+          return selectable;
+        }
+      }
+
+      return Selectable.fromJSON(project, json);
+    };
+
     const insertionTarget = getInsertionTarget();
     this.project.clearSelection();
 
-    const nodes: Node[] = [];
-    for (const [id, nodeJSON] of Object.entries(data.nodes)) {
-      const node = this.project.nodes.create(nodeJSON.type, id);
-      node.loadJSON(nodeJSON);
-      nodes.push(node);
-    }
-    const topNodes = nodes.filter((node) => !node.parentID);
+    const selectables = data.nodes.map(hydrateJSON);
 
-    insertionTarget.parent?.insertBefore(topNodes, insertionTarget.next);
+    insertionTarget.parent?.selectable.insertBefore(
+      selectables,
+      insertionTarget.next?.selectable,
+      { fixPosition: false }
+    );
 
-    for (const [id, styleJSON] of Object.entries(data.styles)) {
-      const selectable = this.project.selectables.get(id.split(":"));
-      if (selectable) {
-        selectable.selfStyle.loadJSON(styleJSON);
-      }
-    }
-
-    for (const node of topNodes) {
-      node.selectable.select();
+    for (const selectable of selectables) {
+      selectable.select();
     }
 
     // load images

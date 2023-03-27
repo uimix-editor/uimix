@@ -6,7 +6,12 @@ import { getOrCreate } from "../state/Collection";
 import { computed, makeObservable, observable } from "mobx";
 import { Rect } from "paintvec";
 import { resizeWithBoundingBox } from "../services/Resize";
-import { NodeJSON, NodeType, ProjectJSON } from "@uimix/node-data";
+import {
+  SelectableJSON,
+  NodeJSON,
+  NodeType,
+  ProjectJSON,
+} from "@uimix/node-data";
 import { Project } from "./Project";
 import { Component } from "./Component";
 
@@ -194,10 +199,10 @@ export class Selectable {
     return this.originalNode;
   }
 
-  @computed get style(): IStyle {
+  @computed get style(): CascadedStyle {
     return this.getStyle("displayed");
   }
-  @computed get originalStyle(): IStyle {
+  @computed get originalStyle(): CascadedStyle {
     return this.getStyle("original");
   }
 
@@ -213,7 +218,7 @@ export class Selectable {
   }
 
   // resolveMainComponent=false to get main component ID of an instance
-  private getStyle(type: "original" | "displayed"): IStyle {
+  private getStyle(type: "original" | "displayed"): CascadedStyle {
     const { nodePath } = this;
 
     let superStyle: IStyle;
@@ -516,8 +521,8 @@ export class Selectable {
   }
 
   insertBefore(
-    dstNextSibling: Selectable | undefined,
     selectables: readonly Selectable[],
+    dstNextSibling: Selectable | undefined,
     {
       fixPosition = true,
     }: {
@@ -555,6 +560,41 @@ export class Selectable {
         }
       }
     }
+  }
+
+  toJSON(): SelectableJSON {
+    const originalNode = this.originalNode;
+    const node = this.node;
+
+    return {
+      id: this.id,
+      name: originalNode.name,
+      type: node.type,
+      original: {
+        id: originalNode.id,
+        type: originalNode.type,
+        condition: originalNode.condition,
+      },
+      style: this.style.toJSON(),
+      selfStyle: this.selfStyle.toJSON(),
+      children: this.children.map((child) => child.toJSON()),
+    };
+  }
+
+  static fromJSON(project: Project, json: SelectableJSON): Selectable {
+    const node = project.nodes.create(json.type);
+    node.name = json.name;
+    const selectable = node.selectable;
+    selectable.selfStyle.loadJSON(json.style);
+
+    const children = json.children.map((child) =>
+      Selectable.fromJSON(project, child)
+    );
+    node.insertBefore(
+      children.map((c) => c.originalNode),
+      undefined
+    );
+    return selectable;
   }
 }
 

@@ -1,7 +1,7 @@
 import { action, computed, runInAction } from "mobx";
 import { isTextInput } from "../utils/Focus";
 import { Shortcut } from "../utils/Shortcut";
-import { Selectable, selectablesToProjectJSON } from "../models/Selectable";
+import { Selectable } from "../models/Selectable";
 import { exportToJSON as exportJSON, importJSON } from "./JSONExport";
 import { viewportState } from "./ViewportState";
 import { projectState } from "./ProjectState";
@@ -13,12 +13,20 @@ import {
   removeLayout,
   ungroup,
 } from "../services/AutoLayout";
-import { createComponent } from "../services/CreateComponent";
+import {
+  attachComponent,
+  canCreateComponent,
+  canDetachComponent,
+  createComponent,
+  detachComponent,
+} from "../services/Component";
 import { PageHierarchyEntry } from "../models/Project";
 import { posix as path } from "path-browserify";
 import { generateExampleNodes } from "../models/generateExampleNodes";
 import { dialogState } from "./DialogState";
 import { scrollState } from "./ScrollState";
+import { compact } from "lodash-es";
+import { Component } from "../models/Component";
 
 class Commands {
   @computed get canUndo(): boolean {
@@ -42,17 +50,20 @@ class Commands {
   }
 
   async copy() {
-    // TODO: copy from instance contents
-    const json = selectablesToProjectJSON(
-      projectState.selectedNodes.map((node) => node.selectable)
-    );
-    await Clipboard.writeNodes(json);
+    const data = projectState.getNodeClipboardData();
+    if (!data) {
+      return;
+    }
+    await Clipboard.writeNodes(data);
   }
 
   async paste() {
     const data = await Clipboard.readNodes();
+    if (!data) {
+      return;
+    }
     await runInAction(async () => {
-      await projectState.pasteNodes(data);
+      await projectState.pasteNodeClipboardData(data);
     });
     runInAction(() => {
       projectState.undoManager.stopCapturing();
@@ -146,6 +157,26 @@ class Commands {
     for (const selectable of projectState.selectedSelectables) {
       createComponent(selectable);
     }
+    projectState.undoManager.stopCapturing();
+  }
+
+  detachComponent() {
+    const results = compact(
+      projectState.selectedSelectables.map((selectable) =>
+        detachComponent(selectable)
+      )
+    );
+
+    projectState.project.replaceSelection(results);
+    projectState.undoManager.stopCapturing();
+  }
+
+  attachComponent(component: Component) {
+    const results = projectState.selectedSelectables.map((selectable) =>
+      attachComponent(selectable, component)
+    );
+
+    projectState.project.replaceSelection(results);
     projectState.undoManager.stopCapturing();
   }
 
@@ -280,10 +311,25 @@ class Commands {
     type: "command",
     text: "Create Component",
     shortcuts: [new Shortcut(["Mod", "Alt"], "KeyK")],
+    get disabled() {
+      return !projectState.selectedSelectables.some(canCreateComponent);
+    },
     onClick: action(() => {
       this.createComponent();
     }),
   };
+
+  readonly detachComponentCommand: MenuCommandDef = {
+    type: "command",
+    text: "Detach Component",
+    get disabled() {
+      return !projectState.selectedSelectables.some(canDetachComponent);
+    },
+    onClick: action(() => {
+      this.detachComponent();
+    }),
+  };
+
   readonly autoLayoutCommand: MenuCommandDef = {
     type: "command",
     text: "Auto Layout",
@@ -407,6 +453,8 @@ class Commands {
         children: [
           this.createComponentCommand,
           { type: "separator" },
+          this.detachComponentCommand,
+          { type: "separator" },
           this.groupCommand,
           this.ungroupCommand,
           { type: "separator" },
@@ -438,6 +486,21 @@ class Commands {
       this.deleteCommand,
       { type: "separator" },
       this.createComponentCommand,
+      { type: "separator" },
+      this.detachComponentCommand,
+      {
+        type: "submenu",
+        text: "Attach Component",
+        children: projectState.project.components.map((component) => {
+          return {
+            type: "command",
+            text: component.name,
+            onClick: action(() => {
+              this.attachComponent(component);
+            }),
+          };
+        }),
+      },
       { type: "separator" },
       this.groupCommand,
       this.ungroupCommand,

@@ -2,7 +2,7 @@
 
 import * as Y from "yjs";
 import { posix as path } from "path-browserify";
-import { SelectableMap } from "./Selectable";
+import { Selectable, SelectableMap } from "./Selectable";
 import { Node, NodeMap } from "./Node";
 import { computed, makeObservable } from "mobx";
 import { ProjectJSON } from "@uimix/node-data";
@@ -192,5 +192,12 @@ export class Project {
 
   clearSelection() {
     this.selectables.selectionData.clear();
+  }
+
+  replaceSelection(selectables: Iterable<Selectable>) {
+    this.clearSelection();
+    for (const selectable of selectables) {
+      selectable.select();
+    }
   }
 }

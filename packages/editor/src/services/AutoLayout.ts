@@ -53,7 +53,7 @@ export function ungroup(selectable: Selectable): void {
   const next = selectable.nextSibling;
   const children = selectable.children;
 
-  parent.insertBefore(next, children);
+  parent.insertBefore(children, next);
   selectable.remove();
 
   for (const child of children) {
@@ -145,8 +145,8 @@ export function groupAndAutoLayout(
 
   frame.computedRectProvider = new StubComputedRectProvider(flex.bbox);
 
-  frame.insertBefore(undefined, flex.elements);
-  parent.insertBefore(next, [frame]);
+  frame.insertBefore(flex.elements, undefined);
+  parent.insertBefore([frame], next);
 
   return frame;
 }
