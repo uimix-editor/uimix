@@ -1,4 +1,4 @@
-import { defaultTo, isEqual } from "lodash-es";
+import { isEqual } from "lodash-es";
 import { StyleJSON } from "@uimix/node-data";
 import { ObservableYMap } from "../utils/ObservableYMap";
 
