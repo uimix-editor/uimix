@@ -17,18 +17,12 @@ function isSingleImageFill(
   );
 }
 
-interface NodeWithStyle extends Omit<UIMix.NodeJSON, "index" | "parent"> {
-  id: string;
-  style: Partial<UIMix.StyleJSON>;
-  children: NodeWithStyle[];
-}
-
 async function figmaToMacaron(
   images: Map<string, UIMix.Image>,
   node: SceneNode,
   parentLayout: BaseFrameMixin["layoutMode"],
   offset: [number, number]
-): Promise<NodeWithStyle | undefined> {
+): Promise<UIMix.NodeHierarchy | undefined> {
   // TODO: export hidden nodes as well
   if (!node.visible) {
     return;
@@ -140,7 +134,7 @@ export async function figmaNodesToMacaron(
   nodes: readonly SceneNode[],
   parentLayout: BaseFrameMixin["layoutMode"],
   offset: [number, number]
-): Promise<NodeWithStyle[]> {
+): Promise<UIMix.NodeHierarchy[]> {
   return compact(
     await Promise.all(
       nodes.map((child) => figmaToMacaron(images, child, parentLayout, offset))
@@ -150,7 +144,7 @@ export async function figmaNodesToMacaron(
 
 export function buildProjectJSON(
   images: Map<string, UIMix.Image>,
-  nodes: NodeWithStyle[]
+  nodes: UIMix.NodeHierarchy[]
 ): UIMix.ProjectJSON {
   const projectJSON: UIMix.ProjectJSON = {
     nodes: {},
@@ -159,8 +153,8 @@ export function buildProjectJSON(
   };
 
   const visitNode = (
-    node: NodeWithStyle,
-    parent: NodeWithStyle | undefined,
+    node: UIMix.NodeHierarchy,
+    parent: UIMix.NodeHierarchy | undefined,
     index: number
   ) => {
     projectJSON.nodes[node.id] = {

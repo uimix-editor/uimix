@@ -1,6 +1,6 @@
 import { z } from "zod";
 import { NodeJSON } from "./node/node";
-import { Image, ProjectJSON } from "./project";
+import { Image } from "./project";
 import { StyleJSON } from "./style/style";
 
 const NodeHierarchyBase = NodeJSON.omit({
