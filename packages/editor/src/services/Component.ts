@@ -76,7 +76,10 @@ export function detachComponent(selectable: Selectable) {
   return detached;
 }
 
-export function attachComponent(selectable: Selectable, component: Component) {
+export function attachComponent(
+  selectable: Selectable,
+  component: Component
+): Selectable {
   // - insert instance
   // - copy styles recursively
   // - remove original
@@ -85,15 +88,16 @@ export function attachComponent(selectable: Selectable, component: Component) {
   const next = selectable.nextSibling;
 
   const instance = projectState.project.nodes.create("instance");
+  const instanceSelectable = instance.selectable;
   instance.name = selectable.node.name;
-  instance.selectable.style.mainComponent = component.node.id;
+  instanceSelectable.style.mainComponent = component.node.id;
 
   const copyStyles = (src: Selectable, dst: Selectable) => {
     if (src.node.type !== dst.node.type) {
       return;
     }
     for (const key of styleKeys) {
-      if (dst === instance.selectable && key === "mainComponent") {
+      if (dst === instanceSelectable && key === "mainComponent") {
         continue;
       }
       // @ts-ignore
@@ -111,11 +115,13 @@ export function attachComponent(selectable: Selectable, component: Component) {
     }
   };
 
-  parent?.insertBefore([instance.selectable], next, {
+  parent?.insertBefore([instanceSelectable], next, {
     fixPosition: false,
   });
 
-  copyStyles(selectable, instance.selectable);
+  copyStyles(selectable, instanceSelectable);
 
   selectable.remove();
+
+  return instanceSelectable;
 }
