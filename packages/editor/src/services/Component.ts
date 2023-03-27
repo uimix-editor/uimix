@@ -93,6 +93,9 @@ export function attachComponent(selectable: Selectable, component: Component) {
       return;
     }
     for (const key of styleKeys) {
+      if (dst === instance.selectable && key === "mainComponent") {
+        continue;
+      }
       // @ts-ignore
       dst.style[key] = src.style[key];
     }
