@@ -8,6 +8,7 @@ module.exports = {
   },
   packagerConfig: {
     name: process.env.NODE_ENV === "development" ? "UIMix Dev" : "UIMix",
+    extendInfo: "Info.plist",
   },
   rebuildConfig: {},
   makers: [

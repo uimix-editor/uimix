@@ -9,6 +9,9 @@ const store = new Store<{
   lastOpenedFiles: string[];
 }>();
 
+let isReady = false;
+const filesToOpen: string[] = [];
+
 // Handle creating/removing shortcuts on Windows when installing/uninstalling.
 if (require("electron-squirrel-startup")) {
   app.quit();
@@ -18,13 +21,19 @@ if (require("electron-squirrel-startup")) {
 // initialization and is ready to create browser windows.
 // Some APIs can only be used after this event occurs.
 app.on("ready", () => {
-  const lastOpenedFiles = store.get("lastOpenedFiles", []);
-  if (lastOpenedFiles.length > 0) {
-    for (const filePath of lastOpenedFiles) {
-      new Window(new File(filePath));
+  isReady = true;
+
+  const files = new Set<string>([
+    ...filesToOpen,
+    ...store.get("lastOpenedFiles", []),
+  ]);
+
+  if (files.size > 0) {
+    for (const filePath of files) {
+      Window.open(filePath);
     }
   } else {
-    new Window(new File());
+    Window.new();
   }
 });
 
@@ -39,14 +48,19 @@ app.on("window-all-closed", () => {
 
 app.on("open-file", (event, filePath) => {
   event.preventDefault();
-  new Window(new File(filePath));
+
+  if (isReady) {
+    Window.open(filePath);
+  } else {
+    filesToOpen.push(filePath);
+  }
 });
 
 app.on("activate", () => {
   // On OS X it's common to re-create a window in the app when the
   // dock icon is clicked and there are no other windows open.
   if (BrowserWindow.getAllWindows().length === 0) {
-    new Window(new File());
+    Window.new();
   }
 });
 

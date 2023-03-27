@@ -3,7 +3,7 @@ import path from "path";
 import { File } from "./File";
 
 export class Window {
-  constructor(file: File) {
+  private constructor(file: File) {
     this.file = file;
     this.window = new BrowserWindow({
       width: 1280,
@@ -62,6 +62,22 @@ export class Window {
 
   readonly file: File;
   readonly window: BrowserWindow;
+
+  static new() {
+    new Window(new File());
+  }
+
+  static open(filePath: string) {
+    for (const browserWindow of BrowserWindow.getAllWindows()) {
+      const window = windows.get(browserWindow.webContents);
+      if (window && window.file.filePath === filePath) {
+        browserWindow.focus();
+        return;
+      }
+    }
+    const file = new File(filePath);
+    new Window(file);
+  }
 }
 
 export const windows = new WeakMap<WebContents, Window>();
