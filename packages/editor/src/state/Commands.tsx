@@ -19,7 +19,7 @@ import {
   canDetachComponent,
   createComponent,
   detachComponent,
-} from "../services/CreateComponent";
+} from "../services/Component";
 import { PageHierarchyEntry } from "../models/Project";
 import { posix as path } from "path-browserify";
 import { generateExampleNodes } from "../models/generateExampleNodes";
