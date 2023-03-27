@@ -182,7 +182,7 @@ class Commands {
 
   group() {
     const selectables = projectState.selectedSelectables;
-    if (selectables.length < 2) {
+    if (!selectables.length) {
       return;
     }
     const group = groupAndAutoLayout(selectables);
