@@ -59,7 +59,6 @@ export function resizeWithBoundingBox(
     height?: boolean;
   }
 ) {
-  console.log("resize", targets);
   const parent = selectable.offsetParent;
   if (parent) {
     const parentRect = parent.computedPaddingRect;
