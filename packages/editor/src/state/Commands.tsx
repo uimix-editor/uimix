@@ -14,6 +14,7 @@ import {
   ungroup,
 } from "../services/AutoLayout";
 import {
+  attachComponent,
   canCreateComponent,
   canDetachComponent,
   createComponent,
@@ -25,6 +26,7 @@ import { generateExampleNodes } from "../models/generateExampleNodes";
 import { dialogState } from "./DialogState";
 import { scrollState } from "./ScrollState";
 import { compact } from "lodash-es";
+import { Component } from "../models/Component";
 
 class Commands {
   @computed get canUndo(): boolean {
@@ -168,6 +170,13 @@ class Commands {
     projectState.project.clearSelection();
     for (const selectable of detached) {
       selectable.select();
+    }
+    projectState.undoManager.stopCapturing();
+  }
+
+  attachComponent(component: Component) {
+    for (const selectable of projectState.selectedSelectables) {
+      attachComponent(selectable, component);
     }
     projectState.undoManager.stopCapturing();
   }
@@ -480,6 +489,19 @@ class Commands {
       this.createComponentCommand,
       { type: "separator" },
       this.detachComponentCommand,
+      {
+        type: "submenu",
+        text: "Attach Component",
+        children: projectState.project.components.map((component) => {
+          return {
+            type: "command",
+            text: component.name,
+            onClick: action(() => {
+              this.attachComponent(component);
+            }),
+          };
+        }),
+      },
       { type: "separator" },
       this.groupCommand,
       this.ungroupCommand,
