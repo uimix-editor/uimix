@@ -15,13 +15,16 @@ import {
 } from "../services/AutoLayout";
 import {
   canCreateComponent,
+  canDetachComponent,
   createComponent,
+  detachComponent,
 } from "../services/CreateComponent";
 import { PageHierarchyEntry } from "../models/Project";
 import { posix as path } from "path-browserify";
 import { generateExampleNodes } from "../models/generateExampleNodes";
 import { dialogState } from "./DialogState";
 import { scrollState } from "./ScrollState";
+import { compact } from "lodash-es";
 
 class Commands {
   @computed get canUndo(): boolean {
@@ -151,6 +154,20 @@ class Commands {
   createComponent() {
     for (const selectable of projectState.selectedSelectables) {
       createComponent(selectable);
+    }
+    projectState.undoManager.stopCapturing();
+  }
+
+  detachComponent() {
+    const detached = compact(
+      projectState.selectedSelectables.map((selectable) =>
+        detachComponent(selectable)
+      )
+    );
+
+    projectState.project.clearSelection();
+    for (const selectable of detached) {
+      selectable.select();
     }
     projectState.undoManager.stopCapturing();
   }
@@ -293,6 +310,18 @@ class Commands {
       this.createComponent();
     }),
   };
+
+  readonly detachComponentCommand: MenuCommandDef = {
+    type: "command",
+    text: "Detach Component",
+    get disabled() {
+      return !projectState.selectedSelectables.some(canDetachComponent);
+    },
+    onClick: action(() => {
+      this.detachComponent();
+    }),
+  };
+
   readonly autoLayoutCommand: MenuCommandDef = {
     type: "command",
     text: "Auto Layout",
@@ -416,6 +445,8 @@ class Commands {
         children: [
           this.createComponentCommand,
           { type: "separator" },
+          this.detachComponentCommand,
+          { type: "separator" },
           this.groupCommand,
           this.ungroupCommand,
           { type: "separator" },
@@ -447,6 +478,8 @@ class Commands {
       this.deleteCommand,
       { type: "separator" },
       this.createComponentCommand,
+      { type: "separator" },
+      this.detachComponentCommand,
       { type: "separator" },
       this.groupCommand,
       this.ungroupCommand,

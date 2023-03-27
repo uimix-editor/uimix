@@ -60,5 +60,13 @@ export function detachComponent(selectable: Selectable) {
     return;
   }
 
-  throw new Error("TODO");
+  const parent = selectable.parent;
+  const next = selectable.nextSibling;
+  const detached = Selectable.fromJSON(selectable.project, selectable.toJSON());
+  parent?.insertBefore([detached], next, {
+    fixPosition: false,
+  });
+  selectable.remove();
+
+  return detached;
 }
