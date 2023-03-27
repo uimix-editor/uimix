@@ -582,6 +582,22 @@ export class Selectable {
   }
 
   static fromJSON(project: Project, json: SelectableJSON): Selectable {
+    if (json.original?.type === "component") {
+      // create instance
+
+      const node = project.nodes.create("instance");
+      node.name = json.name;
+      const selectable = node.selectable;
+      // TODO: position
+      selectable.style.mainComponent = json.original.id;
+
+      return selectable;
+    }
+
+    if (json.original?.type === "variant") {
+      throw new Error("TODO: pasting variant");
+    }
+
     if (json.original?.type === "instance") {
       const mainComponent = json.style.mainComponent;
       if (mainComponent && project.nodes.get(mainComponent)) {
