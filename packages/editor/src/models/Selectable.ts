@@ -568,7 +568,7 @@ export class Selectable {
 
     return {
       id: this.id,
-      name: node.name,
+      name: originalNode.name,
       type: node.type,
       original: {
         id: originalNode.id,
