@@ -1,6 +1,10 @@
 import { computed, makeObservable, observable } from "mobx";
 import * as Y from "yjs";
-import { NodeClipboardData, ProjectJSON } from "@uimix/node-data";
+import {
+  NodeClipboardData,
+  ProjectJSON,
+  SelectableJSON,
+} from "@uimix/node-data";
 import { Project } from "../models/Project";
 import { Selectable } from "../models/Selectable";
 import { Node } from "../models/Node";
@@ -134,12 +138,56 @@ export class ProjectState {
       };
     };
 
+    const hydrateJSON = (json: SelectableJSON): Selectable => {
+      const project = this.project;
+      if (json.original?.type === "component") {
+        // create instance
+
+        const node = project.nodes.create("instance");
+        node.name = json.name;
+        const selectable = node.selectable;
+        // TODO: position
+        selectable.style.mainComponent = json.original.id;
+
+        return selectable;
+      }
+
+      if (json.original?.type === "variant") {
+        throw new Error("TODO: pasting variant");
+      }
+
+      if (json.original?.type === "instance") {
+        const mainComponent = json.style.mainComponent;
+        if (mainComponent && project.nodes.get(mainComponent)) {
+          // original component exists in the project
+
+          const node = project.nodes.create("instance");
+          node.name = json.name;
+          const selectable = node.selectable;
+
+          const loadOverride = (json: SelectableJSON) => {
+            const idPath = json.id.split(":");
+            idPath[0] = node.id;
+            const selectable = project.selectables.get(idPath);
+            selectable.selfStyle.loadJSON(json.selfStyle ?? {});
+
+            for (const child of json.children) {
+              loadOverride(child);
+            }
+          };
+          loadOverride(json);
+
+          return selectable;
+        }
+      }
+
+      return Selectable.fromJSON(project, json);
+    };
+
     const insertionTarget = getInsertionTarget();
     this.project.clearSelection();
 
-    const selectables = data.nodes.map((json) =>
-      Selectable.fromJSON(this.project, json)
-    );
+    const selectables = data.nodes.map(hydrateJSON);
 
     insertionTarget.parent?.selectable.insertBefore(
       selectables,
