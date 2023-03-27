@@ -1,37 +1,6 @@
-import { NodeClipboardData, NodeJSON, ProjectJSON } from "@uimix/node-data";
-import { IStyle } from "../models/Style";
-import { generateID } from "../utils/ID";
+import { NodeClipboardData } from "@uimix/node-data";
 
 const mimeType = "application/x-macaron-nodes";
-
-function reassignNewIDs(data: ProjectJSON): ProjectJSON {
-  const idMap = new Map<string, string>();
-
-  const newNodes: Record<string, NodeJSON> = {};
-  for (const [id, node] of Object.entries(data.nodes)) {
-    const newID = generateID();
-    idMap.set(id, newID);
-    newNodes[newID] = { ...node };
-  }
-
-  for (const node of Object.values(newNodes)) {
-    if (node.parent) {
-      node.parent = idMap.get(node.parent) ?? node.parent;
-    }
-  }
-
-  const newStyles: Record<string, Partial<IStyle>> = {};
-  for (const [id, style] of Object.entries(data.styles)) {
-    const idPath = id.split(":").map((id) => idMap.get(id) ?? id);
-    newStyles[idPath.join(":")] = style;
-  }
-
-  return {
-    ...data,
-    nodes: newNodes,
-    styles: newStyles,
-  };
-}
 
 export class Clipboard {
   static async writeNodes(data: NodeClipboardData) {
