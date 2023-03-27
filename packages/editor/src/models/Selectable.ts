@@ -590,8 +590,19 @@ export class Selectable {
         const node = project.nodes.create("instance");
         node.name = json.name;
         const selectable = node.selectable;
-        selectable.selfStyle.loadJSON(json.selfStyle ?? {});
-        // TODO: load inner nodes
+
+        const loadOverride = (json: SelectableJSON) => {
+          const idPath = json.id.split(":");
+          idPath[0] = node.id;
+          const selectable = project.selectables.get(idPath);
+          selectable.selfStyle.loadJSON(json.selfStyle ?? {});
+
+          for (const child of json.children) {
+            loadOverride(child);
+          }
+        };
+        loadOverride(json);
+
         return selectable;
       }
     }

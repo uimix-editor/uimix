@@ -143,7 +143,8 @@ export class ProjectState {
 
     insertionTarget.parent?.selectable.insertBefore(
       selectables,
-      insertionTarget.next?.selectable
+      insertionTarget.next?.selectable,
+      { fixPosition: false }
     );
 
     for (const selectable of selectables) {
