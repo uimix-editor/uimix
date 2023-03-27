@@ -29,6 +29,8 @@ export function createComponent(selectable: Selectable) {
     return;
   }
 
+  const isTopLevel = selectable.parent?.originalNode.type === "page";
+
   const parent = selectable.parent;
   const next = selectable.nextSibling;
 
@@ -37,17 +39,18 @@ export function createComponent(selectable: Selectable) {
   component.append([selectable.node]);
   page.append([component]);
 
-  selectable.style.position = {
-    // TODO: find better position
-    x: { type: "start", start: 0 },
-    y: { type: "start", start: 0 },
-  };
+  if (!isTopLevel) {
+    selectable.style.position = {
+      // TODO: find better position
+      x: { type: "start", start: 0 },
+      y: { type: "start", start: 0 },
+    };
 
-  const instance = projectState.project.nodes.create("instance");
-  instance.name = selectable.node.name;
-  instance.selectable.style.mainComponent = component.id;
-
-  parent?.insertBefore([instance.selectable], next);
+    const instance = projectState.project.nodes.create("instance");
+    instance.name = selectable.node.name;
+    instance.selectable.style.mainComponent = component.id;
+    parent?.insertBefore([instance.selectable], next);
+  }
 }
 
 export function canDetachComponent(selectable: Selectable): boolean {
