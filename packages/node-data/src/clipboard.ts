@@ -15,7 +15,7 @@ const SelectableJSONBase = z.object({
     })
     .optional(),
   style: StyleJSON.partial(),
-  selfStyle: StyleJSON.partial(),
+  selfStyle: StyleJSON.partial().optional(),
 });
 
 export type SelectableJSON = z.infer<typeof SelectableJSONBase> & {
