@@ -90,7 +90,14 @@ export class ProjectState {
       return undefined;
     }
 
-    const nodes = selection.map((s) => s.toJSON());
+    const nodes = selection.map((s) => {
+      if (s.originalNode.type === "component") {
+        // TODO: improve component copy/paste
+        // serialize component root instead
+        return s.children[0].toJSON();
+      }
+      return s.toJSON();
+    });
     return {
       uimixClipboardVersion: "0.0.1",
       type: "nodes",

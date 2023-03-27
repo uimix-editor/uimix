@@ -563,7 +563,7 @@ export class Selectable {
   }
 
   toJSON(): NodeHierarchy {
-    const node = this.node;
+    const node = this.originalNode;
 
     return {
       id: node.id,
