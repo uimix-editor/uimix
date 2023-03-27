@@ -90,8 +90,8 @@ export class NodeMoveDragHandler implements DragHandler {
     );
 
     dst.parent.insertBefore(
-      dst.ref,
-      selectablesToInsert.map(([target]) => target)
+      selectablesToInsert.map(([target]) => target),
+      dst.ref
     );
 
     if (dst.parent.style.layout === "none") {

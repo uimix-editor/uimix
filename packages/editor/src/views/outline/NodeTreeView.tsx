@@ -339,8 +339,8 @@ export const NodeTreeView: React.FC = observer(() => {
           if (draggedItem) {
             // TODO: prevent inserting variant as a first child of a component
             item.selectable.insertBefore(
-              before?.selectable,
-              projectState.selectedSelectables
+              projectState.selectedSelectables,
+              before?.selectable
             );
             projectState.undoManager.stopCapturing();
           }

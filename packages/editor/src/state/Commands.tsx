@@ -1,7 +1,7 @@
 import { action, computed, runInAction } from "mobx";
 import { isTextInput } from "../utils/Focus";
 import { Shortcut } from "../utils/Shortcut";
-import { Selectable, selectablesToProjectJSON } from "../models/Selectable";
+import { Selectable } from "../models/Selectable";
 import { exportToJSON as exportJSON, importJSON } from "./JSONExport";
 import { viewportState } from "./ViewportState";
 import { projectState } from "./ProjectState";
@@ -45,17 +45,20 @@ class Commands {
   }
 
   async copy() {
-    // TODO: copy from instance contents
-    const json = selectablesToProjectJSON(
-      projectState.selectedNodes.map((node) => node.selectable)
-    );
-    await Clipboard.writeNodes(json);
+    const data = projectState.getNodeClipboardData();
+    if (!data) {
+      return;
+    }
+    await Clipboard.writeNodes(data);
   }
 
   async paste() {
     const data = await Clipboard.readNodes();
+    if (!data) {
+      return;
+    }
     await runInAction(async () => {
-      await projectState.pasteNodes(data);
+      await projectState.pasteNodeClipboardData(data);
     });
     runInAction(() => {
       projectState.undoManager.stopCapturing();

@@ -75,8 +75,8 @@ describe(Node.name, () => {
     }
 
     page.selectable.insertBefore(
-      frames[0].selectable,
-      frames.map((f) => f.selectable).slice(5)
+      frames.map((f) => f.selectable).slice(5),
+      frames[0].selectable
     );
 
     expect(page.selectable.children.map((c) => c.originalNode.name)).toEqual([
@@ -92,7 +92,7 @@ describe(Node.name, () => {
       "Frame 4",
     ]);
 
-    page.selectable.insertBefore(frames[7].selectable, [frames[5].selectable]);
+    page.selectable.insertBefore([frames[5].selectable], frames[7].selectable);
     expect(page.selectable.children.map((c) => c.originalNode.name)).toEqual([
       "Frame 6",
       "Frame 5",

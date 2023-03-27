@@ -45,7 +45,7 @@ export function createComponent(selectable: Selectable) {
   instance.name = selectable.node.name;
   instance.selectable.style.mainComponent = component.id;
 
-  parent?.insertBefore(next, [instance.selectable]);
+  parent?.insertBefore([instance.selectable], next);
 }
 
 export function canDetachComponent(selectable: Selectable): boolean {

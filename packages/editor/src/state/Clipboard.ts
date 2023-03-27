@@ -1,4 +1,4 @@
-import { JSONClipboardData, NodeJSON, ProjectJSON } from "@uimix/node-data";
+import { NodeClipboardData, NodeJSON, ProjectJSON } from "@uimix/node-data";
 import { IStyle } from "../models/Style";
 import { generateID } from "../utils/ID";
 
@@ -34,7 +34,7 @@ function reassignNewIDs(data: ProjectJSON): ProjectJSON {
 }
 
 export class Clipboard {
-  static async writeNodes(nodes: ProjectJSON) {
+  static async writeNodes(data: NodeClipboardData) {
     // const json = JSON.stringify(nodes);
 
     // await navigator.clipboard.write([
@@ -44,31 +44,26 @@ export class Clipboard {
     //     }),
     //   }),
     // ]);
-    const data: JSONClipboardData = {
-      uimixNodes: nodes,
-    };
-
     await navigator.clipboard.writeText(JSON.stringify(data));
   }
 
-  static async readNodes(): Promise<ProjectJSON> {
+  static async readNodes(): Promise<NodeClipboardData | undefined> {
     const items = await navigator.clipboard.read();
     const item = items.find((item) => item.types.includes(`web ${mimeType}`));
     if (!item) {
       // try parsing text as JSOn
       const text = await navigator.clipboard.readText();
       if (!text) {
-        return { nodes: {}, styles: {} };
+        return;
       }
       try {
-        const json = JSONClipboardData.parse(JSON.parse(text));
-        return reassignNewIDs(json.uimixNodes);
+        return NodeClipboardData.parse(JSON.parse(text));
       } catch (e) {
-        return { nodes: {}, styles: {} };
+        console.error(e);
+        return;
       }
     }
-    const blob = await item.getType(`web ${mimeType}`);
-    const json = ProjectJSON.parse(JSON.parse(await blob.text()));
-    return reassignNewIDs(json);
+    // const blob = await item.getType(`web ${mimeType}`);
+    // return JSONClipboardData.parse(JSON.parse(await blob.text()));
   }
 }

@@ -21,10 +21,11 @@ export const NodeHierarchy: z.ZodType<NodeHierarchy> = NodeHierarchyBase.extend(
   }
 );
 
-export const JSONClipboardData = z.object({
+export const NodeClipboardData = z.object({
   uimixClipboardVersion: z.literal("0.0.1"),
+  type: z.literal("nodes"),
   nodes: z.array(NodeHierarchy),
   images: z.record(Image), // URLs must be data URLs
 });
 
-export type JSONClipboardData = z.infer<typeof JSONClipboardData>;
+export type NodeClipboardData = z.infer<typeof NodeClipboardData>;

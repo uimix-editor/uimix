@@ -1,7 +1,7 @@
 import { MessageToCode, MessageToUI } from "../types/message";
 import { figmaNodesToMacaron } from "./toUIMix/node";
 import * as UIMix from "@uimix/node-data";
-import { JSONClipboardData } from "@uimix/node-data";
+import { NodeClipboardData } from "@uimix/node-data";
 
 figma.showUI(__html__);
 
@@ -24,8 +24,9 @@ figma.ui.onmessage = async (msg: MessageToCode) => {
         "NONE",
         [0, 0]
       );
-      const clipboardJSON: JSONClipboardData = {
+      const clipboardJSON: NodeClipboardData = {
         uimixClipboardVersion: "0.0.1",
+        type: "nodes",
         images: Object.fromEntries(images),
         nodes: macaronLayers,
       };

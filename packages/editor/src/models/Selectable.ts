@@ -6,7 +6,12 @@ import { getOrCreate } from "../state/Collection";
 import { computed, makeObservable, observable } from "mobx";
 import { Rect } from "paintvec";
 import { resizeWithBoundingBox } from "../services/Resize";
-import { NodeJSON, NodeType, ProjectJSON } from "@uimix/node-data";
+import {
+  NodeHierarchy,
+  NodeJSON,
+  NodeType,
+  ProjectJSON,
+} from "@uimix/node-data";
 import { Project } from "./Project";
 import { Component } from "./Component";
 
@@ -516,8 +521,8 @@ export class Selectable {
   }
 
   insertBefore(
-    dstNextSibling: Selectable | undefined,
     selectables: readonly Selectable[],
+    dstNextSibling: Selectable | undefined,
     {
       fixPosition = true,
     }: {
@@ -555,6 +560,35 @@ export class Selectable {
         }
       }
     }
+  }
+
+  toJSON(): NodeHierarchy {
+    const node = this.node;
+
+    return {
+      id: node.id,
+      name: node.name,
+      condition: node.condition,
+      type: node.type,
+      style: this.selfStyle.toJSON(), // TODO: include inherited styles
+      children: this.children.map((child) => child.toJSON()),
+    };
+  }
+
+  static fromJSON(project: Project, json: NodeHierarchy): Selectable {
+    const node = project.nodes.create(json.type);
+    node.name = json.name;
+    node.condition = json.condition;
+    const selectable = node.selectable;
+    selectable.selfStyle.loadJSON(json.style);
+
+    const children = json.children.map((child) =>
+      Selectable.fromJSON(project, child)
+    );
+    selectable.insertBefore(children, undefined, {
+      fixPosition: false,
+    });
+    return selectable;
   }
 }
 

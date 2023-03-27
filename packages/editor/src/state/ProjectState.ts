@@ -1,6 +1,6 @@
 import { computed, makeObservable, observable } from "mobx";
 import * as Y from "yjs";
-import { ProjectJSON } from "@uimix/node-data";
+import { NodeClipboardData, ProjectJSON } from "@uimix/node-data";
 import { Project } from "../models/Project";
 import { Selectable } from "../models/Selectable";
 import { Node } from "../models/Node";
@@ -84,7 +84,22 @@ export class ProjectState {
     }
   }
 
-  async pasteNodes(data: ProjectJSON) {
+  getNodeClipboardData(): NodeClipboardData | undefined {
+    const selection = this.selectedSelectables;
+    if (selection.length === 0) {
+      return undefined;
+    }
+
+    const nodes = selection.map((s) => s.toJSON());
+    return {
+      uimixClipboardVersion: "0.0.1",
+      type: "nodes",
+      nodes,
+      images: {}, // TODO
+    };
+  }
+
+  async pasteNodeClipboardData(data: NodeClipboardData) {
     const getInsertionTarget = () => {
       const defaultTarget = {
         parent: this.page,
@@ -115,25 +130,17 @@ export class ProjectState {
     const insertionTarget = getInsertionTarget();
     this.project.clearSelection();
 
-    const nodes: Node[] = [];
-    for (const [id, nodeJSON] of Object.entries(data.nodes)) {
-      const node = this.project.nodes.create(nodeJSON.type, id);
-      node.loadJSON(nodeJSON);
-      nodes.push(node);
-    }
-    const topNodes = nodes.filter((node) => !node.parentID);
+    const selectables = data.nodes.map((json) =>
+      Selectable.fromJSON(this.project, json)
+    );
 
-    insertionTarget.parent?.insertBefore(topNodes, insertionTarget.next);
+    insertionTarget.parent?.selectable.insertBefore(
+      selectables,
+      insertionTarget.next?.selectable
+    );
 
-    for (const [id, styleJSON] of Object.entries(data.styles)) {
-      const selectable = this.project.selectables.get(id.split(":"));
-      if (selectable) {
-        selectable.selfStyle.loadJSON(styleJSON);
-      }
-    }
-
-    for (const node of topNodes) {
-      node.selectable.select();
+    for (const selectable of selectables) {
+      selectable.select();
     }
 
     // load images
