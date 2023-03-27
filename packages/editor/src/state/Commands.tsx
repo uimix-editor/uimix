@@ -161,23 +161,22 @@ class Commands {
   }
 
   detachComponent() {
-    const detached = compact(
+    const results = compact(
       projectState.selectedSelectables.map((selectable) =>
         detachComponent(selectable)
       )
     );
 
-    projectState.project.clearSelection();
-    for (const selectable of detached) {
-      selectable.select();
-    }
+    projectState.project.replaceSelection(results);
     projectState.undoManager.stopCapturing();
   }
 
   attachComponent(component: Component) {
-    for (const selectable of projectState.selectedSelectables) {
-      attachComponent(selectable, component);
-    }
+    const results = projectState.selectedSelectables.map((selectable) =>
+      attachComponent(selectable, component)
+    );
+
+    projectState.project.replaceSelection(results);
     projectState.undoManager.stopCapturing();
   }
 
