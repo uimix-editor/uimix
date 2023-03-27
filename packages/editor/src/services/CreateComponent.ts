@@ -1,4 +1,6 @@
+import { Component } from "../models/Component";
 import { Selectable } from "../models/Selectable";
+import { styleKeys } from "../models/Style";
 import { projectState } from "../state/ProjectState";
 
 export function canCreateComponent(selectable: Selectable) {
@@ -69,4 +71,45 @@ export function detachComponent(selectable: Selectable) {
   selectable.remove();
 
   return detached;
+}
+
+export function attachComponent(selectable: Selectable, component: Component) {
+  // - insert instance
+  // - copy styles recursively
+  // - remove original
+
+  const parent = selectable.parent;
+  const next = selectable.nextSibling;
+
+  const instance = projectState.project.nodes.create("instance");
+  instance.name = selectable.node.name;
+  instance.selectable.style.mainComponent = component.node.id;
+
+  const copyStyles = (src: Selectable, dst: Selectable) => {
+    if (src.node.type !== dst.node.type) {
+      return;
+    }
+    for (const key of styleKeys) {
+      // @ts-ignore
+      dst.style[key] = src.style[key];
+    }
+
+    const srcChildren = src.children;
+    const dstChildren = dst.children;
+    if (srcChildren.length !== dstChildren.length) {
+      return;
+    }
+
+    for (let i = 0; i < srcChildren.length; i++) {
+      copyStyles(srcChildren[i], dstChildren[i]);
+    }
+  };
+
+  parent?.insertBefore([instance.selectable], next, {
+    fixPosition: false,
+  });
+
+  copyStyles(selectable, instance.selectable);
+
+  selectable.remove();
 }

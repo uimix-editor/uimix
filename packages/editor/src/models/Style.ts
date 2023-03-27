@@ -87,6 +87,8 @@ export const defaultStyle: StyleJSON = {
   tagName: null,
 };
 
+export const styleKeys = Object.keys(defaultStyle) as (keyof StyleJSON)[];
+
 export abstract class PartialStyle implements Partial<IStyle> {
   abstract get data(): ObservableYMap<unknown> | undefined;
   abstract get dataForWrite(): ObservableYMap<unknown>;
@@ -106,7 +108,7 @@ export abstract class PartialStyle implements Partial<IStyle> {
 // eslint-disable-next-line @typescript-eslint/no-empty-interface
 export interface PartialStyle extends Partial<IStyle> {}
 
-for (const key of Object.keys(defaultStyle)) {
+for (const key of styleKeys) {
   Object.defineProperty(PartialStyle.prototype, key, {
     get: function (this: PartialStyle) {
       return this.data?.get(key);
@@ -141,8 +143,7 @@ export class CascadedStyle implements IStyle {
   toJSON(): Partial<StyleJSON> {
     const ret: Partial<StyleJSON> = {};
 
-    const keys = Object.keys(defaultStyle) as (keyof StyleJSON)[];
-    for (const key of keys) {
+    for (const key of styleKeys) {
       if (!isEqual(this[key], defaultStyle[key])) {
         // @ts-ignore
         ret[key] = this[key];
@@ -155,7 +156,7 @@ export class CascadedStyle implements IStyle {
 // eslint-disable-next-line @typescript-eslint/no-empty-interface
 export interface CascadedStyle extends IStyle {}
 
-for (const key of Object.keys(defaultStyle) as (keyof IStyle)[]) {
+for (const key of styleKeys) {
   Object.defineProperty(CascadedStyle.prototype, key, {
     get(this: CascadedStyle) {
       if (this.style[key] !== undefined) {
