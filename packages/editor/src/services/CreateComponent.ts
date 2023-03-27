@@ -47,3 +47,18 @@ export function createComponent(selectable: Selectable) {
 
   parent?.insertBefore(next, [instance.selectable]);
 }
+
+export function canDetachComponent(selectable: Selectable): boolean {
+  return (
+    selectable.idPath.length === 1 &&
+    selectable.originalNode.type === "instance"
+  );
+}
+
+export function detachComponent(selectable: Selectable) {
+  if (!canDetachComponent(selectable)) {
+    return;
+  }
+
+  throw new Error("TODO");
+}
