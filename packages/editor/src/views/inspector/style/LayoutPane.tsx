@@ -19,6 +19,7 @@ import { InspectorPane } from "../components/InspectorPane";
 import { action } from "mobx";
 import { InspectorTargetContext } from "../components/InspectorTargetContext";
 import { commands } from "../../../state/Commands";
+import { Tooltip } from "../../../components/Tooltip";
 
 const StackAlignmentEdit = observer(function StackAlignmentEdit({
   direction,
@@ -91,21 +92,29 @@ export const LayoutPane: React.FC = observer(function StackPane() {
         text="Layout"
         dimmed={!hasStack}
         buttons={
-          hasStack ? (
-            <IconButton
-              icon={removeIcon}
-              onClick={action(() => {
-                commands.removeLayout();
-              })}
-            />
-          ) : (
-            <IconButton
-              icon={addIcon}
-              onClick={action(() => {
-                commands.autoLayout();
-              })}
-            />
-          )
+          <div className="flex gap-1">
+            <Tooltip text="Margin-based layout">
+              <IconButton icon="icon-park-outline:margin-one" />
+            </Tooltip>
+            <Tooltip text="Gap-based layout">
+              <IconButton icon="icon-park-outline:vertical-tidy-up" />
+            </Tooltip>
+            {hasStack ? (
+              <IconButton
+                icon={removeIcon}
+                onClick={action(() => {
+                  commands.removeLayout();
+                })}
+              />
+            ) : (
+              <IconButton
+                icon={addIcon}
+                onClick={action(() => {
+                  commands.autoLayout();
+                })}
+              />
+            )}
+          </div>
         }
       />
       {hasStack && (
