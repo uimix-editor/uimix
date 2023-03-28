@@ -11,7 +11,8 @@
     "build": "turbo build",
     "dev": "turbo dev",
     "lint": "turbo lint",
-    "test": "turbo test"
+    "test": "turbo test",
+    "upgrade-packages": "ncu -u && ls -d packages/*/ | xargs -I {} bash -c \"cd '{}' && ncu -u\""
   },
   "devDependencies": {
     "@typescript-eslint/eslint-plugin": "^5.55.0",
