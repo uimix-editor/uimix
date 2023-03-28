@@ -43,6 +43,11 @@ export function removeLayout(selectable: Selectable): void {
   }
 
   selectable.style.layout = "none";
+  selectable.style.gap = 0;
+  selectable.style.paddingTop = 0;
+  selectable.style.paddingRight = 0;
+  selectable.style.paddingBottom = 0;
+  selectable.style.paddingLeft = 0;
 }
 
 export function ungroup(selectable: Selectable): void {
@@ -283,20 +288,20 @@ export function marginsToGap(frameSelectable: Selectable) {
     margins.push(rects[i][startProp] - rects[i - 1][endProp]);
   }
 
-  const gap = sum(margins) / margins.length;
+  const gap = Math.round(sum(margins) / margins.length);
 
-  const additionalPaddingStart =
+  const paddingStart =
     rects[0][startProp] - frameSelectable.computedRect[startProp];
-  const additionalPaddingEnd =
+  const paddingEnd =
     frameSelectable.computedRect[endProp] - rects[rects.length - 1][endProp];
 
   frameSelectable.style.gap = gap;
   if (direction === "x") {
-    frameSelectable.style.paddingLeft += additionalPaddingStart;
-    frameSelectable.style.paddingRight += additionalPaddingEnd;
+    frameSelectable.style.paddingLeft = paddingStart;
+    frameSelectable.style.paddingRight = paddingEnd;
   } else {
-    frameSelectable.style.paddingTop += additionalPaddingStart;
-    frameSelectable.style.paddingBottom += additionalPaddingEnd;
+    frameSelectable.style.paddingTop = paddingStart;
+    frameSelectable.style.paddingBottom = paddingEnd;
   }
 
   for (const child of relativeChildren) {
