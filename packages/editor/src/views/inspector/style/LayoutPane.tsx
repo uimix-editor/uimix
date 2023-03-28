@@ -20,6 +20,7 @@ import { action } from "mobx";
 import { InspectorTargetContext } from "../components/InspectorTargetContext";
 import { commands } from "../../../state/Commands";
 import { Tooltip } from "../../../components/Tooltip";
+import { DropdownMenu } from "../../../components/Menu";
 
 const StackAlignmentEdit = observer(function StackAlignmentEdit({
   direction,
@@ -93,19 +94,36 @@ export const LayoutPane: React.FC = observer(function StackPane() {
         dimmed={!hasStack}
         buttons={
           <div className="flex gap-1">
-            <Tooltip text="Margin-based layout">
+            {/* <Tooltip text="Margin-based layout">
               <IconButton icon="icon-park-outline:margin-one" />
             </Tooltip>
             <Tooltip text="Gap-based layout">
               <IconButton icon="icon-park-outline:vertical-tidy-up" />
-            </Tooltip>
+            </Tooltip> */}
             {hasStack ? (
-              <IconButton
-                icon={removeIcon}
-                onClick={action(() => {
-                  commands.removeLayout();
-                })}
-              />
+              <>
+                <DropdownMenu
+                  trigger={(props) => (
+                    <IconButton {...props} icon="material-symbols:more-horiz" />
+                  )}
+                  defs={[
+                    {
+                      type: "command",
+                      text: "Convert Gaps to Margins",
+                    },
+                    {
+                      type: "command",
+                      text: "Convert Margins to Gaps",
+                    },
+                  ]}
+                />
+                <IconButton
+                  icon={removeIcon}
+                  onClick={action(() => {
+                    commands.removeLayout();
+                  })}
+                />
+              </>
             ) : (
               <IconButton
                 icon={addIcon}
