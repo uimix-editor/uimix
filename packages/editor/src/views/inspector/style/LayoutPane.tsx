@@ -86,6 +86,8 @@ export const LayoutPane: React.FC = observer(function StackPane() {
     return null;
   }
 
+  const hasGap = stackSelectables.some((s) => s.style.gap !== 0);
+
   return (
     <InspectorPane>
       <InspectorHeading
@@ -102,35 +104,33 @@ export const LayoutPane: React.FC = observer(function StackPane() {
             </Tooltip> */}
             {hasStack ? (
               <>
-                <DropdownMenu
-                  trigger={(props) => (
-                    <IconButton {...props} icon="material-symbols:more-horiz" />
-                  )}
-                  defs={[
-                    {
-                      type: "command",
-                      text: "Convert Gaps to Margins",
-                    },
-                    {
-                      type: "command",
-                      text: "Convert Margins to Gaps",
-                    },
-                  ]}
-                />
-                <IconButton
-                  icon={removeIcon}
-                  onClick={action(() => {
-                    commands.removeLayout();
-                  })}
-                />
+                {hasGap ? (
+                  <Tooltip text="Gap to Margins">
+                    <IconButton icon="icon-park-outline:margin-one" />
+                  </Tooltip>
+                ) : (
+                  <Tooltip text="Margins to Gap">
+                    <IconButton icon="icon-park-outline:vertical-tidy-up" />
+                  </Tooltip>
+                )}
+                <Tooltip text="Remove Layout">
+                  <IconButton
+                    icon={removeIcon}
+                    onClick={action(() => {
+                      commands.removeLayout();
+                    })}
+                  />
+                </Tooltip>
               </>
             ) : (
-              <IconButton
-                icon={addIcon}
-                onClick={action(() => {
-                  commands.autoLayout();
-                })}
-              />
+              <Tooltip text="Add Layout">
+                <IconButton
+                  icon={addIcon}
+                  onClick={action(() => {
+                    commands.autoLayout();
+                  })}
+                />
+              </Tooltip>
             )}
           </div>
         }
