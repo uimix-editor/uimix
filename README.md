@@ -1,6 +1,6 @@
 # UIMix
 
-> Macaron has been renamed to UIMix and is currently undergoing a complete rewrite.
+> Macaron is rebranding to UIMix and is under active development. The old version is still available at the links below.
 >
 > - [Old Branch](https://github.com/uimix-editor/uimix/tree/old)
 > - [Old Website](https://macaron-elements.com/)
