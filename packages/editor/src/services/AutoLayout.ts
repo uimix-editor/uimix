@@ -311,3 +311,20 @@ export function marginsToGap(frameSelectable: Selectable) {
     }
   }
 }
+
+export function gapToMargins(frameSelectable: Selectable) {
+  const children = frameSelectable.children.filter(
+    (child) => !child.isAbsolute
+  );
+  if (children.length < 2) {
+    return;
+  }
+
+  const gap = frameSelectable.style.gap;
+  for (let i = 1; i < children.length; ++i) {
+    const direction = frameSelectable.style.stackDirection;
+    children[i - 1].style[direction === "x" ? "marginRight" : "marginBottom"] +=
+      gap;
+  }
+  frameSelectable.style.gap = 0;
+}

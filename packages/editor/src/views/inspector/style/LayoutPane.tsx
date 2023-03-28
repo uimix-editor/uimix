@@ -21,7 +21,7 @@ import { InspectorTargetContext } from "../components/InspectorTargetContext";
 import { commands } from "../../../state/Commands";
 import { Tooltip } from "../../../components/Tooltip";
 import { DropdownMenu } from "../../../components/Menu";
-import { marginsToGap } from "../../../services/AutoLayout";
+import { gapToMargins, marginsToGap } from "../../../services/AutoLayout";
 
 const StackAlignmentEdit = observer(function StackAlignmentEdit({
   direction,
@@ -107,7 +107,15 @@ export const LayoutPane: React.FC = observer(function StackPane() {
               <>
                 {hasGap ? (
                   <Tooltip text="Gap to Margins">
-                    <IconButton icon="icon-park-outline:margin-one" />
+                    <IconButton
+                      icon="icon-park-outline:margin-one"
+                      onClick={action(() => {
+                        for (const selectable of stackSelectables) {
+                          gapToMargins(selectable);
+                        }
+                        projectState.undoManager.stopCapturing();
+                      })}
+                    />
                   </Tooltip>
                 ) : (
                   <Tooltip text="Margins to Gap">
