@@ -217,18 +217,8 @@
       "paddingLeft": 40
     },
     "1Bvi2z3TpKXtTJLTRPTEd8": {
-      "width": {
-        "type": "fill",
-        "min": 25,
-        "max": 100,
-        "value": 50
-      },
-      "height": {
-        "type": "fill",
-        "min": 20,
-        "max": 60,
-        "value": 50
-      },
+      "width": { "type": "fill", "min": 25, "max": 100, "value": 50 },
+      "height": { "type": "fill", "min": 20, "max": 60, "value": 50 },
       "fills": [{ "type": "solid", "color": "#EF4444" }]
     },
     "1Bvi2z3To8ddXo6R6ZftVD": {
