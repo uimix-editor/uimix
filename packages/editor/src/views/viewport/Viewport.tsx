@@ -51,15 +51,15 @@ export const Viewport: React.FC = observer(function Viewport() {
 
       if (!projectState.page?.childCount) {
         // No layers in page
-        scrollState.translation = new Vec2(0);
+        scrollState.setTranslation(new Vec2(0));
       }
     } else {
       if (!projectState.page?.childCount) {
         // No layers in page
         return;
       }
-      scrollState.translation = scrollState.translation.sub(
-        new Vec2(e.deltaX, e.deltaY).round
+      scrollState.setTranslation(
+        scrollState.translation.sub(new Vec2(e.deltaX, e.deltaY).round)
       );
     }
   });

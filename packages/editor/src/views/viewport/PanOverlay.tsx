@@ -13,8 +13,8 @@ export const PanOverlay: React.FC = observer(function PanOverlay() {
     }),
 
     onMove: action((_, { initData, totalDeltaX, totalDeltaY }) => {
-      scrollState.translation = initData.add(
-        new Vec2(totalDeltaX, totalDeltaY)
+      scrollState.setTranslation(
+        initData.add(new Vec2(totalDeltaX, totalDeltaY))
       );
     }),
   });

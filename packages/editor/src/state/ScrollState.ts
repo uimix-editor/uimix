@@ -7,8 +7,25 @@ export class ScrollState {
     makeObservable(this);
   }
 
-  @observable translation = new Vec2();
-  @observable scale = 1;
+  @observable private _translation = new Vec2();
+  @observable private _scale = 1;
+
+  get translation(): Vec2 {
+    return this._translation;
+  }
+
+  get scale(): number {
+    return this._scale;
+  }
+
+  setTranslation(translation: Vec2): void {
+    this._translation = translation.round;
+  }
+
+  setScale(scale: number): void {
+    // Round to 1/1024 to minimize floating point error
+    this._scale = Math.round(scale * 1024) / 1024;
+  }
 
   // Set by Viewport
   @observable viewportDOMClientRect = Rect.from({
@@ -41,12 +58,11 @@ export class ScrollState {
 
   zoomAround(viewportPos: Vec2, scale: number): void {
     const ratio = scale / this.scale;
-    this.scale = scale;
+    this.setScale(scale);
 
-    this.translation = this.translation
-      .sub(viewportPos)
-      .mulScalar(ratio)
-      .add(viewportPos).round;
+    this.setTranslation(
+      this.translation.sub(viewportPos).mulScalar(ratio).add(viewportPos).round
+    );
   }
 
   zoomAroundCenter(scale: number): void {
@@ -70,16 +86,18 @@ export class ScrollState {
       size: new Vec2(size),
     });
 
-    this.scale = Math.max(
-      Math.min(
-        (this.viewportSize.x - margin * 2) / square.width,
-        (this.viewportSize.y - margin * 2) / square.height
-      ),
-      0.01
+    this.setScale(
+      Math.max(
+        Math.min(
+          (this.viewportSize.x - margin * 2) / square.width,
+          (this.viewportSize.y - margin * 2) / square.height
+        ),
+        0.01
+      )
     );
-    this.translation = square.topLeft.neg
-      .mulScalar(this.scale)
-      .add(new Vec2(margin));
+    this.setTranslation(
+      square.topLeft.neg.mulScalar(this.scale).add(new Vec2(margin))
+    );
   }
 
   resetZoom(): void {
@@ -107,9 +125,9 @@ export class ScrollState {
       return;
     }
 
-    this.translation = this.translation
-      .sub(rect.center)
-      .add(this.viewportSize.mulScalar(0.5));
+    this.setTranslation(
+      this.translation.sub(rect.center).add(this.viewportSize.mulScalar(0.5))
+    );
   }
 
   documentPosForClientPos(clientPos: Vec2): Vec2 {
