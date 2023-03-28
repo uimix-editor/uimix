@@ -23,6 +23,10 @@ export function removeLayout(selectable: Selectable): void {
         start: child.computedOffsetRect.top,
       },
     };
+    child.style.marginTop = 0;
+    child.style.marginRight = 0;
+    child.style.marginBottom = 0;
+    child.style.marginLeft = 0;
   }
 
   if (selectable.style.width.type === "hug") {
