@@ -19,15 +19,15 @@
     "lint": "eslint src"
   },
   "dependencies": {
-    "@hocuspocus/extension-database": "^1.1.1",
-    "@hocuspocus/extension-logger": "^1.1.1",
-    "@hocuspocus/server": "^1.1.1",
+    "@hocuspocus/extension-database": "^1.1.2",
+    "@hocuspocus/extension-logger": "^1.1.2",
+    "@hocuspocus/server": "^1.1.2",
     "@prisma/client": "^4.11.0",
     "jsonwebtoken": "^9.0.0"
   },
   "devDependencies": {
     "@types/jsonwebtoken": "^9.0.1",
-    "esbuild": "^0.17.12",
+    "esbuild": "^0.17.14",
     "forever": "^4.0.3",
     "prisma": "^4.11.0",
     "run-z": "^1.11.0",
