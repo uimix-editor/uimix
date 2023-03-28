@@ -44,9 +44,25 @@ export function toProjectJSON(ydoc: Y.Doc): ProjectJSON {
   };
 
   // delete dangling nodes
-  for (const id of Object.keys(json.nodes)) {
-    if (json.nodes[id].type !== "project" && !json.nodes[id].parent) {
-      delete json.nodes[id];
+
+  const ids = new Set(Object.keys(json.nodes));
+  for (;;) {
+    let deleted = false;
+    for (const id of ids) {
+      const node = json.nodes[id];
+      if (node.type === "project") {
+        continue;
+      }
+
+      if (!node.parent || !ids.has(node.parent)) {
+        delete json.nodes[id];
+        deleted = true;
+        ids.delete(id);
+      }
+    }
+
+    if (!deleted) {
+      break;
     }
   }
 
