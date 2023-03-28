@@ -259,3 +259,49 @@ export function detectFlex(elements: readonly Selectable[]): Flex {
     };
   }
 }
+
+export function marginsToGap(frameSelectable: Selectable) {
+  const relativeChildren = frameSelectable.children.filter(
+    (child) => !child.isAbsolute
+  );
+  if (relativeChildren.length < 2) {
+    return;
+  }
+
+  const margins: number[] = [];
+  const rects = relativeChildren.map((o) => o.computedRect);
+  const direction = frameSelectable.style.stackDirection;
+
+  const startProp = direction === "x" ? "left" : "top";
+  const endProp = direction === "x" ? "right" : "bottom";
+
+  for (let i = 1; i < rects.length; ++i) {
+    margins.push(rects[i][startProp] - rects[i - 1][endProp]);
+  }
+
+  const gap = sum(margins) / margins.length;
+
+  const additionalPaddingStart =
+    rects[0][startProp] - frameSelectable.computedRect[startProp];
+  const additionalPaddingEnd =
+    frameSelectable.computedRect[endProp] - rects[rects.length - 1][endProp];
+
+  frameSelectable.style.gap = gap;
+  if (direction === "x") {
+    frameSelectable.style.paddingLeft += additionalPaddingStart;
+    frameSelectable.style.paddingRight += additionalPaddingEnd;
+  } else {
+    frameSelectable.style.paddingTop += additionalPaddingStart;
+    frameSelectable.style.paddingBottom += additionalPaddingEnd;
+  }
+
+  for (const child of relativeChildren) {
+    if (direction === "x") {
+      child.style.marginLeft = 0;
+      child.style.marginRight = 0;
+    } else {
+      child.style.marginTop = 0;
+      child.style.marginBottom = 0;
+    }
+  }
+}

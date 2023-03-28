@@ -21,6 +21,7 @@ import { InspectorTargetContext } from "../components/InspectorTargetContext";
 import { commands } from "../../../state/Commands";
 import { Tooltip } from "../../../components/Tooltip";
 import { DropdownMenu } from "../../../components/Menu";
+import { marginsToGap } from "../../../services/AutoLayout";
 
 const StackAlignmentEdit = observer(function StackAlignmentEdit({
   direction,
@@ -110,7 +111,15 @@ export const LayoutPane: React.FC = observer(function StackPane() {
                   </Tooltip>
                 ) : (
                   <Tooltip text="Margins to Gap">
-                    <IconButton icon="icon-park-outline:vertical-tidy-up" />
+                    <IconButton
+                      icon="icon-park-outline:vertical-tidy-up"
+                      onClick={action(() => {
+                        for (const selectable of stackSelectables) {
+                          marginsToGap(selectable);
+                        }
+                        projectState.undoManager.stopCapturing();
+                      })}
+                    />
                   </Tooltip>
                 )}
                 <Tooltip text="Remove Layout">
