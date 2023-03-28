@@ -270,41 +270,38 @@ export function detectFlex(elements: readonly Selectable[]): Flex {
 }
 
 export function marginsToGap(frameSelectable: Selectable) {
-  const relativeChildren = frameSelectable.children.filter(
+  const children = frameSelectable.children.filter(
     (child) => !child.isAbsolute
   );
-  if (relativeChildren.length < 2) {
+  if (children.length < 2) {
     return;
   }
 
-  const margins: number[] = [];
-  const rects = relativeChildren.map((o) => o.computedRect);
   const direction = frameSelectable.style.stackDirection;
 
-  const startProp = direction === "x" ? "left" : "top";
-  const endProp = direction === "x" ? "right" : "bottom";
-
-  for (let i = 1; i < rects.length; ++i) {
-    margins.push(rects[i][startProp] - rects[i - 1][endProp]);
+  const margins: number[] = [];
+  for (let i = 1; i < children.length; ++i) {
+    margins.push(
+      children[i].style[direction === "x" ? "marginLeft" : "marginTop"] +
+        children[i - 1].style[
+          direction === "x" ? "marginRight" : "marginBottom"
+        ]
+    );
   }
-
   const gap = Math.round(sum(margins) / margins.length);
-
-  const paddingStart =
-    rects[0][startProp] - frameSelectable.computedRect[startProp];
-  const paddingEnd =
-    frameSelectable.computedRect[endProp] - rects[rects.length - 1][endProp];
 
   frameSelectable.style.gap = gap;
   if (direction === "x") {
-    frameSelectable.style.paddingLeft = paddingStart;
-    frameSelectable.style.paddingRight = paddingEnd;
+    frameSelectable.style.paddingLeft += children[0].style.marginLeft;
+    frameSelectable.style.paddingRight +=
+      children[children.length - 1].style.marginRight;
   } else {
-    frameSelectable.style.paddingTop = paddingStart;
-    frameSelectable.style.paddingBottom = paddingEnd;
+    frameSelectable.style.paddingTop += children[0].style.marginTop;
+    frameSelectable.style.paddingBottom +=
+      children[children.length - 1].style.marginBottom;
   }
 
-  for (const child of relativeChildren) {
+  for (const child of children) {
     if (direction === "x") {
       child.style.marginLeft = 0;
       child.style.marginRight = 0;
