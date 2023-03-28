@@ -925,12 +925,6 @@
       "parent": "1BwgerJyLUpnkTqfZCVgnL",
       "index": 0
     },
-    "1BwgertCkBQG9Ez6zPh3AL": {
-      "type": "frame",
-      "name": "Frame",
-      "parent": "1BwgerJkG3mDENSswyqM44",
-      "index": 20
-    },
     "1BwgpfKvStb5nYD4TzN9UU": {
       "type": "frame",
       "name": "Frame",
@@ -3686,15 +3680,6 @@
       "textHorizontalAlign": "center",
       "textVerticalAlign": "start"
     },
-    "1BwgertCkBQG9Ez6zPh3AL": {
-      "position": {
-        "x": { "type": "start", "start": 0 },
-        "y": { "type": "start", "start": -64 }
-      },
-      "width": { "type": "fixed", "value": 348 },
-      "height": { "type": "fixed", "value": 64 },
-      "fills": [{ "type": "solid", "color": "#FFFFFF" }]
-    },
     "1BwgpfKvStb5nYD4TzN9UU": {
       "position": {
         "x": { "type": "start", "start": -646 },
@@ -3724,7 +3709,8 @@
       },
       "width": { "type": "fixed", "value": 750 },
       "height": { "type": "fixed", "value": 550 },
-      "layout": "stack"
+      "layout": "stack",
+      "absolute": true
     },
     "1Bwgpuey7DQJQJs7BPsfzH": {
       "position": {

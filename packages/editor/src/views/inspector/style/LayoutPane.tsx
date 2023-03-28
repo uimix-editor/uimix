@@ -109,6 +109,7 @@ export const LayoutPane: React.FC = observer(function StackPane() {
                   <Tooltip text="Gap to Margins">
                     <IconButton
                       icon="icon-park-outline:margin-one"
+                      rotate={direction === "x" ? 1 : 0}
                       onClick={action(() => {
                         for (const selectable of stackSelectables) {
                           gapToMargins(selectable);
@@ -121,6 +122,7 @@ export const LayoutPane: React.FC = observer(function StackPane() {
                   <Tooltip text="Margins to Gap">
                     <IconButton
                       icon="icon-park-outline:vertical-tidy-up"
+                      rotate={direction === "x" ? 1 : 0}
                       onClick={action(() => {
                         for (const selectable of stackSelectables) {
                           marginsToGap(selectable);

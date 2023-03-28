@@ -6,10 +6,11 @@ export type IconButtonProps = React.PropsWithoutRef<
   JSX.IntrinsicElements["button"]
 > & {
   icon: IconProps["icon"];
+  rotate?: number;
 };
 
 export const IconButton = React.forwardRef<HTMLButtonElement, IconButtonProps>(
-  ({ className, icon, ...props }, ref) => {
+  ({ className, icon, rotate, ...props }, ref) => {
     return (
       <button
         {...props}
@@ -19,7 +20,7 @@ export const IconButton = React.forwardRef<HTMLButtonElement, IconButtonProps>(
           className
         )}
       >
-        <Icon icon={icon} width={16} />
+        <Icon icon={icon} width={16} rotate={rotate} />
       </button>
     );
   }
