@@ -5,7 +5,7 @@ import parserBabel from "prettier/parser-babel";
 import { ProjectJSON } from "../../node-data/src";
 import { DocumentMetadata } from "../../dashboard/src/types/DesktopAPI";
 import { TypedEmitter } from "tiny-typed-emitter";
-import { dialog } from "electron";
+import { app, dialog } from "electron";
 import { isEqual } from "lodash";
 import chokidar from "chokidar";
 
@@ -27,6 +27,9 @@ export class File extends TypedEmitter<{
     super();
 
     this.filePath = filePath;
+    if (filePath) {
+      app.addRecentDocument(filePath);
+    }
     this._data = filePath
       ? ProjectJSON.parse(
           JSON.parse(fs.readFileSync(filePath, { encoding: "utf-8" }))
@@ -80,6 +83,7 @@ export class File extends TypedEmitter<{
       return;
     }
     fs.writeFileSync(this.filePath, formatJSON(JSON.stringify(this.data)));
+    app.addRecentDocument(this.filePath);
     this.savedData = this.data;
     this.edited = false;
     this.emit("editedChange", this.edited);
