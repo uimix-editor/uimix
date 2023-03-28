@@ -533,19 +533,19 @@
       "type": "text",
       "name": "Revolutionize Your Web Design and Development Workflow",
       "parent": "1BwgerJkG3mDENSswyqM44",
-      "index": 2
+      "index": 24
     },
     "1BwgerJnQB4YeKV3d1E8r6": {
       "type": "text",
       "name": "UIMix is a open-source design tool that combines intuitive editing, React integration, AI assistance, and advanced design tokens.",
       "parent": "1BwgerJkG3mDENSswyqM44",
-      "index": 3
+      "index": 25
     },
     "1BwgerJnRCZwCo1QLbAznW": {
       "type": "frame",
       "name": "Frame 4",
       "parent": "1BwgerJkG3mDENSswyqM44",
-      "index": 4
+      "index": 26
     },
     "1BwgerJnmwJ2QNcNns5zvh": {
       "type": "frame",
@@ -563,13 +563,13 @@
       "type": "image",
       "name": "image 1",
       "parent": "1BwgerJkG3mDENSswyqM44",
-      "index": 5
+      "index": 27
     },
     "1BwgerJobCYAk1AjiYtfZp": {
       "type": "frame",
       "name": "Frame 19",
       "parent": "1BwgerJkG3mDENSswyqM44",
-      "index": 6
+      "index": 28
     },
     "1BwgerJosyL9kr1UU3RHQx": {
       "type": "frame",
@@ -767,25 +767,25 @@
       "type": "text",
       "name": "Open Source",
       "parent": "1BwgpmjsT5KL7RaFAvBQrh",
-      "index": 0
+      "index": 5
     },
     "1BwgerJukRCW5iWLUG3Zaw": {
       "type": "text",
       "name": "How It Works",
       "parent": "1BwgpmjsT5KL7RaFAvBQrh",
-      "index": 1
+      "index": 8
     },
     "1BwgerJut8PPT9Brf1RLyA": {
       "type": "text",
       "name": "UIMix's open-source editor and backend promote community-driven development and offer extensive customization options. Self-host both components for greater control over your design environment and data security.",
       "parent": "1BwgpmjsT5KL7RaFAvBQrh",
-      "index": 2
+      "index": 6
     },
     "1BwgerJv5YHk5xBmTVnkjX": {
       "type": "frame",
       "name": "Frame 3",
       "parent": "1BwgpmjsT5KL7RaFAvBQrh",
-      "index": 3
+      "index": 7
     },
     "1BwgerJvP32Re42nDwKEkW": {
       "type": "text",
@@ -796,44 +796,44 @@
     "1BwgerJvj4S1p8rbP4QhzB": {
       "type": "text",
       "name": "A. Start Your Project",
-      "parent": "1BwgpmjsT5KL7RaFAvBQrh",
-      "index": 4
+      "parent": "1BwiLqwtpS4c6pUKuE1d9G",
+      "index": 0
     },
     "1BwgerJvidgQfBJmf3ptKD": {
       "type": "text",
       "name": "B. Design & Develop",
-      "parent": "1BwgpmjsT5KL7RaFAvBQrh",
-      "index": 5
+      "parent": "1BwiLr1qDWUf1SonAW9LSR",
+      "index": 0
     },
     "1BwgerJw5Tc2bQi1re57dk": {
       "type": "text",
       "name": "C. Collaborate & Publish",
-      "parent": "1BwgpmjsT5KL7RaFAvBQrh",
-      "index": 6
+      "parent": "1BwiLr5ieY6pzAEvrfVi5q",
+      "index": 0
     },
     "1BwgerJvuZqdjdE7f5DM7k": {
       "type": "text",
       "name": "Sign up for a free account or log in. Create a new project or import an existing Figma design. Organize your components and design tokens in the user-friendly interface.",
-      "parent": "1BwgpmjsT5KL7RaFAvBQrh",
-      "index": 7
+      "parent": "1BwiLqwtpS4c6pUKuE1d9G",
+      "index": 1
     },
     "1BwgerJw7UREfdQwiA14En": {
       "type": "text",
       "name": "Utilize Figma-like editing tools to create and modify designs. Seamlessly import React components into your UIMix project. Leverage AI assistance to efficiently generate and refine your content.",
-      "parent": "1BwgpmjsT5KL7RaFAvBQrh",
-      "index": 8
+      "parent": "1BwiLr1qDWUf1SonAW9LSR",
+      "index": 1
     },
     "1BwgerJwEtRY3h2No5Rkb3": {
       "type": "text",
       "name": "Collaborate using the online editor or work offline for an optimized development experience. Integrate with GitHub for streamlined version control. Easily import UIMix components into React apps or export final designs back to Figma.",
-      "parent": "1BwgpmjsT5KL7RaFAvBQrh",
-      "index": 9
+      "parent": "1BwiLr5ieY6pzAEvrfVi5q",
+      "index": 1
     },
     "1BwgerJwMZHwoozskd316Z": {
       "type": "frame",
       "name": "Frame 21",
       "parent": "1BwgerJkG3mDENSswyqM44",
-      "index": 17
+      "index": 37
     },
     "1BwgerJwRGjP7RKcby4xug": {
       "type": "image",
@@ -935,7 +935,7 @@
       "type": "frame",
       "name": "Frame",
       "parent": "1BwgerJkG3mDENSswyqM44",
-      "index": 22
+      "index": 29
     },
     "1BwgptDUAmUd2Qu61wuk9F": {
       "type": "frame",
@@ -953,7 +953,31 @@
       "type": "instance",
       "name": "Frame",
       "parent": "1BwgerJkG3mDENSswyqM44",
-      "index": 21
+      "index": 23
+    },
+    "1BwiLqwtpS4c6pUKuE1d9G": {
+      "type": "frame",
+      "index": 0,
+      "name": "Frame",
+      "parent": "1BwiLricmHGQz8o6m7X8Rq"
+    },
+    "1BwiLr1qDWUf1SonAW9LSR": {
+      "type": "frame",
+      "index": 1,
+      "name": "Frame",
+      "parent": "1BwiLricmHGQz8o6m7X8Rq"
+    },
+    "1BwiLr5ieY6pzAEvrfVi5q": {
+      "type": "frame",
+      "index": 2,
+      "name": "Frame",
+      "parent": "1BwiLricmHGQz8o6m7X8Rq"
+    },
+    "1BwiLricmHGQz8o6m7X8Rq": {
+      "type": "frame",
+      "index": 9,
+      "name": "Frame",
+      "parent": "1BwgpmjsT5KL7RaFAvBQrh"
     }
   },
   "styles": {
@@ -2410,7 +2434,12 @@
       "fills": [{ "type": "solid", "color": "#ffffff" }],
       "opacity": 1,
       "overflowHidden": true,
-      "shadows": []
+      "shadows": [],
+      "stackDirection": "y",
+      "stackAlign": "center",
+      "paddingRight": 1,
+      "paddingBottom": 906,
+      "layout": "stack"
     },
     "1BwgerJktFk5JRyPiePUei": {
       "hidden": false,
@@ -2492,7 +2521,8 @@
       "lineHeight": null,
       "letterSpacing": [0, "%"],
       "textHorizontalAlign": "center",
-      "textVerticalAlign": "start"
+      "textVerticalAlign": "start",
+      "marginBottom": 51
     },
     "1BwgerJnQB4YeKV3d1E8r6": {
       "hidden": false,
@@ -2511,7 +2541,8 @@
       "lineHeight": [150, "%"],
       "letterSpacing": [0, "%"],
       "textHorizontalAlign": "center",
-      "textVerticalAlign": "start"
+      "textVerticalAlign": "start",
+      "marginBottom": 51
     },
     "1BwgerJnRCZwCo1QLbAznW": {
       "hidden": false,
@@ -2536,7 +2567,8 @@
       "paddingTop": 0,
       "paddingRight": 0,
       "paddingBottom": 0,
-      "paddingLeft": 0
+      "paddingLeft": 0,
+      "marginBottom": 68
     },
     "1BwgerJnmwJ2QNcNns5zvh": {
       "hidden": false,
@@ -2601,7 +2633,8 @@
         { "color": "#0000001a", "x": 0, "y": 8, "blur": 10, "spread": -6 },
         { "color": "#0000001a", "x": 0, "y": 20, "blur": 25, "spread": -5 }
       ],
-      "imageHash": "1yKf5NvwGW-XtLSBDlS3GqZfbEGnLshgQrjyQJImqaM="
+      "imageHash": "1yKf5NvwGW-XtLSBDlS3GqZfbEGnLshgQrjyQJImqaM=",
+      "marginBottom": 53
     },
     "1BwgerJobCYAk1AjiYtfZp": {
       "hidden": false,
@@ -3162,7 +3195,8 @@
       "lineHeight": [150, "%"],
       "letterSpacing": [0, "%"],
       "textHorizontalAlign": "start",
-      "textVerticalAlign": "start"
+      "textVerticalAlign": "start",
+      "marginBottom": 26
     },
     "1BwgerJukRCW5iWLUG3Zaw": {
       "hidden": false,
@@ -3181,7 +3215,8 @@
       "lineHeight": [150, "%"],
       "letterSpacing": [0, "%"],
       "textHorizontalAlign": "start",
-      "textVerticalAlign": "start"
+      "textVerticalAlign": "start",
+      "marginBottom": 77
     },
     "1BwgerJut8PPT9Brf1RLyA": {
       "hidden": false,
@@ -3200,7 +3235,8 @@
       "lineHeight": [150, "%"],
       "letterSpacing": [0, "%"],
       "textHorizontalAlign": "center",
-      "textVerticalAlign": "start"
+      "textVerticalAlign": "start",
+      "marginBottom": 47
     },
     "1BwgerJv5YHk5xBmTVnkjX": {
       "hidden": false,
@@ -3233,7 +3269,8 @@
       "paddingTop": 10.5,
       "paddingRight": 22.5,
       "paddingBottom": 10.5,
-      "paddingLeft": 22.5
+      "paddingLeft": 22.5,
+      "marginBottom": 135
     },
     "1BwgerJvP32Re42nDwKEkW": {
       "hidden": false,
@@ -3267,7 +3304,8 @@
       "lineHeight": [150, "%"],
       "letterSpacing": [0, "%"],
       "textHorizontalAlign": "start",
-      "textVerticalAlign": "start"
+      "textVerticalAlign": "start",
+      "marginBottom": 26
     },
     "1BwgerJvidgQfBJmf3ptKD": {
       "hidden": false,
@@ -3286,7 +3324,8 @@
       "lineHeight": [150, "%"],
       "letterSpacing": [0, "%"],
       "textHorizontalAlign": "start",
-      "textVerticalAlign": "start"
+      "textVerticalAlign": "start",
+      "marginBottom": 20
     },
     "1BwgerJw5Tc2bQi1re57dk": {
       "hidden": false,
@@ -3305,7 +3344,8 @@
       "lineHeight": [150, "%"],
       "letterSpacing": [0, "%"],
       "textHorizontalAlign": "start",
-      "textVerticalAlign": "start"
+      "textVerticalAlign": "start",
+      "marginBottom": 20
     },
     "1BwgerJvuZqdjdE7f5DM7k": {
       "hidden": false,
@@ -3700,7 +3740,14 @@
         "y": { "type": "start", "start": 1730 }
       },
       "width": { "type": "fixed", "value": 1439 },
-      "height": { "type": "fixed", "value": 998 }
+      "height": { "type": "fixed", "value": 998 },
+      "stackDirection": "y",
+      "stackAlign": "center",
+      "paddingLeft": 110,
+      "paddingTop": 101,
+      "paddingRight": 91,
+      "paddingBottom": 118,
+      "layout": "stack"
     },
     "1BwgptDUAmUd2Qu61wuk9F": {
       "position": {
@@ -3717,7 +3764,49 @@
         "x": { "type": "start", "start": 0 },
         "y": { "type": "start", "start": 0 }
       },
-      "mainComponent": "1BwgpuexdsimtqqjohSNMo"
+      "mainComponent": "1BwgpuexdsimtqqjohSNMo",
+      "marginBottom": 101
+    },
+    "1BwiLqwtpS4c6pUKuE1d9G": {
+      "position": {
+        "x": { "type": "start", "start": 110 },
+        "y": { "type": "start", "start": 662 }
+      },
+      "width": { "type": "fixed", "value": 360 },
+      "height": { "type": "fixed", "value": 176 },
+      "layout": "stack",
+      "stackDirection": "y",
+      "marginRight": 83
+    },
+    "1BwiLr1qDWUf1SonAW9LSR": {
+      "position": {
+        "x": { "type": "start", "start": 553 },
+        "y": { "type": "start", "start": 662 }
+      },
+      "width": { "type": "fixed", "value": 360 },
+      "height": { "type": "fixed", "value": 194 },
+      "layout": "stack",
+      "stackDirection": "y",
+      "marginRight": 75
+    },
+    "1BwiLr5ieY6pzAEvrfVi5q": {
+      "position": {
+        "x": { "type": "start", "start": 988 },
+        "y": { "type": "start", "start": 662 }
+      },
+      "width": { "type": "fixed", "value": 360 },
+      "height": { "type": "fixed", "value": 218 },
+      "layout": "stack",
+      "stackDirection": "y"
+    },
+    "1BwiLricmHGQz8o6m7X8Rq": {
+      "position": {
+        "x": { "type": "start", "start": 110 },
+        "y": { "type": "start", "start": 662 }
+      },
+      "width": { "type": "fixed", "value": 1238 },
+      "height": { "type": "fixed", "value": 218 },
+      "layout": "stack"
     }
   },
   "componentURLs": [
