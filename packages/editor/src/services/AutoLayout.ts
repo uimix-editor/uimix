@@ -23,6 +23,10 @@ export function removeLayout(selectable: Selectable): void {
         start: child.computedOffsetRect.top,
       },
     };
+    child.style.marginTop = 0;
+    child.style.marginRight = 0;
+    child.style.marginBottom = 0;
+    child.style.marginLeft = 0;
   }
 
   if (selectable.style.width.type === "hug") {
@@ -39,6 +43,11 @@ export function removeLayout(selectable: Selectable): void {
   }
 
   selectable.style.layout = "none";
+  selectable.style.gap = 0;
+  selectable.style.paddingTop = 0;
+  selectable.style.paddingRight = 0;
+  selectable.style.paddingBottom = 0;
+  selectable.style.paddingLeft = 0;
 }
 
 export function ungroup(selectable: Selectable): void {
@@ -92,11 +101,14 @@ export function autoLayout(selectable: Selectable): void {
 
   selectable.style.stackDirection = flex.direction;
   selectable.style.stackAlign = flex.align;
-  selectable.style.gap = flex.gap;
   selectable.style.paddingLeft = Math.max(0, offsetBBox.left);
   selectable.style.paddingTop = Math.max(0, offsetBBox.top);
   selectable.style.paddingRight = Math.max(0, width - offsetBBox.right);
   selectable.style.paddingBottom = Math.max(0, height - offsetBBox.bottom);
+  for (const [i, margin] of flex.margins.entries()) {
+    const prop = flex.direction === "x" ? "marginRight" : "marginBottom";
+    flex.elements[i].style[prop] = margin;
+  }
 
   selectable.originalNode.append(flex.elements.map((e) => e.originalNode));
 
@@ -143,7 +155,10 @@ export function groupAndAutoLayout(
   frame.style.layout = "stack";
   frame.style.stackDirection = flex.direction;
   frame.style.stackAlign = flex.align;
-  frame.style.gap = flex.gap;
+  for (const [i, margin] of flex.margins.entries()) {
+    const prop = flex.direction === "x" ? "marginRight" : "marginBottom";
+    flex.elements[i].style[prop] = margin;
+  }
 
   frame.computedRectProvider = new StubComputedRectProvider(flex.bbox);
 
@@ -153,19 +168,21 @@ export function groupAndAutoLayout(
   return frame;
 }
 
-export function detectFlex(elements: readonly Selectable[]): {
+interface Flex {
   elements: readonly Selectable[];
   bbox: Rect;
   direction: "x" | "y";
-  gap: number;
+  margins: number[];
   align: StackAlign;
-} {
+}
+
+export function detectFlex(elements: readonly Selectable[]): Flex {
   if (!elements.length) {
     return {
       elements,
       bbox: new Rect(),
       direction: "x",
-      gap: 0,
+      margins: [],
       align: "start",
     };
   }
@@ -174,7 +191,7 @@ export function detectFlex(elements: readonly Selectable[]): {
       elements,
       bbox: elements[0].computedRect,
       direction: "x",
-      gap: 0,
+      margins: [],
       align: "start",
     };
   }
@@ -187,19 +204,19 @@ export function detectFlex(elements: readonly Selectable[]): {
     Rect.union(...elements.map((o) => o.computedRect))
   );
 
-  const xGaps: number[] = [];
-  const yGaps: number[] = [];
+  const xMargins: number[] = [];
+  const yMargins: number[] = [];
 
   for (let i = 1; i < elements.length; ++i) {
-    xGaps.push(
+    xMargins.push(
       leftSorted[i].computedRect.left - leftSorted[i - 1].computedRect.right
     );
-    yGaps.push(
+    yMargins.push(
       topSorted[i].computedRect.top - topSorted[i - 1].computedRect.bottom
     );
   }
 
-  const direction = sum(yGaps) < sum(xGaps) ? "x" : "y";
+  const direction = sum(yMargins) < sum(xMargins) ? "x" : "y";
 
   if (direction === "x") {
     const startError = sum(elements.map((o) => o.computedRect.top - bbox.top));
@@ -221,7 +238,7 @@ export function detectFlex(elements: readonly Selectable[]): {
       elements: leftSorted,
       bbox,
       direction: "x",
-      gap: Math.max(Math.round(sum(xGaps) / xGaps.length), 0),
+      margins: xMargins,
       align,
     };
   } else {
@@ -246,8 +263,68 @@ export function detectFlex(elements: readonly Selectable[]): {
       elements: topSorted,
       bbox,
       direction: "y",
-      gap: Math.max(Math.round(sum(yGaps) / yGaps.length), 0),
+      margins: yMargins,
       align,
     };
   }
+}
+
+export function marginsToGap(frameSelectable: Selectable) {
+  const children = frameSelectable.children.filter(
+    (child) => !child.isAbsolute
+  );
+  if (children.length < 2) {
+    return;
+  }
+
+  const direction = frameSelectable.style.stackDirection;
+
+  const margins: number[] = [];
+  for (let i = 1; i < children.length; ++i) {
+    margins.push(
+      children[i].style[direction === "x" ? "marginLeft" : "marginTop"] +
+        children[i - 1].style[
+          direction === "x" ? "marginRight" : "marginBottom"
+        ]
+    );
+  }
+  const gap = Math.round(sum(margins) / margins.length);
+
+  frameSelectable.style.gap = gap;
+  if (direction === "x") {
+    frameSelectable.style.paddingLeft += children[0].style.marginLeft;
+    frameSelectable.style.paddingRight +=
+      children[children.length - 1].style.marginRight;
+  } else {
+    frameSelectable.style.paddingTop += children[0].style.marginTop;
+    frameSelectable.style.paddingBottom +=
+      children[children.length - 1].style.marginBottom;
+  }
+
+  for (const child of children) {
+    if (direction === "x") {
+      child.style.marginLeft = 0;
+      child.style.marginRight = 0;
+    } else {
+      child.style.marginTop = 0;
+      child.style.marginBottom = 0;
+    }
+  }
+}
+
+export function gapToMargins(frameSelectable: Selectable) {
+  const children = frameSelectable.children.filter(
+    (child) => !child.isAbsolute
+  );
+  if (children.length < 2) {
+    return;
+  }
+
+  const gap = frameSelectable.style.gap;
+  for (let i = 1; i < children.length; ++i) {
+    const direction = frameSelectable.style.stackDirection;
+    children[i - 1].style[direction === "x" ? "marginRight" : "marginBottom"] +=
+      gap;
+  }
+  frameSelectable.style.gap = 0;
 }

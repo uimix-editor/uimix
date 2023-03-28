@@ -19,6 +19,9 @@ import { InspectorPane } from "../components/InspectorPane";
 import { action } from "mobx";
 import { InspectorTargetContext } from "../components/InspectorTargetContext";
 import { commands } from "../../../state/Commands";
+import { Tooltip } from "../../../components/Tooltip";
+import { DropdownMenu } from "../../../components/Menu";
+import { gapToMargins, marginsToGap } from "../../../services/AutoLayout";
 
 const StackAlignmentEdit = observer(function StackAlignmentEdit({
   direction,
@@ -84,6 +87,8 @@ export const LayoutPane: React.FC = observer(function StackPane() {
     return null;
   }
 
+  const hasGap = stackSelectables.some((s) => s.style.gap !== 0);
+
   return (
     <InspectorPane>
       <InspectorHeading
@@ -91,21 +96,62 @@ export const LayoutPane: React.FC = observer(function StackPane() {
         text="Layout"
         dimmed={!hasStack}
         buttons={
-          hasStack ? (
-            <IconButton
-              icon={removeIcon}
-              onClick={action(() => {
-                commands.removeLayout();
-              })}
-            />
-          ) : (
-            <IconButton
-              icon={addIcon}
-              onClick={action(() => {
-                commands.autoLayout();
-              })}
-            />
-          )
+          <div className="flex gap-1">
+            {/* <Tooltip text="Margin-based layout">
+              <IconButton icon="icon-park-outline:margin-one" />
+            </Tooltip>
+            <Tooltip text="Gap-based layout">
+              <IconButton icon="icon-park-outline:vertical-tidy-up" />
+            </Tooltip> */}
+            {hasStack ? (
+              <>
+                {hasGap ? (
+                  <Tooltip text="Gap to Margins">
+                    <IconButton
+                      icon="icon-park-outline:margin-one"
+                      rotate={direction === "x" ? 1 : 0}
+                      onClick={action(() => {
+                        for (const selectable of stackSelectables) {
+                          gapToMargins(selectable);
+                        }
+                        projectState.undoManager.stopCapturing();
+                      })}
+                    />
+                  </Tooltip>
+                ) : (
+                  <Tooltip text="Margins to Gap">
+                    <IconButton
+                      icon="icon-park-outline:vertical-tidy-up"
+                      rotate={direction === "x" ? 1 : 0}
+                      onClick={action(() => {
+                        for (const selectable of stackSelectables) {
+                          marginsToGap(selectable);
+                        }
+                        projectState.undoManager.stopCapturing();
+                      })}
+                    />
+                  </Tooltip>
+                )}
+                <Tooltip text="Remove Layout">
+                  <IconButton
+                    icon={removeIcon}
+                    onClick={action(() => {
+                      commands.removeLayout();
+                    })}
+                  />
+                </Tooltip>
+              </>
+            ) : (
+              <Tooltip text="Add Layout">
+                <IconButton
+                  icon={addIcon}
+                  onClick={action(() => {
+                    commands.autoLayout();
+                  })}
+                />
+              </Tooltip>
+            )}
+          </div>
         }
       />
       {hasStack && (
