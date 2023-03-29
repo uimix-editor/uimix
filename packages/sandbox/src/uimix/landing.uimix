@@ -2432,7 +2432,7 @@
         "y": { "type": "start", "start": -557 }
       },
       "width": { "type": "fixed", "value": 1440 },
-      "height": { "type": "fixed", "value": 4000 },
+      "height": { "type": "fill", "value": 4000 },
       "topLeftRadius": 0,
       "topRightRadius": 0,
       "bottomRightRadius": 0,
@@ -2443,8 +2443,7 @@
       "shadows": [],
       "layout": "stack",
       "stackDirection": "y",
-      "stackAlign": "center",
-      "paddingBottom": 906
+      "stackAlign": "center"
     },
     "1BwgerJktFk5JRyPiePUei": {
       "hidden": false,
@@ -3413,21 +3412,20 @@
         "x": { "type": "start", "start": -1 },
         "y": { "type": "start", "start": 2728 }
       },
-      "width": { "type": "fixed", "value": 1440 },
-      "height": { "type": "fill", "value": 366 },
+      "width": { "type": "fill", "value": 1440 },
+      "height": { "type": "fixed", "value": 366 },
       "topLeftRadius": 0,
       "topRightRadius": 0,
       "bottomRightRadius": 0,
       "bottomLeftRadius": 0,
-      "fills": [{ "type": "solid", "color": "#3b82f6" }],
       "opacity": 1,
       "overflowHidden": true,
       "shadows": [],
+      "layout": "stack",
       "stackDirection": "y",
       "stackAlign": "center",
       "paddingTop": 96,
-      "paddingBottom": 128,
-      "layout": "stack"
+      "paddingBottom": 128
     },
     "1BwgerJwRGjP7RKcby4xug": {
       "hidden": false,
@@ -3435,6 +3433,7 @@
         "x": { "type": "start", "start": -23 },
         "y": { "type": "start", "start": -368 }
       },
+      "absolute": true,
       "width": { "type": "fixed", "value": 1500 },
       "height": { "type": "fixed", "value": 1100 },
       "topLeftRadius": 0,
@@ -3444,8 +3443,7 @@
       "opacity": 1,
       "overflowHidden": true,
       "shadows": [],
-      "imageHash": "DGLFxM8eMqBjHUQYEekprnB3xC-f5uvLxL7x2odVAEU=",
-      "absolute": true
+      "imageHash": "DGLFxM8eMqBjHUQYEekprnB3xC-f5uvLxL7x2odVAEU="
     },
     "1BwgerJwhbrnScLWygzA2Y": {
       "hidden": false,
@@ -3457,6 +3455,7 @@
       "height": { "type": "hug" },
       "fills": [{ "type": "solid", "color": "#ffffff" }],
       "opacity": 1,
+      "marginBottom": 49,
       "textContent": "Ready to revolutionize your web design workflow?",
       "fontFamily": "Satoshi",
       "fontWeight": 900,
@@ -3464,8 +3463,7 @@
       "lineHeight": [150, "%"],
       "letterSpacing": [0, "%"],
       "textHorizontalAlign": "start",
-      "textVerticalAlign": "start",
-      "marginBottom": 49
+      "textVerticalAlign": "start"
     },
     "1BwgerJwdosQKLBSXvQyQM": {
       "hidden": false,
@@ -3749,8 +3747,8 @@
         "x": { "type": "start", "start": 0 },
         "y": { "type": "start", "start": 1730 }
       },
-      "width": { "type": "fixed", "value": 1439 },
-      "height": { "type": "fill", "value": 998 },
+      "width": { "type": "fill", "value": 1439 },
+      "height": { "type": "hug" },
       "layout": "stack",
       "stackDirection": "y",
       "stackAlign": "center",
@@ -3773,9 +3771,9 @@
         "x": { "type": "start", "start": 0 },
         "y": { "type": "start", "start": 0 }
       },
+      "width": { "type": "fill", "value": 1183 },
       "marginBottom": 101,
-      "mainComponent": "1BwgpuexdsimtqqjohSNMo",
-      "width": { "type": "fill", "value": 1183 }
+      "mainComponent": "1BwgpuexdsimtqqjohSNMo"
     },
     "1BwiLqwtpS4c6pUKuE1d9G": {
       "position": {
