@@ -229,9 +229,9 @@ export class ReactGenerator {
       return [
         `<${tagName}`,
         ...propTexts,
-        `>`,
-        style.textContent,
-        `</${tagName}>`,
+        `>{`,
+        JSON.stringify(style.textContent),
+        `}</${tagName}>`,
       ];
     }
     if (node.type === "image") {
