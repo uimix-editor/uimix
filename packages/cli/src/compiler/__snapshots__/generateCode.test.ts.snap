@@ -3,6 +3,8 @@
 exports[`generateCode > generates code 1`] = `
 {
   "components.css": ".uimix-1Bvi2z3UPfi6W3L8nDt5VA {
+box-sizing: border-box;
+-webkit-font-smoothing: antialiased;
   position: relative;
   width: max-content;
   height: max-content;
@@ -38,6 +40,8 @@ exports[`generateCode > generates code 1`] = `
 }
 }
 .uimix-1Bvi2z3TfkSpYXW29daTN8 {
+box-sizing: border-box;
+-webkit-font-smoothing: antialiased;
   position: relative;
   width: max-content;
   height: max-content;
@@ -66,6 +70,8 @@ exports[`generateCode > generates code 1`] = `
   box-shadow: none;
 }
 .uimix-1Bvi319YVxZELz4tEskN1S {
+box-sizing: border-box;
+-webkit-font-smoothing: antialiased;
   position: relative;
   width: 744px;
   height: 456px;
@@ -94,6 +100,8 @@ exports[`generateCode > generates code 1`] = `
   box-shadow: none;
 }
 .uimix-1BwWRgjHrhVbbuTV7m36kM {
+box-sizing: border-box;
+-webkit-font-smoothing: antialiased;
   position: relative;
   width: 400px;
   height: max-content;
@@ -122,6 +130,8 @@ exports[`generateCode > generates code 1`] = `
   box-shadow: none;
 }
 .uimix-1Bvi2z3UGTM64JtRT7Qc1S {
+box-sizing: border-box;
+-webkit-font-smoothing: antialiased;
   position: relative;
   margin-top: 0px;
   margin-right: 0px;
@@ -151,6 +161,8 @@ exports[`generateCode > generates code 1`] = `
 }
 }
 .uimix-1Bvi2z3TpKXtTJLTRPTEd8 {
+box-sizing: border-box;
+-webkit-font-smoothing: antialiased;
   position: relative;
   margin-top: 0px;
   margin-right: 0px;
@@ -187,6 +199,8 @@ exports[`generateCode > generates code 1`] = `
   box-shadow: none;
 }
 .uimix-1Bvi2z3To8ddXo6R6ZftVD {
+box-sizing: border-box;
+-webkit-font-smoothing: antialiased;
   position: relative;
   margin-top: 0px;
   margin-right: 0px;
@@ -219,6 +233,8 @@ exports[`generateCode > generates code 1`] = `
   box-shadow: none;
 }
 .uimix-1Bvi2z3UB1xUVg4Xz9WTpJ {
+box-sizing: border-box;
+-webkit-font-smoothing: antialiased;
   position: relative;
   margin-top: 0px;
   margin-right: 0px;
@@ -251,6 +267,8 @@ exports[`generateCode > generates code 1`] = `
   box-shadow: none;
 }
 .uimix-1Bvi2z3U3SiK6r7gf9vh7N {
+box-sizing: border-box;
+-webkit-font-smoothing: antialiased;
   position: relative;
   margin-top: 10px;
   margin-right: 20px;
@@ -273,24 +291,34 @@ exports[`generateCode > generates code 1`] = `
   justify-content: flex-start;
 }
 .uimix-1Bvi31VKu8gfy6XzJ8xrHA {
+box-sizing: border-box;
+-webkit-font-smoothing: antialiased;
   position: relative;
   margin-top: 0px;
   margin-right: 0px;
   margin-bottom: 0px;
   margin-left: 0px;
   align-self: stretch;
+  min-width: undefined;
+  max-width: undefined;
   height: max-content;
   opacity: 1;
   overflow: visible;
 }
 .uimix-1Bvi365mtWZmXKDPeJTB4s {
+box-sizing: border-box;
+-webkit-font-smoothing: antialiased;
   position: relative;
   margin-top: 0px;
   margin-right: 0px;
   margin-bottom: 0px;
   margin-left: 0px;
   align-self: stretch;
+  min-width: undefined;
+  max-width: undefined;
   flex: 1;
+  min-height: undefined;
+  max-height: undefined;
   opacity: 1;
   overflow: visible;
   display: flex;
@@ -316,6 +344,8 @@ exports[`generateCode > generates code 1`] = `
   box-shadow: none;
 }
 .uimix-1Bvi32d9RMi3ES5kk2UvuM {
+box-sizing: border-box;
+-webkit-font-smoothing: antialiased;
   position: absolute;
   left: 33px;
   top: 28px;
@@ -333,6 +363,8 @@ exports[`generateCode > generates code 1`] = `
 .uimix-1Bvi2z3UrU9VkawwAteXs8-1Bvi2z3UGTM64JtRT7Qc1S {
 }
 .uimix-1Bvi392qBdMy93LGLcVymb {
+box-sizing: border-box;
+-webkit-font-smoothing: antialiased;
   position: absolute;
   left: 33px;
   top: 97px;
@@ -367,6 +399,8 @@ exports[`generateCode > generates code 1`] = `
 .uimix-1Bvi39mct9UNYZ9eTCCRdV-1Bvi2z3U3SiK6r7gf9vh7N {
 }
 .uimix-1BwWRgjHyEzJjsehRefVBE {
+box-sizing: border-box;
+-webkit-font-smoothing: antialiased;
   position: relative;
   margin-top: 0px;
   margin-right: 0px;
@@ -399,6 +433,8 @@ exports[`generateCode > generates code 1`] = `
   box-shadow: none;
 }
 .uimix-1BwWRgjHr8HNgX8BRooGv7 {
+box-sizing: border-box;
+-webkit-font-smoothing: antialiased;
   position: relative;
   margin-top: 0px;
   margin-right: 0px;
@@ -422,12 +458,16 @@ exports[`generateCode > generates code 1`] = `
   box-shadow: none;
 }
 .uimix-1BwWRgjHmYZ8qLKDj3Tvdy {
+box-sizing: border-box;
+-webkit-font-smoothing: antialiased;
   position: relative;
   margin-top: 0px;
   margin-right: 0px;
   margin-bottom: 0px;
   margin-left: 0px;
   align-self: stretch;
+  min-width: undefined;
+  max-width: undefined;
   height: max-content;
   opacity: 1;
   overflow: visible;
@@ -444,12 +484,16 @@ exports[`generateCode > generates code 1`] = `
   justify-content: flex-start;
 }
 .uimix-1BwWRgjHuAe9UTxVhowwYu {
+box-sizing: border-box;
+-webkit-font-smoothing: antialiased;
   position: relative;
   margin-top: 0px;
   margin-right: 0px;
   margin-bottom: 0px;
   margin-left: 0px;
   align-self: stretch;
+  min-width: undefined;
+  max-width: undefined;
   height: max-content;
   opacity: 1;
   overflow: visible;
@@ -514,7 +558,7 @@ export const Button = React.forwardRef((props, ref) => {
     { ...props, ref },
     <div className={\\"uimix-1Bvi2z3UPfi6W3L8nDt5VA\\"}>
       <div className={\\"uimix-1Bvi2z3UGTM64JtRT7Qc1S\\"} data-refID={[\\"text\\"]}>
-        Button
+        {\\"Button\\"}
       </div>
     </div>
   );
@@ -541,7 +585,7 @@ export const Stack = React.forwardRef((props, ref) => {
         data-refID={[\\"item_2\\"]}
       ></div>
       <div className={\\"uimix-1Bvi2z3U3SiK6r7gf9vh7N\\"} data-refID={[\\"text\\"]}>
-        Hello, world!
+        {\\"Hello, world!\\"}
       </div>
     </div>
   );
@@ -586,7 +630,7 @@ export const Page = React.forwardRef((props, ref) => {
             }
             data-refID={[\\"instance\\", \\"text\\"]}
           >
-            Override Name
+            {\\"Override Name\\"}
           </div>
         </div>
         <img
@@ -625,7 +669,7 @@ export const Page = React.forwardRef((props, ref) => {
             }
             data-refID={[\\"stack\\", \\"text\\"]}
           >
-            Hello, world!
+            {\\"Hello, world!\\"}
           </div>
         </div>
       </div>
@@ -666,14 +710,15 @@ export const Card = React.forwardRef((props, ref) => {
         </svg>
       </div>
       <div className={\\"uimix-1BwWRgjHmYZ8qLKDj3Tvdy\\"} data-refID={[\\"title\\"]}>
-        React Components Import/Export
+        {\\"React Components Import/Export\\"}
       </div>
       <div
         className={\\"uimix-1BwWRgjHuAe9UTxVhowwYu\\"}
         data-refID={[\\"description\\"]}
       >
-        Seamlessly work with React components, boosting your
-        design-to-development workflow.
+        {
+          \\"Seamlessly work with React components, boosting your design-to-development workflow.\\\\n\\"
+        }
       </div>
     </div>
   );
