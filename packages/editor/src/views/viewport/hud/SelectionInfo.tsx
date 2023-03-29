@@ -5,6 +5,7 @@ import styled from "@emotion/styled";
 import colors from "../../../colors";
 import { projectState } from "../../../state/ProjectState";
 import { scrollState } from "../../../state/ScrollState";
+import { viewportState } from "../../../state/ViewportState";
 
 const SelectionInfoWrap = styled.div`
   position: absolute;
@@ -37,12 +38,16 @@ const Text = styled.div`
 // `;
 
 export const SelectionInfo: React.FC = observer(function SelectionInfo() {
+  if (viewportState.focusedSelectable) {
+    return null;
+  }
+
   const selectables = projectState.selectedSelectables;
 
   const bboxes = selectables.map((i) => i.computedRect);
   const bbox = Rect.union(...bboxes);
   if (!bbox) {
-    return <></>;
+    return null;
   }
   const bboxInViewport = bbox.transform(scrollState.documentToViewport);
 
