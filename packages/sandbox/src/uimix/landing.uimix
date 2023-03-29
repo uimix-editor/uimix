@@ -845,13 +845,13 @@
       "type": "text",
       "name": "Ready to revolutionize your web design workflow?",
       "parent": "1BwgerJwMZHwoozskd316Z",
-      "index": 1
+      "index": 3
     },
     "1BwgerJwdosQKLBSXvQyQM": {
       "type": "frame",
       "name": "Frame 20",
       "parent": "1BwgerJwMZHwoozskd316Z",
-      "index": 2
+      "index": 4
     },
     "1BwgerJwxErsGreg4iMsff": {
       "type": "frame",
@@ -981,9 +981,9 @@
     },
     "1BwiecLRjsYkerJDYVnoer": {
       "type": "component",
-      "index": 2,
       "name": "Landing",
-      "parent": "1Bvi2ymHPmVHms6RDurmNN"
+      "parent": "1Bvi2ymHPmVHms6RDurmNN",
+      "index": 2
     }
   },
   "styles": {
@@ -2444,7 +2444,6 @@
       "layout": "stack",
       "stackDirection": "y",
       "stackAlign": "center",
-      "paddingRight": 1,
       "paddingBottom": 906
     },
     "1BwgerJktFk5JRyPiePUei": {
@@ -2518,7 +2517,7 @@
       },
       "width": { "type": "hug" },
       "height": { "type": "hug" },
-      "fills": [],
+      "fills": [{ "type": "solid", "color": "#1F2937" }],
       "opacity": 1,
       "marginBottom": 51,
       "textContent": "Revolutionize Your Web Design\nand Development Workflow",
@@ -2648,7 +2647,7 @@
         "x": { "type": "start", "start": -1 },
         "y": { "type": "start", "start": 1134 }
       },
-      "width": { "type": "fixed", "value": 1440 },
+      "width": { "type": "fill", "value": 1440 },
       "height": { "type": "hug" },
       "topLeftRadius": 0,
       "topRightRadius": 0,
@@ -2838,7 +2837,7 @@
       "height": { "type": "hug" },
       "fills": [{ "type": "solid", "color": "#4b5563" }],
       "opacity": 1,
-      "textContent": "Seamlessly work with React components, boosting your design-to-development workflow.\n",
+      "textContent": "Seamlessly work with React components, boosting your design-to-development workflow.\n\n",
       "fontFamily": "Inter",
       "fontWeight": 400,
       "fontSize": 16,
@@ -2917,7 +2916,7 @@
       "height": { "type": "hug" },
       "fills": [{ "type": "solid", "color": "#4b5563" }],
       "opacity": 1,
-      "textContent": "Collaborate in real-time with your team, whether they're designers, developers, or stakeholders.\n",
+      "textContent": "Collaborate in real-time with your team, whether they're designers, developers, or stakeholders.\n\n",
       "fontFamily": "Inter",
       "fontWeight": 400,
       "fontSize": 16,
@@ -2939,8 +2938,6 @@
       "shadows": [],
       "layout": "stack",
       "stackDirection": "x",
-      "stackAlign": "end",
-      "stackJustify": "start",
       "gap": 24,
       "paddingTop": 0,
       "paddingRight": 0,
@@ -3017,7 +3014,7 @@
       "height": { "type": "hug" },
       "fills": [{ "type": "solid", "color": "#4b5563" }],
       "opacity": 1,
-      "textContent": "Benefit from UIMix's seamless offline editing, offering local file management, hot reloading, and an uninterrupted workflow.\n",
+      "textContent": "Benefit from UIMix's seamless offline editing, offering local file management, hot reloading, and an uninterrupted workflow.\n\n",
       "fontFamily": "Inter",
       "fontWeight": 400,
       "fontSize": 16,
@@ -3194,7 +3191,7 @@
       "height": { "type": "hug" },
       "fills": [{ "type": "solid", "color": "#1f2937" }],
       "opacity": 1,
-      "marginBottom": 26,
+      "marginBottom": 24,
       "textContent": "Open Source",
       "fontFamily": "Satoshi",
       "fontWeight": 900,
@@ -3214,7 +3211,7 @@
       "height": { "type": "hug" },
       "fills": [{ "type": "solid", "color": "#1f2937" }],
       "opacity": 1,
-      "marginBottom": 77,
+      "marginBottom": 72,
       "textContent": "How It Works",
       "fontFamily": "Satoshi",
       "fontWeight": 900,
@@ -3234,7 +3231,7 @@
       "height": { "type": "hug" },
       "fills": [{ "type": "solid", "color": "#4b5563" }],
       "opacity": 1,
-      "marginBottom": 47,
+      "marginBottom": 48,
       "textContent": "UIMix's open-source editor and backend promote community-driven development and offer extensive customization options.\nSelf-host both components for greater control over your design environment and data security.",
       "fontFamily": "Inter",
       "fontWeight": 400,
@@ -3267,7 +3264,7 @@
         { "color": "#3b82f61a", "x": 0, "y": 4, "blur": 6, "spread": -4 },
         { "color": "#3b82f61a", "x": 0, "y": 10, "blur": 15, "spread": -3 }
       ],
-      "marginBottom": 135,
+      "marginBottom": 128,
       "layout": "stack",
       "stackDirection": "x",
       "stackAlign": "start",
@@ -3417,7 +3414,7 @@
         "y": { "type": "start", "start": 2728 }
       },
       "width": { "type": "fixed", "value": 1440 },
-      "height": { "type": "fixed", "value": 366 },
+      "height": { "type": "fill", "value": 366 },
       "topLeftRadius": 0,
       "topRightRadius": 0,
       "bottomRightRadius": 0,
@@ -3425,7 +3422,12 @@
       "fills": [{ "type": "solid", "color": "#3b82f6" }],
       "opacity": 1,
       "overflowHidden": true,
-      "shadows": []
+      "shadows": [],
+      "stackDirection": "y",
+      "stackAlign": "center",
+      "paddingTop": 96,
+      "paddingBottom": 128,
+      "layout": "stack"
     },
     "1BwgerJwRGjP7RKcby4xug": {
       "hidden": false,
@@ -3442,7 +3444,8 @@
       "opacity": 1,
       "overflowHidden": true,
       "shadows": [],
-      "imageHash": "DGLFxM8eMqBjHUQYEekprnB3xC-f5uvLxL7x2odVAEU="
+      "imageHash": "DGLFxM8eMqBjHUQYEekprnB3xC-f5uvLxL7x2odVAEU=",
+      "absolute": true
     },
     "1BwgerJwhbrnScLWygzA2Y": {
       "hidden": false,
@@ -3461,7 +3464,8 @@
       "lineHeight": [150, "%"],
       "letterSpacing": [0, "%"],
       "textHorizontalAlign": "start",
-      "textVerticalAlign": "start"
+      "textVerticalAlign": "start",
+      "marginBottom": 49
     },
     "1BwgerJwdosQKLBSXvQyQM": {
       "hidden": false,
@@ -3746,24 +3750,23 @@
         "y": { "type": "start", "start": 1730 }
       },
       "width": { "type": "fixed", "value": 1439 },
-      "height": { "type": "fixed", "value": 998 },
+      "height": { "type": "fill", "value": 998 },
       "layout": "stack",
       "stackDirection": "y",
       "stackAlign": "center",
-      "paddingTop": 101,
-      "paddingRight": 91,
-      "paddingBottom": 118,
-      "paddingLeft": 110
+      "paddingTop": 128,
+      "paddingBottom": 128
     },
     "1BwgptDUAmUd2Qu61wuk9F": {
       "position": {
-        "x": { "type": "start", "start": 343 },
+        "x": { "type": "both", "start": 0, "end": 0 },
         "y": { "type": "start", "start": 45 }
       },
       "absolute": true,
-      "width": { "type": "fixed", "value": 750 },
-      "height": { "type": "fixed", "value": 550 },
-      "layout": "stack"
+      "width": { "type": "fill", "value": 750 },
+      "height": { "type": "hug" },
+      "layout": "stack",
+      "stackJustify": "center"
     },
     "1Bwgpuey7DQJQJs7BPsfzH": {
       "position": {
@@ -3771,7 +3774,8 @@
         "y": { "type": "start", "start": 0 }
       },
       "marginBottom": 101,
-      "mainComponent": "1BwgpuexdsimtqqjohSNMo"
+      "mainComponent": "1BwgpuexdsimtqqjohSNMo",
+      "width": { "type": "fill", "value": 1183 }
     },
     "1BwiLqwtpS4c6pUKuE1d9G": {
       "position": {
@@ -3780,7 +3784,6 @@
       },
       "width": { "type": "fixed", "value": 360 },
       "height": { "type": "fixed", "value": 176 },
-      "marginRight": 83,
       "layout": "stack",
       "stackDirection": "y"
     },
@@ -3791,7 +3794,6 @@
       },
       "width": { "type": "fixed", "value": 360 },
       "height": { "type": "fixed", "value": 194 },
-      "marginRight": 75,
       "layout": "stack",
       "stackDirection": "y"
     },
@@ -3810,9 +3812,11 @@
         "x": { "type": "start", "start": 110 },
         "y": { "type": "start", "start": 662 }
       },
-      "width": { "type": "fixed", "value": 1238 },
-      "height": { "type": "fixed", "value": 218 },
-      "layout": "stack"
+      "width": { "type": "fill", "value": 1238 },
+      "height": { "type": "hug" },
+      "layout": "stack",
+      "stackJustify": "center",
+      "gap": 72
     }
   },
   "componentURLs": [
