@@ -126,6 +126,9 @@ const TreeRow: React.FC<{
             return vStackIcon;
           }
         }
+        if (layout === "grid") {
+          return "icon-park-outline:all-application";
+        }
         return rectIcon;
       }
       case "text":

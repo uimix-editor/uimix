@@ -8,7 +8,7 @@ export function removeLayout(selectable: Selectable): void {
   if (selectable.node.type !== "frame") {
     return;
   }
-  if (selectable.style.layout !== "stack") {
+  if (selectable.style.layout === "none") {
     return;
   }
 
@@ -81,6 +81,7 @@ export function ungroup(selectable: Selectable): void {
   }
 }
 
+// TODO: auto layout to grid
 export function autoLayout(selectable: Selectable): void {
   if (selectable.node.type !== "frame") {
     return;
@@ -115,6 +116,7 @@ export function autoLayout(selectable: Selectable): void {
   selectable.style.layout = "stack";
 }
 
+// TODO: group to grid
 export function groupAndAutoLayout(
   selectables: readonly Selectable[]
 ): Selectable | undefined {
@@ -270,6 +272,10 @@ export function detectFlex(elements: readonly Selectable[]): Flex {
 }
 
 export function marginsToGap(frameSelectable: Selectable) {
+  if (frameSelectable.style.layout !== "stack") {
+    return;
+  }
+
   const children = frameSelectable.children.filter(
     (child) => !child.isAbsolute
   );
@@ -313,6 +319,10 @@ export function marginsToGap(frameSelectable: Selectable) {
 }
 
 export function gapToMargins(frameSelectable: Selectable) {
+  if (frameSelectable.style.layout !== "stack") {
+    return;
+  }
+
   const children = frameSelectable.children.filter(
     (child) => !child.isAbsolute
   );
