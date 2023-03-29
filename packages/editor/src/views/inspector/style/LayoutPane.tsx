@@ -51,7 +51,12 @@ const StackAlignmentEdit = observer(function StackAlignmentEdit({
   );
 });
 
-const stackDirectionOptions: ToggleGroupItem<StackDirection>[] = [
+const stackDirectionOptions: ToggleGroupItem<StackDirection | "grid">[] = [
+  {
+    value: "grid",
+    tooltip: "Grid",
+    icon: "icon-park-outline:all-application",
+  },
   {
     value: "x",
     tooltip: "Horizontal",
