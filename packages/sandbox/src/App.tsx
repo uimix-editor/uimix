@@ -1,14 +1,13 @@
-import { Card, Page } from "./uimix/components";
+import { Landing } from "./uimix/landing";
 
 function App() {
   return (
     <>
-      <Page
+      <Landing
         style={{
           width: "100%",
         }}
       />
-      <Card />
     </>
   );
 }

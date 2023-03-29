@@ -1,3 +1,7 @@
 :root {
   font-family: Inter, system-ui, Helvetica, Arial, sans-serif;
 }
+
+body {
+  margin: 0;
+}
