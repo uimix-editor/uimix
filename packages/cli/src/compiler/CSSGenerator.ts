@@ -61,14 +61,15 @@ export class CSSGenerator {
 
       let diffCSS: CSS.Properties;
       if (superSelectable) {
-        const keys = new Set([...Object.keys(css), ...Object.keys(superCSS)]);
+        const keys = new Set([
+          ...Object.keys(css),
+          ...Object.keys(superCSS),
+        ]) as Set<keyof CSS.Properties>;
 
         diffCSS = {};
         for (const key of keys) {
-          // @ts-ignore
           if (css[key] !== superCSS[key]) {
             // @ts-ignore
-            // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
             diffCSS[key] = css[key] ?? "unset";
           }
         }
