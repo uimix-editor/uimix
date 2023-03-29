@@ -15,12 +15,21 @@ function dropDestinationIndicator(
     return;
   }
 
-  const direction = parent.style.stackDirection;
   const inFlowChildren = parent.inFlowChildren;
 
   let index = inFlowChildren.findIndex((o) => o === ref);
   if (index < 0) {
     index = inFlowChildren.length;
+  }
+
+  if (parent.style.layout === "grid") {
+    if (index === inFlowChildren.length) {
+      // last item
+      const rect = inFlowChildren[index - 1].computedRect;
+      return [rect.topRight, rect.bottomRight];
+    }
+    const rect = inFlowChildren[index].computedRect;
+    return [rect.topLeft, rect.bottomLeft];
   }
 
   const parentRect = parent.computedRect;
@@ -31,6 +40,7 @@ function dropDestinationIndicator(
     bottom: parent.style.paddingBottom,
   };
 
+  const direction = parent.style.stackDirection;
   if (direction === "x") {
     let x: number;
 
