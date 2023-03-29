@@ -5,6 +5,12 @@ import { buildNodeCSS } from "@uimix/editor/src/models/buildNodeCSS";
 import { kebabCase } from "lodash-es";
 import * as CSS from "csstype";
 
+const baseCSS = [
+  `all: unset;`,
+  `box-sizing: border-box;`,
+  `-webkit-font-smoothing: antialiased;`,
+];
+
 export class CSSGenerator {
   project: Project;
 
@@ -61,6 +67,10 @@ export class CSSGenerator {
       );
 
       const body: string[] = [];
+      if (!superSelectable) {
+        body.push(...baseCSS);
+      }
+
       for (const [key, value] of Object.entries(diffCSS)) {
         // eslint-disable-next-line
         body.push(`  ${kebabCase(key)}: ${value};`);
