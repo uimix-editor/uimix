@@ -9,6 +9,7 @@ import { ViewportEvent } from "./ViewportEvent";
 import { DragHandler } from "./DragHandler";
 import { assertNonNull } from "../../../utils/Assert";
 import { resizeWithBoundingBox } from "../../../services/Resize";
+import { snapThreshold } from "../constants";
 
 export class NodeMoveDragHandler implements DragHandler {
   constructor(selectables: Selectable[], initPos: Vec2) {
@@ -175,17 +176,45 @@ export function findDropDestination(
     };
   }
 
-  const direction = parent.style.stackDirection;
-  const inFlowChildren = parent.inFlowChildren;
-  const centers = inFlowChildren.map((c) => c.computedRect.center);
-  const index = centers.findIndex((c) => c[direction] > event.pos[direction]);
-  const shouldShowInsertionLine = parent.style.layout !== "none";
-  if (index < 0) {
-    return { parent, shouldShowInsertionLine };
+  const layout = parent.style.layout;
+
+  if (layout === "stack") {
+    const direction = parent.style.stackDirection;
+    const inFlowChildren = parent.inFlowChildren;
+    const centers = inFlowChildren.map((c) => c.computedRect.center);
+    const index = centers.findIndex((c) => c[direction] > event.pos[direction]);
+    if (index < 0) {
+      return { parent, shouldShowInsertionLine: true };
+    }
+    return {
+      parent,
+      ref: inFlowChildren[index],
+      shouldShowInsertionLine: true,
+    };
   }
-  return {
-    parent,
-    ref: inFlowChildren[index],
-    shouldShowInsertionLine,
-  };
+
+  if (layout === "grid") {
+    const inFlowChildren = parent.inFlowChildren;
+    let nextChild: Selectable | undefined;
+
+    for (const child of inFlowChildren) {
+      if (
+        child.computedRect.right - scrollState.snapThreshold * 2 >
+          event.pos.x &&
+        child.computedRect.bottom - scrollState.snapThreshold * 2 > event.pos.y
+      ) {
+        nextChild = child;
+        break;
+      }
+    }
+
+    return {
+      parent,
+      ref: nextChild,
+      shouldShowInsertionLine: true,
+    };
+  }
+
+  // no layout
+  return { parent, shouldShowInsertionLine: false };
 }
