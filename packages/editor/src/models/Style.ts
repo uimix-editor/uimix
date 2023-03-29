@@ -54,6 +54,8 @@ export const defaultStyle: StyleJSON = {
   stackDirection: "x",
   stackAlign: "start",
   stackJustify: "start",
+  gridColumnCount: null,
+  gridRowCount: null,
   gap: 0,
   paddingTop: 0,
   paddingRight: 0,
