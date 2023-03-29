@@ -6,7 +6,6 @@ import { kebabCase } from "lodash-es";
 import * as CSS from "csstype";
 
 const baseCSS = [
-  `all: unset;`,
   `box-sizing: border-box;`,
   `-webkit-font-smoothing: antialiased;`,
 ];
