@@ -59,13 +59,23 @@ export class CSSGenerator {
       const superSelectable = selectable.superSelectable;
       const css = generateCSS(selectable);
       const superCSS = superSelectable ? generateCSS(superSelectable) : {};
-      const diffCSS = Object.fromEntries(
-        Object.entries(css).filter(([key, value]) => {
-          // eslint-disable-next-line
-          return (superCSS as any)[key] !== value;
-        })
-      );
 
+      let diffCSS: CSS.Properties;
+      if (superSelectable) {
+        const keys = new Set([...Object.keys(css), ...Object.keys(superCSS)]);
+
+        diffCSS = {};
+        for (const key of keys) {
+          // @ts-ignore
+          if (css[key] !== superCSS[key]) {
+            // @ts-ignore
+            // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
+            diffCSS[key] = css[key] ?? "unset";
+          }
+        }
+      } else {
+        diffCSS = css;
+      }
       const body: string[] = [];
       if (!superSelectable) {
         body.push(...baseCSS);
