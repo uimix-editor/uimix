@@ -106,7 +106,13 @@ export function buildNodeCSS(
       })();
     } else {
       cssStyle.display = "grid";
-      cssStyle.gridTemplateColumns = `repeat(${3}, 1fr)`;
+      const { gridRowCount, gridColumnCount } = style;
+      if (gridRowCount !== null) {
+        cssStyle.gridTemplateRows = `repeat(${gridRowCount}, 1fr)`;
+      }
+      if (gridColumnCount !== null) {
+        cssStyle.gridTemplateColumns = `repeat(${gridColumnCount}, 1fr)`;
+      }
     }
     cssStyle.gap = `${style.gap}px`;
     cssStyle.paddingLeft = `${style.paddingLeft}px`;
