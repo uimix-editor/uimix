@@ -89,7 +89,11 @@ export class ViewportEvent {
     }
 
     return this.event.metaKey || this.event.ctrlKey
-      ? this.selectables[0]
+      ? this.deepestSelectable
       : this.clickableSelectable;
+  }
+
+  get deepestSelectable(): Selectable | undefined {
+    return this.selectables[0];
   }
 }

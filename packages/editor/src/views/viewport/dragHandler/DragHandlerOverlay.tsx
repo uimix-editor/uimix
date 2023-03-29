@@ -45,6 +45,15 @@ export const DragHandlerOverlay: React.FC = observer(
           mode: isDoubleClick ? "doubleClick" : "click",
         });
 
+        // text editing mode
+        if (viewportState.focusedSelectable) {
+          const newTarget = viewportEvent.deepestSelectable;
+          if (newTarget && isFocusable(newTarget)) {
+            viewportState.focusedSelectable = newTarget;
+            return;
+          }
+        }
+
         viewportState.hoveredSelectable = undefined;
         viewportState.focusedSelectable = undefined;
 
@@ -91,6 +100,15 @@ export const DragHandlerOverlay: React.FC = observer(
         dragHandlerRef.current = undefined;
       });
       const onHover = action((viewportEvent: ViewportEvent) => {
+        // text editing mode
+        if (viewportState.focusedSelectable) {
+          const newTarget = viewportEvent.deepestSelectable;
+          if (newTarget && isFocusable(newTarget)) {
+            viewportState.hoveredSelectable = newTarget;
+            return;
+          }
+        }
+
         viewportState.hoveredSelectable = viewportEvent.selectable;
         viewportState.resizeBoxVisible = true;
 
