@@ -248,6 +248,9 @@ class Commands {
     text: "Cut",
     shortcuts: [new Shortcut(["Mod"], "KeyX")],
     onClick: action(() => {
+      if (isTextInput(document.activeElement)) {
+        return false;
+      }
       void this.cut();
     }),
   };
@@ -256,6 +259,9 @@ class Commands {
     text: "Copy",
     shortcuts: [new Shortcut(["Mod"], "KeyC")],
     onClick: action(() => {
+      if (isTextInput(document.activeElement)) {
+        return false;
+      }
       void this.copy();
     }),
   };
@@ -264,6 +270,9 @@ class Commands {
     text: "Paste",
     shortcuts: [new Shortcut(["Mod"], "KeyV")],
     onClick: action(() => {
+      if (isTextInput(document.activeElement)) {
+        return false;
+      }
       void this.paste();
     }),
   };
@@ -271,6 +280,9 @@ class Commands {
     type: "command",
     text: "Delete",
     onClick: action(() => {
+      if (isTextInput(document.activeElement)) {
+        return false;
+      }
       this.delete();
     }),
   };
@@ -279,6 +291,9 @@ class Commands {
     text: "Select All",
     shortcuts: [new Shortcut(["Mod"], "KeyA")],
     onClick: action(() => {
+      if (isTextInput(document.activeElement)) {
+        return false;
+      }
       this.selectAll();
     }),
   };
@@ -302,8 +317,8 @@ class Commands {
   readonly insertImageCommand: MenuCommandDef = {
     type: "command",
     text: "Image",
-    onClick: action(async () => {
-      await this.insertImage();
+    onClick: action(() => {
+      void this.insertImage();
     }),
   };
 

@@ -7,7 +7,7 @@ export interface MenuCommandDef {
   disabled?: boolean;
   checked?: boolean;
   radioChecked?: boolean;
-  onClick?: () => void;
+  onClick?: () => void | false;
 }
 
 export interface MenuCheckBoxDef {
@@ -61,7 +61,10 @@ export function handleShortcut(
     if (def.type === "command") {
       for (const shortcut of def.shortcuts ?? []) {
         if (shortcut.matches(event)) {
-          def.onClick?.();
+          const result = def.onClick?.();
+          if (result === false) {
+            continue;
+          }
           return true;
         }
       }
