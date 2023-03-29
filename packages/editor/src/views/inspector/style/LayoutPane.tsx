@@ -51,7 +51,7 @@ const StackAlignmentEdit = observer(function StackAlignmentEdit({
   );
 });
 
-const stackDirectionOptions: ToggleGroupItem<StackDirection | "grid">[] = [
+const stackDirectionOptions: ToggleGroupItem<"grid" | "x" | "y">[] = [
   {
     value: "grid",
     tooltip: "Grid",
@@ -76,13 +76,13 @@ export const LayoutPane: React.FC = observer(function StackPane() {
   const frameSelectables = projectState.selectedSelectables.filter(
     (s) => s.node.type === "frame"
   );
-  const stackSelectables = frameSelectables.filter(
-    (s) => s.style.layout === "stack"
+  const layoutSelectables = frameSelectables.filter(
+    (s) => s.style.layout !== "none"
   );
 
-  const hasStack = stackSelectables.length > 0;
+  const hasStack = layoutSelectables.length > 0;
   let direction = sameOrMixed<"x" | "y">(
-    stackSelectables.map((s) => s.style.stackDirection)
+    layoutSelectables.map((s) => s.style.stackDirection)
   );
   if (typeof direction !== "string") {
     direction = "x";
@@ -92,7 +92,7 @@ export const LayoutPane: React.FC = observer(function StackPane() {
     return null;
   }
 
-  const hasGap = stackSelectables.some((s) => s.style.gap !== 0);
+  const hasGap = layoutSelectables.some((s) => s.style.gap !== 0);
 
   return (
     <InspectorPane>
@@ -116,7 +116,7 @@ export const LayoutPane: React.FC = observer(function StackPane() {
                       icon="icon-park-outline:margin-one"
                       rotate={direction === "x" ? 1 : 0}
                       onClick={action(() => {
-                        for (const selectable of stackSelectables) {
+                        for (const selectable of layoutSelectables) {
                           gapToMargins(selectable);
                         }
                         projectState.undoManager.stopCapturing();
@@ -129,7 +129,7 @@ export const LayoutPane: React.FC = observer(function StackPane() {
                       icon="icon-park-outline:vertical-tidy-up"
                       rotate={direction === "x" ? 1 : 0}
                       onClick={action(() => {
-                        for (const selectable of stackSelectables) {
+                        for (const selectable of layoutSelectables) {
                           marginsToGap(selectable);
                         }
                         projectState.undoManager.stopCapturing();
@@ -160,13 +160,23 @@ export const LayoutPane: React.FC = observer(function StackPane() {
         }
       />
       {hasStack && (
-        <InspectorTargetContext.Provider value={stackSelectables}>
+        <InspectorTargetContext.Provider value={layoutSelectables}>
           <div className="flex flex-col gap-2">
             <div className="grid grid-cols-3 gap-2 items-center">
               <InspectorToggleGroup
-                get={(s) => s.style.stackDirection}
+                get={(s) => {
+                  if (s.style.layout === "grid") {
+                    return "grid";
+                  }
+                  return s.style.stackDirection;
+                }}
                 set={(s, value) => {
-                  s.style.stackDirection = value ?? "x";
+                  if (value === "grid") {
+                    s.style.layout = "grid";
+                  } else {
+                    s.style.layout = "stack";
+                    s.style.stackDirection = value ?? "x";
+                  }
                 }}
                 items={stackDirectionOptions}
               />

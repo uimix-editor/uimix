@@ -43,7 +43,7 @@ export const StyleJSON = z.object({
 
   // layout
 
-  layout: z.enum(["none", "stack"]),
+  layout: z.enum(["none", "stack", "grid"]),
   stackDirection: StackDirection,
   stackAlign: StackAlign,
   stackJustify: StackJustify,
