@@ -1,9 +1,20 @@
 import { NodeType, StackDirection, StyleJSON } from "@uimix/node-data";
 
+export function getLayoutType(
+  style: StyleJSON
+): StackDirection | "grid" | undefined {
+  if (style.layout === "stack") {
+    return style.stackDirection;
+  }
+  if (style.layout === "grid") {
+    return "grid";
+  }
+}
+
 export function buildNodeCSS(
   nodeType: NodeType,
   style: StyleJSON,
-  parentStackDirection?: StackDirection
+  parentLayout?: StackDirection | "grid"
 ): React.CSSProperties {
   if (nodeType === "component") {
     return {};
@@ -11,8 +22,7 @@ export function buildNodeCSS(
 
   const cssStyle: React.CSSProperties = {};
 
-  const cssPosition =
-    parentStackDirection && !style.absolute ? "relative" : "absolute";
+  const cssPosition = parentLayout && !style.absolute ? "relative" : "absolute";
   cssStyle.position = cssPosition;
   if (cssPosition === "absolute") {
     const position = style.position;
@@ -36,16 +46,17 @@ export function buildNodeCSS(
     cssStyle.marginLeft = `${style.marginLeft}px`;
   }
 
+  // TODO: unset width/height when both left/right or top/bottom are set
+
   const width = style.width;
   if (width.type === "fixed") {
     cssStyle.width = `${width.value}px`;
   } else if (width.type === "hug") {
     cssStyle.width = "max-content";
   } else {
-    if (parentStackDirection === "x") {
+    if (parentLayout === "x") {
       cssStyle.flex = 1;
-    } else if (parentStackDirection === "y") {
-      //cssStyle.alignSelf = "stretch";
+    } else if (parentLayout) {
       cssStyle.width = `calc(100% - ${style.marginLeft + style.marginRight}px)`;
     } else {
       cssStyle.width = "auto";
@@ -60,9 +71,9 @@ export function buildNodeCSS(
   } else if (height.type === "hug") {
     cssStyle.height = "max-content";
   } else {
-    if (parentStackDirection === "y") {
+    if (parentLayout === "y") {
       cssStyle.flex = 1;
-    } else if (parentStackDirection === "x") {
+    } else if (parentLayout) {
       cssStyle.height = `calc(100% - ${
         style.marginTop + style.marginBottom
       }px)`;

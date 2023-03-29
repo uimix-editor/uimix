@@ -10,7 +10,7 @@ import {
   ForeignComponentRenderer as IForeignComponentRenderer,
 } from "../../../types/ForeignComponent";
 import { ForeignComponentManager } from "../../../models/ForeignComponentManager";
-import { buildNodeCSS } from "../../../models/buildNodeCSS";
+import { buildNodeCSS, getLayoutType } from "../../../models/buildNodeCSS";
 import htmlReactParser from "html-react-parser";
 
 export const selectableForDOM = new WeakMap<HTMLElement, Selectable>();
@@ -47,14 +47,14 @@ const computedRectUpdater = new ComputedRectUpdater();
 
 export const NodeRenderer: React.FC<{
   selectable: Selectable;
-  parentStackDirection?: StackDirection;
+  parentLayout?: StackDirection | "grid";
   forThumbnail?: boolean; // must not be changed after mount
   style?: React.CSSProperties;
   foreignComponentManager: ForeignComponentManager;
 }> = observer(
   ({
     selectable,
-    parentStackDirection,
+    parentLayout,
     forThumbnail,
     style: additionalCSSStyle,
     foreignComponentManager,
@@ -66,7 +66,7 @@ export const NodeRenderer: React.FC<{
     const cssStyle: React.CSSProperties = {
       all: "revert",
       boxSizing: "border-box",
-      ...buildNodeCSS(type, style, parentStackDirection),
+      ...buildNodeCSS(type, style, parentLayout),
       ...(selectable === viewportState.focusedSelectable
         ? {
             opacity: 0,
@@ -98,10 +98,7 @@ export const NodeRenderer: React.FC<{
       });
     }
 
-    const stackDirection =
-      type === "frame" && style.layout === "stack"
-        ? style.stackDirection
-        : undefined;
+    const layoutType = type === "frame" ? getLayoutType(style) : undefined;
 
     // if (selectable.node.type === "instance") {
     //   return (
@@ -232,7 +229,7 @@ export const NodeRenderer: React.FC<{
               <NodeRenderer
                 key={child.id}
                 selectable={child}
-                parentStackDirection={stackDirection}
+                parentLayout={layoutType}
                 forThumbnail={forThumbnail}
                 foreignComponentManager={foreignComponentManager}
               />
