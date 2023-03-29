@@ -2662,14 +2662,14 @@
       "stackJustify": "start",
       "gap": 24,
       "paddingTop": 48,
-      "paddingRight": 0,
+      "paddingRight": 24,
       "paddingBottom": 48,
-      "paddingLeft": 0
+      "paddingLeft": 24
     },
     "1BwgerJosyL9kr1UU3RHQx": {
       "hidden": false,
-      "width": { "type": "hug" },
-      "height": { "type": "hug" },
+      "width": { "type": "fill", "max": 1200, "value": 1248 },
+      "height": { "type": "fill", "value": 238 },
       "topLeftRadius": 0,
       "topRightRadius": 0,
       "bottomRightRadius": 0,
@@ -2738,7 +2738,7 @@
     },
     "1BwgerJpjwMp9JXW9qkXFh": {
       "hidden": false,
-      "width": { "type": "hug" },
+      "width": { "type": "fill", "value": 247.546875 },
       "height": { "type": "hug" },
       "fills": [{ "type": "solid", "color": "#1f2937" }],
       "opacity": 1,
@@ -2817,7 +2817,7 @@
     },
     "1BwgerJqjGBqZWDXNzFMPe": {
       "hidden": false,
-      "width": { "type": "hug" },
+      "width": { "type": "fill", "value": 315.640625 },
       "height": { "type": "hug" },
       "fills": [{ "type": "solid", "color": "#1f2937" }],
       "opacity": 1,
@@ -2836,7 +2836,7 @@
       "height": { "type": "hug" },
       "fills": [{ "type": "solid", "color": "#4b5563" }],
       "opacity": 1,
-      "textContent": "Seamlessly work with React components, boosting your design-to-development workflow.\n\n",
+      "textContent": "Seamlessly work with React components, boosting your design-to-development workflow.\n",
       "fontFamily": "Inter",
       "fontWeight": 400,
       "fontSize": 16,
@@ -2896,7 +2896,7 @@
     },
     "1BwgerJrpGvKChGqb2ukZC": {
       "hidden": false,
-      "width": { "type": "hug" },
+      "width": { "type": "fill", "value": 249.1640625 },
       "height": { "type": "hug" },
       "fills": [{ "type": "solid", "color": "#1f2937" }],
       "opacity": 1,
@@ -2915,7 +2915,7 @@
       "height": { "type": "hug" },
       "fills": [{ "type": "solid", "color": "#4b5563" }],
       "opacity": 1,
-      "textContent": "Collaborate in real-time with your team, whether they're designers, developers, or stakeholders.\n\n",
+      "textContent": "Collaborate in real-time with your team, whether they're designers, developers, or stakeholders.\n",
       "fontFamily": "Inter",
       "fontWeight": 400,
       "fontSize": 16,
@@ -2926,7 +2926,7 @@
     },
     "1BwgerJsMLwBAEsy38m9tF": {
       "hidden": false,
-      "width": { "type": "hug" },
+      "width": { "type": "fill", "max": 1200, "value": 1248 },
       "height": { "type": "hug" },
       "topLeftRadius": 0,
       "topRightRadius": 0,
@@ -2936,7 +2936,6 @@
       "overflowHidden": false,
       "shadows": [],
       "layout": "stack",
-      "stackDirection": "x",
       "gap": 24,
       "paddingTop": 0,
       "paddingRight": 0,
@@ -2994,7 +2993,7 @@
     },
     "1BwgerJspM7QxN1Gc35k6D": {
       "hidden": false,
-      "width": { "type": "hug" },
+      "width": { "type": "fill", "value": 241.203125 },
       "height": { "type": "hug" },
       "fills": [{ "type": "solid", "color": "#1f2937" }],
       "opacity": 1,
@@ -3073,7 +3072,7 @@
     },
     "1BwgerJtNy9R1MRqf4Aoq1": {
       "hidden": false,
-      "width": { "type": "hug" },
+      "width": { "type": "fill", "value": 122.8046875 },
       "height": { "type": "hug" },
       "fills": [{ "type": "solid", "color": "#1f2937" }],
       "opacity": 1,
@@ -3152,7 +3151,7 @@
     },
     "1BwgerJu9vzCG7qd8FxzhP": {
       "hidden": false,
-      "width": { "type": "hug" },
+      "width": { "type": "fill", "value": 164.0859375 },
       "height": { "type": "hug" },
       "fills": [{ "type": "solid", "color": "#1f2937" }],
       "opacity": 1,

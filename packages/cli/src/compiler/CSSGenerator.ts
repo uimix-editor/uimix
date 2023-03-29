@@ -82,8 +82,13 @@ export class CSSGenerator {
       }
 
       for (const [key, value] of Object.entries(diffCSS)) {
-        // eslint-disable-next-line
-        body.push(`  ${kebabCase(key)}: ${value};`);
+        if (key.startsWith("--")) {
+          // eslint-disable-next-line
+          body.push(`  ${key}: ${value};`);
+        } else {
+          // eslint-disable-next-line
+          body.push(`  ${kebabCase(key)}: ${value};`);
+        }
       }
 
       const outermostInstance = selectable.nodePath[0];

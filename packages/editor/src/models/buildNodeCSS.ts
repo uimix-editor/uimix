@@ -29,11 +29,27 @@ export function buildNodeCSS(
     if ("end" in position.y) {
       cssStyle.bottom = `${position.y.end}px`;
     }
+    // @ts-ignore
+    cssStyle["--uimix-marginLeft"] = "0";
+    // @ts-ignore
+    cssStyle["--uimix-marginRight"] = "0";
+    // @ts-ignore
+    cssStyle["--uimix-marginTop"] = "0";
+    // @ts-ignore
+    cssStyle["--uimix-marginBottom"] = "0";
   } else {
     cssStyle.marginTop = `${style.marginTop}px`;
     cssStyle.marginRight = `${style.marginRight}px`;
     cssStyle.marginBottom = `${style.marginBottom}px`;
     cssStyle.marginLeft = `${style.marginLeft}px`;
+    // @ts-ignore
+    cssStyle["--uimix-marginLeft"] = `${style.marginLeft}px`;
+    // @ts-ignore
+    cssStyle["--uimix-marginRight"] = `${style.marginRight}px`;
+    // @ts-ignore
+    cssStyle["--uimix-marginTop"] = `${style.marginTop}px`;
+    // @ts-ignore
+    cssStyle["--uimix-marginBottom"] = `${style.marginBottom}px`;
   }
 
   const width = style.width;
@@ -45,7 +61,9 @@ export function buildNodeCSS(
     if (parentStackDirection === "x") {
       cssStyle.flex = 1;
     } else if (parentStackDirection === "y") {
-      cssStyle.alignSelf = "stretch";
+      //cssStyle.alignSelf = "stretch";
+      cssStyle.width =
+        "calc(100% - var(--uimix-marginLeft) - var(--uimix-marginRight))";
     } else {
       cssStyle.width = "auto";
     }
@@ -62,7 +80,8 @@ export function buildNodeCSS(
     if (parentStackDirection === "y") {
       cssStyle.flex = 1;
     } else if (parentStackDirection === "x") {
-      cssStyle.alignSelf = "stretch";
+      cssStyle.height =
+        "calc(100% - var(--uimix-marginTop) - var(--uimix-marginBottom))";
     } else {
       cssStyle.height = "auto";
     }
