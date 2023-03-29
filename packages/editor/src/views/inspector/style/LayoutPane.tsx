@@ -22,6 +22,7 @@ import { commands } from "../../../state/Commands";
 import { Tooltip } from "../../../components/Tooltip";
 import { DropdownMenu } from "../../../components/Menu";
 import { gapToMargins, marginsToGap } from "../../../services/AutoLayout";
+import { Icon } from "@iconify/react";
 
 const StackAlignmentEdit = observer(function StackAlignmentEdit({
   direction,
@@ -80,13 +81,15 @@ export const LayoutPane: React.FC = observer(function StackPane() {
     (s) => s.style.layout !== "none"
   );
 
-  const hasStack = layoutSelectables.length > 0;
+  const hasLayout = layoutSelectables.length > 0;
   let direction = sameOrMixed<"x" | "y">(
     layoutSelectables.map((s) => s.style.stackDirection)
   );
   if (typeof direction !== "string") {
     direction = "x";
   }
+  const hasStack = frameSelectables.some((s) => s.style.layout === "stack");
+  const hasGrid = frameSelectables.some((s) => s.style.layout === "grid");
 
   if (frameSelectables.length === 0) {
     return null;
@@ -99,7 +102,7 @@ export const LayoutPane: React.FC = observer(function StackPane() {
       <InspectorHeading
         icon="material-symbols:table-rows-outline"
         text="Layout"
-        dimmed={!hasStack}
+        dimmed={!hasLayout}
         buttons={
           <div className="flex gap-1">
             {/* <Tooltip text="Margin-based layout">
@@ -108,7 +111,7 @@ export const LayoutPane: React.FC = observer(function StackPane() {
             <Tooltip text="Gap-based layout">
               <IconButton icon="icon-park-outline:vertical-tidy-up" />
             </Tooltip> */}
-            {hasStack ? (
+            {hasLayout ? (
               <>
                 {hasGap ? (
                   <Tooltip text="Gap to Margins">
@@ -159,7 +162,7 @@ export const LayoutPane: React.FC = observer(function StackPane() {
           </div>
         }
       />
-      {hasStack && (
+      {hasLayout && (
         <InspectorTargetContext.Provider value={layoutSelectables}>
           <div className="flex flex-col gap-2">
             <div className="grid grid-cols-3 gap-2 items-center">
@@ -268,6 +271,40 @@ export const LayoutPane: React.FC = observer(function StackPane() {
               />
             </div>
           </div>
+          {hasGrid && (
+            <div className="grid grid-cols-3 gap-2 items-center">
+              <InspectorNumberInput
+                icon={<Icon width={12} icon="icon-park-outline:column" />}
+                tooltip="Column Count"
+                get={(s) => {
+                  const value = s.style.gridColumnCount;
+                  if (value !== null) {
+                    return { value };
+                  }
+                }}
+                placeholder={() => "Auto"}
+                set={(s, value) => {
+                  s.style.gridColumnCount = value?.value ?? null;
+                }}
+              />
+              <InspectorNumberInput
+                icon={
+                  <Icon width={12} icon="icon-park-outline:column" rotate={1} />
+                }
+                tooltip="Row Count"
+                get={(s) => {
+                  const value = s.style.gridRowCount;
+                  if (value !== null) {
+                    return { value };
+                  }
+                }}
+                placeholder={() => "Auto"}
+                set={(s, value) => {
+                  s.style.gridRowCount = value?.value ?? null;
+                }}
+              />
+            </div>
+          )}
         </InspectorTargetContext.Provider>
       )}
     </InspectorPane>

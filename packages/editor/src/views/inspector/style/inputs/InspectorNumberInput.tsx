@@ -28,8 +28,8 @@ export const InspectorNumberInput = observer(function InspectorNumberInput({
     }
   ) => void;
   allowedUnits?: string[];
-  placeholder?: (selectable: Selectable) => number | undefined;
-  icon?: string | IconifyIcon;
+  placeholder?: (selectable: Selectable) => number | string | undefined;
+  icon?: React.ReactNode | IconifyIcon;
   tooltip?: React.ReactNode;
 }) {
   const selectables = useContext(InspectorTargetContext);
@@ -49,6 +49,8 @@ export const InspectorNumberInput = observer(function InspectorNumberInput({
       placeholder={
         typeof placeholder === "number"
           ? String(roundToFixed(placeholder, 2))
+          : typeof placeholder === "string"
+          ? placeholder
           : undefined
       }
       onChange={action((valueText: string) => {
