@@ -47,6 +47,8 @@ export const StyleJSON = z.object({
   stackDirection: StackDirection,
   stackAlign: StackAlign,
   stackJustify: StackJustify,
+  gridRowCount: z.union([z.number(), z.null()]),
+  gridColumnCount: z.union([z.number(), z.null()]),
   gap: PxValue,
   paddingTop: PxValue,
   paddingRight: PxValue,
