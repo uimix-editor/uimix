@@ -79,30 +79,35 @@ export function buildNodeCSS(
   cssStyle.overflow = style.overflowHidden ? "hidden" : "visible";
 
   if (nodeType === "frame") {
-    cssStyle.display = "flex";
-    cssStyle.flexDirection = style.stackDirection === "x" ? "row" : "column";
-    cssStyle.alignItems = (() => {
-      switch (style.stackAlign) {
-        case "start":
-          return "flex-start";
-        case "center":
-          return "center";
-        case "end":
-          return "flex-end";
-      }
-    })();
-    cssStyle.justifyContent = (() => {
-      switch (style.stackJustify) {
-        case "start":
-          return "flex-start";
-        case "center":
-          return "center";
-        case "end":
-          return "flex-end";
-        case "spaceBetween":
-          return "space-between";
-      }
-    })();
+    if (style.layout === "stack") {
+      cssStyle.display = "flex";
+      cssStyle.flexDirection = style.stackDirection === "x" ? "row" : "column";
+      cssStyle.alignItems = (() => {
+        switch (style.stackAlign) {
+          case "start":
+            return "flex-start";
+          case "center":
+            return "center";
+          case "end":
+            return "flex-end";
+        }
+      })();
+      cssStyle.justifyContent = (() => {
+        switch (style.stackJustify) {
+          case "start":
+            return "flex-start";
+          case "center":
+            return "center";
+          case "end":
+            return "flex-end";
+          case "spaceBetween":
+            return "space-between";
+        }
+      })();
+    } else {
+      cssStyle.display = "grid";
+      cssStyle.gridTemplateColumns = `repeat(${3}, 1fr)`;
+    }
     cssStyle.gap = `${style.gap}px`;
     cssStyle.paddingLeft = `${style.paddingLeft}px`;
     cssStyle.paddingRight = `${style.paddingRight}px`;
