@@ -194,18 +194,34 @@ export function findDropDestination(
   }
 
   if (layout === "grid") {
+    // TODO: when column count is 1, use the same logic as vertical stack
+
     const inFlowChildren = parent.inFlowChildren;
+    const columnCount = parent.style.gridColumnCount ?? 1;
+    const rowCount = Math.ceil(inFlowChildren.length / columnCount);
+
     let nextChild: Selectable | undefined;
 
-    for (const child of inFlowChildren) {
-      if (
-        child.computedRect.right - scrollState.snapThreshold * 2 >
-          event.pos.x &&
-        child.computedRect.bottom - scrollState.snapThreshold * 2 > event.pos.y
-      ) {
-        nextChild = child;
-        break;
+    for (let row = 0; row < rowCount; row++) {
+      const rowChildren = inFlowChildren.slice(
+        row * columnCount,
+        (row + 1) * columnCount
+      );
+      const rowChildrenBottom = Math.max(
+        ...rowChildren.map((c) => c.computedRect.bottom)
+      );
+      if (event.pos.y > rowChildrenBottom) {
+        continue;
       }
+
+      for (const child of rowChildren) {
+        if (child.computedRect.center.x > event.pos.x) {
+          nextChild = child;
+          break;
+        }
+      }
+      nextChild = nextChild ?? rowChildren[rowChildren.length - 1].nextSibling;
+      break;
     }
 
     return {
