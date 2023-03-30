@@ -1,84 +1,8 @@
 import React from "react";
 import { observer } from "mobx-react-lite";
-import { Vec2 } from "paintvec";
 import colors from "../../../colors.js";
 import { scrollState } from "../../../state/ScrollState";
-import { DropDestination } from "../../../state/DropDestination";
 import { viewportState } from "../../../state/ViewportState";
-
-function dropDestinationIndicator(
-  dst: DropDestination
-): [Vec2, Vec2] | undefined {
-  const { parent, ref } = dst;
-
-  if (!dst.shouldShowInsertionLine) {
-    return;
-  }
-
-  const inFlowChildren = parent.inFlowChildren;
-
-  let index = inFlowChildren.findIndex((o) => o === ref);
-  if (index < 0) {
-    index = inFlowChildren.length;
-  }
-
-  if (parent.style.layout === "grid") {
-    if (index === inFlowChildren.length) {
-      // last item
-      const rect = inFlowChildren[index - 1].computedRect;
-      return [rect.topRight, rect.bottomRight];
-    }
-    const rect = inFlowChildren[index].computedRect;
-    return [rect.topLeft, rect.bottomLeft];
-  }
-
-  const parentRect = parent.computedRect;
-  const parentPaddings = {
-    left: parent.style.paddingLeft,
-    top: parent.style.paddingTop,
-    right: parent.style.paddingRight,
-    bottom: parent.style.paddingBottom,
-  };
-
-  const direction = parent.style.stackDirection;
-  if (direction === "x") {
-    let x: number;
-
-    if (index === 0) {
-      x = parentRect.left + parentPaddings.left;
-    } else if (index === inFlowChildren.length) {
-      const prev = inFlowChildren[index - 1];
-      x = prev.computedRect.right;
-    } else {
-      const prev = inFlowChildren[index - 1];
-      const next = inFlowChildren[index];
-      x = (prev.computedRect.right + next.computedRect.left) / 2;
-    }
-
-    const y1 = parentRect.top + parentPaddings.top;
-    const y2 = parentRect.bottom - parentPaddings.bottom;
-
-    return [new Vec2(x, y1), new Vec2(x, y2)];
-  } else {
-    let y: number;
-
-    if (index === 0) {
-      y = parentRect.top + parentPaddings.top;
-    } else if (index === inFlowChildren.length) {
-      const prev = inFlowChildren[index - 1];
-      y = prev.computedRect.bottom;
-    } else {
-      const prev = inFlowChildren[index - 1];
-      const next = inFlowChildren[index];
-      y = (prev.computedRect.bottom + next.computedRect.top) / 2;
-    }
-
-    const x1 = parentRect.left + parentPaddings.left;
-    const x2 = parentRect.right - parentPaddings.right;
-
-    return [new Vec2(x1, y), new Vec2(x2, y)];
-  }
-}
 
 export const DragIndicators: React.FC = observer(function DragIndicators() {
   const dragPreviewRects = viewportState.dragPreviewRects.map((rect) =>
@@ -88,10 +12,9 @@ export const DragIndicators: React.FC = observer(function DragIndicators() {
     viewportState.dropDestination?.parent.computedRect.transform(
       scrollState.documentToViewport
     );
-  const dropIndexIndicator = (
-    viewportState.dropDestination &&
-    dropDestinationIndicator(viewportState.dropDestination)
-  )?.map((p) => p.transform(scrollState.documentToViewport));
+  const dropIndexIndicator = viewportState.dropDestination?.insertionLine?.map(
+    (p) => p.transform(scrollState.documentToViewport)
+  );
 
   return (
     <>

@@ -1,7 +1,8 @@
+import { Vec2 } from "paintvec";
 import { Selectable } from "../models/Selectable";
 
 export interface DropDestination {
   parent: Selectable;
   ref?: Selectable;
-  shouldShowInsertionLine: boolean;
+  insertionLine?: [Vec2, Vec2];
 }

@@ -9,7 +9,6 @@ import { ViewportEvent } from "./ViewportEvent";
 import { DragHandler } from "./DragHandler";
 import { assertNonNull } from "../../../utils/Assert";
 import { resizeWithBoundingBox } from "../../../services/Resize";
-import { snapThreshold } from "../constants";
 
 export class NodeMoveDragHandler implements DragHandler {
   constructor(selectables: Selectable[], initPos: Vec2) {
@@ -61,7 +60,6 @@ export class NodeMoveDragHandler implements DragHandler {
     if (allPrefersAbsolute) {
       viewportState.dropDestination = {
         ...dst,
-        shouldShowInsertionLine: false,
       };
     }
   }
@@ -172,7 +170,6 @@ export function findDropDestination(
   if (!parent) {
     return {
       parent: assertNonNull(projectState.page).selectable,
-      shouldShowInsertionLine: false,
     };
   }
 
@@ -184,12 +181,48 @@ export function findDropDestination(
     const centers = inFlowChildren.map((c) => c.computedRect.center);
     const index = centers.findIndex((c) => c[direction] > event.pos[direction]);
     if (index < 0) {
-      return { parent, shouldShowInsertionLine: true };
+      // append
+      const lastRect = inFlowChildren[inFlowChildren.length - 1].computedRect;
+      return {
+        parent,
+        insertionLine:
+          direction === "x"
+            ? [lastRect.topRight, lastRect.bottomRight]
+            : [lastRect.bottomLeft, lastRect.bottomRight],
+      };
     }
+
+    if (index === 0) {
+      // prepend
+      const firstRect = inFlowChildren[0].computedRect;
+      return {
+        parent,
+        ref: inFlowChildren[0],
+        insertionLine:
+          direction === "x"
+            ? [firstRect.topLeft, firstRect.bottomLeft]
+            : [firstRect.topLeft, firstRect.topRight],
+      };
+    }
+
+    const prev = inFlowChildren[index - 1];
+    const next = inFlowChildren[index];
+    const prevRect = prev.computedRect;
+    const nextRect = next.computedRect;
+
     return {
       parent,
-      ref: inFlowChildren[index],
-      shouldShowInsertionLine: true,
+      ref: next,
+      insertionLine:
+        direction === "x"
+          ? [
+              prevRect.topRight.add(nextRect.topLeft).mulScalar(0.5),
+              prevRect.bottomRight.add(nextRect.bottomLeft).mulScalar(0.5),
+            ]
+          : [
+              prevRect.bottomLeft.add(nextRect.topLeft).mulScalar(0.5),
+              prevRect.bottomRight.add(nextRect.topRight).mulScalar(0.5),
+            ],
     };
   }
 
@@ -201,6 +234,7 @@ export function findDropDestination(
     const rowCount = Math.ceil(inFlowChildren.length / columnCount);
 
     let nextChild: Selectable | undefined;
+    let insertionLine: [Vec2, Vec2] | undefined;
 
     for (let row = 0; row < rowCount; row++) {
       const rowChildren = inFlowChildren.slice(
@@ -221,16 +255,30 @@ export function findDropDestination(
         }
       }
       nextChild = nextChild ?? rowChildren[rowChildren.length - 1].nextSibling;
+      if (nextChild) {
+        insertionLine = [
+          nextChild.computedRect.topLeft,
+          nextChild.computedRect.bottomLeft,
+        ];
+      }
       break;
+    }
+
+    if (!insertionLine) {
+      const lastChild = inFlowChildren[inFlowChildren.length - 1];
+      insertionLine = [
+        lastChild.computedRect.topRight,
+        lastChild.computedRect.bottomRight,
+      ];
     }
 
     return {
       parent,
       ref: nextChild,
-      shouldShowInsertionLine: true,
+      insertionLine: insertionLine,
     };
   }
 
   // no layout
-  return { parent, shouldShowInsertionLine: false };
+  return { parent };
 }
