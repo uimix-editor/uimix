@@ -2463,8 +2463,8 @@
     "1BwgerJkG3mDENSswyqM44": {
       "hidden": false,
       "position": {
-        "x": { "type": "start", "start": -646 },
-        "y": { "type": "start", "start": -557 }
+        "x": { "type": "start", "start": 20 },
+        "y": { "type": "start", "start": 200 }
       },
       "width": { "type": "fixed", "value": 1440 },
       "height": { "type": "fill", "value": 4000 },
@@ -3772,8 +3772,8 @@
     },
     "1BwgpfKvStb5nYD4TzN9UU": {
       "position": {
-        "x": { "type": "start", "start": -646 },
-        "y": { "type": "start", "start": -738 }
+        "x": { "type": "start", "start": 20 },
+        "y": { "type": "start", "start": 20 }
       },
       "width": { "type": "fixed", "value": 1183 },
       "height": { "type": "fixed", "value": 72 },
@@ -3795,9 +3795,9 @@
       "flexDirection": "y",
       "flexAlign": "center",
       "paddingTop": 128,
+      "paddingRight": 24,
       "paddingBottom": 128,
-      "paddingLeft": 24,
-      "paddingRight": 24
+      "paddingLeft": 24
     },
     "1BwgptDUAmUd2Qu61wuk9F": {
       "position": {
@@ -3863,8 +3863,8 @@
     },
     "1Bwmx33dTd9CB4awGhJwUp": {
       "position": {
-        "x": { "type": "start", "start": 824 },
-        "y": { "type": "start", "start": -557 }
+        "x": { "type": "start", "start": 1500 },
+        "y": { "type": "start", "start": 200 }
       },
       "width": { "type": "fixed", "value": 720 }
     },
