@@ -43,10 +43,10 @@ export const StyleJSON = z.object({
 
   // layout
 
-  layout: z.enum(["none", "stack", "grid"]),
-  stackDirection: StackDirection,
-  stackAlign: StackAlign,
-  stackJustify: StackJustify,
+  layout: z.enum(["none", "flex", "grid"]),
+  flexDirection: StackDirection,
+  flexAlign: StackAlign,
+  flexJustify: StackJustify,
   gridRowCount: z.union([z.number(), z.null()]),
   gridColumnCount: z.union([z.number(), z.null()]),
   rowGap: PxValue,

@@ -3,8 +3,8 @@ import { NodeType, StackDirection, StyleJSON } from "@uimix/node-data";
 export function getLayoutType(
   style: StyleJSON
 ): StackDirection | "grid" | undefined {
-  if (style.layout === "stack") {
-    return style.stackDirection;
+  if (style.layout === "flex") {
+    return style.flexDirection;
   }
   if (style.layout === "grid") {
     return "grid";
@@ -91,11 +91,11 @@ export function buildNodeCSS(
 
   if (nodeType === "frame") {
     const layout = style.layout;
-    if (layout === "stack") {
+    if (layout === "flex") {
       cssStyle.display = "flex";
-      cssStyle.flexDirection = style.stackDirection === "x" ? "row" : "column";
+      cssStyle.flexDirection = style.flexDirection === "x" ? "row" : "column";
       cssStyle.alignItems = (() => {
-        switch (style.stackAlign) {
+        switch (style.flexAlign) {
           case "start":
             return "flex-start";
           case "center":
@@ -105,7 +105,7 @@ export function buildNodeCSS(
         }
       })();
       cssStyle.justifyContent = (() => {
-        switch (style.stackJustify) {
+        switch (style.flexJustify) {
           case "start":
             return "flex-start";
           case "center":

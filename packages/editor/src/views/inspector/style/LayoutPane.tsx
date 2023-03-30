@@ -32,8 +32,8 @@ const StackAlignmentEdit = observer(function StackAlignmentEdit({
   className?: string;
 }) {
   const selectables = projectState.selectedSelectables;
-  const align = sameOrMixed(selectables.map((s) => s.style.stackAlign));
-  const justify = sameOrMixed(selectables.map((s) => s.style.stackJustify));
+  const align = sameOrMixed(selectables.map((s) => s.style.flexAlign));
+  const justify = sameOrMixed(selectables.map((s) => s.style.flexJustify));
 
   return (
     <AlignmentEdit
@@ -43,8 +43,8 @@ const StackAlignmentEdit = observer(function StackAlignmentEdit({
       justify={typeof justify === "string" ? justify : undefined}
       onChange={action((align, justify) => {
         for (const selectable of selectables) {
-          selectable.style.stackAlign = align ?? "start";
-          selectable.style.stackJustify = justify ?? "start";
+          selectable.style.flexAlign = align ?? "start";
+          selectable.style.flexJustify = justify ?? "start";
         }
         projectState.undoManager.stopCapturing();
       })}
@@ -83,12 +83,11 @@ export const LayoutPane: React.FC = observer(function StackPane() {
 
   const hasLayout = layoutSelectables.length > 0;
   let direction = sameOrMixed<"x" | "y">(
-    layoutSelectables.map((s) => s.style.stackDirection)
+    layoutSelectables.map((s) => s.style.flexDirection)
   );
   if (typeof direction !== "string") {
     direction = "x";
   }
-  const hasStack = frameSelectables.some((s) => s.style.layout === "stack");
   const hasGrid = frameSelectables.some((s) => s.style.layout === "grid");
 
   if (frameSelectables.length === 0) {
@@ -173,24 +172,24 @@ export const LayoutPane: React.FC = observer(function StackPane() {
                   if (s.style.layout === "grid") {
                     return "grid";
                   }
-                  return s.style.stackDirection;
+                  return s.style.flexDirection;
                 }}
                 set={(s, value) => {
                   if (value === "grid") {
                     s.style.layout = "grid";
                   } else {
-                    s.style.layout = "stack";
-                    s.style.stackDirection = value ?? "x";
+                    s.style.layout = "flex";
+                    s.style.flexDirection = value ?? "x";
                   }
                 }}
                 items={stackDirectionOptions}
               />
               <InspectorToggleGroup
                 get={(s) =>
-                  s.style.stackJustify === "spaceBetween" ? "between" : "packed"
+                  s.style.flexJustify === "spaceBetween" ? "between" : "packed"
                 }
                 set={(s, value) => {
-                  s.style.stackJustify =
+                  s.style.flexJustify =
                     value === "between" ? "spaceBetween" : "start";
                 }}
                 items={[

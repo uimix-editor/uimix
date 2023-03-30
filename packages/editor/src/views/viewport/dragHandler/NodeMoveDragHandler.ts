@@ -175,8 +175,8 @@ export function findDropDestination(
 
   const layout = parent.style.layout;
 
-  if (layout === "stack") {
-    const direction = parent.style.stackDirection;
+  if (layout === "flex") {
+    const direction = parent.style.flexDirection;
     const inFlowChildren = parent.inFlowChildren;
     const centers = inFlowChildren.map((c) => c.computedRect.center);
     const index = centers.findIndex((c) => c[direction] > event.pos[direction]);

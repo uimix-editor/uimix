@@ -118,8 +118,8 @@ const TreeRow: React.FC<{
       default:
       case "frame": {
         const layout = selectable.style.layout;
-        if (layout === "stack") {
-          const dir = selectable.style.stackDirection;
+        if (layout === "flex") {
+          const dir = selectable.style.flexDirection;
           if (dir === "x") {
             return hStackIcon;
           } else {
