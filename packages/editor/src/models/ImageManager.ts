@@ -1,7 +1,7 @@
 import { imageFromURL } from "../utils/Blob";
 import { Project } from "./Project";
 import { ObservableYMap } from "../utils/ObservableYMap";
-import { Image } from "@uimix/node-data";
+import { Image, ImageType } from "@uimix/node-data";
 import { getURLSafeBase64Hash } from "../utils/Hash";
 
 export class ImageManager {
@@ -21,6 +21,7 @@ export class ImageManager {
   ) => Promise<string>;
 
   async insert(blob: Blob): Promise<string> {
+    const type = ImageType.parse(blob.type);
     const buffer = await blob.arrayBuffer();
 
     const hash = await getURLSafeBase64Hash(buffer);
@@ -41,6 +42,7 @@ export class ImageManager {
       width: img.width,
       height: img.height,
       url,
+      type,
     });
 
     return hash;
