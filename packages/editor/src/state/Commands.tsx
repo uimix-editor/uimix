@@ -211,7 +211,7 @@ class Commands {
 
   readonly exportJSONCommand: MenuCommandDef = {
     type: "command",
-    text: "Export JSON...",
+    text: "Export .uimix File",
     onClick: action(() => {
       void exportJSON();
     }),
@@ -219,7 +219,7 @@ class Commands {
 
   readonly importJSONCommand: MenuCommandDef = {
     type: "command",
-    text: "Import JSON...",
+    text: "Import .uimix File...",
     onClick: action(() => {
       void importJSON();
     }),
