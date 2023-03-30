@@ -532,20 +532,20 @@
     "1BwgerJn4m7mFMwSWsQHGv": {
       "type": "text",
       "name": "Revolutionize Your Web Design and Development Workflow",
-      "parent": "1BwgerJkG3mDENSswyqM44",
-      "index": 24
+      "parent": "1Bwmx785ZzeoGUDGmaAt9v",
+      "index": 1
     },
     "1BwgerJnQB4YeKV3d1E8r6": {
       "type": "text",
       "name": "UIMix is a open-source design tool that combines intuitive editing, React integration, AI assistance, and advanced design tokens.",
-      "parent": "1BwgerJkG3mDENSswyqM44",
-      "index": 25
+      "parent": "1Bwmx785ZzeoGUDGmaAt9v",
+      "index": 2
     },
     "1BwgerJnRCZwCo1QLbAznW": {
       "type": "frame",
       "name": "Frame 4",
-      "parent": "1BwgerJkG3mDENSswyqM44",
-      "index": 26
+      "parent": "1Bwmx785ZzeoGUDGmaAt9v",
+      "index": 3
     },
     "1BwgerJnmwJ2QNcNns5zvh": {
       "type": "frame",
@@ -562,8 +562,8 @@
     "1BwgerJoPqu93gMrzcVn4f": {
       "type": "image",
       "name": "image 1",
-      "parent": "1BwgerJkG3mDENSswyqM44",
-      "index": 27
+      "parent": "1Bwmx785ZzeoGUDGmaAt9v",
+      "index": 4
     },
     "1BwgerJobCYAk1AjiYtfZp": {
       "type": "frame",
@@ -934,8 +934,8 @@
     "1BwgptDUAmUd2Qu61wuk9F": {
       "type": "frame",
       "name": "Frame",
-      "parent": "1BwgerJkG3mDENSswyqM44",
-      "index": 1
+      "parent": "1Bwmx785ZzeoGUDGmaAt9v",
+      "index": 0
     },
     "1BwgpuexdsimtqqjohSNMo": {
       "type": "component",
@@ -978,6 +978,18 @@
       "name": "Landing",
       "parent": "1Bvi2ymHPmVHms6RDurmNN",
       "index": 2
+    },
+    "1Bwmx33dTd9CB4awGhJwUp": {
+      "type": "variant",
+      "condition": { "type": "maxWidth", "value": 767 },
+      "parent": "1BwiecLRjsYkerJDYVnoer",
+      "index": 1
+    },
+    "1Bwmx785ZzeoGUDGmaAt9v": {
+      "type": "frame",
+      "name": "Frame",
+      "parent": "1BwgerJkG3mDENSswyqM44",
+      "index": 25
     }
   },
   "styles": {
@@ -2538,11 +2550,12 @@
         "x": { "type": "start", "start": 360 },
         "y": { "type": "start", "start": 173 }
       },
-      "width": { "type": "hug" },
+      "width": { "type": "fill", "value": 717.171875 },
       "height": { "type": "hug" },
       "fills": [{ "type": "solid", "color": "#1F2937" }],
       "opacity": 1,
-      "marginBottom": 51,
+      "marginTop": 96,
+      "marginBottom": 48,
       "textContent": "Revolutionize Your Web Design\nand Development Workflow",
       "fontFamily": "Satoshi",
       "fontWeight": 900,
@@ -2558,11 +2571,11 @@
         "x": { "type": "start", "start": 412 },
         "y": { "type": "start", "start": 354 }
       },
-      "width": { "type": "hug" },
+      "width": { "type": "fill", "value": 624.1796875 },
       "height": { "type": "hug" },
       "fills": [{ "type": "solid", "color": "#6b7280" }],
       "opacity": 1,
-      "marginBottom": 51,
+      "marginBottom": 48,
       "textContent": "UIMix is a open-source design tool that combines intuitive editing,\nReact integration, AI assistance, and advanced design tokens.",
       "fontFamily": "Inter",
       "fontWeight": 400,
@@ -2587,7 +2600,7 @@
       "opacity": 1,
       "overflowHidden": false,
       "shadows": [],
-      "marginBottom": 68,
+      "marginBottom": 64,
       "layout": "flex",
       "flexDirection": "x",
       "flexAlign": "start",
@@ -2646,8 +2659,8 @@
         "x": { "type": "start", "start": 360 },
         "y": { "type": "start", "start": 581 }
       },
-      "width": { "type": "fixed", "value": 720 },
-      "height": { "type": "fixed", "value": 500 },
+      "width": { "type": "fill", "max": 720 },
+      "height": { "type": "hug" },
       "topLeftRadius": 10,
       "topRightRadius": 10,
       "bottomRightRadius": 10,
@@ -3208,7 +3221,7 @@
         "x": { "type": "start", "start": 594 },
         "y": { "type": "start", "start": 101 }
       },
-      "width": { "type": "hug" },
+      "width": { "type": "fill", "value": 249.8437499999999 },
       "height": { "type": "hug" },
       "fills": [{ "type": "solid", "color": "#1f2937" }],
       "opacity": 1,
@@ -3219,7 +3232,7 @@
       "fontSize": 40,
       "lineHeight": [150, "%"],
       "letterSpacing": [0, "%"],
-      "textHorizontalAlign": "start",
+      "textHorizontalAlign": "center",
       "textVerticalAlign": "start"
     },
     "1BwgerJukRCW5iWLUG3Zaw": {
@@ -3228,7 +3241,7 @@
         "x": { "type": "start", "start": 589 },
         "y": { "type": "start", "start": 525 }
       },
-      "width": { "type": "hug" },
+      "width": { "type": "fill", "value": 258.6405818370165 },
       "height": { "type": "hug" },
       "fills": [{ "type": "solid", "color": "#1f2937" }],
       "opacity": 1,
@@ -3239,7 +3252,7 @@
       "fontSize": 40,
       "lineHeight": [150, "%"],
       "letterSpacing": [0, "%"],
-      "textHorizontalAlign": "start",
+      "textHorizontalAlign": "center",
       "textVerticalAlign": "start"
     },
     "1BwgerJut8PPT9Brf1RLyA": {
@@ -3248,7 +3261,7 @@
         "x": { "type": "start", "start": 421 },
         "y": { "type": "start", "start": 187 }
       },
-      "width": { "type": "fixed", "value": 596 },
+      "width": { "type": "fill", "value": 596 },
       "height": { "type": "hug" },
       "fills": [{ "type": "solid", "color": "#4b5563" }],
       "opacity": 1,
@@ -3318,7 +3331,7 @@
         "x": { "type": "start", "start": 118 },
         "y": { "type": "start", "start": 662 }
       },
-      "width": { "type": "hug" },
+      "width": { "type": "fill", "value": 188.765625 },
       "height": { "type": "hug" },
       "fills": [{ "type": "solid", "color": "#1f2937" }],
       "opacity": 1,
@@ -3338,7 +3351,7 @@
         "x": { "type": "start", "start": 561 },
         "y": { "type": "start", "start": 662 }
       },
-      "width": { "type": "hug" },
+      "width": { "type": "fill", "value": 188.5 },
       "height": { "type": "hug" },
       "fills": [{ "type": "solid", "color": "#1f2937" }],
       "opacity": 1,
@@ -3358,7 +3371,7 @@
         "x": { "type": "start", "start": 990 },
         "y": { "type": "start", "start": 662 }
       },
-      "width": { "type": "hug" },
+      "width": { "type": "fill", "value": 226.1875 },
       "height": { "type": "hug" },
       "fills": [{ "type": "solid", "color": "#1f2937" }],
       "opacity": 1,
@@ -3378,7 +3391,7 @@
         "x": { "type": "start", "start": 110 },
         "y": { "type": "start", "start": 718 }
       },
-      "width": { "type": "fixed", "value": 360 },
+      "width": { "type": "fill", "value": 360 },
       "height": { "type": "hug" },
       "fills": [{ "type": "solid", "color": "#4b5563" }],
       "opacity": 1,
@@ -3397,7 +3410,7 @@
         "x": { "type": "start", "start": 553 },
         "y": { "type": "start", "start": 712 }
       },
-      "width": { "type": "fixed", "value": 360 },
+      "width": { "type": "fill", "value": 360 },
       "height": { "type": "hug" },
       "fills": [{ "type": "solid", "color": "#4b5563" }],
       "opacity": 1,
@@ -3416,7 +3429,7 @@
         "x": { "type": "start", "start": 988 },
         "y": { "type": "start", "start": 712 }
       },
-      "width": { "type": "fixed", "value": 360 },
+      "width": { "type": "fill", "value": 360 },
       "height": { "type": "hug" },
       "fills": [{ "type": "solid", "color": "#4b5563" }],
       "opacity": 1,
@@ -3782,16 +3795,19 @@
       "flexDirection": "y",
       "flexAlign": "center",
       "paddingTop": 128,
-      "paddingBottom": 128
+      "paddingBottom": 128,
+      "paddingLeft": 24,
+      "paddingRight": 24
     },
     "1BwgptDUAmUd2Qu61wuk9F": {
       "position": {
         "x": { "type": "both", "start": 0, "end": 0 },
-        "y": { "type": "start", "start": 45 }
+        "y": { "type": "start", "start": 0 }
       },
       "absolute": true,
       "width": { "type": "fill", "value": 750 },
       "height": { "type": "hug" },
+      "marginBottom": -422,
       "layout": "flex",
       "flexJustify": "center"
     },
@@ -3801,7 +3817,6 @@
         "y": { "type": "start", "start": 0 }
       },
       "width": { "type": "fill", "value": 1183 },
-      "marginBottom": 101,
       "mainComponent": "1BwgpuexdsimtqqjohSNMo"
     },
     "1BwiLqwtpS4c6pUKuE1d9G": {
@@ -3809,8 +3824,8 @@
         "x": { "type": "start", "start": 110 },
         "y": { "type": "start", "start": 662 }
       },
-      "width": { "type": "fixed", "value": 360 },
-      "height": { "type": "fixed", "value": 176 },
+      "width": { "type": "fill", "value": 360 },
+      "height": { "type": "hug" },
       "layout": "flex",
       "flexDirection": "y"
     },
@@ -3819,8 +3834,8 @@
         "x": { "type": "start", "start": 553 },
         "y": { "type": "start", "start": 662 }
       },
-      "width": { "type": "fixed", "value": 360 },
-      "height": { "type": "fixed", "value": 194 },
+      "width": { "type": "fill", "value": 360 },
+      "height": { "type": "hug" },
       "layout": "flex",
       "flexDirection": "y"
     },
@@ -3829,8 +3844,8 @@
         "x": { "type": "start", "start": 988 },
         "y": { "type": "start", "start": 662 }
       },
-      "width": { "type": "fixed", "value": 360 },
-      "height": { "type": "fixed", "value": 218 },
+      "width": { "type": "fill", "value": 360 },
+      "height": { "type": "hug" },
       "layout": "flex",
       "flexDirection": "y"
     },
@@ -3839,11 +3854,34 @@
         "x": { "type": "start", "start": 110 },
         "y": { "type": "start", "start": 662 }
       },
-      "width": { "type": "fill", "value": 1238 },
+      "width": { "type": "fill", "max": 1280 },
       "height": { "type": "hug" },
       "layout": "flex",
-      "flexJustify": "center"
-    }
+      "flexJustify": "center",
+      "rowGap": 24,
+      "columnGap": 24
+    },
+    "1Bwmx33dTd9CB4awGhJwUp": {
+      "position": {
+        "x": { "type": "start", "start": 824 },
+        "y": { "type": "start", "start": -557 }
+      },
+      "width": { "type": "fixed", "value": 720 }
+    },
+    "1Bwmx785ZzeoGUDGmaAt9v": {
+      "position": {
+        "x": { "type": "start", "start": 0 },
+        "y": { "type": "start", "start": 45 }
+      },
+      "width": { "type": "fill", "value": 1440 },
+      "height": { "type": "hug" },
+      "layout": "flex",
+      "flexDirection": "y",
+      "flexAlign": "center",
+      "paddingRight": 24,
+      "paddingLeft": 24
+    },
+    "1Bwmx33dTd9CB4awGhJwUp:1BwgerJosyL9kr1UU3RHQx": { "gridColumnCount": 1 }
   },
   "componentURLs": [
     "https://cdn.jsdelivr.net/gh/uimix-editor/uimix@ba0157d5/packages/sandbox/dist-components/components.js",
