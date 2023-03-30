@@ -484,6 +484,7 @@ export async function getImageStyle(
     width: size.width,
     height: size.height,
     url: dataURL,
+    type: dataURL.startsWith("data:image/jpeg") ? "image/jpeg" : "image/png",
   });
 
   return {
