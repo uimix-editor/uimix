@@ -6,6 +6,7 @@ export const Image = z.object({
   width: z.number(),
   height: z.number(),
   url: z.string(),
+  type: z.enum(["image/png", "image/jpeg"]),
 });
 
 export type Image = z.infer<typeof Image>;
