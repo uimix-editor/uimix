@@ -216,12 +216,12 @@ export function findDropDestination(
       insertionLine:
         direction === "x"
           ? [
-              prevRect.topRight.add(nextRect.topLeft).mulScalar(0.5),
-              prevRect.bottomRight.add(nextRect.bottomLeft).mulScalar(0.5),
+              prevRect.topRight.add(nextRect.topLeft).mul(0.5),
+              prevRect.bottomRight.add(nextRect.bottomLeft).mul(0.5),
             ]
           : [
-              prevRect.bottomLeft.add(nextRect.topLeft).mulScalar(0.5),
-              prevRect.bottomRight.add(nextRect.topRight).mulScalar(0.5),
+              prevRect.bottomLeft.add(nextRect.topLeft).mul(0.5),
+              prevRect.bottomRight.add(nextRect.topRight).mul(0.5),
             ],
     };
   }
