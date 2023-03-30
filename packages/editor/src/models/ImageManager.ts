@@ -3,6 +3,8 @@ import { Project } from "./Project";
 import { ObservableYMap } from "../utils/ObservableYMap";
 import { Image, ImageType } from "@uimix/node-data";
 import { getURLSafeBase64Hash } from "../utils/Hash";
+import { Buffer } from "buffer";
+import { compact } from "lodash-es";
 
 export class ImageManager {
   constructor(project: Project) {
@@ -20,14 +22,15 @@ export class ImageManager {
     data: Uint8Array
   ) => Promise<string>;
 
-  async insert(blob: Blob): Promise<string> {
+  async insert(blob: Blob): Promise<[string, Image]> {
     const type = ImageType.parse(blob.type);
     const buffer = await blob.arrayBuffer();
 
     const hash = await getURLSafeBase64Hash(buffer);
 
-    if (this.images.has(hash)) {
-      return hash;
+    const existing = this.images.get(hash);
+    if (existing) {
+      return [hash, existing];
     }
 
     const uploadImage = this.uploadImage;
@@ -36,16 +39,17 @@ export class ImageManager {
     }
 
     const url = await uploadImage(hash, blob.type, new Uint8Array(buffer));
-    const img = await imageFromURL(url);
+    const imgElem = await imageFromURL(url);
 
-    this.images.set(hash, {
-      width: img.width,
-      height: img.height,
+    const image: Image = {
+      width: imgElem.width,
+      height: imgElem.height,
       url,
       type,
-    });
+    };
 
-    return hash;
+    this.images.set(hash, image);
+    return [hash, image];
   }
 
   get(hashBase64: string): Image | undefined {
@@ -54,5 +58,28 @@ export class ImageManager {
 
   has(hashBase64: string): boolean {
     return this.images.has(hashBase64);
+  }
+
+  async uploadImages(
+    images: Record<string, Image>
+  ): Promise<Record<string, Image>> {
+    const uploadImage = this.uploadImage;
+    if (!uploadImage) {
+      throw new Error("No uploadImage function set");
+    }
+
+    const entries = compact(
+      await Promise.all(
+        Object.entries(images).map(async ([hash, image]) => {
+          if (this.has(hash)) {
+            return;
+          }
+          const blob = await fetch(image.url).then((res) => res.blob());
+          return await this.insert(blob);
+        })
+      )
+    );
+
+    return Object.fromEntries(entries);
   }
 }
