@@ -25,14 +25,14 @@ export function StyleInspector(): JSX.Element {
       </div>
       <div
         className="
-      bg-purple-500 text-white p-3 font-medium flex items-center
+      bg-blue-500 text-white p-3 font-medium flex items-center
       "
       >
         Button_1 › Hover
         <button className="border bg-white p-1 rounded-full ml-auto">
           <Icon
             icon="material-symbols:close"
-            className="font-xs text-purple-500"
+            className="font-xs text-blue-500"
           />
         </button>
       </div>
