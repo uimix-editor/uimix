@@ -10,6 +10,8 @@ import { Selectable } from "../models/Selectable";
 import { Node } from "../models/Node";
 import { getIncrementalUniqueName } from "../utils/Name";
 import { generateExampleNodes } from "../models/generateExampleNodes";
+import demoFile from "../../../sandbox/src/uimix/landing.uimix?raw";
+import { reassignNewIDs } from "../models/ProjectJSON";
 
 export class ProjectState {
   constructor() {
@@ -69,6 +71,15 @@ export class ProjectState {
     } else {
       this.pageID = pages[0].id;
     }
+    this.undoManager.clear();
+  }
+
+  loadDemoFile() {
+    let demoProject = ProjectJSON.parse(JSON.parse(demoFile));
+    demoProject = reassignNewIDs(demoProject);
+
+    this.project.loadJSON(demoProject);
+    this.pageID = this.project.pages.all[0].id;
     this.undoManager.clear();
   }
 

@@ -9,6 +9,7 @@ if (window.parent !== window) {
   new IFrameDataConnector(projectState);
 } else {
   projectState.setupInitContent();
+  projectState.loadDemoFile();
 }
 
 ReactDOM.createRoot(document.getElementById("root") as HTMLElement).render(
