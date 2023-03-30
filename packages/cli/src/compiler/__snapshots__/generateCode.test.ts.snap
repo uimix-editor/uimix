@@ -37,7 +37,11 @@ box-sizing: border-box;
   background: #3B82F6;
 }
 @media (max-width: 767px) {
-.uimix-1Bvi2z3UaHFmaikKtfcmGX {
+.uimix-1Bvi2z3UPfi6W3L8nDt5VA {
+  padding-left: 4px;
+  padding-right: 4px;
+  padding-top: 2px;
+  padding-bottom: 2px;
 }
 }
 .uimix-1Bvi2z3TfkSpYXW29daTN8 {
@@ -161,7 +165,8 @@ box-sizing: border-box;
   color: #FFFFFF;
 }
 @media (max-width: 767px) {
-.uimix-1Bvi2z3UaHFmaikKtfcmGX-1Bvi2z3UGTM64JtRT7Qc1S {
+.uimix-1Bvi2z3UGTM64JtRT7Qc1S {
+  font-size: 14px;
 }
 }
 .uimix-1Bvi2z3TpKXtTJLTRPTEd8 {

@@ -197,9 +197,13 @@
       "position": {
         "x": { "type": "start", "start": 350 },
         "y": { "type": "start", "start": 400 }
-      }
+      },
+      "paddingLeft": 4,
+      "paddingRight": 4,
+      "paddingTop": 2,
+      "paddingBottom": 2
     },
-    "1Bvi2z3UaHFmaikKtfcmGX:1Bvi2z3UGTM64JtRT7Qc1S": {},
+    "1Bvi2z3UaHFmaikKtfcmGX:1Bvi2z3UGTM64JtRT7Qc1S": { "fontSize": 14 },
     "1Bvi2zJALza4DrqmNaGYAk": {},
     "1Bvi2z3TfkSpYXW29daTN8": {
       "position": {

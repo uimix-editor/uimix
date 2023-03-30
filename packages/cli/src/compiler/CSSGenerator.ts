@@ -107,7 +107,10 @@ export class CSSGenerator {
 
         const condition = variant.condition;
         if (condition?.type === "maxWidth") {
-          const selector = ".uimix-" + selectable.idPath.join("-");
+          const selector =
+            selectable.nodePath.length === 1
+              ? `.uimix-${mainComponent.rootNode.id}`
+              : `.uimix-${selectable.idPath.slice(1).join("-")}`;
 
           results.push(
             `@media (max-width: ${condition.value}px) {`,

@@ -360,6 +360,10 @@ exports[`selectablesToProjectJSON > works 1`] = `
       ],
     },
     "1Bvi2z3UaHFmaikKtfcmGX": {
+      "paddingBottom": 2,
+      "paddingLeft": 4,
+      "paddingRight": 4,
+      "paddingTop": 2,
       "position": {
         "x": {
           "start": 350,
@@ -371,7 +375,9 @@ exports[`selectablesToProjectJSON > works 1`] = `
         },
       },
     },
-    "1Bvi2z3UaHFmaikKtfcmGX:1Bvi2z3UGTM64JtRT7Qc1S": {},
+    "1Bvi2z3UaHFmaikKtfcmGX:1Bvi2z3UGTM64JtRT7Qc1S": {
+      "fontSize": 14,
+    },
     "1Bvi2z3UrU9VkawwAteXs8": {
       "fills": [
         {
