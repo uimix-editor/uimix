@@ -90,7 +90,8 @@ export function buildNodeCSS(
   cssStyle.overflow = style.overflowHidden ? "hidden" : "visible";
 
   if (nodeType === "frame") {
-    if (style.layout === "stack") {
+    const layout = style.layout;
+    if (layout === "stack") {
       cssStyle.display = "flex";
       cssStyle.flexDirection = style.stackDirection === "x" ? "row" : "column";
       cssStyle.alignItems = (() => {
@@ -115,7 +116,7 @@ export function buildNodeCSS(
             return "space-between";
         }
       })();
-    } else {
+    } else if (layout === "grid") {
       cssStyle.display = "grid";
       const { gridRowCount, gridColumnCount } = style;
       if (gridRowCount !== null) {
@@ -124,6 +125,8 @@ export function buildNodeCSS(
       if (gridColumnCount !== null) {
         cssStyle.gridTemplateColumns = `repeat(${gridColumnCount}, 1fr)`;
       }
+    } else {
+      cssStyle.display = "block";
     }
     cssStyle.gap = `${style.gap}px`;
     cssStyle.paddingLeft = `${style.paddingLeft}px`;
