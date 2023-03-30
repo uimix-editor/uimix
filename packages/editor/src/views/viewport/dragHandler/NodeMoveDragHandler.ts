@@ -1,4 +1,4 @@
-import { Rect, Vec2 } from "paintvec";
+import { Rect, Segment, Vec2 } from "paintvec";
 import { Selectable } from "../../../models/Selectable";
 import { projectState } from "../../../state/ProjectState";
 import { DropDestination } from "../../../state/DropDestination";
@@ -185,10 +185,7 @@ export function findDropDestination(
       const lastRect = inFlowChildren[inFlowChildren.length - 1].computedRect;
       return {
         parent,
-        insertionLine:
-          direction === "x"
-            ? [lastRect.topRight, lastRect.bottomRight]
-            : [lastRect.bottomLeft, lastRect.bottomRight],
+        insertionLine: lastRect.endLines[direction],
       };
     }
 
@@ -198,10 +195,7 @@ export function findDropDestination(
       return {
         parent,
         ref: inFlowChildren[0],
-        insertionLine:
-          direction === "x"
-            ? [firstRect.topLeft, firstRect.bottomLeft]
-            : [firstRect.topLeft, firstRect.topRight],
+        insertionLine: firstRect.startLines[direction],
       };
     }
 
@@ -213,16 +207,10 @@ export function findDropDestination(
     return {
       parent,
       ref: next,
-      insertionLine:
-        direction === "x"
-          ? [
-              prevRect.topRight.add(nextRect.topLeft).mul(0.5),
-              prevRect.bottomRight.add(nextRect.bottomLeft).mul(0.5),
-            ]
-          : [
-              prevRect.bottomLeft.add(nextRect.topLeft).mul(0.5),
-              prevRect.bottomRight.add(nextRect.topRight).mul(0.5),
-            ],
+      insertionLine: prevRect.endLines[direction].mix(
+        nextRect.startLines[direction],
+        0.5
+      ),
     };
   }
 
@@ -234,7 +222,7 @@ export function findDropDestination(
     const rowCount = Math.ceil(inFlowChildren.length / columnCount);
 
     let nextChild: Selectable | undefined;
-    let insertionLine: [Vec2, Vec2] | undefined;
+    let insertionLine: Segment | undefined;
 
     for (let row = 0; row < rowCount; row++) {
       const rowChildren = inFlowChildren.slice(
@@ -256,20 +244,14 @@ export function findDropDestination(
       }
       nextChild = nextChild ?? rowChildren[rowChildren.length - 1].nextSibling;
       if (nextChild) {
-        insertionLine = [
-          nextChild.computedRect.topLeft,
-          nextChild.computedRect.bottomLeft,
-        ];
+        insertionLine = nextChild.computedRect.leftLine;
       }
       break;
     }
 
     if (!insertionLine) {
       const lastChild = inFlowChildren[inFlowChildren.length - 1];
-      insertionLine = [
-        lastChild.computedRect.topRight,
-        lastChild.computedRect.bottomRight,
-      ];
+      insertionLine = lastChild.computedRect.rightLine;
     }
 
     return {

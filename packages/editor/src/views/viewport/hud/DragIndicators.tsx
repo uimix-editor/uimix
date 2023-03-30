@@ -12,19 +12,17 @@ export const DragIndicators: React.FC = observer(function DragIndicators() {
     viewportState.dropDestination?.parent.computedRect.transform(
       scrollState.documentToViewport
     );
-  const dropIndexIndicator = viewportState.dropDestination?.insertionLine?.map(
-    (p) => p.transform(scrollState.documentToViewport)
-  );
+  const dropIndexIndicator =
+    viewportState.dropDestination?.insertionLine?.transform(
+      scrollState.documentToViewport
+    );
 
   return (
     <>
       {dragPreviewRects.map((rect, i) => (
         <rect
           key={i}
-          x={rect.left}
-          y={rect.top}
-          width={rect.width}
-          height={rect.height}
+          {...rect.toSVGRectProps()}
           fill="none"
           strokeDasharray="2 2"
           stroke={colors.active}
@@ -32,10 +30,7 @@ export const DragIndicators: React.FC = observer(function DragIndicators() {
       ))}
       {dropTargetPreviewRect && (
         <rect
-          x={dropTargetPreviewRect.left}
-          y={dropTargetPreviewRect.top}
-          width={dropTargetPreviewRect.width}
-          height={dropTargetPreviewRect.height}
+          {...dropTargetPreviewRect.toSVGRectProps()}
           fill="none"
           strokeDasharray="2 2"
           stroke={colors.active}
@@ -44,10 +39,7 @@ export const DragIndicators: React.FC = observer(function DragIndicators() {
       )}
       {dropIndexIndicator && (
         <line
-          x1={dropIndexIndicator[0].x}
-          y1={dropIndexIndicator[0].y}
-          x2={dropIndexIndicator[1].x}
-          y2={dropIndexIndicator[1].y}
+          {...dropIndexIndicator.toSVGLineProps()}
           stroke={colors.active}
           strokeWidth={2}
         />
