@@ -116,6 +116,8 @@ export function buildNodeCSS(
             return "space-between";
         }
       })();
+      cssStyle.rowGap = `${style.rowGap}px`;
+      cssStyle.columnGap = `${style.columnGap}px`;
     } else if (layout === "grid") {
       cssStyle.display = "grid";
       const { gridRowCount, gridColumnCount } = style;
@@ -125,10 +127,11 @@ export function buildNodeCSS(
       if (gridColumnCount !== null) {
         cssStyle.gridTemplateColumns = `repeat(${gridColumnCount}, 1fr)`;
       }
+      cssStyle.rowGap = `${style.rowGap}px`;
+      cssStyle.columnGap = `${style.columnGap}px`;
     } else {
       cssStyle.display = "block";
     }
-    cssStyle.gap = `${style.gap}px`;
     cssStyle.paddingLeft = `${style.paddingLeft}px`;
     cssStyle.paddingRight = `${style.paddingRight}px`;
     cssStyle.paddingTop = `${style.paddingTop}px`;

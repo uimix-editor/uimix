@@ -34,7 +34,7 @@ export function generateExampleNodes(page: Node) {
     stackStyle.height = { type: "hug" };
     stackStyle.fills = [{ type: "solid", color: Color.white.toHex() }];
     stackStyle.layout = "stack";
-    stackStyle.gap = 10;
+    stackStyle.rowGap = stackStyle.columnGap = 10;
     stackStyle.paddingTop = 10;
     stackStyle.paddingRight = 20;
     stackStyle.paddingBottom = 30;

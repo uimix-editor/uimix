@@ -186,13 +186,13 @@ exports[`selectablesToProjectJSON > works 1`] = `
   },
   "styles": {
     "1Bvi2z3TfkSpYXW29daTN8": {
+      "columnGap": 10,
       "fills": [
         {
           "color": "#FFFFFF",
           "type": "solid",
         },
       ],
-      "gap": 10,
       "height": {
         "type": "hug",
       },
@@ -211,6 +211,7 @@ exports[`selectablesToProjectJSON > works 1`] = `
           "type": "start",
         },
       },
+      "rowGap": 10,
       "width": {
         "type": "hug",
       },
@@ -577,13 +578,13 @@ exports[`selectablesToProjectJSON > works 1`] = `
     "1BwWRgjHrhVbbuTV7m36kM": {
       "bottomLeftRadius": 20,
       "bottomRightRadius": 20,
+      "columnGap": 20,
       "fills": [
         {
           "color": "#ffffff",
           "type": "solid",
         },
       ],
-      "gap": 20,
       "height": {
         "type": "hug",
       },
@@ -605,6 +606,7 @@ exports[`selectablesToProjectJSON > works 1`] = `
           "type": "start",
         },
       },
+      "rowGap": 20,
       "stackAlign": "start",
       "stackDirection": "y",
       "stackJustify": "start",
@@ -642,13 +644,13 @@ exports[`selectablesToProjectJSON > works 1`] = `
     "1BwWRgjHyEzJjsehRefVBE": {
       "bottomLeftRadius": 8,
       "bottomRightRadius": 8,
+      "columnGap": 10,
       "fills": [
         {
           "color": "#f0f9ff",
           "type": "solid",
         },
       ],
-      "gap": 10,
       "height": {
         "type": "hug",
       },
@@ -660,6 +662,7 @@ exports[`selectablesToProjectJSON > works 1`] = `
       "paddingLeft": 3,
       "paddingRight": 3,
       "paddingTop": 3,
+      "rowGap": 10,
       "stackAlign": "start",
       "stackDirection": "x",
       "stackJustify": "start",

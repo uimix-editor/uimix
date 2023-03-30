@@ -322,7 +322,8 @@ function getLayoutStylePartial(
 
   style.layout = "stack";
   style.stackDirection = node.layoutMode === "VERTICAL" ? "y" : "x";
-  style.gap = node.itemSpacing;
+  style.rowGap = node.itemSpacing;
+  style.columnGap = node.itemSpacing;
   if (
     node.strokesIncludedInLayout ||
     node.strokes.filter((s) => s.visible).length === 0

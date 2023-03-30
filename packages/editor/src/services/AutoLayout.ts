@@ -43,7 +43,8 @@ export function removeLayout(selectable: Selectable): void {
   }
 
   selectable.style.layout = "none";
-  selectable.style.gap = 0;
+  selectable.style.rowGap = 0;
+  selectable.style.columnGap = 0;
   selectable.style.paddingTop = 0;
   selectable.style.paddingRight = 0;
   selectable.style.paddingBottom = 0;
@@ -296,7 +297,8 @@ export function marginsToGap(frameSelectable: Selectable) {
   }
   const gap = Math.round(sum(margins) / margins.length);
 
-  frameSelectable.style.gap = gap;
+  frameSelectable.style.rowGap = gap;
+  frameSelectable.style.columnGap = gap;
   if (direction === "x") {
     frameSelectable.style.paddingLeft += children[0].style.marginLeft;
     frameSelectable.style.paddingRight +=
@@ -330,11 +332,14 @@ export function gapToMargins(frameSelectable: Selectable) {
     return;
   }
 
-  const gap = frameSelectable.style.gap;
+  const gapKey =
+    frameSelectable.style.stackDirection === "x" ? "columnGap" : "rowGap";
+  const gap = frameSelectable.style[gapKey];
   for (let i = 1; i < children.length; ++i) {
     const direction = frameSelectable.style.stackDirection;
     children[i - 1].style[direction === "x" ? "marginRight" : "marginBottom"] +=
       gap;
   }
-  frameSelectable.style.gap = 0;
+  frameSelectable.style.rowGap = 0;
+  frameSelectable.style.columnGap = 0;
 }

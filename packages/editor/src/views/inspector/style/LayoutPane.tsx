@@ -95,7 +95,9 @@ export const LayoutPane: React.FC = observer(function StackPane() {
     return null;
   }
 
-  const hasGap = layoutSelectables.some((s) => s.style.gap !== 0);
+  const hasGap = layoutSelectables.some(
+    (s) => s.style.rowGap !== 0 || s.style.columnGap !== 0
+  );
 
   return (
     <InspectorPane>
@@ -213,9 +215,10 @@ export const LayoutPane: React.FC = observer(function StackPane() {
               <InspectorNumberInput
                 icon={spaceBarIcon}
                 tooltip="Gap"
-                get={(s) => ({ value: s.style.gap })}
+                get={(s) => ({ value: s.style.rowGap })} // TODO: separate row/column gap
                 set={(s, value) => {
-                  s.style.gap = value?.value ?? 0;
+                  s.style.rowGap = value?.value ?? 0;
+                  s.style.columnGap = value?.value ?? 0;
                 }}
               />
             </div>
