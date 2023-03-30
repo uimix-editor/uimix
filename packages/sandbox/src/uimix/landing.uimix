@@ -667,17 +667,11 @@
       "parent": "1BwgerJrCZPm2tspU8eWXf",
       "index": 2
     },
-    "1BwgerJsMLwBAEsy38m9tF": {
-      "type": "frame",
-      "name": "Frame 182",
-      "parent": "1BwgerJobCYAk1AjiYtfZp",
-      "index": 1
-    },
     "1BwgerJsJFbW9zdFQxTRrU": {
       "type": "frame",
       "name": "Frame 16",
-      "parent": "1BwgerJsMLwBAEsy38m9tF",
-      "index": 0
+      "parent": "1BwgerJosyL9kr1UU3RHQx",
+      "index": 3
     },
     "1BwgerJsPo3uLRGqfxUTzi": {
       "type": "frame",
@@ -706,8 +700,8 @@
     "1BwgerJtFFjTqk9Qj26G4K": {
       "type": "frame",
       "name": "Frame 17",
-      "parent": "1BwgerJsMLwBAEsy38m9tF",
-      "index": 1
+      "parent": "1BwgerJosyL9kr1UU3RHQx",
+      "index": 4
     },
     "1BwgerJtLqWs8RaDdqFuiX": {
       "type": "frame",
@@ -736,8 +730,8 @@
     "1BwgerJtsrzzL2GD3tEtaM": {
       "type": "frame",
       "name": "Frame 18",
-      "parent": "1BwgerJsMLwBAEsy38m9tF",
-      "index": 2
+      "parent": "1BwgerJosyL9kr1UU3RHQx",
+      "index": 5
     },
     "1BwgerJu2GLb5j3oNi9ect": {
       "type": "frame",
@@ -2677,7 +2671,7 @@
       "opacity": 1,
       "overflowHidden": false,
       "shadows": [],
-      "layout": "stack",
+      "layout": "grid",
       "stackDirection": "x",
       "stackAlign": "start",
       "stackJustify": "start",
@@ -2685,12 +2679,13 @@
       "paddingTop": 0,
       "paddingRight": 0,
       "paddingBottom": 0,
-      "paddingLeft": 0
+      "paddingLeft": 0,
+      "gridColumnCount": 3
     },
     "1BwgerJp7Xmj8gQf4uzazy": {
       "hidden": false,
-      "width": { "type": "fixed", "value": 400 },
-      "height": { "type": "hug" },
+      "width": { "type": "fill", "value": 400 },
+      "height": { "type": "fill", "value": 238 },
       "topLeftRadius": 20,
       "topRightRadius": 20,
       "bottomRightRadius": 20,
@@ -2768,8 +2763,8 @@
     },
     "1BwgerJq26ZFYWnzpbEn7W": {
       "hidden": false,
-      "width": { "type": "fixed", "value": 400 },
-      "height": { "type": "hug" },
+      "width": { "type": "fill", "value": 400 },
+      "height": { "type": "fill", "value": 214 },
       "topLeftRadius": 20,
       "topRightRadius": 20,
       "bottomRightRadius": 20,
@@ -2847,8 +2842,8 @@
     },
     "1BwgerJrCZPm2tspU8eWXf": {
       "hidden": false,
-      "width": { "type": "fixed", "value": 400 },
-      "height": { "type": "hug" },
+      "width": { "type": "fill", "value": 400 },
+      "height": { "type": "fill", "value": 214 },
       "topLeftRadius": 20,
       "topRightRadius": 20,
       "bottomRightRadius": 20,
@@ -2924,28 +2919,10 @@
       "textHorizontalAlign": "start",
       "textVerticalAlign": "start"
     },
-    "1BwgerJsMLwBAEsy38m9tF": {
-      "hidden": false,
-      "width": { "type": "fill", "max": 1200, "value": 1248 },
-      "height": { "type": "hug" },
-      "topLeftRadius": 0,
-      "topRightRadius": 0,
-      "bottomRightRadius": 0,
-      "bottomLeftRadius": 0,
-      "opacity": 1,
-      "overflowHidden": false,
-      "shadows": [],
-      "layout": "stack",
-      "gap": 24,
-      "paddingTop": 0,
-      "paddingRight": 0,
-      "paddingBottom": 0,
-      "paddingLeft": 0
-    },
     "1BwgerJsJFbW9zdFQxTRrU": {
       "hidden": false,
-      "width": { "type": "fixed", "value": 400 },
-      "height": { "type": "hug" },
+      "width": { "type": "fill", "value": 400 },
+      "height": { "type": "fill", "value": 238 },
       "topLeftRadius": 20,
       "topRightRadius": 20,
       "bottomRightRadius": 20,
@@ -3023,8 +3000,8 @@
     },
     "1BwgerJtFFjTqk9Qj26G4K": {
       "hidden": false,
-      "width": { "type": "fixed", "value": 400 },
-      "height": { "type": "hug" },
+      "width": { "type": "fill", "value": 400 },
+      "height": { "type": "fill", "value": 238 },
       "topLeftRadius": 20,
       "topRightRadius": 20,
       "bottomRightRadius": 20,
@@ -3102,8 +3079,8 @@
     },
     "1BwgerJtsrzzL2GD3tEtaM": {
       "hidden": false,
-      "width": { "type": "fixed", "value": 400 },
-      "height": { "type": "hug" },
+      "width": { "type": "fill", "value": 400 },
+      "height": { "type": "fill", "value": 238 },
       "topLeftRadius": 20,
       "topRightRadius": 20,
       "bottomRightRadius": 20,
