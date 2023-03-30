@@ -3449,7 +3449,7 @@
         "y": { "type": "start", "start": 2728 }
       },
       "width": { "type": "fill", "value": 1440 },
-      "height": { "type": "fixed", "value": 366 },
+      "height": { "type": "hug" },
       "topLeftRadius": 0,
       "topRightRadius": 0,
       "bottomRightRadius": 0,
@@ -3461,7 +3461,7 @@
       "flexDirection": "y",
       "flexAlign": "center",
       "paddingTop": 96,
-      "paddingBottom": 128
+      "paddingBottom": 96
     },
     "1BwgerJwRGjP7RKcby4xug": {
       "hidden": false,
@@ -3487,18 +3487,18 @@
         "x": { "type": "start", "start": 248 },
         "y": { "type": "start", "start": 96 }
       },
-      "width": { "type": "hug" },
+      "width": { "type": "fill", "value": 966.3672306629835 },
       "height": { "type": "hug" },
       "fills": [{ "type": "solid", "color": "#ffffff" }],
       "opacity": 1,
-      "marginBottom": 49,
+      "marginBottom": 48,
       "textContent": "Ready to revolutionize your web design workflow?",
       "fontFamily": "Satoshi",
       "fontWeight": 900,
       "fontSize": 40,
       "lineHeight": [150, "%"],
       "letterSpacing": [0, "%"],
-      "textHorizontalAlign": "start",
+      "textHorizontalAlign": "center",
       "textVerticalAlign": "start"
     },
     "1BwgerJwdosQKLBSXvQyQM": {
