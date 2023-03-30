@@ -1,7 +1,10 @@
 import { Project } from "@uimix/editor/src/models/Project";
 import { Selectable } from "@uimix/editor/src/models/Selectable";
 import { Variant } from "@uimix/editor/src/models/Component";
-import { buildNodeCSS } from "@uimix/editor/src/models/buildNodeCSS";
+import {
+  buildNodeCSS,
+  getLayoutType,
+} from "@uimix/editor/src/models/buildNodeCSS";
 import { kebabCase } from "lodash-es";
 import * as CSS from "csstype";
 
@@ -31,15 +34,13 @@ export class CSSGenerator {
       if (parent?.originalNode.isAbstract) {
         parent = undefined;
       }
-      const parentStackDirection =
-        parent?.node.type === "frame" && parent.style.layout === "stack"
-          ? parent.style.stackDirection
-          : undefined;
+      const parentLayoutType =
+        parent?.node.type === "frame" ? getLayoutType(parent.style) : undefined;
 
       css = buildNodeCSS(
         selectable.node.type,
         selectable.style,
-        parentStackDirection
+        parentLayoutType
       ) as CSS.Properties;
 
       if (!parent) {
@@ -82,8 +83,13 @@ export class CSSGenerator {
       }
 
       for (const [key, value] of Object.entries(diffCSS)) {
-        // eslint-disable-next-line
-        body.push(`  ${kebabCase(key)}: ${value};`);
+        if (key.startsWith("--")) {
+          // eslint-disable-next-line
+          body.push(`  ${key}: ${value};`);
+        } else {
+          // eslint-disable-next-line
+          body.push(`  ${kebabCase(key)}: ${value};`);
+        }
       }
 
       const outermostInstance = selectable.nodePath[0];

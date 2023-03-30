@@ -39,11 +39,11 @@ describe(Node.name, () => {
 
     const selectable0 = proj.selectables.get([page.children[0].id]);
     const selectable1 = proj.selectables.get([page.children[1].id]);
-    selectable0.style.gap = 10;
+    selectable0.style.rowGap = 10;
     expect(selectable0.originalNode === page.children[0]).toBe(true);
-    expect(selectable0.style.gap).toStrictEqual(10);
+    expect(selectable0.style.rowGap).toStrictEqual(10);
     expect(selectable1.originalNode === page.children[1]).toBe(true);
-    expect(selectable1.style.gap).toStrictEqual(0);
+    expect(selectable1.style.rowGap).toStrictEqual(0);
 
     text.remove();
 
@@ -134,7 +134,7 @@ describe(Node.name, () => {
 
     const rootSelectable = proj.selectables.get([rootNode.id]);
     expect(rootSelectable.originalNode.type).toBe("frame");
-    rootSelectable.style.gap = 12;
+    rootSelectable.style.rowGap = 12;
 
     const textSelectable = rootSelectable.children[0];
     expect(textSelectable.originalNode === textNode).toBe(true);
@@ -144,7 +144,7 @@ describe(Node.name, () => {
     const hoverSelectable = proj.selectables.get([hoverVariant.id]);
     expect(hoverSelectable.originalNode === hoverVariant).toBe(true);
     expect(hoverSelectable.node === rootNode).toBe(true);
-    expect(hoverSelectable.style.gap).toStrictEqual(12);
+    expect(hoverSelectable.style.rowGap).toStrictEqual(12);
 
     const instance = proj.nodes.create("instance");
     instance.name = "Instance";
@@ -156,16 +156,16 @@ describe(Node.name, () => {
     const instanceTextSelectable = instanceSelectable.children[0];
 
     expect(instanceSelectable.mainComponent?.rootNode === rootNode).toBe(true);
-    expect(instanceSelectable.style.gap).toStrictEqual(12);
+    expect(instanceSelectable.style.rowGap).toStrictEqual(12);
     expect(instanceSelectable.parent === page.selectable).toBe(true);
 
     expect(instanceTextSelectable.originalNode === textNode).toBe(true);
     expect(instanceTextSelectable.style.fontSize).toStrictEqual(24);
     expect(instanceTextSelectable.parent === instanceSelectable).toBe(true);
 
-    instanceSelectable.style.gap = 16;
-    expect(instanceSelectable.style.gap).toStrictEqual(16);
-    expect(rootSelectable.style.gap).toStrictEqual(12);
+    instanceSelectable.style.rowGap = 16;
+    expect(instanceSelectable.style.rowGap).toStrictEqual(16);
+    expect(rootSelectable.style.rowGap).toStrictEqual(12);
 
     instanceTextSelectable.style.fontSize = 32;
     expect(instanceTextSelectable.style.fontSize).toStrictEqual(32);

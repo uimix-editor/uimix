@@ -17,7 +17,7 @@ const HitClipPath = (props: { rect: Rect }) => {
     rect.size
   );
   const dragAreaRect = Rect.from({
-    topLeft: rect.center.sub(dragAreaSize.mulScalar(0.5)),
+    topLeft: rect.center.sub(dragAreaSize.mul(0.5)),
     size: dragAreaSize,
   });
   const wholeAreaRect = rect.inset(EdgeOffsets.from(-handleHitSize / 2));

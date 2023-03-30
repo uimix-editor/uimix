@@ -33,8 +33,8 @@ export function generateExampleNodes(page: Node) {
     stackStyle.width = { type: "hug" };
     stackStyle.height = { type: "hug" };
     stackStyle.fills = [{ type: "solid", color: Color.white.toHex() }];
-    stackStyle.layout = "stack";
-    stackStyle.gap = 10;
+    stackStyle.layout = "flex";
+    stackStyle.rowGap = stackStyle.columnGap = 10;
     stackStyle.paddingTop = 10;
     stackStyle.paddingRight = 20;
     stackStyle.paddingBottom = 30;
@@ -125,7 +125,7 @@ export function generateExampleNodes(page: Node) {
     rootNodeStyle.fills = [
       { type: "solid", color: Color.from(colors.gray[200])!.toHex() },
     ];
-    rootNodeStyle.layout = "stack";
+    rootNodeStyle.layout = "flex";
     rootNodeStyle.paddingLeft = 8;
     rootNodeStyle.paddingRight = 8;
     rootNodeStyle.paddingTop = 4;

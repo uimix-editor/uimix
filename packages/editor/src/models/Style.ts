@@ -51,10 +51,13 @@ export const defaultStyle: StyleJSON = {
   // stack (auto layout)
 
   layout: "none",
-  stackDirection: "x",
-  stackAlign: "start",
-  stackJustify: "start",
-  gap: 0,
+  flexDirection: "x",
+  flexAlign: "start",
+  flexJustify: "start",
+  gridColumnCount: null,
+  gridRowCount: null,
+  rowGap: 0,
+  columnGap: 0,
   paddingTop: 0,
   paddingRight: 0,
   paddingBottom: 0,

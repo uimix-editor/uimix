@@ -1,9 +1,20 @@
 import { NodeType, StackDirection, StyleJSON } from "@uimix/node-data";
 
+export function getLayoutType(
+  style: StyleJSON
+): StackDirection | "grid" | undefined {
+  if (style.layout === "flex") {
+    return style.flexDirection;
+  }
+  if (style.layout === "grid") {
+    return "grid";
+  }
+}
+
 export function buildNodeCSS(
   nodeType: NodeType,
   style: StyleJSON,
-  parentStackDirection?: StackDirection
+  parentLayout?: StackDirection | "grid"
 ): React.CSSProperties {
   if (nodeType === "component") {
     return {};
@@ -11,8 +22,7 @@ export function buildNodeCSS(
 
   const cssStyle: React.CSSProperties = {};
 
-  const cssPosition =
-    parentStackDirection && !style.absolute ? "relative" : "absolute";
+  const cssPosition = parentLayout && !style.absolute ? "relative" : "absolute";
   cssStyle.position = cssPosition;
   if (cssPosition === "absolute") {
     const position = style.position;
@@ -36,16 +46,18 @@ export function buildNodeCSS(
     cssStyle.marginLeft = `${style.marginLeft}px`;
   }
 
+  // TODO: unset width/height when both left/right or top/bottom are set
+
   const width = style.width;
   if (width.type === "fixed") {
     cssStyle.width = `${width.value}px`;
   } else if (width.type === "hug") {
     cssStyle.width = "max-content";
   } else {
-    if (parentStackDirection === "x") {
+    if (parentLayout === "x") {
       cssStyle.flex = 1;
-    } else if (parentStackDirection === "y") {
-      cssStyle.alignSelf = "stretch";
+    } else if (parentLayout) {
+      cssStyle.width = `calc(100% - ${style.marginLeft + style.marginRight}px)`;
     } else {
       cssStyle.width = "auto";
     }
@@ -59,10 +71,12 @@ export function buildNodeCSS(
   } else if (height.type === "hug") {
     cssStyle.height = "max-content";
   } else {
-    if (parentStackDirection === "y") {
+    if (parentLayout === "y") {
       cssStyle.flex = 1;
-    } else if (parentStackDirection === "x") {
-      cssStyle.alignSelf = "stretch";
+    } else if (parentLayout) {
+      cssStyle.height = `calc(100% - ${
+        style.marginTop + style.marginBottom
+      }px)`;
     } else {
       cssStyle.height = "auto";
     }
@@ -76,31 +90,48 @@ export function buildNodeCSS(
   cssStyle.overflow = style.overflowHidden ? "hidden" : "visible";
 
   if (nodeType === "frame") {
-    cssStyle.display = "flex";
-    cssStyle.flexDirection = style.stackDirection === "x" ? "row" : "column";
-    cssStyle.alignItems = (() => {
-      switch (style.stackAlign) {
-        case "start":
-          return "flex-start";
-        case "center":
-          return "center";
-        case "end":
-          return "flex-end";
+    const layout = style.layout;
+    if (layout === "flex") {
+      cssStyle.display = "flex";
+      cssStyle.flexDirection = style.flexDirection === "x" ? "row" : "column";
+      cssStyle.alignItems = (() => {
+        switch (style.flexAlign) {
+          case "start":
+            return "flex-start";
+          case "center":
+            return "center";
+          case "end":
+            return "flex-end";
+        }
+      })();
+      cssStyle.justifyContent = (() => {
+        switch (style.flexJustify) {
+          case "start":
+            return "flex-start";
+          case "center":
+            return "center";
+          case "end":
+            return "flex-end";
+          case "spaceBetween":
+            return "space-between";
+        }
+      })();
+      cssStyle.rowGap = `${style.rowGap}px`;
+      cssStyle.columnGap = `${style.columnGap}px`;
+    } else if (layout === "grid") {
+      cssStyle.display = "grid";
+      const { gridRowCount, gridColumnCount } = style;
+      if (gridRowCount !== null) {
+        cssStyle.gridTemplateRows = `repeat(${gridRowCount}, 1fr)`;
       }
-    })();
-    cssStyle.justifyContent = (() => {
-      switch (style.stackJustify) {
-        case "start":
-          return "flex-start";
-        case "center":
-          return "center";
-        case "end":
-          return "flex-end";
-        case "spaceBetween":
-          return "space-between";
+      if (gridColumnCount !== null) {
+        cssStyle.gridTemplateColumns = `repeat(${gridColumnCount}, 1fr)`;
       }
-    })();
-    cssStyle.gap = `${style.gap}px`;
+      cssStyle.rowGap = `${style.rowGap}px`;
+      cssStyle.columnGap = `${style.columnGap}px`;
+    } else {
+      cssStyle.display = "block";
+    }
     cssStyle.paddingLeft = `${style.paddingLeft}px`;
     cssStyle.paddingRight = `${style.paddingRight}px`;
     cssStyle.paddingTop = `${style.paddingTop}px`;

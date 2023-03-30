@@ -22,6 +22,7 @@ import { commands } from "../../../state/Commands";
 import { Tooltip } from "../../../components/Tooltip";
 import { DropdownMenu } from "../../../components/Menu";
 import { gapToMargins, marginsToGap } from "../../../services/AutoLayout";
+import { Icon } from "@iconify/react";
 
 const StackAlignmentEdit = observer(function StackAlignmentEdit({
   direction,
@@ -31,8 +32,8 @@ const StackAlignmentEdit = observer(function StackAlignmentEdit({
   className?: string;
 }) {
   const selectables = projectState.selectedSelectables;
-  const align = sameOrMixed(selectables.map((s) => s.style.stackAlign));
-  const justify = sameOrMixed(selectables.map((s) => s.style.stackJustify));
+  const align = sameOrMixed(selectables.map((s) => s.style.flexAlign));
+  const justify = sameOrMixed(selectables.map((s) => s.style.flexJustify));
 
   return (
     <AlignmentEdit
@@ -42,8 +43,8 @@ const StackAlignmentEdit = observer(function StackAlignmentEdit({
       justify={typeof justify === "string" ? justify : undefined}
       onChange={action((align, justify) => {
         for (const selectable of selectables) {
-          selectable.style.stackAlign = align ?? "start";
-          selectable.style.stackJustify = justify ?? "start";
+          selectable.style.flexAlign = align ?? "start";
+          selectable.style.flexJustify = justify ?? "start";
         }
         projectState.undoManager.stopCapturing();
       })}
@@ -51,7 +52,12 @@ const StackAlignmentEdit = observer(function StackAlignmentEdit({
   );
 });
 
-const stackDirectionOptions: ToggleGroupItem<StackDirection>[] = [
+const stackDirectionOptions: ToggleGroupItem<"grid" | "x" | "y">[] = [
+  {
+    value: "grid",
+    tooltip: "Grid",
+    icon: "icon-park-outline:all-application",
+  },
   {
     value: "x",
     tooltip: "Horizontal",
@@ -71,30 +77,33 @@ export const LayoutPane: React.FC = observer(function StackPane() {
   const frameSelectables = projectState.selectedSelectables.filter(
     (s) => s.node.type === "frame"
   );
-  const stackSelectables = frameSelectables.filter(
-    (s) => s.style.layout === "stack"
+  const layoutSelectables = frameSelectables.filter(
+    (s) => s.style.layout !== "none"
   );
 
-  const hasStack = stackSelectables.length > 0;
+  const hasLayout = layoutSelectables.length > 0;
   let direction = sameOrMixed<"x" | "y">(
-    stackSelectables.map((s) => s.style.stackDirection)
+    layoutSelectables.map((s) => s.style.flexDirection)
   );
   if (typeof direction !== "string") {
     direction = "x";
   }
+  const hasGrid = frameSelectables.some((s) => s.style.layout === "grid");
 
   if (frameSelectables.length === 0) {
     return null;
   }
 
-  const hasGap = stackSelectables.some((s) => s.style.gap !== 0);
+  const hasGap = layoutSelectables.some(
+    (s) => s.style.rowGap !== 0 || s.style.columnGap !== 0
+  );
 
   return (
     <InspectorPane>
       <InspectorHeading
         icon="material-symbols:table-rows-outline"
         text="Layout"
-        dimmed={!hasStack}
+        dimmed={!hasLayout}
         buttons={
           <div className="flex gap-1">
             {/* <Tooltip text="Margin-based layout">
@@ -103,7 +112,7 @@ export const LayoutPane: React.FC = observer(function StackPane() {
             <Tooltip text="Gap-based layout">
               <IconButton icon="icon-park-outline:vertical-tidy-up" />
             </Tooltip> */}
-            {hasStack ? (
+            {hasLayout ? (
               <>
                 {hasGap ? (
                   <Tooltip text="Gap to Margins">
@@ -111,7 +120,7 @@ export const LayoutPane: React.FC = observer(function StackPane() {
                       icon="icon-park-outline:margin-one"
                       rotate={direction === "x" ? 1 : 0}
                       onClick={action(() => {
-                        for (const selectable of stackSelectables) {
+                        for (const selectable of layoutSelectables) {
                           gapToMargins(selectable);
                         }
                         projectState.undoManager.stopCapturing();
@@ -124,7 +133,7 @@ export const LayoutPane: React.FC = observer(function StackPane() {
                       icon="icon-park-outline:vertical-tidy-up"
                       rotate={direction === "x" ? 1 : 0}
                       onClick={action(() => {
-                        for (const selectable of stackSelectables) {
+                        for (const selectable of layoutSelectables) {
                           marginsToGap(selectable);
                         }
                         projectState.undoManager.stopCapturing();
@@ -154,23 +163,33 @@ export const LayoutPane: React.FC = observer(function StackPane() {
           </div>
         }
       />
-      {hasStack && (
-        <InspectorTargetContext.Provider value={stackSelectables}>
+      {hasLayout && (
+        <InspectorTargetContext.Provider value={layoutSelectables}>
           <div className="flex flex-col gap-2">
             <div className="grid grid-cols-3 gap-2 items-center">
               <InspectorToggleGroup
-                get={(s) => s.style.stackDirection}
+                get={(s) => {
+                  if (s.style.layout === "grid") {
+                    return "grid";
+                  }
+                  return s.style.flexDirection;
+                }}
                 set={(s, value) => {
-                  s.style.stackDirection = value ?? "x";
+                  if (value === "grid") {
+                    s.style.layout = "grid";
+                  } else {
+                    s.style.layout = "flex";
+                    s.style.flexDirection = value ?? "x";
+                  }
                 }}
                 items={stackDirectionOptions}
               />
               <InspectorToggleGroup
                 get={(s) =>
-                  s.style.stackJustify === "spaceBetween" ? "between" : "packed"
+                  s.style.flexJustify === "spaceBetween" ? "between" : "packed"
                 }
                 set={(s, value) => {
-                  s.style.stackJustify =
+                  s.style.flexJustify =
                     value === "between" ? "spaceBetween" : "start";
                 }}
                 items={[
@@ -195,9 +214,10 @@ export const LayoutPane: React.FC = observer(function StackPane() {
               <InspectorNumberInput
                 icon={spaceBarIcon}
                 tooltip="Gap"
-                get={(s) => ({ value: s.style.gap })}
+                get={(s) => ({ value: s.style.rowGap })} // TODO: separate row/column gap
                 set={(s, value) => {
-                  s.style.gap = value?.value ?? 0;
+                  s.style.rowGap = value?.value ?? 0;
+                  s.style.columnGap = value?.value ?? 0;
                 }}
               />
             </div>
@@ -253,6 +273,40 @@ export const LayoutPane: React.FC = observer(function StackPane() {
               />
             </div>
           </div>
+          {hasGrid && (
+            <div className="grid grid-cols-3 gap-2 items-center">
+              <InspectorNumberInput
+                icon={<Icon width={12} icon="icon-park-outline:column" />}
+                tooltip="Column Count"
+                get={(s) => {
+                  const value = s.style.gridColumnCount;
+                  if (value !== null) {
+                    return { value };
+                  }
+                }}
+                placeholder={() => "Auto"}
+                set={(s, value) => {
+                  s.style.gridColumnCount = value?.value ?? null;
+                }}
+              />
+              <InspectorNumberInput
+                icon={
+                  <Icon width={12} icon="icon-park-outline:column" rotate={1} />
+                }
+                tooltip="Row Count"
+                get={(s) => {
+                  const value = s.style.gridRowCount;
+                  if (value !== null) {
+                    return { value };
+                  }
+                }}
+                placeholder={() => "Auto"}
+                set={(s, value) => {
+                  s.style.gridRowCount = value?.value ?? null;
+                }}
+              />
+            </div>
+          )}
         </InspectorTargetContext.Provider>
       )}
     </InspectorPane>

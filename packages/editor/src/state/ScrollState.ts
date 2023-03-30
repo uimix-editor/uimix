@@ -61,12 +61,12 @@ export class ScrollState {
     this.setScale(scale);
 
     this.setTranslation(
-      this.translation.sub(viewportPos).mulScalar(ratio).add(viewportPos).round
+      this.translation.sub(viewportPos).mul(ratio).add(viewportPos).round
     );
   }
 
   zoomAroundCenter(scale: number): void {
-    this.zoomAround(this.viewportSize.mulScalar(0.5), scale);
+    this.zoomAround(this.viewportSize.mul(0.5), scale);
   }
 
   zoomIn(): void {
@@ -96,7 +96,7 @@ export class ScrollState {
       )
     );
     this.setTranslation(
-      square.topLeft.neg.mulScalar(this.scale).add(new Vec2(margin))
+      square.topLeft.neg.mul(this.scale).add(new Vec2(margin))
     );
   }
 
@@ -126,7 +126,7 @@ export class ScrollState {
     }
 
     this.setTranslation(
-      this.translation.sub(rect.center).add(this.viewportSize.mulScalar(0.5))
+      this.translation.sub(rect.center).add(this.viewportSize.mul(0.5))
     );
   }
 

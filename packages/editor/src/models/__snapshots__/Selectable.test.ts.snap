@@ -186,17 +186,17 @@ exports[`selectablesToProjectJSON > works 1`] = `
   },
   "styles": {
     "1Bvi2z3TfkSpYXW29daTN8": {
+      "columnGap": 10,
       "fills": [
         {
           "color": "#FFFFFF",
           "type": "solid",
         },
       ],
-      "gap": 10,
       "height": {
         "type": "hug",
       },
-      "layout": "stack",
+      "layout": "flex",
       "paddingBottom": 30,
       "paddingLeft": 40,
       "paddingRight": 20,
@@ -211,6 +211,7 @@ exports[`selectablesToProjectJSON > works 1`] = `
           "type": "start",
         },
       },
+      "rowGap": 10,
       "width": {
         "type": "hug",
       },
@@ -312,7 +313,7 @@ exports[`selectablesToProjectJSON > works 1`] = `
       "height": {
         "type": "hug",
       },
-      "layout": "stack",
+      "layout": "flex",
       "paddingBottom": 4,
       "paddingLeft": 8,
       "paddingRight": 8,
@@ -401,11 +402,13 @@ exports[`selectablesToProjectJSON > works 1`] = `
           "type": "solid",
         },
       ],
+      "flexAlign": "center",
+      "flexDirection": "y",
       "height": {
         "type": "fixed",
         "value": 456,
       },
-      "layout": "stack",
+      "layout": "flex",
       "position": {
         "x": {
           "start": 50,
@@ -416,8 +419,6 @@ exports[`selectablesToProjectJSON > works 1`] = `
           "type": "start",
         },
       },
-      "stackAlign": "center",
-      "stackDirection": "y",
       "width": {
         "type": "fixed",
         "value": 744,
@@ -577,18 +578,21 @@ exports[`selectablesToProjectJSON > works 1`] = `
     "1BwWRgjHrhVbbuTV7m36kM": {
       "bottomLeftRadius": 20,
       "bottomRightRadius": 20,
+      "columnGap": 20,
       "fills": [
         {
           "color": "#ffffff",
           "type": "solid",
         },
       ],
-      "gap": 20,
+      "flexAlign": "start",
+      "flexDirection": "y",
+      "flexJustify": "start",
       "height": {
         "type": "hug",
       },
       "hidden": false,
-      "layout": "stack",
+      "layout": "flex",
       "opacity": 1,
       "overflowHidden": false,
       "paddingBottom": 19,
@@ -605,9 +609,7 @@ exports[`selectablesToProjectJSON > works 1`] = `
           "type": "start",
         },
       },
-      "stackAlign": "start",
-      "stackDirection": "y",
-      "stackJustify": "start",
+      "rowGap": 20,
       "topLeftRadius": 20,
       "topRightRadius": 20,
       "width": {
@@ -642,27 +644,28 @@ exports[`selectablesToProjectJSON > works 1`] = `
     "1BwWRgjHyEzJjsehRefVBE": {
       "bottomLeftRadius": 8,
       "bottomRightRadius": 8,
+      "columnGap": 10,
       "fills": [
         {
           "color": "#f0f9ff",
           "type": "solid",
         },
       ],
-      "gap": 10,
+      "flexAlign": "start",
+      "flexDirection": "x",
+      "flexJustify": "start",
       "height": {
         "type": "hug",
       },
       "hidden": false,
-      "layout": "stack",
+      "layout": "flex",
       "opacity": 1,
       "overflowHidden": false,
       "paddingBottom": 3,
       "paddingLeft": 3,
       "paddingRight": 3,
       "paddingTop": 3,
-      "stackAlign": "start",
-      "stackDirection": "x",
-      "stackJustify": "start",
+      "rowGap": 10,
       "topLeftRadius": 8,
       "topRightRadius": 8,
       "width": {

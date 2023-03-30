@@ -1,4 +1,4 @@
-import { Rect, Vec2 } from "paintvec";
+import { Rect, Segment, Vec2 } from "paintvec";
 import { Selectable } from "../../../models/Selectable";
 import { projectState } from "../../../state/ProjectState";
 import { DropDestination } from "../../../state/DropDestination";
@@ -60,7 +60,6 @@ export class NodeMoveDragHandler implements DragHandler {
     if (allPrefersAbsolute) {
       viewportState.dropDestination = {
         ...dst,
-        shouldShowInsertionLine: false,
       };
     }
   }
@@ -171,21 +170,97 @@ export function findDropDestination(
   if (!parent) {
     return {
       parent: assertNonNull(projectState.page).selectable,
-      shouldShowInsertionLine: false,
     };
   }
 
-  const direction = parent.style.stackDirection;
-  const inFlowChildren = parent.inFlowChildren;
-  const centers = inFlowChildren.map((c) => c.computedRect.center);
-  const index = centers.findIndex((c) => c[direction] > event.pos[direction]);
-  const shouldShowInsertionLine = parent.style.layout !== "none";
-  if (index < 0) {
-    return { parent, shouldShowInsertionLine };
+  const layout = parent.style.layout;
+
+  if (layout === "flex") {
+    const direction = parent.style.flexDirection;
+    const inFlowChildren = parent.inFlowChildren;
+    const centers = inFlowChildren.map((c) => c.computedRect.center);
+    const index = centers.findIndex((c) => c[direction] > event.pos[direction]);
+    if (index < 0) {
+      // append
+      const lastRect = inFlowChildren[inFlowChildren.length - 1].computedRect;
+      return {
+        parent,
+        insertionLine: lastRect.endLines[direction],
+      };
+    }
+
+    if (index === 0) {
+      // prepend
+      const firstRect = inFlowChildren[0].computedRect;
+      return {
+        parent,
+        ref: inFlowChildren[0],
+        insertionLine: firstRect.startLines[direction],
+      };
+    }
+
+    const prev = inFlowChildren[index - 1];
+    const next = inFlowChildren[index];
+    const prevRect = prev.computedRect;
+    const nextRect = next.computedRect;
+
+    return {
+      parent,
+      ref: next,
+      insertionLine: prevRect.endLines[direction].mix(
+        nextRect.startLines[direction],
+        0.5
+      ),
+    };
   }
-  return {
-    parent,
-    ref: inFlowChildren[index],
-    shouldShowInsertionLine,
-  };
+
+  if (layout === "grid") {
+    // TODO: when column count is 1, use the same logic as vertical stack
+
+    const inFlowChildren = parent.inFlowChildren;
+    const columnCount = parent.style.gridColumnCount ?? 1;
+    const rowCount = Math.ceil(inFlowChildren.length / columnCount);
+
+    let nextChild: Selectable | undefined;
+    let insertionLine: Segment | undefined;
+
+    for (let row = 0; row < rowCount; row++) {
+      const rowChildren = inFlowChildren.slice(
+        row * columnCount,
+        (row + 1) * columnCount
+      );
+      const rowChildrenBottom = Math.max(
+        ...rowChildren.map((c) => c.computedRect.bottom)
+      );
+      if (event.pos.y > rowChildrenBottom) {
+        continue;
+      }
+
+      for (const child of rowChildren) {
+        if (child.computedRect.center.x > event.pos.x) {
+          nextChild = child;
+          break;
+        }
+      }
+      nextChild = nextChild ?? rowChildren[rowChildren.length - 1].nextSibling;
+      if (nextChild) {
+        insertionLine = nextChild.computedRect.leftLine;
+      }
+      break;
+    }
+
+    if (!insertionLine) {
+      const lastChild = inFlowChildren[inFlowChildren.length - 1];
+      insertionLine = lastChild.computedRect.rightLine;
+    }
+
+    return {
+      parent,
+      ref: nextChild,
+      insertionLine: insertionLine,
+    };
+  }
+
+  // no layout
+  return { parent };
 }
