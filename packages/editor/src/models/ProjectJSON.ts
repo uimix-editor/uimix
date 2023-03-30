@@ -1,6 +1,5 @@
-import { NodeJSON, ProjectJSON, StyleJSON } from "@uimix/node-data";
+import { ProjectJSON } from "@uimix/node-data";
 import * as Y from "yjs";
-import { generateID } from "../utils/ID";
 
 export function loadProjectJSON(ydoc: Y.Doc, projectJSON: ProjectJSON): void {
   const nodes = ydoc.getMap("nodes");
@@ -80,33 +79,4 @@ export function toProjectJSON(ydoc: Y.Doc): ProjectJSON {
   // TODO: delete dangling images
 
   return json;
-}
-
-export function reassignNewIDs(data: ProjectJSON): ProjectJSON {
-  const idMap = new Map<string, string>();
-
-  const newNodes: Record<string, NodeJSON> = {};
-  for (const [id, node] of Object.entries(data.nodes)) {
-    const newID = id === "project" ? "project" : generateID();
-    idMap.set(id, newID);
-    newNodes[newID] = { ...node };
-  }
-
-  for (const node of Object.values(newNodes)) {
-    if (node.parent) {
-      node.parent = idMap.get(node.parent) ?? node.parent;
-    }
-  }
-
-  const newStyles: Record<string, Partial<StyleJSON>> = {};
-  for (const [id, style] of Object.entries(data.styles)) {
-    const idPath = id.split(":").map((id) => idMap.get(id) ?? id);
-    newStyles[idPath.join(":")] = style;
-  }
-
-  return {
-    ...data,
-    nodes: newNodes,
-    styles: newStyles,
-  };
 }

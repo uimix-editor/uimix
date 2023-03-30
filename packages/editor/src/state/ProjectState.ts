@@ -11,7 +11,7 @@ import { Node } from "../models/Node";
 import { getIncrementalUniqueName } from "../utils/Name";
 import { generateExampleNodes } from "../models/generateExampleNodes";
 import demoFile from "../../../sandbox/src/uimix/landing.uimix?raw";
-import { reassignNewIDs } from "../models/ProjectJSON";
+import { reassignNewIDs } from "../models/ProjectJSONExtra";
 
 export class ProjectState {
   constructor() {
