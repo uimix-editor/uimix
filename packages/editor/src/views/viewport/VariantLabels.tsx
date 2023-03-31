@@ -38,7 +38,7 @@ const ComponentSection: React.FC<{
   return (
     <div
       className={twMerge(
-        "border border-neutral-300 border-dashed rounded-md",
+        "border border-2 border-neutral-300 border-dotted rounded-md",
         component.selected && "border-macaron-active"
       )}
       style={{
