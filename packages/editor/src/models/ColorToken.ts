@@ -5,21 +5,21 @@ import { Project } from "./Project";
 import { getOrCreate } from "../state/Collection";
 
 export class ColorToken {
-  constructor(list: ColorTokenList, id: string) {
+  constructor(project: Project, id: string) {
     this.id = id;
-    this.list = list;
+    this.project = project;
   }
 
   readonly id: string;
-  readonly list: ColorTokenList;
+  readonly project: Project;
 
   get data(): ObservableYMap<unknown> | undefined {
-    return ObservableYMap.get(this.list.data.get(this.id));
+    return ObservableYMap.get(this.project.colorTokens.data.get(this.id));
   }
 
   get dataForWrite(): ObservableYMap<unknown> {
     return ObservableYMap.get(
-      getOrCreate(this.list.data, this.id, () => new Y.Map())
+      getOrCreate(this.project.colorTokens.data, this.id, () => new Y.Map())
     );
   }
 
@@ -73,7 +73,7 @@ export class ColorTokenList {
 
   get all(): ColorToken[] {
     return [...this.data.keys()]
-      .map((id) => new ColorToken(this, id))
+      .map((id) => new ColorToken(this.project, id))
       .sort((a, b) => a.index - b.index);
   }
 }
