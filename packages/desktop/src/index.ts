@@ -1,5 +1,4 @@
 import { app, BrowserWindow, ipcMain } from "electron";
-import { File } from "./File";
 import { setApplicationMenu } from "./menu";
 import { IPCMainAPI } from "./types/IPCMainAPI";
 import { Window, windows } from "./Window";
@@ -24,8 +23,8 @@ app.on("ready", () => {
   isReady = true;
 
   const files = new Set<string>([
-    ...filesToOpen,
     ...store.get("lastOpenedFiles", []),
+    ...filesToOpen,
   ]);
 
   if (files.size > 0) {
