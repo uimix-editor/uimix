@@ -24,6 +24,7 @@ import { viewportState } from "../../state/ViewportState";
 import { twMerge } from "tailwind-merge";
 import { getIconAndTextForCondition } from "../viewport/VariantLabels";
 import scrollIntoView from "scroll-into-view-if-needed";
+import clsx from "clsx";
 
 interface NodeTreeViewItem extends TreeViewItem {
   selectable: Selectable;
@@ -176,7 +177,7 @@ const TreeRow: React.FC<{
     >
       <div
         className={twMerge(
-          "w-full h-8 flex items-center text-macaron-text",
+          "w-full h-8 flex items-center text-macaron-text relative",
           !topSelected && "rounded-t",
           !bottomSelected && "rounded-b",
           selected
@@ -247,6 +248,54 @@ const TreeRow: React.FC<{
                 projectState.undoManager.stopCapturing();
               })}
             />
+            <div className="absolute right-2 top-0 bottom-0 text-xs flex items-center">
+              {selectable.style.locked ? (
+                <button
+                  className="p-1"
+                  onClick={action((e) => {
+                    e.stopPropagation();
+                    selectable.style.locked = false;
+                    projectState.undoManager.stopCapturing();
+                  })}
+                >
+                  <Icon icon="material-symbols:lock" />
+                </button>
+              ) : (
+                <button
+                  className={twMerge("p-1", !hovered && "invisible")}
+                  onClick={action((e) => {
+                    e.stopPropagation();
+                    selectable.style.locked = true;
+                    projectState.undoManager.stopCapturing();
+                  })}
+                >
+                  <Icon icon="material-symbols:lock-open-outline" />
+                </button>
+              )}
+              {selectable.style.hidden ? (
+                <button
+                  className="p-1"
+                  onClick={action((e) => {
+                    e.stopPropagation();
+                    selectable.style.hidden = false;
+                    projectState.undoManager.stopCapturing();
+                  })}
+                >
+                  <Icon icon="material-symbols:visibility-off-outline" />
+                </button>
+              ) : (
+                <button
+                  className={twMerge("p-1", !hovered && "invisible")}
+                  onClick={action((e) => {
+                    e.stopPropagation();
+                    selectable.style.hidden = true;
+                    projectState.undoManager.stopCapturing();
+                  })}
+                >
+                  <Icon icon="material-symbols:visibility-outline" />
+                </button>
+              )}
+            </div>
           </>
         )}
       </div>

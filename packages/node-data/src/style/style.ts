@@ -10,6 +10,7 @@ import { TextHorizontalAlign, TextVerticalAlign } from "./value/text.js";
 
 export const StyleJSON = z.object({
   hidden: z.boolean(),
+  locked: z.boolean(),
   position: z.object({
     x: PositionConstraint,
     y: PositionConstraint,
