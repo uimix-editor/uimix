@@ -11,6 +11,7 @@ import { FontLoader } from "./viewport/renderer/FontLoader";
 import { ToolBar } from "./toolbar/ToolBar";
 import { InstancePaletteOverlay } from "./viewport/InstancePaletteOverlay";
 import { ForeignComponentListDialog } from "./dialog/ForeignComponentListDialog";
+import { viewportState } from "../state/ViewportState";
 
 function useKeyHandling() {
   useEffect(() => {
@@ -65,14 +66,18 @@ export const App = observer(function App() {
         }}
       >
         <div className="flex flex-1">
-          <OutlineSideBar />
-          <div className="bg-macaron-separator w-px" />
-          <ToolBar />
+          {viewportState.isSideBarsVisible && (
+            <>
+              <OutlineSideBar />
+              <div className="bg-macaron-separator w-px" />
+              <ToolBar />
+            </>
+          )}
           <div className="flex flex-1 border-l border-r border-macaron-separator relative">
             <Viewport />
             <InstancePaletteOverlay />
           </div>
-          <InspectorSideBar />
+          {viewportState.isSideBarsVisible && <InspectorSideBar />}
         </div>
       </div>
       <ContextMenu />

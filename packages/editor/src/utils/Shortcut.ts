@@ -3,7 +3,7 @@ import UAParser from "ua-parser-js";
 const isMac = new UAParser().getOS().name === "Mac OS";
 
 const modifiers = ["Shift", "Alt", "Mod"] as const;
-type Modifier = typeof modifiers[number];
+type Modifier = (typeof modifiers)[number];
 
 // https://developer.mozilla.org/en-US/docs/Web/API/KeyboardEvent/code/code_values
 const keyCodes = {
@@ -48,6 +48,7 @@ const keyCodes = {
   Escape: "Escape",
   Backspace: "Backspace",
   Delete: "Delete",
+  Backslash: "\\",
   ArrowLeft: "Left",
   ArrowRight: "Right",
   ArrowUp: "Up",

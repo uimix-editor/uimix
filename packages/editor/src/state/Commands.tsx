@@ -27,6 +27,7 @@ import { dialogState } from "./DialogState";
 import { scrollState } from "./ScrollState";
 import { compact } from "lodash-es";
 import { Component } from "../models/Component";
+import { Vec2 } from "paintvec";
 
 class Commands {
   @computed get canUndo(): boolean {
@@ -417,6 +418,32 @@ class Commands {
       scrollState.resetZoom();
     }),
   };
+  readonly showHideSidebarsCommand: MenuCommandDef = {
+    type: "command",
+    text: "Show/Hide Sidebars",
+    shortcuts: [new Shortcut(["Mod"], "Backslash")],
+    onClick: action(() => {
+      if (viewportState.isSideBarsVisible) {
+        viewportState.isSideBarsVisible = false;
+        viewportState.lastSideBarLeftOffset =
+          scrollState.viewportDOMClientRect.left;
+        scrollState.setTranslation(
+          new Vec2(
+            scrollState.translation.x + viewportState.lastSideBarLeftOffset,
+            scrollState.translation.y
+          )
+        );
+      } else {
+        viewportState.isSideBarsVisible = true;
+        scrollState.setTranslation(
+          new Vec2(
+            scrollState.translation.x - viewportState.lastSideBarLeftOffset,
+            scrollState.translation.y
+          )
+        );
+      }
+    }),
+  };
 
   @computed get menu(): MenuItemDef[] {
     return [
@@ -484,6 +511,8 @@ class Commands {
           this.zoomInCommand,
           this.zoomOutCommand,
           this.resetZoomCommand,
+          { type: "separator" },
+          this.showHideSidebarsCommand,
         ],
       },
     ];

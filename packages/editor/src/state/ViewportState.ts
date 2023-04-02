@@ -18,6 +18,9 @@ export class ViewportState {
   @observable panMode = false;
   @observable resizeBoxVisible = false;
   @observable measureMode = false;
+
+  @observable isSideBarsVisible = true;
+  @observable lastSideBarLeftOffset = 0;
 }
 
 export const viewportState = new ViewportState();
