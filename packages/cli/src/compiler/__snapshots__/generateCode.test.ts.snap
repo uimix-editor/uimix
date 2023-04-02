@@ -233,6 +233,36 @@ box-sizing: border-box;
   border-bottom-left-radius: 0px;
   box-shadow: none;
 }
+.uimix-1BwspVKcGYvxVctYVzjPu6 {
+box-sizing: border-box;
+-webkit-font-smoothing: antialiased;
+  position: relative;
+  margin-top: 0px;
+  margin-right: 0px;
+  margin-bottom: 0px;
+  margin-left: 0px;
+  width: 40px;
+  height: 80px;
+  opacity: 1;
+  overflow: visible;
+  display: none;
+  padding-left: 0px;
+  padding-right: 0px;
+  padding-top: 0px;
+  padding-bottom: 0px;
+  background: #22C55E;
+  border-style: solid;
+  border-color: transparent;
+  border-top-width: 0px;
+  border-right-width: 0px;
+  border-bottom-width: 0px;
+  border-left-width: 0px;
+  border-top-left-radius: 0px;
+  border-top-right-radius: 0px;
+  border-bottom-right-radius: 0px;
+  border-bottom-left-radius: 0px;
+  box-shadow: none;
+}
 .uimix-1Bvi2z3UB1xUVg4Xz9WTpJ {
 box-sizing: border-box;
 -webkit-font-smoothing: antialiased;
@@ -386,6 +416,9 @@ box-sizing: border-box;
 .uimix-1Bvi39mct9UNYZ9eTCCRdV-1Bvi2z3TpKXtTJLTRPTEd8 {
 }
 .uimix-1Bvi39mct9UNYZ9eTCCRdV-1Bvi2z3To8ddXo6R6ZftVD {
+}
+.uimix-1Bvi39mct9UNYZ9eTCCRdV-1BwspVKcGYvxVctYVzjPu6 {
+  display: block;
 }
 .uimix-1Bvi39mct9UNYZ9eTCCRdV-1Bvi2z3UB1xUVg4Xz9WTpJ {
 }
@@ -575,6 +608,10 @@ export const Stack = React.forwardRef((props, ref) => {
         data-refID={[\\"item_1\\"]}
       ></div>
       <div
+        className={\\"uimix-1BwspVKcGYvxVctYVzjPu6\\"}
+        data-refID={[\\"hidden_Item\\"]}
+      ></div>
+      <div
         className={\\"uimix-1Bvi2z3UB1xUVg4Xz9WTpJ\\"}
         data-refID={[\\"item_2\\"]}
       ></div>
@@ -587,6 +624,7 @@ export const Stack = React.forwardRef((props, ref) => {
   JSX.IntrinsicElements[\\"div\\"] & {
     item_0Props?: JSX.IntrinsicElements[\\"div\\"];
     item_1Props?: JSX.IntrinsicElements[\\"div\\"];
+    hidden_ItemProps?: JSX.IntrinsicElements[\\"div\\"];
     item_2Props?: JSX.IntrinsicElements[\\"div\\"];
     textProps?: JSX.IntrinsicElements[\\"div\\"];
   }
@@ -650,6 +688,12 @@ export const Page = React.forwardRef((props, ref) => {
               \\"uimix-1Bvi39mct9UNYZ9eTCCRdV-1Bvi2z3To8ddXo6R6ZftVD uimix-1Bvi2z3To8ddXo6R6ZftVD\\"
             }
             data-refID={[\\"stack\\", \\"item_1\\"]}
+          ></div>
+          <div
+            className={
+              \\"uimix-1Bvi39mct9UNYZ9eTCCRdV-1BwspVKcGYvxVctYVzjPu6 uimix-1BwspVKcGYvxVctYVzjPu6\\"
+            }
+            data-refID={[\\"stack\\", \\"hidden_Item\\"]}
           ></div>
           <div
             className={

@@ -29,6 +29,7 @@ exports[`loadProjectJSON > works 1`] = `
   "1BwWRgjHmYZ8qLKDj3Tvdy",
   "1BwWRgjHuAe9UTxVhowwYu",
   "1BwWRiQqGA4gTdwZRLXFBh",
+  "1BwspVKcGYvxVctYVzjPu6",
 ]
 `;
 
@@ -66,6 +67,8 @@ exports[`loadProjectJSON > works 2`] = `
   "1BwWRgjHr8HNgX8BRooGv7",
   "1BwWRgjHmYZ8qLKDj3Tvdy",
   "1BwWRgjHuAe9UTxVhowwYu",
+  "1BwspVKcGYvxVctYVzjPu6",
+  "1Bvi39mct9UNYZ9eTCCRdV:1BwspVKcGYvxVctYVzjPu6",
 ]
 `;
 

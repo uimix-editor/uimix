@@ -183,6 +183,13 @@ exports[`selectablesToProjectJSON > works 1`] = `
       "parent": undefined,
       "type": "component",
     },
+    "1BwspVKcGYvxVctYVzjPu6": {
+      "condition": undefined,
+      "index": 1.5,
+      "name": "Hidden Item",
+      "parent": "1Bvi2z3TfkSpYXW29daTN8",
+      "type": "frame",
+    },
   },
   "styles": {
     "1Bvi2z3TfkSpYXW29daTN8": {
@@ -544,6 +551,9 @@ exports[`selectablesToProjectJSON > works 1`] = `
     "1Bvi39mct9UNYZ9eTCCRdV:1Bvi2z3TpKXtTJLTRPTEd8": {},
     "1Bvi39mct9UNYZ9eTCCRdV:1Bvi2z3U3SiK6r7gf9vh7N": {},
     "1Bvi39mct9UNYZ9eTCCRdV:1Bvi2z3UB1xUVg4Xz9WTpJ": {},
+    "1Bvi39mct9UNYZ9eTCCRdV:1BwspVKcGYvxVctYVzjPu6": {
+      "hidden": false,
+    },
     "1Bvi3BSSb2oaHb1ZqUEk6H": {},
     "1BwWRgjHmYZ8qLKDj3Tvdy": {
       "fills": [
@@ -679,6 +689,23 @@ exports[`selectablesToProjectJSON > works 1`] = `
       },
     },
     "1BwWRiQqGA4gTdwZRLXFBh": {},
+    "1BwspVKcGYvxVctYVzjPu6": {
+      "fills": [
+        {
+          "color": "#22C55E",
+          "type": "solid",
+        },
+      ],
+      "height": {
+        "type": "fixed",
+        "value": 80,
+      },
+      "hidden": true,
+      "width": {
+        "type": "fixed",
+        "value": 40,
+      },
+    },
   },
 }
 `;
