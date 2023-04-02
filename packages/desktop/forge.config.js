@@ -9,6 +9,7 @@ module.exports = {
   packagerConfig: {
     name: process.env.NODE_ENV === "development" ? "UIMix Dev" : "UIMix",
     extendInfo: "Info.plist",
+    icon: "./src/icon/icon",
   },
   rebuildConfig: {},
   makers: [
