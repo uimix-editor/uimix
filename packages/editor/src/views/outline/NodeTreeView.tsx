@@ -251,7 +251,7 @@ const TreeRow: React.FC<{
             <div className="absolute right-2 top-0 bottom-0 text-xs flex items-center text-macaron-label">
               {selectable.style.locked ? (
                 <button
-                  className="p-1"
+                  className="p-0.5"
                   onClick={action((e) => {
                     e.stopPropagation();
                     selectable.style.locked = false;
@@ -262,7 +262,7 @@ const TreeRow: React.FC<{
                 </button>
               ) : (
                 <button
-                  className={twMerge("p-1", !hovered && "invisible")}
+                  className={twMerge("p-0.5", !hovered && "invisible")}
                   onClick={action((e) => {
                     e.stopPropagation();
                     selectable.style.locked = true;
@@ -274,7 +274,7 @@ const TreeRow: React.FC<{
               )}
               {selectable.style.hidden ? (
                 <button
-                  className="p-1"
+                  className="p-0.5"
                   onClick={action((e) => {
                     e.stopPropagation();
                     selectable.style.hidden = false;
@@ -285,7 +285,7 @@ const TreeRow: React.FC<{
                 </button>
               ) : (
                 <button
-                  className={twMerge("p-1", !hovered && "invisible")}
+                  className={twMerge("p-0.5", !hovered && "invisible")}
                   onClick={action((e) => {
                     e.stopPropagation();
                     selectable.style.hidden = true;
