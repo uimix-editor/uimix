@@ -10,7 +10,6 @@ import { DoubleClickToEdit } from "../../../components/DoubleClickToEdit";
 import { ColorPopoverButton } from "../components/ColorInput";
 import { Color } from "../../../utils/Color";
 import { showContextMenu } from "../../ContextMenu";
-import { useState } from "react";
 
 export const ColorTokenListPane = observer(() => {
   const tokens = projectState.project.colorTokens.all;
