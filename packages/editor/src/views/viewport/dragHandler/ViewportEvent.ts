@@ -55,14 +55,19 @@ export class ViewportEvent {
     const clientPos =
       options.clientPos ?? new Vec2(event.clientX, event.clientY);
 
-    this.selectables =
+    this.selectablesIncludingLocked =
       options.all ?? nodePicker.instancesFromPoint(clientPos.x, clientPos.y);
+    this.selectables = this.selectablesIncludingLocked.filter(
+      (s) => !s.ancestorLocked
+    );
+
     this.clientPos = clientPos;
     this.pos = options.pos ?? scrollState.documentPosForClientPos(clientPos);
     this.event = event;
     this.mode = options.mode ?? "click";
   }
 
+  readonly selectablesIncludingLocked: readonly Selectable[];
   readonly selectables: readonly Selectable[];
   readonly clientPos: Vec2;
   readonly pos: Vec2;

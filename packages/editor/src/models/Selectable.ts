@@ -311,6 +311,10 @@ export class Selectable {
     return this.selected || !!this.parent?.ancestorSelected;
   }
 
+  @computed get ancestorLocked(): boolean {
+    return this.style.locked || !!this.parent?.ancestorLocked;
+  }
+
   @observable computedRectProvider: IComputedRectProvider | undefined =
     undefined;
 

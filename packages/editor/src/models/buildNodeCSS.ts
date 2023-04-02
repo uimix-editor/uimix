@@ -204,5 +204,9 @@ export function buildNodeCSS(
     })();
   }
 
+  if (style.hidden) {
+    cssStyle.display = "none";
+  }
+
   return cssStyle;
 }

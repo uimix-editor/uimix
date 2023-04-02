@@ -158,6 +158,12 @@
       "name": "Card",
       "parent": "1Bvi2ymHPmVHms6RDurmNN",
       "index": 15
+    },
+    "1BwspVKcGYvxVctYVzjPu6": {
+      "type": "frame",
+      "index": 1.5,
+      "name": "Hidden Item",
+      "parent": "1Bvi2z3TfkSpYXW29daTN8"
     }
   },
   "styles": {
@@ -198,10 +204,10 @@
         "x": { "type": "start", "start": 350 },
         "y": { "type": "start", "start": 400 }
       },
-      "paddingLeft": 4,
-      "paddingRight": 4,
       "paddingTop": 2,
-      "paddingBottom": 2
+      "paddingRight": 4,
+      "paddingBottom": 2,
+      "paddingLeft": 4
     },
     "1Bvi2z3UaHFmaikKtfcmGX:1Bvi2z3UGTM64JtRT7Qc1S": { "fontSize": 14 },
     "1Bvi2zJALza4DrqmNaGYAk": {},
@@ -410,7 +416,14 @@
       "letterSpacing": 0,
       "textHorizontalAlign": "start",
       "textVerticalAlign": "start"
-    }
+    },
+    "1BwspVKcGYvxVctYVzjPu6": {
+      "width": { "type": "fixed", "value": 40 },
+      "height": { "type": "fixed", "value": 80 },
+      "fills": [{ "type": "solid", "color": "#22C55E" }],
+      "hidden": true
+    },
+    "1Bvi39mct9UNYZ9eTCCRdV:1BwspVKcGYvxVctYVzjPu6": { "hidden": false }
   },
   "componentURLs": [
     "https://cdn.jsdelivr.net/gh/uimix-editor/uimix@ba0157d5/packages/sandbox/dist-components/components.js",

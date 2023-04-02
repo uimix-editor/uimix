@@ -6,6 +6,7 @@ export type IStyle = StyleJSON;
 
 export const defaultStyle: StyleJSON = {
   hidden: false,
+  locked: false,
   position: {
     x: {
       type: "start",
