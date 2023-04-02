@@ -248,7 +248,7 @@ const TreeRow: React.FC<{
                 projectState.undoManager.stopCapturing();
               })}
             />
-            <div className="absolute right-2 top-0 bottom-0 text-xs flex items-center">
+            <div className="absolute right-2 top-0 bottom-0 text-xs flex items-center text-macaron-label">
               {selectable.style.locked ? (
                 <button
                   className="p-1"
