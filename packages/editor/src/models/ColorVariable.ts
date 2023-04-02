@@ -72,6 +72,8 @@ class ColorVariableList {
   }
 
   get all(): ColorVariable[] {
-    return [...this.data.keys()].map((id) => new ColorVariable(this, id));
+    return [...this.data.keys()]
+      .map((id) => new ColorVariable(this, id))
+      .sort((a, b) => a.index - b.index);
   }
 }
