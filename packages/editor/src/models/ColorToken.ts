@@ -4,14 +4,14 @@ import { ObservableYMap } from "../utils/ObservableYMap";
 import { Project } from "./Project";
 import { getOrCreate } from "../state/Collection";
 
-class ColorVariable {
-  constructor(list: ColorVariableList, id: string) {
+export class ColorToken {
+  constructor(list: ColorTokenList, id: string) {
     this.id = id;
     this.list = list;
   }
 
   readonly id: string;
-  readonly list: ColorVariableList;
+  readonly list: ColorTokenList;
 
   get data(): ObservableYMap<unknown> | undefined {
     return ObservableYMap.get(this.list.data.get(this.id));
@@ -60,7 +60,7 @@ class ColorVariable {
   }
 }
 
-class ColorVariableList {
+export class ColorTokenList {
   constructor(project: Project) {
     this.project = project;
   }
@@ -71,9 +71,9 @@ class ColorVariableList {
     return ObservableYMap.get(this.project.doc.getMap("colors"));
   }
 
-  get all(): ColorVariable[] {
+  get all(): ColorToken[] {
     return [...this.data.keys()]
-      .map((id) => new ColorVariable(this, id))
+      .map((id) => new ColorToken(this, id))
       .sort((a, b) => a.index - b.index);
   }
 }
