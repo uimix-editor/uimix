@@ -79,6 +79,10 @@ export class ColorTokenList {
     return new ColorToken(this.project, id);
   }
 
+  delete(id: string) {
+    this.data.delete(id);
+  }
+
   get all(): ColorToken[] {
     return [...this.data.keys()]
       .map((id) => new ColorToken(this.project, id))

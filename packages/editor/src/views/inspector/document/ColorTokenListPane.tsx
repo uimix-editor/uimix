@@ -9,11 +9,13 @@ import { compact } from "lodash-es";
 import { DoubleClickToEdit } from "../../../components/DoubleClickToEdit";
 import { ColorPopoverButton } from "../components/ColorInput";
 import { Color } from "../../../utils/Color";
+import { showContextMenu } from "../../ContextMenu";
+import { useState } from "react";
 
 export const ColorTokenListPane = observer(() => {
   const tokens = projectState.project.colorTokens.all;
 
-  // TODO: use list view?
+  // TODO: use TreeView
 
   return (
     <InspectorPane>
@@ -32,7 +34,7 @@ export const ColorTokenListPane = observer(() => {
           </>
         }
       />
-      <div>
+      <div className="-mx-3">
         <ReactSortable
           list={tokens.map((token) => ({
             id: token.id,
@@ -48,7 +50,22 @@ export const ColorTokenListPane = observer(() => {
           })}
         >
           {tokens.map((token) => (
-            <div className="h-7 gap-2 flex" key={token.id}>
+            <div
+              className="h-8 gap-2 flex hover:bg-macaron-uiBackground px-3"
+              key={token.id}
+              onContextMenu={action((e: React.MouseEvent) => {
+                showContextMenu(e, [
+                  {
+                    type: "command",
+                    text: "Delete",
+                    onClick: action(() => {
+                      projectState.project.colorTokens.delete(token.id);
+                      projectState.undoManager.stopCapturing();
+                    }),
+                  },
+                ]);
+              })}
+            >
               <ColorPopoverButton
                 value={token.value ?? Color.black}
                 onChange={action((color: Color) => {
