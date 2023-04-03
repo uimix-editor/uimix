@@ -8,6 +8,7 @@ import { Color } from "../../../utils/Color";
 import { useState } from "react";
 import { IconButton } from "../../../components/IconButton";
 import { ColorRef } from "../../../models/ColorRef";
+import { twMerge } from "tailwind-merge";
 
 export const ColorTokenPopover: React.FC<{
   value?: ColorRef;
@@ -49,10 +50,16 @@ export const ColorTokenPopover: React.FC<{
             </div>
             <div className="flex gap-1 flex-wrap">
               {projectState.project.colorTokens.all.map((token) => {
+                const selected =
+                  value?.value.type === "token" &&
+                  value?.value.value.id === token.id;
                 return (
                   <Tooltip text={token.name} key={token.id} delayDuration={0}>
                     <div
-                      className="w-6 h-6 rounded-full border border-macaron-uiBackground"
+                      className={twMerge(
+                        "w-6 h-6 rounded-full border border-macaron-uiBackground",
+                        selected && "ring-2 ring-macaron-active"
+                      )}
                       style={{
                         backgroundColor: token.value?.toHex(),
                       }}

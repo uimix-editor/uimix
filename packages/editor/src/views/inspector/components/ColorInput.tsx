@@ -95,6 +95,7 @@ export function ColorInput({
       {value?.value.type === "token" ? (
         <>
           <ColorTokenPopover
+            value={value}
             onChange={(token) => {
               onChange?.(new ColorRef(token));
               onChangeEnd?.();
