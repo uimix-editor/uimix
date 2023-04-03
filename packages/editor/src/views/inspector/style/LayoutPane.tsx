@@ -20,7 +20,6 @@ import { action } from "mobx";
 import { InspectorTargetContext } from "../components/InspectorTargetContext";
 import { commands } from "../../../state/Commands";
 import { Tooltip } from "../../../components/Tooltip";
-import { DropdownMenu } from "../../../components/Menu";
 import { gapToMargins, marginsToGap } from "../../../services/AutoLayout";
 import { Icon } from "@iconify/react";
 

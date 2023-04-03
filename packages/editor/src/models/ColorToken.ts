@@ -95,6 +95,7 @@ export class ColorTokenList {
     const token = new ColorToken(this.project, id);
     token.index = this.all.length;
     token.name = "New Color";
+    token.value = Color.black;
     return token;
   }
 }

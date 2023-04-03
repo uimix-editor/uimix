@@ -10,6 +10,8 @@ import { InspectorHeading } from "../components/InspectorHeading";
 import { InspectorPane } from "../components/InspectorPane";
 import { action } from "mobx";
 import { InspectorTargetContext } from "../components/InspectorTargetContext";
+import { Tooltip } from "../../../components/Tooltip";
+import * as RadixPopover from "@radix-ui/react-popover";
 
 export const FillPane: React.FC = observer(function FillPane() {
   const selectables = projectState.selectedSelectables.filter(
@@ -41,21 +43,59 @@ export const FillPane: React.FC = observer(function FillPane() {
         text="Fill"
         dimmed={!hasFill}
         buttons={
-          hasFill ? (
-            <IconButton
-              icon={removeIcon}
-              onClick={() => {
-                onChangeFill(undefined);
-              }}
-            />
-          ) : (
-            <IconButton
-              icon={addIcon}
-              onClick={() => {
-                onChangeFill(Color.from("gray"));
-              }}
-            />
-          )
+          <div className="flex gap-1">
+            <RadixPopover.Root>
+              <RadixPopover.Trigger>
+                <Tooltip text="Color Tokens">
+                  <IconButton
+                    icon="material-symbols:palette-outline"
+                    onClick={action(() => {
+                      // TODO
+                    })}
+                  />
+                </Tooltip>
+              </RadixPopover.Trigger>
+              <RadixPopover.Portal>
+                <RadixPopover.Content
+                  align="start"
+                  className="bg-macaron-background z-10 border border-macaron-separator rounded-lg shadow-xl overflow-hidden"
+                >
+                  <div className="w-64 p-3 text-xs">
+                    <div>Search...</div>
+                    <div>This File</div>
+                    <div className="flex gap-1 flex-wrap">
+                      {projectState.project.colorTokens.all.map((token) => {
+                        return (
+                          <div
+                            className="w-6 h-6 rounded-full"
+                            style={{
+                              backgroundColor: token.value?.toHex(),
+                            }}
+                          />
+                        );
+                      })}
+                    </div>
+                  </div>
+                </RadixPopover.Content>
+              </RadixPopover.Portal>
+            </RadixPopover.Root>
+
+            {hasFill ? (
+              <IconButton
+                icon={removeIcon}
+                onClick={() => {
+                  onChangeFill(undefined);
+                }}
+              />
+            ) : (
+              <IconButton
+                icon={addIcon}
+                onClick={() => {
+                  onChangeFill(Color.from("gray"));
+                }}
+              />
+            )}
+          </div>
         }
       />
       {fills === Mixed ? (
