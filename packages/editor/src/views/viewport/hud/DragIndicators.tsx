@@ -1,20 +1,20 @@
 import React from "react";
 import { observer } from "mobx-react-lite";
 import colors from "../../../colors.js";
-import { scrollState } from "../../../state/ScrollState";
 import { viewportState } from "../../../state/ViewportState";
+import { projectState } from "../../../state/ProjectState.js";
 
 export const DragIndicators: React.FC = observer(function DragIndicators() {
   const dragPreviewRects = viewportState.dragPreviewRects.map((rect) =>
-    rect.transform(scrollState.documentToViewport)
+    rect.transform(projectState.scroll.documentToViewport)
   );
   const dropTargetPreviewRect =
     viewportState.dropDestination?.parent.computedRect.transform(
-      scrollState.documentToViewport
+      projectState.scroll.documentToViewport
     );
   const dropIndexIndicator =
     viewportState.dropDestination?.insertionLine?.transform(
-      scrollState.documentToViewport
+      projectState.scroll.documentToViewport
     );
 
   return (

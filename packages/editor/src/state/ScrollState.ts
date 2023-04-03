@@ -144,5 +144,3 @@ export class ScrollState {
     return snapThreshold / this.scale;
   }
 }
-
-export const scrollState = new ScrollState();

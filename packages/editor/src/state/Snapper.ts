@@ -8,7 +8,7 @@ import {
   snapRectToRects,
 } from "../utils/Snapping";
 import { Selectable } from "../models/Selectable";
-import { scrollState } from "./ScrollState";
+import { projectState } from "./ProjectState";
 
 export class Snapper {
   constructor() {
@@ -16,7 +16,7 @@ export class Snapper {
   }
 
   private get threshold(): number {
-    return scrollState.snapThreshold;
+    return projectState.scroll.snapThreshold;
   }
 
   @observable private _snappings: (PointSnapping | SameMarginSnapping)[] = [];
@@ -123,7 +123,7 @@ export class Snapper {
   );
 
   private rectsForInstances(instances: Set<Selectable>): Rect[] {
-    const viewportRect = scrollState.viewportRectInDocument;
+    const viewportRect = projectState.scroll.viewportRectInDocument;
     return [...instances]
       .map((p) => p.computedRect)
       .filter((rect) => !!viewportRect.intersection(rect));

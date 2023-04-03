@@ -5,8 +5,8 @@ import removeIcon from "@iconify-icons/ic/remove";
 import { twMerge } from "tailwind-merge";
 import { IconButton } from "../../components/IconButton";
 import { UnstyledInput } from "../../components/Input";
-import { scrollState } from "../../state/ScrollState";
 import { observer } from "mobx-react-lite";
+import { projectState } from "../../state/ProjectState";
 
 export const ZoomControl: React.FC<{
   className?: string;
@@ -49,17 +49,19 @@ export const ZoomControl: React.FC<{
 
 export const ZoomControlController: React.FC<{ className?: string }> = observer(
   ({ className }) => {
-    const percentage = Math.round(scrollState.scale * 100);
+    const scroll = projectState.scroll;
+
+    const percentage = Math.round(scroll.scale * 100);
     const onZoomOut = useCallback(
-      action(() => scrollState.zoomOut()),
+      action(() => scroll.zoomOut()),
       []
     );
     const onZoomIn = useCallback(
-      action(() => scrollState.zoomIn()),
+      action(() => scroll.zoomIn()),
       []
     );
     const onChangeZoomPercent = useCallback(
-      action((percent: number) => scrollState.zoomAroundCenter(percent / 100)),
+      action((percent: number) => scroll.zoomAroundCenter(percent / 100)),
       []
     );
     return (

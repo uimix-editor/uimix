@@ -24,7 +24,7 @@ import { PageHierarchyEntry } from "../models/PageList";
 import { posix as path } from "path-browserify";
 import { generateExampleNodes } from "../models/generateExampleNodes";
 import { dialogState } from "./DialogState";
-import { scrollState, viewportGeometry } from "./ScrollState";
+import { viewportGeometry } from "./ScrollState";
 import { compact } from "lodash-es";
 import { Component } from "../models/Component";
 import { Vec2 } from "paintvec";
@@ -390,7 +390,7 @@ class Commands {
       new Shortcut(["Shift", "Mod"], "Equal"),
     ],
     onClick: action(() => {
-      scrollState.zoomIn();
+      projectState.scroll.zoomIn();
     }),
   };
   readonly zoomOutCommand: MenuCommandDef = {
@@ -405,7 +405,7 @@ class Commands {
       new Shortcut(["Shift", "Mod"], "Minus"),
     ],
     onClick: action(() => {
-      scrollState.zoomOut();
+      projectState.scroll.zoomOut();
     }),
   };
   readonly resetZoomCommand: MenuCommandDef = {
@@ -416,7 +416,7 @@ class Commands {
       new Shortcut(["Mod"], "Numpad0"),
     ],
     onClick: action(() => {
-      scrollState.resetZoom();
+      projectState.scroll.resetZoom();
     }),
   };
   readonly showHideSidebarsCommand: MenuCommandDef = {
@@ -424,22 +424,24 @@ class Commands {
     text: "Show/Hide Sidebars",
     shortcuts: [new Shortcut(["Mod"], "Backslash")],
     onClick: action(() => {
+      const { scroll } = projectState;
+
       if (viewportState.isSideBarsVisible) {
         viewportState.isSideBarsVisible = false;
         viewportState.lastSideBarLeftOffset =
           viewportGeometry.domClientRect.left;
-        scrollState.setTranslation(
+        scroll.setTranslation(
           new Vec2(
-            scrollState.translation.x + viewportState.lastSideBarLeftOffset,
-            scrollState.translation.y
+            scroll.translation.x + viewportState.lastSideBarLeftOffset,
+            scroll.translation.y
           )
         );
       } else {
         viewportState.isSideBarsVisible = true;
-        scrollState.setTranslation(
+        scroll.setTranslation(
           new Vec2(
-            scrollState.translation.x - viewportState.lastSideBarLeftOffset,
-            scrollState.translation.y
+            scroll.translation.x - viewportState.lastSideBarLeftOffset,
+            scroll.translation.y
           )
         );
       }

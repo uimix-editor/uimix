@@ -5,7 +5,6 @@ import { observer } from "mobx-react-lite";
 import { Selectable } from "../../../models/Selectable";
 import { projectState } from "../../../state/ProjectState";
 import colors from "../../../colors.js";
-import { scrollState } from "../../../state/ScrollState";
 import { ResizeBox } from "../../../components/ResizeBox";
 import { roundRectXYWH } from "../../../types/Rect";
 import { snapper } from "../../../state/Snapper";
@@ -40,7 +39,7 @@ class NodeResizeBoxState {
   }
 
   @computed get viewportBoundingBox(): Rect | undefined {
-    return this.boundingBox?.transform(scrollState.documentToViewport);
+    return this.boundingBox?.transform(projectState.scroll.documentToViewport);
   }
 
   begin() {
@@ -54,7 +53,7 @@ class NodeResizeBoxState {
 
   change(p0: Vec2, p1: Vec2) {
     const newWholeBBox = assertNonNull(Rect.boundingRect([p0, p1])).transform(
-      scrollState.viewportToDocument
+      projectState.scroll.viewportToDocument
     );
     if (
       Math.round(newWholeBBox.width) !==
@@ -117,9 +116,10 @@ export const NodeResizeBox: React.FC = observer(function NodeResizeBox() {
       p1={boundingBox.bottomRight}
       snap={action((p: Vec2) => {
         // TODO: avoid transform
-        let pos = p.transform(scrollState.viewportToDocument).round;
+        const { viewportToDocument, documentToViewport } = projectState.scroll;
+        let pos = p.transform(viewportToDocument).round;
         pos = snapper.snapResizePoint(state.selectedInstances, pos);
-        return pos.transform(scrollState.documentToViewport);
+        return pos.transform(documentToViewport);
       })}
       onChangeBegin={action(state.begin.bind(state))}
       onChange={action(state.change.bind(state))}

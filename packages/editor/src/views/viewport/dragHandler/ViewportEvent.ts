@@ -1,7 +1,6 @@
 import { Vec2 } from "paintvec";
 import { Selectable } from "../../../models/Selectable";
 import { projectState } from "../../../state/ProjectState";
-import { scrollState } from "../../../state/ScrollState";
 import { assertNonNull } from "../../../utils/Assert";
 import { nodePicker } from "../renderer/NodePicker";
 
@@ -62,7 +61,8 @@ export class ViewportEvent {
     );
 
     this.clientPos = clientPos;
-    this.pos = options.pos ?? scrollState.documentPosForClientPos(clientPos);
+    this.pos =
+      options.pos ?? projectState.scroll.documentPosForClientPos(clientPos);
     this.event = event;
     this.mode = options.mode ?? "click";
   }

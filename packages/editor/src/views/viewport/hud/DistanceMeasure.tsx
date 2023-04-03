@@ -3,7 +3,6 @@ import { Rect } from "paintvec";
 import React from "react";
 import colors from "../../../colors";
 import { projectState } from "../../../state/ProjectState";
-import { scrollState } from "../../../state/ScrollState";
 import { viewportState } from "../../../state/ViewportState";
 import { XDistanceIndicator, YDistanceIndicator } from "./DistanceIndicator";
 
@@ -12,7 +11,7 @@ export const DistanceMeasure: React.FC = observer(function DistanceMeasure() {
     return null;
   }
 
-  const transform = scrollState.documentToViewport;
+  const transform = projectState.scroll.documentToViewport;
 
   const hoverRect = viewportState.hoveredSelectable?.computedRect;
   const selectedRect = Rect.union(

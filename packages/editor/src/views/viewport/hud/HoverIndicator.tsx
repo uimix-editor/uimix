@@ -1,12 +1,12 @@
 import React from "react";
 import { observer } from "mobx-react-lite";
 import colors from "../../../colors.js";
-import { scrollState } from "../../../state/ScrollState";
 import { viewportState } from "../../../state/ViewportState";
+import { projectState } from "../../../state/ProjectState.js";
 
 export const HoverIndicator: React.FC = observer(function HoverIndicator() {
   const rect = viewportState.hoveredSelectable?.computedRect?.transform(
-    scrollState.documentToViewport
+    projectState.scroll.documentToViewport
   );
 
   return rect ? (

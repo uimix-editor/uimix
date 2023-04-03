@@ -3,7 +3,7 @@ import { observer } from "mobx-react-lite";
 import { Rect, Vec2 } from "paintvec";
 import { createRef, useEffect } from "react";
 import { projectState } from "../../state/ProjectState";
-import { scrollState, viewportGeometry } from "../../state/ScrollState";
+import { viewportGeometry } from "../../state/ScrollState";
 import { PanOverlay } from "./PanOverlay";
 import { DragHandlerOverlay } from "./dragHandler/DragHandlerOverlay";
 import { HUD } from "./hud/HUD";
@@ -40,24 +40,26 @@ export const Viewport: React.FC = observer(function Viewport() {
   }, []);
 
   const onWheel = action((e: React.WheelEvent) => {
+    const { scroll } = projectState;
+
     if (e.ctrlKey || e.metaKey) {
       const factor = Math.pow(2, -e.deltaY / 100);
       const pos = new Vec2(e.clientX, e.clientY).sub(
         viewportGeometry.domClientRect.topLeft
       );
-      scrollState.zoomAround(pos, scrollState.scale * factor);
+      scroll.zoomAround(pos, scroll.scale * factor);
 
       if (!projectState.page?.node.childCount) {
         // No layers in page
-        scrollState.setTranslation(new Vec2(0));
+        scroll.setTranslation(new Vec2(0));
       }
     } else {
       if (!projectState.page?.node.childCount) {
         // No layers in page
         return;
       }
-      scrollState.setTranslation(
-        scrollState.translation.sub(new Vec2(e.deltaX, e.deltaY).round)
+      scroll.setTranslation(
+        scroll.translation.sub(new Vec2(e.deltaX, e.deltaY).round)
       );
     }
   });

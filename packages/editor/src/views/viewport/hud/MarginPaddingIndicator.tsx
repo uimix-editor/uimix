@@ -2,7 +2,6 @@ import React, { Fragment } from "react";
 import { observer } from "mobx-react-lite";
 import { Rect } from "paintvec";
 import { projectState } from "../../../state/ProjectState";
-import { scrollState } from "../../../state/ScrollState";
 
 function rectToSVGPoints(rect: Rect) {
   return [...rect.vertices, rect.topLeft].map((v) => `${v.x},${v.y}`).join(" ");
@@ -17,7 +16,7 @@ function rectToSVGPointsReverse(rect: Rect) {
 export const MarginPaddingIndicator: React.FC = observer(
   function MarginPaddingArea() {
     const instances = projectState.selectedSelectables;
-    const transform = scrollState.documentToViewport;
+    const transform = projectState.scroll.documentToViewport;
 
     return (
       <g opacity={0.1}>

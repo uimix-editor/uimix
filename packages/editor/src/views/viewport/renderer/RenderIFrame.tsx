@@ -4,7 +4,6 @@ import { IFrame } from "../../../components/IFrame";
 import { ForeignComponentManager } from "../../../models/ForeignComponentManager";
 import { Selectable } from "../../../models/Selectable";
 import { projectState } from "../../../state/ProjectState";
-import { scrollState } from "../../../state/ScrollState";
 import { viewportRootMarker } from "./ComputedRectProvider";
 import { FontLoader } from "./FontLoader";
 import { nodePicker } from "./NodePicker";
@@ -16,7 +15,7 @@ const RenderIFrameBody: React.FC = observer(() => {
       style={{
         position: "absolute",
         transformOrigin: "left top",
-        transform: scrollState.documentToViewport.toCSSMatrixString(),
+        transform: projectState.scroll.documentToViewport.toCSSMatrixString(),
       }}
       {...{
         [viewportRootMarker]: true,
