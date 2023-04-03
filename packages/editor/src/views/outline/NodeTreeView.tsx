@@ -24,7 +24,6 @@ import { viewportState } from "../../state/ViewportState";
 import { twMerge } from "tailwind-merge";
 import { getIconAndTextForCondition } from "../viewport/VariantLabels";
 import scrollIntoView from "scroll-into-view-if-needed";
-import clsx from "clsx";
 
 interface NodeTreeViewItem extends TreeViewItem {
   selectable: Selectable;
