@@ -47,12 +47,12 @@ export const Viewport: React.FC = observer(function Viewport() {
       );
       scrollState.zoomAround(pos, scrollState.scale * factor);
 
-      if (!projectState.page?.childCount) {
+      if (!projectState.page?.node.childCount) {
         // No layers in page
         scrollState.setTranslation(new Vec2(0));
       }
     } else {
-      if (!projectState.page?.childCount) {
+      if (!projectState.page?.node.childCount) {
         // No layers in page
         return;
       }

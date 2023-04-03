@@ -83,7 +83,8 @@ class Commands {
     const firstSelected = projectState.selectedSelectables[0];
     if (!firstSelected) {
       // select all top level nodes
-      for (const selectable of projectState.page?.selectable.children ?? []) {
+      for (const selectable of projectState.page?.node.selectable.children ??
+        []) {
         selectable.select();
       }
     } else {
@@ -483,7 +484,7 @@ class Commands {
               if (!page) {
                 return;
               }
-              generateExampleNodes(page);
+              generateExampleNodes(page.node);
               projectState.undoManager.stopCapturing();
             }),
           },

@@ -79,7 +79,7 @@ const ComponentThumbnails: React.FC<{
   const sections = compact(
     pages.map((page) => {
       const components = compact(
-        page.children.map((c) => {
+        page.node.children.map((c) => {
           if (queryTester.test(c.name)) return Component.from(c);
         })
       );
@@ -222,7 +222,7 @@ const ComponentThumbnail: React.FC<{
           const instanceNode = project.nodes.create(
             component instanceof Component ? "instance" : "foreign"
           );
-          page.append([instanceNode]);
+          page.node.append([instanceNode]);
 
           const instanceNodeStyle = instanceNode.selectable.style;
           instanceNodeStyle.position = {

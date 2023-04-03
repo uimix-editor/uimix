@@ -11,6 +11,9 @@ import { Component } from "./Component";
 import { ObservableYArray } from "../utils/ObservableYArray";
 import { loadProjectJSON, toProjectJSON } from "./ProjectJSON";
 import { ColorTokenList } from "./ColorToken";
+import { Page } from "./Page";
+import { compact } from "lodash-es";
+import { assertNonNull } from "../utils/Assert";
 
 export interface PageHierarchyFolderEntry {
   type: "directory";
@@ -25,7 +28,7 @@ export interface PageHierarchyPageEntry {
   id: string;
   path: string;
   name: string;
-  page: Node;
+  page: Page;
 }
 
 export type PageHierarchyEntry =
@@ -46,14 +49,15 @@ class Pages {
     return this.node.childCount;
   }
 
-  get all(): Node[] {
-    return this.node.children;
+  get all(): Page[] {
+    return compact(this.node.children.map((node) => Page.from(node)));
   }
 
-  create(filePath: string): Node {
+  create(filePath: string): Page {
     const node = this.project.nodes.create("page");
-    node.name = filePath;
-    return node;
+    const page = assertNonNull(Page.from(node));
+    page.name = filePath;
+    return page;
   }
 
   toHierarchy(): PageHierarchyFolderEntry {
@@ -110,7 +114,7 @@ class Pages {
     return root;
   }
 
-  affectedPagesForPath(path: string): Node[] {
+  affectedPagesForPath(path: string): Page[] {
     return this.all.filter(
       (page) => page.name === path || page.name.startsWith(path + "/")
     );
@@ -120,7 +124,7 @@ class Pages {
     const pagesToDelete = this.affectedPagesForPath(path);
 
     for (const page of pagesToDelete) {
-      page.remove();
+      page.node.remove();
       // TODO: delete dangling nodes?
       //this.project.nodes.remove(doc.root);
     }
@@ -179,7 +183,7 @@ export class Project {
     const components: Component[] = [];
 
     for (const page of this.pages.all) {
-      for (const node of page.children) {
+      for (const node of page.node.children) {
         const component = Component.from(node);
         if (component) {
           components.push(component);

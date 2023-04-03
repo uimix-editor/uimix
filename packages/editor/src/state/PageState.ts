@@ -1,20 +1,20 @@
 import { computed, makeObservable } from "mobx";
-import { Node } from "../models/Node";
 import { Selectable } from "../models/Selectable";
 import { ScrollState } from "./ScrollState";
+import { Page } from "../models/Page";
 
 export class PageState {
-  constructor(pageNode: Node) {
-    this.pageNode = pageNode;
+  constructor(page: Page) {
+    this.page = page;
     makeObservable(this);
   }
 
-  readonly pageNode: Node;
+  readonly page: Page;
   readonly scroll = new ScrollState();
 
   @computed get selectedSelectables(): Selectable[] {
     return (
-      this.pageNode.selectable?.children.flatMap(
+      this.page.node.selectable?.children.flatMap(
         (s) => s.selectedDescendants
       ) ?? []
     );
