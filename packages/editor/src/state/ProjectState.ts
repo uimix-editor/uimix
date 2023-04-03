@@ -11,6 +11,7 @@ import { getIncrementalUniqueName } from "../utils/Name";
 import { generateExampleNodes } from "../models/generateExampleNodes";
 import demoFile from "../../../sandbox/src/uimix/landing.uimix?raw";
 import { reassignNewIDs } from "../models/ProjectJSONExtra";
+import { PageState } from "./PageState";
 import { Page } from "../models/Page";
 import { ScrollState } from "./ScrollState";
 
@@ -36,32 +37,26 @@ export class ProjectState {
   }
   readonly undoManager: Y.UndoManager;
 
-  // MARK: Scroll
-
-  readonly scrolls = new Map<string /* page id */, ScrollState>();
-
-  @computed get scroll(): ScrollState {
+  get pageState(): PageState | undefined {
     const page = this.page;
     if (!page) {
-      return new ScrollState();
+      return;
     }
-    let scroll = this.scrolls.get(page.id);
-    if (!scroll) {
-      scroll = new ScrollState();
-      this.scrolls.set(page.id, scroll);
-    }
-    return scroll;
+    return PageState.from(page);
+  }
+
+  // MARK: Scroll
+
+  get scroll(): ScrollState {
+    return this.pageState?.scroll ?? new ScrollState();
   }
 
   // MARK: Selection
 
   @computed get selectedSelectables(): Selectable[] {
-    return (
-      this.page?.node.selectable?.children.flatMap(
-        (s) => s.selectedDescendants
-      ) ?? []
-    );
+    return this.pageState?.selectedSelectables ?? [];
   }
+
   // MARK: Collapsing
 
   readonly collapsedPaths = observable.set<string>();
