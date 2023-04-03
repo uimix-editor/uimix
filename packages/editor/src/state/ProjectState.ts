@@ -12,6 +12,7 @@ import { getIncrementalUniqueName } from "../utils/Name";
 import { generateExampleNodes } from "../models/generateExampleNodes";
 import demoFile from "../../../sandbox/src/uimix/landing.uimix?raw";
 import { reassignNewIDs } from "../models/ProjectJSONExtra";
+import { PageState } from "./PageState";
 
 export class ProjectState {
   constructor() {
@@ -26,26 +27,27 @@ export class ProjectState {
   @computed get page(): Node | undefined {
     return this.pageID ? this.project.nodes.get(this.pageID) : undefined;
   }
-
   readonly undoManager: Y.UndoManager;
+
+  readonly pageStates = new WeakMap<Node, PageState>();
+  get pageState(): PageState | undefined {
+    const page = this.page;
+    if (!page) {
+      return;
+    }
+
+    let pageState = this.pageStates.get(page);
+    if (!pageState) {
+      pageState = new PageState(page);
+      this.pageStates.set(page, pageState);
+    }
+    return pageState;
+  }
 
   // MARK: Selection
 
   @computed get selectedSelectables(): Selectable[] {
-    return (
-      this.page?.selectable?.children.flatMap((s) => s.selectedDescendants) ??
-      []
-    );
-  }
-
-  @computed get selectedNodes(): Node[] {
-    const nodes: Node[] = [];
-    for (const s of this.selectedSelectables) {
-      if (s.idPath.length === 1) {
-        nodes.push(s.originalNode);
-      }
-    }
-    return nodes;
+    return this.pageState?.selectedSelectables ?? [];
   }
 
   // MARK: Collapsing
