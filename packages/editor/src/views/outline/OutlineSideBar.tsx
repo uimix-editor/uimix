@@ -8,7 +8,7 @@ import {
 import { ScrollArea } from "../../components/ScrollArea";
 import { NodeTreeView } from "./NodeTreeView";
 import { Icon } from "@iconify/react";
-import { PageTreeView } from "./DocumentTreeView";
+import { PageTreeView } from "./PageTreeView";
 
 export const OutlineSideBar: React.FC = observer(() => {
   return (
