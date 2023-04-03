@@ -73,7 +73,14 @@ export const ColorTokenListPane = observer(() => {
                 onChangeEnd={action(() => {
                   projectState.undoManager.stopCapturing();
                 })}
-              />
+              >
+                <div
+                  className="w-6 h-6 rounded-full border border-macaron-uiBackground"
+                  style={{
+                    backgroundColor: token.value?.toHex(),
+                  }}
+                />
+              </ColorPopover>
               <DoubleClickToEdit
                 className="flex-1"
                 value={token.name ?? ""}

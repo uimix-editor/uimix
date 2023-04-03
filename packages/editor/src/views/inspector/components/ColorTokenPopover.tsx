@@ -51,7 +51,7 @@ export const ColorTokenPopover: React.FC<{
                 return (
                   <Tooltip text={token.name} key={token.id} delayDuration={0}>
                     <div
-                      className="w-6 h-6 rounded-full"
+                      className="w-6 h-6 rounded-full border border-macaron-uiBackground"
                       style={{
                         backgroundColor: token.value?.toHex(),
                       }}
