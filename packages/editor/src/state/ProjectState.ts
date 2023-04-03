@@ -11,7 +11,6 @@ import { getIncrementalUniqueName } from "../utils/Name";
 import { generateExampleNodes } from "../models/generateExampleNodes";
 import demoFile from "../../../sandbox/src/uimix/landing.uimix?raw";
 import { reassignNewIDs } from "../models/ProjectJSONExtra";
-import { PageState } from "./PageState";
 import { Page } from "../models/Page";
 
 export class ProjectState {
@@ -36,20 +35,15 @@ export class ProjectState {
   }
   readonly undoManager: Y.UndoManager;
 
-  get pageState(): PageState | undefined {
-    const page = this.page;
-    if (!page) {
-      return;
-    }
-    return PageState.from(page);
-  }
-
   // MARK: Selection
 
   @computed get selectedSelectables(): Selectable[] {
-    return this.pageState?.selectedSelectables ?? [];
+    return (
+      this.page?.node.selectable?.children.flatMap(
+        (s) => s.selectedDescendants
+      ) ?? []
+    );
   }
-
   // MARK: Collapsing
 
   readonly collapsedPaths = observable.set<string>();
