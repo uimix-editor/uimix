@@ -9,6 +9,7 @@ import { useState } from "react";
 import { IconButton } from "../../../components/IconButton";
 import { ColorRef } from "../../../models/ColorRef";
 import { twMerge } from "tailwind-merge";
+import { QueryTester } from "../../../utils/QueryTester";
 
 export const ColorTokenPopover: React.FC<{
   value?: ColorRef;
@@ -16,6 +17,7 @@ export const ColorTokenPopover: React.FC<{
   children: React.ReactNode;
 }> = ({ value, onChange, children }) => {
   const [searchText, setSearchText] = useState("");
+  const queryTester = new QueryTester(searchText);
 
   return (
     <RadixPopover.Root>
@@ -49,27 +51,29 @@ export const ColorTokenPopover: React.FC<{
               />
             </div>
             <div className="flex gap-1 flex-wrap">
-              {projectState.project.colorTokens.all.map((token) => {
-                const selected =
-                  value?.value.type === "token" &&
-                  value?.value.value.id === token.id;
-                return (
-                  <Tooltip text={token.name} key={token.id} delayDuration={0}>
-                    <div
-                      className={twMerge(
-                        "w-6 h-6 rounded-full border border-macaron-uiBackground",
-                        selected && "ring-2 ring-macaron-active"
-                      )}
-                      style={{
-                        backgroundColor: token.value?.toHex(),
-                      }}
-                      onClick={action(() => {
-                        onChange(token);
-                      })}
-                    />
-                  </Tooltip>
-                );
-              })}
+              {projectState.project.colorTokens.all
+                .filter((token) => queryTester.test(token.name ?? ""))
+                .map((token) => {
+                  const selected =
+                    value?.value.type === "token" &&
+                    value?.value.value.id === token.id;
+                  return (
+                    <Tooltip text={token.name} key={token.id} delayDuration={0}>
+                      <div
+                        className={twMerge(
+                          "w-6 h-6 rounded-full border border-macaron-uiBackground",
+                          selected && "ring-2 ring-macaron-active"
+                        )}
+                        style={{
+                          backgroundColor: token.value?.toHex(),
+                        }}
+                        onClick={action(() => {
+                          onChange(token);
+                        })}
+                      />
+                    </Tooltip>
+                  );
+                })}
             </div>
           </div>
         </RadixPopover.Content>
