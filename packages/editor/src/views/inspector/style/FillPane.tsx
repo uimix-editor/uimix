@@ -11,7 +11,6 @@ import { InspectorPane } from "../components/InspectorPane";
 import { action } from "mobx";
 import { InspectorTargetContext } from "../components/InspectorTargetContext";
 import { ColorToken } from "../../../models/ColorToken";
-import { ColorTokenPopover } from "../components/ColorTokenPopover";
 
 export const FillPane: React.FC = observer(function FillPane() {
   const selectables = projectState.selectedSelectables.filter(
@@ -50,14 +49,6 @@ export const FillPane: React.FC = observer(function FillPane() {
         dimmed={!hasFill}
         buttons={
           <div className="flex gap-1">
-            <ColorTokenPopover
-              onSelect={action((token) => {
-                onChangeFill(token);
-                onChangeEndFill();
-              })}
-            >
-              <IconButton icon="material-symbols:palette-outline" />
-            </ColorTokenPopover>
             {hasFill ? (
               <IconButton
                 icon={removeIcon}
@@ -81,17 +72,15 @@ export const FillPane: React.FC = observer(function FillPane() {
           <div className="text-macaron-disabledText">Mixed</div>
         ) : fill ? (
           <div>
-            {typeof fill.color === "string" ? (
-              <ColorInput
-                value={Color.from(fill.color) ?? Color.black}
-                onChange={onChangeFill}
-                onChangeEnd={onChangeEndFill}
-              />
-            ) : (
-              <div>
-                {projectState.project.colorTokens.get(fill.color.id)?.name}
-              </div>
-            )}
+            <ColorInput
+              value={
+                typeof fill.color === "string"
+                  ? Color.from(fill.color)
+                  : projectState.project.colorTokens.get(fill.color.id)
+              }
+              onChange={onChangeFill}
+              onChangeEnd={onChangeEndFill}
+            />
           </div>
         ) : null}
       </InspectorTargetContext.Provider>

@@ -5,6 +5,9 @@ import { ColorPicker } from "../../../components/color/ColorPicker";
 import { Input } from "../../../components/Input";
 import { Color } from "../../../utils/Color";
 import { twMerge } from "tailwind-merge";
+import { ColorToken } from "../../../models/ColorToken";
+import { ColorTokenPopover } from "./ColorTokenPopover";
+import { IconButton } from "../../../components/IconButton";
 
 const ColorLabelBackground = styled.div`
   ${checkPattern("white", "#aaa", "8px")}
@@ -70,48 +73,89 @@ export function ColorInput({
   onChange,
   onChangeEnd,
 }: {
-  value: Color;
-  onChange?: (value: Color) => void;
+  value?: Color | ColorToken;
+  onChange?: (value: Color | ColorToken) => void;
   onChangeEnd?: () => void;
 }): JSX.Element {
-  const valueWithoutAlpha = value?.withAlpha(1);
-  const alpha = value?.a;
+  const color =
+    (value instanceof ColorToken ? value.value : value) ?? Color.black;
 
-  const hex = valueWithoutAlpha.toHex6().slice(1);
+  const colorWithAlpha = color.withAlpha(1);
+  const alpha = color.a;
+
+  const hex = colorWithAlpha.toHex6().slice(1);
 
   return (
-    <div className="flex gap-2">
+    <div className="flex gap-2 items-center h-7">
       <ColorPopover
-        value={value}
+        value={color}
         onChange={onChange}
         onChangeEnd={onChangeEnd}
       />
-      <Input
-        className="flex-1"
-        value={hex}
-        onChange={(text) => {
-          const color = Color.from(text);
-          if (color) {
-            onChange?.(color);
-            onChangeEnd?.();
-          }
-        }}
-      />
-      <Input
-        className="w-16"
-        icon="%"
-        value={
-          alpha !== undefined ? Math.round(alpha * 100).toString() : undefined
-        }
-        onChange={(text) => {
-          let alpha = Number.parseInt(text) / 100;
-          if (isNaN(alpha)) {
-            alpha = 1;
-          }
-          onChange?.(value.withAlpha(alpha));
-          onChangeEnd?.();
-        }}
-      />
+      {value instanceof ColorToken ? (
+        <>
+          <ColorTokenPopover
+            onSelect={(token) => {
+              onChange?.(token);
+              onChangeEnd?.();
+            }}
+          >
+            <button
+              className="flex-1 text-left
+              h-7 bg-macaron-uiBackground rounded px-1.5
+            "
+            >
+              {value.name}
+            </button>
+          </ColorTokenPopover>
+          <IconButton
+            icon="material-symbols:link-off"
+            onClick={() => {
+              onChange?.(color);
+              onChangeEnd?.();
+            }}
+          />
+        </>
+      ) : (
+        <>
+          <Input
+            className="flex-1"
+            value={hex}
+            onChange={(text) => {
+              const color = Color.from(text);
+              if (color) {
+                onChange?.(color);
+                onChangeEnd?.();
+              }
+            }}
+          />
+          <Input
+            className="w-16"
+            icon="%"
+            value={
+              alpha !== undefined
+                ? Math.round(alpha * 100).toString()
+                : undefined
+            }
+            onChange={(text) => {
+              let alpha = Number.parseInt(text) / 100;
+              if (isNaN(alpha)) {
+                alpha = 1;
+              }
+              onChange?.(color.withAlpha(alpha));
+              onChangeEnd?.();
+            }}
+          />
+          <ColorTokenPopover
+            onSelect={(token) => {
+              onChange?.(token);
+              onChangeEnd?.();
+            }}
+          >
+            <IconButton icon="material-symbols:palette-outline" />
+          </ColorTokenPopover>
+        </>
+      )}
     </div>
   );
 }
