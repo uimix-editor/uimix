@@ -7,7 +7,7 @@ import { projectState } from "../../../state/ProjectState";
 import { action } from "mobx";
 import { compact } from "lodash-es";
 import { DoubleClickToEdit } from "../../../components/DoubleClickToEdit";
-import { ColorPopoverButton } from "../components/ColorInput";
+import { ColorPopover } from "../components/ColorInput";
 import { Color } from "../../../utils/Color";
 import { showContextMenu } from "../../ContextMenu";
 
@@ -65,7 +65,7 @@ export const ColorTokenListPane = observer(() => {
                 ]);
               })}
             >
-              <ColorPopoverButton
+              <ColorPopover
                 value={token.value ?? Color.black}
                 onChange={action((color: Color) => {
                   token.value = color;

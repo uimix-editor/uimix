@@ -9,29 +9,37 @@ const ColorLabelBackground = styled.div`
   ${checkPattern("white", "#aaa", "8px")}
 `;
 
-export function ColorPopoverButton({
+export const ColorButton: React.FC<{
+  value?: Color;
+}> = ({ value }) => {
+  return (
+    <div className="w-6 h-6 rounded p-0.5 bg-macaron-uiBackground">
+      <ColorLabelBackground className="w-full h-full rounded-sm overflow-hidden">
+        <div
+          className="w-full h-full"
+          style={{
+            backgroundColor: value?.toHex() ?? "transparent",
+          }}
+        />
+      </ColorLabelBackground>
+    </div>
+  );
+};
+
+export function ColorPopover({
   value,
   onChange,
   onChangeEnd,
+  children = <ColorButton value={value} />,
 }: {
   value: Color;
   onChange?: (value: Color) => void;
   onChangeEnd?: () => void;
+  children?: React.ReactNode;
 }): JSX.Element {
   return (
     <RadixPopover.Root>
-      <RadixPopover.Trigger>
-        <div className="w-6 h-6 rounded p-0.5 bg-macaron-uiBackground">
-          <ColorLabelBackground className="w-full h-full rounded-sm overflow-hidden">
-            <div
-              className="w-full h-full"
-              style={{
-                backgroundColor: value?.toHex() ?? "transparent",
-              }}
-            />
-          </ColorLabelBackground>
-        </div>
-      </RadixPopover.Trigger>
+      <RadixPopover.Trigger>{children}</RadixPopover.Trigger>
       <RadixPopover.Portal>
         <RadixPopover.Content
           align="start"
@@ -64,7 +72,7 @@ export function ColorInput({
 
   return (
     <div className="flex gap-2">
-      <ColorPopoverButton
+      <ColorPopover
         value={value}
         onChange={onChange}
         onChangeEnd={onChangeEnd}
