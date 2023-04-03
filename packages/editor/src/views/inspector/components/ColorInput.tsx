@@ -4,16 +4,25 @@ import { checkPattern } from "../../../components/checkPattern";
 import { ColorPicker } from "../../../components/color/ColorPicker";
 import { Input } from "../../../components/Input";
 import { Color } from "../../../utils/Color";
+import { twMerge } from "tailwind-merge";
 
 const ColorLabelBackground = styled.div`
   ${checkPattern("white", "#aaa", "8px")}
 `;
 
-export const ColorButton: React.FC<{
-  value?: Color;
-}> = ({ value }) => {
+export const ColorButton: React.FC<
+  {
+    value?: Color;
+  } & React.PropsWithoutRef<JSX.IntrinsicElements["div"]>
+> = ({ className, value, ...props }) => {
   return (
-    <div className="w-6 h-6 rounded p-0.5 bg-macaron-uiBackground">
+    <div
+      {...props}
+      className={twMerge(
+        "w-6 h-6 rounded p-0.5 bg-macaron-uiBackground",
+        className
+      )}
+    >
       <ColorLabelBackground className="w-full h-full rounded-sm overflow-hidden">
         <div
           className="w-full h-full"
