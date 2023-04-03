@@ -66,7 +66,12 @@ export const NodeRenderer: React.FC<{
     const cssStyle: React.CSSProperties = {
       all: "revert",
       boxSizing: "border-box",
-      ...buildNodeCSS(type, style, parentLayout),
+      ...buildNodeCSS(
+        type,
+        style,
+        (tokenID) => selectable.project.colorTokens.resolve(tokenID),
+        parentLayout
+      ),
       ...(selectable === viewportState.focusedSelectable
         ? {
             opacity: 0,

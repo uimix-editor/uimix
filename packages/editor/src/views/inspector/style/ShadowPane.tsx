@@ -72,16 +72,19 @@ export const ShadowPane: React.FC = observer(function ShadowPane() {
             return (
               <div className="flex gap-2 items-center">
                 <div className="flex flex-col gap-2">
-                  <ColorInput
-                    value={Color.from(shadow.color) ?? Color.black}
-                    onChange={action((color) => {
-                      const newShadow = { ...shadow, color: color.toHex() };
-                      onChangeShadow(newShadow, i);
-                    })}
-                    onChangeEnd={action(() => {
-                      projectState.undoManager.stopCapturing();
-                    })}
-                  />
+                  {typeof shadow.color === "string" && (
+                    // TODO: color tokens
+                    <ColorInput
+                      value={Color.from(shadow.color) ?? Color.black}
+                      onChange={action((color) => {
+                        const newShadow = { ...shadow, color: color.toHex() };
+                        onChangeShadow(newShadow, i);
+                      })}
+                      onChangeEnd={action(() => {
+                        projectState.undoManager.stopCapturing();
+                      })}
+                    />
+                  )}
                   <div className="grid grid-cols-4 gap-1">
                     <Input
                       // TODO: refactor to NumberInput?

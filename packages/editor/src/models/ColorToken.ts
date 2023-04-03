@@ -79,6 +79,10 @@ export class ColorTokenList {
     return new ColorToken(this.project, id);
   }
 
+  resolve(id: string): string {
+    return this.get(id)?.value?.toHex() ?? "transparent";
+  }
+
   delete(id: string) {
     this.data.delete(id);
   }

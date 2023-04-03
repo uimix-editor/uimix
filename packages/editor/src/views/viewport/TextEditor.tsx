@@ -13,7 +13,9 @@ export const TextEditorBody: React.FC<{
 }> = observer(({ selectable }) => {
   const style = selectable.style;
 
-  const cssStyle = buildNodeCSS("text", style);
+  const cssStyle = buildNodeCSS("text", style, (tokenID) =>
+    selectable.project.colorTokens.resolve(tokenID)
+  );
   const computedRect = selectable.computedRect;
 
   const fitWidth = style.width.type === "hug";
