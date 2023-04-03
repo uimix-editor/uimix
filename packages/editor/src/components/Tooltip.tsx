@@ -21,7 +21,7 @@ export function Tooltip({
       <RadixTooltip.Portal>
         <RadixTooltip.Content
           sideOffset={5}
-          className="pointer-events-none bg-white text-black rounded shadow text-macaron-base px-2 py-1"
+          className="pointer-events-none bg-white text-black rounded shadow text-macaron-base px-2 py-1 z-10"
           side={side}
         >
           {text}

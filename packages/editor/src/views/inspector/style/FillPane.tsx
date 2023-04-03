@@ -75,12 +75,14 @@ export const FillPane: React.FC = observer(function FillPane() {
                     <div className="flex gap-1 flex-wrap">
                       {projectState.project.colorTokens.all.map((token) => {
                         return (
-                          <div
-                            className="w-6 h-6 rounded-full"
-                            style={{
-                              backgroundColor: token.value?.toHex(),
-                            }}
-                          />
+                          <Tooltip text={token.name} key={token.id}>
+                            <div
+                              className="w-6 h-6 rounded-full"
+                              style={{
+                                backgroundColor: token.value?.toHex(),
+                              }}
+                            />
+                          </Tooltip>
                         );
                       })}
                     </div>
