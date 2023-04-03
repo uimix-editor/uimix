@@ -12,6 +12,7 @@ import { action } from "mobx";
 import { InspectorTargetContext } from "../components/InspectorTargetContext";
 import { Tooltip } from "../../../components/Tooltip";
 import * as RadixPopover from "@radix-ui/react-popover";
+import { SearchInput } from "../../outline/SearchInput";
 
 export const FillPane: React.FC = observer(function FillPane() {
   const selectables = projectState.selectedSelectables.filter(
@@ -58,11 +59,19 @@ export const FillPane: React.FC = observer(function FillPane() {
               <RadixPopover.Portal>
                 <RadixPopover.Content
                   align="start"
-                  className="bg-macaron-background z-10 border border-macaron-separator rounded-lg shadow-xl overflow-hidden"
+                  className="bg-macaron-background z-10 border border-macaron-separator rounded-lg shadow-xl overflow-hidden text-xs"
                 >
-                  <div className="w-64 p-3 text-xs">
-                    <div>Search...</div>
-                    <div>This File</div>
+                  <SearchInput
+                    placeholder="Search"
+                    value={""}
+                    onChangeValue={action((value) => {
+                      // TODO
+                    })}
+                  />
+                  <div className="w-64 p-3">
+                    <div className="text-macaron-label font-medium mb-2">
+                      This Document
+                    </div>
                     <div className="flex gap-1 flex-wrap">
                       {projectState.project.colorTokens.all.map((token) => {
                         return (
