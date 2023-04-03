@@ -4,11 +4,17 @@ import { action } from "mobx";
 import { SearchInput } from "../../outline/SearchInput";
 import { projectState } from "../../../state/ProjectState";
 import { ColorToken } from "../../../models/ColorToken";
+import { Color } from "../../../utils/Color";
+import { useState } from "react";
+import { IconButton } from "../../../components/IconButton";
 
 export const ColorTokenPopover: React.FC<{
-  onSelect: (token: ColorToken) => void;
+  value?: Color | ColorToken;
+  onChange: (token: ColorToken) => void;
   children: React.ReactNode;
-}> = ({ onSelect, children }) => {
+}> = ({ value, onChange, children }) => {
+  const [searchText, setSearchText] = useState("");
+
   return (
     <RadixPopover.Root>
       <Tooltip text="Color Tokens">
@@ -21,14 +27,24 @@ export const ColorTokenPopover: React.FC<{
         >
           <SearchInput
             placeholder="Search"
-            value={""}
-            onChangeValue={action((value) => {
-              // TODO
-            })}
+            value={searchText}
+            onChangeValue={setSearchText}
           />
           <div className="w-64 p-3">
-            <div className="text-macaron-label font-medium mb-2">
-              This Document
+            <div className="flex items-center justify-between mb-2">
+              <div className="text-macaron-label font-medium">
+                This Document
+              </div>
+              <IconButton
+                icon="material-symbols:add"
+                onClick={action(() => {
+                  // Add
+                  const token = projectState.project.colorTokens.add();
+                  token.value = value instanceof Color ? value : value?.value;
+                  token.name = token.value?.getName();
+                  onChange(token);
+                })}
+              />
             </div>
             <div className="flex gap-1 flex-wrap">
               {projectState.project.colorTokens.all.map((token) => {
@@ -40,7 +56,7 @@ export const ColorTokenPopover: React.FC<{
                         backgroundColor: token.value?.toHex(),
                       }}
                       onClick={action(() => {
-                        onSelect(token);
+                        onChange(token);
                       })}
                     />
                   </Tooltip>

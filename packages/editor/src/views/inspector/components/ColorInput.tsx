@@ -96,7 +96,7 @@ export function ColorInput({
       {value instanceof ColorToken ? (
         <>
           <ColorTokenPopover
-            onSelect={(token) => {
+            onChange={(token) => {
               onChange?.(token);
               onChangeEnd?.();
             }}
@@ -150,7 +150,8 @@ export function ColorInput({
             }}
           />
           <ColorTokenPopover
-            onSelect={(token) => {
+            value={value}
+            onChange={(token) => {
               onChange?.(token);
               onChangeEnd?.();
             }}
