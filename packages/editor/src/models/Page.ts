@@ -2,12 +2,20 @@ import { Node } from "./Node";
 import { Project } from "./Project";
 import { Selectable } from "./Selectable";
 
+const instances = new WeakMap<Node, Page>();
+
 export class Page {
   static from(node: Node): Page | undefined {
     if (node.type !== "page") {
       return;
     }
-    return new Page(node);
+
+    let instance = instances.get(node);
+    if (!instance) {
+      instance = new Page(node);
+      instances.set(node, instance);
+    }
+    return instance;
   }
 
   private constructor(node: Node) {

@@ -22,13 +22,13 @@ export class PageState {
   }
 
   static from(page: Page): PageState {
-    let pageState = pageStates.get(page.node);
+    let pageState = pageStates.get(page);
     if (!pageState) {
       pageState = new PageState(page);
-      pageStates.set(page.node, pageState);
+      pageStates.set(page, pageState);
     }
     return pageState;
   }
 }
 
-const pageStates = new WeakMap<Node, PageState>();
+const pageStates = new WeakMap<Page, PageState>();
