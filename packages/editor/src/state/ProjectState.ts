@@ -59,11 +59,10 @@ export class ProjectState {
   setupInitContent() {
     const pages = this.project.pages.all;
     if (pages.length === 0) {
-      const page = this.project.nodes.create("page");
-      page.name = "Page 1";
-      this.project.node.append([page]);
+      const page = this.project.pages.create("Page 1");
+      this.project.node.append([page.node]);
       this.pageID = page.id;
-      generateExampleNodes(page);
+      generateExampleNodes(page.node);
       if (this.project.componentURLs.length === 0) {
         this.project.componentURLs.push([
           "https://cdn.jsdelivr.net/gh/uimix-editor/uimix@ba0157d5/packages/sandbox/dist-components/components.js",
