@@ -2,6 +2,12 @@ import { z } from "zod";
 import { NodeJSON } from "./node/node.js";
 import { StyleJSON } from "./style/style.js";
 
+export const ColorToken = z.object({
+  name: z.string(),
+  value: z.string(),
+  index: z.number(),
+});
+
 export const ImageType = z.enum(["image/png", "image/jpeg"]);
 export type ImageType = z.infer<typeof ImageType>;
 
@@ -20,6 +26,7 @@ export const ProjectJSON = z.object({
   styles: z.record(StyleJSON.partial()),
   componentURLs: z.array(z.string()).optional(),
   images: z.record(Image).optional(),
+  colors: z.record(ColorToken).optional(),
 });
 
 export type ProjectJSON = z.infer<typeof ProjectJSON>;

@@ -12,6 +12,7 @@ import { InspectorTargetContext } from "../components/InspectorTargetContext";
 import { Input } from "../../../components/Input";
 import { DropdownMenu } from "../../../components/Menu";
 import { Shadow } from "@uimix/node-data";
+import { ColorRef } from "../../../models/ColorRef";
 
 function nanToZero(value: number) {
   return isNaN(value) ? 0 : value;
@@ -73,9 +74,12 @@ export const ShadowPane: React.FC = observer(function ShadowPane() {
               <div className="flex gap-2 items-center">
                 <div className="flex flex-col gap-2">
                   <ColorInput
-                    value={Color.from(shadow.color) ?? Color.black}
+                    value={ColorRef.fromJSON(
+                      projectState.project,
+                      shadow.color
+                    )}
                     onChange={action((color) => {
-                      const newShadow = { ...shadow, color: color.toHex() };
+                      const newShadow = { ...shadow, color: color.toJSON() };
                       onChangeShadow(newShadow, i);
                     })}
                     onChangeEnd={action(() => {

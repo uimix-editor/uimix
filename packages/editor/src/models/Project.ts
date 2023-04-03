@@ -10,6 +10,7 @@ import { ImageManager } from "./ImageManager";
 import { Component } from "./Component";
 import { ObservableYArray } from "../utils/ObservableYArray";
 import { loadProjectJSON, toProjectJSON } from "./ProjectJSON";
+import { ColorTokenList } from "./ColorToken";
 
 export interface PageHierarchyFolderEntry {
   type: "directory";
@@ -143,6 +144,7 @@ export class Project {
     this.doc = doc;
     this.nodes = new NodeMap(this);
     this.selectables = new SelectableMap(this);
+    this.colorTokens = new ColorTokenList(this);
     this.node = this.nodes.create("project", "project");
     this.pages = new Pages(this);
   }
@@ -150,6 +152,7 @@ export class Project {
   readonly doc: Y.Doc;
   readonly nodes: NodeMap;
   readonly selectables: SelectableMap;
+  readonly colorTokens: ColorTokenList;
   readonly node: Node;
   readonly pages: Pages;
   readonly imageManager = new ImageManager(this);
@@ -160,6 +163,7 @@ export class Project {
       this.doc.getMap("styles"),
       this.doc.getMap("selection"),
       this.doc.getArray("componentURLs"),
+      this.doc.getMap("colors"),
     ]);
   }
 

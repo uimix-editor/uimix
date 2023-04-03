@@ -4,34 +4,55 @@ import { checkPattern } from "../../../components/checkPattern";
 import { ColorPicker } from "../../../components/color/ColorPicker";
 import { Input } from "../../../components/Input";
 import { Color } from "../../../utils/Color";
+import { twMerge } from "tailwind-merge";
+import { ColorTokenPopover } from "./ColorTokenPopover";
+import { IconButton } from "../../../components/IconButton";
+import { Tooltip } from "../../../components/Tooltip";
+import { ColorRef } from "../../../models/ColorRef";
 
 const ColorLabelBackground = styled.div`
   ${checkPattern("white", "#aaa", "8px")}
 `;
 
-export function ColorPopoverButton({
+export const ColorButton: React.FC<
+  {
+    value?: Color;
+  } & React.PropsWithoutRef<JSX.IntrinsicElements["div"]>
+> = ({ className, value, ...props }) => {
+  return (
+    <div
+      {...props}
+      className={twMerge(
+        "w-7 h-7 rounded p-0.5 bg-macaron-uiBackground",
+        className
+      )}
+    >
+      <ColorLabelBackground className="w-full h-full rounded-sm overflow-hidden">
+        <div
+          className="w-full h-full"
+          style={{
+            backgroundColor: value?.toHex() ?? "transparent",
+          }}
+        />
+      </ColorLabelBackground>
+    </div>
+  );
+};
+
+export function ColorPopover({
   value,
   onChange,
   onChangeEnd,
+  children = <ColorButton value={value} />,
 }: {
   value: Color;
   onChange?: (value: Color) => void;
   onChangeEnd?: () => void;
+  children?: React.ReactNode;
 }): JSX.Element {
   return (
     <RadixPopover.Root>
-      <RadixPopover.Trigger>
-        <div className="w-6 h-6 rounded p-0.5 bg-macaron-uiBackground">
-          <ColorLabelBackground className="w-full h-full rounded-sm overflow-hidden">
-            <div
-              className="w-full h-full"
-              style={{
-                backgroundColor: value?.toHex() ?? "transparent",
-              }}
-            />
-          </ColorLabelBackground>
-        </div>
-      </RadixPopover.Trigger>
+      <RadixPopover.Trigger>{children}</RadixPopover.Trigger>
       <RadixPopover.Portal>
         <RadixPopover.Content
           align="start"
@@ -53,48 +74,92 @@ export function ColorInput({
   onChange,
   onChangeEnd,
 }: {
-  value: Color;
-  onChange?: (value: Color) => void;
+  value?: ColorRef;
+  onChange?: (value: ColorRef) => void;
   onChangeEnd?: () => void;
 }): JSX.Element {
-  const valueWithoutAlpha = value?.withAlpha(1);
-  const alpha = value?.a;
+  const color = value?.color ?? Color.black;
 
-  const hex = valueWithoutAlpha.toHex6().slice(1);
+  const colorWithAlpha = color.withAlpha(1);
+  const alpha = color.a;
+
+  const hex = colorWithAlpha.toHex6().slice(1);
 
   return (
-    <div className="flex gap-2">
-      <ColorPopoverButton
-        value={value}
-        onChange={onChange}
+    <div className="flex gap-2 items-center h-7">
+      <ColorPopover
+        value={color}
+        onChange={(color) => onChange?.(new ColorRef(color))}
         onChangeEnd={onChangeEnd}
       />
-      <Input
-        className="flex-1"
-        value={hex}
-        onChange={(text) => {
-          const color = Color.from(text);
-          if (color) {
-            onChange?.(color);
-            onChangeEnd?.();
-          }
-        }}
-      />
-      <Input
-        className="w-16"
-        icon="%"
-        value={
-          alpha !== undefined ? Math.round(alpha * 100).toString() : undefined
-        }
-        onChange={(text) => {
-          let alpha = Number.parseInt(text) / 100;
-          if (isNaN(alpha)) {
-            alpha = 1;
-          }
-          onChange?.(value.withAlpha(alpha));
-          onChangeEnd?.();
-        }}
-      />
+      {value?.value.type === "token" ? (
+        <>
+          <ColorTokenPopover
+            value={value}
+            onChange={(token) => {
+              onChange?.(new ColorRef(token));
+              onChangeEnd?.();
+            }}
+          >
+            <button
+              className="flex-1 text-left
+              h-7 bg-macaron-uiBackground rounded px-1.5
+            "
+            >
+              {value.value.value.name}
+            </button>
+          </ColorTokenPopover>
+          <Tooltip text="Unlink from token">
+            <IconButton
+              icon="material-symbols:link-off"
+              onClick={() => {
+                onChange?.(new ColorRef(color));
+                onChangeEnd?.();
+              }}
+            />
+          </Tooltip>
+        </>
+      ) : (
+        <>
+          <Input
+            className="flex-1"
+            value={hex}
+            onChange={(text) => {
+              const color = Color.from(text);
+              if (color) {
+                onChange?.(new ColorRef(color));
+                onChangeEnd?.();
+              }
+            }}
+          />
+          <Input
+            className="w-16"
+            icon="%"
+            value={
+              alpha !== undefined
+                ? Math.round(alpha * 100).toString()
+                : undefined
+            }
+            onChange={(text) => {
+              let alpha = Number.parseInt(text) / 100;
+              if (isNaN(alpha)) {
+                alpha = 1;
+              }
+              onChange?.(new ColorRef(color.withAlpha(alpha)));
+              onChangeEnd?.();
+            }}
+          />
+          <ColorTokenPopover
+            value={value}
+            onChange={(token) => {
+              onChange?.(new ColorRef(token));
+              onChangeEnd?.();
+            }}
+          >
+            <IconButton icon="material-symbols:palette-outline" />
+          </ColorTokenPopover>
+        </>
+      )}
     </div>
   );
 }

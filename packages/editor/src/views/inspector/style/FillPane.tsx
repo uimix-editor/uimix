@@ -10,6 +10,7 @@ import { InspectorHeading } from "../components/InspectorHeading";
 import { InspectorPane } from "../components/InspectorPane";
 import { action } from "mobx";
 import { InspectorTargetContext } from "../components/InspectorTargetContext";
+import { ColorRef } from "../../../models/ColorRef";
 
 export const FillPane: React.FC = observer(function FillPane() {
   const selectables = projectState.selectedSelectables.filter(
@@ -19,11 +20,13 @@ export const FillPane: React.FC = observer(function FillPane() {
   const hasFill = fills && fills !== Mixed && fills.length;
   const fill = hasFill ? fills[0] : undefined;
 
-  const onChangeFill = action((fill: Color | undefined) => {
+  const onChangeFill = action((color: ColorRef | undefined) => {
     for (const selectable of selectables) {
-      selectable.style.fills = fill
-        ? [{ type: "solid", color: fill.toHex() }]
-        : [];
+      if (color) {
+        selectable.style.fills = [{ type: "solid", color: color.toJSON() }];
+      } else {
+        selectable.style.fills = [];
+      }
     }
   });
   const onChangeEndFill = action(() => {
@@ -41,36 +44,38 @@ export const FillPane: React.FC = observer(function FillPane() {
         text="Fill"
         dimmed={!hasFill}
         buttons={
-          hasFill ? (
-            <IconButton
-              icon={removeIcon}
-              onClick={() => {
-                onChangeFill(undefined);
-              }}
-            />
-          ) : (
-            <IconButton
-              icon={addIcon}
-              onClick={() => {
-                onChangeFill(Color.from("gray"));
-              }}
-            />
-          )
+          <div className="flex gap-1">
+            {hasFill ? (
+              <IconButton
+                icon={removeIcon}
+                onClick={() => {
+                  onChangeFill(undefined);
+                }}
+              />
+            ) : (
+              <IconButton
+                icon={addIcon}
+                onClick={() => {
+                  onChangeFill(new ColorRef(Color.from("gray")));
+                }}
+              />
+            )}
+          </div>
         }
       />
-      {fills === Mixed ? (
-        <div className="text-macaron-disabledText">Mixed</div>
-      ) : fill ? (
-        <InspectorTargetContext.Provider value={selectables}>
+      <InspectorTargetContext.Provider value={selectables}>
+        {fills === Mixed ? (
+          <div className="text-macaron-disabledText">Mixed</div>
+        ) : fill ? (
           <div>
             <ColorInput
-              value={Color.from(fill.color) ?? Color.black}
+              value={ColorRef.fromJSON(projectState.project, fill.color)}
               onChange={onChangeFill}
               onChangeEnd={onChangeEndFill}
             />
           </div>
-        </InspectorTargetContext.Provider>
-      ) : null}
+        ) : null}
+      </InspectorTargetContext.Provider>
     </InspectorPane>
   );
 });

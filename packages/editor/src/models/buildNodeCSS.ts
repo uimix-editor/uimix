@@ -1,4 +1,4 @@
-import { NodeType, StackDirection, StyleJSON } from "@uimix/node-data";
+import { Color, NodeType, StackDirection, StyleJSON } from "@uimix/node-data";
 
 export function getLayoutType(
   style: StyleJSON
@@ -14,8 +14,16 @@ export function getLayoutType(
 export function buildNodeCSS(
   nodeType: NodeType,
   style: StyleJSON,
+  getColorToken: (id: string) => string,
   parentLayout?: StackDirection | "grid"
 ): React.CSSProperties {
+  const resolveColorToken = (color: Color): string => {
+    if (typeof color === "string") {
+      return color;
+    }
+    return getColorToken(color.id);
+  };
+
   if (nodeType === "component") {
     return {};
   }
@@ -140,9 +148,12 @@ export function buildNodeCSS(
 
   if (nodeType === "frame" || nodeType === "image" || nodeType === "svg") {
     const fills = style.fills;
-    cssStyle.background = fills.length ? fills[0].color : "transparent";
+    cssStyle.background = fills.length
+      ? resolveColorToken(fills[0].color)
+      : "transparent";
     cssStyle.borderStyle = "solid";
-    cssStyle.borderColor = style.border?.color ?? "transparent";
+    cssStyle.borderColor =
+      (style.border && resolveColorToken(style.border.color)) ?? "transparent";
     cssStyle.borderTopWidth = `${style.borderTopWidth}px`;
     cssStyle.borderRightWidth = `${style.borderRightWidth}px`;
     cssStyle.borderBottomWidth = `${style.borderBottomWidth}px`;
@@ -163,7 +174,7 @@ export function buildNodeCSS(
           const y = `${shadow.y}px`;
           const blur = `${shadow.blur}px`;
           const spread = `${shadow.spread}px`;
-          const color = shadow.color;
+          const color = resolveColorToken(shadow.color);
           return `${x} ${y} ${blur} ${spread} ${color}`;
         })
         .join(", ");
@@ -175,7 +186,9 @@ export function buildNodeCSS(
     cssStyle.display = "flex";
     cssStyle.flexDirection = "column";
     const fills = style.fills;
-    cssStyle.color = fills.length ? fills[0].color : "transparent";
+    cssStyle.color = fills.length
+      ? resolveColorToken(fills[0].color)
+      : "transparent";
     cssStyle.fontFamily = style.fontFamily;
     cssStyle.fontSize = `${style.fontSize}px`;
     cssStyle.fontWeight = style.fontWeight;
