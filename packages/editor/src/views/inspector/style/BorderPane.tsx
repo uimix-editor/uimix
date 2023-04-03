@@ -18,6 +18,7 @@ import edgeBottomIcon from "@seanchas116/design-icons/json/edge-bottom.json";
 import edgeLeftIcon from "@seanchas116/design-icons/json/edge-left.json";
 import { SeparableInput } from "../../../components/SeparableInput";
 import { useContext } from "react";
+import { ColorRef } from "../../../models/ColorRef";
 
 function BorderWidthEdit() {
   const selectables = useContext(InspectorTargetContext);
@@ -87,11 +88,11 @@ export const BorderPane: React.FC = observer(function BorderPane() {
   const border = sameOrMixed(selectables.map((s) => s.style.border));
   const hasBorder = border && border !== Mixed;
 
-  const onChangeBorder = action((border: Color | undefined) => {
+  const onChangeBorder = action((color: ColorRef | undefined) => {
     for (const selectable of selectables) {
-      const adding = border && !selectable.style.border;
-      selectable.style.border = border
-        ? { type: "solid", color: border.toHex() }
+      const adding = color && !selectable.style.border;
+      selectable.style.border = color
+        ? { type: "solid", color: color.toJSON() }
         : null;
       if (adding) {
         selectable.style.borderTopWidth = 1;
@@ -99,7 +100,7 @@ export const BorderPane: React.FC = observer(function BorderPane() {
         selectable.style.borderBottomWidth = 1;
         selectable.style.borderLeftWidth = 1;
       }
-      if (!border) {
+      if (!color) {
         selectable.style.borderTopWidth = 0;
         selectable.style.borderRightWidth = 0;
         selectable.style.borderBottomWidth = 0;
@@ -133,7 +134,7 @@ export const BorderPane: React.FC = observer(function BorderPane() {
             <IconButton
               icon={addIcon}
               onClick={() => {
-                onChangeBorder(Color.from("black"));
+                onChangeBorder(new ColorRef(Color.from("black")));
               }}
             />
           )
@@ -144,15 +145,11 @@ export const BorderPane: React.FC = observer(function BorderPane() {
           <div className="text-macaron-disabledText">Mixed</div>
         ) : border ? (
           <div className="flex flex-col gap-2">
-            {typeof border.color === "string" ? (
-              <ColorInput
-                value={Color.from(border.color) ?? Color.black}
-                onChange={onChangeBorder}
-                onChangeEnd={onChangeEndBorder}
-              />
-            ) : (
-              <> TODO</>
-            )}
+            <ColorInput
+              value={ColorRef.fromJSON(projectState.project, border.color)}
+              onChange={onChangeBorder}
+              onChangeEnd={onChangeEndBorder}
+            />
             <BorderWidthEdit />
           </div>
         ) : null}

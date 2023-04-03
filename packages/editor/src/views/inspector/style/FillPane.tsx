@@ -10,7 +10,7 @@ import { InspectorHeading } from "../components/InspectorHeading";
 import { InspectorPane } from "../components/InspectorPane";
 import { action } from "mobx";
 import { InspectorTargetContext } from "../components/InspectorTargetContext";
-import { ColorToken } from "../../../models/ColorToken";
+import { ColorRef } from "../../../models/ColorRef";
 
 export const FillPane: React.FC = observer(function FillPane() {
   const selectables = projectState.selectedSelectables.filter(
@@ -20,14 +20,10 @@ export const FillPane: React.FC = observer(function FillPane() {
   const hasFill = fills && fills !== Mixed && fills.length;
   const fill = hasFill ? fills[0] : undefined;
 
-  const onChangeFill = action((fill: Color | ColorToken | undefined) => {
+  const onChangeFill = action((color: ColorRef | undefined) => {
     for (const selectable of selectables) {
-      if (fill instanceof Color) {
-        selectable.style.fills = [{ type: "solid", color: fill.toHex() }];
-      } else if (fill instanceof ColorToken) {
-        selectable.style.fills = [
-          { type: "solid", color: { type: "token", id: fill.id } },
-        ];
+      if (color) {
+        selectable.style.fills = [{ type: "solid", color: color.toJSON() }];
       } else {
         selectable.style.fills = [];
       }
@@ -60,7 +56,7 @@ export const FillPane: React.FC = observer(function FillPane() {
               <IconButton
                 icon={addIcon}
                 onClick={() => {
-                  onChangeFill(Color.from("gray"));
+                  onChangeFill(new ColorRef(Color.from("gray")));
                 }}
               />
             )}
@@ -73,11 +69,7 @@ export const FillPane: React.FC = observer(function FillPane() {
         ) : fill ? (
           <div>
             <ColorInput
-              value={
-                typeof fill.color === "string"
-                  ? Color.from(fill.color)
-                  : projectState.project.colorTokens.get(fill.color.id)
-              }
+              value={ColorRef.fromJSON(projectState.project, fill.color)}
               onChange={onChangeFill}
               onChangeEnd={onChangeEndFill}
             />

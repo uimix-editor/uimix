@@ -12,6 +12,7 @@ import { InspectorTargetContext } from "../components/InspectorTargetContext";
 import { Input } from "../../../components/Input";
 import { DropdownMenu } from "../../../components/Menu";
 import { Shadow } from "@uimix/node-data";
+import { ColorRef } from "../../../models/ColorRef";
 
 function nanToZero(value: number) {
   return isNaN(value) ? 0 : value;
@@ -72,19 +73,19 @@ export const ShadowPane: React.FC = observer(function ShadowPane() {
             return (
               <div className="flex gap-2 items-center">
                 <div className="flex flex-col gap-2">
-                  {typeof shadow.color === "string" && (
-                    // TODO: color tokens
-                    <ColorInput
-                      value={Color.from(shadow.color) ?? Color.black}
-                      onChange={action((color) => {
-                        const newShadow = { ...shadow, color: color.toHex() };
-                        onChangeShadow(newShadow, i);
-                      })}
-                      onChangeEnd={action(() => {
-                        projectState.undoManager.stopCapturing();
-                      })}
-                    />
-                  )}
+                  <ColorInput
+                    value={ColorRef.fromJSON(
+                      projectState.project,
+                      shadow.color
+                    )}
+                    onChange={action((color) => {
+                      const newShadow = { ...shadow, color: color.toJSON() };
+                      onChangeShadow(newShadow, i);
+                    })}
+                    onChangeEnd={action(() => {
+                      projectState.undoManager.stopCapturing();
+                    })}
+                  />
                   <div className="grid grid-cols-4 gap-1">
                     <Input
                       // TODO: refactor to NumberInput?

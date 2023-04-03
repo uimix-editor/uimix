@@ -9,6 +9,7 @@ import { ColorToken } from "../../../models/ColorToken";
 import { ColorTokenPopover } from "./ColorTokenPopover";
 import { IconButton } from "../../../components/IconButton";
 import { Tooltip } from "../../../components/Tooltip";
+import { ColorRef } from "../../../models/ColorRef";
 
 const ColorLabelBackground = styled.div`
   ${checkPattern("white", "#aaa", "8px")}
@@ -74,12 +75,11 @@ export function ColorInput({
   onChange,
   onChangeEnd,
 }: {
-  value?: Color | ColorToken;
-  onChange?: (value: Color | ColorToken) => void;
+  value?: ColorRef;
+  onChange?: (value: ColorRef) => void;
   onChangeEnd?: () => void;
 }): JSX.Element {
-  const color =
-    (value instanceof ColorToken ? value.value : value) ?? Color.black;
+  const color = value?.color ?? Color.black;
 
   const colorWithAlpha = color.withAlpha(1);
   const alpha = color.a;
@@ -90,14 +90,14 @@ export function ColorInput({
     <div className="flex gap-2 items-center h-7">
       <ColorPopover
         value={color}
-        onChange={onChange}
+        onChange={(color) => onChange?.(new ColorRef(color))}
         onChangeEnd={onChangeEnd}
       />
       {value instanceof ColorToken ? (
         <>
           <ColorTokenPopover
             onChange={(token) => {
-              onChange?.(token);
+              onChange?.(new ColorRef(token));
               onChangeEnd?.();
             }}
           >
@@ -113,7 +113,7 @@ export function ColorInput({
             <IconButton
               icon="material-symbols:link-off"
               onClick={() => {
-                onChange?.(color);
+                onChange?.(new ColorRef(color));
                 onChangeEnd?.();
               }}
             />
@@ -127,7 +127,7 @@ export function ColorInput({
             onChange={(text) => {
               const color = Color.from(text);
               if (color) {
-                onChange?.(color);
+                onChange?.(new ColorRef(color));
                 onChangeEnd?.();
               }
             }}
@@ -145,14 +145,14 @@ export function ColorInput({
               if (isNaN(alpha)) {
                 alpha = 1;
               }
-              onChange?.(color.withAlpha(alpha));
+              onChange?.(new ColorRef(color.withAlpha(alpha)));
               onChangeEnd?.();
             }}
           />
           <ColorTokenPopover
             value={value}
             onChange={(token) => {
-              onChange?.(token);
+              onChange?.(new ColorRef(token));
               onChangeEnd?.();
             }}
           >

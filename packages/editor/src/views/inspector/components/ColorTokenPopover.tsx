@@ -7,9 +7,10 @@ import { ColorToken } from "../../../models/ColorToken";
 import { Color } from "../../../utils/Color";
 import { useState } from "react";
 import { IconButton } from "../../../components/IconButton";
+import { ColorRef } from "../../../models/ColorRef";
 
 export const ColorTokenPopover: React.FC<{
-  value?: Color | ColorToken;
+  value?: ColorRef;
   onChange: (token: ColorToken) => void;
   children: React.ReactNode;
 }> = ({ value, onChange, children }) => {
@@ -40,7 +41,7 @@ export const ColorTokenPopover: React.FC<{
                 onClick={action(() => {
                   // Add
                   const token = projectState.project.colorTokens.add();
-                  token.value = value instanceof Color ? value : value?.value;
+                  token.value = value?.color ?? Color.black;
                   token.name = token.value?.getName();
                   onChange(token);
                 })}
