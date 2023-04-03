@@ -1,3 +1,4 @@
+import { getOrCreate } from "../state/Collection";
 import { Node } from "./Node";
 import { Project } from "./Project";
 import { Selectable } from "./Selectable";
@@ -9,13 +10,7 @@ export class Page {
     if (node.type !== "page") {
       return;
     }
-
-    let instance = instances.get(node);
-    if (!instance) {
-      instance = new Page(node);
-      instances.set(node, instance);
-    }
-    return instance;
+    return getOrCreate(instances, node, () => new Page(node));
   }
 
   private constructor(node: Node) {

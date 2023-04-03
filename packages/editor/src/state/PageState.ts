@@ -2,6 +2,7 @@ import { computed, makeObservable } from "mobx";
 import { Selectable } from "../models/Selectable";
 import { ScrollState } from "./ScrollState";
 import { Page } from "../models/Page";
+import { getOrCreate } from "./Collection";
 
 export class PageState {
   constructor(page: Page) {
@@ -21,12 +22,7 @@ export class PageState {
   }
 
   static from(page: Page): PageState {
-    let pageState = pageStates.get(page);
-    if (!pageState) {
-      pageState = new PageState(page);
-      pageStates.set(page, pageState);
-    }
-    return pageState;
+    return getOrCreate(pageStates, page, () => new PageState(page));
   }
 }
 
