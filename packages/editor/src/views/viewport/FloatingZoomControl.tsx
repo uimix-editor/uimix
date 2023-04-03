@@ -52,17 +52,10 @@ export const ZoomControlController: React.FC<{ className?: string }> = observer(
     const scroll = projectState.scroll;
 
     const percentage = Math.round(scroll.scale * 100);
-    const onZoomOut = useCallback(
-      action(() => scroll.zoomOut()),
-      []
-    );
-    const onZoomIn = useCallback(
-      action(() => scroll.zoomIn()),
-      []
-    );
-    const onChangeZoomPercent = useCallback(
-      action((percent: number) => scroll.zoomAroundCenter(percent / 100)),
-      []
+    const onZoomOut = action(() => scroll.zoomOut());
+    const onZoomIn = action(() => scroll.zoomIn());
+    const onChangeZoomPercent = action((percent: number) =>
+      scroll.zoomAroundCenter(percent / 100)
     );
     return (
       <ZoomControl

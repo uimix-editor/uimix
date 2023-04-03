@@ -40,7 +40,7 @@ export class ProjectState {
 
   readonly scrolls = new Map<string /* page id */, ScrollState>();
 
-  get scroll(): ScrollState {
+  @computed get scroll(): ScrollState {
     const page = this.page;
     if (!page) {
       return new ScrollState();
