@@ -33,6 +33,13 @@ export function loadProjectJSON(ydoc: Y.Doc, projectJSON: ProjectJSON): void {
   for (const [hash, url] of Object.entries(projectJSON.images ?? {})) {
     images.set(hash, url);
   }
+
+  const colors = ydoc.getMap("colors");
+  colors.clear();
+  for (const [name, json] of Object.entries(projectJSON.colors ?? {})) {
+    const data = new Y.Map(Object.entries(json));
+    colors.set(name, data);
+  }
 }
 
 export function toProjectJSON(ydoc: Y.Doc): ProjectJSON {
@@ -41,6 +48,7 @@ export function toProjectJSON(ydoc: Y.Doc): ProjectJSON {
     styles: ydoc.getMap("styles").toJSON(),
     componentURLs: ydoc.getArray("componentURLs").toJSON(),
     images: ydoc.getMap("images").toJSON(),
+    colors: ydoc.getMap("colors").toJSON(),
   };
 
   // delete dangling nodes
