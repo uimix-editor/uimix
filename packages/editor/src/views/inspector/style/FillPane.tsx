@@ -14,6 +14,7 @@ import { Tooltip } from "../../../components/Tooltip";
 import * as RadixPopover from "@radix-ui/react-popover";
 import { SearchInput } from "../../outline/SearchInput";
 import { ColorToken } from "../../../models/ColorToken";
+import { ColorTokenPopover } from "../components/ColorTokenPopover";
 
 export const FillPane: React.FC = observer(function FillPane() {
   const selectables = projectState.selectedSelectables.filter(
@@ -52,60 +53,14 @@ export const FillPane: React.FC = observer(function FillPane() {
         dimmed={!hasFill}
         buttons={
           <div className="flex gap-1">
-            <RadixPopover.Root>
-              <Tooltip text="Color Tokens">
-                <RadixPopover.Trigger asChild>
-                  <IconButton
-                    icon="material-symbols:palette-outline"
-                    onClick={action(() => {
-                      // TODO
-                    })}
-                  />
-                </RadixPopover.Trigger>
-              </Tooltip>
-              <RadixPopover.Portal>
-                <RadixPopover.Content
-                  align="start"
-                  className="bg-macaron-background z-10 border border-macaron-separator rounded-lg shadow-xl overflow-hidden text-xs"
-                >
-                  <SearchInput
-                    placeholder="Search"
-                    value={""}
-                    onChangeValue={action((value) => {
-                      // TODO
-                    })}
-                  />
-                  <div className="w-64 p-3">
-                    <div className="text-macaron-label font-medium mb-2">
-                      This Document
-                    </div>
-                    <div className="flex gap-1 flex-wrap">
-                      {projectState.project.colorTokens.all.map((token) => {
-                        return (
-                          <Tooltip
-                            text={token.name}
-                            key={token.id}
-                            delayDuration={0}
-                          >
-                            <div
-                              className="w-6 h-6 rounded-full"
-                              style={{
-                                backgroundColor: token.value?.toHex(),
-                              }}
-                              onClick={action(() => {
-                                onChangeFill(token);
-                                onChangeEndFill();
-                              })}
-                            />
-                          </Tooltip>
-                        );
-                      })}
-                    </div>
-                  </div>
-                </RadixPopover.Content>
-              </RadixPopover.Portal>
-            </RadixPopover.Root>
-
+            <ColorTokenPopover
+              onSelect={action((token) => {
+                onChangeFill(token);
+                onChangeEndFill();
+              })}
+            >
+              <IconButton icon="material-symbols:palette-outline" />
+            </ColorTokenPopover>
             {hasFill ? (
               <IconButton
                 icon={removeIcon}
