@@ -46,16 +46,16 @@ export const FillPane: React.FC = observer(function FillPane() {
         buttons={
           <div className="flex gap-1">
             <RadixPopover.Root>
-              <RadixPopover.Trigger>
-                <Tooltip text="Color Tokens">
+              <Tooltip text="Color Tokens">
+                <RadixPopover.Trigger asChild>
                   <IconButton
                     icon="material-symbols:palette-outline"
                     onClick={action(() => {
                       // TODO
                     })}
                   />
-                </Tooltip>
-              </RadixPopover.Trigger>
+                </RadixPopover.Trigger>
+              </Tooltip>
               <RadixPopover.Portal>
                 <RadixPopover.Content
                   align="start"
