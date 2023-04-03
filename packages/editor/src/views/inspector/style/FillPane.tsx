@@ -13,6 +13,7 @@ import { InspectorTargetContext } from "../components/InspectorTargetContext";
 import { Tooltip } from "../../../components/Tooltip";
 import * as RadixPopover from "@radix-ui/react-popover";
 import { SearchInput } from "../../outline/SearchInput";
+import { ColorToken } from "../../../models/ColorToken";
 
 export const FillPane: React.FC = observer(function FillPane() {
   const selectables = projectState.selectedSelectables.filter(
@@ -22,11 +23,17 @@ export const FillPane: React.FC = observer(function FillPane() {
   const hasFill = fills && fills !== Mixed && fills.length;
   const fill = hasFill ? fills[0] : undefined;
 
-  const onChangeFill = action((fill: Color | undefined) => {
+  const onChangeFill = action((fill: Color | ColorToken | undefined) => {
     for (const selectable of selectables) {
-      selectable.style.fills = fill
-        ? [{ type: "solid", color: fill.toHex() }]
-        : [];
+      if (fill instanceof Color) {
+        selectable.style.fills = [{ type: "solid", color: fill.toHex() }];
+      } else if (fill instanceof ColorToken) {
+        selectable.style.fills = [
+          { type: "solid", color: { type: "token", id: fill.id } },
+        ];
+      } else {
+        selectable.style.fills = [];
+      }
     }
   });
   const onChangeEndFill = action(() => {
@@ -85,6 +92,10 @@ export const FillPane: React.FC = observer(function FillPane() {
                               style={{
                                 backgroundColor: token.value?.toHex(),
                               }}
+                              onClick={action(() => {
+                                onChangeFill(token);
+                                onChangeEndFill();
+                              })}
                             />
                           </Tooltip>
                         );
@@ -125,7 +136,9 @@ export const FillPane: React.FC = observer(function FillPane() {
                 onChangeEnd={onChangeEndFill}
               />
             ) : (
-              <>TODO: Color token</>
+              <div>
+                {projectState.project.colorTokens.get(fill.color.id)?.name}
+              </div>
             )}
           </div>
         ) : null}
