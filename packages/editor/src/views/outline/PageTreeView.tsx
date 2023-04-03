@@ -14,7 +14,7 @@ import {
 import { projectState } from "../../state/ProjectState";
 import { DoubleClickToEdit } from "../../components/DoubleClickToEdit";
 import { commands } from "../../state/Commands";
-import { PageHierarchyEntry } from "../../models/Project";
+import { PageHierarchyEntry } from "../../models/PageList";
 import { showContextMenu } from "../ContextMenu";
 
 interface PageTreeViewItem extends TreeViewItem {

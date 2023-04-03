@@ -20,7 +20,7 @@ import {
   createComponent,
   detachComponent,
 } from "../services/Component";
-import { PageHierarchyEntry } from "../models/Project";
+import { PageHierarchyEntry } from "../models/PageList";
 import { posix as path } from "path-browserify";
 import { generateExampleNodes } from "../models/generateExampleNodes";
 import { dialogState } from "./DialogState";
