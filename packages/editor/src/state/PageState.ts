@@ -19,4 +19,15 @@ export class PageState {
       ) ?? []
     );
   }
+
+  static from(page: Page): PageState {
+    let pageState = pageStates.get(page);
+    if (!pageState) {
+      pageState = new PageState(page);
+      pageStates.set(page, pageState);
+    }
+    return pageState;
+  }
 }
+
+const pageStates = new WeakMap<Page, PageState>();

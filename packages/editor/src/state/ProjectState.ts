@@ -36,19 +36,12 @@ export class ProjectState {
   }
   readonly undoManager: Y.UndoManager;
 
-  readonly pageStates = new WeakMap<Page, PageState>();
   get pageState(): PageState | undefined {
     const page = this.page;
     if (!page) {
       return;
     }
-
-    let pageState = this.pageStates.get(page);
-    if (!pageState) {
-      pageState = new PageState(page);
-      this.pageStates.set(page, pageState);
-    }
-    return pageState;
+    return PageState.from(page);
   }
 
   // MARK: Selection
