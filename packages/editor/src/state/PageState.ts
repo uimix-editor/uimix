@@ -2,7 +2,6 @@ import { computed, makeObservable } from "mobx";
 import { Selectable } from "../models/Selectable";
 import { ScrollState } from "./ScrollState";
 import { Page } from "../models/Page";
-import { Node } from "../models/Node";
 
 export class PageState {
   constructor(page: Page) {
