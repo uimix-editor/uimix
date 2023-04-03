@@ -3,7 +3,7 @@ import { observer } from "mobx-react-lite";
 import { Rect, Vec2 } from "paintvec";
 import { createRef, useEffect } from "react";
 import { projectState } from "../../state/ProjectState";
-import { scrollState } from "../../state/ScrollState";
+import { scrollState, viewportGeometry } from "../../state/ScrollState";
 import { PanOverlay } from "./PanOverlay";
 import { DragHandlerOverlay } from "./dragHandler/DragHandlerOverlay";
 import { HUD } from "./hud/HUD";
@@ -23,9 +23,7 @@ export const Viewport: React.FC = observer(function Viewport() {
 
     const updateViewportClientRect = action(() => {
       console.log("update viewport");
-      scrollState.viewportDOMClientRect = Rect.from(
-        elem.getBoundingClientRect()
-      );
+      viewportGeometry.domClientRect = Rect.from(elem.getBoundingClientRect());
     });
 
     updateViewportClientRect();
@@ -45,7 +43,7 @@ export const Viewport: React.FC = observer(function Viewport() {
     if (e.ctrlKey || e.metaKey) {
       const factor = Math.pow(2, -e.deltaY / 100);
       const pos = new Vec2(e.clientX, e.clientY).sub(
-        scrollState.viewportDOMClientRect.topLeft
+        viewportGeometry.domClientRect.topLeft
       );
       scrollState.zoomAround(pos, scrollState.scale * factor);
 

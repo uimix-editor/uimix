@@ -24,7 +24,7 @@ import { PageHierarchyEntry } from "../models/Project";
 import { posix as path } from "path-browserify";
 import { generateExampleNodes } from "../models/generateExampleNodes";
 import { dialogState } from "./DialogState";
-import { scrollState } from "./ScrollState";
+import { scrollState, viewportGeometry } from "./ScrollState";
 import { compact } from "lodash-es";
 import { Component } from "../models/Component";
 import { Vec2 } from "paintvec";
@@ -426,7 +426,7 @@ class Commands {
       if (viewportState.isSideBarsVisible) {
         viewportState.isSideBarsVisible = false;
         viewportState.lastSideBarLeftOffset =
-          scrollState.viewportDOMClientRect.left;
+          viewportGeometry.domClientRect.left;
         scrollState.setTranslation(
           new Vec2(
             scrollState.translation.x + viewportState.lastSideBarLeftOffset,

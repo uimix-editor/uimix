@@ -8,7 +8,7 @@ import {
   NodeRenderer,
 } from "../viewport/renderer/NodeRenderer";
 import { usePointerStroke } from "../../components/hooks/usePointerStroke";
-import { scrollState } from "../../state/ScrollState";
+import { scrollState, viewportGeometry } from "../../state/ScrollState";
 import { NodeMoveDragHandler } from "../viewport/dragHandler/NodeMoveDragHandler";
 import { ReactNode, useRef, useState } from "react";
 import { DragHandler } from "../viewport/dragHandler/DragHandler";
@@ -207,7 +207,7 @@ const ComponentThumbnail: React.FC<{
       const clientPos = new Vec2(clientX, clientY);
 
       if (!status.current.dragHandler && !status.current.creating) {
-        const isInViewport = scrollState.viewportDOMClientRect.includes(
+        const isInViewport = viewportGeometry.domClientRect.includes(
           new Vec2(clientX, clientY)
         );
         if (isInViewport) {
