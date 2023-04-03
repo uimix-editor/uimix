@@ -10,9 +10,6 @@ import { InspectorHeading } from "../components/InspectorHeading";
 import { InspectorPane } from "../components/InspectorPane";
 import { action } from "mobx";
 import { InspectorTargetContext } from "../components/InspectorTargetContext";
-import { Tooltip } from "../../../components/Tooltip";
-import * as RadixPopover from "@radix-ui/react-popover";
-import { SearchInput } from "../../outline/SearchInput";
 import { ColorToken } from "../../../models/ColorToken";
 import { ColorTokenPopover } from "../components/ColorTokenPopover";
 
