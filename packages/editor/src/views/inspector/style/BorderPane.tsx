@@ -139,20 +139,24 @@ export const BorderPane: React.FC = observer(function BorderPane() {
           )
         }
       />
-      {border === Mixed ? (
-        <div className="text-macaron-disabledText">Mixed</div>
-      ) : border ? (
-        <InspectorTargetContext.Provider value={selectables}>
+      <InspectorTargetContext.Provider value={selectables}>
+        {border === Mixed ? (
+          <div className="text-macaron-disabledText">Mixed</div>
+        ) : border ? (
           <div className="flex flex-col gap-2">
-            <ColorInput
-              value={Color.from(border.color) ?? Color.black}
-              onChange={onChangeBorder}
-              onChangeEnd={onChangeEndBorder}
-            />
+            {typeof border.color === "string" ? (
+              <ColorInput
+                value={Color.from(border.color) ?? Color.black}
+                onChange={onChangeBorder}
+                onChangeEnd={onChangeEndBorder}
+              />
+            ) : (
+              <> TODO</>
+            )}
             <BorderWidthEdit />
           </div>
-        </InspectorTargetContext.Provider>
-      ) : null}
+        ) : null}
+      </InspectorTargetContext.Provider>
     </InspectorPane>
   );
 });

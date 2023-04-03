@@ -113,19 +113,23 @@ export const FillPane: React.FC = observer(function FillPane() {
           </div>
         }
       />
-      {fills === Mixed ? (
-        <div className="text-macaron-disabledText">Mixed</div>
-      ) : fill ? (
-        <InspectorTargetContext.Provider value={selectables}>
+      <InspectorTargetContext.Provider value={selectables}>
+        {fills === Mixed ? (
+          <div className="text-macaron-disabledText">Mixed</div>
+        ) : fill ? (
           <div>
-            <ColorInput
-              value={Color.from(fill.color) ?? Color.black}
-              onChange={onChangeFill}
-              onChangeEnd={onChangeEndFill}
-            />
+            {typeof fill.color === "string" ? (
+              <ColorInput
+                value={Color.from(fill.color) ?? Color.black}
+                onChange={onChangeFill}
+                onChangeEnd={onChangeEndFill}
+              />
+            ) : (
+              <>TODO: Color token</>
+            )}
           </div>
-        </InspectorTargetContext.Provider>
-      ) : null}
+        ) : null}
+      </InspectorTargetContext.Provider>
     </InspectorPane>
   );
 });
