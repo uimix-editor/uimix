@@ -38,17 +38,17 @@ export class ProjectState {
 
   // MARK: Scroll
 
-  readonly scrolls = new WeakMap<Page, ScrollState>();
+  readonly scrolls = new Map<string /* page id */, ScrollState>();
 
   get scroll(): ScrollState {
     const page = this.page;
     if (!page) {
       return new ScrollState();
     }
-    let scroll = this.scrolls.get(page);
+    let scroll = this.scrolls.get(page.id);
     if (!scroll) {
       scroll = new ScrollState();
-      this.scrolls.set(page, scroll);
+      this.scrolls.set(page.id, scroll);
     }
     return scroll;
   }

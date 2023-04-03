@@ -56,7 +56,8 @@ const PageRow = observer(
   }) => {
     const { entry } = item;
 
-    const selected = entry.type === "file" && entry.page === projectState.page;
+    const selected =
+      entry.type === "file" && entry.page.id === projectState.page?.id;
     const collapsed = projectState.collapsedPaths.has(entry.path);
 
     const onClick = action(() => {
