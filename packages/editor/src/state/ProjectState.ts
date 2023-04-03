@@ -12,6 +12,7 @@ import { generateExampleNodes } from "../models/generateExampleNodes";
 import demoFile from "../../../sandbox/src/uimix/landing.uimix?raw";
 import { reassignNewIDs } from "../models/ProjectJSONExtra";
 import { Page } from "../models/Page";
+import { ScrollState } from "./ScrollState";
 
 export class ProjectState {
   constructor() {
@@ -34,6 +35,23 @@ export class ProjectState {
     return Page.from(pageNode);
   }
   readonly undoManager: Y.UndoManager;
+
+  // MARK: Scroll
+
+  readonly scrolls = new WeakMap<Page, ScrollState>();
+
+  get scroll(): ScrollState {
+    const page = this.page;
+    if (!page) {
+      return new ScrollState();
+    }
+    let scroll = this.scrolls.get(page);
+    if (!scroll) {
+      scroll = new ScrollState();
+      this.scrolls.set(page, scroll);
+    }
+    return scroll;
+  }
 
   // MARK: Selection
 
