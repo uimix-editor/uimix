@@ -2,7 +2,6 @@ import { computed, makeObservable } from "mobx";
 import { Selectable } from "../models/Selectable";
 import { ScrollState } from "./ScrollState";
 import { Page } from "../models/Page";
-import { Node } from "../models/Node";
 
 export class PageState {
   constructor(page: Page) {
@@ -22,13 +21,14 @@ export class PageState {
   }
 
   static from(page: Page): PageState {
-    let pageState = pageStates.get(page.node);
+    let pageState = pageStates.get(page.id);
     if (!pageState) {
       pageState = new PageState(page);
-      pageStates.set(page.node, pageState);
+      pageStates.set(page.id, pageState);
     }
     return pageState;
   }
 }
 
-const pageStates = new WeakMap<Node, PageState>();
+// TODO: sweep unused page states
+const pageStates = new Map<string, PageState>();
