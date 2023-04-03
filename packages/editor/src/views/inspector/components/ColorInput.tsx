@@ -8,6 +8,7 @@ import { twMerge } from "tailwind-merge";
 import { ColorToken } from "../../../models/ColorToken";
 import { ColorTokenPopover } from "./ColorTokenPopover";
 import { IconButton } from "../../../components/IconButton";
+import { Tooltip } from "../../../components/Tooltip";
 
 const ColorLabelBackground = styled.div`
   ${checkPattern("white", "#aaa", "8px")}
@@ -22,7 +23,7 @@ export const ColorButton: React.FC<
     <div
       {...props}
       className={twMerge(
-        "w-6 h-6 rounded p-0.5 bg-macaron-uiBackground",
+        "w-7 h-7 rounded p-0.5 bg-macaron-uiBackground",
         className
       )}
     >
@@ -108,13 +109,15 @@ export function ColorInput({
               {value.name}
             </button>
           </ColorTokenPopover>
-          <IconButton
-            icon="material-symbols:link-off"
-            onClick={() => {
-              onChange?.(color);
-              onChangeEnd?.();
-            }}
-          />
+          <Tooltip text="Unlink from token">
+            <IconButton
+              icon="material-symbols:link-off"
+              onClick={() => {
+                onChange?.(color);
+                onChangeEnd?.();
+              }}
+            />
+          </Tooltip>
         </>
       ) : (
         <>
