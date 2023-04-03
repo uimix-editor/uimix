@@ -5,7 +5,17 @@ import { Color as ColorJSON } from "@uimix/node-data";
 
 export class ColorRef {
   constructor(value: Color | ColorToken) {
-    this.value = value;
+    if (value instanceof Color) {
+      this.value = {
+        type: "color",
+        value,
+      };
+    } else {
+      this.value = {
+        type: "token",
+        value,
+      };
+    }
   }
 
   static fromJSON(project: Project, json: ColorJSON): ColorRef | undefined {
@@ -18,23 +28,31 @@ export class ColorRef {
   }
 
   toJSON(): ColorJSON {
-    if (this.value instanceof Color) {
-      return this.value.toHex();
+    if (this.value.type === "color") {
+      return this.value.value.toHex();
     } else {
       return {
         type: "token",
-        id: this.value.id,
+        id: this.value.value.id,
       };
     }
   }
 
   get color(): Color {
-    if (this.value instanceof Color) {
-      return this.value;
+    if (this.value.type === "color") {
+      return this.value.value;
     } else {
-      return this.value.value ?? Color.black;
+      return this.value.value.value ?? Color.black;
     }
   }
 
-  readonly value: Color | ColorToken;
+  readonly value:
+    | {
+        type: "color";
+        value: Color;
+      }
+    | {
+        type: "token";
+        value: ColorToken;
+      };
 }

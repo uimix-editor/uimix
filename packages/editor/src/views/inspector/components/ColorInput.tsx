@@ -5,7 +5,6 @@ import { ColorPicker } from "../../../components/color/ColorPicker";
 import { Input } from "../../../components/Input";
 import { Color } from "../../../utils/Color";
 import { twMerge } from "tailwind-merge";
-import { ColorToken } from "../../../models/ColorToken";
 import { ColorTokenPopover } from "./ColorTokenPopover";
 import { IconButton } from "../../../components/IconButton";
 import { Tooltip } from "../../../components/Tooltip";
@@ -93,7 +92,7 @@ export function ColorInput({
         onChange={(color) => onChange?.(new ColorRef(color))}
         onChangeEnd={onChangeEnd}
       />
-      {value instanceof ColorToken ? (
+      {value?.value.type === "token" ? (
         <>
           <ColorTokenPopover
             onChange={(token) => {
@@ -106,7 +105,7 @@ export function ColorInput({
               h-7 bg-macaron-uiBackground rounded px-1.5
             "
             >
-              {value.name}
+              {value.value.value.name}
             </button>
           </ColorTokenPopover>
           <Tooltip text="Unlink from token">
