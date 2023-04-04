@@ -1,5 +1,5 @@
 import * as RadixPopover from "@radix-ui/react-popover";
-import { Tooltip } from "../../../components/Tooltip";
+import { Tooltip } from "@uimix/design-system/src/components/Tooltip";
 import { action } from "mobx";
 import { SearchInput } from "../../outline/SearchInput";
 import { projectState } from "../../../state/ProjectState";

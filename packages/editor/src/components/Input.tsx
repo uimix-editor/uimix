@@ -4,7 +4,7 @@ import { mergeRefs } from "react-merge-refs";
 import { useDraftValue } from "./hooks/useDraftValue";
 import { Icon, IconifyIcon } from "@iconify/react";
 import { Mixed } from "../utils/Mixed";
-import { Tooltip } from "./Tooltip";
+import { Tooltip } from "@uimix/design-system/src/components/Tooltip";
 
 export type UnstyledInputProps = Omit<
   JSX.IntrinsicElements["input"],

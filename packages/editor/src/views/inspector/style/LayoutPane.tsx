@@ -19,7 +19,7 @@ import { InspectorPane } from "../components/InspectorPane";
 import { action } from "mobx";
 import { InspectorTargetContext } from "../components/InspectorTargetContext";
 import { commands } from "../../../state/Commands";
-import { Tooltip } from "../../../components/Tooltip";
+import { Tooltip } from "@uimix/design-system/src/components/Tooltip";
 import { gapToMargins, marginsToGap } from "../../../services/AutoLayout";
 import { Icon } from "@iconify/react";
 

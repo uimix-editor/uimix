@@ -3,7 +3,7 @@ import styled from "@emotion/styled";
 import { Icon, IconifyIcon } from "@iconify/react";
 import { Input, UnstyledInput } from "./Input";
 import { Mixed, sameOrMixed } from "../utils/Mixed";
-import { Tooltip } from "./Tooltip";
+import { Tooltip } from "@uimix/design-system/src/components/Tooltip";
 import { IconButton } from "./IconButton";
 import { css } from "@emotion/react";
 import clsx from "clsx";

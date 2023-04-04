@@ -7,7 +7,7 @@ import { Color } from "../../../utils/Color";
 import { twMerge } from "tailwind-merge";
 import { ColorTokenPopover } from "./ColorTokenPopover";
 import { IconButton } from "../../../components/IconButton";
-import { Tooltip } from "../../../components/Tooltip";
+import { Tooltip } from "@uimix/design-system/src/components/Tooltip";
 import { ColorRef } from "../../../models/ColorRef";
 
 const ColorLabelBackground = styled.div`

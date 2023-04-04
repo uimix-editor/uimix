@@ -1,12 +1,27 @@
 {
   "name": "@uimix/design-system",
-  "private": true,
   "version": "1.0.0",
+  "private": true,
   "description": "Internal design system for UIMix",
+  "license": "MIT",
+  "author": "",
   "main": "index.ts",
   "scripts": {
     "lint": "eslint --ext .ts ."
   },
-  "author": "",
-  "license": "MIT"
+  "dependencies": {
+    "@iconify/react": "^4.1.0",
+    "@radix-ui/react-dialog": "^1.0.3",
+    "@radix-ui/react-popover": "^1.0.5",
+    "@radix-ui/react-scroll-area": "^1.0.3",
+    "@radix-ui/react-select": "^1.2.1",
+    "@radix-ui/react-tabs": "^1.0.3",
+    "@radix-ui/react-toggle-group": "^1.0.3",
+    "@radix-ui/react-tooltip": "^1.0.5",
+    "@types/react": "^18.0.33",
+    "@types/react-dom": "^18.0.11",
+    "ariakit": "2.0.0-next.43",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0"
+  }
 }

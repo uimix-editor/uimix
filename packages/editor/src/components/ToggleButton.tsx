@@ -1,6 +1,6 @@
 import { Icon, IconProps } from "@iconify/react";
 import { twMerge } from "tailwind-merge";
-import { Tooltip } from "./Tooltip";
+import { Tooltip } from "@uimix/design-system/src/components/Tooltip";
 
 export function ToggleButton({
   className,

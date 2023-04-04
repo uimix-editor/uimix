@@ -6,7 +6,6 @@ import { Selectable } from "../../../../models/Selectable";
 import { projectState } from "../../../../state/ProjectState";
 import { action } from "mobx";
 import { IconProps } from "@iconify/react";
-import { Tooltip } from "../../../../components/Tooltip";
 import { ToggleButton } from "../../../../components/ToggleButton";
 
 export const InspectorToggleButton = observer(function InspectorCheckBox({
