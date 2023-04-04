@@ -77,6 +77,9 @@ importers:
       '@uimix/editor':
         specifier: workspace:*
         version: link:../editor
+      '@uimix/foundation':
+        specifier: workspace:*
+        version: link:../foundation
       '@uimix/node-data':
         specifier: workspace:*
         version: link:../node-data
