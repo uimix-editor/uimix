@@ -2,6 +2,7 @@ import { Icon } from "@iconify/react";
 import * as Toast from "@radix-ui/react-toast";
 import { observer } from "mobx-react-lite";
 import { toastController } from "./ToastController";
+// @ts-ignore
 import styles from "./Toast.module.css";
 
 export const ToastPresenter: React.FC = observer(() => {
