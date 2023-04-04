@@ -8,7 +8,7 @@ import {
   NodeRenderer,
 } from "../viewport/renderer/NodeRenderer";
 import { usePointerStroke } from "../../components/hooks/usePointerStroke";
-import { scrollState } from "../../state/ScrollState";
+import { viewportGeometry } from "../../state/ScrollState";
 import { NodeMoveDragHandler } from "../viewport/dragHandler/NodeMoveDragHandler";
 import { ReactNode, useRef, useState } from "react";
 import { DragHandler } from "../viewport/dragHandler/DragHandler";
@@ -79,7 +79,7 @@ const ComponentThumbnails: React.FC<{
   const sections = compact(
     pages.map((page) => {
       const components = compact(
-        page.children.map((c) => {
+        page.node.children.map((c) => {
           if (queryTester.test(c.name)) return Component.from(c);
         })
       );
@@ -207,22 +207,21 @@ const ComponentThumbnail: React.FC<{
       const clientPos = new Vec2(clientX, clientY);
 
       if (!status.current.dragHandler && !status.current.creating) {
-        const isInViewport = scrollState.viewportDOMClientRect.includes(
+        const isInViewport = viewportGeometry.domClientRect.includes(
           new Vec2(clientX, clientY)
         );
         if (isInViewport) {
-          const pos = scrollState.documentPosForClientPos(clientPos);
-
-          const project = projectState.project;
-          const page = projectState.page;
+          const { project, page, scroll } = projectState;
           if (!page) {
             return;
           }
 
+          const pos = scroll.documentPosForClientPos(clientPos);
+
           const instanceNode = project.nodes.create(
             component instanceof Component ? "instance" : "foreign"
           );
-          page.append([instanceNode]);
+          page.node.append([instanceNode]);
 
           const instanceNodeStyle = instanceNode.selectable.style;
           instanceNodeStyle.position = {

@@ -20,11 +20,11 @@ import {
   createComponent,
   detachComponent,
 } from "../services/Component";
-import { PageHierarchyEntry } from "../models/Project";
+import { PageHierarchyEntry } from "../models/PageList";
 import { posix as path } from "path-browserify";
 import { generateExampleNodes } from "../models/generateExampleNodes";
 import { dialogState } from "./DialogState";
-import { scrollState } from "./ScrollState";
+import { viewportGeometry } from "./ScrollState";
 import { compact } from "lodash-es";
 import { Component } from "../models/Component";
 import { Vec2 } from "paintvec";
@@ -83,7 +83,8 @@ class Commands {
     const firstSelected = projectState.selectedSelectables[0];
     if (!firstSelected) {
       // select all top level nodes
-      for (const selectable of projectState.page?.selectable.children ?? []) {
+      for (const selectable of projectState.page?.node.selectable.children ??
+        []) {
         selectable.select();
       }
     } else {
@@ -389,7 +390,7 @@ class Commands {
       new Shortcut(["Shift", "Mod"], "Equal"),
     ],
     onClick: action(() => {
-      scrollState.zoomIn();
+      projectState.scroll.zoomIn();
     }),
   };
   readonly zoomOutCommand: MenuCommandDef = {
@@ -404,7 +405,7 @@ class Commands {
       new Shortcut(["Shift", "Mod"], "Minus"),
     ],
     onClick: action(() => {
-      scrollState.zoomOut();
+      projectState.scroll.zoomOut();
     }),
   };
   readonly resetZoomCommand: MenuCommandDef = {
@@ -415,7 +416,7 @@ class Commands {
       new Shortcut(["Mod"], "Numpad0"),
     ],
     onClick: action(() => {
-      scrollState.resetZoom();
+      projectState.scroll.resetZoom();
     }),
   };
   readonly showHideSidebarsCommand: MenuCommandDef = {
@@ -423,22 +424,24 @@ class Commands {
     text: "Show/Hide Sidebars",
     shortcuts: [new Shortcut(["Mod"], "Backslash")],
     onClick: action(() => {
+      const { scroll } = projectState;
+
       if (viewportState.isSideBarsVisible) {
         viewportState.isSideBarsVisible = false;
         viewportState.lastSideBarLeftOffset =
-          scrollState.viewportDOMClientRect.left;
-        scrollState.setTranslation(
+          viewportGeometry.domClientRect.left;
+        scroll.setTranslation(
           new Vec2(
-            scrollState.translation.x + viewportState.lastSideBarLeftOffset,
-            scrollState.translation.y
+            scroll.translation.x + viewportState.lastSideBarLeftOffset,
+            scroll.translation.y
           )
         );
       } else {
         viewportState.isSideBarsVisible = true;
-        scrollState.setTranslation(
+        scroll.setTranslation(
           new Vec2(
-            scrollState.translation.x - viewportState.lastSideBarLeftOffset,
-            scrollState.translation.y
+            scroll.translation.x - viewportState.lastSideBarLeftOffset,
+            scroll.translation.y
           )
         );
       }
@@ -483,7 +486,7 @@ class Commands {
               if (!page) {
                 return;
               }
-              generateExampleNodes(page);
+              generateExampleNodes(page.node);
               projectState.undoManager.stopCapturing();
             }),
           },

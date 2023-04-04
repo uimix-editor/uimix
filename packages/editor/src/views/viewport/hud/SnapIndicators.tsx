@@ -4,8 +4,8 @@ import { Transform, Vec2 } from "paintvec";
 import { PointSnapping, SameMarginSnapping } from "../../../utils/Snapping";
 import colors from "../../../colors.js";
 import { XDistanceIndicator, YDistanceIndicator } from "./DistanceIndicator";
-import { scrollState } from "../../../state/ScrollState";
 import { snapper } from "../../../state/Snapper";
+import { projectState } from "../../../state/ProjectState";
 
 const SnapLine = (props: {
   snapping: PointSnapping<"x" | "y">;
@@ -82,7 +82,7 @@ const SameMarginIndicator = ({
 };
 
 export const SnapIndicators = observer(function SnapIndicator() {
-  const transform = scrollState.documentToViewport;
+  const transform = projectState.scroll.documentToViewport;
   const snappings = snapper.snappings;
 
   return (

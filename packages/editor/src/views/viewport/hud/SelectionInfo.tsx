@@ -4,7 +4,6 @@ import { Rect } from "paintvec";
 import styled from "@emotion/styled";
 import colors from "../../../colors";
 import { projectState } from "../../../state/ProjectState";
-import { scrollState } from "../../../state/ScrollState";
 import { viewportState } from "../../../state/ViewportState";
 
 const SelectionInfoWrap = styled.div`
@@ -49,7 +48,7 @@ export const SelectionInfo: React.FC = observer(function SelectionInfo() {
   if (!bbox) {
     return null;
   }
-  const bboxInViewport = bbox.transform(scrollState.documentToViewport);
+  const bboxInViewport = bbox.transform(projectState.scroll.documentToViewport);
 
   // const tagName =
   //   sameOrNone(

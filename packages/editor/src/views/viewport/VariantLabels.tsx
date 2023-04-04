@@ -3,7 +3,6 @@ import * as RadixPopover from "@radix-ui/react-popover";
 import { projectState } from "../../state/ProjectState";
 import { Selectable } from "../../models/Selectable";
 import { observer } from "mobx-react-lite";
-import { scrollState } from "../../state/ScrollState";
 import { selectableForDOM } from "./renderer/NodeRenderer";
 import { Icon, IconifyIcon } from "@iconify/react";
 import { usePointerStroke } from "../../components/hooks/usePointerStroke";
@@ -33,7 +32,7 @@ const ComponentSection: React.FC<{
   if (!bbox) {
     return null;
   }
-  const bboxInView = bbox.transform(scrollState.documentToViewport);
+  const bboxInView = bbox.transform(projectState.scroll.documentToViewport);
 
   return (
     <div
@@ -134,7 +133,7 @@ const ComponentLabel: React.FC<{
   if (!bbox) {
     return null;
   }
-  const bboxInView = bbox.transform(scrollState.documentToViewport);
+  const bboxInView = bbox.transform(projectState.scroll.documentToViewport);
 
   return (
     <div
@@ -163,7 +162,7 @@ const VariantLabel: React.FC<{
 }> = observer(function Label({ variantSelectable }) {
   const variant = variantSelectable.originalNode;
   const pos = variantSelectable.computedRect.transform(
-    scrollState.documentToViewport
+    projectState.scroll.documentToViewport
   );
 
   const condition = variant.type === "variant" ? variant.condition : undefined;

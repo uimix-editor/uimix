@@ -3,17 +3,17 @@ import { observer } from "mobx-react-lite";
 import { Vec2 } from "paintvec";
 import React from "react";
 import { usePointerStroke } from "../../components/hooks/usePointerStroke";
-import { scrollState } from "../../state/ScrollState";
 import { viewportState } from "../../state/ViewportState";
+import { projectState } from "../../state/ProjectState";
 
 export const PanOverlay: React.FC = observer(function PanOverlay() {
   const pointerHandlers = usePointerStroke<HTMLElement, Vec2>({
     onBegin: action(() => {
-      return scrollState.translation;
+      return projectState.scroll.translation;
     }),
 
     onMove: action((_, { initData, totalDeltaX, totalDeltaY }) => {
-      scrollState.setTranslation(
+      projectState.scroll.setTranslation(
         initData.add(new Vec2(totalDeltaX, totalDeltaY))
       );
     }),

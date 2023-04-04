@@ -37,7 +37,7 @@ export function createComponent(selectable: Selectable) {
   const component = projectState.project.nodes.create("component");
   component.name = selectable.node.name;
   component.append([selectable.node]);
-  page.append([component]);
+  page.node.append([component]);
 
   if (!isTopLevel) {
     selectable.style.position = {

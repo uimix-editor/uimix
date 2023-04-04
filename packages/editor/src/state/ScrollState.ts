@@ -2,6 +2,26 @@ import { observable, computed, makeObservable } from "mobx";
 import { Vec2, Transform, Rect } from "paintvec";
 import { snapThreshold } from "../views/viewport/constants";
 
+export class ViewportGeometry {
+  // Set by Viewport
+  @observable domClientRect = Rect.from({
+    x: 0,
+    y: 0,
+    width: 100,
+    height: 100,
+  });
+
+  @computed get size(): Vec2 {
+    return this.domClientRect.size;
+  }
+
+  @computed get rect(): Rect {
+    return new Rect(new Vec2(), this.size);
+  }
+}
+
+export const viewportGeometry = new ViewportGeometry();
+
 export class ScrollState {
   constructor() {
     makeObservable(this);
@@ -27,24 +47,8 @@ export class ScrollState {
     this._scale = Math.round(scale * 1024) / 1024;
   }
 
-  // Set by Viewport
-  @observable viewportDOMClientRect = Rect.from({
-    x: 0,
-    y: 0,
-    width: 100,
-    height: 100,
-  });
-
-  @computed get viewportSize(): Vec2 {
-    return this.viewportDOMClientRect.size;
-  }
-
-  @computed get viewportRect(): Rect {
-    return new Rect(new Vec2(), this.viewportSize);
-  }
-
   @computed get viewportRectInDocument(): Rect {
-    return this.viewportRect.transform(this.viewportToDocument);
+    return viewportGeometry.rect.transform(this.viewportToDocument);
   }
 
   @computed get viewportToDocument(): Transform {
@@ -66,7 +70,7 @@ export class ScrollState {
   }
 
   zoomAroundCenter(scale: number): void {
-    this.zoomAround(this.viewportSize.mul(0.5), scale);
+    this.zoomAround(viewportGeometry.size.mul(0.5), scale);
   }
 
   zoomIn(): void {
@@ -89,8 +93,8 @@ export class ScrollState {
     this.setScale(
       Math.max(
         Math.min(
-          (this.viewportSize.x - margin * 2) / square.width,
-          (this.viewportSize.y - margin * 2) / square.height
+          (viewportGeometry.size.x - margin * 2) / square.width,
+          (viewportGeometry.size.y - margin * 2) / square.height
         ),
         0.01
       )
@@ -119,20 +123,20 @@ export class ScrollState {
       .inflate(margin);
 
     if (
-      this.viewportRect.includes(rect.topLeft) &&
-      this.viewportRect.includes(rect.bottomRight)
+      viewportGeometry.rect.includes(rect.topLeft) &&
+      viewportGeometry.rect.includes(rect.bottomRight)
     ) {
       return;
     }
 
     this.setTranslation(
-      this.translation.sub(rect.center).add(this.viewportSize.mul(0.5))
+      this.translation.sub(rect.center).add(viewportGeometry.size.mul(0.5))
     );
   }
 
   documentPosForClientPos(clientPos: Vec2): Vec2 {
     return clientPos
-      .sub(this.viewportDOMClientRect.topLeft)
+      .sub(viewportGeometry.domClientRect.topLeft)
       .transform(this.viewportToDocument).round;
   }
 
@@ -140,5 +144,3 @@ export class ScrollState {
     return snapThreshold / this.scale;
   }
 }
-
-export const scrollState = new ScrollState();

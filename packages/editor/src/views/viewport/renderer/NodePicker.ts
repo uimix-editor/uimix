@@ -1,6 +1,6 @@
 import { compact } from "lodash-es";
 import { Selectable } from "../../../models/Selectable";
-import { scrollState } from "../../../state/ScrollState";
+import { viewportGeometry } from "../../../state/ScrollState";
 import { selectableForDOM } from "../renderer/NodeRenderer";
 
 export class NodePicker {
@@ -12,8 +12,8 @@ export class NodePicker {
     }
 
     const doms = this.document.elementsFromPoint(
-      clientX - scrollState.viewportDOMClientRect.left,
-      clientY - scrollState.viewportDOMClientRect.top
+      clientX - viewportGeometry.domClientRect.left,
+      clientY - viewportGeometry.domClientRect.top
     );
 
     return [

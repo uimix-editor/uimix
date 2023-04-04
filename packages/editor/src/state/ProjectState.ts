@@ -7,11 +7,13 @@ import {
 } from "@uimix/node-data";
 import { Project } from "../models/Project";
 import { Selectable } from "../models/Selectable";
-import { Node } from "../models/Node";
 import { getIncrementalUniqueName } from "../utils/Name";
 import { generateExampleNodes } from "../models/generateExampleNodes";
 import demoFile from "../../../sandbox/src/uimix/landing.uimix?raw";
 import { reassignNewIDs } from "../models/ProjectJSONExtra";
+import { PageState } from "./PageState";
+import { Page } from "../models/Page";
+import { ScrollState } from "./ScrollState";
 
 export class ProjectState {
   constructor() {
@@ -23,29 +25,36 @@ export class ProjectState {
   readonly doc = new Y.Doc();
   readonly project: Project;
   @observable pageID: string | undefined;
-  @computed get page(): Node | undefined {
-    return this.pageID ? this.project.nodes.get(this.pageID) : undefined;
+  @computed get page(): Page | undefined {
+    if (!this.pageID) {
+      return;
+    }
+    const pageNode = this.project.nodes.get(this.pageID);
+    if (!pageNode) {
+      return;
+    }
+    return Page.from(pageNode);
+  }
+  readonly undoManager: Y.UndoManager;
+
+  get pageState(): PageState | undefined {
+    const page = this.page;
+    if (!page) {
+      return;
+    }
+    return PageState.from(page);
   }
 
-  readonly undoManager: Y.UndoManager;
+  // MARK: Scroll
+
+  get scroll(): ScrollState {
+    return this.pageState?.scroll ?? new ScrollState();
+  }
 
   // MARK: Selection
 
   @computed get selectedSelectables(): Selectable[] {
-    return (
-      this.page?.selectable?.children.flatMap((s) => s.selectedDescendants) ??
-      []
-    );
-  }
-
-  @computed get selectedNodes(): Node[] {
-    const nodes: Node[] = [];
-    for (const s of this.selectedSelectables) {
-      if (s.idPath.length === 1) {
-        nodes.push(s.originalNode);
-      }
-    }
-    return nodes;
+    return this.pageState?.selectedSelectables ?? [];
   }
 
   // MARK: Collapsing
@@ -57,11 +66,10 @@ export class ProjectState {
   setupInitContent() {
     const pages = this.project.pages.all;
     if (pages.length === 0) {
-      const page = this.project.nodes.create("page");
-      page.name = "Page 1";
-      this.project.node.append([page]);
+      const page = this.project.pages.create("Page 1");
+      this.project.node.append([page.node]);
       this.pageID = page.id;
-      generateExampleNodes(page);
+      generateExampleNodes(page.node);
       if (this.project.componentURLs.length === 0) {
         this.project.componentURLs.push([
           "https://cdn.jsdelivr.net/gh/uimix-editor/uimix@ba0157d5/packages/sandbox/dist-components/components.js",
@@ -124,7 +132,7 @@ export class ProjectState {
   async pasteNodeClipboardData(data: NodeClipboardData) {
     const getInsertionTarget = () => {
       const defaultTarget = {
-        parent: this.page,
+        parent: this.page?.node,
         next: undefined,
       };
 
@@ -224,7 +232,7 @@ export class ProjectState {
 
   // MARK: Pages
 
-  openPage(page: Node) {
+  openPage(page: Page) {
     this.pageID = page.id;
   }
 

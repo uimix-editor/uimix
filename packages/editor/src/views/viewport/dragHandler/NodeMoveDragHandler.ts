@@ -2,7 +2,6 @@ import { Rect, Segment, Vec2 } from "paintvec";
 import { Selectable } from "../../../models/Selectable";
 import { projectState } from "../../../state/ProjectState";
 import { DropDestination } from "../../../state/DropDestination";
-import { scrollState } from "../../../state/ScrollState";
 import { snapper } from "../../../state/Snapper";
 import { viewportState } from "../../../state/ViewportState";
 import { ViewportEvent } from "./ViewportEvent";
@@ -146,8 +145,8 @@ export function findDropDestination(
       const bbox = dst.computedRect;
       const parentBBox = dst.parent.computedRect;
 
-      const parentCloseThresh = scrollState.snapThreshold;
-      const threshold = scrollState.snapThreshold * 2;
+      const parentCloseThresh = projectState.scroll.snapThreshold;
+      const threshold = projectState.scroll.snapThreshold * 2;
 
       // do not drop near the edge when the parent edge is close
 

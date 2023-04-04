@@ -1,14 +1,14 @@
 import { createAtom } from "mobx";
 import { Rect } from "paintvec";
 import { IComputedRectProvider } from "../../../models/Selectable";
-import { scrollState } from "../../../state/ScrollState";
+import { projectState } from "../../../state/ProjectState";
 
 export const viewportRootMarker = "data-viewport-root";
 
 function getComputedRect(element: Element): Rect {
   // TODO: avoid floating point errors when zoom scale is not a round number
   return Rect.from((element as HTMLElement).getBoundingClientRect()).transform(
-    scrollState.viewportToDocument
+    projectState.scroll.viewportToDocument
   );
 }
 

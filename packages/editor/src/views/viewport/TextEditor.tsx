@@ -5,8 +5,8 @@ import { createEditor, Transforms, Descendant } from "slate";
 import { Slate, Editable, withReact } from "slate-react";
 import { Selectable } from "../../models/Selectable";
 import { buildNodeCSS } from "../../models/buildNodeCSS";
-import { scrollState } from "../../state/ScrollState";
 import { viewportState } from "../../state/ViewportState";
+import { projectState } from "../../state/ProjectState";
 
 export const TextEditorBody: React.FC<{
   selectable: Selectable;
@@ -49,7 +49,7 @@ export const TextEditorBody: React.FC<{
       style={{
         position: "absolute",
         transformOrigin: "left top",
-        transform: scrollState.documentToViewport.toCSSMatrixString(),
+        transform: projectState.scroll.documentToViewport.toCSSMatrixString(),
       }}
     >
       <div

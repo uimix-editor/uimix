@@ -3,11 +3,11 @@ import { Color } from "../utils/Color";
 import colors from "tailwindcss/colors.js";
 import { Node } from "./Node";
 
-export function generateExampleNodes(page: Node) {
-  const project = page.project;
+export function generateExampleNodes(pageNode: Node) {
+  const project = pageNode.project;
 
   for (let i = 0; i < 10; ++i) {
-    const frameSelectable = page.selectable.append("frame");
+    const frameSelectable = pageNode.selectable.append("frame");
     frameSelectable.originalNode.name = `Frame ${i}`;
     const style = frameSelectable.style;
     style.position = {
@@ -22,7 +22,7 @@ export function generateExampleNodes(page: Node) {
   }
 
   {
-    const stackSelectable = page.selectable.append("frame");
+    const stackSelectable = pageNode.selectable.append("frame");
     stackSelectable.originalNode.name = "Stack";
     const stackStyle = stackSelectable.style;
 
@@ -83,7 +83,7 @@ export function generateExampleNodes(page: Node) {
   {
     const componentNode = project.nodes.create("component");
     componentNode.name = "Button";
-    page.append([componentNode]);
+    pageNode.append([componentNode]);
 
     // componentNode.props.replace([
     //   { name: "width", type: "number" },
@@ -163,7 +163,7 @@ export function generateExampleNodes(page: Node) {
 
     const instanceNode = project.nodes.create("instance");
     instanceNode.name = "Instance";
-    page.append([instanceNode]);
+    pageNode.append([instanceNode]);
 
     const instanceNodeStyle = instanceNode.selectable.style;
     instanceNodeStyle.position = {
