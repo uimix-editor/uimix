@@ -6,7 +6,7 @@ export default {
   content: [
     "./index.html",
     "./src/**/*.{js,ts,jsx,tsx}",
-    "../design-system/src/**/*.{js,ts,jsx,tsx}",
+    "../foundation/src/**/*.{js,ts,jsx,tsx}",
   ],
   theme: {
     extend: {
