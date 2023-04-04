@@ -11,7 +11,7 @@ import type {
 } from "@uimix/editor/src/state/IFrameRPC";
 import { Icon } from "@iconify/react";
 import Link from "next/link";
-import { DoubleClickToEdit } from "../DoubleClickToEdit";
+import { DocumentTitleEdit } from "../DocumentTitleEdit";
 import { toastController } from "@uimix/foundation/src/components/toast/ToastController";
 import { LoadingErrorOverlay } from "./LoadingErrorOverlay";
 import { assertNonNull } from "../../utils/assertNonNull";
@@ -155,7 +155,7 @@ const Editor: React.FC<{
         >
           <Icon icon="material-symbols:chevron-left" className="text-base" />
         </Link>
-        <DoubleClickToEdit
+        <DocumentTitleEdit
           className="text-xs font-medium"
           value={documentQuery.data?.title ?? ""}
           onChange={async (title) => {

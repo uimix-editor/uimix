@@ -1,24 +1,8 @@
 import clsx from "clsx";
 import { createRef, useEffect, useState } from "react";
+import { useDraftValue } from "@uimix/foundation/src/components/hooks/useDraftValue";
 
-export function useDraftValue<T>(
-  value: T,
-  onChange: (value: T) => void
-): [
-  T, // draft
-  (value: T) => void, // on change draft value
-  () => void // on change done
-] {
-  const [draft, setDraft] = useState(value);
-
-  useEffect(() => {
-    setDraft(value);
-  }, [value]);
-
-  return [draft, setDraft, () => onChange(draft)];
-}
-
-export function DoubleClickToEdit({
+export function DocumentTitleEdit({
   className,
   value,
   onChange,
