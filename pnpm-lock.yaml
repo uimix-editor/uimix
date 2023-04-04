@@ -666,9 +666,6 @@ importers:
       '@seanchas116/design-icons':
         specifier: ^1.0.1
         version: 1.0.1
-      '@uimix/foundation':
-        specifier: workspace:*
-        version: 'link:'
       '@uimix/node-data':
         specifier: workspace:*
         version: link:../node-data
