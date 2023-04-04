@@ -1,7 +1,7 @@
 import { Icon } from "@iconify/react";
 import * as RadixToggleGroup from "@radix-ui/react-toggle-group";
 import { twMerge } from "tailwind-merge";
-import { Tooltip } from "@uimix/design-system/src/components/Tooltip";
+import { Tooltip } from "./Tooltip";
 
 export interface ToggleGroupItem<T extends string> {
   icon?: React.ComponentProps<typeof Icon>["icon"];

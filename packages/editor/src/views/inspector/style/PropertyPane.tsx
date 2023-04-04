@@ -8,7 +8,7 @@ import { Input } from "../../../components/Input";
 import { Select } from "../../../components/Select";
 import { ForeignComponentRef } from "@uimix/node-data";
 import { action } from "mobx";
-import { Tooltip } from "@uimix/design-system/src/components/Tooltip";
+import { Tooltip } from "@uimix/foundation/src/components/Tooltip";
 import { Prop } from "../../../types/ForeignComponent";
 
 export const PropertyPane: React.FC = observer(function PropertyPane() {

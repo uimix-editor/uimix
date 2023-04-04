@@ -8,7 +8,7 @@ import textIcon from "@seanchas116/design-icons/json/text.json";
 import imageIcon from "@seanchas116/design-icons/json/image.json";
 import { viewportState } from "../../state/ViewportState";
 import { action } from "mobx";
-import { Tooltip } from "@uimix/design-system/src/components/Tooltip";
+import { Tooltip } from "@uimix/foundation/src/components/Tooltip";
 
 export const ToolBar = observer(() => {
   // TODO: use material symbols instead of SVGs

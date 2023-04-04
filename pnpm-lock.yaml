@@ -293,48 +293,6 @@ importers:
         specifier: ^3.3.1
         version: 3.3.1(postcss@8.4.21)
 
-  packages/design-system:
-    dependencies:
-      '@iconify/react':
-        specifier: ^4.1.0
-        version: 4.1.0(react@18.2.0)
-      '@radix-ui/react-dialog':
-        specifier: ^1.0.3
-        version: 1.0.3(@types/react@18.0.33)(react-dom@18.2.0)(react@18.2.0)
-      '@radix-ui/react-popover':
-        specifier: ^1.0.5
-        version: 1.0.5(@types/react@18.0.33)(react-dom@18.2.0)(react@18.2.0)
-      '@radix-ui/react-scroll-area':
-        specifier: ^1.0.3
-        version: 1.0.3(react-dom@18.2.0)(react@18.2.0)
-      '@radix-ui/react-select':
-        specifier: ^1.2.1
-        version: 1.2.1(@types/react@18.0.33)(react-dom@18.2.0)(react@18.2.0)
-      '@radix-ui/react-tabs':
-        specifier: ^1.0.3
-        version: 1.0.3(react-dom@18.2.0)(react@18.2.0)
-      '@radix-ui/react-toggle-group':
-        specifier: ^1.0.3
-        version: 1.0.3(react-dom@18.2.0)(react@18.2.0)
-      '@radix-ui/react-tooltip':
-        specifier: ^1.0.5
-        version: 1.0.5(@types/react@18.0.33)(react-dom@18.2.0)(react@18.2.0)
-      '@types/react':
-        specifier: ^18.0.33
-        version: 18.0.33
-      '@types/react-dom':
-        specifier: ^18.0.11
-        version: 18.0.11
-      ariakit:
-        specifier: 2.0.0-next.43
-        version: 2.0.0-next.43(@types/react@18.0.33)(react-dom@18.2.0)(react@18.2.0)
-      react:
-        specifier: ^18.2.0
-        version: 18.2.0
-      react-dom:
-        specifier: ^18.2.0
-        version: 18.2.0(react@18.2.0)
-
   packages/editor:
     dependencies:
       '@emotion/react':
@@ -379,9 +337,9 @@ importers:
       '@seanchas116/design-icons':
         specifier: ^1.0.1
         version: 1.0.1
-      '@uimix/design-system':
+      '@uimix/foundation':
         specifier: workspace:*
-        version: link:../design-system
+        version: link:../foundation
       '@uimix/node-data':
         specifier: workspace:*
         version: link:../node-data
@@ -664,6 +622,262 @@ importers:
         specifier: ^0.29.8
         version: 0.29.8
 
+  packages/foundation:
+    dependencies:
+      '@emotion/react':
+        specifier: ^11.10.6
+        version: 11.10.6(@types/react@18.0.33)(react@18.2.0)
+      '@emotion/styled':
+        specifier: ^11.10.6
+        version: 11.10.6(@emotion/react@11.10.6)(@types/react@18.0.33)(react@18.2.0)
+      '@iconify-icons/heroicons':
+        specifier: ^1.2.7
+        version: 1.2.7
+      '@iconify-icons/ic':
+        specifier: ^1.2.13
+        version: 1.2.13
+      '@iconify/react':
+        specifier: ^4.1.0
+        version: 4.1.0(react@18.2.0)
+      '@material-symbols/svg-300':
+        specifier: ^0.5.5
+        version: 0.5.5
+      '@radix-ui/react-dialog':
+        specifier: ^1.0.3
+        version: 1.0.3(@types/react@18.0.33)(react-dom@18.2.0)(react@18.2.0)
+      '@radix-ui/react-popover':
+        specifier: ^1.0.5
+        version: 1.0.5(@types/react@18.0.33)(react-dom@18.2.0)(react@18.2.0)
+      '@radix-ui/react-scroll-area':
+        specifier: ^1.0.3
+        version: 1.0.3(react-dom@18.2.0)(react@18.2.0)
+      '@radix-ui/react-select':
+        specifier: ^1.2.1
+        version: 1.2.1(@types/react@18.0.33)(react-dom@18.2.0)(react@18.2.0)
+      '@radix-ui/react-tabs':
+        specifier: ^1.0.3
+        version: 1.0.3(react-dom@18.2.0)(react@18.2.0)
+      '@radix-ui/react-toggle-group':
+        specifier: ^1.0.3
+        version: 1.0.3(react-dom@18.2.0)(react@18.2.0)
+      '@radix-ui/react-tooltip':
+        specifier: ^1.0.5
+        version: 1.0.5(@types/react@18.0.33)(react-dom@18.2.0)(react@18.2.0)
+      '@seanchas116/design-icons':
+        specifier: ^1.0.1
+        version: 1.0.1
+      '@uimix/foundation':
+        specifier: workspace:*
+        version: 'link:'
+      '@uimix/node-data':
+        specifier: workspace:*
+        version: link:../node-data
+      '@uimix/typed-rpc':
+        specifier: workspace:*
+        version: link:../typed-rpc
+      any-base:
+        specifier: ^1.1.0
+        version: 1.1.0
+      ariakit:
+        specifier: 2.0.0-next.43
+        version: 2.0.0-next.43(@types/react@18.0.33)(react-dom@18.2.0)(react@18.2.0)
+      buffer:
+        specifier: ^6.0.3
+        version: 6.0.3
+      clsx:
+        specifier: ^1.2.1
+        version: 1.2.1
+      css-color-names:
+        specifier: ^1.0.1
+        version: 1.0.1
+      dedent:
+        specifier: ^0.7.0
+        version: 0.7.0
+      html-react-parser:
+        specifier: ^3.0.15
+        version: 3.0.15(react@18.2.0)
+      html-to-image:
+        specifier: ^1.11.11
+        version: 1.11.11
+      lodash-es:
+        specifier: ^4.17.21
+        version: 4.17.21
+      material-symbols:
+        specifier: ^0.5.5
+        version: 0.5.5
+      mobx:
+        specifier: ^6.9.0
+        version: 6.9.0
+      mobx-react-lite:
+        specifier: ^3.4.3
+        version: 3.4.3(mobx@6.9.0)(react-dom@18.2.0)(react@18.2.0)
+      paintvec:
+        specifier: workspace:*
+        version: link:../paintvec
+      parse-css-color:
+        specifier: ^0.2.1
+        version: 0.2.1
+      path-browserify:
+        specifier: ^1.0.1
+        version: 1.0.1
+      prettier:
+        specifier: ^2.8.7
+        version: 2.8.7
+      react:
+        specifier: ^18.2.0
+        version: 18.2.0
+      react-dom:
+        specifier: ^18.2.0
+        version: 18.2.0(react@18.2.0)
+      react-draggable-tree:
+        specifier: ^0.7.0
+        version: 0.7.0
+      react-merge-refs:
+        specifier: ^2.0.1
+        version: 2.0.1
+      react-sortablejs:
+        specifier: ^6.1.4
+        version: 6.1.4(@types/sortablejs@1.15.1)(react-dom@18.2.0)(react@18.2.0)(sortablejs@1.15.0)
+      scroll-into-view-if-needed:
+        specifier: ^3.0.6
+        version: 3.0.6
+      slate:
+        specifier: ^0.93.0
+        version: 0.93.0
+      slate-react:
+        specifier: ^0.93.0
+        version: 0.93.0(react-dom@18.2.0)(react@18.2.0)(slate@0.93.0)
+      sortablejs:
+        specifier: ^1.15.0
+        version: 1.15.0
+      tailwind-merge:
+        specifier: ^1.11.0
+        version: 1.11.0
+      tailwind-styled-components:
+        specifier: ^2.2.0
+        version: 2.2.0(react-dom@18.2.0)(react@18.2.0)
+      tiny-typed-emitter:
+        specifier: ^2.1.0
+        version: 2.1.0
+      ua-parser-js:
+        specifier: ^1.0.35
+        version: 1.0.35
+      url-safe-base64:
+        specifier: ^1.3.0
+        version: 1.3.0
+      yjs:
+        specifier: ^13.5.52
+        version: 13.5.52
+      zod:
+        specifier: ^3.21.4
+        version: 3.21.4
+    devDependencies:
+      '@babel/core':
+        specifier: ^7.21.4
+        version: 7.21.4
+      '@storybook/addon-actions':
+        specifier: ^7.0.1
+        version: 7.0.2(react-dom@18.2.0)(react@18.2.0)
+      '@storybook/addon-essentials':
+        specifier: ^7.0.1
+        version: 7.0.2(react-dom@18.2.0)(react@18.2.0)
+      '@storybook/addon-interactions':
+        specifier: ^7.0.1
+        version: 7.0.2(react-dom@18.2.0)(react@18.2.0)
+      '@storybook/addon-links':
+        specifier: ^7.0.1
+        version: 7.0.2(react-dom@18.2.0)(react@18.2.0)
+      '@storybook/addon-mdx-gfm':
+        specifier: ^7.0.1
+        version: 7.0.2
+      '@storybook/react':
+        specifier: ^7.0.1
+        version: 7.0.2(react-dom@18.2.0)(react@18.2.0)(typescript@5.0.3)
+      '@storybook/react-vite':
+        specifier: ^7.0.1
+        version: 7.0.2(react-dom@18.2.0)(react@18.2.0)(typescript@5.0.3)(vite@4.2.1)
+      '@storybook/testing-library':
+        specifier: ^0.1.0
+        version: 0.1.0
+      '@types/color-namer':
+        specifier: ^1.3.0
+        version: 1.3.0
+      '@types/dedent':
+        specifier: ^0.7.0
+        version: 0.7.0
+      '@types/lodash-es':
+        specifier: ^4.17.7
+        version: 4.17.7
+      '@types/path-browserify':
+        specifier: ^1.0.0
+        version: 1.0.0
+      '@types/prettier':
+        specifier: ^2.7.2
+        version: 2.7.2
+      '@types/react':
+        specifier: ^18.0.33
+        version: 18.0.33
+      '@types/react-color':
+        specifier: ^3.0.6
+        version: 3.0.6
+      '@types/react-dom':
+        specifier: ^18.0.11
+        version: 18.0.11
+      '@types/sortablejs':
+        specifier: ^1.15.1
+        version: 1.15.1
+      '@types/ua-parser-js':
+        specifier: ^0.7.36
+        version: 0.7.36
+      '@types/wicg-file-system-access':
+        specifier: ^2020.9.5
+        version: 2020.9.5
+      '@vitejs/plugin-react':
+        specifier: ^3.1.0
+        version: 3.1.0(vite@4.2.1)
+      autoprefixer:
+        specifier: ^10.4.14
+        version: 10.4.14(postcss@8.4.21)
+      babel-loader:
+        specifier: ^9.1.2
+        version: 9.1.2(@babel/core@7.21.4)(webpack@5.77.0)
+      color-namer:
+        specifier: ^1.4.0
+        version: 1.4.0
+      csstype:
+        specifier: ^3.1.2
+        version: 3.1.2
+      html-tags:
+        specifier: ^3.3.0
+        version: 3.3.0
+      postcss:
+        specifier: ^8.4.21
+        version: 8.4.21
+      react-color:
+        specifier: ^2.19.3
+        version: 2.19.3(react@18.2.0)
+      react-docgen-typescript:
+        specifier: ^2.2.2
+        version: 2.2.2(typescript@5.0.3)
+      run-z:
+        specifier: ^1.11.0
+        version: 1.11.0
+      storybook:
+        specifier: ^7.0.1
+        version: 7.0.2
+      tailwindcss:
+        specifier: ^3.3.1
+        version: 3.3.1(postcss@8.4.21)
+      typescript:
+        specifier: ^5.0.3
+        version: 5.0.3
+      vite:
+        specifier: ^4.2.1
+        version: 4.2.1(@types/node@18.15.11)
+      vitest:
+        specifier: ^0.29.8
+        version: 0.29.8
+
   packages/node-data:
     dependencies:
       zod:
@@ -789,13 +1003,6 @@ packages:
       default-browser-id: 3.0.0
     dev: true
 
-  /@babel/code-frame@7.18.6:
-    resolution: {integrity: sha512-TDCmlK5eOvH+eH7cdAFlNXeVJqWIQ7gW9tY1GJIpUtFb6CmjVyq2VM3u71bOyR8CRihcCgMUYoDNyLXao3+70Q==}
-    engines: {node: '>=6.9.0'}
-    dependencies:
-      '@babel/highlight': 7.18.6
-    dev: true
-
   /@babel/code-frame@7.21.4:
     resolution: {integrity: sha512-LYvhNKfwWSPpocw8GI7gpK2nq3HSDuEPC/uSYaALSJu9xjsalaaYFOq0Pwt5KmVqwEbZlDu81aLXwBOmD/Fv9g==}
     engines: {node: '>=6.9.0'}
@@ -828,16 +1035,6 @@ packages:
       semver: 6.3.0
     transitivePeerDependencies:
       - supports-color
-    dev: true
-
-  /@babel/generator@7.21.3:
-    resolution: {integrity: sha512-QS3iR1GYC/YGUnW7IdggFeN5c1poPUurnGttOV/bZgPGV+izC/D8HnD6DLwod0fsatNyVn1G3EVWMYIF0nHbeA==}
-    engines: {node: '>=6.9.0'}
-    dependencies:
-      '@babel/types': 7.21.4
-      '@jridgewell/gen-mapping': 0.3.2
-      '@jridgewell/trace-mapping': 0.3.17
-      jsesc: 2.5.2
     dev: true
 
   /@babel/generator@7.21.4:
@@ -975,8 +1172,8 @@ packages:
       '@babel/helper-split-export-declaration': 7.18.6
       '@babel/helper-validator-identifier': 7.19.1
       '@babel/template': 7.20.7
-      '@babel/traverse': 7.21.3
-      '@babel/types': 7.21.3
+      '@babel/traverse': 7.21.4
+      '@babel/types': 7.21.4
     transitivePeerDependencies:
       - supports-color
     dev: true
@@ -1086,14 +1283,6 @@ packages:
       '@babel/helper-validator-identifier': 7.19.1
       chalk: 2.4.2
       js-tokens: 4.0.0
-
-  /@babel/parser@7.21.3:
-    resolution: {integrity: sha512-lobG0d7aOfQRXh8AyklEAgZGvA4FShxo6xQbUrrT/cNBPUdIDojlokwJsQyCC/eKia7ifqM0yP+2DRZ4WKw2RQ==}
-    engines: {node: '>=6.0.0'}
-    hasBin: true
-    dependencies:
-      '@babel/types': 7.21.4
-    dev: true
 
   /@babel/parser@7.21.4:
     resolution: {integrity: sha512-alVJj7k7zIxqBZ7BTRhz0IqJFxW1VJbm6N8JbcYhQ186df9ZBPbZBmWSqAMXwHGsCJdYks7z/voa3ibiS5bCIw==}
@@ -2052,27 +2241,9 @@ packages:
     resolution: {integrity: sha512-8SegXApWe6VoNw0r9JHpSteLKTpTiLZ4rMlGIm9JQ18KiCtyQiAMEazujAHrUS5flrcqYZa75ukev3P6QmUwUw==}
     engines: {node: '>=6.9.0'}
     dependencies:
-      '@babel/code-frame': 7.18.6
-      '@babel/parser': 7.21.3
-      '@babel/types': 7.21.3
-    dev: true
-
-  /@babel/traverse@7.21.3:
-    resolution: {integrity: sha512-XLyopNeaTancVitYZe2MlUEvgKb6YVVPXzofHgqHijCImG33b/uTurMS488ht/Hbsb2XK3U2BnSTxKVNGV3nGQ==}
-    engines: {node: '>=6.9.0'}
-    dependencies:
-      '@babel/code-frame': 7.18.6
-      '@babel/generator': 7.21.3
-      '@babel/helper-environment-visitor': 7.18.9
-      '@babel/helper-function-name': 7.21.0
-      '@babel/helper-hoist-variables': 7.18.6
-      '@babel/helper-split-export-declaration': 7.18.6
+      '@babel/code-frame': 7.21.4
       '@babel/parser': 7.21.4
       '@babel/types': 7.21.4
-      debug: 4.3.4
-      globals: 11.12.0
-    transitivePeerDependencies:
-      - supports-color
     dev: true
 
   /@babel/traverse@7.21.4:
@@ -2091,15 +2262,6 @@ packages:
       globals: 11.12.0
     transitivePeerDependencies:
       - supports-color
-    dev: true
-
-  /@babel/types@7.21.3:
-    resolution: {integrity: sha512-sBGdETxC+/M4o/zKC0sl6sjWv62WFR/uzxrJ6uYyMLZOUlPnwzw0tKgVHOXxaAd5l2g8pEDM5RZ495GPQI77kg==}
-    engines: {node: '>=6.9.0'}
-    dependencies:
-      '@babel/helper-string-parser': 7.19.4
-      '@babel/helper-validator-identifier': 7.19.1
-      to-fast-properties: 2.0.0
     dev: true
 
   /@babel/types@7.21.4:

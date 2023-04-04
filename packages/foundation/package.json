@@ -1,20 +1,13 @@
 {
-  "name": "@uimix/editor",
-  "version": "0.0.0",
+  "name": "@uimix/foundation",
+  "version": "1.0.0",
   "private": true,
-  "type": "module",
+  "description": "Internal design system for UIMix",
+  "license": "MIT",
+  "author": "",
+  "main": "index.ts",
   "scripts": {
-    "build": "run-z build:tsc build:vite",
-    "build-storybook": "storybook build",
-    "build:tsc": "tsc",
-    "build:vite": "vite build",
-    "dev": "run-z dev:vite",
-    "dev:vite": "vite",
-    "format": "prettier --write src",
-    "lint": "eslint src",
-    "preview": "vite preview",
-    "storybook": "storybook dev -p 6006",
-    "test": "vitest run"
+    "lint": "eslint --ext .ts ."
   },
   "dependencies": {
     "@emotion/react": "^11.10.6",
