@@ -138,13 +138,6 @@ const DocumentCard = ({
                   {document.type === "cloud" ? (
                     <DropdownMenu.Item
                       onClick={async () => {
-                        console.log("show toast");
-                        toastController.show({
-                          type: "error",
-                          message: "Failed delete",
-                        });
-                        return;
-
                         const ok = confirm(
                           "Are you sure you want to delete this document?"
                         );
