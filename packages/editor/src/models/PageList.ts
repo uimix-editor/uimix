@@ -3,7 +3,7 @@ import { Node } from "./Node";
 import { computed, makeObservable } from "mobx";
 import { Page } from "./Page";
 import { compact } from "lodash-es";
-import { assertNonNull } from "../utils/Assert";
+import { assertNonNull } from "@uimix/foundation/src/utils/Assert";
 import { Project } from "./Project";
 
 export interface PageHierarchyFolderEntry {

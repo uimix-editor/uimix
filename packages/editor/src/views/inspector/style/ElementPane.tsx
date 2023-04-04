@@ -1,11 +1,11 @@
 import { observer } from "mobx-react-lite";
-import { Mixed, sameOrMixed } from "../../../utils/Mixed";
+import { Mixed, sameOrMixed } from "@uimix/foundation/src/utils/Mixed";
 import { projectState } from "../../../state/ProjectState";
 import { InspectorHeading } from "../components/InspectorHeading";
 import { InspectorPane } from "../components/InspectorPane";
 import { InspectorInput } from "./inputs/InspectorInput";
 import { InspectorTargetContext } from "../components/InspectorTargetContext";
-import { Tooltip } from "../../../components/Tooltip";
+import { Tooltip } from "@uimix/foundation/src/components/Tooltip";
 import { Icon } from "@iconify/react";
 
 export const ElementPane: React.FC = observer(function DebugPane() {

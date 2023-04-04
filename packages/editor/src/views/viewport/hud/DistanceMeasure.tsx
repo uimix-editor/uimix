@@ -1,7 +1,7 @@
 import { observer } from "mobx-react-lite";
 import { Rect } from "paintvec";
 import React from "react";
-import colors from "../../../colors";
+import colors from "@uimix/foundation/src/colors";
 import { projectState } from "../../../state/ProjectState";
 import { viewportState } from "../../../state/ViewportState";
 import { XDistanceIndicator, YDistanceIndicator } from "./DistanceIndicator";

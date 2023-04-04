@@ -1,8 +1,8 @@
-import { imageFromURL } from "../utils/Blob";
+import { imageFromURL } from "@uimix/foundation/src/utils/Blob";
 import { Project } from "./Project";
-import { ObservableYMap } from "../utils/ObservableYMap";
+import { ObservableYMap } from "@uimix/foundation/src/utils/ObservableYMap";
 import { Image, ImageType } from "@uimix/node-data";
-import { getURLSafeBase64Hash } from "../utils/Hash";
+import { getURLSafeBase64Hash } from "@uimix/foundation/src/utils/Hash";
 import { Buffer } from "buffer";
 import { compact } from "lodash-es";
 

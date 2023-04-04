@@ -5,7 +5,7 @@ import Link from "next/link";
 import { trpc } from "../../utils/trpc";
 import * as DropdownMenu from "@radix-ui/react-dropdown-menu";
 import { useEffect } from "react";
-import { toastController } from "../../components/toast/ToastController";
+import { toastController } from "@uimix/foundation/src/components/toast/ToastController";
 import Router from "next/router";
 import TimeAgo from "javascript-time-ago";
 import en from "javascript-time-ago/locale/en";

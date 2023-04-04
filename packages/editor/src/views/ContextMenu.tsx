@@ -1,8 +1,8 @@
 import { useMenuState } from "ariakit";
 import { useEffect, useState } from "react";
-import { Menu } from "../components/Menu";
-import { MenuItemDef } from "../state/MenuItemDef";
-import { EventEmitter } from "../utils/EventEmitter";
+import { Menu } from "@uimix/foundation/src/components/Menu";
+import { MenuItemDef } from "@uimix/foundation/src/components/MenuItemDef";
+import { EventEmitter } from "@uimix/foundation/src/utils/EventEmitter";
 
 export interface ContextMenuRequest {
   clientX: number;

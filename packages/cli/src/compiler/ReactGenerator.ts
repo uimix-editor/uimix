@@ -4,7 +4,7 @@ import { Selectable } from "@uimix/editor/src/models/Selectable";
 import {
   generateJSIdentifier,
   getIncrementalUniqueName,
-} from "@uimix/editor/src/utils/Name";
+} from "@uimix/foundation/src/utils/Name";
 import { camelCase, compact } from "lodash-es";
 import * as path from "path";
 import htmlReactParser from "html-react-parser";

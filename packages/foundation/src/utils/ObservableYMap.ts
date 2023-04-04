@@ -1,6 +1,6 @@
 import { createAtom, IAtom } from "mobx";
 import * as Y from "yjs";
-import { getOrCreate } from "../state/Collection";
+import { getOrCreate } from "./Collection";
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 const instances = new WeakMap<Y.Map<any>, ObservableYMap<any>>();

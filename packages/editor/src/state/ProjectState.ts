@@ -7,7 +7,7 @@ import {
 } from "@uimix/node-data";
 import { Project } from "../models/Project";
 import { Selectable } from "../models/Selectable";
-import { getIncrementalUniqueName } from "../utils/Name";
+import { getIncrementalUniqueName } from "@uimix/foundation/src/utils/Name";
 import { generateExampleNodes } from "../models/generateExampleNodes";
 import demoFile from "../../../sandbox/src/uimix/landing.uimix?raw";
 import { reassignNewIDs } from "../models/ProjectJSONExtra";

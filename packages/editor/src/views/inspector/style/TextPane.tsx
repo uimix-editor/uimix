@@ -13,12 +13,12 @@ import { InspectorHeading } from "../components/InspectorHeading";
 import { InspectorNumberInput } from "./inputs/InspectorNumberInput";
 import { InspectorPane } from "../components/InspectorPane";
 import { InspectorToggleGroup } from "./inputs/InspectorToggleGroup";
-import { ToggleGroupItem } from "../../../components/ToggleGroup";
+import { ToggleGroupItem } from "@uimix/foundation/src/components/ToggleGroup";
 import { TextHorizontalAlign, TextVerticalAlign } from "@uimix/node-data";
 import { InspectorTargetContext } from "../components/InspectorTargetContext";
 import { projectState } from "../../../state/ProjectState";
 import { InspectorComboBox } from "./inputs/InspectorComboBox";
-import googleFonts from "../../../fonts/GoogleFonts.json";
+import googleFonts from "@uimix/foundation/src/fonts/GoogleFonts.json";
 
 const googleFontOptions = googleFonts.items.map((item) => ({
   value: item.family,

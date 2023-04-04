@@ -12,13 +12,13 @@ import textIcon from "@seanchas116/design-icons/json/text.json";
 import imageIcon from "@seanchas116/design-icons/json/image.json";
 import { Selectable } from "../../models/Selectable";
 import { projectState } from "../../state/ProjectState";
-import { DoubleClickToEdit } from "../../components/DoubleClickToEdit";
+import { DoubleClickToEdit } from "@uimix/foundation/src/components/DoubleClickToEdit";
 import { commands } from "../../state/Commands";
 import {
   DropBetweenIndicator,
   DropOverIndicator,
   ToggleCollapsedButton,
-} from "../../components/TreeViewParts";
+} from "@uimix/foundation/src/components/TreeViewParts";
 import { showContextMenu } from "../ContextMenu";
 import { viewportState } from "../../state/ViewportState";
 import { twMerge } from "tailwind-merge";

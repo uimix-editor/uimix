@@ -1,6 +1,6 @@
 import { runInAction } from "mobx";
 import { ProjectJSON, Image } from "@uimix/node-data";
-import { formatJSON } from "../utils/Format";
+import { formatJSON } from "@uimix/foundation/src/utils/Format";
 import { projectState } from "./ProjectState";
 
 export async function embedImages(

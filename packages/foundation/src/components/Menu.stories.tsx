@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import menuIcon from "@iconify-icons/ic/menu";
-import { MenuItemDef } from "../state/MenuItemDef";
+import { MenuItemDef } from "./MenuItemDef";
 import { Shortcut } from "../utils/Shortcut";
 import { useMenuButton, useMenuState } from "ariakit";
 import { ToolButton } from "./ToolButton";

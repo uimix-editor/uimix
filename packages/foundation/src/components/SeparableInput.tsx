@@ -4,7 +4,6 @@ import { Icon, IconifyIcon } from "@iconify/react";
 import { Input, UnstyledInput } from "./Input";
 import { Mixed, sameOrMixed } from "../utils/Mixed";
 import { Tooltip } from "./Tooltip";
-import { IconButton } from "./IconButton";
 import { css } from "@emotion/react";
 import clsx from "clsx";
 import { ToggleButton } from "./ToggleButton";

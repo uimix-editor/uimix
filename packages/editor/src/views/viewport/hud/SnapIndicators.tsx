@@ -1,8 +1,10 @@
-import React from "react";
 import { observer } from "mobx-react-lite";
 import { Transform, Vec2 } from "paintvec";
-import { PointSnapping, SameMarginSnapping } from "../../../utils/Snapping";
-import colors from "../../../colors.js";
+import {
+  PointSnapping,
+  SameMarginSnapping,
+} from "@uimix/foundation/src/utils/Snapping";
+import colors from "@uimix/foundation/src/colors";
 import { XDistanceIndicator, YDistanceIndicator } from "./DistanceIndicator";
 import { snapper } from "../../../state/Snapper";
 import { projectState } from "../../../state/ProjectState";

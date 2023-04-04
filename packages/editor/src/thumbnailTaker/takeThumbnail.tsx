@@ -2,7 +2,7 @@ import { Project } from "../models/Project";
 import { domForSelectable } from "../views/viewport/renderer/NodeRenderer";
 import * as htmlToImage from "html-to-image";
 import { Rect, Vec2 } from "paintvec";
-import { assertNonNull } from "../utils/Assert";
+import { assertNonNull } from "@uimix/foundation/src/utils/Assert";
 
 export async function takeThumbnail(
   project: Project

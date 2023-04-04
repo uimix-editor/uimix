@@ -4,13 +4,13 @@ import { projectState } from "../../../state/ProjectState";
 import { InsertMode } from "../../../state/InsertMode";
 import { snapper } from "../../../state/Snapper";
 import { viewportState } from "../../../state/ViewportState";
-import { Color } from "../../../utils/Color";
+import { Color } from "@uimix/foundation/src/utils/Color";
+import { assertNonNull } from "@uimix/foundation/src/utils/Assert";
 import { dragStartThreshold } from "../constants";
 import { ViewportEvent } from "./ViewportEvent";
 import { DragHandler } from "./DragHandler";
 import { resizeWithBoundingBox } from "../../../services/Resize";
 import { action } from "mobx";
-import { assertNonNull } from "../../../utils/Assert";
 
 export class NodeInsertDragHandler implements DragHandler {
   constructor(mode: InsertMode, event: ViewportEvent) {

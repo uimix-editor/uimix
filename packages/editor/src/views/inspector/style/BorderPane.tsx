@@ -1,11 +1,11 @@
 import { observer } from "mobx-react-lite";
 import addIcon from "@iconify-icons/ic/add";
 import removeIcon from "@iconify-icons/ic/remove";
-import { Color } from "../../../utils/Color";
+import { Color } from "@uimix/foundation/src/utils/Color";
+import { Mixed, sameOrMixed } from "@uimix/foundation/src/utils/Mixed";
 import { ColorInput } from "../components/ColorInput";
-import { Mixed, sameOrMixed } from "../../../utils/Mixed";
 import { projectState } from "../../../state/ProjectState";
-import { IconButton } from "../../../components/IconButton";
+import { IconButton } from "@uimix/foundation/src/components/IconButton";
 import { InspectorHeading } from "../components/InspectorHeading";
 import { InspectorPane } from "../components/InspectorPane";
 import { action } from "mobx";
@@ -16,7 +16,7 @@ import edgeTopIcon from "@seanchas116/design-icons/json/edge-top.json";
 import edgeRightIcon from "@seanchas116/design-icons/json/edge-right.json";
 import edgeBottomIcon from "@seanchas116/design-icons/json/edge-bottom.json";
 import edgeLeftIcon from "@seanchas116/design-icons/json/edge-left.json";
-import { SeparableInput } from "../../../components/SeparableInput";
+import { SeparableInput } from "@uimix/foundation/src/components/SeparableInput";
 import { useContext } from "react";
 import { ColorRef } from "../../../models/ColorRef";
 

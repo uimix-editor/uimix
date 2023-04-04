@@ -2,7 +2,7 @@ import { observer } from "mobx-react-lite";
 import { NodeRenderer } from "../views/viewport/renderer/NodeRenderer";
 import { ForeignComponentManager } from "../models/ForeignComponentManager";
 import { projectState } from "../state/ProjectState";
-import { assertNonNull } from "../utils/Assert";
+import { assertNonNull } from "@uimix/foundation/src/utils/Assert";
 import { Page } from "../models/Page";
 
 export const ThumbnailTaker: React.FC = observer(() => {

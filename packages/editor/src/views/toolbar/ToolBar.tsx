@@ -1,14 +1,14 @@
 import { Icon } from "@iconify/react";
 import { observer } from "mobx-react-lite";
-import { DropdownMenu } from "../../components/Menu";
-import { ToolButton } from "../../components/ToolButton";
+import { DropdownMenu } from "@uimix/foundation/src/components/Menu";
+import { ToolButton } from "@uimix/foundation/src/components/ToolButton";
 import { commands } from "../../state/Commands";
 import rectIcon from "@seanchas116/design-icons/json/rect.json";
 import textIcon from "@seanchas116/design-icons/json/text.json";
 import imageIcon from "@seanchas116/design-icons/json/image.json";
 import { viewportState } from "../../state/ViewportState";
 import { action } from "mobx";
-import { Tooltip } from "../../components/Tooltip";
+import { Tooltip } from "@uimix/foundation/src/components/Tooltip";
 
 export const ToolBar = observer(() => {
   // TODO: use material symbols instead of SVGs

@@ -1,7 +1,7 @@
 import { Vec2 } from "paintvec";
 import { Selectable } from "../../../models/Selectable";
 import { projectState } from "../../../state/ProjectState";
-import { assertNonNull } from "../../../utils/Assert";
+import { assertNonNull } from "@uimix/foundation/src/utils/Assert";
 import { nodePicker } from "../renderer/NodePicker";
 
 function clickableAncestor(

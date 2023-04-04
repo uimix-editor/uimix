@@ -1,13 +1,12 @@
 import { observer } from "mobx-react-lite";
-import { Mixed, sameOrMixed } from "../../../../utils/Mixed";
+import { Mixed, sameOrMixed } from "@uimix/foundation/src/utils/Mixed";
 import { InspectorTargetContext } from "../../components/InspectorTargetContext";
 import { useContext } from "react";
 import { Selectable } from "../../../../models/Selectable";
 import { projectState } from "../../../../state/ProjectState";
 import { action } from "mobx";
 import { IconProps } from "@iconify/react";
-import { Tooltip } from "../../../../components/Tooltip";
-import { ToggleButton } from "../../../../components/ToggleButton";
+import { ToggleButton } from "@uimix/foundation/src/components/ToggleButton";
 
 export const InspectorToggleButton = observer(function InspectorCheckBox({
   className,

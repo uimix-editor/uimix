@@ -2,7 +2,7 @@ import { sum } from "lodash-es";
 import { StackAlign } from "@uimix/node-data";
 import { Rect } from "paintvec";
 import { Selectable, StubComputedRectProvider } from "../models/Selectable";
-import { assertNonNull } from "../utils/Assert";
+import { assertNonNull } from "@uimix/foundation/src/utils/Assert";
 
 export function removeLayout(selectable: Selectable): void {
   if (selectable.node.type !== "frame") {

@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-non-null-assertion */
-import { Color } from "../utils/Color";
+import { Color } from "@uimix/foundation/src/utils/Color";
 import colors from "tailwindcss/colors.js";
 import { Node } from "./Node";
 

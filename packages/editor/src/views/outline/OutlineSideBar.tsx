@@ -4,8 +4,8 @@ import {
   SideBarTabsList,
   SideBarTabsRoot,
   SideBarTabsTrigger,
-} from "../../components/SideBarTabs";
-import { ScrollArea } from "../../components/ScrollArea";
+} from "@uimix/foundation/src/components/SideBarTabs";
+import { ScrollArea } from "@uimix/foundation/src/components/ScrollArea";
 import { NodeTreeView } from "./NodeTreeView";
 import { Icon } from "@iconify/react";
 import { PageTreeView } from "./PageTreeView";

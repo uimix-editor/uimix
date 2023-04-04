@@ -2,12 +2,12 @@ import { useContext } from "react";
 import { action } from "mobx";
 import { observer } from "mobx-react-lite";
 import { IconifyIcon } from "@iconify/react";
-import { Mixed, sameOrMixed } from "../../../../utils/Mixed";
+import { Mixed, sameOrMixed } from "@uimix/foundation/src/utils/Mixed";
 import { Selectable } from "../../../../models/Selectable";
 import { InspectorTargetContext } from "../../components/InspectorTargetContext";
 import { projectState } from "../../../../state/ProjectState";
-import { SelectOption } from "../../../../components/Select";
-import { ComboBox } from "../../../../components/ComboBox";
+import { SelectOption } from "@uimix/foundation/src/components/Select";
+import { ComboBox } from "@uimix/foundation/src/components/ComboBox";
 
 export const InspectorComboBox = observer(function InspectorComboBox({
   className,

@@ -12,7 +12,7 @@ import { commands } from "../../../state/Commands";
 import { observer } from "mobx-react-lite";
 import { showContextMenu } from "../../ContextMenu";
 import { viewportState } from "../../../state/ViewportState";
-import { assertNonNull } from "../../../utils/Assert";
+import { assertNonNull } from "@uimix/foundation/src/utils/Assert";
 
 function isFocusable(selectable: Selectable) {
   return selectable.originalNode.type === "text";

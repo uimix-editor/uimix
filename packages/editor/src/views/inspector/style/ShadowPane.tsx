@@ -1,16 +1,16 @@
 import { observer } from "mobx-react-lite";
 import addIcon from "@iconify-icons/ic/add";
-import { Color } from "../../../utils/Color";
+import { Color } from "@uimix/foundation/src/utils/Color";
 import { ColorInput } from "../components/ColorInput";
-import { Mixed, sameOrMixed } from "../../../utils/Mixed";
+import { Mixed, sameOrMixed } from "@uimix/foundation/src/utils/Mixed";
 import { projectState } from "../../../state/ProjectState";
-import { IconButton } from "../../../components/IconButton";
+import { IconButton } from "@uimix/foundation/src/components/IconButton";
 import { InspectorHeading } from "../components/InspectorHeading";
 import { InspectorPane } from "../components/InspectorPane";
 import { action } from "mobx";
 import { InspectorTargetContext } from "../components/InspectorTargetContext";
-import { Input } from "../../../components/Input";
-import { DropdownMenu } from "../../../components/Menu";
+import { Input } from "@uimix/foundation/src/components/Input";
+import { DropdownMenu } from "@uimix/foundation/src/components/Menu";
 import { Shadow } from "@uimix/node-data";
 import { ColorRef } from "../../../models/ColorRef";
 

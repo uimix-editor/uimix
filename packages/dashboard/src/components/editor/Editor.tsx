@@ -12,7 +12,7 @@ import type {
 import { Icon } from "@iconify/react";
 import Link from "next/link";
 import { DoubleClickToEdit } from "../DoubleClickToEdit";
-import { toastController } from "../toast/ToastController";
+import { toastController } from "@uimix/foundation/src/components/toast/ToastController";
 import { LoadingErrorOverlay } from "./LoadingErrorOverlay";
 import { assertNonNull } from "../../utils/assertNonNull";
 

@@ -1,9 +1,13 @@
 import plugin from "tailwindcss/plugin.js";
-import colors from "./src/colors.js";
+import colors from "@uimix/foundation/src/colors.js";
 
 /** @type {import('tailwindcss').Config} */
 export default {
-  content: ["./index.html", "./src/**/*.{js,ts,jsx,tsx}"],
+  content: [
+    "./index.html",
+    "./src/**/*.{js,ts,jsx,tsx}",
+    "../foundation/src/**/*.{js,ts,jsx,tsx}",
+  ],
   theme: {
     extend: {
       fontSize: {

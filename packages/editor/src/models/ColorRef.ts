@@ -1,7 +1,7 @@
-import { Color } from "../utils/Color";
+import { Color } from "@uimix/foundation/src/utils/Color";
+import { Color as ColorJSON } from "@uimix/node-data";
 import { ColorToken } from "./ColorToken";
 import { Project } from "./Project";
-import { Color as ColorJSON } from "@uimix/node-data";
 
 export class ColorRef {
   constructor(value: Color | ColorToken) {

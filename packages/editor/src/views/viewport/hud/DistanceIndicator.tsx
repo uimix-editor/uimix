@@ -1,6 +1,6 @@
 import { Transform, Vec2 } from "paintvec";
 import React from "react";
-import { roundToFixed } from "../../../utils/Math";
+import { roundToFixed } from "@uimix/foundation/src/utils/Math";
 import { Label } from "./Label";
 
 export const XDistanceIndicator: React.FC<{

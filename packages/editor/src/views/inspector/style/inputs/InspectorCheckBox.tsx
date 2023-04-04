@@ -1,5 +1,5 @@
 import { observer } from "mobx-react-lite";
-import { Mixed, sameOrMixed } from "../../../../utils/Mixed";
+import { Mixed, sameOrMixed } from "@uimix/foundation/src/utils/Mixed";
 import { InspectorTargetContext } from "../../components/InspectorTargetContext";
 import { useContext, useEffect, useRef } from "react";
 import { Selectable } from "../../../../models/Selectable";
