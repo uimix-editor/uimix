@@ -207,6 +207,9 @@ importers:
       '@uimix/editor':
         specifier: workspace:*
         version: link:../editor
+      '@uimix/foundation':
+        specifier: workspace:*
+        version: link:../foundation
       '@uimix/typed-rpc':
         specifier: workspace:*
         version: link:../typed-rpc
