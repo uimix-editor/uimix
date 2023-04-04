@@ -16,7 +16,7 @@ import { Vec2 } from "paintvec";
 import { useResizeObserver } from "../../components/hooks/useResizeObserver";
 import { QueryTester } from "../../utils/QueryTester";
 import { ForeignComponentManager } from "../../models/ForeignComponentManager";
-import { IFrame } from "../../components/IFrame";
+import { IFrame } from "../components/IFrame";
 import { action, makeObservable, observable } from "mobx";
 import colors from "../../colors";
 import { Color } from "../../utils/Color";
