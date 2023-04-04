@@ -1,4 +1,4 @@
-import { getOrCreate } from "../state/Collection";
+import { getOrCreate } from "@uimix/foundation/src/utils/Collection";
 import { Node } from "./Node";
 import { Project } from "./Project";
 import { Selectable } from "./Selectable";

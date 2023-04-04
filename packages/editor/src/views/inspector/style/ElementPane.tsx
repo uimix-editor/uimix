@@ -1,5 +1,5 @@
 import { observer } from "mobx-react-lite";
-import { Mixed, sameOrMixed } from "../../../utils/Mixed";
+import { Mixed, sameOrMixed } from "@uimix/foundation/src/utils/Mixed";
 import { projectState } from "../../../state/ProjectState";
 import { InspectorHeading } from "../components/InspectorHeading";
 import { InspectorPane } from "../components/InspectorPane";

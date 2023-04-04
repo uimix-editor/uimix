@@ -1,11 +1,15 @@
 import { action, computed, runInAction } from "mobx";
-import { isTextInput } from "../utils/Focus";
-import { Shortcut } from "../utils/Shortcut";
+import { isTextInput } from "@uimix/foundation/src/utils/Focus";
+import { Shortcut } from "@uimix/foundation/src/utils/Shortcut";
 import { Selectable } from "../models/Selectable";
 import { exportToJSON as exportJSON, importJSON } from "./JSONExport";
 import { viewportState } from "./ViewportState";
 import { projectState } from "./ProjectState";
-import { handleShortcut, MenuCommandDef, MenuItemDef } from "./MenuItemDef";
+import {
+  handleShortcut,
+  MenuCommandDef,
+  MenuItemDef,
+} from "@uimix/foundation/src/components/MenuItemDef";
 import { Clipboard } from "./Clipboard";
 import {
   autoLayout,

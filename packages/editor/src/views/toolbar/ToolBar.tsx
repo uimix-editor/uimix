@@ -1,7 +1,7 @@
 import { Icon } from "@iconify/react";
 import { observer } from "mobx-react-lite";
-import { DropdownMenu } from "../../components/Menu";
-import { ToolButton } from "../../components/ToolButton";
+import { DropdownMenu } from "@uimix/foundation/src/components/Menu";
+import { ToolButton } from "@uimix/foundation/src/components/ToolButton";
 import { commands } from "../../state/Commands";
 import rectIcon from "@seanchas116/design-icons/json/rect.json";
 import textIcon from "@seanchas116/design-icons/json/text.json";

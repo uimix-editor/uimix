@@ -3,8 +3,8 @@ import { action } from "mobx";
 import addIcon from "@iconify-icons/ic/add";
 import removeIcon from "@iconify-icons/ic/remove";
 import { twMerge } from "tailwind-merge";
-import { IconButton } from "../../components/IconButton";
-import { UnstyledInput } from "../../components/Input";
+import { IconButton } from "@uimix/foundation/src/components/IconButton";
+import { UnstyledInput } from "@uimix/foundation/src/components/Input";
 import { observer } from "mobx-react-lite";
 import { projectState } from "../../state/ProjectState";
 

@@ -1,9 +1,9 @@
-import { Color } from "../utils/Color";
 import * as Y from "yjs";
-import { ObservableYMap } from "../utils/ObservableYMap";
+import { Color } from "@uimix/foundation/src/utils/Color";
+import { ObservableYMap } from "@uimix/foundation/src/utils/ObservableYMap";
+import { getOrCreate } from "@uimix/foundation/src/utils/Collection";
+import { generateID } from "@uimix/foundation/src/utils/ID";
 import { Project } from "./Project";
-import { getOrCreate } from "../state/Collection";
-import { generateID } from "../utils/ID";
 
 export class ColorToken {
   constructor(project: Project, id: string) {

@@ -6,7 +6,7 @@ import {
   SameMarginSnapping,
   snapPointToRects,
   snapRectToRects,
-} from "../utils/Snapping";
+} from "@uimix/foundation/src/utils/Snapping";
 import { Selectable } from "../models/Selectable";
 import { projectState } from "./ProjectState";
 

@@ -1,6 +1,6 @@
 import { isEqual } from "lodash-es";
 import { StyleJSON } from "@uimix/node-data";
-import { ObservableYMap } from "../utils/ObservableYMap";
+import { ObservableYMap } from "@uimix/foundation/src/utils/ObservableYMap";
 
 export type IStyle = StyleJSON;
 

@@ -1,7 +1,7 @@
 import * as AriakitMenu from "ariakit/menu";
 import checkIcon from "@iconify-icons/ic/check";
 import chevronRightIcon from "@iconify-icons/ic/chevron-right";
-import { MenuItemDef, MenuSubmenuDef } from "../state/MenuItemDef";
+import { MenuItemDef, MenuSubmenuDef } from "./MenuItemDef";
 import { PopoverState } from "ariakit/popover";
 import { Icon } from "@iconify/react";
 

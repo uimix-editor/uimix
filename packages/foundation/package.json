@@ -7,7 +7,10 @@
   "author": "",
   "main": "index.ts",
   "scripts": {
-    "lint": "eslint --ext .ts ."
+    "build-storybook": "storybook build",
+    "lint": "eslint --ext .ts .",
+    "storybook": "storybook dev -p 6006",
+    "test": "vitest run"
   },
   "dependencies": {
     "@emotion/react": "^11.10.6",

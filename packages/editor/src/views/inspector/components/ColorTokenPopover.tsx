@@ -4,12 +4,12 @@ import { action } from "mobx";
 import { SearchInput } from "../../outline/SearchInput";
 import { projectState } from "../../../state/ProjectState";
 import { ColorToken } from "../../../models/ColorToken";
-import { Color } from "../../../utils/Color";
+import { Color } from "@uimix/foundation/src/utils/Color";
 import { useState } from "react";
-import { IconButton } from "../../../components/IconButton";
+import { IconButton } from "@uimix/foundation/src/components/IconButton";
 import { ColorRef } from "../../../models/ColorRef";
 import { twMerge } from "tailwind-merge";
-import { QueryTester } from "../../../utils/QueryTester";
+import { QueryTester } from "@uimix/foundation/src/utils/QueryTester";
 
 export const ColorTokenPopover: React.FC<{
   value?: ColorRef;

@@ -1,6 +1,6 @@
 import { describe, expect, it } from "vitest";
 import * as Y from "yjs";
-import { Color } from "../utils/Color";
+import { Color } from "@uimix/foundation/src/utils/Color";
 import { Project } from "./Project";
 import { Node } from "./Node";
 

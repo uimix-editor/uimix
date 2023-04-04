@@ -7,19 +7,19 @@ import {
   ForeignComponentRenderer,
   NodeRenderer,
 } from "../viewport/renderer/NodeRenderer";
-import { usePointerStroke } from "../../components/hooks/usePointerStroke";
+import { usePointerStroke } from "@uimix/foundation/src/components/hooks/usePointerStroke";
 import { viewportGeometry } from "../../state/ScrollState";
 import { NodeMoveDragHandler } from "../viewport/dragHandler/NodeMoveDragHandler";
 import { ReactNode, useRef, useState } from "react";
 import { DragHandler } from "../viewport/dragHandler/DragHandler";
 import { Vec2 } from "paintvec";
-import { useResizeObserver } from "../../components/hooks/useResizeObserver";
-import { QueryTester } from "../../utils/QueryTester";
+import { useResizeObserver } from "@uimix/foundation/src/components/hooks/useResizeObserver";
+import { QueryTester } from "@uimix/foundation/src/utils/QueryTester";
 import { ForeignComponentManager } from "../../models/ForeignComponentManager";
 import { IFrame } from "../components/IFrame";
 import { action, makeObservable, observable } from "mobx";
-import colors from "../../colors";
-import { Color } from "../../utils/Color";
+import colors from "@uimix/foundation/src/colors";
+import { Color } from "@uimix/foundation/src/utils/Color";
 import { FontLoader } from "../viewport/renderer/FontLoader";
 import { dialogState } from "../../state/DialogState";
 import { ForeignComponent } from "../../types/ForeignComponent";

@@ -2,8 +2,8 @@ import { observer } from "mobx-react-lite";
 import {
   ToggleGroup,
   ToggleGroupItem,
-} from "../../../../components/ToggleGroup";
-import { Mixed, sameOrMixed } from "../../../../utils/Mixed";
+} from "@uimix/foundation/src/components/ToggleGroup";
+import { Mixed, sameOrMixed } from "@uimix/foundation/src/utils/Mixed";
 import { InspectorTargetContext } from "../../components/InspectorTargetContext";
 import { useContext } from "react";
 import { Selectable } from "../../../../models/Selectable";

@@ -1,9 +1,9 @@
-import { ObservableYMap } from "../utils/ObservableYMap";
+import { ObservableYMap } from "@uimix/foundation/src/utils/ObservableYMap";
 import * as Y from "yjs";
-import { ObservableRBTree } from "../utils/ObservableRBTree";
+import { ObservableRBTree } from "@uimix/foundation/src/utils/ObservableRBTree";
 import { NodeJSON, NodeType, VariantCondition } from "@uimix/node-data";
-import { getOrCreate } from "../state/Collection";
-import { generateID } from "../utils/ID";
+import { getOrCreate } from "@uimix/foundation/src/utils/Collection";
+import { generateID } from "@uimix/foundation/src/utils/ID";
 import { computed, makeObservable } from "mobx";
 import { Project } from "./Project";
 import { Selectable } from "./Selectable";

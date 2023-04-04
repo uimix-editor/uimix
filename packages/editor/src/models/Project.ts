@@ -4,7 +4,7 @@ import { Node, NodeMap } from "./Node";
 import { ProjectJSON } from "@uimix/node-data";
 import { ImageManager } from "./ImageManager";
 import { Component } from "./Component";
-import { ObservableYArray } from "../utils/ObservableYArray";
+import { ObservableYArray } from "@uimix/foundation/src/utils/ObservableYArray";
 import { loadProjectJSON, toProjectJSON } from "./ProjectJSON";
 import { ColorTokenList } from "./ColorToken";
 import { PageList } from "./PageList";

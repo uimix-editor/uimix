@@ -1,6 +1,6 @@
 import React from "react";
 import { observer } from "mobx-react-lite";
-import colors from "../../../colors.js";
+import colors from "@uimix/foundation/src/colors.js";
 import { viewportState } from "../../../state/ViewportState";
 import { projectState } from "../../../state/ProjectState.js";
 

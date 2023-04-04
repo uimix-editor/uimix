@@ -1,12 +1,12 @@
 import styled from "@emotion/styled";
 import * as RadixPopover from "@radix-ui/react-popover";
-import { checkPattern } from "../../../components/checkPattern";
-import { ColorPicker } from "../../../components/color/ColorPicker";
-import { Input } from "../../../components/Input";
-import { Color } from "../../../utils/Color";
+import { checkPattern } from "@uimix/foundation/src/components/checkPattern";
+import { ColorPicker } from "@uimix/foundation/src/components/color/ColorPicker";
+import { Input } from "@uimix/foundation/src/components/Input";
+import { Color } from "@uimix/foundation/src/utils/Color";
 import { twMerge } from "tailwind-merge";
 import { ColorTokenPopover } from "./ColorTokenPopover";
-import { IconButton } from "../../../components/IconButton";
+import { IconButton } from "@uimix/foundation/src/components/IconButton";
 import { Tooltip } from "@uimix/foundation/src/components/Tooltip";
 import { ColorRef } from "../../../models/ColorRef";
 

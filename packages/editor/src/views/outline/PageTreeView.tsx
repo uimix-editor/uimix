@@ -10,9 +10,9 @@ import {
   DropBetweenIndicator,
   DropOverIndicator,
   ToggleCollapsedButton,
-} from "../../components/TreeViewParts";
+} from "@uimix/foundation/src/components/TreeViewParts";
 import { projectState } from "../../state/ProjectState";
-import { DoubleClickToEdit } from "../../components/DoubleClickToEdit";
+import { DoubleClickToEdit } from "@uimix/foundation/src/components/DoubleClickToEdit";
 import { commands } from "../../state/Commands";
 import { PageHierarchyEntry } from "../../models/PageList";
 import { showContextMenu } from "../ContextMenu";

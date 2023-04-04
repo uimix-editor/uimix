@@ -1,13 +1,13 @@
 import { observer } from "mobx-react-lite";
-import { Input } from "../../../../components/Input";
-import { sameOrMixed } from "../../../../utils/Mixed";
 import { action } from "mobx";
 import { IconifyIcon } from "@iconify/react";
 import { useContext } from "react";
+import { Input } from "@uimix/foundation/src/components/Input";
+import { sameOrMixed } from "@uimix/foundation/src/utils/Mixed";
+import { roundToFixed } from "@uimix/foundation/src/utils/Math";
 import { InspectorTargetContext } from "../../components/InspectorTargetContext";
 import { Selectable } from "../../../../models/Selectable";
 import { projectState } from "../../../../state/ProjectState";
-import { roundToFixed } from "../../../../utils/Math";
 
 export const InspectorNumberInput = observer(function InspectorNumberInput({
   className,

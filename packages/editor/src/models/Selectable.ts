@@ -1,8 +1,8 @@
-import { ObservableYMap } from "../utils/ObservableYMap";
+import { ObservableYMap } from "@uimix/foundation/src/utils/ObservableYMap";
 import { abstractNodeTypes, Node } from "./Node";
 import { CascadedStyle, defaultStyle, IStyle, PartialStyle } from "./Style";
 import * as Y from "yjs";
-import { getOrCreate } from "../state/Collection";
+import { getOrCreate } from "@uimix/foundation/src/utils/Collection";
 import { computed, makeObservable, observable } from "mobx";
 import { Rect } from "paintvec";
 import { resizeWithBoundingBox } from "../services/Resize";

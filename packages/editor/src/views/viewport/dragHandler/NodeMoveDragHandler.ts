@@ -6,7 +6,7 @@ import { snapper } from "../../../state/Snapper";
 import { viewportState } from "../../../state/ViewportState";
 import { ViewportEvent } from "./ViewportEvent";
 import { DragHandler } from "./DragHandler";
-import { assertNonNull } from "../../../utils/Assert";
+import { assertNonNull } from "@uimix/foundation/src/utils/Assert";
 import { resizeWithBoundingBox } from "../../../services/Resize";
 
 export class NodeMoveDragHandler implements DragHandler {

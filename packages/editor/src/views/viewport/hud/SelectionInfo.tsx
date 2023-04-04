@@ -2,7 +2,7 @@ import React from "react";
 import { observer } from "mobx-react-lite";
 import { Rect } from "paintvec";
 import styled from "@emotion/styled";
-import colors from "../../../colors";
+import colors from "@uimix/foundation/src/colors";
 import { projectState } from "../../../state/ProjectState";
 import { viewportState } from "../../../state/ViewportState";
 

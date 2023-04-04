@@ -2,7 +2,7 @@ import { action } from "mobx";
 import { observer } from "mobx-react-lite";
 import { Vec2 } from "paintvec";
 import React from "react";
-import { usePointerStroke } from "../../components/hooks/usePointerStroke";
+import { usePointerStroke } from "@uimix/foundation/src/components/hooks/usePointerStroke";
 import { viewportState } from "../../state/ViewportState";
 import { projectState } from "../../state/ProjectState";
 
