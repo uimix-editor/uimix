@@ -1,5 +1,5 @@
 import plugin from "tailwindcss/plugin.js";
-import colors from "./src/colors.js";
+import colors from "@uimix/foundation/src/colors.js";
 
 /** @type {import('tailwindcss').Config} */
 export default {

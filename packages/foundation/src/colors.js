@@ -1,4 +1,4 @@
-import colors from "tailwindcss/colors";
+import colors from "tailwindcss/colors.js";
 
 export default {
   active: colors.blue[500],

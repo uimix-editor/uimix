@@ -5,6 +5,7 @@
   "description": "Internal design system for UIMix",
   "license": "MIT",
   "author": "",
+  "type": "module",
   "main": "index.ts",
   "scripts": {
     "build-storybook": "storybook build",
