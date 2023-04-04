@@ -1,0 +1,12 @@
+{
+  "name": "@uimix/design-system",
+  "private": true,
+  "version": "1.0.0",
+  "description": "Internal design system for UIMix",
+  "main": "index.ts",
+  "scripts": {
+    "lint": "eslint --ext .ts ."
+  },
+  "author": "",
+  "license": "MIT"
+}
