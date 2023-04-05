@@ -108,14 +108,14 @@ export class PageList {
     return root;
   }
 
-  affectedPagesForPath(path: string): Page[] {
+  pagesForPath(path: string): Page[] {
     return this.all.filter(
       (page) => page.name === path || page.name.startsWith(path + "/")
     );
   }
 
-  deletePageOrPageFolder(path: string) {
-    const pagesToDelete = this.affectedPagesForPath(path);
+  delete(path: string) {
+    const pagesToDelete = this.pagesForPath(path);
 
     for (const page of pagesToDelete) {
       page.node.remove();
@@ -124,12 +124,12 @@ export class PageList {
     }
   }
 
-  renamePageOrPageFolder(path: string, newPath: string) {
+  rename(path: string, newPath: string) {
     if (path === newPath) {
       return;
     }
 
-    const pagesToDelete = this.affectedPagesForPath(path);
+    const pagesToDelete = this.pagesForPath(path);
 
     for (const page of pagesToDelete) {
       const newName = newPath + page.name.slice(path.length);

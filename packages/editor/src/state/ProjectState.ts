@@ -249,7 +249,7 @@ export class ProjectState {
   }
 
   deletePageOrPageFolder(path: string) {
-    const affectedPages = this.project.pages.affectedPagesForPath(path);
+    const affectedPages = this.project.pages.pagesForPath(path);
     const deletingCurrent = this.page
       ? affectedPages.includes(this.page)
       : false;
@@ -257,7 +257,7 @@ export class ProjectState {
     // if (this.project.pages.count === affectedPages.length) {
     //   return;
     // }
-    this.project.pages.deletePageOrPageFolder(path);
+    this.project.pages.delete(path);
 
     if (deletingCurrent) {
       this.pageID = this.project.pages.all[0]?.id;
@@ -267,7 +267,7 @@ export class ProjectState {
   }
 
   renamePageOrPageFolder(path: string, newPath: string) {
-    this.project.pages.renamePageOrPageFolder(path, newPath);
+    this.project.pages.rename(path, newPath);
     this.undoManager.stopCapturing();
   }
 }
