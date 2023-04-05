@@ -336,26 +336,30 @@ export class File extends TypedEmitter<{
       return;
     }
     const filePath = this.filePath;
+    const watchPath = path.resolve(filePath, "**/*.uimix");
 
-    const watcher = chokidar.watch(filePath);
+    const watcher = chokidar.watch(watchPath);
+    console.log("start watching...");
     watcher.on("change", () => {
-      try {
-        const json = ProjectJSON.parse(
-          JSON.parse(fs.readFileSync(filePath, { encoding: "utf-8" }))
-        );
-        if (isEqual(json, this._data)) {
-          return;
-        }
-        if (this.edited) {
-          // TODO: warn
-          return;
-        }
-        this._data = json;
-        this.savedData = json;
-        this.emit("dataChange", json);
-      } catch (e) {
-        console.error(e);
-      }
+      console.log("change");
+      // TODO: reload on file change
+      // try {
+      //   const json = ProjectJSON.parse(
+      //     JSON.parse(fs.readFileSync(filePath, { encoding: "utf-8" }))
+      //   );
+      //   if (isEqual(json, this._data)) {
+      //     return;
+      //   }
+      //   if (this.edited) {
+      //     // TODO: warn
+      //     return;
+      //   }
+      //   this._data = json;
+      //   this.savedData = json;
+      //   this.emit("dataChange", json);
+      // } catch (e) {
+      //   console.error(e);
+      // }
     });
     this.watchDisposer = () => {
       void watcher.close();
