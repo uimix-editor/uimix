@@ -137,6 +137,8 @@ function saveProjectToDirectory(
 }
 
 function filesToProjectJSON(files: ProjectJSONFiles): ProjectJSON {
+  // TODO: detect ID conflicts between files (and provide way to resolve them)
+
   const projectJSON: ProjectJSON = {
     nodes: {},
     styles: {},
