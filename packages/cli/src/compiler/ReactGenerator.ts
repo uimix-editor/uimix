@@ -88,7 +88,7 @@ export class ReactGenerator {
     this.page = page;
 
     const componentNames = new Set<string>();
-    for (const component of page.project.components) {
+    for (const component of page.components) {
       const name = getIncrementalUniqueName(
         componentNames,
         generateJSIdentifier(component.name ?? "")
@@ -106,7 +106,7 @@ export class ReactGenerator {
   imageVarNames = new Map<string, string>(); // hash -> varName
 
   render(): string[] {
-    const components = this.page.project.components;
+    const components = this.page.components;
 
     const results: string[] = [];
     results.push(`import React from "react";`);

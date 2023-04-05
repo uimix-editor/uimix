@@ -1,14 +1,15 @@
 import { describe, expect, it } from "vitest";
 import { generateCode } from "./generateCode";
-// @ts-ignore
-// eslint-disable-next-line import/no-unresolved
-import uimixFile from "../../../sandbox/src/uimix/components.uimix?raw";
-import { ProjectJSON } from "@uimix/node-data";
+import { ProjectFiles } from "./ProjectFiles";
+import * as path from "path";
 
 describe(generateCode.name, () => {
   it("generates code", async () => {
-    const json = ProjectJSON.parse(JSON.parse(uimixFile as string));
-    const code = await generateCode("../..", "components", json);
+    const rootDir = path.resolve("../sandbox");
+    const files = new ProjectFiles(rootDir);
+    files.loadFiles();
+    const json = files.toProjectJSON();
+    const code = await generateCode(rootDir, json);
     const result: Record<string, string> = {};
     for (const file of code) {
       if (file.content instanceof Buffer) {

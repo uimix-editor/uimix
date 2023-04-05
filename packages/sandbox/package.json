@@ -4,7 +4,7 @@
   "private": true,
   "type": "module",
   "scripts": {
-    "build:uimix": "uimix compile src/uimix/*.uimix",
+    "build:uimix": "uimix compile",
     "build:tsc": "tsc",
     "build:vite": "vite build",
     "build:components": "vite build -c vite.config.components.js",

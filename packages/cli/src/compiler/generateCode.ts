@@ -7,7 +7,6 @@ import * as Y from "yjs";
 import { ReactGenerator } from "./ReactGenerator.js";
 import { dataUriToBuffer } from "data-uri-to-buffer";
 import * as mime from "mime-types";
-import { posix as path } from "path";
 
 export async function generateCode(
   rootPath: string,
@@ -44,7 +43,6 @@ export async function generateCode(
   }[] = [];
 
   for (const page of project.pages.all) {
-    const basename = path.basename(page.filePath);
     const tsContent = formatTypeScript(
       new ReactGenerator(rootPath, page).render().join("\n")
     );
@@ -52,11 +50,11 @@ export async function generateCode(
 
     results.push(
       {
-        filePath: basename + ".tsx",
+        filePath: page.filePath + ".tsx",
         content: tsContent,
       },
       {
-        filePath: basename + ".css",
+        filePath: page.filePath + ".css",
         content: cssContent,
       }
     );
