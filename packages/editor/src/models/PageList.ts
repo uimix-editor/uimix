@@ -114,32 +114,49 @@ export class PageList {
     );
   }
 
-  delete(path: string) {
-    const pagesToDelete = this.pagesForPath(path);
+  delete(path: string): Page[] {
+    const deletedPages = this.pagesForPath(path);
 
-    for (const page of pagesToDelete) {
+    for (const page of deletedPages) {
       page.node.remove();
       // TODO: delete dangling nodes?
       //this.project.nodes.remove(doc.root);
     }
+
+    return deletedPages;
   }
 
-  rename(path: string, newPath: string) {
+  rename(
+    path: string,
+    newPath: string
+  ): {
+    originalPages: Page[];
+    newPages: Page[];
+  } {
     if (path === newPath) {
-      return;
+      return {
+        originalPages: [],
+        newPages: [],
+      };
     }
 
-    const pagesToDelete = this.pagesForPath(path);
+    const originalPages = this.pagesForPath(path);
+    const newPages: Page[] = [];
 
-    for (const page of pagesToDelete) {
+    for (const page of originalPages) {
       const newName = newPath + page.name.slice(path.length);
-
       const newPage = this.create(newName);
       newPage.node.append(page.node.children);
+      newPages.push(newPage);
     }
 
-    for (const page of pagesToDelete) {
+    for (const page of originalPages) {
       page.node.remove();
     }
+
+    return {
+      originalPages,
+      newPages,
+    };
   }
 }

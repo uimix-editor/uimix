@@ -249,16 +249,11 @@ export class ProjectState {
   }
 
   deletePageOrPageFolder(path: string) {
-    const affectedPages = this.project.pages.pagesForPath(path);
+    const deletedPages = this.project.pages.delete(path);
+
     const deletingCurrent = this.page
-      ? affectedPages.includes(this.page)
+      ? deletedPages.includes(this.page)
       : false;
-
-    // if (this.project.pages.count === affectedPages.length) {
-    //   return;
-    // }
-    this.project.pages.delete(path);
-
     if (deletingCurrent) {
       this.pageID = this.project.pages.all[0]?.id;
     }
@@ -267,7 +262,18 @@ export class ProjectState {
   }
 
   renamePageOrPageFolder(path: string, newPath: string) {
-    this.project.pages.rename(path, newPath);
+    const { originalPages, newPages } = this.project.pages.rename(
+      path,
+      newPath
+    );
+
+    const selectedOriginalPageIndex = originalPages.findIndex(
+      (page) => page.id === this.pageID
+    );
+    if (selectedOriginalPageIndex !== -1) {
+      this.pageID = newPages[selectedOriginalPageIndex].id;
+    }
+
     this.undoManager.stopCapturing();
   }
 }
