@@ -43,8 +43,8 @@ async function compileFile(
 function compileCommand(
   filePathOrGlobs: string[],
   options: {
+    root?: string;
     watch?: boolean;
-    output?: string;
   }
 ): void {
   const filePaths = new Set(filePathOrGlobs.flatMap((f) => globSync(f)));
@@ -76,15 +76,15 @@ const cli = cac("uimix");
 // TODO: output help if unknown command is passed
 
 cli
-  .command("compile [...files]", "compile UIMix files")
+  .command("compile", "compile UIMix project")
+  .option("--root", `[string] root directory`)
   .option("-w, --watch", `[boolean] watch for changes`)
-  .option("-o, --output <outdir>", `[string] output directory`)
   .action(
     async (
       files: string[],
       options: {
+        root?: string;
         watch?: boolean;
-        output?: string;
       }
     ) => {
       compileCommand(files, options);
