@@ -12,7 +12,7 @@ describe(selectablesToProjectJSON.name, () => {
     const projectFiles = new ProjectFiles(rootDir, {
       filePattern: "src/uimix/components.uimix",
     });
-    projectFiles.loadFiles();
+    projectFiles.load();
     const projectJSON = projectFiles.toProjectJSON();
 
     const ydoc = new Y.Doc();

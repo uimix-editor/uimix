@@ -26,7 +26,7 @@ export class File extends TypedEmitter<{
     if (filePath) {
       app.addRecentDocument(filePath);
       this.files = new ProjectFiles(filePath);
-      this.files.loadFiles();
+      this.files.load();
     }
 
     this._data = this.files?.toProjectJSON() ?? {
@@ -79,7 +79,7 @@ export class File extends TypedEmitter<{
     }
 
     this.files.loadProjectJSON(this.data);
-    this.files.saveFiles();
+    this.files.save();
     app.addRecentDocument(this.files.rootPath);
     this.savedData = this.data;
     this.edited = false;

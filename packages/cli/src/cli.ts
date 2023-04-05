@@ -24,7 +24,7 @@ function compileCommand(
   }
 ): void {
   const projectFiles = new ProjectFiles(rootPath);
-  projectFiles.loadFiles();
+  projectFiles.load();
 
   if (options.watch) {
     projectFiles.watch(() => compileProject(projectFiles));

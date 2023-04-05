@@ -158,7 +158,7 @@ export class ProjectFiles {
     this.pages = pages;
   }
 
-  loadFiles(): void {
+  load(): void {
     const rootPath = this.rootPath;
     const manifestPath = path.resolve(rootPath, "uimix/project.json");
     let manifest: ProjectManifestJSON;
@@ -192,7 +192,7 @@ export class ProjectFiles {
     this.pages = pages;
   }
 
-  saveFiles(): void {
+  save(): void {
     const rootPath = this.rootPath;
 
     mkdirpSync(path.resolve(rootPath, "uimix"));
@@ -248,7 +248,7 @@ export class ProjectFiles {
 
     const _onChange = () => {
       try {
-        this.loadFiles();
+        this.load();
         onChange();
       } catch (e) {
         console.error(e);
