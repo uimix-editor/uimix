@@ -37,7 +37,7 @@ RenderIFrameBody.displayName = "RenderIFrameBody";
 export const RenderIFrame: React.FC = () => {
   return (
     <IFrame
-      className="absolute inset-0 w-full h-full"
+      className="absolute inset-0 w-full h-full contain-strict"
       init={(window) => {
         ForeignComponentManager.init(window);
 
