@@ -1,3 +1,4 @@
+/** @type {import('eslint').Linter.Config} */
 module.exports = {
   parser: "@typescript-eslint/parser",
   parserOptions: {
@@ -25,4 +26,9 @@ module.exports = {
       typescript: true,
     },
   },
+  // ignore package root files
+  ignorePatterns: ["js", "mjs", "cjs", "ts"].flatMap((ext) => [
+    `*.${ext}`,
+    `packages/*/*.${ext}`,
+  ]),
 };
