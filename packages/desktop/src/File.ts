@@ -180,14 +180,13 @@ function filesToProjectJSON(files: ProjectJSONFiles): ProjectJSON {
   };
   projectJSON.nodes["project"] = projectNode;
 
-  let nextNodeIndex = 1;
+  let pageIndex = 0;
   for (const [pageName, pageJSON] of files.pages) {
-    // TODO
     const pageID: string = sha256(pageName);
 
     const pageNode: NodeJSON = {
       type: "page",
-      index: nextNodeIndex++,
+      index: pageIndex++,
       name: pageName,
       parent: "project",
     };
