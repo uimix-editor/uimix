@@ -356,24 +356,21 @@ export class File extends TypedEmitter<{
     console.log("start watching...");
     watcher.on("change", () => {
       console.log("change");
-      // TODO: reload on file change
-      // try {
-      //   const json = ProjectJSON.parse(
-      //     JSON.parse(fs.readFileSync(filePath, { encoding: "utf-8" }))
-      //   );
-      //   if (isEqual(json, this._data)) {
-      //     return;
-      //   }
-      //   if (this.edited) {
-      //     // TODO: warn
-      //     return;
-      //   }
-      //   this._data = json;
-      //   this.savedData = json;
-      //   this.emit("dataChange", json);
-      // } catch (e) {
-      //   console.error(e);
-      // }
+      try {
+        const json = filesToProjectJSON(loadProjectFromDirectory(filePath));
+        if (isEqual(json, this._data)) {
+          return;
+        }
+        if (this.edited) {
+          // TODO: warn
+          return;
+        }
+        this._data = json;
+        this.savedData = json;
+        this.emit("dataChange", json);
+      } catch (e) {
+        console.error(e);
+      }
     });
     this.watchDisposer = () => {
       void watcher.close();
