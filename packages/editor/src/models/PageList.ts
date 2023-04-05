@@ -89,17 +89,17 @@ export class PageList {
     };
 
     const pages = Array.from(this.all);
-    pages.sort((a, b) => a.name.localeCompare(b.name));
+    pages.sort((a, b) => a.filePath.localeCompare(b.filePath));
 
     for (const page of pages) {
-      const segments = page.name.split(path.sep);
+      const segments = page.filePath.split(path.sep);
       const parent = mkdirp(segments.slice(0, -1));
 
       const item: PageHierarchyPageEntry = {
         type: "file",
         id: page.id,
         name: segments[segments.length - 1],
-        path: page.name,
+        path: page.filePath,
         page,
       };
       parent.children.push(item);
@@ -110,7 +110,7 @@ export class PageList {
 
   pagesForPath(path: string): Page[] {
     return this.all.filter(
-      (page) => page.name === path || page.name.startsWith(path + "/")
+      (page) => page.filePath === path || page.filePath.startsWith(path + "/")
     );
   }
 
@@ -144,7 +144,7 @@ export class PageList {
     const newPages: Page[] = [];
 
     for (const page of originalPages) {
-      const newName = newPath + page.name.slice(path.length);
+      const newName = newPath + page.filePath.slice(path.length);
       const newPage = this.create(newName);
       newPage.node.append(page.node.children);
       newPages.push(newPage);

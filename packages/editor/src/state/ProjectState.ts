@@ -237,7 +237,7 @@ export class ProjectState {
 
   createPage(name: string) {
     const existingFilePaths = new Set(
-      this.project.pages.all.map((d) => d.name)
+      this.project.pages.all.map((d) => d.filePath)
     );
     const newPath = getIncrementalUniqueName(existingFilePaths, name);
 

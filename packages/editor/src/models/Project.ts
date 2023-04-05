@@ -46,18 +46,7 @@ export class Project {
   }
 
   get components(): Component[] {
-    const components: Component[] = [];
-
-    for (const page of this.pages.all) {
-      for (const node of page.node.children) {
-        const component = Component.from(node);
-        if (component) {
-          components.push(component);
-        }
-      }
-    }
-
-    return components;
+    return this.pages.all.flatMap((page) => page.components);
   }
 
   get componentURLs(): ObservableYArray<string> {
