@@ -55,10 +55,12 @@ function toHierarchicalNodeJSONs(
   return Object.values(hierarchicalNodes).filter((node) => !node.parent);
 }
 
-function projectJSONToFiles(projectJSON: ProjectJSON): {
+interface ProjectJSONFiles {
   manifest: ProjectManifestJSON;
   pages: Map<string /* file path */, PageJSON>;
-} {
+}
+
+function projectJSONToFiles(projectJSON: ProjectJSON): ProjectJSONFiles {
   const manifest: ProjectManifestJSON = {
     componentURLs: projectJSON.componentURLs,
     images: projectJSON.images,
@@ -110,6 +112,49 @@ function projectJSONToFiles(projectJSON: ProjectJSON): {
     manifest,
     pages,
   };
+}
+
+function filesToProjectJSON(files: ProjectJSONFiles): ProjectJSON {
+  const projectJSON: ProjectJSON = {
+    nodes: {},
+    styles: {},
+    componentURLs: files.manifest.componentURLs,
+    images: files.manifest.images,
+    colors: files.manifest.colors,
+  };
+
+  const projectNode: NodeJSON = {
+    type: "project",
+    index: 0,
+  };
+  projectJSON.nodes["project"] = projectNode;
+
+  let nextNodeIndex = 1;
+  for (const [pageName, pageJSON] of files.pages) {
+    // TODO
+    const pageID: string = sha256(pageName);
+
+    const pageNode: NodeJSON = {
+      type: "page",
+      index: nextNodeIndex++,
+      name: pageName,
+      parent: "project",
+    };
+    projectJSON.nodes[pageID] = pageNode;
+
+    for (const [id, node] of Object.entries(pageJSON.nodes)) {
+      projectJSON.nodes[id] = {
+        ...node,
+        parent: node.parent ?? pageID,
+      };
+    }
+
+    for (const [id, style] of Object.entries(pageJSON.styles)) {
+      projectJSON.styles[id] = style;
+    }
+  }
+
+  return projectJSON;
 }
 
 export class File extends TypedEmitter<{
