@@ -43,12 +43,12 @@ function toHierarchicalNodeJSONs(
   return Object.values(hierarchicalNodes).filter((node) => !node.parent);
 }
 
-interface ProjectJSONFiles {
+interface ProjectFiles {
   manifest: ProjectManifestJSON;
   pages: Map<string /* file path */, PageJSON>;
 }
 
-export function projectJSONToFiles(projectJSON: ProjectJSON): ProjectJSONFiles {
+export function projectJSONToFiles(projectJSON: ProjectJSON): ProjectFiles {
   const manifest: ProjectManifestJSON = {
     componentURLs: projectJSON.componentURLs,
     images: projectJSON.images,
@@ -104,7 +104,7 @@ export function projectJSONToFiles(projectJSON: ProjectJSON): ProjectJSONFiles {
 
 export function saveProjectToDirectory(
   projectDirPath: string,
-  files: ProjectJSONFiles
+  files: ProjectFiles
 ): void {
   mkdirpSync(path.resolve(projectDirPath, "uimix"));
   mkdirpSync(path.resolve(projectDirPath, "uimix/images"));
@@ -148,7 +148,7 @@ export function saveProjectToDirectory(
   }
 }
 
-export function filesToProjectJSON(files: ProjectJSONFiles): ProjectJSON {
+export function filesToProjectJSON(files: ProjectFiles): ProjectJSON {
   // TODO: detect ID conflicts between files (and provide way to resolve them)
 
   const projectJSON: ProjectJSON = {
@@ -192,9 +192,7 @@ export function filesToProjectJSON(files: ProjectJSONFiles): ProjectJSON {
   return projectJSON;
 }
 
-export function loadProjectFromDirectory(
-  projectDirPath: string
-): ProjectJSONFiles {
+export function loadProjectFromDirectory(projectDirPath: string): ProjectFiles {
   const manifestPath = path.resolve(projectDirPath, "uimix/project.json");
   let manifest: ProjectManifestJSON;
   try {
