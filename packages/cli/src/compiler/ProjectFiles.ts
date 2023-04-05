@@ -49,7 +49,7 @@ export class ProjectFiles {
     this.rootPath = rootPath;
   }
 
-  rootPath: string;
+  readonly rootPath: string;
   manifest: ProjectManifestJSON = {};
   pages = new Map<string /* file path */, PageJSON>();
 
