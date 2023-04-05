@@ -54,27 +54,27 @@ function toHierarchicalNodeJSONs(
   return Object.values(hierarchicalNodes).filter((node) => !node.parent);
 }
 
-function projectJSONToFiles(projectJSON: ProjectJSON): {
-  manifest: ProjectManifestJSON;
-  pages: Map<string, PageJSON>;
-} {
-  const manifest: ProjectManifestJSON = {
-    componentURLs: projectJSON.componentURLs,
-    images: projectJSON.images,
-    colors: projectJSON.colors,
-  };
+// function projectJSONToFiles(projectJSON: ProjectJSON): {
+//   manifest: ProjectManifestJSON;
+//   pages: Map<string, PageJSON>;
+// } {
+//   const manifest: ProjectManifestJSON = {
+//     componentURLs: projectJSON.componentURLs,
+//     images: projectJSON.images,
+//     colors: projectJSON.colors,
+//   };
 
-  const hierarchicalNodes = toHierarchicalNodeJSONs(projectJSON.nodes);
-  const projectNode = hierarchicalNodes.find((node) => node.type === "project");
-  if (!projectNode) {
-    throw new Error("Project node not found");
-  }
+//   const hierarchicalNodes = toHierarchicalNodeJSONs(projectJSON.nodes);
+//   const projectNode = hierarchicalNodes.find((node) => node.type === "project");
+//   if (!projectNode) {
+//     throw new Error("Project node not found");
+//   }
 
-  return {
-    manifest,
-    pages,
-  };
-}
+//   return {
+//     manifest,
+//     pages,
+//   };
+// }
 
 export class File extends TypedEmitter<{
   editedChange: (edited: boolean) => void;
