@@ -13,7 +13,7 @@
     "dev:vite": "vite --port 5174",
     "dev:uimix": "uimix compile -w src/uimix/*.uimix",
     "dev:components": "vite --port 5175 -c vite.config.components.js",
-    "/dev": "run-z dev:vite,dev:uimix,dev:components",
+    "dev": "run-z dev:vite,dev:uimix,dev:components",
     "preview": "vite preview",
     "storybook": "storybook dev -p 6006",
     "test": "vitest run",
