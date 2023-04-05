@@ -9,7 +9,7 @@
   "main": "index.ts",
   "scripts": {
     "build-storybook": "storybook build",
-    "lint": "eslint --ext .ts .",
+    "lint": "eslint src",
     "storybook": "storybook dev -p 6006",
     "test": "vitest run"
   },

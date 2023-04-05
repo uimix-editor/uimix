@@ -14,7 +14,10 @@ export const ToastPresenter: React.FC = observer(() => {
         duration={3000}
         className={`
         fixed bottom-10 left-0 right-0 w-fit mx-auto z-50 bg-red-500 text-red-500 rounded-full px-1 text-xs outline-none shadow-xl
-        ${styles.ToastRoot}
+        ${
+          // eslint-disable-next-line
+          styles.ToastRoot
+        }
         `}
         open={toastController.visible}
         onOpenChange={(open) => {
