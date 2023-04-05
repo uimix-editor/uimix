@@ -121,12 +121,13 @@ function saveProjectToDirectory(
   projectDirPath: string,
   files: ProjectJSONFiles
 ): void {
+  mkdirpSync(path.resolve(projectDirPath, "uimix"));
+  mkdirpSync(path.resolve(projectDirPath, "uimix/images"));
+
   fs.writeFileSync(
-    path.resolve(projectDirPath, "uimix.json"),
+    path.resolve(projectDirPath, "uimix/project.json"),
     formatJSON(JSON.stringify(files.manifest))
   );
-
-  mkdirpSync(path.resolve(projectDirPath, "uimix-images"));
 
   for (const [hash, image] of Object.entries(files.manifest.images ?? {})) {
     const dataURL = image.url;
@@ -135,7 +136,7 @@ function saveProjectToDirectory(
     const buffer = Buffer.from(base64, "base64");
 
     fs.writeFileSync(
-      path.resolve(projectDirPath, `uimix-images/${hash}.png`),
+      path.resolve(projectDirPath, `uimix/images/${hash}.png`),
       buffer
     );
   }
@@ -196,7 +197,7 @@ function filesToProjectJSON(files: ProjectJSONFiles): ProjectJSON {
 }
 
 function loadProjectFromDirectory(projectDirPath: string): ProjectJSONFiles {
-  const manifestPath = path.resolve(projectDirPath, "uimix.json");
+  const manifestPath = path.resolve(projectDirPath, "uimix/project.json");
   let manifest: ProjectManifestJSON;
   try {
     manifest = ProjectManifestJSON.parse(
