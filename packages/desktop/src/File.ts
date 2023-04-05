@@ -352,6 +352,7 @@ export class File extends TypedEmitter<{
     const filePath = this.filePath;
     const watchPath = path.resolve(filePath, "**/*.uimix");
 
+    // FIXME: chokidar looks like making UI slow
     const watcher = chokidar.watch(watchPath);
     console.log("start watching...");
 
