@@ -258,7 +258,7 @@ export class File extends TypedEmitter<{
   }
 
   get name(): string {
-    return this.filePath ? path.basename(this.filePath) : "Untitled";
+    return this.filePath ? path.basename(this.filePath) : "Untitled Project";
   }
 
   get metadata(): DocumentMetadata {
@@ -302,7 +302,8 @@ export class File extends TypedEmitter<{
 
   saveAs() {
     const newPath = dialog.showOpenDialogSync({
-      properties: ["openDirectory"],
+      properties: ["openDirectory", "createDirectory"],
+      message: "Select a folder to save your project to.",
     })?.[0];
     if (!newPath) {
       return;
@@ -319,6 +320,7 @@ export class File extends TypedEmitter<{
   static open() {
     const filePath = dialog.showOpenDialogSync({
       properties: ["openDirectory"],
+      message: "Select a folder to open your project from.",
     })?.[0];
     if (!filePath) {
       return;
