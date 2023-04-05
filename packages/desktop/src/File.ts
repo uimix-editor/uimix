@@ -126,6 +126,20 @@ function saveProjectToDirectory(
     formatJSON(JSON.stringify(files.manifest))
   );
 
+  mkdirpSync(path.resolve(projectDirPath, "uimix-images"));
+
+  for (const [hash, image] of Object.entries(files.manifest.images ?? {})) {
+    const dataURL = image.url;
+    // data url to buffer
+    const base64 = dataURL.split(",")[1];
+    const buffer = Buffer.from(base64, "base64");
+
+    fs.writeFileSync(
+      path.resolve(projectDirPath, `uimix-images/${hash}.png`),
+      buffer
+    );
+  }
+
   for (const [pagePath, pageJSON] of files.pages) {
     const pageDirPath = path.dirname(pagePath);
     mkdirpSync(path.resolve(projectDirPath, pageDirPath));
