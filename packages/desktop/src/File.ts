@@ -354,8 +354,8 @@ export class File extends TypedEmitter<{
 
     const watcher = chokidar.watch(watchPath);
     console.log("start watching...");
-    watcher.on("change", () => {
-      console.log("change");
+
+    const onChange = () => {
       try {
         const json = filesToProjectJSON(loadProjectFromDirectory(filePath));
         if (isEqual(json, this._data)) {
@@ -371,7 +371,12 @@ export class File extends TypedEmitter<{
       } catch (e) {
         console.error(e);
       }
-    });
+    };
+
+    watcher.on("change", onChange);
+    watcher.on("add", onChange);
+    watcher.on("unlink", onChange);
+
     this.watchDisposer = () => {
       void watcher.close();
     };
