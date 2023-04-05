@@ -7,11 +7,12 @@ import {
   PageJSON,
   ProjectJSON,
   ProjectManifestJSON,
+  StyleJSON,
 } from "../../node-data/src";
 import { DocumentMetadata } from "../../dashboard/src/types/DesktopAPI";
 import { TypedEmitter } from "tiny-typed-emitter";
 import { app, dialog } from "electron";
-import { isEqual } from "lodash";
+import { isEqual, omit } from "lodash";
 import chokidar from "chokidar";
 
 export function compareProjectJSONs(a: ProjectJSON, b: ProjectJSON): boolean {
@@ -54,27 +55,62 @@ function toHierarchicalNodeJSONs(
   return Object.values(hierarchicalNodes).filter((node) => !node.parent);
 }
 
-// function projectJSONToFiles(projectJSON: ProjectJSON): {
-//   manifest: ProjectManifestJSON;
-//   pages: Map<string, PageJSON>;
-// } {
-//   const manifest: ProjectManifestJSON = {
-//     componentURLs: projectJSON.componentURLs,
-//     images: projectJSON.images,
-//     colors: projectJSON.colors,
-//   };
+function projectJSONToFiles(projectJSON: ProjectJSON): {
+  manifest: ProjectManifestJSON;
+  pages: Map<string /* file path */, PageJSON>;
+} {
+  const manifest: ProjectManifestJSON = {
+    componentURLs: projectJSON.componentURLs,
+    images: projectJSON.images,
+    colors: projectJSON.colors,
+  };
 
-//   const hierarchicalNodes = toHierarchicalNodeJSONs(projectJSON.nodes);
-//   const projectNode = hierarchicalNodes.find((node) => node.type === "project");
-//   if (!projectNode) {
-//     throw new Error("Project node not found");
-//   }
+  const hierarchicalNodes = toHierarchicalNodeJSONs(projectJSON.nodes);
+  const projectNode = hierarchicalNodes.find((node) => node.type === "project");
+  if (!projectNode) {
+    throw new Error("Project node not found");
+  }
 
-//   return {
-//     manifest,
-//     pages,
-//   };
-// }
+  const pages = new Map<string, PageJSON>();
+  const nodeIDToPageJSON = new Map<string, PageJSON>();
+  for (const page of projectNode.children) {
+    if (page.type !== "page") {
+      throw new Error("expected page node");
+    }
+    if (!page.name) {
+      throw new Error("page name is empty");
+    }
+
+    const pageJSON: PageJSON = {
+      nodes: {},
+      styles: {},
+    };
+    const addNodeRecursively = (node: HierarchicalNodeJSON) => {
+      pageJSON.nodes[node.id] = omit(node, ["children", "id"]);
+      nodeIDToPageJSON.set(node.id, pageJSON);
+      for (const child of node.children) {
+        addNodeRecursively(child);
+      }
+    };
+    for (const child of page.children) {
+      addNodeRecursively(omit(child, ["parent"]));
+    }
+    pages.set(page.name, pageJSON);
+  }
+
+  for (const [id, style] of Object.entries(projectJSON.styles)) {
+    const idPath = id.split(":");
+    const pageJSON = nodeIDToPageJSON.get(idPath[0]);
+    if (pageJSON) {
+      pageJSON.styles[id] = style;
+    }
+  }
+
+  return {
+    manifest,
+    pages,
+  };
+}
 
 export class File extends TypedEmitter<{
   editedChange: (edited: boolean) => void;

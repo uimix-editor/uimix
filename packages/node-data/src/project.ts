@@ -32,8 +32,8 @@ export const ProjectJSON = z.object({
 export type ProjectJSON = z.infer<typeof ProjectJSON>;
 
 export const PageJSON = z.object({
-  nodes: z.record(NodeJSON).optional(),
-  styles: z.record(StyleJSON.partial()).optional(),
+  nodes: z.record(NodeJSON),
+  styles: z.record(StyleJSON.partial()),
 });
 export type PageJSON = z.infer<typeof PageJSON>;
 
