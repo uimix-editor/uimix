@@ -5,6 +5,7 @@ import { Page } from "./Page";
 import { compact } from "lodash-es";
 import { assertNonNull } from "@uimix/foundation/src/utils/Assert";
 import { Project } from "./Project";
+import { sha256 } from "js-sha256";
 
 export interface PageHierarchyFolderEntry {
   type: "directory";
@@ -45,9 +46,11 @@ export class PageList {
   }
 
   create(filePath: string): Page {
-    const node = this.project.nodes.create("page");
+    const id = sha256(filePath);
+    const node = this.project.nodes.create("page", id);
+    node.name = filePath;
+    this.node.append([node]);
     const page = assertNonNull(Page.from(node));
-    page.name = filePath;
     return page;
   }
 
@@ -129,7 +132,14 @@ export class PageList {
     const pagesToDelete = this.affectedPagesForPath(path);
 
     for (const page of pagesToDelete) {
-      page.name = newPath + page.name.slice(path.length);
+      const newName = newPath + page.name.slice(path.length);
+
+      const newPage = this.create(newName);
+      newPage.node.append(page.node.children);
+    }
+
+    for (const page of pagesToDelete) {
+      page.node.remove();
     }
   }
 }

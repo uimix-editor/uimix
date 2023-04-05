@@ -67,7 +67,6 @@ export class ProjectState {
     const pages = this.project.pages.all;
     if (pages.length === 0) {
       const page = this.project.pages.create("Page 1");
-      this.project.node.append([page.node]);
       this.pageID = page.id;
       generateExampleNodes(page.node);
       if (this.project.componentURLs.length === 0) {
