@@ -141,6 +141,12 @@ function saveProjectToDirectory(
     );
   }
 
+  const pagePathsToDelete = new Set(
+    glob.sync("**/*.uimix", {
+      cwd: projectDirPath,
+    })
+  );
+
   for (const [pagePath, pageJSON] of files.pages) {
     const pageDirPath = path.dirname(pagePath);
     mkdirpSync(path.resolve(projectDirPath, pageDirPath));
@@ -148,6 +154,11 @@ function saveProjectToDirectory(
       path.resolve(projectDirPath, pagePath),
       formatJSON(JSON.stringify(pageJSON))
     );
+    pagePathsToDelete.delete(pagePath);
+  }
+
+  for (const pagePath of pagePathsToDelete) {
+    fs.rmSync(path.resolve(projectDirPath, pagePath));
   }
 }
 
