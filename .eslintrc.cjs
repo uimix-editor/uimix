@@ -26,9 +26,5 @@ module.exports = {
       typescript: true,
     },
   },
-  // ignore package root files
-  ignorePatterns: ["js", "mjs", "cjs", "ts"].flatMap((ext) => [
-    `*.${ext}`,
-    `packages/*/*.${ext}`,
-  ]),
+  ignorePatterns: [`*.js`, `*.mjs`, `*.cjs`, `vite.config.ts`],
 };
