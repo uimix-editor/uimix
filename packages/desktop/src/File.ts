@@ -4,13 +4,7 @@ import { DocumentMetadata } from "../../dashboard/src/types/DesktopAPI";
 import { TypedEmitter } from "tiny-typed-emitter";
 import { app, dialog } from "electron";
 import { isEqual } from "lodash";
-import chokidar from "chokidar";
-import {
-  loadProjectFromDirectory,
-  saveProjectToDirectory,
-  filesToProjectJSON,
-  projectJSONToFiles,
-} from "../../cli/src/compiler/project";
+import { ProjectFiles } from "../../cli/src/compiler/ProjectFiles";
 
 export function compareProjectJSONs(a: ProjectJSON, b: ProjectJSON): boolean {
   return (
@@ -29,19 +23,19 @@ export class File extends TypedEmitter<{
   constructor(filePath?: string) {
     super();
 
-    this.filePath = filePath;
     if (filePath) {
       app.addRecentDocument(filePath);
+      this.files = new ProjectFiles(filePath);
+      this.files.loadFiles();
     }
-    this._data = filePath
-      ? filesToProjectJSON(loadProjectFromDirectory(filePath))
-      : // default project
-        {
-          nodes: {
-            project: { type: "project", index: 0 },
-          },
-          styles: {},
-        };
+
+    this._data = this.files?.toProjectJSON() ?? {
+      // default project
+      nodes: {
+        project: { type: "project", index: 0 },
+      },
+      styles: {},
+    };
     this.savedData = this._data;
     if (filePath) {
       this.watch();
@@ -49,7 +43,7 @@ export class File extends TypedEmitter<{
   }
 
   get name(): string {
-    return this.filePath ? path.basename(this.filePath) : "Untitled Project";
+    return this.files ? path.basename(this.files.rootPath) : "Untitled Project";
   }
 
   get metadata(): DocumentMetadata {
@@ -58,7 +52,7 @@ export class File extends TypedEmitter<{
     };
   }
 
-  filePath?: string;
+  files?: ProjectFiles;
   edited = false;
 
   private _data: ProjectJSON;
@@ -79,13 +73,14 @@ export class File extends TypedEmitter<{
   }
 
   save() {
-    if (!this.filePath) {
+    if (!this.files) {
       this.saveAs();
       return;
     }
 
-    saveProjectToDirectory(this.filePath, projectJSONToFiles(this.data));
-    app.addRecentDocument(this.filePath);
+    this.files.loadProjectJSON(this.data);
+    this.files.saveFiles();
+    app.addRecentDocument(this.files.rootPath);
     this.savedData = this.data;
     this.edited = false;
     this.emit("editedChange", this.edited);
@@ -101,7 +96,7 @@ export class File extends TypedEmitter<{
     }
     console.log("newPath", newPath);
 
-    this.filePath = newPath;
+    this.files = new ProjectFiles(newPath);
     this.save();
     this.watch();
 
@@ -125,41 +120,24 @@ export class File extends TypedEmitter<{
       this.watchDisposer = undefined;
     }
 
-    if (!this.filePath) {
+    const { files } = this;
+    if (!files) {
       return;
     }
-    const filePath = this.filePath;
-    const watchPath = path.resolve(filePath, "**/*.uimix");
 
-    // FIXME: chokidar looks like making UI slow
-    const watcher = chokidar.watch(watchPath);
-    console.log("start watching...");
-
-    const onChange = () => {
-      try {
-        const json = filesToProjectJSON(loadProjectFromDirectory(filePath));
-        if (isEqual(json, this._data)) {
-          return;
-        }
-        if (this.edited) {
-          // TODO: warn
-          return;
-        }
-        this._data = json;
-        this.savedData = json;
-        this.emit("dataChange", json);
-      } catch (e) {
-        console.error(e);
+    this.watchDisposer = files.watch(() => {
+      const json = files.toProjectJSON();
+      if (isEqual(json, this._data)) {
+        return;
       }
-    };
-
-    watcher.on("change", onChange);
-    watcher.on("add", onChange);
-    watcher.on("unlink", onChange);
-
-    this.watchDisposer = () => {
-      void watcher.close();
-    };
+      if (this.edited) {
+        // TODO: warn
+        return;
+      }
+      this._data = json;
+      this.savedData = json;
+      this.emit("dataChange", json);
+    });
   }
   private watchDisposer?: () => void;
 }
