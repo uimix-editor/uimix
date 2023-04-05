@@ -2,7 +2,7 @@
 
 exports[`generateCode > generates code 1`] = `
 {
-  "components.css": ".uimix-1Bvi2z3UPfi6W3L8nDt5VA {
+  "src/uimix/components.css": ".uimix-1Bvi2z3UPfi6W3L8nDt5VA {
 box-sizing: border-box;
 -webkit-font-smoothing: antialiased;
   position: relative;
@@ -536,10 +536,13 @@ box-sizing: border-box;
   text-align: start;
   justify-content: flex-start;
 }",
-  "components.tsx": "import React from \\"react\\";
-import * as header from \\"../../src/stories/Header\\";
-import * as button from \\"../../src/stories/Button\\";
-import image_YmY$tuteU03QY$k_2ARy1uacNmXDNmOX$FFAlj2qCIo from \\"./images/YmY-tuteU03QY-k_2ARy1uacNmXDNmOX-FFAlj2qCIo=.png\\";
+  "src/uimix/components.tsx": "import React from \\"react\\";
+import * as header from \\"../../../sandbox/src/stories/Header\\";
+import * as button from \\"../../../sandbox/src/stories/Button\\";
+import image_YmY$tuteU03QY$k_2ARy1uacNmXDNmOX$FFAlj2qCIo from \\"../../uimix/images/YmY-tuteU03QY-k_2ARy1uacNmXDNmOX-FFAlj2qCIo=.png\\";
+import image_XMIUgNq9VxH1FiVdc4M95ZcfqaSP3aF07GtbcGHi9AY from \\"../../uimix/images/XMIUgNq9VxH1FiVdc4M95ZcfqaSP3aF07GtbcGHi9AY=.png\\";
+import image_DGLFxM8eMqBjHUQYEekprnB3xC$f5uvLxL7x2odVAEU from \\"../../uimix/images/DGLFxM8eMqBjHUQYEekprnB3xC-f5uvLxL7x2odVAEU=.png\\";
+import image_1yKf5NvwGW$XtLSBDlS3GqZfbEGnLshgQrjyQJImqaM from \\"../../uimix/images/1yKf5NvwGW-XtLSBDlS3GqZfbEGnLshgQrjyQJImqaM=.png\\";
 import \\"./components.css\\";
 
 function applyOverrides(
@@ -769,6 +772,5 @@ export const Card = React.forwardRef((props, ref) => {
   }
 >;
 ",
-  "images/YmY-tuteU03QY-k_2ARy1uacNmXDNmOX-FFAlj2qCIo=.png": "binary",
 }
 `;

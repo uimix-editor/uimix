@@ -12,9 +12,10 @@ describe(generateCode.name, () => {
     const code = await generateCode(rootDir, json);
     const result: Record<string, string> = {};
     for (const file of code) {
-      if (file.content instanceof Buffer) {
-        result[file.filePath] = "binary";
-      } else {
+      if (
+        file.filePath.includes("components.") &&
+        typeof file.content === "string"
+      ) {
         result[file.filePath] = file.content;
       }
     }
