@@ -147,7 +147,8 @@ function saveProjectToDirectory(
     })
   );
 
-  for (const [pagePath, pageJSON] of files.pages) {
+  for (const [pageName, pageJSON] of files.pages) {
+    const pagePath = pageName + ".uimix";
     const pageDirPath = path.dirname(pagePath);
     mkdirpSync(path.resolve(projectDirPath, pageDirPath));
     fs.writeFileSync(
@@ -232,7 +233,7 @@ function loadProjectFromDirectory(projectDirPath: string): ProjectJSONFiles {
         })
       )
     );
-    pages.set(pagePath, pageJSON);
+    pages.set(pagePath.replace(/\.uimix$/, ""), pageJSON);
   }
 
   return {
