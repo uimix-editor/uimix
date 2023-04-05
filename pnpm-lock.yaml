@@ -37,6 +37,9 @@ importers:
       glob:
         specifier: ^9.3.4
         version: 9.3.4
+      js-sha256:
+        specifier: ^0.9.0
+        version: 0.9.0
       lodash-es:
         specifier: ^4.17.21
         version: 4.17.21
