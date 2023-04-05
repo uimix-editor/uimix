@@ -1,16 +1,17 @@
 import { describe, expect, it } from "vitest";
 import * as Y from "yjs";
-import { ProjectJSON } from "@uimix/node-data";
 import { loadProjectJSON } from "./ProjectJSON";
 import { Project } from "./Project";
 import { selectablesToProjectJSON } from "./Selectable";
-// @ts-ignore
-// eslint-disable-next-line import/no-unresolved
-import uimixFile from "../../../sandbox/src/uimix/components.uimix?raw";
+import * as path from "path";
+import { ProjectFiles } from "../../../cli/src/compiler/ProjectFiles";
 
 describe(selectablesToProjectJSON.name, () => {
   it("works", () => {
-    const projectJSON = ProjectJSON.parse(JSON.parse(uimixFile));
+    const rootDir = path.resolve("../sandbox");
+    const projectFiles = new ProjectFiles(rootDir);
+    projectFiles.loadFiles();
+    const projectJSON = projectFiles.toProjectJSON();
 
     const ydoc = new Y.Doc();
     const project = new Project(ydoc);
