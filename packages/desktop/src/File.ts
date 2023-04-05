@@ -183,9 +183,14 @@ function filesToProjectJSON(files: ProjectJSONFiles): ProjectJSON {
 
 function loadProjectFromDirectory(projectDirPath: string): ProjectJSONFiles {
   const manifestPath = path.resolve(projectDirPath, "uimix.json");
-  const manifest = ProjectManifestJSON.parse(
-    JSON.parse(fs.readFileSync(manifestPath, { encoding: "utf-8" }))
-  );
+  let manifest: ProjectManifestJSON;
+  try {
+    manifest = ProjectManifestJSON.parse(
+      JSON.parse(fs.readFileSync(manifestPath, { encoding: "utf-8" }))
+    );
+  } catch {
+    manifest = { componentURLs: [], images: {}, colors: {} };
+  }
 
   const pages = new Map<string, PageJSON>();
 
