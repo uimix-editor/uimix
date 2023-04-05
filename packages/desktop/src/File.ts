@@ -118,8 +118,8 @@ function projectJSONToFiles(projectJSON: ProjectJSON): ProjectJSONFiles {
 }
 
 function saveProjectToDirectory(
-  files: ProjectJSONFiles,
-  projectDirPath: string
+  projectDirPath: string,
+  files: ProjectJSONFiles
 ): void {
   fs.writeFileSync(
     path.resolve(projectDirPath, "uimix.json"),
@@ -221,9 +221,7 @@ export class File extends TypedEmitter<{
       app.addRecentDocument(filePath);
     }
     this._data = filePath
-      ? ProjectJSON.parse(
-          JSON.parse(fs.readFileSync(filePath, { encoding: "utf-8" }))
-        )
+      ? filesToProjectJSON(loadProjectFromDirectory(filePath))
       : // default project
         {
           nodes: {
@@ -272,7 +270,8 @@ export class File extends TypedEmitter<{
       this.saveAs();
       return;
     }
-    fs.writeFileSync(this.filePath, formatJSON(JSON.stringify(this.data)));
+
+    saveProjectToDirectory(this.filePath, projectJSONToFiles(this.data));
     app.addRecentDocument(this.filePath);
     this.savedData = this.data;
     this.edited = false;
@@ -280,9 +279,9 @@ export class File extends TypedEmitter<{
   }
 
   saveAs() {
-    const newPath = dialog.showSaveDialogSync({
-      filters: [{ name: "UI Mix", extensions: ["uimix"] }],
-    });
+    const newPath = dialog.showOpenDialogSync({
+      properties: ["openDirectory"],
+    })?.[0];
     if (!newPath) {
       return;
     }
@@ -297,8 +296,7 @@ export class File extends TypedEmitter<{
 
   static open() {
     const filePath = dialog.showOpenDialogSync({
-      properties: ["openFile"],
-      filters: [{ name: "UI Mix", extensions: ["uimix"] }],
+      properties: ["openDirectory"],
     })?.[0];
     if (!filePath) {
       return;
