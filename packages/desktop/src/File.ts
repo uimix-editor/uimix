@@ -15,6 +15,8 @@ import { app, dialog } from "electron";
 import { isEqual, omit } from "lodash";
 import chokidar from "chokidar";
 import { sha256 } from "js-sha256";
+import { mkdirpSync } from "mkdirp";
+import { glob } from "glob";
 
 export function compareProjectJSONs(a: ProjectJSON, b: ProjectJSON): boolean {
   return (
@@ -115,6 +117,25 @@ function projectJSONToFiles(projectJSON: ProjectJSON): ProjectJSONFiles {
   };
 }
 
+function saveProjectToDirectory(
+  files: ProjectJSONFiles,
+  projectDirPath: string
+): void {
+  fs.writeFileSync(
+    path.resolve(projectDirPath, "uimix.json"),
+    formatJSON(JSON.stringify(files.manifest))
+  );
+
+  for (const [pagePath, pageJSON] of files.pages) {
+    const pageDirPath = path.dirname(pagePath);
+    mkdirpSync(path.resolve(projectDirPath, pageDirPath));
+    fs.writeFileSync(
+      path.resolve(projectDirPath, pagePath),
+      formatJSON(JSON.stringify(pageJSON))
+    );
+  }
+}
+
 function filesToProjectJSON(files: ProjectJSONFiles): ProjectJSON {
   const projectJSON: ProjectJSON = {
     nodes: {},
@@ -156,6 +177,35 @@ function filesToProjectJSON(files: ProjectJSONFiles): ProjectJSON {
   }
 
   return projectJSON;
+}
+
+function loadProjectFromDirectory(projectDirPath: string): ProjectJSONFiles {
+  const manifestPath = path.resolve(projectDirPath, "uimix.json");
+  const manifest = ProjectManifestJSON.parse(
+    JSON.parse(fs.readFileSync(manifestPath, { encoding: "utf-8" }))
+  );
+
+  const pages = new Map<string, PageJSON>();
+
+  const pagePaths = glob.sync("**/*.uimix", {
+    cwd: projectDirPath,
+  });
+
+  for (const pagePath of pagePaths) {
+    const pageJSON = PageJSON.parse(
+      JSON.parse(
+        fs.readFileSync(path.resolve(projectDirPath, pagePath), {
+          encoding: "utf-8",
+        })
+      )
+    );
+    pages.set(pagePath, pageJSON);
+  }
+
+  return {
+    manifest,
+    pages,
+  };
 }
 
 export class File extends TypedEmitter<{
