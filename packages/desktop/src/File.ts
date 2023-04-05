@@ -14,6 +14,7 @@ import { TypedEmitter } from "tiny-typed-emitter";
 import { app, dialog } from "electron";
 import { isEqual, omit } from "lodash";
 import chokidar from "chokidar";
+import { sha256 } from "js-sha256";
 
 export function compareProjectJSONs(a: ProjectJSON, b: ProjectJSON): boolean {
   return (
