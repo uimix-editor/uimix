@@ -2,7 +2,12 @@ import fs from "fs";
 import path from "path";
 import prettier from "prettier/standalone";
 import parserBabel from "prettier/parser-babel";
-import { ProjectJSON } from "../../node-data/src";
+import {
+  NodeJSON,
+  PageJSON,
+  ProjectJSON,
+  ProjectManifestJSON,
+} from "../../node-data/src";
 import { DocumentMetadata } from "../../dashboard/src/types/DesktopAPI";
 import { TypedEmitter } from "tiny-typed-emitter";
 import { app, dialog } from "electron";
@@ -16,6 +21,59 @@ export function compareProjectJSONs(a: ProjectJSON, b: ProjectJSON): boolean {
     JSON.stringify(a.componentURLs) === JSON.stringify(b.componentURLs)
     // do not compare images because they are too big
   );
+}
+
+interface HierarchicalNodeJSON extends NodeJSON {
+  id: string;
+  children: HierarchicalNodeJSON[];
+}
+
+function toHierarchicalNodeJSONs(
+  nodes: Record<string, NodeJSON>
+): HierarchicalNodeJSON[] {
+  const hierarchicalNodes: Record<string, HierarchicalNodeJSON> = {};
+
+  for (const [id, node] of Object.entries(nodes)) {
+    hierarchicalNodes[id] = {
+      ...node,
+      id,
+      children: [],
+    };
+  }
+
+  for (const [id, node] of Object.entries(nodes)) {
+    if (node.parent) {
+      hierarchicalNodes[node.parent].children.push(hierarchicalNodes[id]);
+    }
+  }
+
+  for (const node of Object.values(hierarchicalNodes)) {
+    node.children.sort((a, b) => a.index - b.index);
+  }
+
+  return Object.values(hierarchicalNodes).filter((node) => !node.parent);
+}
+
+function projectJSONToFiles(projectJSON: ProjectJSON): {
+  manifest: ProjectManifestJSON;
+  pages: Map<string, PageJSON>;
+} {
+  const manifest: ProjectManifestJSON = {
+    componentURLs: projectJSON.componentURLs,
+    images: projectJSON.images,
+    colors: projectJSON.colors,
+  };
+
+  const hierarchicalNodes = toHierarchicalNodeJSONs(projectJSON.nodes);
+  const projectNode = hierarchicalNodes.find((node) => node.type === "project");
+  if (!projectNode) {
+    throw new Error("Project node not found");
+  }
+
+  return {
+    manifest,
+    pages,
+  };
 }
 
 export class File extends TypedEmitter<{
