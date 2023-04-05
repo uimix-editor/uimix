@@ -168,6 +168,7 @@ export class ProjectFiles {
     const pagePaths = globSync("**/*.uimix", {
       cwd: rootPath,
     });
+    pagePaths.sort();
 
     for (const pagePath of pagePaths) {
       const pageJSON = PageJSON.parse(
