@@ -9,7 +9,9 @@ import { ProjectFiles } from "../../../cli/src/compiler/ProjectFiles";
 describe(selectablesToProjectJSON.name, () => {
   it("works", () => {
     const rootDir = path.resolve("../sandbox");
-    const projectFiles = new ProjectFiles(rootDir);
+    const projectFiles = new ProjectFiles(rootDir, {
+      filePattern: "src/uimix/components.uimix",
+    });
     projectFiles.loadFiles();
     const projectJSON = projectFiles.toProjectJSON();
 

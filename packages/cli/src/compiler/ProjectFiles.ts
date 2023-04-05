@@ -45,11 +45,18 @@ function toHierarchicalNodeJSONs(
 }
 
 export class ProjectFiles {
-  constructor(rootPath: string) {
+  constructor(
+    rootPath: string,
+    options: {
+      filePattern?: string;
+    } = {}
+  ) {
     this.rootPath = rootPath;
+    this.filePattern = options.filePattern ?? "**/*.uimix";
   }
 
   readonly rootPath: string;
+  readonly filePattern: string;
   manifest: ProjectManifestJSON = {};
   pages = new Map<string /* file path */, PageJSON>();
 
@@ -165,7 +172,7 @@ export class ProjectFiles {
 
     const pages = new Map<string, PageJSON>();
 
-    const pagePaths = globSync("**/*.uimix", {
+    const pagePaths = globSync(this.filePattern, {
       cwd: rootPath,
     });
     pagePaths.sort();
@@ -209,7 +216,7 @@ export class ProjectFiles {
     }
 
     const pagePathsToDelete = new Set(
-      globSync("**/*.uimix", {
+      globSync(this.filePattern, {
         cwd: rootPath,
       })
     );
@@ -231,7 +238,7 @@ export class ProjectFiles {
   }
 
   watch(onChange: () => void): () => void {
-    const watchPath = path.resolve(this.rootPath, "**/*.uimix");
+    const watchPath = path.resolve(this.rootPath, this.filePattern);
 
     // FIXME: chokidar looks like making UI slow
     const watcher = chokidar.watch(watchPath, {
