@@ -4,6 +4,7 @@ import { ObservableYMap } from "@uimix/foundation/src/utils/ObservableYMap";
 import { getOrCreate } from "@uimix/foundation/src/utils/Collection";
 import { generateID } from "@uimix/foundation/src/utils/ID";
 import { Project } from "./Project";
+import { Page } from "./Page";
 
 export class ColorToken {
   constructor(project: Project, id: string) {
@@ -61,19 +62,19 @@ export class ColorToken {
   }
 
   get pageID(): string | undefined {
-    return this.data?.get("pageID") as string | undefined;
+    return this.data?.get("page") as string | undefined;
   }
 
   set pageID(value: string | undefined) {
     if (value === undefined) {
-      this.data?.delete("pageID");
+      this.data?.delete("page");
     } else {
-      this.dataForWrite.set("pageID", value);
+      this.dataForWrite.set("page", value);
     }
   }
 }
 
-export class ColorTokenList {
+export class ColorTokenMap {
   constructor(project: Project) {
     this.project = project;
   }
@@ -100,9 +101,23 @@ export class ColorTokenList {
   }
 
   get all(): ColorToken[] {
-    return [...this.data.keys()]
-      .map((id) => new ColorToken(this.project, id))
-      .sort((a, b) => a.index - b.index);
+    return [...this.data.keys()].map((id) => new ColorToken(this.project, id));
+  }
+}
+
+export class ColorTokenList {
+  constructor(page: Page) {
+    this.page = page;
+    this.project = page.project;
+  }
+
+  readonly page: Page;
+  readonly project: Project;
+
+  get all(): ColorToken[] {
+    return this.project.colorTokens.all.filter(
+      (token) => token.pageID === this.page.id
+    );
   }
 
   add(): ColorToken {
@@ -112,6 +127,7 @@ export class ColorTokenList {
     token.index = this.all.length;
     token.name = "New Color";
     token.value = Color.black;
+    token.pageID = this.page.id;
     return token;
   }
 }

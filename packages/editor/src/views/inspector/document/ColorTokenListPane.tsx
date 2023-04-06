@@ -12,7 +12,11 @@ import { Color } from "@uimix/foundation/src/utils/Color";
 import { showContextMenu } from "../../ContextMenu";
 
 export const ColorTokenListPane = observer(() => {
-  const tokens = projectState.project.colorTokens.all;
+  const tokens = projectState.page?.colorTokens;
+  if (!tokens) {
+    return null;
+  }
+  const allTokens = tokens.all;
 
   // TODO: use TreeView
 
@@ -26,7 +30,7 @@ export const ColorTokenListPane = observer(() => {
             <IconButton
               icon="material-symbols:add"
               onClick={action(() => {
-                projectState.project.colorTokens.add();
+                tokens.add();
                 projectState.undoManager.stopCapturing();
               })}
             />
@@ -35,7 +39,7 @@ export const ColorTokenListPane = observer(() => {
       />
       <div className="-mx-3">
         <ReactSortable
-          list={tokens.map((token) => ({
+          list={allTokens.map((token) => ({
             id: token.id,
           }))}
           setList={action((list: { id: string }[]) => {
@@ -48,7 +52,7 @@ export const ColorTokenListPane = observer(() => {
             projectState.undoManager.stopCapturing();
           })}
         >
-          {tokens.map((token) => (
+          {allTokens.map((token) => (
             <div
               className="h-8 gap-2 flex hover:bg-macaron-uiBackground px-3"
               key={token.id}
