@@ -23,8 +23,7 @@ export async function generateCode(
 
   const imagesPath = ".uimix/images";
 
-  const imageFiles: {
-    hash: string;
+  const results: {
     filePath: string;
     content: string | Buffer;
   }[] = [];
@@ -32,17 +31,11 @@ export async function generateCode(
   for (const [hash, image] of Object.entries(projectJSON.images ?? {})) {
     const decoded = dataUriToBuffer(image.url);
     const suffix = mime.extension(decoded.type) || "bin";
-    imageFiles.push({
-      hash,
+    results.push({
       filePath: `${imagesPath}/${hash}.${suffix}`,
       content: decoded,
     });
   }
-
-  const results: {
-    filePath: string;
-    content: string | Buffer;
-  }[] = imageFiles;
 
   for (const page of project.pages.all) {
     const tsContent = formatTypeScript(
