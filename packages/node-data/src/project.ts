@@ -6,6 +6,7 @@ export const ColorToken = z.object({
   name: z.string(),
   value: z.string(),
   index: z.number(),
+  page: z.string().optional(),
 });
 export type ColorToken = z.infer<typeof ColorToken>;
 

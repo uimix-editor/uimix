@@ -7,7 +7,7 @@ import {
   ProjectManifestJSON,
   StyleJSON,
 } from "@uimix/node-data";
-import { omit } from "lodash-es";
+import { filter, omit } from "lodash-es";
 import { mkdirpSync } from "mkdirp";
 import { globSync } from "glob";
 import path from "path";
@@ -103,7 +103,10 @@ export class ProjectFiles {
         images[id] = image;
       }
       for (const [id, color] of Object.entries(pageJSON.colors ?? {})) {
-        colors[id] = color;
+        colors[id] = {
+          ...color,
+          page: pageID,
+        };
       }
     }
 
@@ -142,9 +145,13 @@ export class ProjectFiles {
       const pageJSON: PageJSON = {
         nodes: {},
         styles: {},
-        // TODO: selectively save images and colors
+        // TODO: selectively save images
         images: projectJSON.images,
-        colors: projectJSON.colors,
+        colors: Object.fromEntries(
+          Object.entries(projectJSON.colors ?? {})
+            .filter(([, color]) => color.page === page.id)
+            .map(([id, color]) => [id, omit(color, ["page"])])
+        ),
       };
       const addNodeRecursively = (node: HierarchicalNodeJSON) => {
         pageJSON.nodes[node.id] = omit(node, ["children", "id"]);
