@@ -15,6 +15,12 @@ import fs from "fs";
 import { sha256 } from "js-sha256";
 import { formatJSON } from "../format";
 import chokidar from "chokidar";
+import { encode } from "url-safe-base64";
+
+function getURLSafeBase64Hash(data: string | Uint8Array): string {
+  const hash = sha256.arrayBuffer(data);
+  return encode(Buffer.from(hash).toString("base64"));
+}
 
 interface HierarchicalNodeJSON extends NodeJSON {
   id: string;
@@ -79,7 +85,7 @@ export class ProjectFiles {
 
     let pageIndex = 0;
     for (const [pageName, pageJSON] of this.pages) {
-      const pageID: string = sha256(pageName);
+      const pageID: string = getURLSafeBase64Hash(pageName);
 
       const pageNode: NodeJSON = {
         type: "page",
