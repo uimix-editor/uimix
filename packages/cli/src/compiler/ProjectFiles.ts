@@ -1,4 +1,5 @@
 import {
+  Image,
   NodeJSON,
   PageJSON,
   ProjectJSON,
@@ -12,6 +13,14 @@ import fs from "fs";
 import { sha256 } from "js-sha256";
 import { formatJSON } from "../format";
 import chokidar from "chokidar";
+import mime from "mime-types";
+import sizeOf from "image-size";
+import { encode } from "url-safe-base64";
+
+function getURLSafeBase64Hash(data: ArrayBuffer | string): string {
+  const hash = sha256.arrayBuffer(data);
+  return encode(Buffer.from(hash).toString("base64"));
+}
 
 interface HierarchicalNodeJSON extends NodeJSON {
   id: string;
@@ -58,6 +67,7 @@ export class ProjectFiles {
   readonly rootPath: string;
   readonly filePattern: string;
   manifest: ProjectManifestJSON = {};
+  images: Record<string, Image> = {};
   pages = new Map<string /* file path */, PageJSON>();
 
   toProjectJSON(): ProjectJSON {
@@ -67,7 +77,7 @@ export class ProjectFiles {
       nodes: {},
       styles: {},
       componentURLs: this.manifest.componentURLs,
-      images: this.manifest.images,
+      images: this.images,
       colors: this.manifest.colors,
     };
 
@@ -79,7 +89,7 @@ export class ProjectFiles {
 
     let pageIndex = 0;
     for (const [pageName, pageJSON] of this.pages) {
-      const pageID: string = sha256(pageName);
+      const pageID: string = getURLSafeBase64Hash(pageName);
 
       const pageNode: NodeJSON = {
         type: "page",
@@ -107,7 +117,6 @@ export class ProjectFiles {
   loadProjectJSON(projectJSON: ProjectJSON): void {
     const manifest: ProjectManifestJSON = {
       componentURLs: projectJSON.componentURLs,
-      images: projectJSON.images,
       colors: projectJSON.colors,
     };
 
@@ -155,6 +164,7 @@ export class ProjectFiles {
     }
 
     this.manifest = manifest;
+    this.images = projectJSON.images ?? {};
     this.pages = pages;
   }
 
@@ -167,7 +177,32 @@ export class ProjectFiles {
         JSON.parse(fs.readFileSync(manifestPath, { encoding: "utf-8" }))
       );
     } catch {
-      manifest = { componentURLs: [], images: {}, colors: {} };
+      manifest = { componentURLs: [], colors: {} };
+    }
+
+    const images: Record<string, Image> = {};
+
+    const imageFiles = globSync("uimix/images/*", {
+      cwd: rootPath,
+    });
+    for (const imageFilePath of imageFiles) {
+      const mimeType = mime.lookup(imageFilePath);
+      if (!mimeType) {
+        console.error(`Unknown MIME type for ${imageFilePath}`);
+        continue;
+      }
+
+      const data = fs.readFileSync(path.resolve(rootPath, imageFilePath));
+      const dataURL = `data:${mimeType};base64,${data.toString("base64")}`;
+      const hash = getURLSafeBase64Hash(data);
+      const size = sizeOf(data);
+
+      images[hash] = {
+        width: size.width ?? 0,
+        height: size.height ?? 0,
+        type: mimeType as Image["type"],
+        url: dataURL,
+      };
     }
 
     const pages = new Map<string, PageJSON>();
@@ -189,6 +224,7 @@ export class ProjectFiles {
     }
 
     this.manifest = manifest;
+    this.images = images;
     this.pages = pages;
   }
 
@@ -203,7 +239,7 @@ export class ProjectFiles {
       formatJSON(JSON.stringify(this.manifest))
     );
 
-    for (const [hash, image] of Object.entries(this.manifest.images ?? {})) {
+    for (const [hash, image] of Object.entries(this.images)) {
       const dataURL = image.url;
       // data url to buffer
       const base64 = dataURL.split(",")[1];

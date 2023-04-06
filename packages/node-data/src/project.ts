@@ -39,7 +39,6 @@ export type PageJSON = z.infer<typeof PageJSON>;
 
 export const ProjectManifestJSON = z.object({
   componentURLs: z.array(z.string()).optional(),
-  images: z.record(Image).optional(), // TODO: store images in separate files
   colors: z.record(ColorToken).optional(),
 });
 export type ProjectManifestJSON = z.infer<typeof ProjectManifestJSON>;
