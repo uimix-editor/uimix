@@ -7,6 +7,7 @@ export const ColorToken = z.object({
   value: z.string(),
   index: z.number(),
 });
+export type ColorToken = z.infer<typeof ColorToken>;
 
 export const ImageType = z.enum(["image/png", "image/jpeg"]);
 export type ImageType = z.infer<typeof ImageType>;

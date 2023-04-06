@@ -1,8 +1,11 @@
 import {
+  Image,
+  ColorToken,
   NodeJSON,
   PageJSON,
   ProjectJSON,
   ProjectManifestJSON,
+  StyleJSON,
 } from "@uimix/node-data";
 import { omit } from "lodash-es";
 import { mkdirpSync } from "mkdirp";
@@ -63,19 +66,16 @@ export class ProjectFiles {
   toProjectJSON(): ProjectJSON {
     // TODO: detect ID conflicts between files (and provide way to resolve them)
 
-    const projectJSON: ProjectJSON = {
-      nodes: {},
-      styles: {},
-      componentURLs: this.manifest.componentURLs,
-      images: this.manifest.images,
-      colors: this.manifest.colors,
-    };
+    const nodes: Record<string, NodeJSON> = {};
+    const styles: Record<string, Partial<StyleJSON>> = {};
+    const images: Record<string, Image> = {};
+    const colors: Record<string, ColorToken> = {};
 
     const projectNode: NodeJSON = {
       type: "project",
       index: 0,
     };
-    projectJSON.nodes["project"] = projectNode;
+    nodes["project"] = projectNode;
 
     let pageIndex = 0;
     for (const [pageName, pageJSON] of this.pages) {
@@ -87,28 +87,38 @@ export class ProjectFiles {
         name: pageName,
         parent: "project",
       };
-      projectJSON.nodes[pageID] = pageNode;
+      nodes[pageID] = pageNode;
 
       for (const [id, node] of Object.entries(pageJSON.nodes)) {
-        projectJSON.nodes[id] = {
+        nodes[id] = {
           ...node,
           parent: node.parent ?? pageID,
         };
       }
 
       for (const [id, style] of Object.entries(pageJSON.styles)) {
-        projectJSON.styles[id] = style;
+        styles[id] = style;
+      }
+      for (const [id, image] of Object.entries(pageJSON.images ?? {})) {
+        images[id] = image;
+      }
+      for (const [id, color] of Object.entries(pageJSON.colors ?? {})) {
+        colors[id] = color;
       }
     }
 
-    return projectJSON;
+    return {
+      nodes,
+      styles,
+      componentURLs: this.manifest.componentURLs,
+      images,
+      colors,
+    };
   }
 
   loadProjectJSON(projectJSON: ProjectJSON): void {
     const manifest: ProjectManifestJSON = {
       componentURLs: projectJSON.componentURLs,
-      images: projectJSON.images,
-      colors: projectJSON.colors,
     };
 
     const hierarchicalNodes = toHierarchicalNodeJSONs(projectJSON.nodes);
@@ -132,6 +142,9 @@ export class ProjectFiles {
       const pageJSON: PageJSON = {
         nodes: {},
         styles: {},
+        // TODO: selectively save images and colors
+        images: projectJSON.images,
+        colors: projectJSON.colors,
       };
       const addNodeRecursively = (node: HierarchicalNodeJSON) => {
         pageJSON.nodes[node.id] = omit(node, ["children", "id"]);
@@ -143,6 +156,7 @@ export class ProjectFiles {
       for (const child of page.children) {
         addNodeRecursively(omit(child, ["parent"]));
       }
+
       pages.set(page.name, pageJSON);
     }
 
@@ -167,7 +181,7 @@ export class ProjectFiles {
         JSON.parse(fs.readFileSync(manifestPath, { encoding: "utf-8" }))
       );
     } catch {
-      manifest = { componentURLs: [], images: {}, colors: {} };
+      manifest = { componentURLs: [] };
     }
 
     const pages = new Map<string, PageJSON>();
@@ -203,22 +217,22 @@ export class ProjectFiles {
       formatJSON(JSON.stringify(this.manifest))
     );
 
-    for (const [hash, image] of Object.entries(this.manifest.images ?? {})) {
-      const dataURL = image.url;
-      // data url to buffer
-      const base64 = dataURL.split(",")[1];
-      const buffer = Buffer.from(base64, "base64");
-      const ext = mime.extension(image.type);
-      if (!ext) {
-        console.error(`Unknown MIME type for ${image.type}`);
-        continue;
-      }
+    // for (const [hash, image] of Object.entries(this.manifest.images ?? {})) {
+    //   const dataURL = image.url;
+    //   // data url to buffer
+    //   const base64 = dataURL.split(",")[1];
+    //   const buffer = Buffer.from(base64, "base64");
+    //   const ext = mime.extension(image.type);
+    //   if (!ext) {
+    //     console.error(`Unknown MIME type for ${image.type}`);
+    //     continue;
+    //   }
 
-      fs.writeFileSync(
-        path.resolve(rootPath, `uimix/images/${hash}.${ext}`),
-        buffer
-      );
-    }
+    //   fs.writeFileSync(
+    //     path.resolve(rootPath, `uimix/images/${hash}.${ext}`),
+    //     buffer
+    //   );
+    // }
 
     const pagePathsToDelete = new Set(
       globSync(this.filePattern, {
