@@ -76,7 +76,15 @@ export class Window {
       }
     }
     const file = new File(filePath);
-    new Window(file);
+    return new Window(file);
+  }
+
+  static openFromDialog() {
+    const file = File.open();
+    if (!file) {
+      return;
+    }
+    return new Window(file);
   }
 }
 

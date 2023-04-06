@@ -15,18 +15,14 @@ export function setApplicationMenu() {
           label: "New",
           accelerator: "CmdOrCtrl+N",
           click: () => {
-            new Window(new File());
+            Window.new();
           },
         },
         {
           label: "Open",
           accelerator: "CmdOrCtrl+O",
           click: () => {
-            const file = File.open();
-            if (!file) {
-              return;
-            }
-            new Window(file);
+            Window.openFromDialog();
           },
         },
         { type: "separator" },

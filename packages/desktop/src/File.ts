@@ -47,6 +47,10 @@ export class File extends TypedEmitter<{
     return this.files ? path.basename(this.files.rootPath) : "Untitled Project";
   }
 
+  get filePath(): string | undefined {
+    return this.files?.rootPath;
+  }
+
   get metadata(): DocumentMetadata {
     return {
       name: this.name,
