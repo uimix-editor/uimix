@@ -9,7 +9,7 @@ describe(loadProjectJSON.name, () => {
   it("works", () => {
     const rootDir = path.resolve("../sandbox");
     const projectFiles = new ProjectFiles(rootDir, {
-      filePattern: "src/uimix/components.uimix",
+      filePattern: "src/components.uimix",
     });
     projectFiles.load();
     const projectJSON = projectFiles.toProjectJSON();
