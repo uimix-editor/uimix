@@ -1,4 +1,4 @@
-import { Landing } from "./uimix/landing.uimix.js";
+import { Landing } from "./landing.uimix.js";
 
 function App() {
   return (
