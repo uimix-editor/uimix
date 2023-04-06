@@ -66,6 +66,7 @@ export class ProjectFiles {
 
   readonly rootPath: string;
   readonly filePattern: string;
+  readonly manifestName = "uimix.json";
   manifest: ProjectManifestJSON = {};
   pages = new Map<string /* file path */, PageJSON>();
 
@@ -187,7 +188,7 @@ export class ProjectFiles {
 
   load(): void {
     const rootPath = this.rootPath;
-    const manifestPath = path.resolve(rootPath, "uimix/project.json");
+    const manifestPath = path.resolve(rootPath, this.manifestName);
     let manifest: ProjectManifestJSON;
     try {
       manifest = ProjectManifestJSON.parse(
@@ -226,7 +227,7 @@ export class ProjectFiles {
     mkdirpSync(path.resolve(rootPath, "uimix/images"));
 
     fs.writeFileSync(
-      path.resolve(rootPath, "uimix/project.json"),
+      path.resolve(rootPath, this.manifestName),
       formatJSON(JSON.stringify(this.manifest))
     );
 
