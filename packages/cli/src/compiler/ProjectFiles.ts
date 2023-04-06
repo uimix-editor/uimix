@@ -228,23 +228,6 @@ export class ProjectFiles {
       formatJSON(JSON.stringify(this.manifest))
     );
 
-    // for (const [hash, image] of Object.entries(this.manifest.images ?? {})) {
-    //   const dataURL = image.url;
-    //   // data url to buffer
-    //   const base64 = dataURL.split(",")[1];
-    //   const buffer = Buffer.from(base64, "base64");
-    //   const ext = mime.extension(image.type);
-    //   if (!ext) {
-    //     console.error(`Unknown MIME type for ${image.type}`);
-    //     continue;
-    //   }
-
-    //   fs.writeFileSync(
-    //     path.resolve(rootPath, `uimix/images/${hash}.${ext}`),
-    //     buffer
-    //   );
-    // }
-
     const pagePathsToDelete = new Set(
       globSync(this.filePattern, {
         cwd: rootPath,
