@@ -9,8 +9,6 @@ import { Project } from "../models/Project";
 import { Selectable } from "../models/Selectable";
 import { getIncrementalUniqueName } from "@uimix/foundation/src/utils/Name";
 import { generateExampleNodes } from "../models/generateExampleNodes";
-import demoFile from "../../../sandbox/src/uimix/landing.uimix?raw";
-import { reassignNewIDs } from "../models/ProjectJSONExtra";
 import { PageState } from "./PageState";
 import { Page } from "../models/Page";
 import { ScrollState } from "./ScrollState";
@@ -82,12 +80,12 @@ export class ProjectState {
   }
 
   loadDemoFile() {
-    let demoProject = ProjectJSON.parse(JSON.parse(demoFile));
-    demoProject = reassignNewIDs(demoProject);
-
-    this.project.loadJSON(demoProject);
-    this.pageID = this.project.pages.all[0].id;
-    this.undoManager.clear();
+    // TODO
+    // let demoProject = ProjectJSON.parse(JSON.parse(demoFile));
+    // demoProject = reassignNewIDs(demoProject);
+    // this.project.loadJSON(demoProject);
+    // this.pageID = this.project.pages.all[0].id;
+    // this.undoManager.clear();
   }
 
   loadJSON(projectJSON: ProjectJSON) {
