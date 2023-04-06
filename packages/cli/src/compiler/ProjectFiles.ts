@@ -244,9 +244,14 @@ export class ProjectFiles {
       // data url to buffer
       const base64 = dataURL.split(",")[1];
       const buffer = Buffer.from(base64, "base64");
+      const ext = mime.extension(image.type);
+      if (!ext) {
+        console.error(`Unknown MIME type for ${image.type}`);
+        continue;
+      }
 
       fs.writeFileSync(
-        path.resolve(rootPath, `uimix/images/${hash}.png`),
+        path.resolve(rootPath, `uimix/images/${hash}.${ext}`),
         buffer
       );
     }

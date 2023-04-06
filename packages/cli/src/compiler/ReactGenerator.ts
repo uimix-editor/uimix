@@ -10,6 +10,7 @@ import htmlReactParser from "html-react-parser";
 import reactElementToJSXString from "react-element-to-jsx-string";
 import React from "react";
 import { Page } from "@uimix/editor/src/models/Page";
+import mime from "mime-types";
 
 // TODO: remove this when react-element-to-jsx-string is fixed
 const reactElementToJSXStringFixed =
@@ -130,8 +131,7 @@ export class ReactGenerator {
     }
 
     for (const [hash, image] of this.page.project.imageManager.images) {
-      // TODO: support other extensions
-      const extension = image.type === "image/jpeg" ? "jpg" : "png";
+      const extension = mime.extension(image.type) || "";
       const imagePathFromRoot = path.join(
         "uimix/images",
         hash + "." + extension
