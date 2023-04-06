@@ -59,6 +59,18 @@ export class ColorToken {
   set index(value: number) {
     this.dataForWrite.set("index", value);
   }
+
+  get pageID(): string | undefined {
+    return this.data?.get("pageID") as string | undefined;
+  }
+
+  set pageID(value: string | undefined) {
+    if (value === undefined) {
+      this.data?.delete("pageID");
+    } else {
+      this.dataForWrite.set("pageID", value);
+    }
+  }
 }
 
 export class ColorTokenList {
