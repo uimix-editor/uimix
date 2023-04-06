@@ -42,6 +42,7 @@
     "dedent": "^0.7.0",
     "html-react-parser": "^3.0.15",
     "html-to-image": "^1.11.11",
+    "js-sha256": "^0.9.0",
     "lodash-es": "^4.17.21",
     "material-symbols": "^0.5.5",
     "mobx": "^6.9.0",

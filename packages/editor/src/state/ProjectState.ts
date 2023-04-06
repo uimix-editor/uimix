@@ -9,8 +9,6 @@ import { Project } from "../models/Project";
 import { Selectable } from "../models/Selectable";
 import { getIncrementalUniqueName } from "@uimix/foundation/src/utils/Name";
 import { generateExampleNodes } from "../models/generateExampleNodes";
-import demoFile from "../../../sandbox/src/uimix/landing.uimix?raw";
-import { reassignNewIDs } from "../models/ProjectJSONExtra";
 import { PageState } from "./PageState";
 import { Page } from "../models/Page";
 import { ScrollState } from "./ScrollState";
@@ -67,7 +65,6 @@ export class ProjectState {
     const pages = this.project.pages.all;
     if (pages.length === 0) {
       const page = this.project.pages.create("Page 1");
-      this.project.node.append([page.node]);
       this.pageID = page.id;
       generateExampleNodes(page.node);
       if (this.project.componentURLs.length === 0) {
@@ -83,12 +80,12 @@ export class ProjectState {
   }
 
   loadDemoFile() {
-    let demoProject = ProjectJSON.parse(JSON.parse(demoFile));
-    demoProject = reassignNewIDs(demoProject);
-
-    this.project.loadJSON(demoProject);
-    this.pageID = this.project.pages.all[0].id;
-    this.undoManager.clear();
+    // TODO
+    // let demoProject = ProjectJSON.parse(JSON.parse(demoFile));
+    // demoProject = reassignNewIDs(demoProject);
+    // this.project.loadJSON(demoProject);
+    // this.pageID = this.project.pages.all[0].id;
+    // this.undoManager.clear();
   }
 
   loadJSON(projectJSON: ProjectJSON) {
@@ -238,7 +235,7 @@ export class ProjectState {
 
   createPage(name: string) {
     const existingFilePaths = new Set(
-      this.project.pages.all.map((d) => d.name)
+      this.project.pages.all.map((d) => d.filePath)
     );
     const newPath = getIncrementalUniqueName(existingFilePaths, name);
 
@@ -250,16 +247,11 @@ export class ProjectState {
   }
 
   deletePageOrPageFolder(path: string) {
-    const affectedPages = this.project.pages.affectedPagesForPath(path);
+    const deletedPages = this.project.pages.delete(path);
+
     const deletingCurrent = this.page
-      ? affectedPages.includes(this.page)
+      ? deletedPages.includes(this.page)
       : false;
-
-    // if (this.project.pages.count === affectedPages.length) {
-    //   return;
-    // }
-    this.project.pages.deletePageOrPageFolder(path);
-
     if (deletingCurrent) {
       this.pageID = this.project.pages.all[0]?.id;
     }
@@ -268,7 +260,18 @@ export class ProjectState {
   }
 
   renamePageOrPageFolder(path: string, newPath: string) {
-    this.project.pages.renamePageOrPageFolder(path, newPath);
+    const { originalPages, newPages } = this.project.pages.rename(
+      path,
+      newPath
+    );
+
+    const selectedOriginalPageIndex = originalPages.findIndex(
+      (page) => page.id === this.pageID
+    );
+    if (selectedOriginalPageIndex !== -1) {
+      this.pageID = newPages[selectedOriginalPageIndex].id;
+    }
+
     this.undoManager.stopCapturing();
   }
 }

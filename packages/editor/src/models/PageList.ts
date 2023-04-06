@@ -5,6 +5,7 @@ import { Page } from "./Page";
 import { compact } from "lodash-es";
 import { assertNonNull } from "@uimix/foundation/src/utils/Assert";
 import { Project } from "./Project";
+import { sha256 } from "js-sha256";
 
 export interface PageHierarchyFolderEntry {
   type: "directory";
@@ -45,9 +46,11 @@ export class PageList {
   }
 
   create(filePath: string): Page {
-    const node = this.project.nodes.create("page");
+    const id = sha256(filePath);
+    const node = this.project.nodes.create("page", id);
+    node.name = filePath;
+    this.node.append([node]);
     const page = assertNonNull(Page.from(node));
-    page.name = filePath;
     return page;
   }
 
@@ -86,17 +89,17 @@ export class PageList {
     };
 
     const pages = Array.from(this.all);
-    pages.sort((a, b) => a.name.localeCompare(b.name));
+    pages.sort((a, b) => a.filePath.localeCompare(b.filePath));
 
     for (const page of pages) {
-      const segments = page.name.split(path.sep);
+      const segments = page.filePath.split(path.sep);
       const parent = mkdirp(segments.slice(0, -1));
 
       const item: PageHierarchyPageEntry = {
         type: "file",
         id: page.id,
         name: segments[segments.length - 1],
-        path: page.name,
+        path: page.filePath,
         page,
       };
       parent.children.push(item);
@@ -105,31 +108,55 @@ export class PageList {
     return root;
   }
 
-  affectedPagesForPath(path: string): Page[] {
+  pagesForPath(path: string): Page[] {
     return this.all.filter(
-      (page) => page.name === path || page.name.startsWith(path + "/")
+      (page) => page.filePath === path || page.filePath.startsWith(path + "/")
     );
   }
 
-  deletePageOrPageFolder(path: string) {
-    const pagesToDelete = this.affectedPagesForPath(path);
+  delete(path: string): Page[] {
+    const deletedPages = this.pagesForPath(path);
 
-    for (const page of pagesToDelete) {
+    for (const page of deletedPages) {
       page.node.remove();
       // TODO: delete dangling nodes?
       //this.project.nodes.remove(doc.root);
     }
+
+    return deletedPages;
   }
 
-  renamePageOrPageFolder(path: string, newPath: string) {
+  rename(
+    path: string,
+    newPath: string
+  ): {
+    originalPages: Page[];
+    newPages: Page[];
+  } {
     if (path === newPath) {
-      return;
+      return {
+        originalPages: [],
+        newPages: [],
+      };
     }
 
-    const pagesToDelete = this.affectedPagesForPath(path);
+    const originalPages = this.pagesForPath(path);
+    const newPages: Page[] = [];
 
-    for (const page of pagesToDelete) {
-      page.name = newPath + page.name.slice(path.length);
+    for (const page of originalPages) {
+      const newName = newPath + page.filePath.slice(path.length);
+      const newPage = this.create(newName);
+      newPage.node.append(page.node.children);
+      newPages.push(newPage);
     }
+
+    for (const page of originalPages) {
+      page.node.remove();
+    }
+
+    return {
+      originalPages,
+      newPages,
+    };
   }
 }

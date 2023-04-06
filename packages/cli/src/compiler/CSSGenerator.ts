@@ -1,4 +1,3 @@
-import { Project } from "@uimix/editor/src/models/Project";
 import { Selectable } from "@uimix/editor/src/models/Selectable";
 import { Variant } from "@uimix/editor/src/models/Component";
 import {
@@ -7,6 +6,7 @@ import {
 } from "@uimix/editor/src/models/buildNodeCSS";
 import { kebabCase } from "lodash-es";
 import * as CSS from "csstype";
+import { Page } from "@uimix/editor/src/models/Page";
 
 const baseCSS = [
   `box-sizing: border-box;`,
@@ -14,10 +14,10 @@ const baseCSS = [
 ];
 
 export class CSSGenerator {
-  project: Project;
+  page: Page;
 
-  constructor(project: Project) {
-    this.project = project;
+  constructor(page: Page) {
+    this.page = page;
   }
 
   generate(): string {
@@ -148,7 +148,7 @@ export class CSSGenerator {
       }
     };
 
-    const components = this.project.components;
+    const components = this.page.components;
 
     // component root styles must come before instances
     for (const component of components) {

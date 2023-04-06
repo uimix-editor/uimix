@@ -1,15 +1,16 @@
 import { Component } from "@uimix/editor/src/models/Component";
-import { Project } from "@uimix/editor/src/models/Project";
 import { Selectable } from "@uimix/editor/src/models/Selectable";
 import {
   generateJSIdentifier,
   getIncrementalUniqueName,
 } from "@uimix/foundation/src/utils/Name";
 import { camelCase, compact } from "lodash-es";
-import * as path from "path";
+import { posix as path } from "path";
 import htmlReactParser from "html-react-parser";
 import reactElementToJSXString from "react-element-to-jsx-string";
 import React from "react";
+import { Page } from "@uimix/editor/src/models/Page";
+import mime from "mime-types";
 
 // TODO: remove this when react-element-to-jsx-string is fixed
 const reactElementToJSXStringFixed =
@@ -83,19 +84,13 @@ function getExternalModulePaths(components: Component[]): Set<string> {
 }
 
 export class ReactGenerator {
-  constructor(
-    pathToPackageRoot: string,
-    basename: string,
-    project: Project,
-    imageFiles: { filePath: string; hash: string }[]
-  ) {
-    this.pathToPackageRoot = pathToPackageRoot;
-    this.basename = basename;
-    this.project = project;
-    this.imageFiles = imageFiles;
+  constructor(options: { rootPath: string; page: Page; imagesPath: string }) {
+    this.imagesPath = options.imagesPath;
+    this.rootPath = options.rootPath;
+    this.page = options.page;
 
     const componentNames = new Set<string>();
-    for (const component of project.components) {
+    for (const component of this.page.components) {
       const name = getIncrementalUniqueName(
         componentNames,
         generateJSIdentifier(component.name ?? "")
@@ -105,41 +100,57 @@ export class ReactGenerator {
     }
   }
 
-  pathToPackageRoot: string;
-  basename: string;
-  project: Project;
-  imageFiles: { filePath: string; hash: string }[];
+  imagesPath: string;
+  rootPath: string;
+  page: Page;
   componentsWithNames: [Component, string][] = [];
   refIDs = new Map<string, string>();
   moduleVarNames = new Map<string, string>(); // path -> varName
   imageVarNames = new Map<string, string>(); // hash -> varName
 
   render(): string[] {
-    const components = this.project.components;
+    const components = this.page.components;
 
     const results: string[] = [];
     results.push(`import React from "react";`);
+
+    const pathToRoot = path.relative(
+      path.dirname(this.page.filePath),
+      this.rootPath
+    );
 
     for (const modulePath of getExternalModulePaths(components)) {
       const varName = camelCase(
         path.basename(modulePath, path.extname(modulePath))
       );
       results.push(
-        `import * as ${varName} from "${
-          this.pathToPackageRoot
-        }/${modulePath.replace(/\.[jt]sx?$/, "")}";`
+        `import * as ${varName} from "${pathToRoot}/${modulePath.replace(
+          /\.[jt]sx?$/,
+          ""
+        )}";`
       );
       this.moduleVarNames.set(modulePath, varName);
     }
 
-    for (const { hash, filePath } of this.imageFiles) {
-      const importPath = "./" + filePath;
+    for (const [hash, image] of this.page.project.imageManager.images) {
+      const extension = mime.extension(image.type) || "";
+      const imagePathFromRoot = path.join(
+        this.imagesPath,
+        hash + "." + extension
+      );
+      const imagePathFromPage = path.relative(
+        path.dirname(this.page.filePath),
+        imagePathFromRoot
+      );
+
       const varName = imageHashToVarName(hash);
-      results.push(`import ${varName} from "${importPath}";`);
+      results.push(`import ${varName} from "${imagePathFromPage}";`);
       this.imageVarNames.set(hash, varName);
     }
 
-    results.push(`import './${this.basename}.css';`);
+    const basename = path.basename(this.page.filePath);
+
+    results.push(`import './${basename}.uimix.css';`);
 
     results.push(applyOverridesSnippet);
 
@@ -157,7 +168,7 @@ export class ReactGenerator {
       const node = this.renderSelectable(component.rootNode.selectable);
 
       const overrideProps = [...refIDs].map(([id, refID]) => {
-        const node = this.project.nodes.get(id);
+        const node = this.page.project.nodes.get(id);
         const selectable = node?.selectable;
         const foreignComponentID = selectable?.style.foreignComponent;
         const tagName = selectable?.style.tagName ?? "div";

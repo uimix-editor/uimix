@@ -22,3 +22,8 @@ dist-ssr
 *.njsproj
 *.sln
 *.sw?
+
+# UIMix generated files
+.uimix
+*.uimix.tsx
+*.uimix.css

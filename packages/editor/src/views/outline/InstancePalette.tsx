@@ -105,7 +105,7 @@ const ComponentThumbnails: React.FC<{
               margin: 0,
             }}
           >
-            {page.name}
+            {page.filePath}
           </h2>
           {components.map((c) => (
             <ComponentThumbnail

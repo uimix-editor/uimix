@@ -12,5 +12,6 @@
     "skipLibCheck": true,
     "experimentalDecorators": true,
     "noEmit": true
-  }
+  },
+  "include": ["src"]
 }

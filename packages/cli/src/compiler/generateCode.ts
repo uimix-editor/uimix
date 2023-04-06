@@ -9,8 +9,7 @@ import { dataUriToBuffer } from "data-uri-to-buffer";
 import * as mime from "mime-types";
 
 export async function generateCode(
-  pathToPackageRoot: string,
-  basename: string,
+  rootPath: string,
   projectJSON: ProjectJSON
 ): Promise<
   {
@@ -22,8 +21,9 @@ export async function generateCode(
   const project = new Project(ydoc);
   loadProjectJSON(ydoc, projectJSON);
 
-  const imageFiles: {
-    hash: string;
+  const imagesPath = ".uimix/images";
+
+  const results: {
     filePath: string;
     content: string | Buffer;
   }[] = [];
@@ -31,28 +31,29 @@ export async function generateCode(
   for (const [hash, image] of Object.entries(projectJSON.images ?? {})) {
     const decoded = dataUriToBuffer(image.url);
     const suffix = mime.extension(decoded.type) || "bin";
-    imageFiles.push({
-      hash,
-      filePath: `images/${hash}.${suffix}`,
+    results.push({
+      filePath: `${imagesPath}/${hash}.${suffix}`,
       content: decoded,
     });
   }
 
-  const tsContent = formatTypeScript(
-    new ReactGenerator(pathToPackageRoot, basename, project, imageFiles)
-      .render()
-      .join("\n")
-  );
-  const cssContent = new CSSGenerator(project).generate();
-  return [
-    ...imageFiles,
-    {
-      filePath: basename + ".tsx",
-      content: tsContent,
-    },
-    {
-      filePath: basename + ".css",
-      content: cssContent,
-    },
-  ];
+  for (const page of project.pages.all) {
+    const tsContent = formatTypeScript(
+      new ReactGenerator({ rootPath, page, imagesPath }).render().join("\n")
+    );
+    const cssContent = new CSSGenerator(page).generate();
+
+    results.push(
+      {
+        filePath: page.filePath + ".uimix.tsx",
+        content: tsContent,
+      },
+      {
+        filePath: page.filePath + ".uimix.css",
+        content: cssContent,
+      }
+    );
+  }
+
+  return results;
 }

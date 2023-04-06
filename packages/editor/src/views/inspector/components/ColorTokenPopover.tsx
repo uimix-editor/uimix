@@ -42,8 +42,10 @@ export const ColorTokenPopover: React.FC<{
               <IconButton
                 icon="material-symbols:add"
                 onClick={action(() => {
+                  const colorTokens = projectState.page?.colorTokens;
+                  if (!colorTokens) return;
                   // Add
-                  const token = projectState.project.colorTokens.add();
+                  const token = colorTokens.add();
                   token.value = value?.color ?? Color.black;
                   token.name = token.value?.getName();
                   onChange(token);

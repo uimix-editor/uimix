@@ -1,19 +1,17 @@
-import fs from "fs";
 import path from "path";
-import prettier from "prettier/standalone";
-import parserBabel from "prettier/parser-babel";
 import { ProjectJSON } from "../../node-data/src";
 import { DocumentMetadata } from "../../dashboard/src/types/DesktopAPI";
 import { TypedEmitter } from "tiny-typed-emitter";
 import { app, dialog } from "electron";
 import { isEqual } from "lodash";
-import chokidar from "chokidar";
+import { ProjectFiles } from "../../cli/src/compiler/ProjectFiles";
 
 export function compareProjectJSONs(a: ProjectJSON, b: ProjectJSON): boolean {
   return (
     JSON.stringify(a.nodes) === JSON.stringify(b.nodes) &&
     JSON.stringify(a.styles) === JSON.stringify(b.styles) &&
-    JSON.stringify(a.componentURLs) === JSON.stringify(b.componentURLs)
+    JSON.stringify(a.componentURLs) === JSON.stringify(b.componentURLs) &&
+    JSON.stringify(a.colors) === JSON.stringify(b.colors)
     // do not compare images because they are too big
   );
 }
@@ -26,21 +24,19 @@ export class File extends TypedEmitter<{
   constructor(filePath?: string) {
     super();
 
-    this.filePath = filePath;
     if (filePath) {
       app.addRecentDocument(filePath);
+      this.files = new ProjectFiles(filePath);
+      this.files.load();
     }
-    this._data = filePath
-      ? ProjectJSON.parse(
-          JSON.parse(fs.readFileSync(filePath, { encoding: "utf-8" }))
-        )
-      : // default project
-        {
-          nodes: {
-            project: { type: "project", index: 0 },
-          },
-          styles: {},
-        };
+
+    this._data = this.files?.toProjectJSON() ?? {
+      // default project
+      nodes: {
+        project: { type: "project", index: 0 },
+      },
+      styles: {},
+    };
     this.savedData = this._data;
     if (filePath) {
       this.watch();
@@ -48,7 +44,11 @@ export class File extends TypedEmitter<{
   }
 
   get name(): string {
-    return this.filePath ? path.basename(this.filePath) : "Untitled";
+    return this.files ? path.basename(this.files.rootPath) : "Untitled Project";
+  }
+
+  get filePath(): string | undefined {
+    return this.files?.rootPath;
   }
 
   get metadata(): DocumentMetadata {
@@ -57,7 +57,7 @@ export class File extends TypedEmitter<{
     };
   }
 
-  filePath?: string;
+  files?: ProjectFiles;
   edited = false;
 
   private _data: ProjectJSON;
@@ -78,27 +78,30 @@ export class File extends TypedEmitter<{
   }
 
   save() {
-    if (!this.filePath) {
+    if (!this.files) {
       this.saveAs();
       return;
     }
-    fs.writeFileSync(this.filePath, formatJSON(JSON.stringify(this.data)));
-    app.addRecentDocument(this.filePath);
+
+    this.files.loadProjectJSON(this.data);
+    this.files.save();
+    app.addRecentDocument(this.files.rootPath);
     this.savedData = this.data;
     this.edited = false;
     this.emit("editedChange", this.edited);
   }
 
   saveAs() {
-    const newPath = dialog.showSaveDialogSync({
-      filters: [{ name: "UI Mix", extensions: ["uimix"] }],
-    });
+    const newPath = dialog.showOpenDialogSync({
+      properties: ["openDirectory", "createDirectory"],
+      message: "Select a folder to save your project to.",
+    })?.[0];
     if (!newPath) {
       return;
     }
     console.log("newPath", newPath);
 
-    this.filePath = newPath;
+    this.files = new ProjectFiles(newPath);
     this.save();
     this.watch();
 
@@ -107,8 +110,8 @@ export class File extends TypedEmitter<{
 
   static open() {
     const filePath = dialog.showOpenDialogSync({
-      properties: ["openFile"],
-      filters: [{ name: "UI Mix", extensions: ["uimix"] }],
+      properties: ["openDirectory"],
+      message: "Select a folder to open your project from.",
     })?.[0];
     if (!filePath) {
       return;
@@ -122,41 +125,24 @@ export class File extends TypedEmitter<{
       this.watchDisposer = undefined;
     }
 
-    if (!this.filePath) {
+    const { files } = this;
+    if (!files) {
       return;
     }
-    const filePath = this.filePath;
 
-    const watcher = chokidar.watch(filePath);
-    watcher.on("change", () => {
-      try {
-        const json = ProjectJSON.parse(
-          JSON.parse(fs.readFileSync(filePath, { encoding: "utf-8" }))
-        );
-        if (isEqual(json, this._data)) {
-          return;
-        }
-        if (this.edited) {
-          // TODO: warn
-          return;
-        }
-        this._data = json;
-        this.savedData = json;
-        this.emit("dataChange", json);
-      } catch (e) {
-        console.error(e);
+    this.watchDisposer = files.watch(() => {
+      const json = files.toProjectJSON();
+      if (isEqual(json, this._data)) {
+        return;
       }
+      if (this.edited) {
+        // TODO: warn
+        return;
+      }
+      this._data = json;
+      this.savedData = json;
+      this.emit("dataChange", json);
     });
-    this.watchDisposer = () => {
-      void watcher.close();
-    };
   }
   private watchDisposer?: () => void;
-}
-
-function formatJSON(text: string): string {
-  return prettier.format(text, {
-    parser: "json",
-    plugins: [parserBabel],
-  });
 }

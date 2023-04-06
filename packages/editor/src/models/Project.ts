@@ -6,7 +6,7 @@ import { ImageManager } from "./ImageManager";
 import { Component } from "./Component";
 import { ObservableYArray } from "@uimix/foundation/src/utils/ObservableYArray";
 import { loadProjectJSON, toProjectJSON } from "./ProjectJSON";
-import { ColorTokenList } from "./ColorToken";
+import { ColorTokenMap } from "./ColorToken";
 import { PageList } from "./PageList";
 
 export class Project {
@@ -14,7 +14,7 @@ export class Project {
     this.doc = doc;
     this.nodes = new NodeMap(this);
     this.selectables = new SelectableMap(this);
-    this.colorTokens = new ColorTokenList(this);
+    this.colorTokens = new ColorTokenMap(this);
     this.node = this.nodes.create("project", "project");
     this.pages = new PageList(this);
   }
@@ -22,7 +22,7 @@ export class Project {
   readonly doc: Y.Doc;
   readonly nodes: NodeMap;
   readonly selectables: SelectableMap;
-  readonly colorTokens: ColorTokenList;
+  readonly colorTokens: ColorTokenMap;
   readonly node: Node;
   readonly pages: PageList;
   readonly imageManager = new ImageManager(this);
@@ -46,18 +46,7 @@ export class Project {
   }
 
   get components(): Component[] {
-    const components: Component[] = [];
-
-    for (const page of this.pages.all) {
-      for (const node of page.node.children) {
-        const component = Component.from(node);
-        if (component) {
-          components.push(component);
-        }
-      }
-    }
-
-    return components;
+    return this.pages.all.flatMap((page) => page.components);
   }
 
   get componentURLs(): ObservableYArray<string> {
