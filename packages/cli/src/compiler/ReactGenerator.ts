@@ -150,7 +150,7 @@ export class ReactGenerator {
 
     const basename = path.basename(this.page.filePath);
 
-    results.push(`import './${basename}.css';`);
+    results.push(`import './${basename}.uimix.css';`);
 
     results.push(applyOverridesSnippet);
 

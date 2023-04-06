@@ -52,11 +52,11 @@ export async function generateCode(
 
     results.push(
       {
-        filePath: page.filePath + ".tsx",
+        filePath: page.filePath + ".uimix.tsx",
         content: tsContent,
       },
       {
-        filePath: page.filePath + ".css",
+        filePath: page.filePath + ".uimix.css",
         content: cssContent,
       }
     );
