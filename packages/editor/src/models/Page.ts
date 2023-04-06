@@ -30,10 +30,6 @@ export class Page {
     return this.node.name;
   }
 
-  // set name(name: string) {
-  //   this.node.name = name;
-  // }
-
   readonly node: Node;
 
   get selectable(): Selectable {
