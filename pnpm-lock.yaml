@@ -17,8 +17,8 @@ importers:
         specifier: ^2.27.5
         version: 2.27.5(@typescript-eslint/parser@5.56.0)(eslint-import-resolver-typescript@3.5.3)(eslint@8.37.0)
       npm-check-updates:
-        specifier: ^16.10.1
-        version: 16.10.1
+        specifier: ^16.10.7
+        version: 16.10.7
       turbo:
         specifier: ^1.8.8
         version: 1.8.8
@@ -220,8 +220,8 @@ importers:
         specifier: workspace:*
         version: link:../typed-rpc
       aws-sdk:
-        specifier: ^2.1349.0
-        version: 2.1349.0
+        specifier: ^2.1351.0
+        version: 2.1351.0
       clsx:
         specifier: ^1.2.1
         version: 1.2.1
@@ -265,14 +265,14 @@ importers:
         specifier: ^1.12.2
         version: 1.12.2
       tailwind-merge:
-        specifier: ^1.11.0
-        version: 1.11.0
+        specifier: ^1.12.0
+        version: 1.12.0
       tiny-typed-emitter:
         specifier: ^2.1.0
         version: 2.1.0
       trpc-panel:
-        specifier: ^1.2.8
-        version: 1.2.8(@trpc/server@10.18.0)(zod@3.21.4)
+        specifier: ^1.2.9
+        version: 1.2.9(@trpc/server@10.18.0)(zod@3.21.4)
       typescript:
         specifier: 5.0.3
         version: 5.0.3
@@ -437,8 +437,8 @@ importers:
         specifier: ^1.15.0
         version: 1.15.0
       tailwind-merge:
-        specifier: ^1.11.0
-        version: 1.11.0
+        specifier: ^1.12.0
+        version: 1.12.0
       tailwind-styled-components:
         specifier: ^2.2.0
         version: 2.2.0(react-dom@18.2.0)(react@18.2.0)
@@ -462,25 +462,25 @@ importers:
         specifier: ^7.21.4
         version: 7.21.4
       '@storybook/addon-actions':
-        specifier: ^7.0.1
+        specifier: ^7.0.2
         version: 7.0.2(react-dom@18.2.0)(react@18.2.0)
       '@storybook/addon-essentials':
-        specifier: ^7.0.1
+        specifier: ^7.0.2
         version: 7.0.2(react-dom@18.2.0)(react@18.2.0)
       '@storybook/addon-interactions':
-        specifier: ^7.0.1
+        specifier: ^7.0.2
         version: 7.0.2(react-dom@18.2.0)(react@18.2.0)
       '@storybook/addon-links':
-        specifier: ^7.0.1
+        specifier: ^7.0.2
         version: 7.0.2(react-dom@18.2.0)(react@18.2.0)
       '@storybook/addon-mdx-gfm':
-        specifier: ^7.0.1
+        specifier: ^7.0.2
         version: 7.0.2
       '@storybook/react':
-        specifier: ^7.0.1
+        specifier: ^7.0.2
         version: 7.0.2(react-dom@18.2.0)(react@18.2.0)(typescript@5.0.3)
       '@storybook/react-vite':
-        specifier: ^7.0.1
+        specifier: ^7.0.2
         version: 7.0.2(react-dom@18.2.0)(react@18.2.0)(typescript@5.0.3)(vite@4.2.1)
       '@storybook/testing-library':
         specifier: ^0.1.0
@@ -534,8 +534,8 @@ importers:
         specifier: ^3.1.2
         version: 3.1.2
       html-tags:
-        specifier: ^3.3.0
-        version: 3.3.0
+        specifier: ^3.3.1
+        version: 3.3.1
       postcss:
         specifier: ^8.4.21
         version: 8.4.21
@@ -549,7 +549,7 @@ importers:
         specifier: ^1.11.0
         version: 1.11.0
       storybook:
-        specifier: ^7.0.1
+        specifier: ^7.0.2
         version: 7.0.2
       tailwindcss:
         specifier: ^3.3.1
@@ -591,8 +591,8 @@ importers:
         specifier: ^18.2.0
         version: 18.2.0(react@18.2.0)
       tailwind-merge:
-        specifier: ^1.11.0
-        version: 1.11.0
+        specifier: ^1.12.0
+        version: 1.12.0
       url-safe-base64:
         specifier: ^1.3.0
         version: 1.3.0
@@ -766,8 +766,8 @@ importers:
         specifier: ^1.15.0
         version: 1.15.0
       tailwind-merge:
-        specifier: ^1.11.0
-        version: 1.11.0
+        specifier: ^1.12.0
+        version: 1.12.0
       tailwind-styled-components:
         specifier: ^2.2.0
         version: 2.2.0(react-dom@18.2.0)(react@18.2.0)
@@ -791,25 +791,25 @@ importers:
         specifier: ^7.21.4
         version: 7.21.4
       '@storybook/addon-actions':
-        specifier: ^7.0.1
+        specifier: ^7.0.2
         version: 7.0.2(react-dom@18.2.0)(react@18.2.0)
       '@storybook/addon-essentials':
-        specifier: ^7.0.1
+        specifier: ^7.0.2
         version: 7.0.2(react-dom@18.2.0)(react@18.2.0)
       '@storybook/addon-interactions':
-        specifier: ^7.0.1
+        specifier: ^7.0.2
         version: 7.0.2(react-dom@18.2.0)(react@18.2.0)
       '@storybook/addon-links':
-        specifier: ^7.0.1
+        specifier: ^7.0.2
         version: 7.0.2(react-dom@18.2.0)(react@18.2.0)
       '@storybook/addon-mdx-gfm':
-        specifier: ^7.0.1
+        specifier: ^7.0.2
         version: 7.0.2
       '@storybook/react':
-        specifier: ^7.0.1
+        specifier: ^7.0.2
         version: 7.0.2(react-dom@18.2.0)(react@18.2.0)(typescript@5.0.3)
       '@storybook/react-vite':
-        specifier: ^7.0.1
+        specifier: ^7.0.2
         version: 7.0.2(react-dom@18.2.0)(react@18.2.0)(typescript@5.0.3)(vite@4.2.1)
       '@storybook/testing-library':
         specifier: ^0.1.0
@@ -863,8 +863,8 @@ importers:
         specifier: ^3.1.2
         version: 3.1.2
       html-tags:
-        specifier: ^3.3.0
-        version: 3.3.0
+        specifier: ^3.3.1
+        version: 3.3.1
       postcss:
         specifier: ^8.4.21
         version: 8.4.21
@@ -878,7 +878,7 @@ importers:
         specifier: ^1.11.0
         version: 1.11.0
       storybook:
-        specifier: ^7.0.1
+        specifier: ^7.0.2
         version: 7.0.2
       tailwindcss:
         specifier: ^3.3.1
@@ -4942,7 +4942,7 @@ packages:
       acorn-jsx: 5.3.2(acorn@7.4.1)
       acorn-walk: 7.2.0
       escodegen: 2.0.0
-      html-tags: 3.3.0
+      html-tags: 3.3.1
       lodash: 4.17.21
       prop-types: 15.8.1
       react: 18.2.0
@@ -6367,8 +6367,8 @@ packages:
     resolution: {integrity: sha512-DMD0KiN46eipeziST1LPP/STfDU0sufISXmjSgvVsoU2tqxctQeASejWcfNtxYKqETM1UxQ8sp2OrSBWpHY6sw==}
     engines: {node: '>= 0.4'}
 
-  /aws-sdk@2.1349.0:
-    resolution: {integrity: sha512-aCuIFkWeRZWaxcjb+q5nqN4JsxdS/Bca7hcFkHI2P0oUzGPki6yU4fwriC1QLAW3SzBVLSeJdgXlBTS9ErBUuA==}
+  /aws-sdk@2.1351.0:
+    resolution: {integrity: sha512-/Hj9lmxFO2eBipUGY2CL5rNhoZO4PrXOYQ6C+nQ0ffzp+bmYc0nzKwO7xrGreVIefrVbbikQyItiDL3PmBRnGw==}
     engines: {node: '>= 10.0.0'}
     dependencies:
       buffer: 4.9.2
@@ -9546,8 +9546,8 @@ packages:
       react-property: 2.0.0
       style-to-js: 1.1.3
 
-  /html-tags@3.3.0:
-    resolution: {integrity: sha512-mH3dWNbvfCKcAEysbpD7wvtIJ6ImPog8aFhfzqog9gCN8CJFhKjLDtjpohG3IxYRLqHMJ1PWpBvnSMkFJBQ6Jg==}
+  /html-tags@3.3.1:
+    resolution: {integrity: sha512-ztqyC3kLto0e9WbNp0aeP+M3kTt+nbaIveGmUxAtZa+8iFgKLUOD4YKM5j+f3QD89bra7UeumolZHKuOXnTmeQ==}
     engines: {node: '>=8'}
     dev: true
 
@@ -11823,8 +11823,8 @@ packages:
       npm-normalize-package-bin: 3.0.0
     dev: true
 
-  /npm-check-updates@16.10.1:
-    resolution: {integrity: sha512-s5CNxtaCjiFR8ns4DkZJuukMaiXodeYyoHQ4XYp0WfRuqU+NfSODbW9jQDTtwZFIhrzX0d4/YJXL32BteX+ujw==}
+  /npm-check-updates@16.10.7:
+    resolution: {integrity: sha512-hVJCULf8AoVob9FDvoC7hrkQGuWhWctE9k3sNmR+M6hxZJnlb+03Ph4G1w/pHmI5BGHoo+ZPJtVEXkJsA+JwPQ==}
     engines: {node: '>=14.14'}
     hasBin: true
     dependencies:
@@ -11838,15 +11838,16 @@ packages:
       globby: 11.1.0
       hosted-git-info: 5.2.1
       ini: 4.0.0
+      js-yaml: 4.1.0
       json-parse-helpfulerror: 1.0.3
       jsonlines: 0.1.1
       lodash: 4.17.21
-      minimatch: 7.4.5
+      minimatch: 8.0.3
       p-map: 4.0.0
       pacote: 15.1.1
       parse-github-url: 1.0.2
       progress: 2.0.3
-      prompts-ncu: 2.5.1
+      prompts-ncu: 3.0.0
       rc-config-loader: 4.1.2
       remote-git-tags: 3.0.0
       rimraf: 4.4.1
@@ -11857,7 +11858,6 @@ packages:
       strip-json-comments: 5.0.0
       untildify: 4.0.0
       update-notifier: 6.0.2
-      yaml: 2.2.1
     transitivePeerDependencies:
       - bluebird
       - supports-color
@@ -12716,9 +12716,9 @@ packages:
       winston: 0.8.3
     dev: true
 
-  /prompts-ncu@2.5.1:
-    resolution: {integrity: sha512-Hdd7GgV7b76Yh9FP9HL1D9xqtJCJdVPpiM2vDtuoc8W1KfweJe15gutFYmxkq83ViFaagFM8K0UcPCQ/tZq8bA==}
-    engines: {node: '>= 6'}
+  /prompts-ncu@3.0.0:
+    resolution: {integrity: sha512-qyz9UxZ5MlPKWVhWrCmSZ1ahm2GVYdjLb8og2sg0IPth1KRuhcggHGuijz0e41dkx35p1t1q3GRISGH7QGALFA==}
+    engines: {node: '>= 14'}
     dependencies:
       kleur: 4.1.5
       sisteransi: 1.0.5
@@ -14295,8 +14295,8 @@ packages:
       '@pkgr/utils': 2.3.1
       tslib: 2.5.0
 
-  /tailwind-merge@1.11.0:
-    resolution: {integrity: sha512-oG3/328Y7LrfPMfkgMNxoqEk1ZQdXBxdphf9FFrreo8q0EtVIHt3bQf2IyFhQuVt8puB57lCRBNbazGhYAyz9w==}
+  /tailwind-merge@1.12.0:
+    resolution: {integrity: sha512-Y17eDp7FtN1+JJ4OY0Bqv9OA41O+MS8c1Iyr3T6JFLnOgLg3EvcyMKZAnQ8AGyvB5Nxm3t9Xb5Mhe139m8QT/g==}
     dev: false
 
   /tailwind-styled-components@2.2.0(react-dom@18.2.0)(react@18.2.0):
@@ -14307,7 +14307,7 @@ packages:
     dependencies:
       react: 18.2.0
       react-dom: 18.2.0(react@18.2.0)
-      tailwind-merge: 1.11.0
+      tailwind-merge: 1.12.0
     dev: false
 
   /tailwindcss@3.3.1(postcss@8.4.21):
@@ -14601,8 +14601,8 @@ packages:
     resolution: {integrity: sha512-AqTiAOLcj85xS7vQ8QkAV41hPDIJ71XJB4RCUrzo/1GM2CQwhkJGaf9Hgr7BOugMRpgGUrqRg/DrBDl4H40+8g==}
     dev: true
 
-  /trpc-panel@1.2.8(@trpc/server@10.18.0)(zod@3.21.4):
-    resolution: {integrity: sha512-jaBP1g9sajHtq3Wx+G3DOSsCtekwyDnWEBCspNQpQERXrk47TyZaMw68cRTXQno6bHD0SrS/i7NTm9wS5lfR8g==}
+  /trpc-panel@1.2.9(@trpc/server@10.18.0)(zod@3.21.4):
+    resolution: {integrity: sha512-NXTm7xHpIVUNTIkCzsHlykNiDGQE5STf4dPeEZLyVaS85jVTgyul78X83/Odb54EImm/38Ob8HQ/KjIACo5DMg==}
     peerDependencies:
       '@trpc/server': ^10.0.0
       zod: ^3.19.1
@@ -15829,11 +15829,6 @@ packages:
   /yaml@1.10.2:
     resolution: {integrity: sha512-r3vXyErRCYJ7wg28yvBY5VSoAF8ZvlcW9/BwUzEtUsjvX/DKs24dIkuwjtuprwJJHsbyUbLApepYTR1BN4uHrg==}
     engines: {node: '>= 6'}
-
-  /yaml@2.2.1:
-    resolution: {integrity: sha512-e0WHiYql7+9wr4cWMx3TVQrNwejKaEe7/rHNmQmqRjazfOP5W8PB6Jpebb5o6fIapbz9o9+2ipcaTM2ZwDI6lw==}
-    engines: {node: '>= 14'}
-    dev: true
 
   /yargonaut@1.1.4:
     resolution: {integrity: sha512-rHgFmbgXAAzl+1nngqOcwEljqHGG9uUZoPjsdZEs1w5JW9RXYzrSvH/u70C1JE5qFi0qjsdhnUX/dJRpWqitSA==}

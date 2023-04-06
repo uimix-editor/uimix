@@ -19,7 +19,7 @@
     "@typescript-eslint/parser": "^5.57.1",
     "eslint": "8.37.0",
     "eslint-plugin-import": "^2.27.5",
-    "npm-check-updates": "^16.10.1",
+    "npm-check-updates": "^16.10.7",
     "turbo": "^1.8.8"
   }
 }
