@@ -7,7 +7,7 @@ import {
   ProjectManifestJSON,
   StyleJSON,
 } from "@uimix/node-data";
-import { filter, omit } from "lodash-es";
+import { omit } from "lodash-es";
 import { mkdirpSync } from "mkdirp";
 import { globSync } from "glob";
 import path from "path";
@@ -272,7 +272,7 @@ export class ProjectFiles {
 
     // FIXME: chokidar looks like making UI slow
     const watcher = chokidar.watch(watchPath, {
-      ignored: ["**/node_modules/**", "**/dist/**"],
+      ignored: ["**/node_modules/**", "**/.git/**"],
     });
     console.log("start watching...");
 
