@@ -21,6 +21,8 @@ export async function generateCode(
   const project = new Project(ydoc);
   loadProjectJSON(ydoc, projectJSON);
 
+  const imagesPath = ".uimix/images";
+
   const imageFiles: {
     hash: string;
     filePath: string;
@@ -32,7 +34,7 @@ export async function generateCode(
     const suffix = mime.extension(decoded.type) || "bin";
     imageFiles.push({
       hash,
-      filePath: `images/${hash}.${suffix}`,
+      filePath: `${imagesPath}/${hash}.${suffix}`,
       content: decoded,
     });
   }
@@ -40,11 +42,11 @@ export async function generateCode(
   const results: {
     filePath: string;
     content: string | Buffer;
-  }[] = [];
+  }[] = imageFiles;
 
   for (const page of project.pages.all) {
     const tsContent = formatTypeScript(
-      new ReactGenerator(rootPath, page).render().join("\n")
+      new ReactGenerator({ rootPath, page, imagesPath }).render().join("\n")
     );
     const cssContent = new CSSGenerator(page).generate();
 

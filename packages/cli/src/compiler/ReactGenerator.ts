@@ -84,12 +84,13 @@ function getExternalModulePaths(components: Component[]): Set<string> {
 }
 
 export class ReactGenerator {
-  constructor(rootPath: string, page: Page) {
-    this.rootPath = rootPath;
-    this.page = page;
+  constructor(options: { rootPath: string; page: Page; imagesPath: string }) {
+    this.imagesPath = options.imagesPath;
+    this.rootPath = options.rootPath;
+    this.page = options.page;
 
     const componentNames = new Set<string>();
-    for (const component of page.components) {
+    for (const component of this.page.components) {
       const name = getIncrementalUniqueName(
         componentNames,
         generateJSIdentifier(component.name ?? "")
@@ -99,6 +100,7 @@ export class ReactGenerator {
     }
   }
 
+  imagesPath: string;
   rootPath: string;
   page: Page;
   componentsWithNames: [Component, string][] = [];
@@ -133,7 +135,7 @@ export class ReactGenerator {
     for (const [hash, image] of this.page.project.imageManager.images) {
       const extension = mime.extension(image.type) || "";
       const imagePathFromRoot = path.join(
-        "uimix/images",
+        this.imagesPath,
         hash + "." + extension
       );
       const imagePathFromPage = path.relative(
