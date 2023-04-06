@@ -223,9 +223,6 @@ export class ProjectFiles {
   save(): void {
     const rootPath = this.rootPath;
 
-    mkdirpSync(path.resolve(rootPath, "uimix"));
-    mkdirpSync(path.resolve(rootPath, "uimix/images"));
-
     fs.writeFileSync(
       path.resolve(rootPath, this.manifestName),
       formatJSON(JSON.stringify(this.manifest))
