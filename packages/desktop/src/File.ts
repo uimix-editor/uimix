@@ -10,7 +10,8 @@ export function compareProjectJSONs(a: ProjectJSON, b: ProjectJSON): boolean {
   return (
     JSON.stringify(a.nodes) === JSON.stringify(b.nodes) &&
     JSON.stringify(a.styles) === JSON.stringify(b.styles) &&
-    JSON.stringify(a.componentURLs) === JSON.stringify(b.componentURLs)
+    JSON.stringify(a.componentURLs) === JSON.stringify(b.componentURLs) &&
+    JSON.stringify(a.colors) === JSON.stringify(b.colors)
     // do not compare images because they are too big
   );
 }
