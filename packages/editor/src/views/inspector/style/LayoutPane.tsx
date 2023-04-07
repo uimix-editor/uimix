@@ -275,7 +275,9 @@ export const LayoutPane: React.FC = observer(function StackPane() {
           {hasGrid && (
             <div className="grid grid-cols-3 gap-2 items-center">
               <InspectorNumberInput
-                icon={<Icon width={12} icon="icon-park-outline:column" />}
+                icon={
+                  <Icon className="text-xs" icon="icon-park-outline:column" />
+                }
                 tooltip="Column Count"
                 get={(s) => {
                   const value = s.style.gridColumnCount;
@@ -290,7 +292,11 @@ export const LayoutPane: React.FC = observer(function StackPane() {
               />
               <InspectorNumberInput
                 icon={
-                  <Icon width={12} icon="icon-park-outline:column" rotate={1} />
+                  <Icon
+                    className="text-xs"
+                    icon="icon-park-outline:column"
+                    rotate={1}
+                  />
                 }
                 tooltip="Row Count"
                 get={(s) => {

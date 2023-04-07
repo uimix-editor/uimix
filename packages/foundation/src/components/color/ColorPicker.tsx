@@ -258,7 +258,7 @@ export const ColorPicker: React.FC<{
           className="text-macaron-text w-5 h-5 flex items-center justify-center"
           onClick={onEyeDropper}
         >
-          <Icon icon={colorizeIcon} width={16} />
+          <Icon icon={colorizeIcon} className="text-base" />
         </button>
         <ColorBox style={{ color: color.toHex() }} />
       </div>

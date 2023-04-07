@@ -44,7 +44,11 @@ export function ToggleGroup<T extends string>({
               value={item.value}
               className="aria-checked:bg-macaron-active aria-checked:text-macaron-activeText w-6 h-6 flex items-center justify-center rounded"
             >
-              {item.icon ? <Icon icon={item.icon} width={16} /> : item.text}
+              {item.icon ? (
+                <Icon icon={item.icon} className="text-base" />
+              ) : (
+                item.text
+              )}
             </RadixToggleGroup.Item>
           </Tooltip>
         );

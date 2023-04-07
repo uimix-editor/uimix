@@ -45,12 +45,17 @@ function MenuItem({ def }: { def: MenuItemDef }) {
         >
           {def.checked && (
             <div className="absolute left-2">
-              <Icon icon={checkIcon} width={12} />
+              <Icon icon={checkIcon} className="text-xs" />
             </div>
           )}
           {def.radioChecked && (
             <div className="absolute left-2">
-              <svg width={16} height={16}>
+              <svg
+                className="text-base"
+                width="1em"
+                height="1em"
+                viewBox="0 0 16 16"
+              >
                 <circle cx={8} cy={8} r={2} fill="currentColor" />
               </svg>
             </div>

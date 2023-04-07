@@ -71,7 +71,7 @@ export const Input: React.FC<{
         />
         <div className="absolute right-1.5 top-0 bottom-0 flex items-center text-macaron-disabledText text-2xs font-medium">
           {typeof icon === "object" && icon && "body" in icon ? (
-            <Icon icon={icon} width={12} />
+            <Icon icon={icon} className="text-xs" />
           ) : (
             icon
           )}

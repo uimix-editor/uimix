@@ -113,7 +113,10 @@ export const SeparableInput: React.VFC<{
             }
           >
             <div className="absolute right-1.5 top-0 bottom-0 flex items-center text-macaron-disabledText text-2xs font-bold">
-              <Icon width={12} icon={edgeIcons[currentEdge ?? "all"]} />
+              <Icon
+                className="text-xs"
+                icon={edgeIcons[currentEdge ?? "all"]}
+              />
             </div>
           </Tooltip>
         </div>

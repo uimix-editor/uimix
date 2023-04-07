@@ -25,7 +25,7 @@ export const IconButton = React.forwardRef<HTMLButtonElement, IconButtonProps>(
           className
         )}
       >
-        <Icon icon={icon} width={16} rotate={rotate} />
+        <Icon icon={icon} className="text-base" rotate={rotate} />
       </button>
     );
   }
