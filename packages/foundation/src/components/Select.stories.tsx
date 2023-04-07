@@ -14,7 +14,7 @@ export const Basic: React.FC = () => {
   const [value, setValue] = useState<string | undefined>("div");
 
   return (
-    <div className="flex flex-col gap-2 w-[200px]">
+    <div className="flex flex-col gap-2 w-[12.5rem]">
       <Select
         value={value}
         onChange={setValue}
@@ -31,7 +31,7 @@ export const Icons: React.FC = () => {
   const [value, setValue] = useState<string | undefined>("div");
 
   return (
-    <div className="flex flex-col gap-2 w-[200px]">
+    <div className="flex flex-col gap-2 w-[12.5rem]">
       <Select
         value={value}
         onChange={setValue}

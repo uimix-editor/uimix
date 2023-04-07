@@ -29,7 +29,7 @@ export const ForeignComponentListDialog = observer(() => {
           className="fixed bg-white
         -translate-x-1/2 -translate-y-1/2 top-1/2 left-1/2
         rounded-md shadow-xl p-4 text-xs
-        w-[640px] min-h-[320px]
+        w-[40rem] min-h-[20rem]
         "
         >
           <div className="flex justify-between items-center mb-4">

@@ -250,7 +250,7 @@ const VariantLabel: React.FC<{
               align="start"
               alignOffset={-4}
               sideOffset={16}
-              className={`w-[200px] ${popoverStyle} rounded-lg shadow-xl p-2 flex flex-col gap-2`}
+              className={`w-[12.5rem] ${popoverStyle} rounded-lg shadow-xl p-2 flex flex-col gap-2`}
             >
               <ConditionEditor
                 value={variant.condition}

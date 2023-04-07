@@ -32,7 +32,7 @@ const Input = tw(UnstyledInput)`
 `;
 
 const InputLabel = tw.label`
-  text-[10px] leading-[10px] text-macaron-label
+  text-2xs leading-none text-macaron-label
 `;
 
 type SliderMode = "rgb" | "hsv";
@@ -258,7 +258,7 @@ export const ColorPicker: React.FC<{
           className="text-macaron-text w-5 h-5 flex items-center justify-center"
           onClick={onEyeDropper}
         >
-          <Icon icon={colorizeIcon} width={16} />
+          <Icon icon={colorizeIcon} className="text-base" />
         </button>
         <ColorBox style={{ color: color.toHex() }} />
       </div>

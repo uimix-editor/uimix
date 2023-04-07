@@ -27,7 +27,7 @@ export function ToggleButton({
           onChange?.(!value);
         }}
       >
-        <Icon icon={icon} width={16} />
+        <Icon icon={icon} className="text-base" />
       </button>
     </Tooltip>
   );

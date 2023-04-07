@@ -14,7 +14,7 @@ export const OutlineSideBar: React.FC = observer(() => {
   return (
     <SideBarTabsRoot
       defaultValue="layers"
-      className="w-[256px] flex flex-col contain-strict"
+      className="w-64 flex flex-col contain-strict"
     >
       <SideBarTabsList>
         <SideBarTabsTrigger value="pages">

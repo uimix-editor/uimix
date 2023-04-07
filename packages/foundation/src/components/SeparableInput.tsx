@@ -71,7 +71,7 @@ export const SeparableInput: React.VFC<{
   return (
     <SeparableInputWrap separate={separate}>
       {separate ? (
-        <div className="relative bg-macaron-uiBackground rounded grid grid-cols-[repeat(4,1fr)_20px]">
+        <div className="relative bg-macaron-uiBackground rounded grid grid-cols-[repeat(4,1fr)_1.25rem]">
           <UnstyledInput
             className={clsx(inputClassNames, "rounded-l")}
             value={values.top}
@@ -112,8 +112,11 @@ export const SeparableInput: React.VFC<{
                 : `Separate ${title}`
             }
           >
-            <div className="absolute right-1.5 top-0 bottom-0 flex items-center text-macaron-disabledText text-[10px] font-bold">
-              <Icon width={12} icon={edgeIcons[currentEdge ?? "all"]} />
+            <div className="absolute right-1.5 top-0 bottom-0 flex items-center text-macaron-disabledText text-2xs font-bold">
+              <Icon
+                className="text-xs"
+                icon={edgeIcons[currentEdge ?? "all"]}
+              />
             </div>
           </Tooltip>
         </div>
