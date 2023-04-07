@@ -8,7 +8,7 @@ export default {
     extend: {
       fontSize: {
         "2xs": "0.625rem", // 10px
-        "macaron-base": ["12px", "16px"],
+        "macaron-base": ["0.75rem", "1rem"],
       },
       colors: {
         macaron: colors,
