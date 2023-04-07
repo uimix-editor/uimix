@@ -37,7 +37,7 @@ const instancePaletteState = new InstancePaletteState();
 
 export const InstancePalette: React.FC = observer(() => {
   return (
-    <div className="flex flex-col h-full w-[256px] bg-macaron-background border-r border-macaron-separator">
+    <div className="flex flex-col h-full w-64 bg-macaron-background border-r border-macaron-separator">
       <SearchInput
         placeholder="Search"
         value={instancePaletteState.searchText}

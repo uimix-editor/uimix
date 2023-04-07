@@ -71,7 +71,7 @@ export const SeparableInput: React.VFC<{
   return (
     <SeparableInputWrap separate={separate}>
       {separate ? (
-        <div className="relative bg-macaron-uiBackground rounded grid grid-cols-[repeat(4,1fr)_20px]">
+        <div className="relative bg-macaron-uiBackground rounded grid grid-cols-[repeat(4,1fr)_1.25rem]">
           <UnstyledInput
             className={clsx(inputClassNames, "rounded-l")}
             value={values.top}

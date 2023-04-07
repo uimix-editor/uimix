@@ -19,7 +19,7 @@ export const Basic: React.FC = () => {
   const [value, setValue] = useState<string | undefined>("");
 
   return (
-    <div className="flex flex-col gap-2 w-[200px]">
+    <div className="flex flex-col gap-2 w-[12.5rem]">
       <ComboBox
         value={value}
         onChange={setValue}

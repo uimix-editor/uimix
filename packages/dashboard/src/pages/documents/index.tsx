@@ -26,7 +26,7 @@ const Header = () => {
 
   return (
     <div className="border-b border-neutral-200 relative px-8">
-      <div className="max-w-[960px] h-10 mx-auto flex items-center justify-end">
+      <div className="max-w-[60rem] h-10 mx-auto flex items-center justify-end">
         <DropdownMenu.Root>
           <DropdownMenu.Trigger asChild>
             <button className="outline-none">
@@ -234,7 +234,7 @@ export default function Documents() {
       <div className="text-xs">
         <Header />
         <main className="px-8 pb-8">
-          <div className="max-w-[960px] mx-auto">
+          <div className="max-w-[60rem] mx-auto">
             <div className="flex justify-between items-center">
               <h1 className="font-bold text-lg py-8">Documents</h1>
               <button
