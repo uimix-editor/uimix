@@ -5,6 +5,11 @@ import colors from "./src/colors.js";
 export default {
   content: ["./index.html", "./src/**/*.{js,ts,jsx,tsx}"],
   theme: {
+    theme: {
+      fontSize: {
+        "2xs": "0.625rem", // 10px
+      },
+    },
     extend: {
       fontSize: {
         "macaron-base": ["12px", "16px"],

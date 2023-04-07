@@ -32,7 +32,7 @@ const Input = tw(UnstyledInput)`
 `;
 
 const InputLabel = tw.label`
-  text-[10px] leading-[10px] text-macaron-label
+  text-2xs leading-[10px] text-macaron-label
 `;
 
 type SliderMode = "rgb" | "hsv";

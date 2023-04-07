@@ -232,7 +232,7 @@ const TreeRow: React.FC<{
               )}
               icon={icon}
             />
-            <span className="text-[10px] uppercase text-bold opacity-40 mr-1">
+            <span className="text-2xs uppercase text-bold opacity-40 mr-1">
               {selectable.style.tagName}
             </span>
             <DoubleClickToEdit

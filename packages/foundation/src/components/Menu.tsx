@@ -67,7 +67,7 @@ function MenuItem({ def }: { def: MenuItemDef }) {
       return <Submenu def={def} />;
     case "label":
       return (
-        <div className="text-macaron-disabledText text-[10px] pr-4 pl-6 leading-4">
+        <div className="text-macaron-disabledText text-2xs pr-4 pl-6 leading-4">
           {def.text}
         </div>
       );
