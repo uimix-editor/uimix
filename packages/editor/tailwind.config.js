@@ -9,11 +9,9 @@ export default {
     "../foundation/src/**/*.{js,ts,jsx,tsx}",
   ],
   theme: {
-    fontSize: {
-      "2xs": "0.625rem", // 10px
-    },
     extend: {
       fontSize: {
+        "2xs": "0.625rem", // 10px
         "macaron-base": ["12px", "16px"],
       },
       colors: {
