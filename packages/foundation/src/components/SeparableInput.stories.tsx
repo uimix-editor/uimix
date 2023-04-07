@@ -21,7 +21,7 @@ export const Basic = () => {
 
   return (
     <TooltipProvider>
-      <div className="w-[14.5rem]">
+      <div className="w-[232px]">
         <SeparableInput
           title="Border Width"
           values={{

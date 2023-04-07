@@ -197,7 +197,7 @@ export const ColorPicker: React.FC<{
   };
 
   return (
-    <div className={twMerge("w-[14.5rem] flex flex-col gap-3 p-3", className)}>
+    <div className={twMerge("w-[232px] flex flex-col gap-3 p-3", className)}>
       <SVPicker
         width={208}
         height={160}
