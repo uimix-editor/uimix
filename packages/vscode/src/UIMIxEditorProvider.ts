@@ -81,9 +81,21 @@ export class UIMixEditorProvider implements vscode.CustomEditorProvider {
       <head>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <style>
+          body {
+            margin: 0;
+          }
+          iframe {
+            border: none;
+            position: fixed;
+            inset: 0;
+            width: 100vw;
+            height: 100vh;
+          }
+        </style>
       </head>
       <body>
-        TODO
+      <iframe src="http://localhost:3000/vscode-editor"></iframe>
       </body>
       </html>
     `;
