@@ -70,6 +70,10 @@ export class ProjectFiles {
   manifest: ProjectManifestJSON = {};
   pages = new Map<string /* file path */, PageJSON>();
 
+  getPageID(pageName: string): string {
+    return getURLSafeBase64Hash(pageName);
+  }
+
   toProjectJSON(): ProjectJSON {
     // TODO: detect ID conflicts between files (and provide way to resolve them)
 
@@ -86,7 +90,7 @@ export class ProjectFiles {
 
     let pageIndex = 0;
     for (const [pageName, pageJSON] of this.pages) {
-      const pageID: string = getURLSafeBase64Hash(pageName);
+      const pageID: string = this.getPageID(pageName);
 
       const pageNode: NodeJSON = {
         type: "page",
