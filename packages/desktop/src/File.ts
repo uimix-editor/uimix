@@ -4,17 +4,10 @@ import { DocumentMetadata } from "../../dashboard/src/types/DesktopAPI";
 import { TypedEmitter } from "tiny-typed-emitter";
 import { app, dialog } from "electron";
 import { isEqual } from "lodash";
-import { ProjectFiles } from "../../cli/src/compiler/ProjectFiles";
-
-export function compareProjectJSONs(a: ProjectJSON, b: ProjectJSON): boolean {
-  return (
-    JSON.stringify(a.nodes) === JSON.stringify(b.nodes) &&
-    JSON.stringify(a.styles) === JSON.stringify(b.styles) &&
-    JSON.stringify(a.componentURLs) === JSON.stringify(b.componentURLs) &&
-    JSON.stringify(a.colors) === JSON.stringify(b.colors)
-    // do not compare images because they are too big
-  );
-}
+import {
+  ProjectFiles,
+  compareProjectJSONs,
+} from "../../cli/src/compiler/ProjectFiles";
 
 export class File extends TypedEmitter<{
   editedChange: (edited: boolean) => void;
@@ -132,9 +125,7 @@ export class File extends TypedEmitter<{
 
     this.watchDisposer = files.watch(() => {
       const json = files.projectJSON;
-      if (isEqual(json, this._data)) {
-        return;
-      }
+      console.log("changed");
       if (this.edited) {
         // TODO: warn
         return;

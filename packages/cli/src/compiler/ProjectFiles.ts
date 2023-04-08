@@ -7,7 +7,7 @@ import {
   ProjectManifestJSON,
   StyleJSON,
 } from "@uimix/node-data";
-import { omit } from "lodash-es";
+import { isEqual, omit } from "lodash-es";
 import { mkdirpSync } from "mkdirp";
 import { globSync } from "glob";
 import path from "path";
@@ -57,6 +57,10 @@ export function getPageID(pageName: string): string {
   return getURLSafeBase64Hash(pageName);
 }
 
+export function compareProjectJSONs(a: ProjectJSON, b: ProjectJSON): boolean {
+  return isEqual(omit(a, "images"), omit(b, "images"));
+}
+
 // Important TODO: fix paths in Windows!!
 // TODO: test
 export class ProjectFiles {
@@ -78,7 +82,7 @@ export class ProjectFiles {
     styles: {},
   };
 
-  load(): void {
+  load(): boolean {
     const rootPath = this.rootPath;
     const manifestPath = path.resolve(rootPath, this.manifestName);
     let manifest: ProjectManifestJSON;
@@ -107,8 +111,14 @@ export class ProjectFiles {
       );
       pages.set(pagePath.replace(/\.uimix$/, ""), pageJSON);
     }
+    const newProjectJSON = filesToProjectJSON(manifest, pages);
 
-    this.projectJSON = filesToProjectJSON(manifest, pages);
+    if (compareProjectJSONs(this.projectJSON, newProjectJSON)) {
+      return false;
+    }
+
+    this.projectJSON = newProjectJSON;
+    return true;
   }
 
   save(): void {
@@ -154,8 +164,9 @@ export class ProjectFiles {
 
     const _onChange = () => {
       try {
-        this.load();
-        onChange();
+        if (this.load()) {
+          onChange();
+        }
       } catch (e) {
         console.error(e);
       }
