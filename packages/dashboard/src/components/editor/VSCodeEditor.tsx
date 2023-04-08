@@ -83,18 +83,14 @@ const VSCodeEditor: React.FC = () => {
     return () => connection.dispose();
   }, []);
 
-  const editorSrc =
-    assertNonNull(process.env.NEXT_PUBLIC_EDITOR_URL).replace(
-      "://",
-      // TODO: use unique ID for subdomain?
-      `://local.`
-    ) + "?titleBarPadding=40";
+  const editorSrc = assertNonNull(process.env.NEXT_PUBLIC_EDITOR_URL).replace(
+    "://",
+    // TODO: use unique ID for subdomain?
+    `://local.`
+  );
 
   return (
-    <div className="text-neutral-800 flex flex-col text-xs">
-      <div className="z-10 fixed top-0 left-0 right-0 h-10 border-b border-neutral-200 flex items-center justify-center uimix-titlebar">
-        <div className="text-xs font-medium">TODO</div>
-      </div>
+    <div className="text-neutral-800 text-xs">
       <iframe
         ref={iframeRef}
         // looks like Chrome sends wrong coordinates in pointerrawupdate events inside iframes (TODO: report)
