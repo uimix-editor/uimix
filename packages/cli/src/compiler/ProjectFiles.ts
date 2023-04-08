@@ -63,7 +63,6 @@ export function compareProjectJSONs(a: ProjectJSON, b: ProjectJSON): boolean {
 }
 
 // Important TODO: fix paths in Windows!!
-// TODO: test
 export class ProjectFiles {
   constructor(
     rootPath: string,
