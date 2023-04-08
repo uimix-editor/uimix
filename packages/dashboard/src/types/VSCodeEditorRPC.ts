@@ -4,6 +4,6 @@ export interface IVSCodeToEditorRPCHandler {
 }
 
 export interface IEditorToVSCodeRPCHandler {
-  ready(data: Uint8Array): Promise<void>;
+  ready(): Promise<void>;
   update(data: Uint8Array): Promise<void>;
 }
