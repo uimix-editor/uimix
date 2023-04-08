@@ -100,9 +100,12 @@ export const App = observer(function App() {
       >
         {viewOptions.narrowMode ? (
           <div className="flex flex-1">
-            <div className="flex flex-1 border-l border-r border-macaron-separator relative">
-              <Viewport />
-              <InstancePaletteOverlay />
+            <div className="flex flex-1 flex-col border-r border-macaron-separator">
+              <ToolBar position="top" />
+              <div className="flex flex-1 border-t border-macaron-separator relative">
+                <Viewport />
+                <InstancePaletteOverlay />
+              </div>
             </div>
             {viewportState.isSideBarsVisible && (
               <div className="flex flex-col w-64">
@@ -121,7 +124,7 @@ export const App = observer(function App() {
               <>
                 <OutlineSideBar />
                 <div className="bg-macaron-separator w-px" />
-                <ToolBar />
+                <ToolBar position="left" />
               </>
             )}
             <div className="flex flex-1 border-l border-r border-macaron-separator relative">

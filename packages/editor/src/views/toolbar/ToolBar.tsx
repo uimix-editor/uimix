@@ -9,12 +9,20 @@ import imageIcon from "@seanchas116/design-icons/json/image.json";
 import { viewportState } from "../../state/ViewportState";
 import { action } from "mobx";
 import { Tooltip } from "@uimix/foundation/src/components/Tooltip";
+import { twMerge } from "tailwind-merge";
 
-export const ToolBar = observer(() => {
+export const ToolBar: React.FC<{
+  position: "left" | "top";
+}> = observer(({ position }) => {
   // TODO: use material symbols instead of SVGs
 
   return (
-    <div className="w-10 flex flex-col items-center p-1.5">
+    <div
+      className={twMerge(
+        "w-10 flex items-center p-1.5",
+        position === "left" && "flex-col"
+      )}
+    >
       <DropdownMenu
         defs={commands.menu}
         placement="right-start"
@@ -24,7 +32,12 @@ export const ToolBar = observer(() => {
           </ToolButton>
         )}
       />
-      <div className="flex flex-col items-center gap-1 mt-2">
+      <div
+        className={twMerge(
+          "flex items-center gap-1",
+          position === "left" ? "flex-col mt-2" : "flex-row ml-2"
+        )}
+      >
         <Tooltip text="Select" side="right">
           <ToolButton
             aria-pressed={!viewportState.tool}
