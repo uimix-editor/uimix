@@ -61,6 +61,10 @@ class Connection extends TypedEmitter<{
       },
     });
     void this.vscodeRPC.remote.ready();
+    void this.vscodeRPC.remote.sync(Y.encodeStateAsUpdate(this.doc));
+    this.doc.on("update", (update: Uint8Array) => {
+      void this.vscodeRPC.remote.sync(update);
+    });
   }
 
   private rpc: RPC<IRootToEditorRPCHandler, IEditorToRootRPCHandler>;
