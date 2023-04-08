@@ -1,12 +1,10 @@
 import { describe, expect, it } from "vitest";
-import * as Y from "yjs";
 import { Color } from "@uimix/foundation/src/utils/Color";
 import { Project } from "./Project";
 import { Node } from "./Node";
 
 function createEmptyPage() {
-  const ydoc = new Y.Doc();
-  const project = new Project(ydoc);
+  const project = new Project();
 
   const page = project.nodes.create("page");
 

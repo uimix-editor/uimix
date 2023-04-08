@@ -1,11 +1,9 @@
 import { describe, it, expect, beforeEach, afterEach } from "vitest";
 import { ProjectFiles } from "./ProjectFiles";
-import * as path from "path";
 import * as fs from "fs";
 import shell from "shelljs";
 import tmp from "tmp";
 import { Project } from "@uimix/editor/src/models/Project";
-import * as Y from "yjs";
 
 describe(ProjectFiles.name, () => {
   let tmpObj: tmp.DirResult;
@@ -29,8 +27,7 @@ describe(ProjectFiles.name, () => {
   // });
 
   it("saves", () => {
-    const ydoc = new Y.Doc();
-    const project = new Project(ydoc);
+    const project = new Project();
     const page1 = project.pages.create("src/page1");
     const page2 = project.pages.create("src/page2");
 
@@ -60,8 +57,7 @@ describe(ProjectFiles.name, () => {
   });
 
   it("watches", async () => {
-    const ydoc = new Y.Doc();
-    const project = new Project(ydoc);
+    const project = new Project();
     const page1 = project.pages.create("src/page1");
     const page2 = project.pages.create("src/page2");
 

@@ -1,5 +1,4 @@
 import { describe, expect, it } from "vitest";
-import * as Y from "yjs";
 import { Project } from "./Project";
 import { selectablesToProjectJSON } from "./Selectable";
 import * as path from "path";
@@ -13,8 +12,7 @@ describe(selectablesToProjectJSON.name, () => {
     });
     const projectJSON = projectFiles.projectJSON;
 
-    const ydoc = new Y.Doc();
-    const project = new Project(ydoc);
+    const project = new Project();
     project.loadJSON(projectJSON);
 
     const partial = selectablesToProjectJSON(

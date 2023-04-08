@@ -10,8 +10,7 @@ import { ColorTokenMap } from "./ColorToken";
 import { PageList } from "./PageList";
 
 export class Project {
-  constructor(doc: Y.Doc) {
-    this.doc = doc;
+  constructor() {
     this.nodes = new NodeMap(this);
     this.selectables = new SelectableMap(this);
     this.colorTokens = new ColorTokenMap(this);
@@ -19,7 +18,7 @@ export class Project {
     this.pages = new PageList(this);
   }
 
-  readonly doc: Y.Doc;
+  readonly doc = new Y.Doc();
   readonly nodes: NodeMap;
   readonly selectables: SelectableMap;
   readonly colorTokens: ColorTokenMap;
