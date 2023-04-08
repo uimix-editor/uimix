@@ -54,6 +54,7 @@
     "@typescript-eslint/eslint-plugin": "^5.56.0",
     "@typescript-eslint/parser": "^5.56.0",
     "@uimix/editor": "workspace:*",
+    "@uimix/typed-rpc": "workspace:*",
     "@vscode/test-electron": "^2.3.0",
     "esbuild": "^0.17.15",
     "eslint": "^8.36.0",

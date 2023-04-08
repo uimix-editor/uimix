@@ -1028,6 +1028,9 @@ importers:
       '@uimix/editor':
         specifier: workspace:*
         version: link:../editor
+      '@uimix/typed-rpc':
+        specifier: workspace:*
+        version: link:../typed-rpc
       '@vscode/test-electron':
         specifier: ^2.3.0
         version: 2.3.0
