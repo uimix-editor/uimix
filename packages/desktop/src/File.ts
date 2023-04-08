@@ -30,7 +30,7 @@ export class File extends TypedEmitter<{
       this.files.load();
     }
 
-    this._data = this.files?.toProjectJSON() ?? {
+    this._data = this.files?.projectJSON ?? {
       // default project
       nodes: {
         project: { type: "project", index: 0 },
@@ -83,7 +83,7 @@ export class File extends TypedEmitter<{
       return;
     }
 
-    this.files.loadProjectJSON(this.data);
+    this.files.projectJSON = this.data;
     this.files.save();
     app.addRecentDocument(this.files.rootPath);
     this.savedData = this.data;
@@ -131,7 +131,7 @@ export class File extends TypedEmitter<{
     }
 
     this.watchDisposer = files.watch(() => {
-      const json = files.toProjectJSON();
+      const json = files.projectJSON;
       if (isEqual(json, this._data)) {
         return;
       }

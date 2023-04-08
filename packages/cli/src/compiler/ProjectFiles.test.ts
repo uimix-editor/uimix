@@ -42,7 +42,7 @@ describe(ProjectFiles.name, () => {
     page2.node.append([project.nodes.create("text", "text1")]);
 
     const projectFiles = new ProjectFiles(tmpObj.name + "/demo-project");
-    projectFiles.loadProjectJSON(toProjectJSON(ydoc));
+    projectFiles.projectJSON = toProjectJSON(ydoc);
     projectFiles.save();
 
     const page1File = fs.readFileSync(
@@ -60,6 +60,6 @@ describe(ProjectFiles.name, () => {
     const projectFiles2 = new ProjectFiles(tmpObj.name + "/demo-project");
     projectFiles2.load();
 
-    expect(projectFiles2.toProjectJSON()).toEqual(toProjectJSON(ydoc));
+    expect(projectFiles2.projectJSON).toEqual(toProjectJSON(ydoc));
   });
 });

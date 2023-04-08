@@ -12,7 +12,7 @@ describe(loadProjectJSON.name, () => {
       filePattern: "src/components.uimix",
     });
     projectFiles.load();
-    const projectJSON = projectFiles.toProjectJSON();
+    const projectJSON = projectFiles.projectJSON;
 
     const ydoc = new Y.Doc();
     const project = new Project(ydoc);

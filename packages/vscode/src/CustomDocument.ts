@@ -1,4 +1,4 @@
-import { ProjectFiles } from "uimix/src/compiler/ProjectFiles";
+import { ProjectFiles, getPageID } from "uimix/src/compiler/ProjectFiles";
 import * as vscode from "vscode";
 import * as path from "path";
 
@@ -17,7 +17,7 @@ export class CustomDocument implements vscode.CustomDocument {
       this.projectFiles.rootPath,
       this.uri.fsPath
     );
-    return this.projectFiles.getPageID(relativePath.replace(/\.uimix$/, ""));
+    return getPageID(relativePath.replace(/\.uimix$/, ""));
   }
 
   dispose(): void {}

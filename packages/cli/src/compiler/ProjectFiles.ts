@@ -53,6 +53,10 @@ function toHierarchicalNodeJSONs(
   return Object.values(hierarchicalNodes).filter((node) => !node.parent);
 }
 
+export function getPageID(pageName: string): string {
+  return getURLSafeBase64Hash(pageName);
+}
+
 // Important TODO: fix paths in Windows!!
 // TODO: test
 export class ProjectFiles {
@@ -69,128 +73,10 @@ export class ProjectFiles {
   readonly rootPath: string;
   readonly filePattern: string;
   readonly manifestName = "uimix.json";
-  manifest: ProjectManifestJSON = {};
-  pages = new Map<string /* file path */, PageJSON>();
-
-  getPageID(pageName: string): string {
-    return getURLSafeBase64Hash(pageName);
-  }
-
-  toProjectJSON(): ProjectJSON {
-    // TODO: detect ID conflicts between files (and provide way to resolve them)
-
-    const nodes: Record<string, NodeJSON> = {};
-    const styles: Record<string, Partial<StyleJSON>> = {};
-    const images: Record<string, Image> = {};
-    const colors: Record<string, ColorToken> = {};
-
-    const projectNode: NodeJSON = {
-      type: "project",
-      index: 0,
-    };
-    nodes["project"] = projectNode;
-
-    let pageIndex = 0;
-    for (const [pageName, pageJSON] of this.pages) {
-      const pageID: string = this.getPageID(pageName);
-
-      const pageNode: NodeJSON = {
-        type: "page",
-        index: pageIndex++,
-        name: pageName,
-        parent: "project",
-      };
-      nodes[pageID] = pageNode;
-
-      for (const [id, node] of Object.entries(pageJSON.nodes)) {
-        nodes[id] = {
-          ...node,
-          parent: node.parent ?? pageID,
-        };
-      }
-
-      for (const [id, style] of Object.entries(pageJSON.styles)) {
-        styles[id] = style;
-      }
-      for (const [id, image] of Object.entries(pageJSON.images ?? {})) {
-        images[id] = image;
-      }
-      for (const [id, color] of Object.entries(pageJSON.colors ?? {})) {
-        colors[id] = {
-          ...color,
-          page: pageID,
-        };
-      }
-    }
-
-    return {
-      nodes,
-      styles,
-      componentURLs: this.manifest.componentURLs,
-      images,
-      colors,
-    };
-  }
-
-  loadProjectJSON(projectJSON: ProjectJSON): void {
-    const manifest: ProjectManifestJSON = {
-      componentURLs: projectJSON.componentURLs,
-    };
-
-    const hierarchicalNodes = toHierarchicalNodeJSONs(projectJSON.nodes);
-    const projectNode = hierarchicalNodes.find(
-      (node) => node.type === "project"
-    );
-    if (!projectNode) {
-      throw new Error("Project node not found");
-    }
-
-    const pages = new Map<string, PageJSON>();
-    const nodeIDToPageJSON = new Map<string, PageJSON>();
-    for (const page of projectNode.children) {
-      if (page.type !== "page") {
-        throw new Error("expected page node");
-      }
-      if (!page.name) {
-        throw new Error("page name is empty");
-      }
-
-      const pageJSON: PageJSON = {
-        nodes: {},
-        styles: {},
-        // TODO: selectively save images
-        images: projectJSON.images,
-        colors: Object.fromEntries(
-          Object.entries(projectJSON.colors ?? {})
-            .filter(([, color]) => color.page === page.id)
-            .map(([id, color]) => [id, omit(color, ["page"])])
-        ),
-      };
-      const addNodeRecursively = (node: HierarchicalNodeJSON) => {
-        pageJSON.nodes[node.id] = omit(node, ["children", "id"]);
-        nodeIDToPageJSON.set(node.id, pageJSON);
-        for (const child of node.children) {
-          addNodeRecursively(child);
-        }
-      };
-      for (const child of page.children) {
-        addNodeRecursively(omit(child, ["parent"]));
-      }
-
-      pages.set(page.name, pageJSON);
-    }
-
-    for (const [id, style] of Object.entries(projectJSON.styles)) {
-      const idPath = id.split(":");
-      const pageJSON = nodeIDToPageJSON.get(idPath[0]);
-      if (pageJSON) {
-        pageJSON.styles[id] = style;
-      }
-    }
-
-    this.manifest = manifest;
-    this.pages = pages;
-  }
+  projectJSON: ProjectJSON = {
+    nodes: {},
+    styles: {},
+  };
 
   load(): void {
     const rootPath = this.rootPath;
@@ -222,16 +108,17 @@ export class ProjectFiles {
       pages.set(pagePath.replace(/\.uimix$/, ""), pageJSON);
     }
 
-    this.manifest = manifest;
-    this.pages = pages;
+    this.projectJSON = filesToProjectJSON(manifest, pages);
   }
 
   save(): void {
     const rootPath = this.rootPath;
 
+    const { manifest, pages } = projectJSONToFiles(this.projectJSON);
+
     fs.writeFileSync(
       path.resolve(rootPath, this.manifestName),
-      formatJSON(JSON.stringify(this.manifest))
+      formatJSON(JSON.stringify(manifest))
     );
 
     const pagePathsToDelete = new Set(
@@ -240,7 +127,7 @@ export class ProjectFiles {
       })
     );
 
-    for (const [pageName, pageJSON] of this.pages) {
+    for (const [pageName, pageJSON] of pages) {
       const pagePath = pageName + ".uimix";
       const pageDirPath = path.dirname(pagePath);
       mkdirpSync(path.resolve(rootPath, pageDirPath));
@@ -280,4 +167,126 @@ export class ProjectFiles {
 
     return () => watcher.close();
   }
+}
+
+function projectJSONToFiles(projectJSON: ProjectJSON): {
+  manifest: ProjectManifestJSON;
+  pages: Map<string, PageJSON>;
+} {
+  const manifest: ProjectManifestJSON = {
+    componentURLs: projectJSON.componentURLs,
+  };
+
+  const hierarchicalNodes = toHierarchicalNodeJSONs(projectJSON.nodes);
+  const projectNode = hierarchicalNodes.find((node) => node.type === "project");
+  if (!projectNode) {
+    throw new Error("Project node not found");
+  }
+
+  const pages = new Map<string, PageJSON>();
+  const nodeIDToPageJSON = new Map<string, PageJSON>();
+  for (const page of projectNode.children) {
+    if (page.type !== "page") {
+      throw new Error("expected page node");
+    }
+    if (!page.name) {
+      throw new Error("page name is empty");
+    }
+
+    const pageJSON: PageJSON = {
+      nodes: {},
+      styles: {},
+      // TODO: selectively save images
+      images: projectJSON.images,
+      colors: Object.fromEntries(
+        Object.entries(projectJSON.colors ?? {})
+          .filter(([, color]) => color.page === page.id)
+          .map(([id, color]) => [id, omit(color, ["page"])])
+      ),
+    };
+    const addNodeRecursively = (node: HierarchicalNodeJSON) => {
+      pageJSON.nodes[node.id] = omit(node, ["children", "id"]);
+      nodeIDToPageJSON.set(node.id, pageJSON);
+      for (const child of node.children) {
+        addNodeRecursively(child);
+      }
+    };
+    for (const child of page.children) {
+      addNodeRecursively(omit(child, ["parent"]));
+    }
+
+    pages.set(page.name, pageJSON);
+  }
+
+  for (const [id, style] of Object.entries(projectJSON.styles)) {
+    const idPath = id.split(":");
+    const pageJSON = nodeIDToPageJSON.get(idPath[0]);
+    if (pageJSON) {
+      pageJSON.styles[id] = style;
+    }
+  }
+
+  return {
+    manifest,
+    pages,
+  };
+}
+
+function filesToProjectJSON(
+  manifest: ProjectManifestJSON,
+  pages: Map<string, PageJSON>
+): ProjectJSON {
+  // TODO: detect ID conflicts between files (and provide way to resolve them)
+
+  const nodes: Record<string, NodeJSON> = {};
+  const styles: Record<string, Partial<StyleJSON>> = {};
+  const images: Record<string, Image> = {};
+  const colors: Record<string, ColorToken> = {};
+
+  const projectNode: NodeJSON = {
+    type: "project",
+    index: 0,
+  };
+  nodes["project"] = projectNode;
+
+  let pageIndex = 0;
+  for (const [pageName, pageJSON] of pages) {
+    const pageID: string = getPageID(pageName);
+
+    const pageNode: NodeJSON = {
+      type: "page",
+      index: pageIndex++,
+      name: pageName,
+      parent: "project",
+    };
+    nodes[pageID] = pageNode;
+
+    for (const [id, node] of Object.entries(pageJSON.nodes)) {
+      nodes[id] = {
+        ...node,
+        parent: node.parent ?? pageID,
+      };
+    }
+
+    for (const [id, style] of Object.entries(pageJSON.styles)) {
+      styles[id] = style;
+    }
+    for (const [id, image] of Object.entries(pageJSON.images ?? {})) {
+      images[id] = image;
+    }
+    for (const [id, color] of Object.entries(pageJSON.colors ?? {})) {
+      colors[id] = {
+        ...color,
+        page: pageID,
+      };
+    }
+  }
+
+  return {
+    nodes,
+    styles,
+    componentURLs: manifest.componentURLs,
+    images,
+    colors,
+  };
 }

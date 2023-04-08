@@ -6,7 +6,7 @@ import mkdirp from "mkdirp";
 import { ProjectFiles } from "./compiler/ProjectFiles";
 
 async function compileProject(projectFiles: ProjectFiles) {
-  const json = projectFiles.toProjectJSON();
+  const json = projectFiles.projectJSON;
   const outFiles = await generateCode(projectFiles.rootPath, json);
 
   for (const outFile of outFiles) {
