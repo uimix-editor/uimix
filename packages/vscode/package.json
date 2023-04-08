@@ -60,5 +60,8 @@
   },
   "engines": {
     "vscode": "^1.77.0"
+  },
+  "dependencies": {
+    "chokidar": "^3.5.3"
   }
 }

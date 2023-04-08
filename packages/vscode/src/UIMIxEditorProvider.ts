@@ -11,7 +11,9 @@ export class UIMixEditorProvider implements vscode.CustomEditorProvider {
       throw new Error("No workspace folder found");
     }
 
+    console.log(rootFolder.uri.fsPath);
     this.projectFiles = new ProjectFiles(rootFolder.uri.fsPath);
+    this.projectFiles.load();
     console.log(this.projectFiles.pages);
   }
 
