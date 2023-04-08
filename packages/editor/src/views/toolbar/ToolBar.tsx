@@ -19,8 +19,8 @@ export const ToolBar: React.FC<{
   return (
     <div
       className={twMerge(
-        "w-10 flex items-center p-1.5",
-        position === "left" && "flex-col"
+        "flex items-center p-1.5",
+        position === "left" ? "w-10 flex-col" : "h-10"
       )}
     >
       <DropdownMenu
