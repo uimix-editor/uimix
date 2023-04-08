@@ -3,11 +3,8 @@ import { ProjectJSON } from "../../node-data/src";
 import { DocumentMetadata } from "../../dashboard/src/types/DesktopAPI";
 import { TypedEmitter } from "tiny-typed-emitter";
 import { app, dialog } from "electron";
-import { isEqual } from "lodash";
-import {
-  ProjectFiles,
-  compareProjectJSONs,
-} from "../../cli/src/compiler/ProjectFiles";
+import { ProjectFiles } from "../../cli/src/compiler/ProjectFiles";
+import { compareProjectJSONs } from "../../editor/src/models/ProjectJSON";
 
 export class File extends TypedEmitter<{
   editedChange: (edited: boolean) => void;

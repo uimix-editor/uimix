@@ -1,4 +1,5 @@
-import { ProjectFiles, getPageID } from "uimix/src/compiler/ProjectFiles";
+import { ProjectFiles } from "uimix/src/compiler/ProjectFiles";
+import { getPageID } from "@uimix/editor/src/models/ProjectJSON";
 import * as vscode from "vscode";
 import * as path from "path";
 

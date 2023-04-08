@@ -3,7 +3,6 @@ import { Project } from "./Project";
 import { ObservableYMap } from "@uimix/foundation/src/utils/ObservableYMap";
 import { Image, ImageType } from "@uimix/node-data";
 import { getURLSafeBase64Hash } from "@uimix/foundation/src/utils/Hash";
-import { Buffer } from "buffer";
 import { compact } from "lodash-es";
 
 export class ImageManager {
@@ -26,7 +25,7 @@ export class ImageManager {
     const type = ImageType.parse(blob.type);
     const buffer = await blob.arrayBuffer();
 
-    const hash = await getURLSafeBase64Hash(buffer);
+    const hash = getURLSafeBase64Hash(buffer);
 
     const existing = this.images.get(hash);
     if (existing) {

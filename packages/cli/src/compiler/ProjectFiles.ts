@@ -7,20 +7,17 @@ import {
   ProjectManifestJSON,
   StyleJSON,
 } from "@uimix/node-data";
-import { isEqual, omit } from "lodash-es";
+import {
+  getPageID,
+  compareProjectJSONs,
+} from "@uimix/editor/src/models/ProjectJSON";
+import { omit } from "lodash-es";
 import { mkdirpSync } from "mkdirp";
 import { globSync } from "glob";
 import path from "path";
 import fs from "fs";
-import { sha256 } from "js-sha256";
 import { formatJSON } from "../format";
 import chokidar from "chokidar";
-import { encode } from "url-safe-base64";
-
-function getURLSafeBase64Hash(data: string | Uint8Array): string {
-  const hash = sha256.arrayBuffer(data);
-  return encode(Buffer.from(hash).toString("base64"));
-}
 
 interface HierarchicalNodeJSON extends NodeJSON {
   id: string;
@@ -51,15 +48,6 @@ function toHierarchicalNodeJSONs(
   }
 
   return Object.values(hierarchicalNodes).filter((node) => !node.parent);
-}
-
-export function getPageID(pageName: string): string {
-  return getURLSafeBase64Hash(pageName);
-}
-
-export function compareProjectJSONs(a: ProjectJSON, b: ProjectJSON): boolean {
-  // skipping images as they may be very large
-  return isEqual(omit(a, "images"), omit(b, "images"));
 }
 
 interface ProjectFilesOptions {

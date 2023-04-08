@@ -1,6 +1,8 @@
 // @ts-ignore
 import anyBase from "any-base";
-import { crypto } from "./Hash";
+
+export const crypto =
+  globalThis.crypto ?? (await import("node:crypto")).webcrypto;
 
 const base58 = "123456789ABCDEFGHJKLMNPQRSTUVWXYZabcdefghijkmnopqrstuvwxyz";
 

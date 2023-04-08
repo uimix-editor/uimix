@@ -5,15 +5,7 @@ import { Page } from "./Page";
 import { compact } from "lodash-es";
 import { assertNonNull } from "@uimix/foundation/src/utils/Assert";
 import { Project } from "./Project";
-import { sha256 } from "js-sha256";
-import { encode } from "url-safe-base64";
-import { Buffer } from "buffer";
-
-// TODO: commonize code
-function getURLSafeBase64Hash(data: string | Uint8Array): string {
-  const hash = sha256.arrayBuffer(data);
-  return encode(Buffer.from(hash).toString("base64"));
-}
+import { getPageID } from "./ProjectJSON";
 
 export interface PageHierarchyFolderEntry {
   type: "directory";
@@ -54,7 +46,7 @@ export class PageList {
   }
 
   create(filePath: string): Page {
-    const id = getURLSafeBase64Hash(filePath);
+    const id = getPageID(filePath);
     const node = this.project.nodes.create("page", id);
     node.name = filePath;
     this.node.append([node]);
