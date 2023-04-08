@@ -2,6 +2,7 @@ import * as vscode from "vscode";
 import { CustomDocument } from "./CustomDocument";
 import { ProjectFiles } from "uimix/src/compiler/ProjectFiles";
 import * as Y from "yjs";
+import { loadProjectJSON } from "@uimix/editor/src/models/ProjectJSON";
 
 export class CustomEditorProvider implements vscode.CustomEditorProvider {
   constructor(context: vscode.ExtensionContext) {
@@ -15,6 +16,8 @@ export class CustomEditorProvider implements vscode.CustomEditorProvider {
     console.log(rootFolder.uri.fsPath);
     this.projectFiles = new ProjectFiles(rootFolder.uri.fsPath);
     this.projectFiles.load();
+
+    loadProjectJSON(this.doc, this.projectFiles.toProjectJSON());
 
     console.log(this.projectFiles.pages);
   }
