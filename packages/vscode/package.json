@@ -12,6 +12,25 @@
   "activationEvents": [],
   "main": "./out/extension.js",
   "contributes": {
+    "customEditors": [
+      {
+        "viewType": "uimix.uimixFile",
+        "displayName": "UIMix",
+        "selector": [
+          {
+            "filenamePattern": "*.uimix"
+          }
+        ]
+      }
+    ],
+    "languages": [
+      {
+        "id": "json",
+        "extensions": [
+          ".uimix"
+        ]
+      }
+    ],
     "commands": [
       {
         "command": "uimix-vscode.helloWorld",
