@@ -27,7 +27,7 @@ class Connection extends TypedEmitter<{
       {
         ready: async () => {
           this.iframeReady = true;
-          if (this.fileReady) {
+          if (this.vscodeReady) {
             await this.onReady();
           }
         },
@@ -57,6 +57,10 @@ class Connection extends TypedEmitter<{
     >(parentWindowTarget(), {
       init: async (update) => {
         Y.applyUpdate(this.doc, update);
+        this.vscodeReady = true;
+        if (this.iframeReady) {
+          await this.onReady();
+        }
       },
       update: async (update) => {
         Y.applyUpdate(this.doc, update);
@@ -72,7 +76,7 @@ class Connection extends TypedEmitter<{
   private vscodeRPC: RPC<IEditorToVSCodeRPCHandler, IVSCodeToEditorRPCHandler>;
   private iframe: HTMLIFrameElement;
   private doc = new Y.Doc();
-  private fileReady = true;
+  private vscodeReady = false;
   private iframeReady = false;
 
   dispose() {
