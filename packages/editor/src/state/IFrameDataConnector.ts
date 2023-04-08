@@ -25,15 +25,18 @@ export class IFrameDataConnector {
       return this.rpc.remote.uploadImage(hash, contentType, data);
     };
 
-    this.rpc = new RPC(parentWindowTarget(), {
-      sync: action((data: Uint8Array) => {
-        Y.applyUpdate(state.doc, data);
-      }),
-      init: action((data: Uint8Array) => {
-        Y.applyUpdate(state.doc, data);
-        state.pageID = state.project.pages.all[0]?.id;
-      }),
-    });
+    this.rpc = new RPC<IEditorToRootRPCHandler, IRootToEditorRPCHandler>(
+      parentWindowTarget(),
+      {
+        sync: action(async (data: Uint8Array) => {
+          Y.applyUpdate(state.doc, data);
+        }),
+        init: action(async (data: Uint8Array) => {
+          Y.applyUpdate(state.doc, data);
+          state.pageID = state.project.pages.all[0]?.id;
+        }),
+      }
+    );
 
     new ThumbnailTakerHost(state.project, (pngData) => {
       void this.rpc.remote.updateThumbnail(pngData);
