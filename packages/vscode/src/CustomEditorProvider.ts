@@ -1,8 +1,8 @@
 import * as vscode from "vscode";
-import { UIMixDocument } from "./UIMixDocument";
+import { CustomDocument } from "./CustomDocument";
 import { ProjectFiles } from "uimix/src/compiler/ProjectFiles";
 
-export class UIMixEditorProvider implements vscode.CustomEditorProvider {
+export class CustomEditorProvider implements vscode.CustomEditorProvider {
   constructor(context: vscode.ExtensionContext) {
     this.context = context;
 
@@ -60,7 +60,7 @@ export class UIMixEditorProvider implements vscode.CustomEditorProvider {
     openContext: vscode.CustomDocumentOpenContext,
     token: vscode.CancellationToken
   ): Promise<vscode.CustomDocument> {
-    return new UIMixDocument(uri);
+    return new CustomDocument(uri);
   }
 
   async resolveCustomEditor(
