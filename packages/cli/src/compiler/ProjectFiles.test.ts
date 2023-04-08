@@ -75,26 +75,27 @@ describe(ProjectFiles.name, () => {
     const projectFiles = new ProjectFiles(tmpObj.name + "/demo-project");
     projectFiles.projectJSON = toProjectJSON(ydoc);
 
+    let watchCount = 0;
     projectFiles.watch(() => {
       watchCount++;
     });
-
-    let watchCount = 0;
+    await new Promise((resolve) => setTimeout(resolve, 500));
 
     // saves not cause watch
     projectFiles.save();
+    await new Promise((resolve) => setTimeout(resolve, 500));
     expect(watchCount).toBe(0);
 
     // change file
     fs.rmSync(tmpObj.name + "/demo-project/src/page1.uimix");
-
-    // wait for watch
     await new Promise((resolve) => setTimeout(resolve, 500));
 
     expect(watchCount).toBe(1);
 
     loadProjectJSON(ydoc, projectFiles.projectJSON);
 
-    expect(project.pages.count).toBe(1);
+    expect(project.pages.all.map((page) => page.filePath)).toEqual([
+      "src/page2",
+    ]);
   });
 });
