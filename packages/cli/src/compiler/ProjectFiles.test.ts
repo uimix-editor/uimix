@@ -92,6 +92,9 @@ describe(ProjectFiles.name, () => {
     await new Promise((resolve) => setTimeout(resolve, 500));
 
     expect(watchCount).toBe(1);
-    // TODO: check if projectJSON is updated
+
+    loadProjectJSON(ydoc, projectFiles.projectJSON);
+
+    expect(project.pages.count).toBe(1);
   });
 });
