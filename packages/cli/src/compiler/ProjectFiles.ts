@@ -58,6 +58,7 @@ export function getPageID(pageName: string): string {
 }
 
 export function compareProjectJSONs(a: ProjectJSON, b: ProjectJSON): boolean {
+  // skipping images as they may be very large
   return isEqual(omit(a, "images"), omit(b, "images"));
 }
 
