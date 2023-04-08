@@ -68,6 +68,24 @@ export class UIMixEditorProvider implements vscode.CustomEditorProvider {
     webviewPanel: vscode.WebviewPanel,
     token: vscode.CancellationToken
   ): Promise<void> {
-    throw new Error("Method not implemented.");
+    webviewPanel.webview.options = {
+      enableScripts: true,
+    };
+    webviewPanel.webview.html = this.getHTMLForWebview(webviewPanel.webview);
+  }
+
+  private getHTMLForWebview(webview: vscode.Webview): string {
+    return `
+      <!DOCTYPE html>
+      <html lang="en">
+      <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      </head>
+      <body>
+        TODO
+      </body>
+      </html>
+    `;
   }
 }
