@@ -111,6 +111,7 @@ export class CustomEditorProvider implements vscode.CustomEditorProvider {
           console.log("ready");
         },
         sync: async (data) => {
+          console.log("sync", data);
           Y.applyUpdate(this.doc, data);
         },
       }
