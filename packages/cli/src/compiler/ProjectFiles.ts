@@ -54,6 +54,7 @@ function toHierarchicalNodeJSONs(
 }
 
 // Important TODO: fix paths in Windows!!
+// TODO: test
 export class ProjectFiles {
   constructor(
     rootPath: string,
