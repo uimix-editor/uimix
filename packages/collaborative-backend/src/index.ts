@@ -7,6 +7,27 @@ import { loadProjectJSON } from "../../editor/src/models/ProjectJSON";
 import * as Y from "yjs";
 import { createId } from "@paralleldrive/cuid2";
 
+function generateInitialData(): Uint8Array {
+  const doc = new Y.Doc();
+  loadProjectJSON(doc, {
+    nodes: {
+      project: {
+        type: "project",
+        index: 0,
+      },
+      [createId()]: {
+        type: "page",
+        name: "Page 1",
+        parent: "project",
+        index: 0,
+      },
+    },
+    styles: {},
+  });
+
+  return Y.encodeStateAsUpdate(doc);
+}
+
 const db = new PrismaClient({
   log: ["query"],
 });
@@ -45,30 +66,8 @@ const server = Server.configure({
             id: documentName,
           },
         });
-        if (data?.data) {
-          return data.data;
-        }
 
-        // create initial document
-
-        const doc = new Y.Doc();
-        loadProjectJSON(doc, {
-          nodes: {
-            project: {
-              type: "project",
-              index: 0,
-            },
-            [createId()]: {
-              type: "page",
-              name: "Page 1",
-              parent: "project",
-              index: 0,
-            },
-          },
-          styles: {},
-        });
-
-        return Y.encodeStateAsUpdate(doc);
+        return data?.data ?? generateInitialData();
       },
       // … and a Promise to store data:
       store: async ({ documentName, state }) => {
