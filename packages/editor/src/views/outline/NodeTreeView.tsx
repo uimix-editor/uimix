@@ -172,11 +172,11 @@ const TreeRow: React.FC<{
       onMouseEnter={onMouseEnter}
       onMouseLeave={onMouseLeave}
       onContextMenu={onContextMenu}
-      className="w-full h-8 px-1"
+      className="w-full h-7 px-1"
     >
       <div
         className={twMerge(
-          "w-full h-8 flex items-center text-macaron-text relative",
+          "w-full h-7 flex items-center text-macaron-text relative",
           !topSelected && "rounded-t",
           !bottomSelected && "rounded-b",
           selected
@@ -340,6 +340,8 @@ export const NodeTreeView: React.FC = observer(() => {
   return (
     <TreeView
       className="min-h-full treeview-root"
+      header={<div className="h-1" />}
+      footer={<div className="h-1" />}
       rootItem={rootItem}
       background={
         <div
