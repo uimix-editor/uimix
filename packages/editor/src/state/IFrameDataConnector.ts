@@ -28,7 +28,7 @@ export class IFrameDataConnector {
     this.rpc = new RPC<IEditorToRootRPCHandler, IRootToEditorRPCHandler>(
       parentWindowTarget(),
       {
-        sync: action(async (data: Uint8Array) => {
+        update: action(async (data: Uint8Array) => {
           Y.applyUpdate(state.doc, data);
         }),
         init: action(async (data: Uint8Array) => {

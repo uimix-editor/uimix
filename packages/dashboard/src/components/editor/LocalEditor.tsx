@@ -90,7 +90,7 @@ class Connection extends TypedEmitter<{
 
   private onReady = async () => {
     this.doc.on("update", (update) => {
-      void this.rpc.remote.sync(update as never);
+      void this.rpc.remote.update(update as never);
     });
     await this.rpc.remote.init(Y.encodeStateAsUpdate(this.doc));
     this.emit("readyToShow");
