@@ -62,4 +62,36 @@ describe(ProjectFiles.name, () => {
 
     expect(projectFiles2.projectJSON).toEqual(toProjectJSON(ydoc));
   });
+
+  it("watches", async () => {
+    const ydoc = new Y.Doc();
+    const project = new Project(ydoc);
+    const page1 = project.pages.create("src/page1");
+    const page2 = project.pages.create("src/page2");
+
+    page1.node.append([project.nodes.create("frame", "frame1")]);
+    page2.node.append([project.nodes.create("text", "text1")]);
+
+    const projectFiles = new ProjectFiles(tmpObj.name + "/demo-project");
+    projectFiles.projectJSON = toProjectJSON(ydoc);
+
+    projectFiles.watch(() => {
+      watchCount++;
+    });
+
+    let watchCount = 0;
+
+    // saves not cause watch
+    projectFiles.save();
+    expect(watchCount).toBe(0);
+
+    // change file
+    fs.rmSync(tmpObj.name + "/demo-project/src/page1.uimix");
+
+    // wait for watch
+    await new Promise((resolve) => setTimeout(resolve, 500));
+
+    expect(watchCount).toBe(1);
+    // TODO: check if projectJSON is updated
+  });
 });
