@@ -3,6 +3,11 @@ import { CustomDocument } from "./CustomDocument";
 import { ProjectFiles } from "uimix/src/compiler/ProjectFiles";
 import * as Y from "yjs";
 import { loadProjectJSON } from "@uimix/editor/src/models/ProjectJSON";
+import {
+  IEditorToVSCodeRPCHandler,
+  IVSCodeToEditorRPCHandler,
+} from "../../dashboard/src/types/VSCodeEditorRPC";
+import { RPC } from "@uimix/typed-rpc";
 
 export class CustomEditorProvider implements vscode.CustomEditorProvider {
   constructor(context: vscode.ExtensionContext) {
@@ -78,6 +83,30 @@ export class CustomEditorProvider implements vscode.CustomEditorProvider {
       enableScripts: true,
     };
     webviewPanel.webview.html = this.getHTMLForWebview(webviewPanel.webview);
+
+    const rpc = new RPC<IVSCodeToEditorRPCHandler, IEditorToVSCodeRPCHandler>(
+      {
+        post: (message) => {
+          webviewPanel.webview.postMessage(message);
+        },
+        subscribe: (handler) => {
+          const disposable = webviewPanel.webview.onDidReceiveMessage(handler);
+          return () => disposable.dispose();
+        },
+      },
+      {
+        ready: async () => {
+          console.log("ready");
+        },
+        sync: async (data) => {
+          console.log("TODO: sync");
+        },
+      }
+    );
+
+    webviewPanel.onDidDispose(() => {
+      rpc.dispose();
+    });
   }
 
   private getHTMLForWebview(webview: vscode.Webview): string {
@@ -102,6 +131,19 @@ export class CustomEditorProvider implements vscode.CustomEditorProvider {
       </head>
       <body>
       <iframe src="http://localhost:3000/vscode-editor" allow="clipboard-read; clipboard-write"></iframe>
+      <script>
+        // pass-through messages between the iframe and the extension
+        const vscode = acquireVsCodeApi();
+        const iframe = document.querySelector("iframe");
+
+        window.addEventListener("message", (event) => {
+          if (event.source === iframe.contentWindow) {
+            vscode.postMessage(event.data);
+          } else {
+            iframe.contentWindow.postMessage(event.data, "*");
+          }
+        });
+      </script>
       </body>
       </html>
     `;

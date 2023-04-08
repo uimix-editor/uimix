@@ -1,7 +1,7 @@
 import React, { useEffect, useRef, useState } from "react";
 import * as Y from "yjs";
 import { TypedEmitter } from "tiny-typed-emitter";
-import { iframeTarget } from "@uimix/typed-rpc/browser";
+import { iframeTarget, parentWindowTarget } from "@uimix/typed-rpc/browser";
 import { RPC } from "@uimix/typed-rpc";
 import type {
   IRootToEditorRPCHandler,
@@ -9,6 +9,10 @@ import type {
 } from "@uimix/editor/src/state/IFrameRPC";
 import { LoadingErrorOverlay } from "./LoadingErrorOverlay";
 import { assertNonNull } from "../../utils/assertNonNull";
+import {
+  IEditorToVSCodeRPCHandler,
+  IVSCodeToEditorRPCHandler,
+} from "../../types/VSCodeEditorRPC";
 
 // TODO: test
 
@@ -46,9 +50,20 @@ class Connection extends TypedEmitter<{
         },
       }
     );
+
+    this.vscodeRPC = new RPC<
+      IEditorToVSCodeRPCHandler,
+      IVSCodeToEditorRPCHandler
+    >(parentWindowTarget(), {
+      sync: async (update) => {
+        console.log("TODO: sync");
+      },
+    });
+    void this.vscodeRPC.remote.ready();
   }
 
   private rpc: RPC<IRootToEditorRPCHandler, IEditorToRootRPCHandler>;
+  private vscodeRPC: RPC<IEditorToVSCodeRPCHandler, IVSCodeToEditorRPCHandler>;
   private iframe: HTMLIFrameElement;
   private doc = new Y.Doc();
   private fileReady = true;
