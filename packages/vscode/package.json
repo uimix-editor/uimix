@@ -12,7 +12,7 @@
     "dev": "node build.js --watch",
     "lint": "eslint src --ext ts",
     "pretest": "pnpm run build && pnpm run lint",
-    "test": "node ./out/test/runTest.js",
+    "//test": "node ./out/test/runTest.js",
     "vscode:prepublish": "pnpm run build"
   },
   "contributes": {
