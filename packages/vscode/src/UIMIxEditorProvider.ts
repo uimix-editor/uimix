@@ -1,4 +1,5 @@
 import * as vscode from "vscode";
+import { UIMixDocument } from "./UIMixDocument";
 
 export class UIMixEditorProvider implements vscode.CustomEditorProvider {
   constructor(context: vscode.ExtensionContext) {
@@ -12,44 +13,49 @@ export class UIMixEditorProvider implements vscode.CustomEditorProvider {
 
   readonly onDidChangeCustomDocument = this._onDidChangeCustomDocument.event;
 
-  saveCustomDocument(
+  async saveCustomDocument(
     document: vscode.CustomDocument,
     cancellation: vscode.CancellationToken
-  ): Thenable<void> {
+  ): Promise<void> {
     throw new Error("Method not implemented.");
   }
-  saveCustomDocumentAs(
+
+  async saveCustomDocumentAs(
     document: vscode.CustomDocument,
     destination: vscode.Uri,
     cancellation: vscode.CancellationToken
-  ): Thenable<void> {
+  ): Promise<void> {
     throw new Error("Method not implemented.");
   }
-  revertCustomDocument(
+
+  async revertCustomDocument(
     document: vscode.CustomDocument,
     cancellation: vscode.CancellationToken
-  ): Thenable<void> {
+  ): Promise<void> {
     throw new Error("Method not implemented.");
   }
-  backupCustomDocument(
+
+  async backupCustomDocument(
     document: vscode.CustomDocument,
     context: vscode.CustomDocumentBackupContext,
     cancellation: vscode.CancellationToken
-  ): Thenable<vscode.CustomDocumentBackup> {
+  ): Promise<vscode.CustomDocumentBackup> {
     throw new Error("Method not implemented.");
   }
-  openCustomDocument(
+
+  async openCustomDocument(
     uri: vscode.Uri,
     openContext: vscode.CustomDocumentOpenContext,
     token: vscode.CancellationToken
-  ): vscode.CustomDocument | Thenable<vscode.CustomDocument> {
-    throw new Error("Method not implemented.");
+  ): Promise<vscode.CustomDocument> {
+    return new UIMixDocument(uri);
   }
-  resolveCustomEditor(
+
+  async resolveCustomEditor(
     document: vscode.CustomDocument,
     webviewPanel: vscode.WebviewPanel,
     token: vscode.CancellationToken
-  ): void | Thenable<void> {
+  ): Promise<void> {
     throw new Error("Method not implemented.");
   }
 }
