@@ -1,6 +1,5 @@
 import { ProjectJSON } from "@uimix/node-data";
 import { Project } from "@uimix/editor/src/models/Project";
-import { loadProjectJSON } from "@uimix/editor/src/models/ProjectJSON";
 import { formatTypeScript } from "../format.js";
 import { CSSGenerator } from "./CSSGenerator.js";
 import * as Y from "yjs";
@@ -19,7 +18,7 @@ export async function generateCode(
 > {
   const ydoc = new Y.Doc();
   const project = new Project(ydoc);
-  loadProjectJSON(ydoc, projectJSON);
+  project.loadJSON(projectJSON);
 
   const imagesPath = ".uimix/images";
 

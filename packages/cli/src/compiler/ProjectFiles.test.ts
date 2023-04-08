@@ -6,10 +6,6 @@ import shell from "shelljs";
 import tmp from "tmp";
 import { Project } from "@uimix/editor/src/models/Project";
 import * as Y from "yjs";
-import {
-  loadProjectJSON,
-  toProjectJSON,
-} from "@uimix/editor/src/models/ProjectJSON";
 
 describe(ProjectFiles.name, () => {
   let tmpObj: tmp.DirResult;
@@ -42,7 +38,7 @@ describe(ProjectFiles.name, () => {
     page2.node.append([project.nodes.create("text", "text1")]);
 
     const projectFiles = new ProjectFiles(tmpObj.name + "/demo-project");
-    projectFiles.projectJSON = toProjectJSON(ydoc);
+    projectFiles.projectJSON = project.toJSON();
     projectFiles.save();
 
     const page1File = fs.readFileSync(
@@ -60,7 +56,7 @@ describe(ProjectFiles.name, () => {
     const projectFiles2 = new ProjectFiles(tmpObj.name + "/demo-project");
     projectFiles2.load();
 
-    expect(projectFiles2.projectJSON).toEqual(toProjectJSON(ydoc));
+    expect(projectFiles2.projectJSON).toEqual(project.toJSON());
   });
 
   it("watches", async () => {
@@ -73,7 +69,7 @@ describe(ProjectFiles.name, () => {
     page2.node.append([project.nodes.create("text", "text1")]);
 
     const projectFiles = new ProjectFiles(tmpObj.name + "/demo-project");
-    projectFiles.projectJSON = toProjectJSON(ydoc);
+    projectFiles.projectJSON = project.toJSON();
 
     let watchCount = 0;
     projectFiles.watch(() => {
@@ -92,7 +88,7 @@ describe(ProjectFiles.name, () => {
 
     expect(watchCount).toBe(1);
 
-    loadProjectJSON(ydoc, projectFiles.projectJSON);
+    project.loadJSON(projectFiles.projectJSON);
 
     expect(project.pages.all.map((page) => page.filePath)).toEqual([
       "src/page2",

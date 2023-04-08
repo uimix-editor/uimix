@@ -15,7 +15,7 @@ describe(loadProjectJSON.name, () => {
 
     const ydoc = new Y.Doc();
     const project = new Project(ydoc);
-    loadProjectJSON(ydoc, projectJSON);
+    project.loadJSON(projectJSON);
 
     expect([...project.nodes.data.keys()]).toMatchSnapshot();
     expect([...project.selectables.stylesData.keys()]).toMatchSnapshot();
