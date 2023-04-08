@@ -8,7 +8,7 @@ describe(generateCode.name, () => {
     const rootDir = path.resolve("../sandbox");
     const files = new ProjectFiles(rootDir);
     files.load();
-    const json = files.projectJSON;
+    const json = files.json;
     const code = await generateCode(rootDir, json);
     const result: Record<string, string> = {};
     for (const file of code) {

@@ -23,7 +23,7 @@ export class File extends TypedEmitter<{
       this.files.load();
     }
 
-    this._data = this.files?.projectJSON ?? {
+    this._data = this.files?.json ?? {
       // default project
       nodes: {
         project: { type: "project", index: 0 },
@@ -76,7 +76,7 @@ export class File extends TypedEmitter<{
       return;
     }
 
-    this.files.projectJSON = this.data;
+    this.files.json = this.data;
     this.files.save();
     app.addRecentDocument(this.files.rootPath);
     this.savedData = this.data;
@@ -124,7 +124,7 @@ export class File extends TypedEmitter<{
     }
 
     this.watchDisposer = files.watch(() => {
-      const json = files.projectJSON;
+      const json = files.json;
       console.log("changed");
       if (this.edited) {
         // TODO: warn

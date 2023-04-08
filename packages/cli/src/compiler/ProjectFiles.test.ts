@@ -35,7 +35,7 @@ describe(ProjectFiles.name, () => {
     page2.node.append([project.nodes.create("text", "text1")]);
 
     const projectFiles = new ProjectFiles(tmpObj.name + "/demo-project");
-    projectFiles.projectJSON = project.toJSON();
+    projectFiles.json = project.toJSON();
     projectFiles.save();
 
     const page1File = fs.readFileSync(
@@ -53,7 +53,7 @@ describe(ProjectFiles.name, () => {
     const projectFiles2 = new ProjectFiles(tmpObj.name + "/demo-project");
     projectFiles2.load();
 
-    expect(projectFiles2.projectJSON).toEqual(project.toJSON());
+    expect(projectFiles2.json).toEqual(project.toJSON());
   });
 
   it("watches", async () => {
@@ -65,7 +65,7 @@ describe(ProjectFiles.name, () => {
     page2.node.append([project.nodes.create("text", "text1")]);
 
     const projectFiles = new ProjectFiles(tmpObj.name + "/demo-project");
-    projectFiles.projectJSON = project.toJSON();
+    projectFiles.json = project.toJSON();
 
     let watchCount = 0;
     projectFiles.watch(() => {
@@ -84,7 +84,7 @@ describe(ProjectFiles.name, () => {
 
     expect(watchCount).toBe(1);
 
-    project.loadJSON(projectFiles.projectJSON);
+    project.loadJSON(projectFiles.json);
 
     expect(project.pages.all.map((page) => page.filePath)).toEqual([
       "src/page2",

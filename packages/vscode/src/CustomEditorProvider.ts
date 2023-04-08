@@ -26,7 +26,7 @@ export class CustomEditorProvider implements vscode.CustomEditorProvider {
     this.projectFiles = new ProjectFiles(rootFolder.uri.fsPath);
     this.projectFiles.load();
 
-    loadProjectJSON(this.doc, this.projectFiles.projectJSON);
+    loadProjectJSON(this.doc, this.projectFiles.json);
   }
 
   readonly context: vscode.ExtensionContext;
@@ -126,7 +126,7 @@ export class CustomEditorProvider implements vscode.CustomEditorProvider {
   }
 
   readonly save = debounce(() => {
-    this.projectFiles.projectJSON = toProjectJSON(this.doc);
+    this.projectFiles.json = toProjectJSON(this.doc);
     this.projectFiles.save();
   }, 500);
 

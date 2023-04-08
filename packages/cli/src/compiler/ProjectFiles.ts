@@ -82,7 +82,7 @@ export class ProjectFiles {
   readonly rootPath: string;
   readonly filePattern: string;
   readonly manifestName = "uimix.json";
-  projectJSON: ProjectJSON = {
+  json: ProjectJSON = {
     nodes: {},
     styles: {},
   };
@@ -118,18 +118,18 @@ export class ProjectFiles {
     }
     const newProjectJSON = filesToProjectJSON(manifest, pages);
 
-    if (compareProjectJSONs(this.projectJSON, newProjectJSON)) {
+    if (compareProjectJSONs(this.json, newProjectJSON)) {
       return false;
     }
 
-    this.projectJSON = newProjectJSON;
+    this.json = newProjectJSON;
     return true;
   }
 
   save(): void {
     const rootPath = this.rootPath;
 
-    const { manifest, pages } = projectJSONToFiles(this.projectJSON);
+    const { manifest, pages } = projectJSONToFiles(this.json);
 
     fs.writeFileSync(
       path.resolve(rootPath, this.manifestName),
@@ -170,7 +170,7 @@ export class ProjectFiles {
     const _onChange = () => {
       try {
         if (this.load()) {
-          onChange(this.projectJSON);
+          onChange(this.json);
         }
       } catch (e) {
         console.error(e);
