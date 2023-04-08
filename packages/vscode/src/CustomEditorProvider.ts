@@ -84,6 +84,8 @@ export class CustomEditorProvider implements vscode.CustomEditorProvider {
     };
     webviewPanel.webview.html = this.getHTMLForWebview(webviewPanel.webview);
 
+    let unsubscribeDoc: (() => void) | undefined;
+
     const rpc = new RPC<IVSCodeToEditorRPCHandler, IEditorToVSCodeRPCHandler>(
       {
         post: (message) => {
@@ -96,16 +98,27 @@ export class CustomEditorProvider implements vscode.CustomEditorProvider {
       },
       {
         ready: async () => {
+          const onDocUpdate = (update: Uint8Array) => {
+            rpc.remote.sync(update);
+          };
+
+          this.doc.on("update", onDocUpdate);
+          unsubscribeDoc = () => {
+            this.doc.off("update", onDocUpdate);
+          };
+
+          onDocUpdate(Y.encodeStateAsUpdate(this.doc));
           console.log("ready");
         },
         sync: async (data) => {
-          console.log("TODO: sync");
+          Y.applyUpdate(this.doc, data);
         },
       }
     );
 
     webviewPanel.onDidDispose(() => {
       rpc.dispose();
+      unsubscribeDoc?.();
     });
   }
 

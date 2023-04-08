@@ -56,7 +56,8 @@ class Connection extends TypedEmitter<{
       IVSCodeToEditorRPCHandler
     >(parentWindowTarget(), {
       sync: async (update) => {
-        console.log("TODO: sync");
+        console.log("sync", update);
+        Y.applyUpdate(this.doc, update);
       },
     });
     void this.vscodeRPC.remote.ready();
