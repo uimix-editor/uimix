@@ -154,7 +154,7 @@ export class ProjectFiles {
     }
   }
 
-  watch(onChange: () => void): () => void {
+  watch(onChange: (projectJSON: ProjectJSON) => void): () => void {
     const watchPath = path.resolve(this.rootPath, this.filePattern);
 
     // FIXME: chokidar looks like making UI slow
@@ -166,7 +166,7 @@ export class ProjectFiles {
     const _onChange = () => {
       try {
         if (this.load()) {
-          onChange();
+          onChange(this.projectJSON);
         }
       } catch (e) {
         console.error(e);
