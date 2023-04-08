@@ -62,14 +62,19 @@ export function compareProjectJSONs(a: ProjectJSON, b: ProjectJSON): boolean {
   return isEqual(omit(a, "images"), omit(b, "images"));
 }
 
+interface ProjectFilesOptions {
+  filePattern?: string;
+}
+
 // Important TODO: fix paths in Windows!!
 export class ProjectFiles {
-  constructor(
-    rootPath: string,
-    options: {
-      filePattern?: string;
-    } = {}
-  ) {
+  static load(rootPath: string, options: ProjectFilesOptions = {}) {
+    const projectFiles = new ProjectFiles(rootPath, options);
+    projectFiles.load();
+    return projectFiles;
+  }
+
+  constructor(rootPath: string, options: ProjectFilesOptions = {}) {
     this.rootPath = rootPath;
     this.filePattern = options.filePattern ?? "**/*.uimix";
   }

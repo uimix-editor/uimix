@@ -8,10 +8,9 @@ import { ProjectFiles } from "../../../cli/src/compiler/ProjectFiles";
 describe(loadProjectJSON.name, () => {
   it("works", () => {
     const rootDir = path.resolve("../sandbox");
-    const projectFiles = new ProjectFiles(rootDir, {
+    const projectFiles = ProjectFiles.load(rootDir, {
       filePattern: "src/components.uimix",
     });
-    projectFiles.load();
     const projectJSON = projectFiles.projectJSON;
 
     const ydoc = new Y.Doc();

@@ -23,8 +23,7 @@ function compileCommand(
     watch?: boolean;
   }
 ): void {
-  const projectFiles = new ProjectFiles(rootPath);
-  projectFiles.load();
+  const projectFiles = ProjectFiles.load(rootPath);
 
   if (options.watch) {
     projectFiles.watch(() => compileProject(projectFiles));
