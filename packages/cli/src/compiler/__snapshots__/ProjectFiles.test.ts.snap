@@ -2,7 +2,17 @@
 
 exports[`ProjectFiles > saves 1`] = `
 "{
-  \\"nodes\\": { \\"1Bx5TrKQBSLkwyYm1Xkia6\\": { \\"type\\": \\"frame\\", \\"index\\": 0 } },
+  \\"nodes\\": { \\"frame1\\": { \\"type\\": \\"frame\\", \\"index\\": 0 } },
+  \\"styles\\": {},
+  \\"images\\": {},
+  \\"colors\\": {}
+}
+"
+`;
+
+exports[`ProjectFiles > saves 2`] = `
+"{
+  \\"nodes\\": { \\"text1\\": { \\"type\\": \\"text\\", \\"index\\": 0 } },
   \\"styles\\": {},
   \\"images\\": {},
   \\"colors\\": {}

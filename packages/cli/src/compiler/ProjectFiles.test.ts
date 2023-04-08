@@ -38,8 +38,8 @@ describe(ProjectFiles.name, () => {
     const page1 = project.pages.create("src/page1");
     const page2 = project.pages.create("src/page2");
 
-    page1.node.append([project.nodes.create("frame")]);
-    page2.node.append([project.nodes.create("text")]);
+    page1.node.append([project.nodes.create("frame", "frame1")]);
+    page2.node.append([project.nodes.create("text", "text1")]);
 
     const projectFiles = new ProjectFiles(tmpObj.name + "/demo-project");
     projectFiles.loadProjectJSON(toProjectJSON(ydoc));
@@ -56,5 +56,10 @@ describe(ProjectFiles.name, () => {
       "utf8"
     );
     expect(page2File).toMatchSnapshot();
+
+    const projectFiles2 = new ProjectFiles(tmpObj.name + "/demo-project");
+    projectFiles2.load();
+
+    expect(projectFiles2.toProjectJSON()).toEqual(toProjectJSON(ydoc));
   });
 });
