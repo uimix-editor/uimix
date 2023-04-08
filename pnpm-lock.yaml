@@ -1049,6 +1049,9 @@ importers:
       glob:
         specifier: ^8.1.0
         version: 8.1.0
+      just-debounce-it:
+        specifier: ^3.2.0
+        version: 3.2.0
       mocha:
         specifier: ^10.2.0
         version: 10.2.0
@@ -10687,6 +10690,10 @@ packages:
   /just-compare@2.3.0:
     resolution: {integrity: sha512-6shoR7HDT+fzfL3gBahx1jZG3hWLrhPAf+l7nCwahDdT9XDtosB9kIF0ZrzUp5QY8dJWfQVr5rnsPqsbvflDzg==}
     dev: false
+
+  /just-debounce-it@3.2.0:
+    resolution: {integrity: sha512-WXzwLL0745uNuedrCsCs3rpmfD6DBaf7uuVwaq98/8dafURfgQaBsSpjiPp5+CW6Vjltwy9cOGI6qE71b3T8iQ==}
+    dev: true
 
   /jwa@1.4.1:
     resolution: {integrity: sha512-qiLX/xhEEFKUAJ6FiBMbes3w9ATzyk5W7Hvzpa/SLYdxNtng+gcurvrI7TbACjIXlsJyr05/S1oUhZrc63evQA==}

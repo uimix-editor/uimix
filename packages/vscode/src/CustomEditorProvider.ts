@@ -2,12 +2,16 @@ import * as vscode from "vscode";
 import { CustomDocument } from "./CustomDocument";
 import { ProjectFiles } from "uimix/src/compiler/ProjectFiles";
 import * as Y from "yjs";
-import { loadProjectJSON } from "@uimix/editor/src/models/ProjectJSON";
+import {
+  loadProjectJSON,
+  toProjectJSON,
+} from "@uimix/editor/src/models/ProjectJSON";
 import {
   IEditorToVSCodeRPCHandler,
   IVSCodeToEditorRPCHandler,
 } from "../../dashboard/src/types/VSCodeEditorRPC";
 import { RPC } from "@uimix/typed-rpc";
+import debounce from "just-debounce-it";
 
 export class CustomEditorProvider implements vscode.CustomEditorProvider {
   constructor(context: vscode.ExtensionContext) {
@@ -112,6 +116,7 @@ export class CustomEditorProvider implements vscode.CustomEditorProvider {
         update: async (data) => {
           console.log("sync", data);
           Y.applyUpdate(this.doc, data);
+          this.save();
         },
       }
     );
@@ -121,6 +126,11 @@ export class CustomEditorProvider implements vscode.CustomEditorProvider {
       unsubscribeDoc?.();
     });
   }
+
+  readonly save = debounce(() => {
+    this.projectFiles.loadProjectJSON(toProjectJSON(this.doc));
+    this.projectFiles.save();
+  }, 500);
 
   private getHTMLForWebview(webview: vscode.Webview): string {
     return `
