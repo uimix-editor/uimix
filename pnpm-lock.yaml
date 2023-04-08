@@ -1001,42 +1001,6 @@ importers:
 
   packages/typed-rpc: {}
 
-  packages/uimix-vscode:
-    devDependencies:
-      '@types/glob':
-        specifier: ^8.1.0
-        version: 8.1.0
-      '@types/mocha':
-        specifier: ^10.0.1
-        version: 10.0.1
-      '@types/node':
-        specifier: 16.x
-        version: 16.18.18
-      '@types/vscode':
-        specifier: ^1.77.0
-        version: 1.77.0
-      '@typescript-eslint/eslint-plugin':
-        specifier: ^5.56.0
-        version: 5.57.1(@typescript-eslint/parser@5.57.1)(eslint@8.37.0)(typescript@4.9.5)
-      '@typescript-eslint/parser':
-        specifier: ^5.56.0
-        version: 5.57.1(eslint@8.37.0)(typescript@4.9.5)
-      '@vscode/test-electron':
-        specifier: ^2.3.0
-        version: 2.3.0
-      eslint:
-        specifier: ^8.36.0
-        version: 8.37.0
-      glob:
-        specifier: ^8.1.0
-        version: 8.1.0
-      mocha:
-        specifier: ^10.2.0
-        version: 10.2.0
-      typescript:
-        specifier: ^4.9.5
-        version: 4.9.5
-
   packages/vscode:
     devDependencies:
       '@types/glob':
@@ -1075,6 +1039,9 @@ importers:
       typescript:
         specifier: ^4.9.5
         version: 4.9.5
+      uimix:
+        specifier: workspace:*
+        version: link:../cli
 
 packages:
 
