@@ -31,9 +31,9 @@ export class IFrameDataConnector {
         update: action(async (data: Uint8Array) => {
           Y.applyUpdate(state.doc, data);
         }),
-        init: action(async (data: Uint8Array) => {
+        init: action(async (data: Uint8Array, pageID?: string) => {
           Y.applyUpdate(state.doc, data);
-          state.pageID = state.project.pages.all[0]?.id;
+          state.pageID = pageID ?? state.project.pages.all[0]?.id;
         }),
       }
     );

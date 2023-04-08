@@ -55,8 +55,9 @@ class Connection extends TypedEmitter<{
       IEditorToVSCodeRPCHandler,
       IVSCodeToEditorRPCHandler
     >(parentWindowTarget(), {
-      init: async (update) => {
+      init: async (update, pageID) => {
         Y.applyUpdate(this.doc, update);
+        this.pageID = pageID;
         this.vscodeReady = true;
         if (this.iframeReady) {
           await this.onReady();
@@ -78,6 +79,7 @@ class Connection extends TypedEmitter<{
   private doc = new Y.Doc();
   private vscodeReady = false;
   private iframeReady = false;
+  private pageID: string | undefined;
 
   dispose() {
     this.rpc.dispose();
@@ -87,7 +89,7 @@ class Connection extends TypedEmitter<{
     this.doc.on("update", (update) => {
       void this.rpc.remote.update(update as never);
     });
-    await this.rpc.remote.init(Y.encodeStateAsUpdate(this.doc));
+    await this.rpc.remote.init(Y.encodeStateAsUpdate(this.doc), this.pageID);
     this.emit("readyToShow");
   };
 }

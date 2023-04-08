@@ -53,6 +53,7 @@ function toHierarchicalNodeJSONs(
   return Object.values(hierarchicalNodes).filter((node) => !node.parent);
 }
 
+// Important TODO: fix paths in Windows!!
 export class ProjectFiles {
   constructor(
     rootPath: string,

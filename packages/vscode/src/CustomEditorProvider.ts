@@ -71,11 +71,11 @@ export class CustomEditorProvider implements vscode.CustomEditorProvider {
     openContext: vscode.CustomDocumentOpenContext,
     token: vscode.CancellationToken
   ): Promise<vscode.CustomDocument> {
-    return new CustomDocument(uri);
+    return new CustomDocument(this.projectFiles, uri);
   }
 
   async resolveCustomEditor(
-    document: vscode.CustomDocument,
+    document: CustomDocument,
     webviewPanel: vscode.WebviewPanel,
     token: vscode.CancellationToken
   ): Promise<void> {
@@ -101,7 +101,11 @@ export class CustomEditorProvider implements vscode.CustomEditorProvider {
           const onDocUpdate = (update: Uint8Array) => rpc.remote.update(update);
           this.doc.on("update", onDocUpdate);
           unsubscribeDoc = () => this.doc.off("update", onDocUpdate);
-          void rpc.remote.init(Y.encodeStateAsUpdate(this.doc));
+
+          void rpc.remote.init(
+            Y.encodeStateAsUpdate(this.doc),
+            document.pageID
+          );
 
           console.log("ready");
         },
