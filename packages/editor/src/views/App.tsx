@@ -48,9 +48,29 @@ function useKeyHandling() {
 
 // get title bar padding from query string
 
-const titleBarPadding = Number.parseInt(
-  new URLSearchParams(window.location.search).get("titleBarPadding") ?? "0"
-);
+interface ViewOptions {
+  titleBarPadding: number;
+  remSize: number;
+  fontSize: number;
+}
+
+function getViewOptions(): ViewOptions {
+  const searchParams = new URLSearchParams(window.location.search);
+
+  const titleBarPadding = Number.parseInt(
+    searchParams.get("titleBarPadding") ?? "0"
+  );
+  const remSize = Number.parseInt(searchParams.get("remSize") ?? "16");
+  const fontSize = Number.parseInt(searchParams.get("fontSize") ?? "12");
+
+  return {
+    titleBarPadding,
+    remSize,
+    fontSize,
+  };
+}
+
+const viewOptions = getViewOptions();
 
 export const App = observer(function App() {
   useKeyHandling();
@@ -59,10 +79,18 @@ export const App = observer(function App() {
   return (
     <TooltipProvider>
       <FontLoader />
+      <style>
+        {`
+          :root {
+            font-size: ${viewOptions.remSize}px;
+            --uimix-font-size: ${viewOptions.fontSize}px;
+          }
+        `}
+      </style>
       <div
         className="flex flex-col fixed inset-0 text-macaron-base bg-macaron-background text-macaron-text select-none"
         style={{
-          top: `${titleBarPadding}px`,
+          top: `${viewOptions.titleBarPadding}px`,
         }}
       >
         <div className="flex flex-1">

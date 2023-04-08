@@ -83,11 +83,12 @@ const VSCodeEditor: React.FC = () => {
     return () => connection.dispose();
   }, []);
 
-  const editorSrc = assertNonNull(process.env.NEXT_PUBLIC_EDITOR_URL).replace(
-    "://",
-    // TODO: use unique ID for subdomain?
-    `://local.`
-  );
+  const editorSrc =
+    assertNonNull(process.env.NEXT_PUBLIC_EDITOR_URL).replace(
+      "://",
+      // TODO: use unique ID for subdomain?
+      `://local.`
+    ) + "?remSize=12&fontSize=11";
 
   return (
     <div className="text-neutral-800 text-xs">
