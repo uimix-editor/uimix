@@ -43,6 +43,9 @@
     ]
   },
   "activationEvents": [],
+  "dependencies": {
+    "chokidar": "^3.5.3"
+  },
   "devDependencies": {
     "@types/glob": "^8.1.0",
     "@types/mocha": "^10.0.1",
@@ -56,12 +59,10 @@
     "glob": "^8.1.0",
     "mocha": "^10.2.0",
     "typescript": "^4.9.5",
-    "uimix": "workspace:*"
+    "uimix": "workspace:*",
+    "yjs": "^13.5.52"
   },
   "engines": {
     "vscode": "^1.77.0"
-  },
-  "dependencies": {
-    "chokidar": "^3.5.3"
   }
 }

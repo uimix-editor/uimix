@@ -1046,6 +1046,9 @@ importers:
       uimix:
         specifier: workspace:*
         version: link:../cli
+      yjs:
+        specifier: ^13.5.52
+        version: 13.5.52
 
 packages:
 

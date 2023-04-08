@@ -1,6 +1,7 @@
 import * as vscode from "vscode";
 import { CustomDocument } from "./CustomDocument";
 import { ProjectFiles } from "uimix/src/compiler/ProjectFiles";
+import * as Y from "yjs";
 
 export class CustomEditorProvider implements vscode.CustomEditorProvider {
   constructor(context: vscode.ExtensionContext) {
@@ -14,11 +15,13 @@ export class CustomEditorProvider implements vscode.CustomEditorProvider {
     console.log(rootFolder.uri.fsPath);
     this.projectFiles = new ProjectFiles(rootFolder.uri.fsPath);
     this.projectFiles.load();
+
     console.log(this.projectFiles.pages);
   }
 
   readonly context: vscode.ExtensionContext;
   readonly projectFiles: ProjectFiles;
+  readonly doc = new Y.Doc();
 
   private readonly _onDidChangeCustomDocument =
     new vscode.EventEmitter<vscode.CustomDocumentContentChangeEvent>();
