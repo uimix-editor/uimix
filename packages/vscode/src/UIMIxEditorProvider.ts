@@ -95,7 +95,7 @@ export class UIMixEditorProvider implements vscode.CustomEditorProvider {
         </style>
       </head>
       <body>
-      <iframe src="http://localhost:3000/vscode-editor"></iframe>
+      <iframe src="http://localhost:3000/vscode-editor" allow="clipboard-read; clipboard-write"></iframe>
       </body>
       </html>
     `;
