@@ -3,6 +3,9 @@ import { Logger } from "@hocuspocus/extension-logger";
 import { PrismaClient } from "@prisma/client";
 import jwt from "jsonwebtoken";
 import { Database } from "@hocuspocus/extension-database";
+import { loadProjectJSON } from "../../editor/src/models/ProjectJSON";
+import * as Y from "yjs";
+import { createId } from "@paralleldrive/cuid2";
 
 const db = new PrismaClient({
   log: ["query"],
@@ -42,7 +45,30 @@ const server = Server.configure({
             id: documentName,
           },
         });
-        return data?.data ?? null;
+        if (data?.data) {
+          return data.data;
+        }
+
+        // create initial document
+
+        const doc = new Y.Doc();
+        loadProjectJSON(doc, {
+          nodes: {
+            project: {
+              type: "project",
+              index: 0,
+            },
+            [createId()]: {
+              type: "page",
+              name: "Page 1",
+              parent: "project",
+              index: 0,
+            },
+          },
+          styles: {},
+        });
+
+        return Y.encodeStateAsUpdate(doc);
       },
       // … and a Promise to store data:
       store: async ({ documentName, state }) => {
