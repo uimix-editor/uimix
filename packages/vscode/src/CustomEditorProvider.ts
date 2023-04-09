@@ -26,7 +26,17 @@ export class CustomEditorProvider implements vscode.CustomEditorProvider {
     this.projectFiles = new ProjectFiles(rootFolder.uri.fsPath);
     this.projectFiles.load();
 
-    loadProjectJSON(this.doc, this.projectFiles.json);
+    this.doc.transact(() => {
+      loadProjectJSON(this.doc, this.projectFiles.json);
+    });
+
+    this.disposables.push({
+      dispose: this.projectFiles.watch((json) => {
+        this.doc.transact(() => {
+          loadProjectJSON(this.doc, json);
+        });
+      }),
+    });
   }
 
   readonly context: vscode.ExtensionContext;
@@ -37,6 +47,12 @@ export class CustomEditorProvider implements vscode.CustomEditorProvider {
     new vscode.EventEmitter<vscode.CustomDocumentContentChangeEvent>();
 
   readonly onDidChangeCustomDocument = this._onDidChangeCustomDocument.event;
+
+  readonly disposables: vscode.Disposable[] = [];
+
+  dispose() {
+    this.disposables.forEach((disposable) => disposable.dispose());
+  }
 
   async saveCustomDocument(
     document: vscode.CustomDocument,

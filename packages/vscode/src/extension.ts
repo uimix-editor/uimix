@@ -24,10 +24,12 @@ export function activate(context: vscode.ExtensionContext) {
 
   context.subscriptions.push(disposable);
 
+  const customEditorProvider = new CustomEditorProvider(context);
+
   context.subscriptions.push(
     vscode.window.registerCustomEditorProvider(
       "uimix.uimixFile",
-      new CustomEditorProvider(context),
+      customEditorProvider,
       {
         webviewOptions: {
           retainContextWhenHidden: true,
@@ -36,6 +38,8 @@ export function activate(context: vscode.ExtensionContext) {
       }
     )
   );
+
+  context.subscriptions.push(customEditorProvider);
 }
 
 // This method is called when your extension is deactivated
