@@ -13,6 +13,7 @@ export class Clipboard {
     //     }),
     //   }),
     // ]);
+
     await navigator.clipboard.writeText(JSON.stringify(data));
   }
 

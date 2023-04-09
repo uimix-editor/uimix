@@ -14,6 +14,7 @@ import { ForeignComponentListDialog } from "./dialog/ForeignComponentListDialog"
 import { viewportState } from "../state/ViewportState";
 import { ScrollArea } from "@uimix/foundation/src/components/ScrollArea";
 import { NodeTreeView } from "./outline/NodeTreeView";
+import { viewOptions } from "../state/ViewOptions";
 
 function useKeyHandling() {
   useEffect(() => {
@@ -49,33 +50,6 @@ function useKeyHandling() {
 // }
 
 // get title bar padding from query string
-
-interface ViewOptions {
-  titleBarPadding: number;
-  remSize: number;
-  fontSize: number;
-  narrowMode: boolean;
-}
-
-function getViewOptions(): ViewOptions {
-  const searchParams = new URLSearchParams(window.location.search);
-
-  const titleBarPadding = Number.parseInt(
-    searchParams.get("titleBarPadding") ?? "0"
-  );
-  const remSize = Number.parseInt(searchParams.get("remSize") ?? "16");
-  const fontSize = Number.parseInt(searchParams.get("fontSize") ?? "12");
-  const narrowMode = searchParams.get("narrowMode") === "true";
-
-  return {
-    titleBarPadding,
-    remSize,
-    fontSize,
-    narrowMode,
-  };
-}
-
-const viewOptions = getViewOptions();
 
 export const App = observer(function App() {
   useKeyHandling();
