@@ -12,4 +12,7 @@ export interface IEditorToRootRPCHandler {
     data: Uint8Array
   ): Promise<string>;
   updateThumbnail(pngData: Uint8Array): Promise<void>;
+
+  setClipboardText(text: string): Promise<void>;
+  getClipboardText(): Promise<string>;
 }

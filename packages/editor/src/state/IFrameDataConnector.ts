@@ -6,6 +6,7 @@ import { action } from "mobx";
 import { IEditorToRootRPCHandler, IRootToEditorRPCHandler } from "./IFrameRPC";
 import { throttle } from "lodash-es";
 import { ThumbnailTakerHost } from "./ThumbnailTakerHost";
+import { Clipboard } from "./Clipboard";
 
 export class IFrameDataConnector {
   constructor(state: ProjectState) {
@@ -43,6 +44,15 @@ export class IFrameDataConnector {
     });
 
     void this.rpc.remote.ready();
+
+    Clipboard.externalClipboard = {
+      getText: async () => {
+        return this.rpc.remote.getClipboardText();
+      },
+      setText: async (text) => {
+        void this.rpc.remote.setClipboardText(text);
+      },
+    };
   }
 
   private state: ProjectState;

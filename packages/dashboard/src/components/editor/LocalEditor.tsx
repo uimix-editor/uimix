@@ -47,6 +47,13 @@ class Connection extends TypedEmitter<{
         updateThumbnail: async (pngData) => {
           // TODO: set thumbnail for file
         },
+
+        getClipboardText: async () => {
+          return await navigator.clipboard.readText();
+        },
+        setClipboardText: async (text) => {
+          await navigator.clipboard.writeText(text);
+        },
       }
     );
 

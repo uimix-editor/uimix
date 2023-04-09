@@ -72,6 +72,12 @@ class Connection extends TypedEmitter<{
             thumbnail: url,
           });
         },
+        getClipboardText: async () => {
+          return await navigator.clipboard.readText();
+        },
+        setClipboardText: async (text) => {
+          await navigator.clipboard.writeText(text);
+        },
       }
     );
 

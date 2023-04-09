@@ -48,6 +48,15 @@ class Connection extends TypedEmitter<{
         updateThumbnail: async () => {
           // no op
         },
+        getClipboardText: async () => {
+          // TODO: propagate to vscode webview
+          // there's a bug in vscode that prevents navigator.clipboard.readText() from working in inner iframes
+          // https://github.com/microsoft/vscode/issues/129178#issuecomment-913093082
+          return await navigator.clipboard.readText();
+        },
+        setClipboardText: async (text) => {
+          await navigator.clipboard.writeText(text);
+        },
       }
     );
 
