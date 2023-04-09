@@ -1,5 +1,5 @@
 import {
-  Color,
+  ColorToken,
   Image,
   NodeJSON,
   ProjectJSON,
@@ -26,7 +26,7 @@ export class ProjectData {
     return this.doc.getArray("componentURLs");
   }
 
-  get colors(): Y.Map<Y.Map<Color[keyof Color]>> {
+  get colors(): Y.Map<Y.Map<ColorToken[keyof ColorToken]>> {
     return this.doc.getMap("colors");
   }
 
@@ -74,7 +74,9 @@ export class ProjectData {
     const colors = this.colors;
     colors.clear();
     for (const [name, json] of Object.entries(projectJSON.colors ?? {})) {
-      const data = new Y.Map<Color[keyof Color]>(Object.entries(json));
+      const data = new Y.Map<ColorToken[keyof ColorToken]>(
+        Object.entries(json)
+      );
       colors.set(name, data);
     }
   }
