@@ -187,7 +187,7 @@ const TreeRow: React.FC<{
           hovered && "ring-1 ring-inset ring-macaron-active"
         )}
         style={{
-          paddingLeft: depth * indentation,
+          paddingLeft: `${(depth * indentation) / 16}rem`,
         }}
       >
         <ToggleCollapsedButton
