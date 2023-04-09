@@ -68,6 +68,7 @@ export const TextEditorBody: React.FC<{
           top: `${computedRect.top}px`,
           width: fitWidth ? "max-content" : `${computedRect.width}px`,
           height: `${computedRect.height}px`,
+          outline: "none",
         }}
       />
     </div>
