@@ -54,6 +54,14 @@ interface ProjectFilesOptions {
   filePattern?: string;
 }
 
+export interface FileAccess {
+  rootPath: string;
+  watch(pattern: string, onChange: () => void): () => void;
+  glob(pattern: string): Promise<string[]>;
+  writeText(path: string, data: string): Promise<void>;
+  readText(path: string): Promise<string>;
+}
+
 // Important TODO: fix paths in Windows!!
 export class ProjectFiles {
   static load(rootPath: string, options: ProjectFilesOptions = {}) {
