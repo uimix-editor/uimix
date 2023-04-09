@@ -158,6 +158,9 @@ importers:
       jsonwebtoken:
         specifier: ^9.0.0
         version: 9.0.0
+      yjs:
+        specifier: ^13.5.52
+        version: 13.5.52
     devDependencies:
       '@types/jsonwebtoken':
         specifier: ^9.0.1
@@ -177,9 +180,6 @@ importers:
       typescript:
         specifier: ^5.0.3
         version: 5.0.3
-      yjs:
-        specifier: ^13.5.52
-        version: 13.5.52
 
   packages/dashboard:
     dependencies:
