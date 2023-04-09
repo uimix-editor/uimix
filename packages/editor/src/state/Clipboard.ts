@@ -2,7 +2,14 @@ import { NodeClipboardData } from "@uimix/node-data";
 
 // const mimeType = "application/x-macaron-nodes";
 
+interface ExternalClipboard {
+  get(type: "text" | "image"): Promise<string>;
+  set(type: "text" | "image", textOrDataURL: string): Promise<void>;
+}
+
 export class Clipboard {
+  static externalClipboard: ExternalClipboard | undefined;
+
   static async writeNodes(data: NodeClipboardData) {
     // const json = JSON.stringify(nodes);
 
@@ -13,7 +20,13 @@ export class Clipboard {
     //     }),
     //   }),
     // ]);
-    await navigator.clipboard.writeText(JSON.stringify(data));
+
+    const text = JSON.stringify(data);
+    if (this.externalClipboard) {
+      await this.externalClipboard.set("text", text);
+    } else {
+      await navigator.clipboard.writeText(text);
+    }
   }
 
   static async readNodes(): Promise<NodeClipboardData | undefined> {
@@ -21,7 +34,9 @@ export class Clipboard {
     // const item = items.find((item) => item.types.includes(`web ${mimeType}`));
     // if (!item) {
     // try parsing text as JSON
-    const text = await navigator.clipboard.readText();
+    const text =
+      (await this.externalClipboard?.get("text")) ??
+      (await navigator.clipboard.readText());
     if (!text) {
       return;
     }

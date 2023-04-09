@@ -80,11 +80,11 @@ const PageRow = observer(
           e.preventDefault();
           showContextMenu(e, commands.contextMenuForFile(entry));
         })}
-        className="w-full h-8 px-1"
+        className="w-full h-7 px-1"
       >
         <div
           className={twMerge(
-            "w-full h-8 flex items-center text-macaron-text rounded",
+            "w-full h-7 flex items-center text-macaron-text rounded",
             selected
               ? "bg-macaron-active text-macaron-activeText"
               : "bg-macaron-background",
@@ -92,7 +92,7 @@ const PageRow = observer(
               "hover:ring-1 hover:ring-inset hover:ring-macaron-active"
           )}
           style={{
-            paddingLeft: depth * indentation,
+            paddingLeft: `${(depth * indentation) / 16}rem`,
           }}
         >
           <ToggleCollapsedButton

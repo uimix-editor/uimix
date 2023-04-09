@@ -1,5 +1,4 @@
 import { MenuItemConstructorOptions, shell, Menu } from "electron";
-import { File } from "./File";
 import { Window, windows } from "./Window";
 
 export function setApplicationMenu() {
@@ -21,15 +20,15 @@ export function setApplicationMenu() {
         {
           label: "Open",
           accelerator: "CmdOrCtrl+O",
-          click: () => {
-            Window.openFromDialog();
+          click: async () => {
+            await Window.openFromDialog();
           },
         },
         { type: "separator" },
         {
           label: "Save",
           accelerator: "CmdOrCtrl+S",
-          click: (menuItem, browserWindow) => {
+          click: async (menuItem, browserWindow) => {
             if (!browserWindow) {
               return;
             }
@@ -37,13 +36,13 @@ export function setApplicationMenu() {
             if (!window) {
               return;
             }
-            window.file.save();
+            await window.file.save();
           },
         },
         {
           label: "Save As",
           accelerator: "CmdOrCtrl+Shift+S",
-          click: (menuItem, browserWindow) => {
+          click: async (menuItem, browserWindow) => {
             if (!browserWindow) {
               return;
             }
@@ -51,7 +50,7 @@ export function setApplicationMenu() {
             if (!window) {
               return;
             }
-            window.file.saveAs();
+            await window.file.saveAs();
           },
         },
         { type: "separator" },

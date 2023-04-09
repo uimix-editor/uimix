@@ -9,6 +9,9 @@ const options = {
   bundle: true,
   format: "esm",
   platform: "node",
+  banner: {
+    js: "import { createRequire } from 'module'; const require = createRequire(import.meta.url);",
+  },
   outfile: "dist/index.js",
   external: externals,
 };

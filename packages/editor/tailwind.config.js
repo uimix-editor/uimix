@@ -12,7 +12,7 @@ export default {
     extend: {
       fontSize: {
         "2xs": "0.625rem", // 10px
-        "macaron-base": ["0.75rem", "1rem"],
+        "macaron-base": ["var(--uimix-font-size, 0.75rem)", "1rem"],
       },
       colors: {
         macaron: colors,

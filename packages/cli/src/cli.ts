@@ -3,11 +3,11 @@ import { generateCode } from "./compiler/generateCode";
 import * as fs from "fs";
 import * as path from "path";
 import mkdirp from "mkdirp";
-import { ProjectFiles } from "./compiler/ProjectFiles";
+import { ProjectFiles } from "./project/ProjectFiles";
+import { NodeFileAccess } from "./project/NodeFileAccess";
 
 async function compileProject(projectFiles: ProjectFiles) {
-  const json = projectFiles.toProjectJSON();
-  const outFiles = await generateCode(projectFiles.rootPath, json);
+  const outFiles = await generateCode(projectFiles.rootPath, projectFiles.json);
 
   for (const outFile of outFiles) {
     const outPath = path.join(projectFiles.rootPath, outFile.filePath);
@@ -17,14 +17,13 @@ async function compileProject(projectFiles: ProjectFiles) {
   }
 }
 
-function compileCommand(
+async function compileCommand(
   rootPath: string,
   options: {
     watch?: boolean;
   }
-): void {
-  const projectFiles = new ProjectFiles(rootPath);
-  projectFiles.load();
+): Promise<void> {
+  const projectFiles = await ProjectFiles.load(new NodeFileAccess(rootPath));
 
   if (options.watch) {
     projectFiles.watch(() => compileProject(projectFiles));
@@ -42,7 +41,7 @@ cli
   .option("--root", `[string] root directory`)
   .option("-w, --watch", `[boolean] watch for changes`)
   .action(async (options: { root?: string; watch?: boolean }) => {
-    compileCommand(path.resolve(options.root || "."), options);
+    await compileCommand(path.resolve(options.root || "."), options);
   });
 
 cli.help();

@@ -1,23 +1,20 @@
 import { describe, expect, it } from "vitest";
-import * as Y from "yjs";
-import { loadProjectJSON } from "./ProjectJSON";
 import { Project } from "./Project";
 import { selectablesToProjectJSON } from "./Selectable";
 import * as path from "path";
-import { ProjectFiles } from "../../../cli/src/compiler/ProjectFiles";
+import { ProjectFiles } from "../../../cli/src/project/ProjectFiles";
+import { NodeFileAccess } from "../../../cli/src/project/NodeFileAccess";
 
 describe(selectablesToProjectJSON.name, () => {
-  it("works", () => {
+  it("works", async () => {
     const rootDir = path.resolve("../sandbox");
-    const projectFiles = new ProjectFiles(rootDir, {
+    const projectFiles = await ProjectFiles.load(new NodeFileAccess(rootDir), {
       filePattern: "src/components.uimix",
     });
-    projectFiles.load();
-    const projectJSON = projectFiles.toProjectJSON();
+    const projectJSON = projectFiles.json;
 
-    const ydoc = new Y.Doc();
-    const project = new Project(ydoc);
-    loadProjectJSON(ydoc, projectJSON);
+    const project = new Project();
+    project.loadJSON(projectJSON);
 
     const partial = selectablesToProjectJSON(
       project.pages.all[0].selectable.children

@@ -11,6 +11,7 @@ import {
   NodeJSON,
   NodeType,
   ProjectJSON,
+  StyleJSON,
 } from "@uimix/node-data";
 import { Project } from "./Project";
 import { Component } from "./Component";
@@ -36,13 +37,13 @@ class SelectablePartialStyle extends PartialStyle {
 
   selectable: Selectable;
 
-  get data(): ObservableYMap<unknown> | undefined {
+  get data(): ObservableYMap<StyleJSON[keyof StyleJSON]> | undefined {
     return ObservableYMap.get(
       this.selectable.selectableMap.stylesData.get(this.selectable.id)
     );
   }
 
-  get dataForWrite(): ObservableYMap<unknown> {
+  get dataForWrite(): ObservableYMap<StyleJSON[keyof StyleJSON]> {
     return ObservableYMap.get(
       getOrCreate(
         this.selectable.selectableMap.stylesData,
@@ -607,11 +608,11 @@ export class SelectableMap {
     this.project = project;
   }
 
-  get stylesData(): ObservableYMap<Y.Map<unknown>> {
-    return ObservableYMap.get(this.project.doc.getMap("styles"));
+  get stylesData(): ObservableYMap<Y.Map<StyleJSON[keyof StyleJSON]>> {
+    return ObservableYMap.get(this.project.data.styles);
   }
   get selectionData(): ObservableYMap<true> {
-    return ObservableYMap.get(this.project.doc.getMap("selection"));
+    return ObservableYMap.get(this.project.data.selection);
   }
 
   private readonly project: Project;

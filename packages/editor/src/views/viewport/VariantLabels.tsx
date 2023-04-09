@@ -20,9 +20,10 @@ import { VariantCondition } from "@uimix/node-data";
 import { Select } from "@uimix/foundation/src/components/Select";
 import { Input } from "@uimix/foundation/src/components/Input";
 import { startCase } from "lodash-es";
+import { viewOptions } from "../../state/ViewOptions";
 
-const componentSectionTopPadding = 48;
-const componentSectionPadding = 16;
+const componentSectionTopPadding = 48 * viewOptions.uiScaling;
+const componentSectionPadding = 16 * viewOptions.uiScaling;
 
 const ComponentSection: React.FC<{
   component: Selectable;
@@ -220,7 +221,7 @@ const VariantLabel: React.FC<{
       ref={ref}
       style={{
         left: `${pos.left}px`,
-        top: `${pos.top - 32}px`,
+        top: `${pos.top - 32 * viewOptions.uiScaling}px`,
         minWidth: `${pos.width}px`,
         width: "max-content",
         //pointerEvents: frame.isLocked ? "none" : "auto",

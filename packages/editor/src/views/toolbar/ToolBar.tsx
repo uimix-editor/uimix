@@ -9,23 +9,38 @@ import imageIcon from "@seanchas116/design-icons/json/image.json";
 import { viewportState } from "../../state/ViewportState";
 import { action } from "mobx";
 import { Tooltip } from "@uimix/foundation/src/components/Tooltip";
+import { twMerge } from "tailwind-merge";
 
-export const ToolBar = observer(() => {
+export const ToolBar: React.FC<{
+  position: "left" | "top";
+}> = observer(({ position }) => {
   // TODO: use material symbols instead of SVGs
 
+  const tooltipSide = position === "left" ? "right" : "bottom";
+
   return (
-    <div className="w-10 flex flex-col items-center p-1.5">
+    <div
+      className={twMerge(
+        "flex items-center p-1.5",
+        position === "left" ? "w-10 flex-col" : "h-10"
+      )}
+    >
       <DropdownMenu
         defs={commands.menu}
-        placement="right-start"
+        placement={position === "left" ? "right-start" : "bottom-start"}
         trigger={(props) => (
           <ToolButton {...props}>
             <Icon icon="ic:menu" className="text-base" />
           </ToolButton>
         )}
       />
-      <div className="flex flex-col items-center gap-1 mt-2">
-        <Tooltip text="Select" side="right">
+      <div
+        className={twMerge(
+          "flex items-center gap-1",
+          position === "left" ? "flex-col mt-2" : "flex-row ml-2"
+        )}
+      >
+        <Tooltip text="Select" side={tooltipSide}>
           <ToolButton
             aria-pressed={!viewportState.tool}
             onClick={action(() => {
@@ -45,7 +60,7 @@ export const ToolBar = observer(() => {
             </svg>
           </ToolButton>
         </Tooltip>
-        <Tooltip text="Frame (F)" side="right">
+        <Tooltip text="Frame (F)" side={tooltipSide}>
           <ToolButton
             aria-pressed={
               viewportState.tool?.type === "insert" &&
@@ -58,7 +73,7 @@ export const ToolBar = observer(() => {
             <Icon icon={rectIcon} className="text-xl" />
           </ToolButton>
         </Tooltip>
-        <Tooltip text="Text (T)" side="right">
+        <Tooltip text="Text (T)" side={tooltipSide}>
           <ToolButton
             aria-pressed={
               viewportState.tool?.type === "insert" &&
@@ -71,7 +86,7 @@ export const ToolBar = observer(() => {
             <Icon icon={textIcon} className="text-xl" />
           </ToolButton>
         </Tooltip>
-        <Tooltip text="Image" side="right">
+        <Tooltip text="Image" side={tooltipSide}>
           <ToolButton
             aria-pressed={
               viewportState.tool?.type === "insert" &&
@@ -84,7 +99,7 @@ export const ToolBar = observer(() => {
             <Icon icon={imageIcon} className="text-xl" />
           </ToolButton>
         </Tooltip>
-        <Tooltip text="Instance" side="right">
+        <Tooltip text="Instance" side={tooltipSide}>
           <ToolButton
             aria-pressed={viewportState.tool?.type === "instancePalette"}
             onClick={action(() => {
@@ -106,7 +121,7 @@ export const ToolBar = observer(() => {
             </svg>
           </ToolButton>
         </Tooltip>
-        <Tooltip text="Generate with AI (TODO)" side="right">
+        <Tooltip text="Generate with AI (TODO)" side={tooltipSide}>
           <ToolButton>
             <Icon icon="carbon:machine-learning" className="text-xl" />
           </ToolButton>

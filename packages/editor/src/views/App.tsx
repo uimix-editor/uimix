@@ -12,6 +12,9 @@ import { ToolBar } from "./toolbar/ToolBar";
 import { InstancePaletteOverlay } from "./viewport/InstancePaletteOverlay";
 import { ForeignComponentListDialog } from "./dialog/ForeignComponentListDialog";
 import { viewportState } from "../state/ViewportState";
+import { ScrollArea } from "@uimix/foundation/src/components/ScrollArea";
+import { NodeTreeView } from "./outline/NodeTreeView";
+import { viewOptions } from "../state/ViewOptions";
 
 function useKeyHandling() {
   useEffect(() => {
@@ -48,10 +51,6 @@ function useKeyHandling() {
 
 // get title bar padding from query string
 
-const titleBarPadding = Number.parseInt(
-  new URLSearchParams(window.location.search).get("titleBarPadding") ?? "0"
-);
-
 export const App = observer(function App() {
   useKeyHandling();
   //useWindowTitle();
@@ -59,26 +58,56 @@ export const App = observer(function App() {
   return (
     <TooltipProvider>
       <FontLoader />
+      <style>
+        {`
+          :root {
+            font-size: ${viewOptions.uiScaling * 16}px;
+            --uimix-font-size: ${viewOptions.fontSize}px;
+          }
+        `}
+      </style>
       <div
         className="flex flex-col fixed inset-0 text-macaron-base bg-macaron-background text-macaron-text select-none"
         style={{
-          top: `${titleBarPadding}px`,
+          top: `${viewOptions.titleBarPadding}px`,
         }}
       >
-        <div className="flex flex-1">
-          {viewportState.isSideBarsVisible && (
-            <>
-              <OutlineSideBar />
-              <div className="bg-macaron-separator w-px" />
-              <ToolBar />
-            </>
-          )}
-          <div className="flex flex-1 border-l border-r border-macaron-separator relative">
-            <Viewport />
-            <InstancePaletteOverlay />
+        {viewOptions.narrowMode ? (
+          <div className="flex flex-1">
+            <div className="flex flex-1 flex-col border-r border-macaron-separator">
+              <ToolBar position="top" />
+              <div className="flex flex-1 border-t border-macaron-separator relative">
+                <Viewport />
+                <InstancePaletteOverlay />
+              </div>
+            </div>
+            {viewportState.isSideBarsVisible && (
+              <div className="flex flex-col w-64">
+                <div className="flex-1 border-b border-macaron-separator">
+                  <ScrollArea className="absolute left-0 top-0 w-full h-full">
+                    <NodeTreeView />
+                  </ScrollArea>
+                </div>
+                <InspectorSideBar className="flex-[2_2_0%]" />
+              </div>
+            )}
           </div>
-          {viewportState.isSideBarsVisible && <InspectorSideBar />}
-        </div>
+        ) : (
+          <div className="flex flex-1">
+            {viewportState.isSideBarsVisible && (
+              <>
+                <OutlineSideBar />
+                <div className="bg-macaron-separator w-px" />
+                <ToolBar position="left" />
+              </>
+            )}
+            <div className="flex flex-1 border-l border-r border-macaron-separator relative">
+              <Viewport />
+              <InstancePaletteOverlay />
+            </div>
+            {viewportState.isSideBarsVisible && <InspectorSideBar />}
+          </div>
+        )}
       </div>
       <ContextMenu />
       <ForeignComponentListDialog />

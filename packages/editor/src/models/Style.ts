@@ -94,8 +94,8 @@ export const defaultStyle: StyleJSON = {
 export const styleKeys = Object.keys(defaultStyle) as (keyof StyleJSON)[];
 
 export abstract class PartialStyle implements Partial<IStyle> {
-  abstract get data(): ObservableYMap<unknown> | undefined;
-  abstract get dataForWrite(): ObservableYMap<unknown>;
+  abstract get data(): ObservableYMap<StyleJSON[keyof StyleJSON]> | undefined;
+  abstract get dataForWrite(): ObservableYMap<StyleJSON[keyof StyleJSON]>;
 
   toJSON(): Partial<IStyle> {
     return this.data?.toJSON() ?? {};
@@ -117,7 +117,7 @@ for (const key of styleKeys) {
     get: function (this: PartialStyle) {
       return this.data?.get(key);
     },
-    set(this: PartialStyle, value) {
+    set(this: PartialStyle, value: StyleJSON[keyof StyleJSON]) {
       if (value === undefined) {
         this.data?.delete(key);
       } else {

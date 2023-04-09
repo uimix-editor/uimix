@@ -1,0 +1,80 @@
+{
+  "name": "uimix-vscode",
+  "displayName": "vscode",
+  "version": "0.0.1",
+  "description": "UIMix editor in VS Code",
+  "categories": [
+    "Other"
+  ],
+  "homepage": "https://github.com/seanchas116/uimix",
+  "bugs": {
+    "url": "https://github.com/seanchas116/uimix/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/seanchas116/uimix.git"
+  },
+  "main": "./out/extension.js",
+  "scripts": {
+    "//test": "node ./out/test/runTest.js",
+    "build": "node build.js",
+    "dev": "node build.js --watch",
+    "lint": "eslint src --ext ts",
+    "package": "vsce package --no-dependencies",
+    "publish": "vsce publish --no-dependencies",
+    "pretest": "pnpm run build && pnpm run lint",
+    "vscode:prepublish": "pnpm run build"
+  },
+  "contributes": {
+    "commands": [
+      {
+        "command": "uimix-vscode.helloWorld",
+        "title": "Hello World"
+      }
+    ],
+    "customEditors": [
+      {
+        "viewType": "uimix.uimixFile",
+        "displayName": "UIMix",
+        "selector": [
+          {
+            "filenamePattern": "*.uimix"
+          }
+        ]
+      }
+    ],
+    "languages": [
+      {
+        "id": "json",
+        "extensions": [
+          ".uimix"
+        ]
+      }
+    ]
+  },
+  "activationEvents": [],
+  "dependencies": {},
+  "devDependencies": {
+    "@types/glob": "^8.1.0",
+    "@types/mocha": "^10.0.1",
+    "@types/node": "16.x",
+    "@types/vscode": "^1.77.0",
+    "@typescript-eslint/eslint-plugin": "^5.56.0",
+    "@typescript-eslint/parser": "^5.56.0",
+    "@uimix/editor": "workspace:*",
+    "@uimix/typed-rpc": "workspace:*",
+    "@vscode/test-electron": "^2.3.0",
+    "@vscode/vsce": "^2.18.0",
+    "esbuild": "^0.17.15",
+    "eslint": "^8.36.0",
+    "glob": "^8.1.0",
+    "just-debounce-it": "^3.2.0",
+    "mocha": "^10.2.0",
+    "typescript": "^4.9.5",
+    "uimix": "workspace:*",
+    "yjs": "^13.5.52"
+  },
+  "engines": {
+    "vscode": "^1.77.0"
+  }
+}

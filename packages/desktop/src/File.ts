@@ -3,34 +3,24 @@ import { ProjectJSON } from "../../node-data/src";
 import { DocumentMetadata } from "../../dashboard/src/types/DesktopAPI";
 import { TypedEmitter } from "tiny-typed-emitter";
 import { app, dialog } from "electron";
-import { isEqual } from "lodash";
-import { ProjectFiles } from "../../cli/src/compiler/ProjectFiles";
-
-export function compareProjectJSONs(a: ProjectJSON, b: ProjectJSON): boolean {
-  return (
-    JSON.stringify(a.nodes) === JSON.stringify(b.nodes) &&
-    JSON.stringify(a.styles) === JSON.stringify(b.styles) &&
-    JSON.stringify(a.componentURLs) === JSON.stringify(b.componentURLs) &&
-    JSON.stringify(a.colors) === JSON.stringify(b.colors)
-    // do not compare images because they are too big
-  );
-}
+import { ProjectFiles } from "../../cli/src/project/ProjectFiles";
+import { NodeFileAccess } from "../../cli/src/project/NodeFileAccess";
+import { compareProjectJSONs } from "../../editor/src/models/ProjectJSON";
 
 export class File extends TypedEmitter<{
   editedChange: (edited: boolean) => void;
   metadataChange: (metadata: DocumentMetadata) => void;
   dataChange: (data: ProjectJSON) => void;
 }> {
-  constructor(filePath?: string) {
+  constructor(files?: ProjectFiles) {
     super();
 
-    if (filePath) {
-      app.addRecentDocument(filePath);
-      this.files = new ProjectFiles(filePath);
-      this.files.load();
+    if (files) {
+      app.addRecentDocument(files.rootPath);
+      this.files = files;
     }
 
-    this._data = this.files?.toProjectJSON() ?? {
+    this._data = this.files?.json ?? {
       // default project
       nodes: {
         project: { type: "project", index: 0 },
@@ -38,7 +28,7 @@ export class File extends TypedEmitter<{
       styles: {},
     };
     this.savedData = this._data;
-    if (filePath) {
+    if (files) {
       this.watch();
     }
   }
@@ -77,46 +67,54 @@ export class File extends TypedEmitter<{
     this.emit("dataChange", this.data);
   }
 
-  save() {
+  async save() {
     if (!this.files) {
-      this.saveAs();
+      await this.saveAs();
       return;
     }
 
-    this.files.loadProjectJSON(this.data);
-    this.files.save();
+    this.files.json = this.data;
+    await this.files.save();
     app.addRecentDocument(this.files.rootPath);
     this.savedData = this.data;
     this.edited = false;
     this.emit("editedChange", this.edited);
   }
 
-  saveAs() {
-    const newPath = dialog.showOpenDialogSync({
+  async saveAs() {
+    const openDialogResult = await dialog.showOpenDialog({
       properties: ["openDirectory", "createDirectory"],
       message: "Select a folder to save your project to.",
-    })?.[0];
+    });
+    const newPath = openDialogResult.filePaths[0];
     if (!newPath) {
       return;
     }
     console.log("newPath", newPath);
 
-    this.files = new ProjectFiles(newPath);
-    this.save();
+    this.files = new ProjectFiles(new NodeFileAccess(newPath));
+    await this.save();
     this.watch();
 
     this.emit("metadataChange", this.metadata);
   }
 
-  static open() {
-    const filePath = dialog.showOpenDialogSync({
+  static async open() {
+    const dialogResult = await dialog.showOpenDialog({
       properties: ["openDirectory"],
       message: "Select a folder to open your project from.",
-    })?.[0];
+    });
+    const filePath = dialogResult.filePaths[0];
     if (!filePath) {
       return;
     }
-    return new File(filePath);
+
+    return await this.openFilePath(filePath);
+  }
+
+  static async openFilePath(filePath: string) {
+    const files = await ProjectFiles.load(new NodeFileAccess(filePath));
+    return new File(files);
   }
 
   watch() {
@@ -131,10 +129,8 @@ export class File extends TypedEmitter<{
     }
 
     this.watchDisposer = files.watch(() => {
-      const json = files.toProjectJSON();
-      if (isEqual(json, this._data)) {
-        return;
-      }
+      const json = files.json;
+      console.log("changed");
       if (this.edited) {
         // TODO: warn
         return;

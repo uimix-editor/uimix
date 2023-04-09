@@ -1,13 +1,16 @@
 import { encode } from "url-safe-base64";
 import { Buffer } from "buffer";
+import createHash, { TypedArray } from "create-hash";
 
-export const crypto =
-  globalThis.crypto ?? (await import("node:crypto")).webcrypto;
+type Data = string | Buffer | TypedArray | DataView;
 
-export async function getURLSafeBase64Hash(
-  buffer: ArrayBuffer
-): Promise<string> {
-  // get hash of blob
-  const hashData = await crypto.subtle.digest("SHA-256", buffer);
-  return encode(Buffer.from(hashData).toString("base64"));
+export function sha256(data: Data): Buffer {
+  const hash = createHash("sha256");
+  hash.update(data);
+  return hash.digest();
+}
+
+export function getURLSafeBase64Hash(data: Data): string {
+  const hash = sha256(data);
+  return encode(Buffer.from(hash).toString("base64"));
 }

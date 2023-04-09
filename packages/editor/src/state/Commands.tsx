@@ -255,7 +255,8 @@ class Commands {
     shortcuts: [new Shortcut(["Mod"], "KeyX")],
     onClick: action(() => {
       if (isTextInput(document.activeElement)) {
-        return false;
+        document.execCommand("cut");
+        return;
       }
       void this.cut();
     }),
@@ -266,7 +267,8 @@ class Commands {
     shortcuts: [new Shortcut(["Mod"], "KeyC")],
     onClick: action(() => {
       if (isTextInput(document.activeElement)) {
-        return false;
+        document.execCommand("copy");
+        return;
       }
       void this.copy();
     }),
@@ -277,7 +279,8 @@ class Commands {
     shortcuts: [new Shortcut(["Mod"], "KeyV")],
     onClick: action(() => {
       if (isTextInput(document.activeElement)) {
-        return false;
+        document.execCommand("paste");
+        return;
       }
       void this.paste();
     }),
@@ -287,7 +290,8 @@ class Commands {
     text: "Delete",
     onClick: action(() => {
       if (isTextInput(document.activeElement)) {
-        return false;
+        document.execCommand("delete");
+        return;
       }
       this.delete();
     }),
@@ -298,7 +302,8 @@ class Commands {
     shortcuts: [new Shortcut(["Mod"], "KeyA")],
     onClick: action(() => {
       if (isTextInput(document.activeElement)) {
-        return false;
+        document.execCommand("selectAll");
+        return;
       }
       this.selectAll();
     }),

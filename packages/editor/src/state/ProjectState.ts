@@ -15,12 +15,14 @@ import { ScrollState } from "./ScrollState";
 
 export class ProjectState {
   constructor() {
-    this.project = new Project(this.doc);
+    this.project = new Project();
     this.undoManager = this.project.createUndoManager();
     makeObservable(this);
   }
 
-  readonly doc = new Y.Doc();
+  get doc(): Y.Doc {
+    return this.project.doc;
+  }
   readonly project: Project;
   @observable pageID: string | undefined;
   @computed get page(): Page | undefined {

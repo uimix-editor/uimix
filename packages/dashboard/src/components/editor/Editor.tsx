@@ -72,6 +72,18 @@ class Connection extends TypedEmitter<{
             thumbnail: url,
           });
         },
+        getClipboard: async (type) => {
+          if (type !== "text") {
+            throw new Error(`unsupported clipboard type: ${type}`);
+          }
+          return await navigator.clipboard.readText();
+        },
+        setClipboard: async (type, text) => {
+          if (type !== "text") {
+            throw new Error(`unsupported clipboard type: ${type}`);
+          }
+          await navigator.clipboard.writeText(text);
+        },
       }
     );
 
@@ -108,7 +120,7 @@ class Connection extends TypedEmitter<{
     const doc = this.provider.document;
 
     doc.on("update", (update) => {
-      void this.rpc.remote.sync(update as never);
+      void this.rpc.remote.update(update as never);
     });
     await this.rpc.remote.init(Y.encodeStateAsUpdate(doc));
     this.emit("readyToShow");
@@ -144,7 +156,7 @@ const Editor: React.FC<{
       "://",
       // adds subdomain to the editor url
       `://${documentId}.`
-    ) + "?titleBarPadding=40";
+    ) + "?embed=true&titleBarPadding=40";
 
   return (
     <div className="text-neutral-800 flex flex-col text-xs">

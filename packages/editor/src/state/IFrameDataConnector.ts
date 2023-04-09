@@ -6,6 +6,7 @@ import { action } from "mobx";
 import { IEditorToRootRPCHandler, IRootToEditorRPCHandler } from "./IFrameRPC";
 import { throttle } from "lodash-es";
 import { ThumbnailTakerHost } from "./ThumbnailTakerHost";
+import { Clipboard } from "./Clipboard";
 
 export class IFrameDataConnector {
   constructor(state: ProjectState) {
@@ -25,21 +26,33 @@ export class IFrameDataConnector {
       return this.rpc.remote.uploadImage(hash, contentType, data);
     };
 
-    this.rpc = new RPC(parentWindowTarget(), {
-      sync: action((data: Uint8Array) => {
-        Y.applyUpdate(state.doc, data);
-      }),
-      init: action((data: Uint8Array) => {
-        Y.applyUpdate(state.doc, data);
-        state.setupInitContent();
-      }),
-    });
+    this.rpc = new RPC<IEditorToRootRPCHandler, IRootToEditorRPCHandler>(
+      parentWindowTarget(),
+      {
+        update: action(async (data: Uint8Array) => {
+          Y.applyUpdate(state.doc, data);
+        }),
+        init: action(async (data: Uint8Array, pageID?: string) => {
+          Y.applyUpdate(state.doc, data);
+          state.pageID = pageID ?? state.project.pages.all[0]?.id;
+        }),
+      }
+    );
 
     new ThumbnailTakerHost(state.project, (pngData) => {
       void this.rpc.remote.updateThumbnail(pngData);
     });
 
     void this.rpc.remote.ready();
+
+    Clipboard.externalClipboard = {
+      get: async (type) => {
+        return this.rpc.remote.getClipboard(type);
+      },
+      set: async (type, text) => {
+        void this.rpc.remote.setClipboard(type, text);
+      },
+    };
   }
 
   private state: ProjectState;
