@@ -1,6 +1,6 @@
 import { describe, expect, it } from "vitest";
 import { generateCode } from "./generateCode";
-import { ProjectFiles } from "./ProjectFiles";
+import { ProjectFiles } from "../project/ProjectFiles";
 import * as path from "path";
 
 describe(generateCode.name, () => {

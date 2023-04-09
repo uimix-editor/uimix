@@ -1,7 +1,7 @@
 import { describe, expect, it } from "vitest";
 import { Project } from "./Project";
 import * as path from "path";
-import { ProjectFiles } from "../../../cli/src/compiler/ProjectFiles";
+import { ProjectFiles } from "../../../cli/src/project/ProjectFiles";
 
 describe(Project.name, () => {
   describe("loadJSON", () => {

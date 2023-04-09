@@ -1,6 +1,6 @@
 import * as vscode from "vscode";
 import { CustomDocument } from "./CustomDocument";
-import { ProjectFiles } from "uimix/src/compiler/ProjectFiles";
+import { ProjectFiles } from "uimix/src/project/ProjectFiles";
 import * as Y from "yjs";
 import { ProjectData } from "@uimix/editor/src/models/ProjectData";
 import {

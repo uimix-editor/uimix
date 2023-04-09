@@ -3,7 +3,7 @@ import { generateCode } from "./compiler/generateCode";
 import * as fs from "fs";
 import * as path from "path";
 import mkdirp from "mkdirp";
-import { ProjectFiles } from "./compiler/ProjectFiles";
+import { ProjectFiles } from "./project/ProjectFiles";
 
 async function compileProject(projectFiles: ProjectFiles) {
   const outFiles = await generateCode(projectFiles.rootPath, projectFiles.json);
