@@ -4,6 +4,7 @@ import * as fs from "fs";
 import shell from "shelljs";
 import tmp from "tmp";
 import { Project } from "@uimix/editor/src/models/Project";
+import { NodeFileAccess } from "./NodeFileAccess";
 
 describe(ProjectFiles.name, () => {
   let tmpObj: tmp.DirResult;
@@ -26,7 +27,7 @@ describe(ProjectFiles.name, () => {
   //   expect(projectFiles.toProjectJSON()).toMatchSnapshot();
   // });
 
-  it("saves", () => {
+  it("saves", async () => {
     const project = new Project();
     const page1 = project.pages.create("src/page1");
     const page2 = project.pages.create("src/page2");
@@ -34,9 +35,11 @@ describe(ProjectFiles.name, () => {
     page1.node.append([project.nodes.create("frame", "frame1")]);
     page2.node.append([project.nodes.create("text", "text1")]);
 
-    const projectFiles = new ProjectFiles(tmpObj.name + "/demo-project");
+    const projectFiles = new ProjectFiles(
+      new NodeFileAccess(tmpObj.name + "/demo-project")
+    );
     projectFiles.json = project.toJSON();
-    projectFiles.save();
+    await projectFiles.save();
 
     const page1File = fs.readFileSync(
       tmpObj.name + "/demo-project/src/page1.uimix",
@@ -50,8 +53,9 @@ describe(ProjectFiles.name, () => {
     );
     expect(page2File).toMatchSnapshot();
 
-    const projectFiles2 = new ProjectFiles(tmpObj.name + "/demo-project");
-    projectFiles2.load();
+    const projectFiles2 = await ProjectFiles.load(
+      new NodeFileAccess(tmpObj.name + "/demo-project")
+    );
 
     expect(projectFiles2.json).toEqual(project.toJSON());
   });
@@ -64,7 +68,9 @@ describe(ProjectFiles.name, () => {
     page1.node.append([project.nodes.create("frame", "frame1")]);
     page2.node.append([project.nodes.create("text", "text1")]);
 
-    const projectFiles = new ProjectFiles(tmpObj.name + "/demo-project");
+    const projectFiles = new ProjectFiles(
+      new NodeFileAccess(tmpObj.name + "/demo-project")
+    );
     projectFiles.json = project.toJSON();
 
     let watchCount = 0;
@@ -74,7 +80,7 @@ describe(ProjectFiles.name, () => {
     await new Promise((resolve) => setTimeout(resolve, 500));
 
     // saves not cause watch
-    projectFiles.save();
+    await projectFiles.save();
     await new Promise((resolve) => setTimeout(resolve, 500));
     expect(watchCount).toBe(0);
 

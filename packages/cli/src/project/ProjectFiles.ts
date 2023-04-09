@@ -12,12 +12,8 @@ import {
   compareProjectJSONs,
 } from "@uimix/editor/src/models/ProjectJSON";
 import { omit } from "lodash-es";
-import { mkdirpSync } from "mkdirp";
-import { globSync } from "glob";
-import path from "path";
-import fs from "fs";
 import { formatJSON } from "../format";
-import chokidar from "chokidar";
+import { FileAccess } from "./FileAccess";
 
 interface HierarchicalNodeJSON extends NodeJSON {
   id: string;
@@ -54,28 +50,25 @@ interface ProjectFilesOptions {
   filePattern?: string;
 }
 
-export interface FileAccess {
-  rootPath: string;
-  watch(pattern: string, onChange: () => void): () => void;
-  glob(pattern: string): Promise<string[]>;
-  writeText(path: string, data: string): Promise<void>;
-  readText(path: string): Promise<string>;
-}
-
 // Important TODO: fix paths in Windows!!
 export class ProjectFiles {
-  static load(rootPath: string, options: ProjectFilesOptions = {}) {
-    const projectFiles = new ProjectFiles(rootPath, options);
-    projectFiles.load();
+  static async load(fileAccess: FileAccess, options: ProjectFilesOptions = {}) {
+    const projectFiles = new ProjectFiles(fileAccess, options);
+    await projectFiles.load();
     return projectFiles;
   }
 
-  constructor(rootPath: string, options: ProjectFilesOptions = {}) {
-    this.rootPath = rootPath;
+  constructor(fileAccess: FileAccess, options: ProjectFilesOptions = {}) {
+    this.fileAccess = fileAccess;
     this.filePattern = options.filePattern ?? "**/*.uimix";
   }
 
-  readonly rootPath: string;
+  readonly fileAccess: FileAccess;
+
+  get rootPath(): string {
+    return this.fileAccess.rootPath;
+  }
+
   readonly filePattern: string;
   readonly manifestName = "uimix.json";
   json: ProjectJSON = {
@@ -83,13 +76,11 @@ export class ProjectFiles {
     styles: {},
   };
 
-  load(): boolean {
-    const rootPath = this.rootPath;
-    const manifestPath = path.resolve(rootPath, this.manifestName);
+  async load(): Promise<boolean> {
     let manifest: ProjectManifestJSON;
     try {
       manifest = ProjectManifestJSON.parse(
-        JSON.parse(fs.readFileSync(manifestPath, { encoding: "utf-8" }))
+        JSON.parse(await this.fileAccess.readText(this.manifestName))
       );
     } catch {
       manifest = { componentURLs: [] };
@@ -97,18 +88,12 @@ export class ProjectFiles {
 
     const pages = new Map<string, PageJSON>();
 
-    const pagePaths = globSync(this.filePattern, {
-      cwd: rootPath,
-    });
+    const pagePaths = await this.fileAccess.glob(this.filePattern);
     pagePaths.sort();
 
     for (const pagePath of pagePaths) {
       const pageJSON = PageJSON.parse(
-        JSON.parse(
-          fs.readFileSync(path.resolve(rootPath, pagePath), {
-            encoding: "utf-8",
-          })
-        )
+        JSON.parse(await this.fileAccess.readText(pagePath))
       );
       pages.set(pagePath.replace(/\.uimix$/, ""), pageJSON);
     }
@@ -122,62 +107,44 @@ export class ProjectFiles {
     return true;
   }
 
-  save(): void {
-    const rootPath = this.rootPath;
-
+  async save(): Promise<void> {
     const { manifest, pages } = projectJSONToFiles(this.json);
 
-    fs.writeFileSync(
-      path.resolve(rootPath, this.manifestName),
+    await this.fileAccess.writeText(
+      this.manifestName,
       formatJSON(JSON.stringify(manifest))
     );
 
     const pagePathsToDelete = new Set(
-      globSync(this.filePattern, {
-        cwd: rootPath,
-      })
+      await this.fileAccess.glob(this.filePattern)
     );
 
     for (const [pageName, pageJSON] of pages) {
       const pagePath = pageName + ".uimix";
-      const pageDirPath = path.dirname(pagePath);
-      mkdirpSync(path.resolve(rootPath, pageDirPath));
-      fs.writeFileSync(
-        path.resolve(rootPath, pagePath),
+      await this.fileAccess.writeText(
+        pagePath,
         formatJSON(JSON.stringify(pageJSON))
       );
       pagePathsToDelete.delete(pagePath);
     }
 
     for (const pagePath of pagePathsToDelete) {
-      fs.rmSync(path.resolve(rootPath, pagePath));
+      await this.fileAccess.remove(pagePath);
     }
   }
 
   watch(onChange: (projectJSON: ProjectJSON) => void): () => void {
-    const watchPath = path.resolve(this.rootPath, this.filePattern);
-
-    // FIXME: chokidar looks like making UI slow
-    const watcher = chokidar.watch(watchPath, {
-      ignored: ["**/node_modules/**", "**/.git/**"],
-    });
     console.log("start watching...");
 
-    const _onChange = () => {
+    return this.fileAccess.watch(this.filePattern, async () => {
       try {
-        if (this.load()) {
+        if (await this.load()) {
           onChange(this.json);
         }
       } catch (e) {
         console.error(e);
       }
-    };
-
-    watcher.on("change", _onChange);
-    watcher.on("add", _onChange);
-    watcher.on("unlink", _onChange);
-
-    return () => watcher.close();
+    });
   }
 }
 
