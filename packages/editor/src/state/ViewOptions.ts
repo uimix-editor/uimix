@@ -1,4 +1,5 @@
 interface ViewOptions {
+  embed: boolean;
   titleBarPadding: number;
   remSize: number;
   fontSize: number;
@@ -8,6 +9,7 @@ interface ViewOptions {
 function getViewOptions(): ViewOptions {
   const searchParams = new URLSearchParams(window.location.search);
 
+  const embed = searchParams.get("embed") === "true";
   const titleBarPadding = Number.parseInt(
     searchParams.get("titleBarPadding") ?? "0"
   );
@@ -16,6 +18,7 @@ function getViewOptions(): ViewOptions {
   const narrowMode = searchParams.get("narrowMode") === "true";
 
   return {
+    embed,
     titleBarPadding,
     remSize,
     fontSize,

@@ -144,7 +144,7 @@ const Editor: React.FC<{
       "://",
       // adds subdomain to the editor url
       `://${documentId}.`
-    ) + "?titleBarPadding=40";
+    ) + "?embed=true&titleBarPadding=40";
 
   return (
     <div className="text-neutral-800 flex flex-col text-xs">

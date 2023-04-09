@@ -4,8 +4,9 @@ import { App } from "./views/App";
 import "./index.css";
 import { IFrameDataConnector } from "./state/IFrameDataConnector";
 import { projectState } from "./state/ProjectState";
+import { viewOptions } from "./state/ViewOptions";
 
-if (window.parent !== window) {
+if (viewOptions.embed) {
   new IFrameDataConnector(projectState);
 } else {
   projectState.setupInitContent();
