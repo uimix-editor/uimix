@@ -72,10 +72,16 @@ class Connection extends TypedEmitter<{
             thumbnail: url,
           });
         },
-        getClipboardText: async () => {
+        getClipboard: async (type) => {
+          if (type !== "text") {
+            throw new Error(`unsupported clipboard type: ${type}`);
+          }
           return await navigator.clipboard.readText();
         },
-        setClipboardText: async (text) => {
+        setClipboard: async (type, text) => {
+          if (type !== "text") {
+            throw new Error(`unsupported clipboard type: ${type}`);
+          }
           await navigator.clipboard.writeText(text);
         },
       }

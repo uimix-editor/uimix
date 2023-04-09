@@ -48,10 +48,16 @@ class Connection extends TypedEmitter<{
           // TODO: set thumbnail for file
         },
 
-        getClipboardText: async () => {
+        getClipboard: async (type) => {
+          if (type !== "text") {
+            throw new Error(`unsupported clipboard type: ${type}`);
+          }
           return await navigator.clipboard.readText();
         },
-        setClipboardText: async (text) => {
+        setClipboard: async (type, text) => {
+          if (type !== "text") {
+            throw new Error(`unsupported clipboard type: ${type}`);
+          }
           await navigator.clipboard.writeText(text);
         },
       }

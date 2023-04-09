@@ -3,8 +3,8 @@ import { NodeClipboardData } from "@uimix/node-data";
 // const mimeType = "application/x-macaron-nodes";
 
 interface ExternalClipboard {
-  getText(): Promise<string>;
-  setText(text: string): Promise<void>;
+  get(type: "text" | "image"): Promise<string>;
+  set(type: "text" | "image", textOrDataURL: string): Promise<void>;
 }
 
 export class Clipboard {
@@ -23,7 +23,7 @@ export class Clipboard {
 
     const text = JSON.stringify(data);
     if (this.externalClipboard) {
-      await this.externalClipboard.setText(text);
+      await this.externalClipboard.set("text", text);
     } else {
       await navigator.clipboard.writeText(text);
     }
@@ -35,7 +35,7 @@ export class Clipboard {
     // if (!item) {
     // try parsing text as JSON
     const text =
-      (await this.externalClipboard?.getText()) ??
+      (await this.externalClipboard?.get("text")) ??
       (await navigator.clipboard.readText());
     if (!text) {
       return;

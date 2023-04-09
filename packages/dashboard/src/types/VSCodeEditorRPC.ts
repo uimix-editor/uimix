@@ -6,6 +6,6 @@ export interface IVSCodeToEditorRPCHandler {
 export interface IEditorToVSCodeRPCHandler {
   ready(): Promise<void>;
   update(data: Uint8Array): Promise<void>;
-  getClipboardText(): Promise<string>;
-  setClipboardText(content: string): Promise<void>;
+  getClipboard(type: "text" | "image"): Promise<string>;
+  setClipboard(type: "text" | "image", content: string): Promise<void>;
 }

@@ -210,10 +210,10 @@ export class CustomEditorProvider implements vscode.CustomEditorProvider {
           Y.applyUpdate(this.data.doc, data);
           this.save();
         },
-        getClipboardText: async () => {
+        getClipboard: async () => {
           throw new Error("should be intercepted in webview.");
         },
-        setClipboardText: async (text) => {
+        setClipboard: async () => {
           throw new Error("should be intercepted in webview.");
         },
       }
@@ -265,7 +265,12 @@ export class CustomEditorProvider implements vscode.CustomEditorProvider {
           if (event.source === iframe.contentWindow) {
             // intercept clipboard messages
             if (event.data.type === "call") {
-              if (event.data.name === "getClipboardText") {
+              if (event.data.name === "getClipboard") {
+                const type = event.data.args[0];
+                if (type !== "text") {
+                  throw new Error("unsupported clipboard type: " + type);
+                }
+
                 iframe.contentWindow.postMessage({
                   type: "result",
                   callID: event.data.callID,
@@ -274,8 +279,13 @@ export class CustomEditorProvider implements vscode.CustomEditorProvider {
                 }, "*");
                 return;
               }
-              if (event.data.name === "setClipboardText") {
-                await navigator.clipboard.writeText(event.data.args[0]);
+              if (event.data.name === "setClipboard") {
+                const type = event.data.args[0];
+                if (type !== "text") {
+                  throw new Error("unsupported clipboard type: " + type);
+                }
+
+                await navigator.clipboard.writeText(event.data.args[1]);
                 iframe.contentWindow.postMessage({
                   type: "result",
                   callID: event.data.callID,
