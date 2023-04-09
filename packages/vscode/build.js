@@ -4,11 +4,16 @@ const esbuild = require("esbuild");
 const externals = [
   ...Object.keys(require("./package.json").dependencies ?? {}),
   "vscode",
+  "mocha",
 ];
 
 /** @type import('esbuild').BuildOptions */
 const options = {
-  entryPoints: ["./src/extension.ts", "./src/test/runTest.ts"],
+  entryPoints: [
+    "./src/extension.ts",
+    "./src/test/runTest.ts",
+    "./src/test/suite/index.ts",
+  ],
   bundle: true,
   format: "cjs",
   platform: "node",
