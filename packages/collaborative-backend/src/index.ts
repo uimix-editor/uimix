@@ -3,13 +3,14 @@ import { Logger } from "@hocuspocus/extension-logger";
 import { PrismaClient } from "@prisma/client";
 import jwt from "jsonwebtoken";
 import { Database } from "@hocuspocus/extension-database";
-import { loadProjectJSON } from "../../editor/src/models/ProjectJSON";
+import { ProjectData } from "../../editor/src/models/ProjectData";
 import * as Y from "yjs";
 import { createId } from "@paralleldrive/cuid2";
 
 function generateInitialData(): Uint8Array {
-  const doc = new Y.Doc();
-  loadProjectJSON(doc, {
+  const data = new ProjectData();
+
+  data.loadJSON({
     nodes: {
       project: {
         type: "project",
@@ -25,7 +26,7 @@ function generateInitialData(): Uint8Array {
     styles: {},
   });
 
-  return Y.encodeStateAsUpdate(doc);
+  return Y.encodeStateAsUpdate(data.doc);
 }
 
 const db = new PrismaClient({

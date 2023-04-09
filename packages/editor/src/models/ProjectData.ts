@@ -39,46 +39,48 @@ export class ProjectData {
   }
 
   loadJSON(projectJSON: ProjectJSON): void {
-    const nodes = this.nodes;
-    nodes.clear();
-    for (const [id, json] of Object.entries(projectJSON.nodes)) {
-      const data = new Y.Map<NodeJSON[keyof NodeJSON]>();
-      for (const [key, value] of Object.entries(json)) {
-        data.set(key, value);
+    this.doc.transact(() => {
+      const nodes = this.nodes;
+      nodes.clear();
+      for (const [id, json] of Object.entries(projectJSON.nodes)) {
+        const data = new Y.Map<NodeJSON[keyof NodeJSON]>();
+        for (const [key, value] of Object.entries(json)) {
+          data.set(key, value);
+        }
+        nodes.set(id, data);
       }
-      nodes.set(id, data);
-    }
 
-    const styles = this.styles;
-    styles.clear();
-    for (const [id, json] of Object.entries(projectJSON.styles)) {
-      const data = new Y.Map<StyleJSON[keyof StyleJSON]>();
-      for (const [key, value] of Object.entries(json)) {
-        data.set(key, value);
+      const styles = this.styles;
+      styles.clear();
+      for (const [id, json] of Object.entries(projectJSON.styles)) {
+        const data = new Y.Map<StyleJSON[keyof StyleJSON]>();
+        for (const [key, value] of Object.entries(json)) {
+          data.set(key, value);
+        }
+        styles.set(id, data);
       }
-      styles.set(id, data);
-    }
 
-    const componentURLs = this.componentURLs;
-    componentURLs.delete(0, componentURLs.length);
-    for (const url of projectJSON.componentURLs ?? []) {
-      componentURLs.push([url]);
-    }
+      const componentURLs = this.componentURLs;
+      componentURLs.delete(0, componentURLs.length);
+      for (const url of projectJSON.componentURLs ?? []) {
+        componentURLs.push([url]);
+      }
 
-    const images = this.images;
-    images.clear();
-    for (const [hash, url] of Object.entries(projectJSON.images ?? {})) {
-      images.set(hash, url);
-    }
+      const images = this.images;
+      images.clear();
+      for (const [hash, url] of Object.entries(projectJSON.images ?? {})) {
+        images.set(hash, url);
+      }
 
-    const colors = this.colors;
-    colors.clear();
-    for (const [name, json] of Object.entries(projectJSON.colors ?? {})) {
-      const data = new Y.Map<ColorToken[keyof ColorToken]>(
-        Object.entries(json)
-      );
-      colors.set(name, data);
-    }
+      const colors = this.colors;
+      colors.clear();
+      for (const [name, json] of Object.entries(projectJSON.colors ?? {})) {
+        const data = new Y.Map<ColorToken[keyof ColorToken]>(
+          Object.entries(json)
+        );
+        colors.set(name, data);
+      }
+    });
   }
 
   toJSON(): ProjectJSON {

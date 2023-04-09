@@ -7,10 +7,7 @@ import type {
   IRootToEditorRPCHandler,
   IEditorToRootRPCHandler,
 } from "@uimix/editor/src/state/IFrameRPC";
-import {
-  loadProjectJSON,
-  toProjectJSON,
-} from "@uimix/editor/src/models/ProjectJSON";
+import { ProjectData } from "@uimix/editor/src/models/ProjectData";
 import { LoadingErrorOverlay } from "./LoadingErrorOverlay";
 import { DocumentMetadata, getDesktopAPI } from "../../types/DesktopAPI";
 import { assertNonNull } from "../../utils/assertNonNull";
@@ -33,8 +30,8 @@ class Connection extends TypedEmitter<{
           }
         },
         update: async (data: Uint8Array) => {
-          Y.applyUpdate(this.doc, data);
-          await getDesktopAPI()?.setDocumentData(toProjectJSON(this.doc));
+          Y.applyUpdate(this.data.doc, data);
+          await getDesktopAPI()?.setDocumentData(this.data.toJSON());
         },
         uploadImage: async (
           hash: string,
@@ -63,7 +60,7 @@ class Connection extends TypedEmitter<{
         return;
       }
       console.log("got data", data);
-      loadProjectJSON(this.doc, data);
+      this.data.loadJSON(data);
       this.fileReady = true;
       if (this.iframeReady) {
         void this.onReady();
@@ -72,13 +69,13 @@ class Connection extends TypedEmitter<{
 
     this.dataChangeDisposer = api.onDocumentDataChange((data) => {
       console.log("got data change", data);
-      loadProjectJSON(this.doc, data);
+      this.data.loadJSON(data);
     });
   }
 
   private rpc: RPC<IRootToEditorRPCHandler, IEditorToRootRPCHandler>;
   private iframe: HTMLIFrameElement;
-  private doc = new Y.Doc();
+  private data = new ProjectData();
   private fileReady = false;
   private iframeReady = false;
   private dataChangeDisposer: () => void;
@@ -89,10 +86,10 @@ class Connection extends TypedEmitter<{
   }
 
   private onReady = async () => {
-    this.doc.on("update", (update) => {
+    this.data.doc.on("update", (update) => {
       void this.rpc.remote.update(update as never);
     });
-    await this.rpc.remote.init(Y.encodeStateAsUpdate(this.doc));
+    await this.rpc.remote.init(Y.encodeStateAsUpdate(this.data.doc));
     this.emit("readyToShow");
   };
 }

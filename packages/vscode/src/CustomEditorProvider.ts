@@ -2,10 +2,7 @@ import * as vscode from "vscode";
 import { CustomDocument } from "./CustomDocument";
 import { ProjectFiles } from "uimix/src/compiler/ProjectFiles";
 import * as Y from "yjs";
-import {
-  loadProjectJSON,
-  toProjectJSON,
-} from "@uimix/editor/src/models/ProjectJSON";
+import { ProjectData } from "@uimix/editor/src/models/ProjectData";
 import {
   IEditorToVSCodeRPCHandler,
   IVSCodeToEditorRPCHandler,
@@ -26,22 +23,18 @@ export class CustomEditorProvider implements vscode.CustomEditorProvider {
     this.projectFiles = new ProjectFiles(rootFolder.uri.fsPath);
     this.projectFiles.load();
 
-    this.doc.transact(() => {
-      loadProjectJSON(this.doc, this.projectFiles.json);
-    });
+    this.data.loadJSON(this.projectFiles.json);
 
     this.disposables.push({
       dispose: this.projectFiles.watch((json) => {
-        this.doc.transact(() => {
-          loadProjectJSON(this.doc, json);
-        });
+        this.data.loadJSON(json);
       }),
     });
   }
 
   readonly context: vscode.ExtensionContext;
   readonly projectFiles: ProjectFiles;
-  readonly doc = new Y.Doc();
+  readonly data = new ProjectData();
 
   private readonly _onDidChangeCustomDocument =
     new vscode.EventEmitter<vscode.CustomDocumentContentChangeEvent>();
@@ -117,11 +110,11 @@ export class CustomEditorProvider implements vscode.CustomEditorProvider {
       {
         ready: async () => {
           const onDocUpdate = (update: Uint8Array) => rpc.remote.update(update);
-          this.doc.on("update", onDocUpdate);
-          unsubscribeDoc = () => this.doc.off("update", onDocUpdate);
+          this.data.doc.on("update", onDocUpdate);
+          unsubscribeDoc = () => this.data.doc.off("update", onDocUpdate);
 
           void rpc.remote.init(
-            Y.encodeStateAsUpdate(this.doc),
+            Y.encodeStateAsUpdate(this.data.doc),
             document.pageID
           );
 
@@ -129,7 +122,7 @@ export class CustomEditorProvider implements vscode.CustomEditorProvider {
         },
         update: async (data) => {
           console.log("sync", data);
-          Y.applyUpdate(this.doc, data);
+          Y.applyUpdate(this.data.doc, data);
           this.save();
         },
       }
@@ -142,7 +135,7 @@ export class CustomEditorProvider implements vscode.CustomEditorProvider {
   }
 
   readonly save = debounce(() => {
-    this.projectFiles.json = toProjectJSON(this.doc);
+    this.projectFiles.json = this.data.toJSON();
     this.projectFiles.save();
   }, 500);
 
