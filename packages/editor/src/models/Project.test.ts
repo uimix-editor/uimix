@@ -2,14 +2,16 @@ import { describe, expect, it } from "vitest";
 import { Project } from "./Project";
 import * as path from "path";
 import { ProjectFiles } from "../../../cli/src/project/ProjectFiles";
+import { NodeFileAccess } from "../../../cli/src/project/NodeFileAccess";
 
 describe(Project.name, () => {
   describe("loadJSON", () => {
-    it("works", () => {
+    it("works", async () => {
       const rootDir = path.resolve("../sandbox");
-      const projectFiles = ProjectFiles.load(rootDir, {
-        filePattern: "src/components.uimix",
-      });
+      const projectFiles = await ProjectFiles.load(
+        new NodeFileAccess(rootDir),
+        { filePattern: "src/components.uimix" }
+      );
       const projectJSON = projectFiles.json;
 
       const project = new Project();
@@ -24,11 +26,14 @@ describe(Project.name, () => {
   });
 
   describe("toJSON", () => {
-    it("works ", () => {
+    it("works ", async () => {
       const rootDir = path.resolve("../sandbox");
-      const projectFiles = ProjectFiles.load(rootDir, {
-        filePattern: "src/components.uimix",
-      });
+      const projectFiles = await ProjectFiles.load(
+        new NodeFileAccess(rootDir),
+        {
+          filePattern: "src/components.uimix",
+        }
+      );
       const projectJSON = projectFiles.json;
 
       const project = new Project();

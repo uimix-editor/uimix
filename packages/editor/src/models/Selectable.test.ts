@@ -3,11 +3,12 @@ import { Project } from "./Project";
 import { selectablesToProjectJSON } from "./Selectable";
 import * as path from "path";
 import { ProjectFiles } from "../../../cli/src/project/ProjectFiles";
+import { NodeFileAccess } from "../../../cli/src/project/NodeFileAccess";
 
 describe(selectablesToProjectJSON.name, () => {
-  it("works", () => {
+  it("works", async () => {
     const rootDir = path.resolve("../sandbox");
-    const projectFiles = ProjectFiles.load(rootDir, {
+    const projectFiles = await ProjectFiles.load(new NodeFileAccess(rootDir), {
       filePattern: "src/components.uimix",
     });
     const projectJSON = projectFiles.json;

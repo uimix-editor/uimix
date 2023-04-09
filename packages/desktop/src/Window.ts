@@ -39,8 +39,8 @@ export class Window {
       this.window.setDocumentEdited(edited);
     });
 
-    this.window.on("close", (event) => {
-      if (this.file.edited) {
+    this.window.on("close", async (event) => {
+      if (this.file.edited && !this.closeConfirmed) {
         const choice = dialog.showMessageBoxSync(this.window, {
           type: "question",
           buttons: ["Save", "Discard", "Cancel"],
@@ -51,7 +51,9 @@ export class Window {
           detail: "Your changes will be lost if you don't save them.",
         });
         if (choice === 0) {
-          this.file.save();
+          await this.file.save();
+          this.closeConfirmed = true;
+          this.window.close();
         }
         if (choice === 2) {
           event.preventDefault();
@@ -62,12 +64,13 @@ export class Window {
 
   readonly file: File;
   readonly window: BrowserWindow;
+  private closeConfirmed = false;
 
   static new() {
     new Window(new File());
   }
 
-  static open(filePath: string) {
+  static async open(filePath: string) {
     for (const browserWindow of BrowserWindow.getAllWindows()) {
       const window = windows.get(browserWindow.webContents);
       if (window && window.file.filePath === filePath) {
@@ -75,12 +78,12 @@ export class Window {
         return;
       }
     }
-    const file = new File(filePath);
+    const file = await File.openFilePath(filePath);
     return new Window(file);
   }
 
-  static openFromDialog() {
-    const file = File.open();
+  static async openFromDialog() {
+    const file = await File.open();
     if (!file) {
       return;
     }
