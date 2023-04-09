@@ -12,7 +12,8 @@
     "build": "node build.js",
     "dev": "node build.js --watch",
     "lint": "eslint src --ext ts",
-    "package": "vsce package",
+    "package": "vsce package --no-dependencies",
+    "publish": "vsce publish --no-dependencies",
     "pretest": "pnpm run build && pnpm run lint",
     "vscode:prepublish": "pnpm run build"
   },
