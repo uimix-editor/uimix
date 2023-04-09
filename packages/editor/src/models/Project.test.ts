@@ -22,4 +22,21 @@ describe(Project.name, () => {
       expect(project.toJSON()).toEqual(projectJSON);
     });
   });
+
+  describe("toJSON", () => {
+    it("works ", () => {
+      const rootDir = path.resolve("../sandbox");
+      const projectFiles = ProjectFiles.load(rootDir, {
+        filePattern: "src/components.uimix",
+      });
+      const projectJSON = projectFiles.json;
+
+      const project = new Project();
+      project.loadJSON(projectJSON);
+
+      const outputJSON = project.toJSON();
+
+      expect(outputJSON).toEqual(projectJSON);
+    });
+  });
 });
