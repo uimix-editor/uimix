@@ -1029,10 +1029,6 @@ importers:
   packages/typed-rpc: {}
 
   packages/vscode:
-    dependencies:
-      chokidar:
-        specifier: ^3.5.3
-        version: 3.5.3
     devDependencies:
       '@types/glob':
         specifier: ^8.1.0
