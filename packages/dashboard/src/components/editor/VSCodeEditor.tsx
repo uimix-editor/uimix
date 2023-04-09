@@ -49,7 +49,7 @@ class Connection extends TypedEmitter<{
           // no op
         },
         getClipboard: async (type) => {
-          // TODO: propagate to vscode webview
+          // Propagate to vscode webview
           // there's a bug in vscode that prevents navigator.clipboard.readText() from working in inner iframes
           // https://github.com/microsoft/vscode/issues/129178#issuecomment-913093082
           return await this.vscodeRPC.remote.getClipboard(type);
