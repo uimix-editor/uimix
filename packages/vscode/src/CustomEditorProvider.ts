@@ -12,6 +12,8 @@ import { RPC } from "@uimix/typed-rpc";
 import debounce from "just-debounce-it";
 import * as path from "path";
 
+let lastSaveTime = 0;
+
 class VSCodeFileAccess implements FileAccess {
   constructor(rootFolder: vscode.WorkspaceFolder) {
     this.rootFolder = rootFolder;
@@ -27,9 +29,16 @@ class VSCodeFileAccess implements FileAccess {
     const watcher = vscode.workspace.createFileSystemWatcher(
       new vscode.RelativePattern(this.rootFolder, pattern)
     );
-    watcher.onDidChange(onChange);
-    watcher.onDidCreate(onChange);
-    watcher.onDidDelete(onChange);
+
+    const _onChange = () => {
+      if (Date.now() - lastSaveTime > 1000) {
+        onChange();
+      }
+    };
+
+    watcher.onDidChange(_onChange);
+    watcher.onDidCreate(_onChange);
+    watcher.onDidDelete(_onChange);
     return () => watcher.dispose();
   }
 
@@ -44,6 +53,8 @@ class VSCodeFileAccess implements FileAccess {
   }
 
   async writeText(filePath: string, data: string): Promise<void> {
+    lastSaveTime = Date.now();
+
     await vscode.workspace.fs.writeFile(
       vscode.Uri.file(path.join(this.rootFolder.uri.fsPath, filePath)),
       Buffer.from(data)
@@ -94,6 +105,7 @@ export class CustomEditorProvider implements vscode.CustomEditorProvider {
     this.data.loadJSON(this.projectFiles.json);
     this.disposables.push({
       dispose: this.projectFiles.watch((json) => {
+        console.log("reload");
         this.data.loadJSON(json);
       }),
     });
@@ -188,7 +200,7 @@ export class CustomEditorProvider implements vscode.CustomEditorProvider {
           console.log("ready");
         },
         update: async (data) => {
-          console.log("sync", data);
+          console.log("sync");
           Y.applyUpdate(this.data.doc, data);
           this.save();
         },
@@ -204,6 +216,7 @@ export class CustomEditorProvider implements vscode.CustomEditorProvider {
   readonly save = debounce(() => {
     this.projectFiles.json = this.data.toJSON();
     this.projectFiles.save();
+    console.log("save");
   }, 500);
 
   private getHTMLForWebview(webview: vscode.Webview): string {
