@@ -8,11 +8,12 @@
   ],
   "main": "./out/extension.js",
   "scripts": {
+    "//test": "node ./out/test/runTest.js",
     "build": "node build.js",
     "dev": "node build.js --watch",
     "lint": "eslint src --ext ts",
+    "package": "vsce package",
     "pretest": "pnpm run build && pnpm run lint",
-    "//test": "node ./out/test/runTest.js",
     "vscode:prepublish": "pnpm run build"
   },
   "contributes": {
@@ -56,6 +57,7 @@
     "@uimix/editor": "workspace:*",
     "@uimix/typed-rpc": "workspace:*",
     "@vscode/test-electron": "^2.3.0",
+    "@vscode/vsce": "^2.18.0",
     "esbuild": "^0.17.15",
     "eslint": "^8.36.0",
     "glob": "^8.1.0",
