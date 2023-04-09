@@ -45,6 +45,7 @@ class VSCodeFileAccess implements FileAccess {
   async glob(pattern: string): Promise<string[]> {
     const urls = await vscode.workspace.findFiles(
       new vscode.RelativePattern(this.rootFolder, pattern),
+      // TODO: configure excludes
       "**/node_modules/**"
     );
     const paths = urls.map((url) =>
