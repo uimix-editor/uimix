@@ -6,6 +6,14 @@
   "categories": [
     "Other"
   ],
+  "homepage": "https://github.com/seanchas116/uimix",
+  "bugs": {
+    "url": "https://github.com/seanchas116/uimix/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/seanchas116/uimix.git"
+  },
   "main": "./out/extension.js",
   "scripts": {
     "//test": "node ./out/test/runTest.js",
