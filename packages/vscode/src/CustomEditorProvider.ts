@@ -210,6 +210,12 @@ export class CustomEditorProvider implements vscode.CustomEditorProvider {
           Y.applyUpdate(this.data.doc, data);
           this.save();
         },
+        getClipboardText: async () => {
+          throw new Error("should be intercepted in webview.");
+        },
+        setClipboardText: async (text) => {
+          throw new Error("should be intercepted in webview.");
+        },
       }
     );
 
@@ -255,8 +261,30 @@ export class CustomEditorProvider implements vscode.CustomEditorProvider {
         const vscode = acquireVsCodeApi();
         const iframe = document.querySelector("iframe");
 
-        window.addEventListener("message", (event) => {
+        window.addEventListener("message", async (event) => {
           if (event.source === iframe.contentWindow) {
+            // intercept clipboard messages
+            if (event.data.type === "call") {
+              if (event.data.name === "getClipboardText") {
+                iframe.contentWindow.postMessage({
+                  type: "result",
+                  callID: event.data.callID,
+                  status: "success",
+                  value: await navigator.clipboard.readText(),
+                }, "*");
+                return;
+              }
+              if (event.data.name === "setClipboardText") {
+                await navigator.clipboard.writeText(event.data.args[0]);
+                iframe.contentWindow.postMessage({
+                  type: "result",
+                  callID: event.data.callID,
+                  status: "success",
+                  value: undefined,
+                }, "*");
+                return;
+              }
+            }
             vscode.postMessage(event.data);
           } else {
             iframe.contentWindow.postMessage(event.data, "*");

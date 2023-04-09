@@ -71,6 +71,18 @@
       "parent": "1BwgerJx7xpYH3Crppj695",
       "index": 0
     },
+    "1Bx76s3GSkDQ6nEBKgd4qp": {
+      "type": "text",
+      "index": 0.5,
+      "name": "Features",
+      "parent": "1BwgerJx7xpYH3Crppj695"
+    },
+    "1Bx76s79xgTbtycUPNuBiZ": {
+      "type": "text",
+      "index": 0.75,
+      "name": "Features",
+      "parent": "1BwgerJx7xpYH3Crppj695"
+    },
     "1BwgerJxPsaSgKH13YzTh3": {
       "type": "text",
       "name": "Pricing",
@@ -489,7 +501,9 @@
       "condition": { "type": "maxWidth", "value": 767 },
       "parent": "1BwiecLRjsYkerJDYVnoer",
       "index": 1
-    }
+    },
+    "1Bx76sMWDgKGKVbQF9xs85": { "type": "frame", "index": 3, "name": "Frame" },
+    "1Bx76sSZ2W8P39RrcfpQgc": { "type": "frame", "index": 4, "name": "Frame" }
   },
   "styles": {
     "1BwgerJkG3mDENSswyqM44": {
@@ -1914,7 +1928,47 @@
       "paddingRight": 24,
       "paddingLeft": 24
     },
-    "1Bwmx33dTd9CB4awGhJwUp:1BwgerJosyL9kr1UU3RHQx": { "gridColumnCount": 1 }
+    "1Bwmx33dTd9CB4awGhJwUp:1BwgerJosyL9kr1UU3RHQx": { "gridColumnCount": 1 },
+    "1Bx76s3GSkDQ6nEBKgd4qp": {
+      "width": { "type": "hug" },
+      "height": { "type": "hug" },
+      "fills": [{ "type": "solid", "color": "#000000" }],
+      "textContent": "Features",
+      "fontFamily": "Satoshi",
+      "fontWeight": 500,
+      "lineHeight": [100, "%"],
+      "letterSpacing": [0, "%"],
+      "textVerticalAlign": "center"
+    },
+    "1Bx76s79xgTbtycUPNuBiZ": {
+      "width": { "type": "hug" },
+      "height": { "type": "hug" },
+      "fills": [{ "type": "solid", "color": "#000000" }],
+      "textContent": "Features",
+      "fontFamily": "Satoshi",
+      "fontWeight": 500,
+      "lineHeight": [100, "%"],
+      "letterSpacing": [0, "%"],
+      "textVerticalAlign": "center"
+    },
+    "1Bx76sMWDgKGKVbQF9xs85": {
+      "fills": [{ "type": "solid", "color": "#FFFFFF" }],
+      "width": { "type": "fixed", "value": 241 },
+      "height": { "type": "fixed", "value": 103 },
+      "position": {
+        "x": { "type": "start", "start": 298 },
+        "y": { "type": "start", "start": -174 }
+      }
+    },
+    "1Bx76sSZ2W8P39RrcfpQgc": {
+      "position": {
+        "x": { "type": "start", "start": 575 },
+        "y": { "type": "start", "start": -174 }
+      },
+      "width": { "type": "fixed", "value": 241 },
+      "height": { "type": "fixed", "value": 103 },
+      "fills": [{ "type": "solid", "color": "#FFFFFF" }]
+    }
   },
   "images": {
     "YmY-tuteU03QY-k_2ARy1uacNmXDNmOX-FFAlj2qCIo=": {
