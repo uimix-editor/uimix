@@ -12,7 +12,7 @@ export class ImageManager {
 
   readonly project: Project;
   get images(): ObservableYMap<Image> {
-    return ObservableYMap.get(this.project.doc.getMap("images"));
+    return ObservableYMap.get(this.project.data.images);
   }
 
   uploadImage?: (

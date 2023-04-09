@@ -34,7 +34,7 @@ export class ProjectData {
     return this.doc.getMap("images");
   }
 
-  get selection(): Y.Map<boolean> {
+  get selection(): Y.Map<true> {
     return this.doc.getMap("selection");
   }
 

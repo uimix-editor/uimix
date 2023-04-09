@@ -279,7 +279,7 @@ export class NodeMap {
   constructor(project: Project) {
     this.project = project;
 
-    const data = project.doc.getMap("nodes");
+    const data = project.data.nodes;
 
     data.observeDeep((events) => {
       for (const event of events) {
@@ -328,7 +328,7 @@ export class NodeMap {
 
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   get data(): ObservableYMap<Y.Map<any>> {
-    return ObservableYMap.get(this.project.doc.getMap("nodes"));
+    return ObservableYMap.get(this.project.data.nodes);
   }
 
   private readonly nodeMap = new Map<string, Node>();

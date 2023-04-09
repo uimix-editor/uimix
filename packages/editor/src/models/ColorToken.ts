@@ -3,6 +3,7 @@ import { Color } from "@uimix/foundation/src/utils/Color";
 import { ObservableYMap } from "@uimix/foundation/src/utils/ObservableYMap";
 import { getOrCreate } from "@uimix/foundation/src/utils/Collection";
 import { generateID } from "@uimix/foundation/src/utils/ID";
+import { ColorToken as ColorTokenJSON } from "@uimix/node-data";
 import { Project } from "./Project";
 import { Page } from "./Page";
 
@@ -15,11 +16,11 @@ export class ColorToken {
   readonly id: string;
   readonly project: Project;
 
-  get data(): ObservableYMap<unknown> | undefined {
+  get data(): ObservableYMap<ColorTokenJSON[keyof ColorTokenJSON]> | undefined {
     return ObservableYMap.get(this.project.colorTokens.data.get(this.id));
   }
 
-  get dataForWrite(): ObservableYMap<unknown> {
+  get dataForWrite(): ObservableYMap<ColorTokenJSON[keyof ColorTokenJSON]> {
     return ObservableYMap.get(
       getOrCreate(this.project.colorTokens.data, this.id, () => new Y.Map())
     );
@@ -81,8 +82,8 @@ export class ColorTokenMap {
 
   readonly project: Project;
 
-  get data(): ObservableYMap<Y.Map<unknown>> {
-    return ObservableYMap.get(this.project.doc.getMap("colors"));
+  get data(): ObservableYMap<Y.Map<ColorTokenJSON[keyof ColorTokenJSON]>> {
+    return ObservableYMap.get(this.project.data.colors);
   }
 
   get(id: string): ColorToken | undefined {

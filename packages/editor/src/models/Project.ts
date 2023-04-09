@@ -5,9 +5,9 @@ import { ProjectJSON } from "@uimix/node-data";
 import { ImageManager } from "./ImageManager";
 import { Component } from "./Component";
 import { ObservableYArray } from "@uimix/foundation/src/utils/ObservableYArray";
-import { loadProjectJSON, toProjectJSON } from "./ProjectJSON";
 import { ColorTokenMap } from "./ColorToken";
 import { PageList } from "./PageList";
+import { ProjectData } from "./ProjectData";
 
 export class Project {
   constructor() {
@@ -18,7 +18,7 @@ export class Project {
     this.pages = new PageList(this);
   }
 
-  readonly doc = new Y.Doc();
+  readonly data = new ProjectData();
   readonly nodes: NodeMap;
   readonly selectables: SelectableMap;
   readonly colorTokens: ColorTokenMap;
@@ -26,22 +26,26 @@ export class Project {
   readonly pages: PageList;
   readonly imageManager = new ImageManager(this);
 
+  get doc(): Y.Doc {
+    return this.data.doc;
+  }
+
   createUndoManager(): Y.UndoManager {
     return new Y.UndoManager([
-      this.doc.getMap("nodes"),
-      this.doc.getMap("styles"),
-      this.doc.getMap("selection"),
-      this.doc.getArray("componentURLs"),
-      this.doc.getMap("colors"),
+      this.data.nodes,
+      this.data.styles,
+      this.data.selection,
+      this.data.componentURLs,
+      this.data.colors,
     ]);
   }
 
   toJSON(): ProjectJSON {
-    return toProjectJSON(this.doc);
+    return this.data.toJSON();
   }
 
   loadJSON(json: ProjectJSON) {
-    loadProjectJSON(this.doc, json);
+    this.data.loadJSON(json);
   }
 
   get components(): Component[] {
@@ -49,7 +53,7 @@ export class Project {
   }
 
   get componentURLs(): ObservableYArray<string> {
-    return ObservableYArray.get(this.doc.getArray("componentURLs"));
+    return ObservableYArray.get(this.data.componentURLs);
   }
 
   clearSelection() {
