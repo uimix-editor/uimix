@@ -16,6 +16,8 @@ export const ToolBar: React.FC<{
 }> = observer(({ position }) => {
   // TODO: use material symbols instead of SVGs
 
+  const tooltipSide = position === "left" ? "right" : "bottom";
+
   return (
     <div
       className={twMerge(
@@ -25,7 +27,7 @@ export const ToolBar: React.FC<{
     >
       <DropdownMenu
         defs={commands.menu}
-        placement="right-start"
+        placement={position === "left" ? "right-start" : "bottom-start"}
         trigger={(props) => (
           <ToolButton {...props}>
             <Icon icon="ic:menu" className="text-base" />
@@ -38,7 +40,7 @@ export const ToolBar: React.FC<{
           position === "left" ? "flex-col mt-2" : "flex-row ml-2"
         )}
       >
-        <Tooltip text="Select" side="right">
+        <Tooltip text="Select" side={tooltipSide}>
           <ToolButton
             aria-pressed={!viewportState.tool}
             onClick={action(() => {
@@ -58,7 +60,7 @@ export const ToolBar: React.FC<{
             </svg>
           </ToolButton>
         </Tooltip>
-        <Tooltip text="Frame (F)" side="right">
+        <Tooltip text="Frame (F)" side={tooltipSide}>
           <ToolButton
             aria-pressed={
               viewportState.tool?.type === "insert" &&
@@ -71,7 +73,7 @@ export const ToolBar: React.FC<{
             <Icon icon={rectIcon} className="text-xl" />
           </ToolButton>
         </Tooltip>
-        <Tooltip text="Text (T)" side="right">
+        <Tooltip text="Text (T)" side={tooltipSide}>
           <ToolButton
             aria-pressed={
               viewportState.tool?.type === "insert" &&
@@ -84,7 +86,7 @@ export const ToolBar: React.FC<{
             <Icon icon={textIcon} className="text-xl" />
           </ToolButton>
         </Tooltip>
-        <Tooltip text="Image" side="right">
+        <Tooltip text="Image" side={tooltipSide}>
           <ToolButton
             aria-pressed={
               viewportState.tool?.type === "insert" &&
@@ -97,7 +99,7 @@ export const ToolBar: React.FC<{
             <Icon icon={imageIcon} className="text-xl" />
           </ToolButton>
         </Tooltip>
-        <Tooltip text="Instance" side="right">
+        <Tooltip text="Instance" side={tooltipSide}>
           <ToolButton
             aria-pressed={viewportState.tool?.type === "instancePalette"}
             onClick={action(() => {
@@ -119,7 +121,7 @@ export const ToolBar: React.FC<{
             </svg>
           </ToolButton>
         </Tooltip>
-        <Tooltip text="Generate with AI (TODO)" side="right">
+        <Tooltip text="Generate with AI (TODO)" side={tooltipSide}>
           <ToolButton>
             <Icon icon="carbon:machine-learning" className="text-xl" />
           </ToolButton>
