@@ -1,6 +1,7 @@
 import * as vscode from "vscode";
 import { CustomDocument } from "./CustomDocument";
 import { ProjectFiles } from "uimix/src/project/ProjectFiles";
+import { FileAccess } from "uimix/src/project/FileAccess";
 import * as Y from "yjs";
 import { ProjectData } from "@uimix/editor/src/models/ProjectData";
 import {
@@ -9,6 +10,59 @@ import {
 } from "../../dashboard/src/types/VSCodeEditorRPC";
 import { RPC } from "@uimix/typed-rpc";
 import debounce from "just-debounce-it";
+import * as path from "path";
+
+class VSCodeFileAccess implements FileAccess {
+  constructor(rootFolder: vscode.WorkspaceFolder) {
+    this.rootFolder = rootFolder;
+  }
+
+  readonly rootFolder: vscode.WorkspaceFolder;
+
+  get rootPath() {
+    return this.rootFolder.uri.fsPath;
+  }
+
+  watch(pattern: string, onChange: () => void): () => void {
+    const watcher = vscode.workspace.createFileSystemWatcher(
+      new vscode.RelativePattern(this.rootFolder, pattern)
+    );
+    watcher.onDidChange(onChange);
+    watcher.onDidCreate(onChange);
+    watcher.onDidDelete(onChange);
+    return () => watcher.dispose();
+  }
+
+  async glob(pattern: string): Promise<string[]> {
+    const urls = await vscode.workspace.findFiles(
+      new vscode.RelativePattern(this.rootFolder, pattern)
+    );
+    const paths = urls.map((url) =>
+      path.relative(this.rootFolder.uri.fsPath, url.fsPath)
+    );
+    return paths;
+  }
+
+  async writeText(filePath: string, data: string): Promise<void> {
+    await vscode.workspace.fs.writeFile(
+      vscode.Uri.file(path.join(this.rootFolder.uri.fsPath, filePath)),
+      Buffer.from(data)
+    );
+  }
+
+  async readText(filePath: string): Promise<string> {
+    const url = vscode.Uri.file(
+      path.join(this.rootFolder.uri.fsPath, filePath)
+    );
+    const buffer = await vscode.workspace.fs.readFile(url);
+    const text = buffer.toString();
+    return text;
+  }
+
+  async remove(filePath: string): Promise<void> {
+    // no-op for now (vscode extension doesn't need to delete files)
+  }
+}
 
 function getNonce(): string {
   let text = "";
@@ -21,20 +75,23 @@ function getNonce(): string {
 }
 
 export class CustomEditorProvider implements vscode.CustomEditorProvider {
-  constructor(context: vscode.ExtensionContext) {
-    this.context = context;
-
+  static async load(context: vscode.ExtensionContext) {
     const rootFolder = vscode.workspace.workspaceFolders?.[0];
     if (!rootFolder) {
       throw new Error("No workspace folder found");
     }
 
     console.log(rootFolder.uri.fsPath);
-    this.projectFiles = new ProjectFiles(rootFolder.uri.fsPath);
-    this.projectFiles.load();
+    const projectFiles = new ProjectFiles(new VSCodeFileAccess(rootFolder));
+    await projectFiles.load();
 
+    return new CustomEditorProvider(context, projectFiles);
+  }
+
+  constructor(context: vscode.ExtensionContext, projectFiles: ProjectFiles) {
+    this.context = context;
+    this.projectFiles = projectFiles;
     this.data.loadJSON(this.projectFiles.json);
-
     this.disposables.push({
       dispose: this.projectFiles.watch((json) => {
         this.data.loadJSON(json);
