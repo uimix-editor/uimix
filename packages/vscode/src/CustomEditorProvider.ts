@@ -234,6 +234,13 @@ export class CustomEditorProvider implements vscode.CustomEditorProvider {
   private getHTMLForWebview(webview: vscode.Webview): string {
     const nonce = getNonce();
 
+    const isDevelopment =
+      this.context.extensionMode === vscode.ExtensionMode.Development;
+
+    const iframeURL = isDevelopment
+      ? "http://localhost:3000/vscode-editor"
+      : "https://uimix.app/vscode-editor";
+
     return `
       <!DOCTYPE html>
       <html lang="en">
@@ -255,7 +262,7 @@ export class CustomEditorProvider implements vscode.CustomEditorProvider {
         </style>
       </head>
       <body>
-      <iframe src="http://localhost:3000/vscode-editor" allow="clipboard-read; clipboard-write"></iframe>
+      <iframe src="${iframeURL}" allow="clipboard-read; clipboard-write"></iframe>
       <script nonce="${nonce}">
         // pass-through messages between the iframe and the extension
         const vscode = acquireVsCodeApi();
