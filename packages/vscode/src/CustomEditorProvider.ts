@@ -190,7 +190,11 @@ export class CustomEditorProvider implements vscode.CustomEditorProvider {
       },
       {
         ready: async () => {
-          const onDocUpdate = (update: Uint8Array) => rpc.remote.update(update);
+          unsubscribeDoc?.();
+
+          const onDocUpdate = (update: Uint8Array) => {
+            rpc.remote.update(update);
+          };
           this.data.doc.on("update", onDocUpdate);
           unsubscribeDoc = () => this.data.doc.off("update", onDocUpdate);
 
