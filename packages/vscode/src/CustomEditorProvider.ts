@@ -10,6 +10,16 @@ import {
 import { RPC } from "@uimix/typed-rpc";
 import debounce from "just-debounce-it";
 
+function getNonce(): string {
+  let text = "";
+  const possible =
+    "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+  for (let i = 0; i < 32; i++) {
+    text += possible.charAt(Math.floor(Math.random() * possible.length));
+  }
+  return text;
+}
+
 export class CustomEditorProvider implements vscode.CustomEditorProvider {
   constructor(context: vscode.ExtensionContext) {
     this.context = context;
@@ -140,13 +150,16 @@ export class CustomEditorProvider implements vscode.CustomEditorProvider {
   }, 500);
 
   private getHTMLForWebview(webview: vscode.Webview): string {
+    const nonce = getNonce();
+
     return `
       <!DOCTYPE html>
       <html lang="en">
       <head>
         <meta charset="UTF-8">
+        <meta http-equiv="Content-Security-Policy" content="default-src 'none'; frame-src *; style-src 'nonce-${nonce}'; script-src 'nonce-${nonce}';">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <style>
+        <style nonce="${nonce}">
           body {
             margin: 0;
           }
@@ -161,7 +174,7 @@ export class CustomEditorProvider implements vscode.CustomEditorProvider {
       </head>
       <body>
       <iframe src="http://localhost:3000/vscode-editor" allow="clipboard-read; clipboard-write"></iframe>
-      <script>
+      <script nonce="${nonce}">
         // pass-through messages between the iframe and the extension
         const vscode = acquireVsCodeApi();
         const iframe = document.querySelector("iframe");
