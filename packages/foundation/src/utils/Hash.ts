@@ -1,10 +1,16 @@
 import { encode } from "url-safe-base64";
 import { Buffer } from "buffer";
-import { sha256 } from "js-sha256";
+import createHash, { TypedArray } from "create-hash";
 
-export function getURLSafeBase64Hash(
-  data: string | Uint8Array | ArrayBuffer
-): string {
-  const hash = sha256.arrayBuffer(data);
+type Data = string | Buffer | TypedArray | DataView;
+
+export function sha256(data: Data): Buffer {
+  const hash = createHash("sha256");
+  hash.update(data);
+  return hash.digest();
+}
+
+export function getURLSafeBase64Hash(data: Data): string {
+  const hash = sha256(data);
   return encode(Buffer.from(hash).toString("base64"));
 }
