@@ -73,13 +73,19 @@
     },
     "1Bx76s3GSkDQ6nEBKgd4qp": {
       "type": "text",
-      "index": 0.5,
       "name": "Features",
-      "parent": "1BwgerJx7xpYH3Crppj695"
+      "parent": "1BwgerJx7xpYH3Crppj695",
+      "index": 0.5
     },
     "1Bx76s79xgTbtycUPNuBiZ": {
       "type": "text",
-      "index": 0.75,
+      "name": "Features",
+      "parent": "1BwgerJx7xpYH3Crppj695",
+      "index": 0.75
+    },
+    "1Bx791MN7fZhf1tDtUAts4": {
+      "type": "text",
+      "index": 0.875,
       "name": "Features",
       "parent": "1BwgerJx7xpYH3Crppj695"
     },
@@ -502,8 +508,24 @@
       "parent": "1BwiecLRjsYkerJDYVnoer",
       "index": 1
     },
-    "1Bx76sMWDgKGKVbQF9xs85": { "type": "frame", "index": 3, "name": "Frame" },
-    "1Bx76sSZ2W8P39RrcfpQgc": { "type": "frame", "index": 4, "name": "Frame" }
+    "1Bx76sMWDgKGKVbQF9xs85": { "type": "frame", "name": "Frame", "index": 3 },
+    "1Bx77VtW9uTe71DdRrPcZg": {
+      "type": "frame",
+      "name": "Frame",
+      "index": 3.25
+    },
+    "1Bx77akn2UqhY4Hm4ebNXN": {
+      "type": "frame",
+      "name": "Frame",
+      "index": 3.375
+    },
+    "1Bx77VnM3QMV5g7BfdLh5p": {
+      "type": "frame",
+      "name": "Frame",
+      "index": 3.5
+    },
+    "1Bx76sSZ2W8P39RrcfpQgc": { "type": "frame", "name": "Frame", "index": 4 },
+    "1Bx77abUKrWBYPRx6rbbmM": { "type": "frame", "name": "Frame", "index": 5 }
   },
   "styles": {
     "1BwgerJkG3mDENSswyqM44": {
@@ -1649,7 +1671,7 @@
       "height": { "type": "hug" },
       "fills": [{ "type": "solid", "color": "#000000" }],
       "opacity": 1,
-      "textContent": "Features",
+      "textContent": "Test AAATest AAATest AAA",
       "fontFamily": "Satoshi",
       "fontWeight": 500,
       "fontSize": 16,
@@ -1711,7 +1733,7 @@
       },
       "absolute": true,
       "width": { "type": "fixed", "value": 247 },
-      "height": { "type": "fixed", "value": 41 },
+      "height": { "type": "hug" },
       "topLeftRadius": 0,
       "topRightRadius": 0,
       "bottomRightRadius": 0,
@@ -1933,7 +1955,7 @@
       "width": { "type": "hug" },
       "height": { "type": "hug" },
       "fills": [{ "type": "solid", "color": "#000000" }],
-      "textContent": "Features",
+      "textContent": "Tes Test t",
       "fontFamily": "Satoshi",
       "fontWeight": 500,
       "lineHeight": [100, "%"],
@@ -1952,13 +1974,13 @@
       "textVerticalAlign": "center"
     },
     "1Bx76sMWDgKGKVbQF9xs85": {
-      "fills": [{ "type": "solid", "color": "#FFFFFF" }],
-      "width": { "type": "fixed", "value": 241 },
-      "height": { "type": "fixed", "value": 103 },
       "position": {
         "x": { "type": "start", "start": 298 },
         "y": { "type": "start", "start": -174 }
-      }
+      },
+      "width": { "type": "fixed", "value": 241 },
+      "height": { "type": "fixed", "value": 103 },
+      "fills": [{ "type": "solid", "color": "#FFFFFF" }]
     },
     "1Bx76sSZ2W8P39RrcfpQgc": {
       "position": {
@@ -1968,6 +1990,53 @@
       "width": { "type": "fixed", "value": 241 },
       "height": { "type": "fixed", "value": 103 },
       "fills": [{ "type": "solid", "color": "#FFFFFF" }]
+    },
+    "1Bx77VnM3QMV5g7BfdLh5p": {
+      "position": {
+        "x": { "type": "start", "start": 143 },
+        "y": { "type": "start", "start": -235 }
+      },
+      "width": { "type": "fixed", "value": 241 },
+      "height": { "type": "fixed", "value": 103 },
+      "fills": [{ "type": "solid", "color": "#FFFFFF" }]
+    },
+    "1Bx77VtW9uTe71DdRrPcZg": {
+      "position": {
+        "x": { "type": "start", "start": 740 },
+        "y": { "type": "start", "start": -261 }
+      },
+      "width": { "type": "fixed", "value": 241 },
+      "height": { "type": "fixed", "value": 103 },
+      "fills": [{ "type": "solid", "color": "#FFFFFF" }]
+    },
+    "1Bx77abUKrWBYPRx6rbbmM": {
+      "position": {
+        "x": { "type": "start", "start": 1094 },
+        "y": { "type": "start", "start": -202 }
+      },
+      "width": { "type": "fixed", "value": 241 },
+      "height": { "type": "fixed", "value": 103 },
+      "fills": [{ "type": "solid", "color": "#FFFFFF" }]
+    },
+    "1Bx77akn2UqhY4Hm4ebNXN": {
+      "position": {
+        "x": { "type": "start", "start": 883 },
+        "y": { "type": "start", "start": -174 }
+      },
+      "width": { "type": "fixed", "value": 241 },
+      "height": { "type": "fixed", "value": 103 },
+      "fills": [{ "type": "solid", "color": "#FFFFFF" }]
+    },
+    "1Bx791MN7fZhf1tDtUAts4": {
+      "width": { "type": "hug" },
+      "height": { "type": "hug" },
+      "fills": [{ "type": "solid", "color": "#000000" }],
+      "textContent": "Features",
+      "fontFamily": "Satoshi",
+      "fontWeight": 500,
+      "lineHeight": [100, "%"],
+      "letterSpacing": [0, "%"],
+      "textVerticalAlign": "center"
     }
   },
   "images": {

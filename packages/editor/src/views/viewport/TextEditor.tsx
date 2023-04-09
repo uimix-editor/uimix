@@ -1,8 +1,6 @@
-import { action } from "mobx";
+import { action, reaction } from "mobx";
 import { observer } from "mobx-react-lite";
-import React, { useCallback, useMemo } from "react";
-import { createEditor, Transforms, Descendant } from "slate";
-import { Slate, Editable, withReact } from "slate-react";
+import React, { useEffect, useRef } from "react";
 import { Selectable } from "../../models/Selectable";
 import { buildNodeCSS } from "../../models/buildNodeCSS";
 import { viewportState } from "../../state/ViewportState";
@@ -17,32 +15,41 @@ export const TextEditorBody: React.FC<{
     selectable.project.colorTokens.resolve(tokenID)
   );
   const computedRect = selectable.computedRect;
-
   const fitWidth = style.width.type === "hug";
 
-  const editor = useMemo(() => withReact(createEditor()), []);
+  const editableRef = useRef<HTMLDivElement>(null);
+  useEffect(() => {
+    const editable = editableRef.current;
+    if (!editable) {
+      return;
+    }
 
-  const onKeyDownEditable = useCallback(
-    (event: React.KeyboardEvent) => {
-      if (event.key === "Enter") {
-        Transforms.insertText(editor, "\n");
-        event.preventDefault();
+    editable.contentEditable = "plaintext-only";
+
+    const disposeReaction = reaction(
+      () => style.textContent,
+      (textContent) => {
+        if (textContent !== editable.innerText) {
+          editable.innerText = textContent;
+        }
+      },
+      { fireImmediately: true }
+    );
+
+    const onInput = action(() => {
+      const textContent = editable.innerText;
+      if (textContent !== style.textContent) {
+        style.textContent = textContent;
       }
-    },
-    [editor]
-  );
+    });
 
-  const initialValue: Descendant[] = [
-    {
-      // @ts-ignore
-      type: "paragraph",
-      children: [
-        {
-          text: style.textContent,
-        },
-      ],
-    },
-  ];
+    editable.addEventListener("input", onInput);
+
+    return () => {
+      disposeReaction();
+      editable.removeEventListener("input", onInput);
+    };
+  }, []);
 
   return (
     <div
@@ -53,6 +60,7 @@ export const TextEditorBody: React.FC<{
       }}
     >
       <div
+        ref={editableRef}
         style={{
           ...cssStyle,
           position: "absolute",
@@ -61,19 +69,7 @@ export const TextEditorBody: React.FC<{
           width: fitWidth ? "max-content" : `${computedRect.width}px`,
           height: `${computedRect.height}px`,
         }}
-      >
-        <Slate
-          editor={editor}
-          onChange={action((value) => {
-            // @ts-ignore
-            // eslint-disable-next-line
-            style.textContent = value[0].children[0].text;
-          })}
-          value={initialValue}
-        >
-          <Editable onKeyDown={onKeyDownEditable} />
-        </Slate>
-      </div>
+      />
     </div>
   );
 });
