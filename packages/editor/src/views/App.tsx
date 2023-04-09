@@ -61,7 +61,7 @@ export const App = observer(function App() {
       <style>
         {`
           :root {
-            font-size: ${viewOptions.remSize}px;
+            font-size: ${viewOptions.uiScaling * 16}px;
             --uimix-font-size: ${viewOptions.fontSize}px;
           }
         `}

@@ -1,7 +1,7 @@
 interface ViewOptions {
   embed: boolean;
   titleBarPadding: number;
-  remSize: number;
+  uiScaling: number;
   fontSize: number;
   narrowMode: boolean;
 }
@@ -13,14 +13,14 @@ function getViewOptions(): ViewOptions {
   const titleBarPadding = Number.parseInt(
     searchParams.get("titleBarPadding") ?? "0"
   );
-  const remSize = Number.parseInt(searchParams.get("remSize") ?? "16");
-  const fontSize = Number.parseInt(searchParams.get("fontSize") ?? "12");
+  const uiScaling = Number.parseFloat(searchParams.get("uiScaling") ?? "1");
+  const fontSize = Number.parseFloat(searchParams.get("fontSize") ?? "12");
   const narrowMode = searchParams.get("narrowMode") === "true";
 
   return {
     embed,
     titleBarPadding,
-    remSize,
+    uiScaling,
     fontSize,
     narrowMode,
   };
