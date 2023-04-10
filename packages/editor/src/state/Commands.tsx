@@ -32,7 +32,6 @@ import { viewportGeometry } from "./ScrollState";
 import { compact } from "lodash-es";
 import { Component } from "../models/Component";
 import { Rect, Vec2 } from "paintvec";
-import { moveByPixels } from "../services/MoveByPixel";
 import { snapper } from "./Snapper";
 import { resizeWithBoundingBox } from "../services/Resize";
 
@@ -218,32 +217,76 @@ class Commands {
     projectState.undoManager.stopCapturing();
   }
 
-  moveByPixels(delta: Vec2) {
-    const targets = projectState.selectedSelectables.filter(
+  moveByDirection(
+    direction: "up" | "down" | "left" | "right",
+    shiftKey: boolean
+  ) {
+    const absoluteSelectables = projectState.selectedSelectables.filter(
       (selectable) => selectable.isAbsolute
     );
-    if (!targets.length) {
-      return;
-    }
+    const relativeSelectables = projectState.selectedSelectables.filter(
+      (selectable) => !selectable.isAbsolute
+    );
 
-    const parent = targets[0].offsetParent ?? targets[0].pageSelectable;
-    if (!parent) {
-      return;
-    }
+    if (absoluteSelectables.length) {
+      // absolute move
+      const amount = shiftKey ? 10 : 1;
 
-    const bbox = Rect.union(...targets.map((t) => t.computedRect));
-    if (!bbox) {
-      return;
-    }
-    const nextBBox = bbox.translate(delta);
-    snapper.exactSnapMoveRect(parent, targets, nextBBox);
+      let delta: Vec2;
+      switch (direction) {
+        case "up":
+          delta = new Vec2(0, -amount);
+          break;
+        case "down":
+          delta = new Vec2(0, amount);
+          break;
+        case "left":
+          delta = new Vec2(-amount, 0);
+          break;
+        case "right":
+          delta = new Vec2(amount, 0);
+          break;
+      }
 
-    for (const selectable of targets) {
-      resizeWithBoundingBox(
-        selectable,
-        selectable.computedRect.translate(delta),
-        { x: true, y: true }
+      const parent =
+        absoluteSelectables[0].offsetParent ??
+        absoluteSelectables[0].pageSelectable;
+      if (!parent) {
+        return;
+      }
+
+      const bbox = Rect.union(
+        ...absoluteSelectables.map((t) => t.computedRect)
       );
+      if (!bbox) {
+        return;
+      }
+      const nextBBox = bbox.translate(delta);
+      snapper.exactSnapMoveRect(parent, absoluteSelectables, nextBBox);
+
+      for (const selectable of absoluteSelectables) {
+        resizeWithBoundingBox(
+          selectable,
+          selectable.computedRect.translate(delta),
+          { x: true, y: true }
+        );
+      }
+    } else if (relativeSelectables.length) {
+      const forward = direction === "right" || direction === "down";
+
+      // move elements in layout
+
+      for (const selectable of relativeSelectables) {
+        const parent = selectable.parent;
+        if (!parent) {
+          continue;
+        }
+        const next = forward
+          ? selectable.nextSibling?.nextSibling
+          : selectable.previousSibling ?? parent.children[0];
+
+        parent.insertBefore([selectable], next);
+      }
     }
   }
 
@@ -644,19 +687,18 @@ class Commands {
     if (!isTextInput(document.activeElement)) {
       // TODO: move elements in layout
 
-      const multiplier = event.shiftKey ? 10 : 1;
       switch (event.key) {
         case "ArrowUp":
-          this.moveByPixels(new Vec2(0, -1).mul(multiplier));
+          this.moveByDirection("up", event.shiftKey);
           return true;
         case "ArrowDown":
-          this.moveByPixels(new Vec2(0, 1).mul(multiplier));
+          this.moveByDirection("down", event.shiftKey);
           return true;
         case "ArrowLeft":
-          this.moveByPixels(new Vec2(-1, 0).mul(multiplier));
+          this.moveByDirection("left", event.shiftKey);
           return true;
         case "ArrowRight":
-          this.moveByPixels(new Vec2(1, 0).mul(multiplier));
+          this.moveByDirection("right", event.shiftKey);
           return true;
       }
     }
