@@ -1,16 +1,10 @@
-import { encode } from "url-safe-base64";
+import { crypto } from "./Crypto";
 import { Buffer } from "buffer";
-import createHash, { TypedArray } from "create-hash";
 
-type Data = string | Buffer | TypedArray | DataView;
-
-export function sha256(data: Data): Buffer {
-  const hash = createHash("sha256");
-  hash.update(data);
-  return hash.digest();
-}
-
-export function getURLSafeBase64Hash(data: Data): string {
-  const hash = sha256(data);
-  return encode(Buffer.from(hash).toString("base64"));
+export async function getURLSafeBase64Hash(
+  data: BufferSource
+): Promise<string> {
+  const hash = await crypto.subtle.digest("SHA-256", data);
+  const base64 = Buffer.from(hash).toString("base64");
+  return base64.replace(/\+/g, "-").replace(/\//g, "_").replace(/=+$/, "");
 }

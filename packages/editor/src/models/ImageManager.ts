@@ -25,7 +25,7 @@ export class ImageManager {
     const type = ImageType.parse(blob.type);
     const buffer = await blob.arrayBuffer();
 
-    const hash = getURLSafeBase64Hash(new DataView(buffer));
+    const hash = await getURLSafeBase64Hash(buffer);
 
     const existing = this.images.get(hash);
     if (existing) {

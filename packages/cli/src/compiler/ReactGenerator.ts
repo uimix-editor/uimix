@@ -61,7 +61,7 @@ function applyOverrides(
 `;
 
 function imageHashToVarName(hash: string): string {
-  return "image_" + hash.replaceAll("-", "$").replaceAll("=", "");
+  return "image_" + hash.replaceAll("-", "$");
 }
 
 function getExternalModulePaths(components: Component[]): Set<string> {
