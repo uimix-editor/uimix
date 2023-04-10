@@ -1,9 +1,10 @@
-import { getURLSafeBase64Hash } from "@uimix/foundation/src/utils/Hash";
 import { ProjectJSON } from "@uimix/node-data";
 import { isEqual, omit } from "lodash-es";
+import sha256 from "crypto-js/sha256";
+import encBase64url from "crypto-js/enc-base64url";
 
 export function getPageID(pageName: string): string {
-  return getURLSafeBase64Hash(pageName);
+  return sha256(pageName).toString(encBase64url);
 }
 
 export function compareProjectJSONs(a: ProjectJSON, b: ProjectJSON): boolean {
