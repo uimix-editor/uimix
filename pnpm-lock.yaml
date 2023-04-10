@@ -40,9 +40,6 @@ importers:
       image-size:
         specifier: ^1.0.2
         version: 1.0.2
-      js-sha256:
-        specifier: ^0.9.0
-        version: 0.9.0
       lodash-es:
         specifier: ^4.17.21
         version: 4.17.21
@@ -400,9 +397,6 @@ importers:
       html-to-image:
         specifier: ^1.11.11
         version: 1.11.11
-      js-sha256:
-        specifier: ^0.9.0
-        version: 0.9.0
       lodash-es:
         specifier: ^4.17.21
         version: 4.17.21
@@ -729,9 +723,6 @@ importers:
       html-to-image:
         specifier: ^1.11.11
         version: 1.11.11
-      js-sha256:
-        specifier: ^0.9.0
-        version: 0.9.0
       lodash-es:
         specifier: ^4.17.21
         version: 4.17.21
