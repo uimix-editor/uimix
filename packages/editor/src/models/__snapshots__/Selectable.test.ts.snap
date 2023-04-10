@@ -521,7 +521,7 @@ exports[`selectablesToProjectJSON > works 1`] = `
         "type": "fixed",
         "value": 100,
       },
-      "imageHash": "YmY-tuteU03QY-k_2ARy1uacNmXDNmOX-FFAlj2qCIo=",
+      "imageHash": "YmY-tuteU03QY-k_2ARy1uacNmXDNmOX-FFAlj2qCIo",
       "position": {
         "x": {
           "start": 33,
