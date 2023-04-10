@@ -15,6 +15,7 @@ import {
 } from "@uimix/node-data";
 import { Project } from "./Project";
 import { Component } from "./Component";
+import { ObjectData } from "./ObjectData";
 
 export interface IComputedRectProvider {
   readonly value: Rect | undefined;
@@ -33,25 +34,14 @@ class SelectablePartialStyle extends PartialStyle {
   constructor(selectable: Selectable) {
     super();
     this.selectable = selectable;
-  }
-
-  selectable: Selectable;
-
-  get data(): ObservableYMap<StyleJSON[keyof StyleJSON]> | undefined {
-    return ObservableYMap.get(
-      this.selectable.selectableMap.stylesData.get(this.selectable.id)
+    this.data = new ObjectData(
+      this.selectable.id,
+      this.selectable.selectableMap.stylesData
     );
   }
 
-  get dataForWrite(): ObservableYMap<StyleJSON[keyof StyleJSON]> {
-    return ObservableYMap.get(
-      getOrCreate(
-        this.selectable.selectableMap.stylesData,
-        this.selectable.id,
-        () => new Y.Map()
-      )
-    );
-  }
+  readonly selectable: Selectable;
+  readonly data: ObjectData<StyleJSON>;
 }
 
 // a node or a inner node of an instance

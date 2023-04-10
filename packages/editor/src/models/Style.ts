@@ -1,6 +1,6 @@
 import { isEqual } from "lodash-es";
 import { StyleJSON } from "@uimix/node-data";
-import { ObservableYMap } from "@uimix/foundation/src/utils/ObservableYMap";
+import { ObjectData } from "./ObjectData";
 
 export type IStyle = StyleJSON;
 
@@ -94,18 +94,13 @@ export const defaultStyle: StyleJSON = {
 export const styleKeys = Object.keys(defaultStyle) as (keyof StyleJSON)[];
 
 export abstract class PartialStyle implements Partial<IStyle> {
-  abstract get data(): ObservableYMap<StyleJSON[keyof StyleJSON]> | undefined;
-  abstract get dataForWrite(): ObservableYMap<StyleJSON[keyof StyleJSON]>;
+  abstract data: ObjectData<StyleJSON>;
 
-  toJSON(): Partial<IStyle> {
-    return this.data?.toJSON() ?? {};
+  toJSON(): Partial<StyleJSON> {
+    return this.data.toJSON();
   }
-  loadJSON(json: Partial<IStyle>) {
-    const data = this.dataForWrite;
-    data.clear();
-    for (const [key, value] of Object.entries(json)) {
-      data.set(key, value);
-    }
+  loadJSON(json: Partial<StyleJSON>) {
+    this.data.loadJSON(json);
   }
 }
 
@@ -115,14 +110,10 @@ export interface PartialStyle extends Partial<IStyle> {}
 for (const key of styleKeys) {
   Object.defineProperty(PartialStyle.prototype, key, {
     get: function (this: PartialStyle) {
-      return this.data?.get(key);
+      return this.data.get(key);
     },
     set(this: PartialStyle, value: StyleJSON[keyof StyleJSON]) {
-      if (value === undefined) {
-        this.data?.delete(key);
-      } else {
-        this.dataForWrite.set(key, value);
-      }
+      this.data.set({ [key]: value });
     },
   });
 }

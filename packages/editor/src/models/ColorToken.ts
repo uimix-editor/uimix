@@ -1,77 +1,57 @@
 import * as Y from "yjs";
 import { Color } from "@uimix/foundation/src/utils/Color";
 import { ObservableYMap } from "@uimix/foundation/src/utils/ObservableYMap";
-import { getOrCreate } from "@uimix/foundation/src/utils/Collection";
 import { generateID } from "@uimix/foundation/src/utils/ID";
 import { ColorToken as ColorTokenJSON } from "@uimix/node-data";
 import { Project } from "./Project";
 import { Page } from "./Page";
+import { ObjectData } from "./ObjectData";
 
 export class ColorToken {
   constructor(project: Project, id: string) {
     this.id = id;
     this.project = project;
+    this.data = new ObjectData<ColorTokenJSON>(
+      this.id,
+      this.project.colorTokens.data
+    );
   }
 
   readonly id: string;
   readonly project: Project;
-
-  get data(): ObservableYMap<ColorTokenJSON[keyof ColorTokenJSON]> | undefined {
-    return ObservableYMap.get(this.project.colorTokens.data.get(this.id));
-  }
-
-  get dataForWrite(): ObservableYMap<ColorTokenJSON[keyof ColorTokenJSON]> {
-    return ObservableYMap.get(
-      getOrCreate(this.project.colorTokens.data, this.id, () => new Y.Map())
-    );
-  }
+  readonly data: ObjectData<ColorTokenJSON>;
 
   get name(): string | undefined {
-    return this.data?.get("name") as string | undefined;
+    return this.data.get("name");
   }
 
-  set name(value: string | undefined) {
-    if (value === undefined) {
-      this.data?.delete("name");
-    } else {
-      this.dataForWrite.set("name", value);
-    }
+  set name(name: string | undefined) {
+    this.data.set({ name });
   }
 
   get value(): Color | undefined {
-    const hex = this.data?.get("value") as string | undefined;
-    if (!hex) {
-      return undefined;
-    }
-    return Color.from(hex);
+    const value = this.data.get("value");
+    return value ? Color.from(value) : undefined;
   }
 
   set value(value: Color | undefined) {
-    if (value === undefined) {
-      this.data?.delete("value");
-    } else {
-      this.dataForWrite.set("value", value.toHex());
-    }
+    this.data.set({ value: value?.toHex() });
   }
 
   get index(): number {
-    return (this.data?.get("index") as number | undefined) ?? 0;
+    return this.data.get("index") ?? 0;
   }
 
-  set index(value: number) {
-    this.dataForWrite.set("index", value);
+  set index(index: number) {
+    this.data.set({ index });
   }
 
   get pageID(): string | undefined {
-    return this.data?.get("page") as string | undefined;
+    return this.data.get("page");
   }
 
   set pageID(value: string | undefined) {
-    if (value === undefined) {
-      this.data?.delete("page");
-    } else {
-      this.dataForWrite.set("page", value);
-    }
+    this.data.set({ page: value });
   }
 }
 

@@ -8,6 +8,7 @@ import { computed, makeObservable } from "mobx";
 import { Project } from "./Project";
 import { Selectable } from "./Selectable";
 import { Component } from "./Component";
+import { ObjectData } from "./ObjectData";
 
 interface NodeKey {
   index: number;
@@ -37,6 +38,7 @@ export class Node {
     this.project = project;
     this.nodeMap = project.nodes;
     this.id = id;
+    this.data = new ObjectData<NodeJSON>(id, project.nodes.data);
 
     makeObservable(this);
   }
@@ -44,34 +46,25 @@ export class Node {
   readonly project: Project;
   readonly nodeMap: NodeMap;
   readonly id: string;
-
-  get data(): ObservableYMap<unknown> | undefined {
-    return ObservableYMap.get(this.nodeMap.data.get(this.id));
-  }
-
-  get dataForWrite(): ObservableYMap<unknown> {
-    return ObservableYMap.get(
-      getOrCreate(this.nodeMap.data, this.id, () => new Y.Map())
-    );
-  }
+  readonly data: ObjectData<NodeJSON>;
 
   get sortKey(): NodeKey {
     return { index: this.index, id: this.id };
   }
 
   get parentID(): string | undefined {
-    return this.data?.get("parent") as string | undefined;
+    return this.data.get("parent");
   }
 
   get index(): number {
-    return (this.data?.get("index") ?? 0) as number;
+    return this.data.get("index") ?? 0;
   }
 
   lastParentID: string | undefined;
   lastIndex = 0;
 
   get type(): NodeType {
-    return (this.data?.get("type") ?? "frame") as NodeType;
+    return this.data.get("type") ?? "frame";
   }
 
   get isAbstract(): boolean {
@@ -79,31 +72,28 @@ export class Node {
   }
 
   @computed get name(): string {
-    return (this.data?.get("name") ?? "") as string;
+    return this.data.get("name") ?? "";
   }
 
   set name(name: string | undefined) {
-    if (name === undefined) {
-      this.data?.delete("name");
-    } else {
-      this.dataForWrite.set("name", name);
-    }
+    this.data.set({ name: name });
   }
 
   // Applicable only to variant nodes
 
   @computed get condition(): VariantCondition | undefined {
-    return this.data?.get("condition") as VariantCondition | undefined;
+    return this.data.get("condition");
   }
 
-  set condition(selector: VariantCondition | undefined) {
-    this.dataForWrite.set("condition", selector);
+  set condition(value: VariantCondition | undefined) {
+    this.data.set({ condition: value });
   }
 
   // parent / children
 
   get parent(): Node | undefined {
-    return this.nodeMap.get(this.data?.get("parent") as string | undefined);
+    const parentID = this.data.get("parent");
+    return this.nodeMap.get(parentID);
   }
 
   get childCount(): number {
@@ -213,9 +203,10 @@ export class Node {
           : i;
 
       // TODO: transaction
-      const data = node.dataForWrite;
-      data.set("parent", this.id);
-      data.set("index", index);
+      node.data.set({
+        parent: this.id,
+        index,
+      });
     }
   }
 
@@ -224,7 +215,9 @@ export class Node {
   }
 
   remove() {
-    this.data?.delete("parent");
+    this.data.set({
+      parent: undefined,
+    });
   }
 
   clear() {
@@ -246,11 +239,12 @@ export class Node {
   }
 
   loadJSON(json: NodeJSON) {
-    const data = this.dataForWrite;
-    data.set("name", json.name);
-    data.set("condition", json.condition);
-    data.set("parent", json.parent);
-    data.set("index", json.index);
+    this.data.set({
+      name: json.name,
+      condition: json.condition,
+      parent: json.parent,
+      index: json.index,
+    });
   }
 
   /// Utility
@@ -326,8 +320,7 @@ export class NodeMap {
 
   readonly project: Project;
 
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  get data(): ObservableYMap<Y.Map<any>> {
+  get data(): ObservableYMap<Y.Map<NodeJSON[keyof NodeJSON]>> {
     return ObservableYMap.get(this.project.data.nodes);
   }
 
@@ -350,7 +343,7 @@ export class NodeMap {
   }
 
   create(type: NodeType, id: string = generateID()): Node {
-    const data = new Y.Map<unknown>();
+    const data = new Y.Map<NodeJSON[keyof NodeJSON]>();
     data.set("type", type);
     data.set("index", 0);
     this.data.set(id, data);
@@ -386,8 +379,8 @@ export class NodeMap {
 
   private insertToParentChildrenMap(node: Node) {
     const data = node.data;
-    const parentID = data?.get("parent") as string | undefined;
-    const index = (data?.get("index") ?? 0) as number;
+    const parentID = data.get("parent");
+    const index = data.get("index");
 
     if (parentID && index !== undefined) {
       const parentChildrenMap = this.getChildrenMap(parentID);
