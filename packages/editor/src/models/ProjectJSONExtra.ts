@@ -21,8 +21,14 @@ export function reassignNewIDs(data: ProjectJSON): ProjectJSON {
 
   const newStyles: Record<string, Partial<StyleJSON>> = {};
   for (const [id, style] of Object.entries(data.styles)) {
+    const newStyle = { ...style };
+    if (newStyle.mainComponent) {
+      newStyle.mainComponent =
+        idMap.get(newStyle.mainComponent) ?? newStyle.mainComponent;
+    }
+
     const idPath = id.split(":").map((id) => idMap.get(id) ?? id);
-    newStyles[idPath.join(":")] = style;
+    newStyles[idPath.join(":")] = newStyle;
   }
 
   return {

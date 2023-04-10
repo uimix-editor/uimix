@@ -9,7 +9,6 @@ import { viewOptions } from "./state/ViewOptions";
 if (viewOptions.embed) {
   new IFrameDataConnector(projectState);
 } else {
-  projectState.setupInitContent();
   projectState.loadDemoFile();
 }
 

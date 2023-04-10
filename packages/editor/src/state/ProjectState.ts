@@ -2,7 +2,9 @@ import { computed, makeObservable, observable } from "mobx";
 import * as Y from "yjs";
 import {
   NodeClipboardData,
+  PageJSON,
   ProjectJSON,
+  ProjectManifestJSON,
   SelectableJSON,
 } from "@uimix/node-data";
 import { Project } from "../models/Project";
@@ -12,6 +14,10 @@ import { generateExampleNodes } from "../models/generateExampleNodes";
 import { PageState } from "./PageState";
 import { Page } from "../models/Page";
 import { ScrollState } from "./ScrollState";
+// eslint-disable-next-line import/no-unresolved
+import demoFile from "./demo.uimix?raw";
+import { filesToProjectJSON } from "../../../cli/src/project/ProjectFiles";
+import { reassignNewIDs } from "../models/ProjectJSONExtra";
 
 export class ProjectState {
   constructor() {
@@ -63,31 +69,22 @@ export class ProjectState {
 
   // MARK: Nodes
 
-  setupInitContent() {
-    const pages = this.project.pages.all;
-    if (pages.length === 0) {
-      const page = this.project.pages.create("Page 1");
-      this.pageID = page.id;
-      generateExampleNodes(page.node);
-      if (this.project.componentURLs.length === 0) {
-        this.project.componentURLs.push([
-          "https://cdn.jsdelivr.net/gh/uimix-editor/uimix@ba0157d5/packages/sandbox/dist-components/components.js",
-          "https://cdn.jsdelivr.net/gh/uimix-editor/uimix@ba0157d5/packages/sandbox/dist-components/style.css",
-        ]);
-      }
-    } else {
-      this.pageID = pages[0].id;
-    }
-    this.undoManager.clear();
-  }
-
   loadDemoFile() {
-    // TODO
-    // let demoProject = ProjectJSON.parse(JSON.parse(demoFile));
-    // demoProject = reassignNewIDs(demoProject);
-    // this.project.loadJSON(demoProject);
-    // this.pageID = this.project.pages.all[0].id;
-    // this.undoManager.clear();
+    const manifest: ProjectManifestJSON = {
+      componentURLs: [
+        "https://cdn.jsdelivr.net/gh/uimix-editor/uimix@ba0157d5/packages/sandbox/dist-components/components.js",
+        "https://cdn.jsdelivr.net/gh/uimix-editor/uimix@ba0157d5/packages/sandbox/dist-components/style.css",
+      ],
+    };
+    const pageJSON: PageJSON = PageJSON.parse(JSON.parse(demoFile));
+
+    const projectJSON = reassignNewIDs(
+      filesToProjectJSON(manifest, new Map([["demo.uimix", pageJSON]]))
+    );
+
+    this.project.loadJSON(projectJSON);
+    this.pageID = this.project.pages.all[0].id;
+    this.undoManager.clear();
   }
 
   loadJSON(projectJSON: ProjectJSON) {

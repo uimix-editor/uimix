@@ -148,7 +148,7 @@ export class ProjectFiles {
   }
 }
 
-function projectJSONToFiles(projectJSON: ProjectJSON): {
+export function projectJSONToFiles(projectJSON: ProjectJSON): {
   manifest: ProjectManifestJSON;
   pages: Map<string, PageJSON>;
 } {
@@ -211,7 +211,7 @@ function projectJSONToFiles(projectJSON: ProjectJSON): {
   };
 }
 
-function filesToProjectJSON(
+export function filesToProjectJSON(
   manifest: ProjectManifestJSON,
   pages: Map<string, PageJSON>
 ): ProjectJSON {
