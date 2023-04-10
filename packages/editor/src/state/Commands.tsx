@@ -31,7 +31,10 @@ import { dialogState } from "./DialogState";
 import { viewportGeometry } from "./ScrollState";
 import { compact } from "lodash-es";
 import { Component } from "../models/Component";
-import { Vec2 } from "paintvec";
+import { Rect, Vec2 } from "paintvec";
+import { moveByPixels } from "../services/MoveByPixel";
+import { snapper } from "./Snapper";
+import { resizeWithBoundingBox } from "../services/Resize";
 
 class Commands {
   @computed get canUndo(): boolean {
@@ -213,6 +216,35 @@ class Commands {
       ungroup(selectable);
     }
     projectState.undoManager.stopCapturing();
+  }
+
+  moveByPixels(delta: Vec2) {
+    const targets = projectState.selectedSelectables.filter(
+      (selectable) => selectable.isAbsolute
+    );
+    if (!targets.length) {
+      return;
+    }
+
+    const parent = targets[0].offsetParent ?? targets[0].pageSelectable;
+    if (!parent) {
+      return;
+    }
+
+    const bbox = Rect.union(...targets.map((t) => t.computedRect));
+    if (!bbox) {
+      return;
+    }
+    const nextBBox = bbox.translate(delta);
+    snapper.exactSnapMoveRect(parent, targets, nextBBox);
+
+    for (const selectable of targets) {
+      resizeWithBoundingBox(
+        selectable,
+        selectable.computedRect.translate(delta),
+        { x: true, y: true }
+      );
+    }
   }
 
   readonly exportJSONCommand: MenuCommandDef = {
@@ -607,6 +639,26 @@ class Commands {
 
     if (event.key === " ") {
       viewportState.panMode = true;
+    }
+
+    if (!isTextInput(document.activeElement)) {
+      // TODO: move elements in layout
+
+      const multiplier = event.shiftKey ? 10 : 1;
+      switch (event.key) {
+        case "ArrowUp":
+          this.moveByPixels(new Vec2(0, -1).mul(multiplier));
+          return true;
+        case "ArrowDown":
+          this.moveByPixels(new Vec2(0, 1).mul(multiplier));
+          return true;
+        case "ArrowLeft":
+          this.moveByPixels(new Vec2(-1, 0).mul(multiplier));
+          return true;
+        case "ArrowRight":
+          this.moveByPixels(new Vec2(1, 0).mul(multiplier));
+          return true;
+      }
     }
 
     if (
