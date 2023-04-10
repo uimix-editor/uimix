@@ -1,4 +1,3 @@
-import { encode } from "url-safe-base64";
 import sha256 from "js-sha256";
 import { Buffer } from "buffer";
 
@@ -53,5 +52,10 @@ export function getURLSafeBase64Hash(data: Uint8Array): string {
   // @ts-ignore
   // eslint-disable-next-line @typescript-eslint/no-unsafe-call
   const hash = sha256.arrayBuffer(data) as ArrayBuffer;
-  return encode(Buffer.from(hash).toString("base64"));
+
+  return Buffer.from(hash)
+    .toString("base64")
+    .replace(/\+/g, "-")
+    .replace(/\//g, "_")
+    .replace(/=+$/, "");
 }
