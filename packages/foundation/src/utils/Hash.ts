@@ -1,4 +1,5 @@
 import { crypto } from "./Crypto";
+import { Buffer } from "buffer";
 
 export async function getURLSafeBase64Hash(
   data: BufferSource
