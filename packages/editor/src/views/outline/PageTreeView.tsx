@@ -131,6 +131,8 @@ export const PageTreeView = observer(() => {
   return (
     <TreeView
       className="min-h-full treeview-root"
+      header={<div className="h-1" />}
+      footer={<div className="h-1" />}
       rootItem={rootItem}
       background={
         <div
