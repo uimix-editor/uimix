@@ -35,6 +35,7 @@ export class IFrameDataConnector {
         init: action(async (data: Uint8Array, pageID?: string) => {
           Y.applyUpdate(state.doc, data);
           state.pageID = pageID ?? state.project.pages.all[0]?.id;
+          state.undoManager.clear();
         }),
       }
     );
