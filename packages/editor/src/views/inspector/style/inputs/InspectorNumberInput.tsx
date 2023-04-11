@@ -6,7 +6,7 @@ import { Input } from "@uimix/foundation/src/components/Input";
 import { sameOrMixed } from "@uimix/foundation/src/utils/Mixed";
 import { roundToFixed } from "@uimix/foundation/src/utils/Math";
 import { InspectorTargetContext } from "../../components/InspectorTargetContext";
-import { Selectable } from "../../../../models/Selectable";
+import { Selectable } from "@uimix/model/src/models";
 import { projectState } from "../../../../state/ProjectState";
 
 export const InspectorNumberInput = observer(function InspectorNumberInput({

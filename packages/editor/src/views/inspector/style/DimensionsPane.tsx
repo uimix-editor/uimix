@@ -4,7 +4,7 @@ import {
   PositionConstraint,
   PositionConstraintType,
   SizeConstraintType,
-} from "@uimix/node-data";
+} from "@uimix/model/src/data/v1";
 import hugContentsIcon from "@seanchas116/design-icons/json/hug-contents.json";
 import fixedSizeIcon from "@seanchas116/design-icons/json/fixed-size.json";
 import fillAreaIcon from "@seanchas116/design-icons/json/fill-area.json";
@@ -18,7 +18,7 @@ import { ToggleGroupItem } from "@uimix/foundation/src/components/ToggleGroup";
 import { InspectorPane } from "../components/InspectorPane";
 import { projectState } from "../../../state/ProjectState";
 import { InspectorTargetContext } from "../components/InspectorTargetContext";
-import { Selectable } from "../../../models/Selectable";
+import { Selectable } from "@uimix/model/src/models";
 import { sameOrMixed } from "@uimix/foundation/src/utils/Mixed";
 import { InspectorHeading } from "../components/InspectorHeading";
 import { SeparableInput } from "@uimix/foundation/src/components/SeparableInput";

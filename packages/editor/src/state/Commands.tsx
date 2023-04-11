@@ -1,7 +1,11 @@
 import { action, computed, runInAction } from "mobx";
 import { isTextInput } from "@uimix/foundation/src/utils/Focus";
 import { Shortcut } from "@uimix/foundation/src/utils/Shortcut";
-import { Selectable } from "../models/Selectable";
+import {
+  Selectable,
+  PageHierarchyEntry,
+  Component,
+} from "@uimix/model/src/models";
 import { exportToJSON as exportJSON, importJSON } from "./JSONExport";
 import { viewportState } from "./ViewportState";
 import { projectState } from "./ProjectState";
@@ -16,24 +20,20 @@ import {
   groupAndAutoLayout,
   removeLayout,
   ungroup,
-} from "../services/AutoLayout";
-import {
+  generateExampleNodes,
   attachComponent,
   canCreateComponent,
   canDetachComponent,
   createComponent,
   detachComponent,
-} from "../services/Component";
-import { PageHierarchyEntry } from "../models/PageList";
+  resizeWithBoundingBox,
+} from "@uimix/model/src/services";
 import { posix as path } from "path-browserify";
-import { generateExampleNodes } from "../models/generateExampleNodes";
 import { dialogState } from "./DialogState";
 import { viewportGeometry } from "./ScrollState";
 import { compact } from "lodash-es";
-import { Component } from "../models/Component";
 import { Rect, Vec2 } from "paintvec";
 import { snapper } from "./Snapper";
-import { resizeWithBoundingBox } from "../services/Resize";
 
 class Commands {
   @computed get canUndo(): boolean {

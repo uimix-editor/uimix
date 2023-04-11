@@ -6,18 +6,19 @@ import {
   ProjectJSON,
   ProjectManifestJSON,
   SelectableJSON,
-} from "@uimix/node-data";
-import { Project } from "../models/Project";
-import { Selectable } from "../models/Selectable";
+} from "@uimix/model/src/data/v1";
+import {
+  Project,
+  Page,
+  reassignNewIDs,
+  Selectable,
+} from "@uimix/model/src/models";
 import { getIncrementalUniqueName } from "@uimix/foundation/src/utils/Name";
-import { generateExampleNodes } from "../models/generateExampleNodes";
 import { PageState } from "./PageState";
-import { Page } from "../models/Page";
 import { ScrollState } from "./ScrollState";
 // eslint-disable-next-line import/no-unresolved
 import demoFile from "./demo.uimix?raw";
 import { filesToProjectJSON } from "../../../cli/src/project/ProjectFiles";
-import { reassignNewIDs } from "../models/ProjectJSONExtra";
 
 export class ProjectState {
   constructor() {

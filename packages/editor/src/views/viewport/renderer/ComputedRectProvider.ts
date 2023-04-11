@@ -1,6 +1,6 @@
 import { createAtom } from "mobx";
 import { Rect } from "paintvec";
-import { IComputedRectProvider } from "../../../models/Selectable";
+import { IComputedRectProvider } from "@uimix/model/src/models";
 import { projectState } from "../../../state/ProjectState";
 
 export const viewportRootMarker = "data-viewport-root";

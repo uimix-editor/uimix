@@ -1,5 +1,5 @@
 import { Rect, Vec2 } from "paintvec";
-import { Selectable } from "../../../models/Selectable";
+import { Selectable } from "@uimix/model/src/models";
 import { projectState } from "../../../state/ProjectState";
 import { InsertMode } from "../../../state/InsertMode";
 import { snapper } from "../../../state/Snapper";
@@ -9,7 +9,7 @@ import { assertNonNull } from "@uimix/foundation/src/utils/Assert";
 import { dragStartThreshold } from "../constants";
 import { ViewportEvent } from "./ViewportEvent";
 import { DragHandler } from "./DragHandler";
-import { resizeWithBoundingBox } from "../../../services/Resize";
+import { resizeWithBoundingBox } from "@uimix/model/src/services";
 import { action } from "mobx";
 
 export class NodeInsertDragHandler implements DragHandler {

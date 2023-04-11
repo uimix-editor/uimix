@@ -1,4 +1,4 @@
-import * as UIMix from "@uimix/node-data";
+import * as UIMix from "@uimix/model/src/data/v1";
 import { getURLSafeBase64Hash, imageToDataURL, rgbaToHex } from "../util";
 
 function getPositionStylePartial(

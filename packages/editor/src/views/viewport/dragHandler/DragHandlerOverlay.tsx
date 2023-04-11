@@ -3,7 +3,7 @@ import React, { useEffect, useRef } from "react";
 import { DragHandler } from "./DragHandler";
 import { NodeClickMoveDragHandler } from "./NodeClickMoveDragHandler";
 import { NodeInsertDragHandler } from "./NodeInsertDragHandler";
-import { Selectable } from "../../../models/Selectable";
+import { Selectable } from "@uimix/model/src/models";
 import { doubleClickInterval } from "../constants";
 import { ViewportEvent } from "./ViewportEvent";
 import { projectState } from "../../../state/ProjectState";

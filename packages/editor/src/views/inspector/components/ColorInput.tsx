@@ -8,7 +8,7 @@ import { twMerge } from "tailwind-merge";
 import { ColorTokenPopover } from "./ColorTokenPopover";
 import { IconButton } from "@uimix/foundation/src/components/IconButton";
 import { Tooltip } from "@uimix/foundation/src/components/Tooltip";
-import { ColorRef } from "../../../models/ColorRef";
+import { ColorRef } from "@uimix/model/src/models";
 
 const ColorLabelBackground = styled.div`
   ${checkPattern("white", "#aaa", "8px")}

@@ -11,6 +11,7 @@
     "build-storybook": "storybook build",
     "lint": "eslint src",
     "storybook": "storybook dev -p 6006",
+    "build": "tsc",
     "test": "vitest run"
   },
   "dependencies": {
@@ -29,7 +30,6 @@
     "@radix-ui/react-toggle-group": "^1.0.3",
     "@radix-ui/react-tooltip": "^1.0.5",
     "@seanchas116/design-icons": "^1.0.1",
-    "@uimix/node-data": "workspace:*",
     "@uimix/typed-rpc": "workspace:*",
     "any-base": "^1.1.0",
     "ariakit": "2.0.0-next.43",

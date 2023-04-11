@@ -1,9 +1,9 @@
 import { observer } from "mobx-react-lite";
 import { NodeRenderer } from "../views/viewport/renderer/NodeRenderer";
-import { ForeignComponentManager } from "../models/ForeignComponentManager";
+import { ForeignComponentManager } from "../state/ForeignComponentManager";
 import { projectState } from "../state/ProjectState";
 import { assertNonNull } from "@uimix/foundation/src/utils/Assert";
-import { Page } from "../models/Page";
+import { Page } from "@uimix/model/src/models";
 
 export const ThumbnailTaker: React.FC = observer(() => {
   const page: Page | undefined = projectState.project.pages.all[0];

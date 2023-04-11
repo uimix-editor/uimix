@@ -1,7 +1,7 @@
 import { MessageToCode, MessageToUI } from "../types/message";
 import { figmaNodesToMacaron } from "./toUIMix/node";
-import * as UIMix from "@uimix/node-data";
-import { NodeClipboardData } from "@uimix/node-data";
+import * as UIMix from "@uimix/model/src/data/v1";
+import { NodeClipboardData } from "@uimix/model/src/data/v1";
 
 figma.showUI(__html__);
 

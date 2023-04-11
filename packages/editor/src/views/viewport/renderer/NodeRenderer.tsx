@@ -1,7 +1,11 @@
 import React, { createRef, useEffect, useRef } from "react";
 import { observer } from "mobx-react-lite";
-import { StackDirection } from "@uimix/node-data";
-import { Selectable } from "../../../models/Selectable";
+import { StackDirection } from "@uimix/model/src/data/v1";
+import {
+  Selectable,
+  buildNodeCSS,
+  getLayoutType,
+} from "@uimix/model/src/models";
 import { viewportState } from "../../../state/ViewportState";
 import { ComputedRectProvider } from "./ComputedRectProvider";
 import { projectState } from "../../../state/ProjectState";
@@ -9,8 +13,7 @@ import {
   ForeignComponent,
   ForeignComponentRenderer as IForeignComponentRenderer,
 } from "../../../types/ForeignComponent";
-import { ForeignComponentManager } from "../../../models/ForeignComponentManager";
-import { buildNodeCSS, getLayoutType } from "../../../models/buildNodeCSS";
+import { ForeignComponentManager } from "../../../state/ForeignComponentManager";
 import htmlReactParser from "html-react-parser";
 
 export const selectableForDOM = new WeakMap<HTMLElement, Selectable>();

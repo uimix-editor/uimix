@@ -2,7 +2,7 @@ import { action, computed, makeObservable } from "mobx";
 import React from "react";
 import { Vec2, Rect, Transform } from "paintvec";
 import { observer } from "mobx-react-lite";
-import { Selectable } from "../../../models/Selectable";
+import { Selectable } from "@uimix/model/src/models";
 import { projectState } from "../../../state/ProjectState";
 import colors from "@uimix/foundation/src/colors";
 import { ResizeBox } from "@uimix/foundation/src/components/ResizeBox";
@@ -10,7 +10,7 @@ import { roundRectXYWH } from "../../../types/Rect";
 import { snapper } from "../../../state/Snapper";
 import { assertNonNull } from "@uimix/foundation/src/utils/Assert";
 import { viewportState } from "../../../state/ViewportState";
-import { resizeWithBoundingBox } from "../../../services/Resize";
+import { resizeWithBoundingBox } from "@uimix/model/src/services";
 
 class NodeResizeBoxState {
   constructor() {

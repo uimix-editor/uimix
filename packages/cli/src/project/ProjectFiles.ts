@@ -6,11 +6,11 @@ import {
   ProjectJSON,
   ProjectManifestJSON,
   StyleJSON,
-} from "@uimix/node-data";
+} from "@uimix/model/src/data/v1";
 import {
   getPageID,
   compareProjectJSONs,
-} from "@uimix/editor/src/models/ProjectJSON";
+} from "@uimix/model/src/models/ProjectJSON";
 import { omit } from "lodash-es";
 import { formatJSON } from "../format";
 import { FileAccess } from "./FileAccess";

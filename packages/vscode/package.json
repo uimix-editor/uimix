@@ -61,7 +61,7 @@
     "@types/vscode": "^1.77.0",
     "@typescript-eslint/eslint-plugin": "^5.58.0",
     "@typescript-eslint/parser": "^5.58.0",
-    "@uimix/editor": "workspace:*",
+    "@uimix/model": "workspace:*",
     "@uimix/typed-rpc": "workspace:*",
     "@vscode/test-electron": "^2.3.0",
     "@vscode/vsce": "^2.18.0",

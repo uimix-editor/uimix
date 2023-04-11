@@ -1,12 +1,12 @@
-import { Selectable } from "@uimix/editor/src/models/Selectable";
-import { Variant } from "@uimix/editor/src/models/Component";
+import { Selectable } from "@uimix/model/src/models/Selectable";
+import { Variant } from "@uimix/model/src/models/Component";
 import {
   buildNodeCSS,
   getLayoutType,
-} from "@uimix/editor/src/models/buildNodeCSS";
+} from "@uimix/model/src/models/buildNodeCSS";
 import { kebabCase } from "lodash-es";
 import * as CSS from "csstype";
-import { Page } from "@uimix/editor/src/models/Page";
+import { Page } from "@uimix/model/src/models/Page";
 
 const baseCSS = [
   `box-sizing: border-box;`,

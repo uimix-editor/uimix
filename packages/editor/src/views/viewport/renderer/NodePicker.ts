@@ -1,5 +1,5 @@
 import { compact } from "lodash-es";
-import { Selectable } from "../../../models/Selectable";
+import { Selectable } from "@uimix/model/src/models";
 import { viewportGeometry } from "../../../state/ScrollState";
 import { selectableForDOM } from "../renderer/NodeRenderer";
 

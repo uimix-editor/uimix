@@ -1,4 +1,4 @@
-import { NodeClipboardData } from "@uimix/node-data";
+import { NodeClipboardData } from "@uimix/model/src/data/v1";
 
 // const mimeType = "application/x-macaron-nodes";
 

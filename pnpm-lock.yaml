@@ -83,15 +83,12 @@ importers:
       '@types/tmp':
         specifier: ^0.2.3
         version: 0.2.3
-      '@uimix/editor':
-        specifier: workspace:*
-        version: link:../editor
       '@uimix/foundation':
         specifier: workspace:*
         version: link:../foundation
-      '@uimix/node-data':
+      '@uimix/model':
         specifier: workspace:*
-        version: link:../node-data
+        version: link:../model
       csstype:
         specifier: ^3.1.2
         version: 3.1.2
@@ -298,9 +295,9 @@ importers:
       '@types/jsonwebtoken':
         specifier: ^9.0.1
         version: 9.0.1
-      '@uimix/node-data':
+      '@uimix/model':
         specifier: workspace:*
-        version: link:../node-data
+        version: link:../model
       autoprefixer:
         specifier: ^10.4.14
         version: 10.4.14(postcss@8.4.21)
@@ -364,9 +361,9 @@ importers:
       '@uimix/foundation':
         specifier: workspace:*
         version: link:../foundation
-      '@uimix/node-data':
+      '@uimix/model':
         specifier: workspace:*
-        version: link:../node-data
+        version: link:../model
       '@uimix/typed-rpc':
         specifier: workspace:*
         version: link:../typed-rpc
@@ -506,6 +503,9 @@ importers:
       '@types/lodash-es':
         specifier: ^4.17.7
         version: 4.17.7
+      '@types/node':
+        specifier: ^18.15.11
+        version: 18.15.11
       '@types/path-browserify':
         specifier: ^1.0.0
         version: 1.0.0
@@ -581,9 +581,9 @@ importers:
       '@iconify/react':
         specifier: ^4.1.0
         version: 4.1.0(react@18.2.0)
-      '@uimix/node-data':
+      '@uimix/model':
         specifier: workspace:*
-        version: link:../node-data
+        version: link:../model
       buffer:
         specifier: ^6.0.3
         version: 6.0.3
@@ -693,9 +693,6 @@ importers:
       '@seanchas116/design-icons':
         specifier: ^1.0.1
         version: 1.0.1
-      '@uimix/node-data':
-        specifier: workspace:*
-        version: link:../node-data
       '@uimix/typed-rpc':
         specifier: workspace:*
         version: link:../typed-rpc
@@ -945,12 +942,6 @@ importers:
         specifier: ^0.30.0
         version: 0.30.0
 
-  packages/node-data:
-    dependencies:
-      zod:
-        specifier: ^3.21.4
-        version: 3.21.4
-
   packages/paintvec:
     devDependencies:
       '@types/node':
@@ -1073,9 +1064,9 @@ importers:
       '@typescript-eslint/parser':
         specifier: ^5.58.0
         version: 5.58.0(eslint@8.38.0)(typescript@4.9.5)
-      '@uimix/editor':
+      '@uimix/model':
         specifier: workspace:*
-        version: link:../editor
+        version: link:../model
       '@uimix/typed-rpc':
         specifier: workspace:*
         version: link:../typed-rpc

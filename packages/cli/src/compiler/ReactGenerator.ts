@@ -1,5 +1,5 @@
-import { Component } from "@uimix/editor/src/models/Component";
-import { Selectable } from "@uimix/editor/src/models/Selectable";
+import { Component } from "@uimix/model/src/models/Component";
+import { Selectable } from "@uimix/model/src/models/Selectable";
 import {
   generateJSIdentifier,
   getIncrementalUniqueName,
@@ -9,7 +9,7 @@ import { posix as path } from "path";
 import htmlReactParser from "html-react-parser";
 import reactElementToJSXString from "react-element-to-jsx-string";
 import React from "react";
-import { Page } from "@uimix/editor/src/models/Page";
+import { Page } from "@uimix/model/src/models/Page";
 import mime from "mime-types";
 
 // TODO: remove this when react-element-to-jsx-string is fixed

@@ -10,7 +10,7 @@ import { InspectorHeading } from "../components/InspectorHeading";
 import { InspectorPane } from "../components/InspectorPane";
 import { action } from "mobx";
 import { InspectorTargetContext } from "../components/InspectorTargetContext";
-import { ColorRef } from "../../../models/ColorRef";
+import { ColorRef } from "@uimix/model/src/models";
 
 export const FillPane: React.FC = observer(function FillPane() {
   const selectables = projectState.selectedSelectables.filter(

@@ -18,7 +18,7 @@ import edgeBottomIcon from "@seanchas116/design-icons/json/edge-bottom.json";
 import edgeLeftIcon from "@seanchas116/design-icons/json/edge-left.json";
 import { SeparableInput } from "@uimix/foundation/src/components/SeparableInput";
 import { useContext } from "react";
-import { ColorRef } from "../../../models/ColorRef";
+import { ColorRef } from "@uimix/model/src/models";
 
 function BorderWidthEdit() {
   const selectables = useContext(InspectorTargetContext);

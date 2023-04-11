@@ -20,7 +20,7 @@
   },
   "dependencies": {
     "@iconify/react": "^4.1.0",
-    "@uimix/node-data": "workspace:*",
+    "@uimix/model": "workspace:*",
     "buffer": "^6.0.3",
     "js-sha256": "^0.9.0",
     "just-compare": "^2.3.0",

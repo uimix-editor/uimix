@@ -7,7 +7,7 @@ import {
   snapPointToRects,
   snapRectToRects,
 } from "@uimix/foundation/src/utils/Snapping";
-import { Selectable } from "../models/Selectable";
+import { Selectable } from "@uimix/model/src/models";
 import { projectState } from "./ProjectState";
 
 export class Snapper {

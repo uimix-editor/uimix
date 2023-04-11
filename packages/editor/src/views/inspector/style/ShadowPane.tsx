@@ -11,8 +11,8 @@ import { action } from "mobx";
 import { InspectorTargetContext } from "../components/InspectorTargetContext";
 import { Input } from "@uimix/foundation/src/components/Input";
 import { DropdownMenu } from "@uimix/foundation/src/components/Menu";
-import { Shadow } from "@uimix/node-data";
-import { ColorRef } from "../../../models/ColorRef";
+import { Shadow } from "@uimix/model/src/data/v1";
+import { ColorRef } from "@uimix/model/src/models";
 
 function nanToZero(value: number) {
   return isNaN(value) ? 0 : value;

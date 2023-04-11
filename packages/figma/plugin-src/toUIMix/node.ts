@@ -1,5 +1,5 @@
 import { compact } from "../util";
-import * as UIMix from "@uimix/node-data";
+import * as UIMix from "@uimix/model/src/data/v1";
 import { svgLikeNodeChecker } from "./SVGLikeNodeChecker";
 import {
   getFrameStyle,

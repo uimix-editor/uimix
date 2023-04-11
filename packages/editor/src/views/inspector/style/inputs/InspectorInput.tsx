@@ -4,7 +4,7 @@ import { observer } from "mobx-react-lite";
 import { IconifyIcon } from "@iconify/react";
 import { Input } from "@uimix/foundation/src/components/Input";
 import { Mixed, sameOrMixed } from "@uimix/foundation/src/utils/Mixed";
-import { Selectable } from "../../../../models/Selectable";
+import { Selectable } from "@uimix/model/src/models";
 import { InspectorTargetContext } from "../../components/InspectorTargetContext";
 import { projectState } from "../../../../state/ProjectState";
 

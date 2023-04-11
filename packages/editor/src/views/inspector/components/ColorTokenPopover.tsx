@@ -3,11 +3,10 @@ import { Tooltip } from "@uimix/foundation/src/components/Tooltip";
 import { action } from "mobx";
 import { SearchInput } from "../../outline/SearchInput";
 import { projectState } from "../../../state/ProjectState";
-import { ColorToken } from "../../../models/ColorToken";
+import { ColorToken, ColorRef } from "@uimix/model/src/models";
 import { Color } from "@uimix/foundation/src/utils/Color";
 import { useState } from "react";
 import { IconButton } from "@uimix/foundation/src/components/IconButton";
-import { ColorRef } from "../../../models/ColorRef";
 import { twMerge } from "tailwind-merge";
 import { QueryTester } from "@uimix/foundation/src/utils/QueryTester";
 

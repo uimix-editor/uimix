@@ -1,5 +1,5 @@
-import { ProjectJSON } from "@uimix/node-data";
-import { Project } from "@uimix/editor/src/models/Project";
+import { ProjectJSON } from "@uimix/model/src/data/v1";
+import { Project } from "@uimix/model/src/models/Project";
 import { formatTypeScript } from "../format.js";
 import { CSSGenerator } from "./CSSGenerator.js";
 import { ReactGenerator } from "./ReactGenerator.js";

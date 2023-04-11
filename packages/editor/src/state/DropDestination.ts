@@ -1,5 +1,5 @@
-import { Segment, Vec2 } from "paintvec";
-import { Selectable } from "../models/Selectable";
+import { Segment } from "paintvec";
+import { Selectable } from "@uimix/model/src/models";
 
 export interface DropDestination {
   parent: Selectable;
