@@ -15,9 +15,9 @@
     "upgrade-packages": "ncu -u && ls -d packages/*/ | xargs -I {} bash -c \"cd '{}' && ncu -u\""
   },
   "devDependencies": {
-    "@typescript-eslint/eslint-plugin": "^5.57.1",
-    "@typescript-eslint/parser": "^5.57.1",
-    "eslint": "8.37.0",
+    "@typescript-eslint/eslint-plugin": "^5.58.0",
+    "@typescript-eslint/parser": "^5.58.0",
+    "eslint": "8.38.0",
     "eslint-plugin-import": "^2.27.5",
     "npm-check-updates": "^16.10.7",
     "turbo": "^1.8.8"

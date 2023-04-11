@@ -39,11 +39,11 @@
     "@types/lodash": "^4.14.192",
     "@types/prettier": "^2.7.2",
     "electron": "23.2.2",
-    "esbuild": "^0.17.15",
+    "esbuild": "^0.17.16",
     "lodash": "^4.17.21",
     "run-z": "^1.11.0",
     "tiny-typed-emitter": "^2.1.0",
-    "typescript": "^5.0.3"
+    "typescript": "^5.0.4"
   },
   "productName": "UIMix"
 }

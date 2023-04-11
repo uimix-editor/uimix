@@ -52,7 +52,7 @@
     "react-draggable-tree": "^0.7.0",
     "react-merge-refs": "^2.0.1",
     "react-sortablejs": "^6.1.4",
-    "scroll-into-view-if-needed": "^3.0.6",
+    "scroll-into-view-if-needed": "^3.0.10",
     "slate": "^0.93.0",
     "slate-react": "^0.93.0",
     "sortablejs": "^1.15.0",
@@ -78,12 +78,12 @@
     "@types/lodash-es": "^4.17.7",
     "@types/path-browserify": "^1.0.0",
     "@types/prettier": "^2.7.2",
-    "@types/react": "^18.0.33",
+    "@types/react": "^18.0.34",
     "@types/react-color": "^3.0.6",
     "@types/react-dom": "^18.0.11",
     "@types/sortablejs": "^1.15.1",
     "@types/ua-parser-js": "^0.7.36",
-    "@types/wicg-file-system-access": "^2020.9.5",
+    "@types/wicg-file-system-access": "^2020.9.6",
     "@vitejs/plugin-react": "^3.1.0",
     "autoprefixer": "^10.4.14",
     "babel-loader": "^9.1.2",
@@ -96,8 +96,8 @@
     "run-z": "^1.11.0",
     "storybook": "^7.0.2",
     "tailwindcss": "^3.3.1",
-    "typescript": "^5.0.3",
+    "typescript": "^5.0.4",
     "vite": "^4.2.1",
-    "vitest": "^0.29.8"
+    "vitest": "^0.30.0"
   }
 }
