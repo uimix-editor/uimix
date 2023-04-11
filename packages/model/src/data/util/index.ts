@@ -1,4 +1,4 @@
-import { ProjectJSON } from "../data/v1";
+import { ProjectJSON } from "../v1";
 import { isEqual, omit } from "lodash-es";
 import sha256 from "crypto-js/sha256";
 import encBase64url from "crypto-js/enc-base64url";

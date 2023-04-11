@@ -5,7 +5,7 @@ import { Page } from "./Page";
 import { compact } from "lodash-es";
 import { assertNonNull } from "@uimix/foundation/src/utils/Assert";
 import { Project } from "./Project";
-import { getPageID } from "./ProjectJSON";
+import { getPageID } from "../data/util";
 
 export interface PageHierarchyFolderEntry {
   type: "directory";

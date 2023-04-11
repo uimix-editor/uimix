@@ -1,4 +1,4 @@
-import { NodeJSON, ProjectJSON, StyleJSON } from "../data/v1";
+import { NodeJSON, ProjectJSON, StyleJSON } from "../v1";
 import { generateID } from "@uimix/foundation/src/utils/ID";
 
 // FIXME: importing generateID breaks Next.js build (so I created a separate file for this function)

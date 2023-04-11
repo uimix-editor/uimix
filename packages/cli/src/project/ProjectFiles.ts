@@ -7,10 +7,7 @@ import {
   ProjectManifestJSON,
   StyleJSON,
 } from "@uimix/model/src/data/v1";
-import {
-  getPageID,
-  compareProjectJSONs,
-} from "@uimix/model/src/models/ProjectJSON";
+import { getPageID, compareProjectJSONs } from "@uimix/model/src/data/util";
 import { omit } from "lodash-es";
 import { formatJSON } from "../format";
 import { FileAccess } from "./FileAccess";
