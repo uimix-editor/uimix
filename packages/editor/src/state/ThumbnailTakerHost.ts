@@ -1,7 +1,7 @@
 import { RPC } from "@uimix/typed-rpc";
 import { iframeTarget } from "@uimix/typed-rpc/browser";
 import * as Y from "yjs";
-import { Project } from "../models/Project";
+import { Project } from "@uimix/model/src/models";
 import {
   IRootToThumbnailTakerRPC,
   IThumbnailTakerToRootRPC,

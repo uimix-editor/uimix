@@ -10,7 +10,7 @@
   },
   "main": "dist/index.js",
   "scripts": {
-    "build": "node build.js",
+    "build": "tsc && node build.js",
     "dev": "NODE_ENV=development run-z build start",
     "lint": "eslint src",
     "make": "electron-forge make",

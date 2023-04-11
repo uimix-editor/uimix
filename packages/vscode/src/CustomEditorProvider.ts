@@ -3,7 +3,7 @@ import { CustomDocument } from "./CustomDocument";
 import { ProjectFiles } from "uimix/src/project/ProjectFiles";
 import { FileAccess } from "uimix/src/project/FileAccess";
 import * as Y from "yjs";
-import { ProjectData } from "@uimix/editor/src/models/ProjectData";
+import { ProjectData } from "@uimix/model/src/collaborative";
 import {
   IEditorToVSCodeRPCHandler,
   IVSCodeToEditorRPCHandler,

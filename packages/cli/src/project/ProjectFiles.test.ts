@@ -3,7 +3,7 @@ import { ProjectFiles } from "./ProjectFiles";
 import * as fs from "fs";
 import shell from "shelljs";
 import tmp from "tmp";
-import { Project } from "@uimix/editor/src/models/Project";
+import { Project } from "@uimix/model/src/models/Project";
 import { NodeFileAccess } from "./NodeFileAccess";
 
 describe(ProjectFiles.name, () => {

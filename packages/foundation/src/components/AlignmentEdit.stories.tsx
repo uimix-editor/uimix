@@ -1,6 +1,5 @@
 import React, { useState } from "react";
-import { StackAlign, StackJustify } from "@uimix/node-data";
-import { AlignmentEdit } from "./AlignmentEdit";
+import { AlignmentEdit, StackAlign, StackJustify } from "./AlignmentEdit";
 
 export default {
   title: "AlignmentEdit",

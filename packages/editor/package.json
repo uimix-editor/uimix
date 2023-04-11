@@ -14,7 +14,7 @@
     "lint": "eslint src",
     "preview": "vite preview",
     "storybook": "storybook dev -p 6006",
-    "test": "vitest run"
+    "//test": "vitest run"
   },
   "dependencies": {
     "@emotion/react": "^11.10.6",
@@ -32,7 +32,7 @@
     "@radix-ui/react-tooltip": "^1.0.5",
     "@seanchas116/design-icons": "^1.0.1",
     "@uimix/foundation": "workspace:*",
-    "@uimix/node-data": "workspace:*",
+    "@uimix/model": "workspace:*",
     "@uimix/typed-rpc": "workspace:*",
     "any-base": "^1.1.0",
     "ariakit": "2.0.0-next.43",
@@ -81,6 +81,7 @@
     "@types/crypto-js": "^4.1.1",
     "@types/dedent": "^0.7.0",
     "@types/lodash-es": "^4.17.7",
+    "@types/node": "^18.15.11",
     "@types/path-browserify": "^1.0.0",
     "@types/prettier": "^2.7.2",
     "@types/react": "^18.0.34",

@@ -7,7 +7,7 @@ import type {
   IRootToEditorRPCHandler,
   IEditorToRootRPCHandler,
 } from "@uimix/editor/src/state/IFrameRPC";
-import { ProjectData } from "@uimix/editor/src/models/ProjectData";
+import { ProjectData } from "@uimix/model/src/collaborative";
 import { LoadingErrorOverlay } from "./LoadingErrorOverlay";
 import { DocumentMetadata, getDesktopAPI } from "../../types/DesktopAPI";
 import { assertNonNull } from "../../utils/assertNonNull";

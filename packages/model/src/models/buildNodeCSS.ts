@@ -1,4 +1,4 @@
-import { Color, NodeType, StackDirection, StyleJSON } from "@uimix/node-data";
+import { Color, NodeType, StackDirection, StyleJSON } from "../data/v1";
 
 export function getLayoutType(
   style: StyleJSON

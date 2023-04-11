@@ -1,8 +1,8 @@
 import { observer } from "mobx-react-lite";
 import React from "react";
 import { IFrame } from "../../components/IFrame";
-import { ForeignComponentManager } from "../../../models/ForeignComponentManager";
-import { Selectable } from "../../../models/Selectable";
+import { ForeignComponentManager } from "../../../state/ForeignComponentManager";
+import { Selectable } from "@uimix/model/src/models";
 import { projectState } from "../../../state/ProjectState";
 import { viewportRootMarker } from "./ComputedRectProvider";
 import { FontLoader } from "./FontLoader";

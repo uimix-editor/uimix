@@ -1,5 +1,5 @@
 import { Color } from "@uimix/foundation/src/utils/Color";
-import { Color as ColorJSON } from "@uimix/node-data";
+import { Color as ColorJSON } from "../data/v1";
 import { ColorToken } from "./ColorToken";
 import { Project } from "./Project";
 

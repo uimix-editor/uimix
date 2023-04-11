@@ -1,7 +1,7 @@
 import { Component } from "../models/Component";
+import { Page } from "../models/Page";
 import { Selectable } from "../models/Selectable";
 import { styleKeys } from "../models/Style";
-import { projectState } from "../state/ProjectState";
 
 export function canCreateComponent(selectable: Selectable) {
   // inside instance
@@ -21,10 +21,13 @@ export function canCreateComponent(selectable: Selectable) {
 }
 
 export function createComponent(selectable: Selectable) {
-  const { page } = projectState;
+  const page =
+    selectable.pageSelectable && Page.from(selectable.pageSelectable.node);
   if (!page) {
     return;
   }
+  const project = page.project;
+
   if (!canCreateComponent(selectable)) {
     return;
   }
@@ -34,7 +37,7 @@ export function createComponent(selectable: Selectable) {
   const parent = selectable.parent;
   const next = selectable.nextSibling;
 
-  const component = projectState.project.nodes.create("component");
+  const component = project.nodes.create("component");
   component.name = selectable.node.name;
   component.append([selectable.node]);
   page.node.append([component]);
@@ -46,7 +49,7 @@ export function createComponent(selectable: Selectable) {
       y: { type: "start", start: 0 },
     };
 
-    const instance = projectState.project.nodes.create("instance");
+    const instance = project.nodes.create("instance");
     instance.name = selectable.node.name;
     instance.selectable.style.mainComponent = component.id;
     parent?.insertBefore([instance.selectable], next);
@@ -84,10 +87,12 @@ export function attachComponent(
   // - copy styles recursively
   // - remove original
 
+  const project = selectable.project;
+
   const parent = selectable.parent;
   const next = selectable.nextSibling;
 
-  const instance = projectState.project.nodes.create("instance");
+  const instance = project.nodes.create("instance");
   const instanceSelectable = instance.selectable;
   instance.name = selectable.node.name;
   instanceSelectable.style.mainComponent = component.node.id;

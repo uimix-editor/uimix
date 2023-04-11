@@ -2,7 +2,7 @@ import { observer } from "mobx-react-lite";
 import { Mixed, sameOrMixed } from "@uimix/foundation/src/utils/Mixed";
 import { InspectorTargetContext } from "../../components/InspectorTargetContext";
 import { useContext, useEffect, useRef } from "react";
-import { Selectable } from "../../../../models/Selectable";
+import { Selectable } from "@uimix/model/src/models";
 import { projectState } from "../../../../state/ProjectState";
 import { twMerge } from "tailwind-merge";
 import { action } from "mobx";

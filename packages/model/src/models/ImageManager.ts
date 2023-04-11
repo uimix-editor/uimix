@@ -1,7 +1,7 @@
 import { imageFromURL } from "@uimix/foundation/src/utils/Blob";
 import { Project } from "./Project";
 import { ObservableYMap } from "@uimix/foundation/src/utils/ObservableYMap";
-import { Image, ImageType } from "@uimix/node-data";
+import { Image, ImageType } from "../data/v1";
 import { getURLSafeBase64Hash } from "@uimix/foundation/src/utils/Hash";
 import { compact } from "lodash-es";
 

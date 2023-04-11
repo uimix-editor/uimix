@@ -5,14 +5,14 @@ import * as Y from "yjs";
 import { getOrCreate } from "@uimix/foundation/src/utils/Collection";
 import { computed, makeObservable, observable } from "mobx";
 import { Rect } from "paintvec";
-import { resizeWithBoundingBox } from "../services/Resize";
+import { resizeWithBoundingBox } from "../services/resizeWithBoundingBox";
 import {
   SelectableJSON,
   NodeJSON,
   NodeType,
   ProjectJSON,
   StyleJSON,
-} from "@uimix/node-data";
+} from "../data/v1";
 import { Project } from "./Project";
 import { Component } from "./Component";
 import { ObjectData } from "./ObjectData";

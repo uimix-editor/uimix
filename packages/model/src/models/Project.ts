@@ -1,13 +1,13 @@
 import * as Y from "yjs";
 import { Selectable, SelectableMap } from "./Selectable";
 import { Node, NodeMap } from "./Node";
-import { ProjectJSON } from "@uimix/node-data";
+import { ProjectJSON } from "../data/v1";
 import { ImageManager } from "./ImageManager";
 import { Component } from "./Component";
 import { ObservableYArray } from "@uimix/foundation/src/utils/ObservableYArray";
 import { ColorTokenMap } from "./ColorToken";
 import { PageList } from "./PageList";
-import { ProjectData } from "./ProjectData";
+import { ProjectData } from "../collaborative/ProjectData";
 
 export class Project {
   constructor() {

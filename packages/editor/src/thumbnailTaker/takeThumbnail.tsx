@@ -1,4 +1,4 @@
-import { Project } from "../models/Project";
+import { Project } from "@uimix/model/src/models";
 import { domForSelectable } from "../views/viewport/renderer/NodeRenderer";
 import * as htmlToImage from "html-to-image";
 import { Rect, Vec2 } from "paintvec";

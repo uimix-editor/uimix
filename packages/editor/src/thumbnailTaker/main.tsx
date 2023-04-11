@@ -1,6 +1,6 @@
 import React from "react";
 import ReactDOM from "react-dom/client";
-import { ForeignComponentManager } from "../models/ForeignComponentManager";
+import { ForeignComponentManager } from "../state/ForeignComponentManager";
 import { projectState } from "../state/ProjectState";
 import { nodePicker } from "../views/viewport/renderer/NodePicker";
 import { ThumbnailTaker } from "./ThumbnailTaker";

@@ -59,7 +59,7 @@
   },
   "devDependencies": {
     "@types/jsonwebtoken": "^9.0.1",
-    "@uimix/node-data": "workspace:*",
+    "@uimix/model": "workspace:*",
     "autoprefixer": "^10.4.14",
     "postcss": "^8.4.21",
     "prisma": "^4.12.0",

@@ -1,5 +1,5 @@
 import { Vec2 } from "paintvec";
-import { Selectable } from "../../../models/Selectable";
+import { Selectable } from "@uimix/model/src/models";
 import { projectState } from "../../../state/ProjectState";
 import { assertNonNull } from "@uimix/foundation/src/utils/Assert";
 import { nodePicker } from "../renderer/NodePicker";

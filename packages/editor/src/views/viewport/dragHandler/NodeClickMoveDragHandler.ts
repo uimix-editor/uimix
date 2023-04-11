@@ -3,7 +3,7 @@ import { DragHandler } from "./DragHandler";
 import { NodeMoveDragHandler } from "./NodeMoveDragHandler";
 import { dragStartThreshold } from "../constants";
 import { ViewportEvent } from "./ViewportEvent";
-import { Selectable } from "../../../models/Selectable";
+import { Selectable } from "@uimix/model/src/models";
 import { projectState } from "../../../state/ProjectState";
 
 export class NodeClickMoveDragHandler implements DragHandler {

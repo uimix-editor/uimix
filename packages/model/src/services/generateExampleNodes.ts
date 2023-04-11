@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-non-null-assertion */
 import { Color } from "@uimix/foundation/src/utils/Color";
 import colors from "tailwindcss/colors.js";
-import { Node } from "./Node";
+import { Node } from "../models/Node";
 
 export function generateExampleNodes(pageNode: Node) {
   const project = pageNode.project;

@@ -1,8 +1,8 @@
-import { ForeignComponentRef } from "@uimix/node-data";
+import { ForeignComponentRef } from "@uimix/model/src/data/v1";
 import { action, observable, reaction } from "mobx";
 import type React from "react";
 import type ReactDOM from "react-dom/client";
-import { projectState } from "../state/ProjectState";
+import { projectState } from "./ProjectState";
 import { ForeignComponent } from "../types/ForeignComponent";
 
 export function foreignComponentKey(ref: { path: string; name: string }) {

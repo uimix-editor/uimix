@@ -1,7 +1,6 @@
 import { computed, makeObservable } from "mobx";
-import { Selectable } from "../models/Selectable";
 import { ScrollState } from "./ScrollState";
-import { Page } from "../models/Page";
+import { Page, Selectable } from "@uimix/model/src/models";
 import { getOrCreate } from "@uimix/foundation/src/utils/Collection";
 
 export class PageState {

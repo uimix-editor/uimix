@@ -14,7 +14,10 @@ import { InspectorNumberInput } from "./inputs/InspectorNumberInput";
 import { InspectorPane } from "../components/InspectorPane";
 import { InspectorToggleGroup } from "./inputs/InspectorToggleGroup";
 import { ToggleGroupItem } from "@uimix/foundation/src/components/ToggleGroup";
-import { TextHorizontalAlign, TextVerticalAlign } from "@uimix/node-data";
+import {
+  TextHorizontalAlign,
+  TextVerticalAlign,
+} from "@uimix/model/src/data/v1";
 import { InspectorTargetContext } from "../components/InspectorTargetContext";
 import { projectState } from "../../../state/ProjectState";
 import { InspectorComboBox } from "./inputs/InspectorComboBox";

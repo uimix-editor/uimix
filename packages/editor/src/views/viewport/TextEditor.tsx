@@ -1,8 +1,7 @@
 import { action, reaction } from "mobx";
 import { observer } from "mobx-react-lite";
 import React, { useEffect, useRef } from "react";
-import { Selectable } from "../../models/Selectable";
-import { buildNodeCSS } from "../../models/buildNodeCSS";
+import { Selectable, buildNodeCSS } from "@uimix/model/src/models";
 import { viewportState } from "../../state/ViewportState";
 import { projectState } from "../../state/ProjectState";
 

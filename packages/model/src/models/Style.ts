@@ -1,5 +1,5 @@
 import { isEqual } from "lodash-es";
-import { StyleJSON } from "@uimix/node-data";
+import { StyleJSON } from "../data/v1";
 import { ObjectData } from "./ObjectData";
 
 export type IStyle = StyleJSON;

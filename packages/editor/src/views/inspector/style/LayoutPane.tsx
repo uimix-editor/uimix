@@ -11,7 +11,7 @@ import { InspectorToggleGroup } from "./inputs/InspectorToggleGroup";
 import { sameOrMixed } from "@uimix/foundation/src/utils/Mixed";
 import { projectState } from "../../../state/ProjectState";
 import { IconButton } from "@uimix/foundation/src/components/IconButton";
-import { StackDirection } from "@uimix/node-data";
+import { StackDirection } from "@uimix/model/src/data/v1";
 import { AlignmentEdit } from "@uimix/foundation/src/components/AlignmentEdit";
 import { ToggleGroupItem } from "@uimix/foundation/src/components/ToggleGroup";
 import { InspectorHeading } from "../components/InspectorHeading";
@@ -20,7 +20,7 @@ import { action } from "mobx";
 import { InspectorTargetContext } from "../components/InspectorTargetContext";
 import { commands } from "../../../state/Commands";
 import { Tooltip } from "@uimix/foundation/src/components/Tooltip";
-import { gapToMargins, marginsToGap } from "../../../services/AutoLayout";
+import { gapToMargins, marginsToGap } from "@uimix/model/src/services";
 import { Icon } from "@iconify/react";
 
 const StackAlignmentEdit = observer(function StackAlignmentEdit({

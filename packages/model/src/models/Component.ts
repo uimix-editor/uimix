@@ -1,4 +1,4 @@
-import { VariantCondition } from "@uimix/node-data";
+import { VariantCondition } from "../data/v1";
 import { generateRefIDs } from "@uimix/foundation/src/utils/Name";
 import { Node } from "./Node";
 import { Selectable } from "./Selectable";

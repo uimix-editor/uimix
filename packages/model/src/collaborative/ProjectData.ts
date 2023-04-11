@@ -4,7 +4,7 @@ import {
   NodeJSON,
   ProjectJSON,
   StyleJSON,
-} from "@uimix/node-data";
+} from "../data/v1";
 import * as Y from "yjs";
 
 export class ProjectData {

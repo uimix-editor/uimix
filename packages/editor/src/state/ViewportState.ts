@@ -1,6 +1,6 @@
 import { makeObservable, observable } from "mobx";
 import { Rect } from "paintvec";
-import { Selectable } from "../models/Selectable";
+import { Selectable } from "@uimix/model/src/models";
 import { DropDestination } from "./DropDestination";
 import { Tool } from "./Tool";
 

@@ -2,7 +2,7 @@ import * as Y from "yjs";
 import { Color } from "@uimix/foundation/src/utils/Color";
 import { ObservableYMap } from "@uimix/foundation/src/utils/ObservableYMap";
 import { generateID } from "@uimix/foundation/src/utils/ID";
-import { ColorToken as ColorTokenJSON } from "@uimix/node-data";
+import { ColorToken as ColorTokenJSON } from "../data/v1";
 import { Project } from "./Project";
 import { Page } from "./Page";
 import { ObjectData } from "./ObjectData";

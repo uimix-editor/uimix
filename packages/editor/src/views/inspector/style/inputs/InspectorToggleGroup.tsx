@@ -6,7 +6,7 @@ import {
 import { Mixed, sameOrMixed } from "@uimix/foundation/src/utils/Mixed";
 import { InspectorTargetContext } from "../../components/InspectorTargetContext";
 import { useContext } from "react";
-import { Selectable } from "../../../../models/Selectable";
+import { Selectable } from "@uimix/model/src/models";
 import { projectState } from "../../../../state/ProjectState";
 
 export const InspectorToggleGroup = observer(function InspectorToggleGroup<

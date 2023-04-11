@@ -14,7 +14,7 @@ import {
 import { projectState } from "../../state/ProjectState";
 import { DoubleClickToEdit } from "@uimix/foundation/src/components/DoubleClickToEdit";
 import { commands } from "../../state/Commands";
-import { PageHierarchyEntry } from "../../models/PageList";
+import { PageHierarchyEntry } from "@uimix/model/src/models";
 import { showContextMenu } from "../ContextMenu";
 
 interface PageTreeViewItem extends TreeViewItem {

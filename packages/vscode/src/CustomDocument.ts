@@ -1,5 +1,5 @@
 import { ProjectFiles } from "uimix/src/project/ProjectFiles";
-import { getPageID } from "@uimix/editor/src/models/ProjectJSON";
+import { getPageID } from "@uimix/model/src/data/util";
 import * as vscode from "vscode";
 import * as path from "path";
 
