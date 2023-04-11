@@ -1,0 +1,29 @@
+{
+  "name": "@uimix/model",
+  "license": "MIT",
+  "type": "module",
+  "main": "src/index.ts",
+  "scripts": {
+    "lint": "eslint src",
+    "build": "tsc",
+    "test": "vitest run"
+  },
+  "dependencies": {
+    "@uimix/foundation": "workspace:*",
+    "crypto-js": "^4.1.1",
+    "lodash-es": "^4.17.21",
+    "mobx": "^6.9.0",
+    "paintvec": "workspace:*",
+    "path-browserify": "^1.0.1",
+    "yjs": "^13.5.52",
+    "zod": "^3.21.4"
+  },
+  "devDependencies": {
+    "@types/crypto-js": "^4.1.1",
+    "@types/lodash-es": "^4.17.7",
+    "@types/path-browserify": "^1.0.0",
+    "tailwindcss": "^3.3.1",
+    "typescript": "^5.0.4",
+    "vitest": "^0.30.0"
+  }
+}
