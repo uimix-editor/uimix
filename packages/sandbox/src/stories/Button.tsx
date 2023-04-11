@@ -1,30 +1,38 @@
 import React from "react";
 import "./button.css";
+import { Infer, builders } from "../schema";
 
-interface ButtonProps {
-  /**
-   * Is this the principal call to action on the page?
-   */
-  primary?: boolean;
-  /**
-   * What background color to use
-   */
-  backgroundColor?: string;
-  /**
-   * How large should the button be?
-   */
-  size?: "small" | "medium" | "large";
-  /**
-   * Button contents
-   */
-  label: string;
+export const ButtonProps = builders.object({
+  primary: builders.boolean(),
+  backgroundColor: builders.string(),
+  size: builders.enum(["small", "medium", "large"]),
+  label: builders.string(),
+});
+
+export type ButtonProps = Infer<typeof ButtonProps> & {
+  // /**
+  //  * Is this the principal call to action on the page?
+  //  */
+  // primary?: boolean;
+  // /**
+  //  * What background color to use
+  //  */
+  // backgroundColor?: string;
+  // /**
+  //  * How large should the button be?
+  //  */
+  // size?: "small" | "medium" | "large";
+  // /**
+  //  * Button contents
+  //  */
+  // label: string;
   /**
    * Optional click handler
    */
   onClick?: () => void;
 
   className?: string;
-}
+};
 
 /**
  * Primary UI component for user interaction
