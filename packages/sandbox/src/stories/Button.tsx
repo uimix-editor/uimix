@@ -3,10 +3,18 @@ import "./button.css";
 import { Infer, builders } from "../schema";
 
 export const ButtonProps = builders.object({
-  primary: builders.boolean(),
-  backgroundColor: builders.string(),
-  size: builders.enum(["small", "medium", "large"]),
-  label: builders.string(),
+  primary: builders.boolean({
+    description: "Is this the principal call to action on the page?",
+  }),
+  backgroundColor: builders.string({
+    description: "What background color to use",
+  }),
+  size: builders.enum(["small", "medium", "large"], {
+    description: "How large should the button be?",
+  }),
+  label: builders.string({
+    description: "Button contents",
+  }),
 });
 
 export type ButtonProps = Infer<typeof ButtonProps> & {

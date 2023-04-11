@@ -1,4 +1,8 @@
-interface AbstractType<T> {
+interface MetaInfo {
+  description?: string;
+}
+
+interface AbstractType<T> extends MetaInfo {
   default: T;
 }
 
@@ -21,32 +25,39 @@ interface ObjectType<T extends Record<string, unknown>>
   props: { [K in keyof T]: AbstractType<T[K]> };
 }
 
-function buildString(): StringType {
+function buildString(metaInfo: MetaInfo = {}): StringType {
   return {
     type: "string",
     default: "",
+    ...metaInfo,
   };
 }
 
-function buildBoolean(): BooleanType {
+function buildBoolean(metaInfo: MetaInfo = {}): BooleanType {
   return {
     type: "boolean",
     default: false,
+    ...metaInfo,
   };
 }
 
 function buildEnum<U extends string, T extends Readonly<[U, ...U[]]>>(
-  values: T
+  values: T,
+  metaInfo: MetaInfo = {}
 ): EnumType<T> {
   return {
     type: "enum",
     default: values[0],
+    ...metaInfo,
   };
 }
 
-function buildObject<T extends Record<string, unknown>>(props: {
-  [K in keyof T]: AbstractType<T[K]>;
-}): ObjectType<T> {
+function buildObject<T extends Record<string, unknown>>(
+  props: {
+    [K in keyof T]: AbstractType<T[K]>;
+  },
+  metaInfo: MetaInfo = {}
+): ObjectType<T> {
   const defaultValue = Object.fromEntries(
     Object.entries(props).map(([key, value]) => [
       key,
@@ -58,6 +69,7 @@ function buildObject<T extends Record<string, unknown>>(props: {
     type: "object",
     props,
     default: defaultValue as T,
+    ...metaInfo,
   };
 }
 
