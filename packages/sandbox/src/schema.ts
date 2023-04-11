@@ -21,21 +21,21 @@ interface ObjectType<T extends Record<string, unknown>>
   props: { [K in keyof T]: AbstractType<T[K]> };
 }
 
-export function string(): StringType {
+function buildString(): StringType {
   return {
     type: "string",
     default: "",
   };
 }
 
-export function boolean(): BooleanType {
+function buildBoolean(): BooleanType {
   return {
     type: "boolean",
     default: false,
   };
 }
 
-export function enum_<U extends string, T extends Readonly<[U, ...U[]]>>(
+function buildEnum<U extends string, T extends Readonly<[U, ...U[]]>>(
   values: T
 ): EnumType<T> {
   return {
@@ -44,7 +44,7 @@ export function enum_<U extends string, T extends Readonly<[U, ...U[]]>>(
   };
 }
 
-export function object<T extends Record<string, unknown>>(props: {
+function buildObject<T extends Record<string, unknown>>(props: {
   [K in keyof T]: AbstractType<T[K]>;
 }): ObjectType<T> {
   const defaultValue = Object.fromEntries(
@@ -61,13 +61,20 @@ export function object<T extends Record<string, unknown>>(props: {
   };
 }
 
+export const builders = {
+  string: buildString,
+  boolean: buildBoolean,
+  enum: buildEnum,
+  object: buildObject,
+};
+
 export type Infer<T> = T extends AbstractType<infer U> ? U : never;
 
-const user = object({
-  name: string(),
-  premium: boolean(),
-  role: enum_(["admin", "user"]),
+const user = builders.object({
+  name: builders.string(),
+  premium: builders.boolean(),
+  role: builders.enum(["admin", "user"]),
 });
 
-export type T = Infer<typeof user>;
-//          ^?
+type T = Infer<typeof user>;
+//   ^?
