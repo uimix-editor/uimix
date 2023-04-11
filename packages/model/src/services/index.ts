@@ -1,4 +1,4 @@
-export * from "./AutoLayout";
-export * from "./Component";
+export * from "./autoLayout";
+export * from "./createComponent";
 export * from "./generateExampleNodes";
-export * from "./Resize";
+export * from "./resizeWithBoundingBox";
