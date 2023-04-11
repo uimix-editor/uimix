@@ -29,6 +29,7 @@
   },
   "devDependencies": {
     "@types/jsonwebtoken": "^9.0.1",
+    "@uimix/model": "workspace:*",
     "esbuild": "^0.17.16",
     "forever": "^4.0.3",
     "prisma": "^4.12.0",

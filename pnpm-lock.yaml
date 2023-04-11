@@ -156,6 +156,9 @@ importers:
       '@types/jsonwebtoken':
         specifier: ^9.0.1
         version: 9.0.1
+      '@uimix/model':
+        specifier: workspace:*
+        version: link:../model
       esbuild:
         specifier: ^0.17.16
         version: 0.17.16

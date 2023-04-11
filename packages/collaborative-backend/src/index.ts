@@ -3,7 +3,7 @@ import { Logger } from "@hocuspocus/extension-logger";
 import { PrismaClient } from "@prisma/client";
 import jwt from "jsonwebtoken";
 import { Database } from "@hocuspocus/extension-database";
-import { ProjectData } from "../../editor/src/models/ProjectData";
+import { ProjectData } from "@uimix/model/src/models/ProjectData";
 import * as Y from "yjs";
 import { createId } from "@paralleldrive/cuid2";
 
