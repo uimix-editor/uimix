@@ -8,7 +8,7 @@ export * from "./ObjectData";
 export * from "./Page";
 export * from "./PageList";
 export * from "./Project";
-export * from "./ProjectData";
+export * from "../collaborative/ProjectData";
 export * from "./ProjectJSON";
 export * from "./ProjectJSONExtra";
 export * from "./Selectable";

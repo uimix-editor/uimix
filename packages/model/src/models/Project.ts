@@ -7,7 +7,7 @@ import { Component } from "./Component";
 import { ObservableYArray } from "@uimix/foundation/src/utils/ObservableYArray";
 import { ColorTokenMap } from "./ColorToken";
 import { PageList } from "./PageList";
-import { ProjectData } from "./ProjectData";
+import { ProjectData } from "../collaborative/ProjectData";
 
 export class Project {
   constructor() {
