@@ -119,6 +119,7 @@ describe(WorkspaceLoader.name, () => {
       watchCount++;
     });
     await new Promise((resolve) => setTimeout(resolve, 500));
+    expect(watchCount).toBe(0);
 
     // saves not cause watch
     await loader.save();

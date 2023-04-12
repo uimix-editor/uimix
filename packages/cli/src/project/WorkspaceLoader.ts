@@ -171,37 +171,45 @@ export class WorkspaceLoader {
     return changed;
   }
 
+  private isSaving = false;
+
   async save(filePaths?: string[]): Promise<void> {
-    const pagePathsToDelete = new Set(
-      await this.fileAccess.glob(this.filePattern)
-    );
+    try {
+      this.isSaving = true;
 
-    for (const [projectPath, json] of this.jsons) {
-      const { manifest, pages } = projectJSONToFiles(json);
-      if (pages.size === 0) {
-        continue;
-      }
-
-      await this.fileAccess.writeText(
-        path.join(projectPath, this.manifestName),
-        formatJSON(JSON.stringify(manifest))
+      const pagePathsToDelete = new Set(
+        await this.fileAccess.glob(this.filePattern)
       );
 
-      for (const [pageName, pageJSON] of pages) {
-        const pagePath = path.join(projectPath, pageName + ".uimix");
-        if (filePaths && !filePaths.includes(pagePath)) {
+      for (const [projectPath, json] of this.jsons) {
+        const { manifest, pages } = projectJSONToFiles(json);
+        if (pages.size === 0) {
           continue;
         }
-        await this.fileAccess.writeText(
-          pagePath,
-          formatJSON(JSON.stringify(pageJSON))
-        );
-        pagePathsToDelete.delete(pagePath);
-      }
-    }
 
-    for (const pagePath of pagePathsToDelete) {
-      await this.fileAccess.remove(pagePath);
+        await this.fileAccess.writeText(
+          path.join(projectPath, this.manifestName),
+          formatJSON(JSON.stringify(manifest))
+        );
+
+        for (const [pageName, pageJSON] of pages) {
+          const pagePath = path.join(projectPath, pageName + ".uimix");
+          if (filePaths && !filePaths.includes(pagePath)) {
+            continue;
+          }
+          await this.fileAccess.writeText(
+            pagePath,
+            formatJSON(JSON.stringify(pageJSON))
+          );
+          pagePathsToDelete.delete(pagePath);
+        }
+      }
+
+      for (const pagePath of pagePathsToDelete) {
+        await this.fileAccess.remove(pagePath);
+      }
+    } finally {
+      this.isSaving = false;
     }
   }
 
@@ -210,6 +218,9 @@ export class WorkspaceLoader {
 
     return this.fileAccess.watch(this.filePattern, async () => {
       try {
+        if (this.isSaving) {
+          return;
+        }
         if (await this.load()) {
           onChange(this.json);
         }
