@@ -89,7 +89,7 @@ export class WorkspaceLoader {
   projectPathForFile(pagePath: string): string {
     return (
       [...this.jsons.keys()]
-        .reverse()
+        .sort((a, b) => b.length - a.length)
         .find((projectPath) => pagePath.startsWith(projectPath + path.sep)) ??
       this.rootPath
     );
@@ -118,7 +118,7 @@ export class WorkspaceLoader {
       }
 
       const projectPath = [...filePathsForProject.keys()]
-        .reverse()
+        .sort((a, b) => b.length - a.length)
         .find((projectPath) => filePath.startsWith(projectPath + path.sep));
       if (!projectPath) {
         throw new Error("not supposed to happen");

@@ -42,13 +42,18 @@ describe(WorkspaceLoader.name, () => {
     innerPage1.node.append([innerProject.nodes.create("frame", "inner1")]);
     innerPage2.node.append([innerProject.nodes.create("frame", "inner2")]);
 
+    const deepInnerProject = new Project();
+    deepInnerProject.pages.create("src/inner1");
+
     const innerProjectPath = tmpObj.name + "/demo-project/inner";
+    const deepInnerProjectPath = tmpObj.name + "/demo-project/inner/inner";
 
     const loader = new WorkspaceLoader(
       new NodeFileAccess(tmpObj.name + "/demo-project")
     );
     loader.json = project.toJSON();
     loader.jsons.set(innerProjectPath, innerProject.toJSON());
+    loader.jsons.set(deepInnerProjectPath, deepInnerProject.toJSON());
     await loader.save();
 
     expect(
