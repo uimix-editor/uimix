@@ -125,8 +125,6 @@ export class ProjectData {
       }
     }
 
-    // TODO: delete dangling images
-
     return json;
   }
 }

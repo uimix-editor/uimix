@@ -247,8 +247,7 @@ export function projectJSONToFiles(projectJSON: ProjectJSON): {
     const pageJSON: PageJSON = {
       nodes: {},
       styles: {},
-      // TODO: selectively save images
-      images: projectJSON.images,
+      images: { ...projectJSON.images },
       colors: Object.fromEntries(
         Object.entries(projectJSON.colors ?? {})
           .filter(([, color]) => color.page === page.id)
@@ -274,6 +273,25 @@ export function projectJSONToFiles(projectJSON: ProjectJSON): {
     const pageJSON = nodeIDToPageJSON.get(idPath[0]);
     if (pageJSON) {
       pageJSON.styles[id] = style;
+    }
+  }
+
+  for (const pageJSON of pages.values()) {
+    // delete dangling images
+
+    const usedImageHashes = new Set<string>();
+    for (const style of Object.values(pageJSON.styles)) {
+      if (style.imageHash) {
+        usedImageHashes.add(style.imageHash);
+      }
+    }
+
+    if (pageJSON.images) {
+      for (const hash of Object.keys(pageJSON.images)) {
+        if (!usedImageHashes.has(hash)) {
+          delete pageJSON.images[hash];
+        }
+      }
     }
   }
 
