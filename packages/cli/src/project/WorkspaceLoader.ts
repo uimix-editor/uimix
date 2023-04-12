@@ -178,6 +178,9 @@ export class WorkspaceLoader {
 
     for (const [projectPath, json] of this.jsons) {
       const { manifest, pages } = projectJSONToFiles(json);
+      if (pages.size === 0) {
+        continue;
+      }
 
       await this.fileAccess.writeText(
         path.join(projectPath, this.manifestName),
