@@ -3,14 +3,14 @@ import { generateCode } from "./compiler/generateCode";
 import * as fs from "fs";
 import * as path from "path";
 import mkdirp from "mkdirp";
-import { ProjectFiles } from "./project/ProjectFiles";
+import { WorkspaceLoader } from "./project/WorkspaceLoader";
 import { NodeFileAccess } from "./project/NodeFileAccess";
 
-async function compileProject(projectFiles: ProjectFiles) {
-  const outFiles = await generateCode(projectFiles.rootPath, projectFiles.json);
+async function compileProject(loader: WorkspaceLoader) {
+  const outFiles = await generateCode(loader.rootPath, loader.json);
 
   for (const outFile of outFiles) {
-    const outPath = path.join(projectFiles.rootPath, outFile.filePath);
+    const outPath = path.join(loader.rootPath, outFile.filePath);
     const outPathDir = path.dirname(outPath);
     mkdirp.sync(outPathDir);
     fs.writeFileSync(outPath, outFile.content);
@@ -23,13 +23,13 @@ async function compileCommand(
     watch?: boolean;
   }
 ): Promise<void> {
-  const projectFiles = await ProjectFiles.load(new NodeFileAccess(rootPath));
+  const loader = await WorkspaceLoader.load(new NodeFileAccess(rootPath));
 
   if (options.watch) {
-    projectFiles.watch(() => compileProject(projectFiles));
+    loader.watch(() => compileProject(loader));
   }
 
-  void compileProject(projectFiles);
+  void compileProject(loader);
 }
 
 const cli = cac("uimix");

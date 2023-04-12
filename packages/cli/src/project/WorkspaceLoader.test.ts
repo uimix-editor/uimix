@@ -1,12 +1,13 @@
 import { describe, it, expect, beforeEach, afterEach } from "vitest";
-import { ProjectFiles } from "./ProjectFiles";
+import { WorkspaceLoader } from "./WorkspaceLoader";
 import * as fs from "fs";
+import * as path from "path";
 import shell from "shelljs";
 import tmp from "tmp";
 import { Project } from "@uimix/model/src/models/Project";
 import { NodeFileAccess } from "./NodeFileAccess";
 
-describe(ProjectFiles.name, () => {
+describe(WorkspaceLoader.name, () => {
   let tmpObj: tmp.DirResult;
 
   beforeEach(async () => {
@@ -35,11 +36,29 @@ describe(ProjectFiles.name, () => {
     page1.node.append([project.nodes.create("frame", "frame1")]);
     page2.node.append([project.nodes.create("text", "text1")]);
 
-    const projectFiles = new ProjectFiles(
+    const innerProject = new Project();
+    const innerPage1 = innerProject.pages.create("src/inner1");
+    const innerPage2 = innerProject.pages.create("src/inner2");
+    innerPage1.node.append([innerProject.nodes.create("frame", "inner1")]);
+    innerPage2.node.append([innerProject.nodes.create("frame", "inner2")]);
+
+    const innerProjectPath = tmpObj.name + "/demo-project/inner";
+
+    const loader = new WorkspaceLoader(
       new NodeFileAccess(tmpObj.name + "/demo-project")
     );
-    projectFiles.json = project.toJSON();
-    await projectFiles.save();
+    loader.json = project.toJSON();
+    loader.jsons.set(innerProjectPath, innerProject.toJSON());
+    await loader.save();
+
+    expect(
+      loader.projectPathForFile(tmpObj.name + "/demo-project/src/page1.uimix")
+    ).toEqual(tmpObj.name + "/demo-project");
+    expect(
+      loader.projectPathForFile(
+        tmpObj.name + "/demo-project/inner/src/inner1.uimix"
+      )
+    ).toEqual(tmpObj.name + "/demo-project/inner");
 
     const page1File = fs.readFileSync(
       tmpObj.name + "/demo-project/src/page1.uimix",
@@ -53,14 +72,23 @@ describe(ProjectFiles.name, () => {
     );
     expect(page2File).toMatchSnapshot();
 
-    const projectFiles2 = await ProjectFiles.load(
+    const innerPage1File = fs.readFileSync(
+      tmpObj.name + "/demo-project/inner/src/inner1.uimix",
+      "utf8"
+    );
+    expect(innerPage1File).toMatchSnapshot();
+
+    const projectFiles2 = await WorkspaceLoader.load(
       new NodeFileAccess(tmpObj.name + "/demo-project")
     );
 
     expect(projectFiles2.json).toEqual(project.toJSON());
+    expect(projectFiles2.jsons.get(innerProjectPath)).toEqual(
+      innerProject.toJSON()
+    );
   });
 
-  it("watches", async () => {
+  it("watches project", async () => {
     const project = new Project();
     const page1 = project.pages.create("src/page1");
     const page2 = project.pages.create("src/page2");
@@ -68,29 +96,41 @@ describe(ProjectFiles.name, () => {
     page1.node.append([project.nodes.create("frame", "frame1")]);
     page2.node.append([project.nodes.create("text", "text1")]);
 
-    const projectFiles = new ProjectFiles(
+    const innerProject = new Project();
+    const innerPage1 = innerProject.pages.create("src/inner1");
+    innerPage1.node.append([innerProject.nodes.create("frame", "inner")]);
+
+    const loader = new WorkspaceLoader(
       new NodeFileAccess(tmpObj.name + "/demo-project")
     );
-    projectFiles.json = project.toJSON();
+    loader.json = project.toJSON();
+    loader.jsons.set(
+      path.resolve(loader.rootPath, "inner"),
+      innerProject.toJSON()
+    );
 
     let watchCount = 0;
-    projectFiles.watch(() => {
+    loader.watch(() => {
       watchCount++;
     });
     await new Promise((resolve) => setTimeout(resolve, 500));
 
     // saves not cause watch
-    await projectFiles.save();
+    await loader.save();
     await new Promise((resolve) => setTimeout(resolve, 500));
     expect(watchCount).toBe(0);
 
     // change file
     fs.rmSync(tmpObj.name + "/demo-project/src/page1.uimix");
     await new Promise((resolve) => setTimeout(resolve, 500));
-
     expect(watchCount).toBe(1);
 
-    project.loadJSON(projectFiles.json);
+    // change inner file
+    fs.rmSync(tmpObj.name + "/demo-project/inner/src/inner1.uimix");
+    await new Promise((resolve) => setTimeout(resolve, 500));
+    expect(watchCount).toBe(2);
+
+    project.loadJSON(loader.json);
 
     expect(project.pages.all.map((page) => page.filePath)).toEqual([
       "src/page2",

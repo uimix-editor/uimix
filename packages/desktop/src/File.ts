@@ -4,7 +4,7 @@ import { compareProjectJSONs } from "../../model/src/data/util";
 import { DocumentMetadata } from "../../dashboard/src/types/DesktopAPI";
 import { TypedEmitter } from "tiny-typed-emitter";
 import { app, dialog } from "electron";
-import { ProjectFiles } from "../../cli/src/project/ProjectFiles";
+import { WorkspaceLoader } from "../../cli/src/project/WorkspaceLoader";
 import { NodeFileAccess } from "../../cli/src/project/NodeFileAccess";
 
 export class File extends TypedEmitter<{
@@ -12,15 +12,15 @@ export class File extends TypedEmitter<{
   metadataChange: (metadata: DocumentMetadata) => void;
   dataChange: (data: ProjectJSON) => void;
 }> {
-  constructor(files?: ProjectFiles) {
+  constructor(loader?: WorkspaceLoader) {
     super();
 
-    if (files) {
-      app.addRecentDocument(files.rootPath);
-      this.files = files;
+    if (loader) {
+      app.addRecentDocument(loader.rootPath);
+      this.loader = loader;
     }
 
-    this._data = this.files?.json ?? {
+    this._data = this.loader?.json ?? {
       // default project
       nodes: {
         project: { type: "project", index: 0 },
@@ -28,17 +28,19 @@ export class File extends TypedEmitter<{
       styles: {},
     };
     this.savedData = this._data;
-    if (files) {
+    if (loader) {
       this.watch();
     }
   }
 
   get name(): string {
-    return this.files ? path.basename(this.files.rootPath) : "Untitled Project";
+    return this.loader
+      ? path.basename(this.loader.rootPath)
+      : "Untitled Project";
   }
 
   get filePath(): string | undefined {
-    return this.files?.rootPath;
+    return this.loader?.rootPath;
   }
 
   get metadata(): DocumentMetadata {
@@ -47,7 +49,7 @@ export class File extends TypedEmitter<{
     };
   }
 
-  files?: ProjectFiles;
+  loader?: WorkspaceLoader;
   edited = false;
 
   private _data: ProjectJSON;
@@ -68,14 +70,14 @@ export class File extends TypedEmitter<{
   }
 
   async save() {
-    if (!this.files) {
+    if (!this.loader) {
       await this.saveAs();
       return;
     }
 
-    this.files.json = this.data;
-    await this.files.save();
-    app.addRecentDocument(this.files.rootPath);
+    this.loader.json = this.data;
+    await this.loader.save();
+    app.addRecentDocument(this.loader.rootPath);
     this.savedData = this.data;
     this.edited = false;
     this.emit("editedChange", this.edited);
@@ -92,7 +94,7 @@ export class File extends TypedEmitter<{
     }
     console.log("newPath", newPath);
 
-    this.files = new ProjectFiles(new NodeFileAccess(newPath));
+    this.loader = new WorkspaceLoader(new NodeFileAccess(newPath));
     await this.save();
     this.watch();
 
@@ -113,8 +115,8 @@ export class File extends TypedEmitter<{
   }
 
   static async openFilePath(filePath: string) {
-    const files = await ProjectFiles.load(new NodeFileAccess(filePath));
-    return new File(files);
+    const loader = await WorkspaceLoader.load(new NodeFileAccess(filePath));
+    return new File(loader);
   }
 
   watch() {
@@ -123,13 +125,13 @@ export class File extends TypedEmitter<{
       this.watchDisposer = undefined;
     }
 
-    const { files } = this;
-    if (!files) {
+    const { loader } = this;
+    if (!loader) {
       return;
     }
 
-    this.watchDisposer = files.watch(() => {
-      const json = files.json;
+    this.watchDisposer = loader.watch(() => {
+      const json = loader.json;
       console.log("changed");
       if (this.edited) {
         // TODO: warn

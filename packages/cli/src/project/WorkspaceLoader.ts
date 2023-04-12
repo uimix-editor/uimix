@@ -11,6 +11,7 @@ import { getPageID, compareProjectJSONs } from "@uimix/model/src/data/util";
 import { omit } from "lodash-es";
 import { formatJSON } from "../format";
 import { FileAccess } from "./FileAccess";
+import * as path from "path";
 
 interface HierarchicalNodeJSON extends NodeJSON {
   id: string;
@@ -43,19 +44,22 @@ function toHierarchicalNodeJSONs(
   return Object.values(hierarchicalNodes).filter((node) => !node.parent);
 }
 
-interface ProjectFilesOptions {
+interface WorkspaceLoaderOptions {
   filePattern?: string;
 }
 
 // Important TODO: fix paths in Windows!!
-export class ProjectFiles {
-  static async load(fileAccess: FileAccess, options: ProjectFilesOptions = {}) {
-    const projectFiles = new ProjectFiles(fileAccess, options);
-    await projectFiles.load();
-    return projectFiles;
+export class WorkspaceLoader {
+  static async load(
+    fileAccess: FileAccess,
+    options: WorkspaceLoaderOptions = {}
+  ) {
+    const loader = new WorkspaceLoader(fileAccess, options);
+    await loader.load();
+    return loader;
   }
 
-  constructor(fileAccess: FileAccess, options: ProjectFilesOptions = {}) {
+  constructor(fileAccess: FileAccess, options: WorkspaceLoaderOptions = {}) {
     this.fileAccess = fileAccess;
     this.filePattern = options.filePattern ?? "**/*.uimix";
   }
@@ -68,61 +72,129 @@ export class ProjectFiles {
 
   readonly filePattern: string;
   readonly manifestName = "uimix.json";
-  json: ProjectJSON = {
-    nodes: {},
-    styles: {},
-  };
+  jsons = new Map<string, ProjectJSON>(); // project path -> project json
 
-  async load(): Promise<boolean> {
-    let manifest: ProjectManifestJSON;
-    try {
-      manifest = ProjectManifestJSON.parse(
-        JSON.parse(await this.fileAccess.readText(this.manifestName))
-      );
-    } catch {
-      manifest = { componentURLs: [] };
-    }
-
-    const pages = new Map<string, PageJSON>();
-
-    const pagePaths = await this.fileAccess.glob(this.filePattern);
-    pagePaths.sort();
-
-    for (const pagePath of pagePaths) {
-      const pageJSON = PageJSON.parse(
-        JSON.parse(await this.fileAccess.readText(pagePath))
-      );
-      pages.set(pagePath.replace(/\.uimix$/, ""), pageJSON);
-    }
-    const newProjectJSON = filesToProjectJSON(manifest, pages);
-
-    if (compareProjectJSONs(this.json, newProjectJSON)) {
-      return false;
-    }
-
-    this.json = newProjectJSON;
-    return true;
+  get json(): ProjectJSON {
+    return (
+      this.jsons.get(this.rootPath) ?? {
+        nodes: {},
+        styles: {},
+      }
+    );
+  }
+  set json(json: ProjectJSON) {
+    this.jsons.set(this.rootPath, json);
   }
 
-  async save(): Promise<void> {
-    const { manifest, pages } = projectJSONToFiles(this.json);
-
-    await this.fileAccess.writeText(
-      this.manifestName,
-      formatJSON(JSON.stringify(manifest))
+  projectPathForFile(pagePath: string): string {
+    return (
+      [...this.jsons.keys()]
+        .reverse()
+        .find((projectPath) => pagePath.startsWith(projectPath + path.sep)) ??
+      this.rootPath
     );
+  }
 
+  async load(): Promise<boolean> {
+    const filePaths = await this.fileAccess.glob(
+      `{${this.filePattern},**/${this.manifestName}}`
+    );
+    filePaths.sort();
+
+    const filePathsForProject = new Map<string, string[]>([
+      [this.rootPath, []],
+    ]);
+
+    for (const manifestPaths of filePaths.filter((filePath) =>
+      filePath.endsWith(this.manifestName)
+    )) {
+      const parentPath = path.dirname(manifestPaths);
+      filePathsForProject.set(parentPath, []);
+    }
+
+    for (const filePath of filePaths) {
+      if (filePath.endsWith(this.manifestName)) {
+        continue;
+      }
+
+      const projectPath = [...filePathsForProject.keys()]
+        .reverse()
+        .find((projectPath) => filePath.startsWith(projectPath + path.sep));
+      if (!projectPath) {
+        throw new Error("not supposed to happen");
+      }
+      filePathsForProject.get(projectPath)?.push(filePath);
+    }
+
+    let changed = false;
+
+    for (const [projectPath, pagePaths] of filePathsForProject) {
+      let manifest: ProjectManifestJSON;
+      try {
+        manifest = ProjectManifestJSON.parse(
+          JSON.parse(
+            await this.fileAccess.readText(
+              path.join(projectPath, this.manifestName)
+            )
+          )
+        );
+      } catch {
+        manifest = { componentURLs: [] };
+      }
+
+      const pages = new Map<string, PageJSON>();
+
+      for (const pagePath of pagePaths) {
+        const pageJSON = PageJSON.parse(
+          JSON.parse(await this.fileAccess.readText(pagePath))
+        );
+
+        pages.set(
+          path.relative(projectPath, pagePath).replace(/\.uimix$/, ""),
+          pageJSON
+        );
+      }
+      const newProjectJSON = filesToProjectJSON(manifest, pages);
+
+      if (
+        !compareProjectJSONs(
+          this.jsons.get(projectPath) ?? { nodes: {}, styles: {} },
+          newProjectJSON
+        )
+      ) {
+        changed = true;
+      }
+
+      this.jsons.set(projectPath, newProjectJSON);
+    }
+
+    return changed;
+  }
+
+  async save(filePaths?: string[]): Promise<void> {
     const pagePathsToDelete = new Set(
       await this.fileAccess.glob(this.filePattern)
     );
 
-    for (const [pageName, pageJSON] of pages) {
-      const pagePath = pageName + ".uimix";
+    for (const [projectPath, json] of this.jsons) {
+      const { manifest, pages } = projectJSONToFiles(json);
+
       await this.fileAccess.writeText(
-        pagePath,
-        formatJSON(JSON.stringify(pageJSON))
+        path.join(projectPath, this.manifestName),
+        formatJSON(JSON.stringify(manifest))
       );
-      pagePathsToDelete.delete(pagePath);
+
+      for (const [pageName, pageJSON] of pages) {
+        const pagePath = path.join(projectPath, pageName + ".uimix");
+        if (filePaths && !filePaths.includes(pagePath)) {
+          continue;
+        }
+        await this.fileAccess.writeText(
+          pagePath,
+          formatJSON(JSON.stringify(pageJSON))
+        );
+        pagePathsToDelete.delete(pagePath);
+      }
     }
 
     for (const pagePath of pagePathsToDelete) {

@@ -1,91 +1,6 @@
 import * as vscode from "vscode";
 import { CustomDocument } from "./CustomDocument";
-import { ProjectFiles } from "uimix/src/project/ProjectFiles";
-import { FileAccess } from "uimix/src/project/FileAccess";
-import * as Y from "yjs";
-import { ProjectData } from "@uimix/model/src/collaborative";
-import {
-  IEditorToVSCodeRPCHandler,
-  IVSCodeToEditorRPCHandler,
-} from "../../dashboard/src/types/VSCodeEditorRPC";
-import { RPC } from "@uimix/typed-rpc";
-import debounce from "just-debounce-it";
-import * as path from "path";
-
-let lastSaveTime = 0;
-
-class VSCodeFileAccess implements FileAccess {
-  constructor(rootFolder: vscode.WorkspaceFolder) {
-    this.rootFolder = rootFolder;
-  }
-
-  readonly rootFolder: vscode.WorkspaceFolder;
-
-  get rootPath() {
-    return this.rootFolder.uri.fsPath;
-  }
-
-  watch(pattern: string, onChange: () => void): () => void {
-    const watcher = vscode.workspace.createFileSystemWatcher(
-      new vscode.RelativePattern(this.rootFolder, pattern)
-    );
-
-    const _onChange = () => {
-      if (Date.now() - lastSaveTime > 1000) {
-        onChange();
-      }
-    };
-
-    watcher.onDidChange(_onChange);
-    watcher.onDidCreate(_onChange);
-    watcher.onDidDelete(_onChange);
-    return () => watcher.dispose();
-  }
-
-  async glob(pattern: string): Promise<string[]> {
-    const urls = await vscode.workspace.findFiles(
-      new vscode.RelativePattern(this.rootFolder, pattern),
-      // TODO: configure excludes
-      "**/node_modules/**"
-    );
-    const paths = urls.map((url) =>
-      path.relative(this.rootFolder.uri.fsPath, url.fsPath)
-    );
-    return paths;
-  }
-
-  async writeText(filePath: string, data: string): Promise<void> {
-    lastSaveTime = Date.now();
-
-    await vscode.workspace.fs.writeFile(
-      vscode.Uri.file(path.join(this.rootFolder.uri.fsPath, filePath)),
-      Buffer.from(data)
-    );
-  }
-
-  async readText(filePath: string): Promise<string> {
-    const url = vscode.Uri.file(
-      path.join(this.rootFolder.uri.fsPath, filePath)
-    );
-    const buffer = await vscode.workspace.fs.readFile(url);
-    const text = buffer.toString();
-    return text;
-  }
-
-  async remove(filePath: string): Promise<void> {
-    // no-op for now (vscode extension doesn't need to delete files)
-  }
-}
-
-function getNonce(): string {
-  let text = "";
-  const possible =
-    "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
-  for (let i = 0; i < 32; i++) {
-    text += possible.charAt(Math.floor(Math.random() * possible.length));
-  }
-  return text;
-}
+import { WorkspaceData } from "./WorkspaceData";
 
 export class CustomEditorProvider implements vscode.CustomEditorProvider {
   static async load(context: vscode.ExtensionContext) {
@@ -93,36 +8,25 @@ export class CustomEditorProvider implements vscode.CustomEditorProvider {
     if (!rootFolder) {
       throw new Error("No workspace folder found");
     }
-
-    console.log(rootFolder.uri.fsPath);
-    const projectFiles = new ProjectFiles(new VSCodeFileAccess(rootFolder));
-    await projectFiles.load();
-
-    return new CustomEditorProvider(context, projectFiles);
+    return new CustomEditorProvider(
+      context,
+      await WorkspaceData.load(rootFolder)
+    );
   }
 
-  constructor(context: vscode.ExtensionContext, projectFiles: ProjectFiles) {
+  constructor(context: vscode.ExtensionContext, workspaceData: WorkspaceData) {
     this.context = context;
-    this.projectFiles = projectFiles;
-    this.data.loadJSON(this.projectFiles.json);
-    this.disposables.push({
-      dispose: this.projectFiles.watch((json) => {
-        console.log("reload");
-        this.data.loadJSON(json);
-      }),
-    });
+    this.workspaceData = workspaceData;
+    this.disposables.push(workspaceData);
   }
 
+  readonly disposables: vscode.Disposable[] = [];
   readonly context: vscode.ExtensionContext;
-  readonly projectFiles: ProjectFiles;
-  readonly data = new ProjectData();
-
+  readonly workspaceData: WorkspaceData;
   private readonly _onDidChangeCustomDocument =
     new vscode.EventEmitter<vscode.CustomDocumentContentChangeEvent>();
 
   readonly onDidChangeCustomDocument = this._onDidChangeCustomDocument.event;
-
-  readonly disposables: vscode.Disposable[] = [];
 
   dispose() {
     this.disposables.forEach((disposable) => disposable.dispose());
@@ -163,7 +67,7 @@ export class CustomEditorProvider implements vscode.CustomEditorProvider {
     openContext: vscode.CustomDocumentOpenContext,
     token: vscode.CancellationToken
   ): Promise<vscode.CustomDocument> {
-    return new CustomDocument(this.projectFiles, uri);
+    return new CustomDocument(this.context, this.workspaceData, uri);
   }
 
   async resolveCustomEditor(
@@ -171,145 +75,6 @@ export class CustomEditorProvider implements vscode.CustomEditorProvider {
     webviewPanel: vscode.WebviewPanel,
     token: vscode.CancellationToken
   ): Promise<void> {
-    webviewPanel.webview.options = {
-      enableScripts: true,
-    };
-    webviewPanel.webview.html = this.getHTMLForWebview(webviewPanel.webview);
-
-    let unsubscribeDoc: (() => void) | undefined;
-
-    const rpc = new RPC<IVSCodeToEditorRPCHandler, IEditorToVSCodeRPCHandler>(
-      {
-        post: (message) => {
-          webviewPanel.webview.postMessage(message);
-        },
-        subscribe: (handler) => {
-          const disposable = webviewPanel.webview.onDidReceiveMessage(handler);
-          return () => disposable.dispose();
-        },
-      },
-      {
-        ready: async () => {
-          unsubscribeDoc?.();
-
-          const onDocUpdate = (update: Uint8Array) => {
-            rpc.remote.update(update);
-          };
-          this.data.doc.on("update", onDocUpdate);
-          unsubscribeDoc = () => this.data.doc.off("update", onDocUpdate);
-
-          void rpc.remote.init(
-            Y.encodeStateAsUpdate(this.data.doc),
-            document.pageID
-          );
-
-          console.log("ready");
-        },
-        update: async (data) => {
-          console.log("sync");
-          Y.applyUpdate(this.data.doc, data);
-          this.save();
-        },
-        getClipboard: async () => {
-          throw new Error("should be intercepted in webview.");
-        },
-        setClipboard: async () => {
-          throw new Error("should be intercepted in webview.");
-        },
-      }
-    );
-
-    webviewPanel.onDidDispose(() => {
-      rpc.dispose();
-      unsubscribeDoc?.();
-    });
-  }
-
-  readonly save = debounce(() => {
-    this.projectFiles.json = this.data.toJSON();
-    this.projectFiles.save();
-    console.log("save");
-  }, 500);
-
-  private getHTMLForWebview(webview: vscode.Webview): string {
-    const nonce = getNonce();
-
-    const isDevelopment =
-      this.context.extensionMode === vscode.ExtensionMode.Development;
-
-    const iframeURL = isDevelopment
-      ? "http://localhost:3000/vscode-editor"
-      : "https://uimix.app/vscode-editor";
-
-    return `
-      <!DOCTYPE html>
-      <html lang="en">
-      <head>
-        <meta charset="UTF-8">
-        <meta http-equiv="Content-Security-Policy" content="default-src 'none'; frame-src *; style-src 'nonce-${nonce}'; script-src 'nonce-${nonce}';">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <style nonce="${nonce}">
-          body {
-            margin: 0;
-          }
-          iframe {
-            border: none;
-            position: fixed;
-            inset: 0;
-            width: 100vw;
-            height: 100vh;
-          }
-        </style>
-      </head>
-      <body>
-      <iframe src="${iframeURL}" allow="clipboard-read; clipboard-write"></iframe>
-      <script nonce="${nonce}">
-        // pass-through messages between the iframe and the extension
-        const vscode = acquireVsCodeApi();
-        const iframe = document.querySelector("iframe");
-
-        window.addEventListener("message", async (event) => {
-          if (event.source === iframe.contentWindow) {
-            // intercept clipboard messages
-            if (event.data.type === "call") {
-              if (event.data.name === "getClipboard") {
-                const type = event.data.args[0];
-                if (type !== "text") {
-                  throw new Error("unsupported clipboard type: " + type);
-                }
-
-                iframe.contentWindow.postMessage({
-                  type: "result",
-                  callID: event.data.callID,
-                  status: "success",
-                  value: await navigator.clipboard.readText(),
-                }, "*");
-                return;
-              }
-              if (event.data.name === "setClipboard") {
-                const type = event.data.args[0];
-                if (type !== "text") {
-                  throw new Error("unsupported clipboard type: " + type);
-                }
-
-                await navigator.clipboard.writeText(event.data.args[1]);
-                iframe.contentWindow.postMessage({
-                  type: "result",
-                  callID: event.data.callID,
-                  status: "success",
-                  value: undefined,
-                }, "*");
-                return;
-              }
-            }
-            vscode.postMessage(event.data);
-          } else {
-            iframe.contentWindow.postMessage(event.data, "*");
-          }
-        });
-      </script>
-      </body>
-      </html>
-    `;
+    await document.resolveCustomEditor(webviewPanel, token);
   }
 }

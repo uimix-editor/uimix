@@ -18,7 +18,7 @@ import { PageState } from "./PageState";
 import { ScrollState } from "./ScrollState";
 // eslint-disable-next-line import/no-unresolved
 import demoFile from "./demo.uimix?raw";
-import { filesToProjectJSON } from "../../../cli/src/project/ProjectFiles";
+import { filesToProjectJSON } from "../../../cli/src/project/WorkspaceLoader";
 
 export class ProjectState {
   constructor() {

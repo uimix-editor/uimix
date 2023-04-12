@@ -7,7 +7,7 @@ import { mkdirp } from "mkdirp";
 
 export class NodeFileAccess implements FileAccess {
   constructor(rootPath: string) {
-    this.rootPath = rootPath;
+    this.rootPath = path.resolve(rootPath);
   }
 
   readonly rootPath: string;
@@ -23,23 +23,20 @@ export class NodeFileAccess implements FileAccess {
   }
 
   async glob(pattern: string): Promise<string[]> {
-    return await glob(pattern, {
-      cwd: this.rootPath,
-    });
+    return (
+      await glob(pattern, {
+        cwd: this.rootPath,
+      })
+    ).map((filePath) => path.resolve(this.rootPath, filePath));
   }
 
   async writeText(filePath: string, data: string): Promise<void> {
-    const fullPath = path.resolve(this.rootPath, filePath);
-
-    await mkdirp(path.dirname(fullPath));
-    await fs.promises.writeFile(fullPath, data);
+    await mkdirp(path.dirname(filePath));
+    await fs.promises.writeFile(filePath, data);
   }
 
   async readText(filePath: string): Promise<string> {
-    return await fs.promises.readFile(
-      path.resolve(this.rootPath, filePath),
-      "utf8"
-    );
+    return await fs.promises.readFile(filePath, "utf8");
   }
 
   async remove(filePath: string): Promise<void> {

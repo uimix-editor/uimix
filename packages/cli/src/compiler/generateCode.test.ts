@@ -1,13 +1,13 @@
 import { describe, expect, it } from "vitest";
 import { generateCode } from "./generateCode";
-import { ProjectFiles } from "../project/ProjectFiles";
+import { WorkspaceLoader } from "../project/WorkspaceLoader";
 import * as path from "path";
 import { NodeFileAccess } from "../project/NodeFileAccess";
 
 describe(generateCode.name, () => {
   it("generates code", async () => {
     const rootDir = path.resolve("../sandbox");
-    const files = await ProjectFiles.load(new NodeFileAccess(rootDir));
+    const files = await WorkspaceLoader.load(new NodeFileAccess(rootDir));
     const json = files.json;
     const code = await generateCode(rootDir, json);
     const result: Record<string, string> = {};

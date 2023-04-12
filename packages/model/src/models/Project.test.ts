@@ -1,18 +1,17 @@
 import { describe, expect, it } from "vitest";
 import { Project } from "./Project";
 import * as path from "path";
-import { ProjectFiles } from "../../../cli/src/project/ProjectFiles";
+import { WorkspaceLoader } from "../../../cli/src/project/WorkspaceLoader";
 import { NodeFileAccess } from "../../../cli/src/project/NodeFileAccess";
 
 describe(Project.name, () => {
   describe("loadJSON", () => {
     it("works", async () => {
       const rootDir = path.resolve("../sandbox");
-      const projectFiles = await ProjectFiles.load(
-        new NodeFileAccess(rootDir),
-        { filePattern: "src/components.uimix" }
-      );
-      const projectJSON = projectFiles.json;
+      const loader = await WorkspaceLoader.load(new NodeFileAccess(rootDir), {
+        filePattern: "src/components.uimix",
+      });
+      const projectJSON = loader.json;
 
       const project = new Project();
       project.loadJSON(projectJSON);
@@ -28,13 +27,10 @@ describe(Project.name, () => {
   describe("toJSON", () => {
     it("works ", async () => {
       const rootDir = path.resolve("../sandbox");
-      const projectFiles = await ProjectFiles.load(
-        new NodeFileAccess(rootDir),
-        {
-          filePattern: "src/components.uimix",
-        }
-      );
-      const projectJSON = projectFiles.json;
+      const loader = await WorkspaceLoader.load(new NodeFileAccess(rootDir), {
+        filePattern: "src/components.uimix",
+      });
+      const projectJSON = loader.json;
 
       const project = new Project();
       project.loadJSON(projectJSON);
