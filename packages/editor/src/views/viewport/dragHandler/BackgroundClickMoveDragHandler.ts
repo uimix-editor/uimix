@@ -16,7 +16,9 @@ export class BackgroundClickMoveDragHandler implements DragHandler {
       event.pos,
     ]));
 
-    // TODO: optimize hit test
+    // TODO
+    // - optimize hit test
+    // - don't select root frames and select next top level frames (like Figma)?
 
     const selectables = projectState.page?.selectable.offsetChildren ?? [];
 
