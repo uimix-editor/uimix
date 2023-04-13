@@ -6,6 +6,7 @@ import { InspectorTargetContext } from "../components/InspectorTargetContext";
 import { sameOrNone } from "@uimix/foundation/src/utils/Mixed";
 import { IconButton } from "@uimix/foundation/src/components/IconButton";
 import { Tooltip } from "@uimix/foundation/src/components/Tooltip";
+import { Clipboard } from "../../../state/Clipboard";
 
 export const ImagePane: React.FC = observer(function FillPane() {
   const selectables = projectState.selectedSelectables.filter(
@@ -21,8 +22,13 @@ export const ImagePane: React.FC = observer(function FillPane() {
   const src =
     imageHash && projectState.project.imageManager.get(imageHash)?.url;
 
-  const copyImage = () => {
-    throw new Error("Not implemented");
+  const copyImage = async () => {
+    const imageWithDataURL =
+      imageHash &&
+      (await projectState.project.imageManager.getWithDataURL(imageHash));
+    if (imageWithDataURL) {
+      await Clipboard.handler.set("image", imageWithDataURL.url);
+    }
   };
 
   const pasteImage = () => {

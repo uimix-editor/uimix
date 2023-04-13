@@ -114,7 +114,7 @@ export class CustomDocument implements vscode.CustomDocument {
       <html lang="en">
       <head>
         <meta charset="UTF-8">
-        <meta http-equiv="Content-Security-Policy" content="default-src 'none'; frame-src *; style-src 'nonce-${nonce}'; script-src 'nonce-${nonce}';">
+        <meta http-equiv="Content-Security-Policy" content="default-src 'none'; frame-src *; style-src 'nonce-${nonce}'; script-src 'nonce-${nonce}'; connect-src data:;">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <style nonce="${nonce}">
           body {

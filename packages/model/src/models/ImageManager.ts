@@ -1,4 +1,4 @@
-import { imageFromURL } from "@uimix/foundation/src/utils/Blob";
+import { blobToDataURL, imageFromURL } from "@uimix/foundation/src/utils/Blob";
 import { Project } from "./Project";
 import { ObservableYMap } from "@uimix/foundation/src/utils/ObservableYMap";
 import { Image, ImageType } from "../data/v1";
@@ -53,6 +53,20 @@ export class ImageManager {
 
   get(hashBase64: string): Image | undefined {
     return this.images.get(hashBase64);
+  }
+
+  async getWithDataURL(hashBase64: string): Promise<Image | undefined> {
+    const image = this.get(hashBase64);
+    if (!image) {
+      return;
+    }
+    const response = await fetch(image.url);
+    const blob = await response.blob();
+    const dataURL = await blobToDataURL(blob);
+    return {
+      ...image,
+      url: dataURL,
+    };
   }
 
   has(hashBase64: string): boolean {
