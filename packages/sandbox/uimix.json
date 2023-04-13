@@ -7,6 +7,6 @@
     // and bundles files into a single JS file
     "react": ["./src/stories/*.tsx", "!./src/stories/*.stories.tsx"]
   },
-  // paths to design token JSONs (W3C design tokens format)
+  // paths to design token JSON or JS files (W3C design tokens format)
   "designTokens": "./src/designTokens/*.json"
 }
