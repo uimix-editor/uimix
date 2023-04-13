@@ -56,6 +56,12 @@ describe(WorkspaceLoader.name, () => {
     loader.jsons.set(deepInnerProjectPath, deepInnerProject.toJSON());
     await loader.save();
 
+    fs.writeFileSync(tmpObj.name + "/demo-project/inner/package.json", "{}");
+    fs.writeFileSync(
+      tmpObj.name + "/demo-project/inner/inner/package.json",
+      "{}"
+    );
+
     expect(
       loader.projectPathForFile(tmpObj.name + "/demo-project/src/page1.uimix")
     ).toEqual(tmpObj.name + "/demo-project");
@@ -113,6 +119,9 @@ describe(WorkspaceLoader.name, () => {
       path.resolve(loader.rootPath, "inner"),
       innerProject.toJSON()
     );
+    await loader.save();
+
+    fs.writeFileSync(tmpObj.name + "/demo-project/inner/package.json", "{}");
 
     let watchCount = 0;
     loader.watch(() => {
