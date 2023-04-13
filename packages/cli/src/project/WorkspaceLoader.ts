@@ -9,14 +9,14 @@ import {
 } from "@uimix/model/src/data/v1";
 import { getPageID, compareProjectJSONs } from "@uimix/model/src/data/util";
 import { omit } from "lodash-es";
-import { formatJSON } from "../format";
+import { formatJSON, formatTypeScript } from "../format";
 import { FileAccess } from "./FileAccess";
 import * as path from "path";
 import {
   HierarchicalNodeJSON,
   toHierarchicalNodeJSONs,
 } from "./HierarchicalNodeJSON";
-import { toHumanReadableNode } from "./HumanReadableFormat";
+import { stringifyAsJSX, toHumanReadableNode } from "./HumanReadableFormat";
 
 interface WorkspaceLoaderOptions {
   filePattern?: string;
@@ -177,10 +177,13 @@ export class WorkspaceLoader {
           );
           await this.fileAccess.writeText(
             pagePath + ".json",
-            formatJSON(
-              JSON.stringify(
-                toHierarchicalNodeJSONs(pageJSON.nodes).map(toHumanReadableNode)
-              )
+            formatTypeScript(
+              "export default <page>" +
+                toHierarchicalNodeJSONs(pageJSON.nodes)
+                  .map(toHumanReadableNode)
+                  .map(stringifyAsJSX)
+                  .join("\n") +
+                "</page>"
             )
           );
           pagePathsToDelete.delete(pagePath);

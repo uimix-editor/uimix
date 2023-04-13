@@ -9,47 +9,47 @@ type StyleProps = Partial<StyleJSON> & {
 
 interface PageNode {
   type: "page";
-  id: string;
+  props: {
+    id: string;
+  };
   children: (InstanceNode | FrameNode | LeafNode | ComponentNode)[];
 }
 
 interface ComponentNode {
   type: "component";
-  id: string;
+  props: {
+    id: string;
+  };
   children: (FrameNode | VariantNode)[];
 }
 
 interface VariantNode {
   type: "variant";
-  props: StyleProps & {
+  props: {
     condition: VariantCondition;
-  };
+  } & StyleProps;
 }
 
 interface InstanceNode {
   type: "instance";
-  id: string;
-  props: StyleProps;
+  props: { id: string } & StyleProps;
   children: OverrideNode[];
 }
 
 interface FrameNode {
   type: "frame";
-  id: string;
-  props: StyleProps;
+  props: { id: string } & StyleProps;
   children: (InstanceNode | FrameNode | LeafNode)[];
 }
 
 interface LeafNode {
   type: "text" | "svg" | "image" | "foreign";
-  id: string;
-  props: StyleProps;
+  props: { id: string } & StyleProps;
 }
 
 interface OverrideNode {
   type: "override";
-  id: string;
-  props: StyleProps;
+  props: { id: string } & StyleProps;
 }
 
 type Node =
@@ -68,7 +68,9 @@ export function toHumanReadableNode(json: HierarchicalNodeJSON): Node {
     case "page":
       return {
         type: json.type,
-        id: json.id,
+        props: {
+          id: json.id,
+        },
         children: json.children.map(
           toHumanReadableNode
         ) as PageNode["children"],
@@ -76,7 +78,9 @@ export function toHumanReadableNode(json: HierarchicalNodeJSON): Node {
     case "component": {
       return {
         type: json.type,
-        id: json.id,
+        props: {
+          id: json.id,
+        },
         children: json.children.map(
           toHumanReadableNode
         ) as ComponentNode["children"],
@@ -97,8 +101,8 @@ export function toHumanReadableNode(json: HierarchicalNodeJSON): Node {
     case "foreign": {
       return {
         type: json.type,
-        id: json.id,
         props: {
+          id: json.id,
           // TODO: styles
         },
       };
@@ -106,8 +110,8 @@ export function toHumanReadableNode(json: HierarchicalNodeJSON): Node {
     case "frame": {
       return {
         type: json.type,
-        id: json.id,
         props: {
+          id: json.id,
           // TODO: styles
         },
         children: json.children.map(
@@ -118,8 +122,8 @@ export function toHumanReadableNode(json: HierarchicalNodeJSON): Node {
     case "instance": {
       return {
         type: json.type,
-        id: json.id,
         props: {
+          id: json.id,
           // TODO: styles
         },
         children: [
@@ -127,5 +131,23 @@ export function toHumanReadableNode(json: HierarchicalNodeJSON): Node {
         ],
       };
     }
+  }
+}
+
+export function stringifyAsJSX(node: Node): string {
+  const propText = Object.entries(node.props)
+    .map(([key, value]) =>
+      typeof value === "string"
+        ? `${key}=${JSON.stringify(value)}`
+        : `${key}={${JSON.stringify(value)}}`
+    )
+    .join(" ");
+
+  if ("children" in node && node.children.length) {
+    return `<${node.type} ${propText}>${node.children
+      .map(stringifyAsJSX)
+      .join("")}</${node.type}>`;
+  } else {
+    return `<${node.type} ${propText}/>`;
   }
 }
