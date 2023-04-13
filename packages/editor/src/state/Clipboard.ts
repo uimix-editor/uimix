@@ -26,8 +26,9 @@ export class Clipboard {
   static async readNodes(): Promise<NodeClipboardData | undefined> {
     const imageDataURL = await this.handler.get("image");
     if (imageDataURL) {
-      const blob = await fetch(imageDataURL).then((r) => r.blob());
-      const [hash] = await projectState.project.imageManager.insert(blob);
+      const [hash] = await projectState.project.imageManager.insertDataURL(
+        imageDataURL
+      );
 
       return {
         uimixClipboardVersion: "0.0.1",

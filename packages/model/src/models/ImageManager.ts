@@ -21,6 +21,10 @@ export class ImageManager {
     data: Uint8Array
   ) => Promise<string>;
 
+  async insertDataURL(dataURL: string): Promise<[string, Image]> {
+    return this.insert(await (await fetch(dataURL)).blob());
+  }
+
   async insert(blob: Blob): Promise<[string, Image]> {
     const type = ImageType.parse(blob.type);
     const buffer = await blob.arrayBuffer();
