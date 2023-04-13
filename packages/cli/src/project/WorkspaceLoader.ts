@@ -189,14 +189,8 @@ export class WorkspaceLoader {
 
       for (const [projectPath, json] of this.jsons) {
         const { manifest, pages } = projectJSONToFiles(json);
-        if (pages.size === 0) {
-          continue;
-        }
 
-        await this.fileAccess.writeText(
-          path.join(projectPath, this.uimixProjectFile),
-          formatJSON(JSON.stringify(manifest))
-        );
+        let projectSaved = false;
 
         for (const [pageName, pageJSON] of pages) {
           const pagePath = path.join(projectPath, pageName + ".uimix");
@@ -208,6 +202,14 @@ export class WorkspaceLoader {
             formatJSON(JSON.stringify(pageJSON))
           );
           pagePathsToDelete.delete(pagePath);
+          projectSaved = true;
+        }
+
+        if (projectSaved) {
+          await this.fileAccess.writeText(
+            path.join(projectPath, this.uimixProjectFile),
+            formatJSON(JSON.stringify(manifest))
+          );
         }
       }
 
