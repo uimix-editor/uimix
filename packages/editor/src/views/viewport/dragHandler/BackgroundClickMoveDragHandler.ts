@@ -11,12 +11,14 @@ export class BackgroundClickMoveDragHandler implements DragHandler {
   }
 
   move(event: ViewportEvent): void {
-    const selectRect = Rect.boundingRect([this.startPos, event.pos]);
-    viewportState.selectRect = selectRect;
+    viewportState.dragSelectionRect = Rect.boundingRect([
+      this.startPos,
+      event.pos,
+    ]);
   }
 
   end(): void {
-    viewportState.selectRect = undefined;
+    viewportState.dragSelectionRect = undefined;
   }
 
   startPos: Vec2;

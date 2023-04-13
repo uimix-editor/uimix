@@ -8,7 +8,7 @@ import { Color } from "@uimix/foundation/src/utils/Color";
 export const DragIndicators: React.FC = observer(function DragIndicators() {
   const { documentToViewport } = projectState.scroll;
 
-  const selectRect = viewportState.selectRect?.transform(
+  const dragSelectionRect = viewportState.dragSelectionRect?.transform(
     projectState.scroll.documentToViewport
   );
 
@@ -24,9 +24,9 @@ export const DragIndicators: React.FC = observer(function DragIndicators() {
 
   return (
     <>
-      {selectRect && (
+      {dragSelectionRect && (
         <rect
-          {...selectRect.toSVGRectProps()}
+          {...dragSelectionRect.toSVGRectProps()}
           fill={Color.from(colors.active)?.withAlpha(0.2).toString()}
           stroke={colors.active}
         />
