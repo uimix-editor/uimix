@@ -8,11 +8,13 @@ type StyleProps = Partial<StyleJSON> & {
 
 interface PageNode {
   type: "node";
+  id: string;
   children: (InstanceNode | FrameNode | LeafNode | ComponentNode)[];
 }
 
 interface ComponentNode {
   type: "component";
+  id: string;
   children: (FrameNode | VariantNode)[];
 }
 
@@ -25,18 +27,21 @@ interface VariantNode {
 
 interface InstanceNode {
   type: "instance";
+  id: string;
   props: StyleProps;
   children: OverrideNode[];
 }
 
 interface FrameNode {
   type: "frame";
+  id: string;
   props: StyleProps;
   children: (InstanceNode | FrameNode | LeafNode)[];
 }
 
 interface LeafNode {
   type: "text" | "svg" | "image" | "foreign";
+  id: string;
   props: StyleProps;
 }
 
