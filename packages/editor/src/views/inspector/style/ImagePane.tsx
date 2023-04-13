@@ -9,6 +9,7 @@ import { Tooltip } from "@uimix/foundation/src/components/Tooltip";
 import { Clipboard } from "../../../state/Clipboard";
 import { runInAction } from "mobx";
 import { showImageInputDialog } from "../../../util/imageDialog";
+import imageIcon from "@seanchas116/design-icons/json/image.json";
 
 export const ImagePane: React.FC = observer(function ImagePane() {
   const selectables = projectState.selectedSelectables.filter(
@@ -77,10 +78,7 @@ export const ImagePane: React.FC = observer(function ImagePane() {
 
   return (
     <InspectorPane>
-      <InspectorHeading
-        icon="material-symbols:format-paint-outline-rounded"
-        text="Image"
-      />
+      <InspectorHeading icon={imageIcon} text="Image" />
       <InspectorTargetContext.Provider value={selectables}>
         <img
           src={src ?? undefined}

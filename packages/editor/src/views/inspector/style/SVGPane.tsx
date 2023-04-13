@@ -23,10 +23,7 @@ export const SVGPane: React.FC = observer(function SVGPane() {
 
   return (
     <InspectorPane>
-      <InspectorHeading
-        icon="material-symbols:format-paint-outline-rounded"
-        text="SVG"
-      />
+      <InspectorHeading icon="material-symbols:shapes-outline" text="SVG" />
       <InspectorTargetContext.Provider value={selectables}>
         <img
           src={svgDataURL}
