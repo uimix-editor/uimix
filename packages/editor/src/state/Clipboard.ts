@@ -2,13 +2,20 @@ import { NodeClipboardData } from "@uimix/model/src/data/v1";
 
 // const mimeType = "application/x-macaron-nodes";
 
-interface ExternalClipboard {
+interface ClipboardHandler {
   get(type: "text" | "image"): Promise<string>;
   set(type: "text" | "image", textOrDataURL: string): Promise<void>;
 }
 
 export class Clipboard {
-  static externalClipboard: ExternalClipboard | undefined;
+  static handler: ClipboardHandler = {
+    get: async (type: "text" | "image") => {
+      return await navigator.clipboard.readText();
+    },
+    set: async (type: "text" | "image", textOrDataURL: string) => {
+      await navigator.clipboard.writeText(textOrDataURL);
+    },
+  };
 
   static async writeNodes(data: NodeClipboardData) {
     // const json = JSON.stringify(nodes);
@@ -22,11 +29,7 @@ export class Clipboard {
     // ]);
 
     const text = JSON.stringify(data);
-    if (this.externalClipboard) {
-      await this.externalClipboard.set("text", text);
-    } else {
-      await navigator.clipboard.writeText(text);
-    }
+    await this.handler.set("text", text);
   }
 
   static async readNodes(): Promise<NodeClipboardData | undefined> {
@@ -34,9 +37,7 @@ export class Clipboard {
     // const item = items.find((item) => item.types.includes(`web ${mimeType}`));
     // if (!item) {
     // try parsing text as JSON
-    const text =
-      (await this.externalClipboard?.get("text")) ??
-      (await navigator.clipboard.readText());
+    const text = await this.handler?.get("text");
     if (!text) {
       return;
     }

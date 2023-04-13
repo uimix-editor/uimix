@@ -46,7 +46,7 @@ export class IFrameDataConnector {
 
     void this.rpc.remote.ready();
 
-    Clipboard.externalClipboard = {
+    Clipboard.handler = {
       get: async (type) => {
         return this.rpc.remote.getClipboard(type);
       },
