@@ -18,6 +18,9 @@ import { ScrollState } from "./ScrollState";
 import demoFile from "./demoFile/demo.uimix?raw";
 import { filesToProjectJSON } from "../../../cli/src/project/WorkspaceLoader";
 import { blobToDataURL } from "@uimix/foundation/src/utils/Blob";
+import { viewportGeometry } from "./ScrollState";
+import { Rect } from "paintvec";
+import { resizeWithBoundingBox } from "@uimix/model/src/services";
 
 export class ProjectState {
   constructor() {
@@ -246,6 +249,35 @@ export class ProjectState {
 
     for (const selectable of selectables) {
       selectable.select();
+    }
+
+    // wait for render
+    // TODO: better time
+    await new Promise((resolve) => setTimeout(resolve, 100));
+
+    const bbox = Rect.union(...selectables.map((s) => s.computedRect));
+    if (bbox) {
+      const viewportRect = projectState.scroll.viewportRectInDocument;
+      // fix position when bbox is outside of the page
+      const isInside = !!bbox.intersection(viewportRect);
+      console.log("isInside", isInside);
+      if (
+        !isInside &&
+        insertionTarget.parent?.selectable.style.layout === "none"
+      ) {
+        const offset = viewportRect.center.sub(bbox.center);
+        console.log(offset);
+        for (const selectable of selectables) {
+          resizeWithBoundingBox(
+            selectable,
+            selectable.computedRect.translate(offset),
+            {
+              x: true,
+              y: true,
+            }
+          );
+        }
+      }
     }
 
     // load images
