@@ -16,6 +16,7 @@ import {
   HierarchicalNodeJSON,
   toHierarchicalNodeJSONs,
 } from "./HierarchicalNodeJSON";
+import { toHumanReadableNode } from "./HumanReadableFormat";
 
 interface WorkspaceLoaderOptions {
   filePattern?: string;
@@ -173,6 +174,14 @@ export class WorkspaceLoader {
           await this.fileAccess.writeText(
             pagePath,
             formatJSON(JSON.stringify(pageJSON))
+          );
+          await this.fileAccess.writeText(
+            pagePath + ".json",
+            formatJSON(
+              JSON.stringify(
+                toHierarchicalNodeJSONs(pageJSON.nodes).map(toHumanReadableNode)
+              )
+            )
           );
           pagePathsToDelete.delete(pagePath);
           projectSaved = true;
