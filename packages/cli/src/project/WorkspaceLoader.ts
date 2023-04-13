@@ -176,7 +176,7 @@ export class WorkspaceLoader {
             formatJSON(JSON.stringify(pageJSON))
           );
           await this.fileAccess.writeText(
-            pagePath + ".json",
+            pagePath + ".newformat.js",
             formatTypeScript(
               "export default <page>" +
                 toHierarchicalNodeJSONs(pageJSON.nodes)
