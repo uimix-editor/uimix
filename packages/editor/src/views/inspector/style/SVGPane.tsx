@@ -4,11 +4,7 @@ import { InspectorHeading } from "../components/InspectorHeading";
 import { InspectorPane } from "../components/InspectorPane";
 import { InspectorTargetContext } from "../components/InspectorTargetContext";
 import { sameOrNone } from "@uimix/foundation/src/utils/Mixed";
-import { IconButton } from "@uimix/foundation/src/components/IconButton";
-import { Tooltip } from "@uimix/foundation/src/components/Tooltip";
-import { Clipboard } from "../../../state/Clipboard";
-import { action, runInAction } from "mobx";
-import { showImageInputDialog } from "../../../util/imageDialog";
+import { action } from "mobx";
 import { Buffer } from "buffer";
 
 export const SVGPane: React.FC = observer(function SVGPane() {
