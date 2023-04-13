@@ -18,7 +18,6 @@ import { ScrollState } from "./ScrollState";
 import demoFile from "./demoFile/demo.uimix?raw";
 import { filesToProjectJSON } from "../../../cli/src/project/WorkspaceLoader";
 import { blobToDataURL } from "@uimix/foundation/src/utils/Blob";
-import { viewportGeometry } from "./ScrollState";
 import { Rect } from "paintvec";
 import { resizeWithBoundingBox } from "@uimix/model/src/services";
 
