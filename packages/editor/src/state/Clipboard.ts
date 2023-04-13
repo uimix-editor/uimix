@@ -2,6 +2,7 @@ import { NodeClipboardData } from "@uimix/model/src/data/v1";
 import { projectState } from "./ProjectState";
 import { DefaultClipboardHandler } from "./DefaultClipboardHandler";
 import { ClipboardHandler } from "../types/ClipboardHandler";
+import isSvg from "is-svg";
 
 // const mimeType = "application/x-macaron-nodes";
 
@@ -58,6 +59,30 @@ export class Clipboard {
     if (!text) {
       return;
     }
+
+    if (isSvg(text)) {
+      // paste as svg
+
+      return {
+        uimixClipboardVersion: "0.0.1",
+        type: "nodes",
+        nodes: [
+          {
+            id: "",
+            type: "svg",
+            name: "SVG",
+            style: {
+              width: { type: "hug" },
+              height: { type: "hug" },
+              svgContent: text,
+            },
+            children: [],
+          },
+        ],
+        images: {},
+      };
+    }
+
     try {
       return NodeClipboardData.parse(JSON.parse(text));
     } catch (e) {
