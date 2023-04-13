@@ -25,10 +25,6 @@ import { viewOptions } from "../../state/ViewOptions";
 const FrameLabel: React.FC<{
   selectable: Selectable;
 }> = observer(function FrameLabel({ selectable }) {
-  const pos = selectable.computedRect.transform(
-    projectState.scroll.documentToViewport
-  );
-
   const ref = createRef<HTMLDivElement>();
   useEffect(() => {
     if (ref.current) {
