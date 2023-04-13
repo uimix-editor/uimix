@@ -1,5 +1,6 @@
 import { NodeClipboardData } from "@uimix/model/src/data/v1";
 import { ClipboardHandler } from "../types/ClipboardHandler";
+import { projectState } from "./ProjectState";
 
 // const mimeType = "application/x-macaron-nodes";
 
@@ -58,6 +59,29 @@ export class Clipboard {
   }
 
   static async readNodes(): Promise<NodeClipboardData | undefined> {
+    const imageDataURL = await this.handler.get("image");
+    if (imageDataURL) {
+      const blob = await fetch(imageDataURL).then((r) => r.blob());
+      const [hash] = await projectState.project.imageManager.insert(blob);
+
+      return {
+        uimixClipboardVersion: "0.0.1",
+        type: "nodes",
+        nodes: [
+          {
+            id: "",
+            type: "image",
+            name: "Image",
+            style: {
+              imageHash: hash,
+            },
+            children: [],
+          },
+        ],
+        images: {},
+      };
+    }
+
     // const items = await navigator.clipboard.read();
     // const item = items.find((item) => item.types.includes(`web ${mimeType}`));
     // if (!item) {
