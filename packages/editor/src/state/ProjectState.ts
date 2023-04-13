@@ -8,13 +8,9 @@ import {
   ProjectManifestJSON,
   SelectableJSON,
 } from "@uimix/model/src/data/v1";
-import {
-  Project,
-  Page,
-  reassignNewIDs,
-  Selectable,
-  usedImageHashesInStyle,
-} from "@uimix/model/src/models";
+import { usedImageHashesInStyle } from "@uimix/model/src/data/util";
+import { reassignNewIDs } from "@uimix/model/src/data/util/reassignNewIDs";
+import { Project, Page, Selectable } from "@uimix/model/src/models";
 import { getIncrementalUniqueName } from "@uimix/foundation/src/utils/Name";
 import { PageState } from "./PageState";
 import { ScrollState } from "./ScrollState";

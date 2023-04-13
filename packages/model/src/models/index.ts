@@ -9,7 +9,5 @@ export * from "./Page";
 export * from "./PageList";
 export * from "./Project";
 export * from "../collaborative/ProjectData";
-export * from "../data/util";
-export * from "../data/util/reassignNewIDs";
 export * from "./Selectable";
 export * from "./Style";
