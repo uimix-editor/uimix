@@ -13,6 +13,7 @@ export class ViewportState {
   @observable focusedSelectable: Selectable | undefined = undefined;
   @observable.ref dragPreviewRects: readonly Rect[] = [];
   @observable.ref dropDestination: DropDestination | undefined = undefined;
+  @observable.ref dragSelectionRect: Rect | undefined = undefined;
 
   @observable.ref tool: Tool | undefined = undefined;
   @observable panMode = false;
