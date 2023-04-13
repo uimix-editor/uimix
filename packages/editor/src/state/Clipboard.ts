@@ -1,11 +1,7 @@
 import { NodeClipboardData } from "@uimix/model/src/data/v1";
+import { ClipboardHandler } from "../types/ClipboardHandler";
 
 // const mimeType = "application/x-macaron-nodes";
-
-interface ClipboardHandler {
-  get(type: "text" | "image"): Promise<string>;
-  set(type: "text" | "image", textOrDataURL: string): Promise<void>;
-}
 
 export class Clipboard {
   static handler: ClipboardHandler = {
