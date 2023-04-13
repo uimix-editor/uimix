@@ -1,6 +1,7 @@
 import { computed, makeObservable, observable } from "mobx";
 import * as Y from "yjs";
 import {
+  Image,
   NodeClipboardData,
   PageJSON,
   ProjectJSON,
@@ -19,6 +20,7 @@ import { ScrollState } from "./ScrollState";
 // eslint-disable-next-line import/no-unresolved
 import demoFile from "./demoFile/demo.uimix?raw";
 import { filesToProjectJSON } from "../../../cli/src/project/WorkspaceLoader";
+import { blobToDataURL } from "@uimix/foundation/src/utils/Blob";
 
 export class ProjectState {
   constructor() {
@@ -104,7 +106,7 @@ export class ProjectState {
     }
   }
 
-  getNodeClipboardData(): NodeClipboardData | undefined {
+  async getNodeClipboardData(): Promise<NodeClipboardData | undefined> {
     const selection = this.selectedSelectables;
     if (selection.length === 0) {
       return undefined;
@@ -118,11 +120,45 @@ export class ProjectState {
       }
       return s.toJSON();
     });
+
+    const imageHashes = new Set<string>();
+
+    const visit = (json: SelectableJSON) => {
+      if (json.style.imageHash) {
+        imageHashes.add(json.style.imageHash);
+      }
+      if (json.children) {
+        json.children.forEach(visit);
+      }
+    };
+    nodes.forEach(visit);
+
+    const images: Record<string, Image> = {};
+    for (const hash of imageHashes) {
+      const image = this.project.imageManager.get(hash);
+      if (!image) {
+        continue;
+      }
+      const url = image.url;
+
+      // fetch and convert to dataURL
+      const response = await fetch(url);
+      const blob = await response.blob();
+      const dataURL = await blobToDataURL(blob);
+
+      if (image) {
+        images[hash] = {
+          ...image,
+          url: dataURL,
+        };
+      }
+    }
+
     return {
       uimixClipboardVersion: "0.0.1",
       type: "nodes",
       nodes,
-      images: {}, // TODO
+      images,
     };
   }
 

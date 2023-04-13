@@ -57,7 +57,7 @@ class Commands {
   }
 
   async copy() {
-    const data = projectState.getNodeClipboardData();
+    const data = await projectState.getNodeClipboardData();
     if (!data) {
       return;
     }
