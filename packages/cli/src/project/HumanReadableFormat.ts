@@ -65,7 +65,7 @@ export function toHumanReadableNode(
   json: HierarchicalNodeJSON,
   styles: Record<string, Partial<StyleJSON>>
 ): Node {
-  const style = styles[json.id] ?? {};
+  const style = styles[json.id] ?? {}; // TODO: variant styles
 
   switch (json.type) {
     case "project":
