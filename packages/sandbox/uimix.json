@@ -1,8 +1,10 @@
 {
-  "componentURLs": [
-    "https://cdn.jsdelivr.net/gh/uimix-editor/uimix@ba0157d5/packages/sandbox/dist-components/components.js",
-    "https://cdn.jsdelivr.net/gh/uimix-editor/uimix@ba0157d5/packages/sandbox/dist-components/style.css"
-  ],
-  "localComponents": ["src/stories/*.tsx", "!src/stories/*.stories.tsx"],
+  "components": {
+    "prebuilt": [
+      "https://cdn.jsdelivr.net/gh/uimix-editor/uimix@ba0157d5/packages/sandbox/dist-components/components.js",
+      "https://cdn.jsdelivr.net/gh/uimix-editor/uimix@ba0157d5/packages/sandbox/dist-components/style.css"
+    ],
+    "react": ["src/stories/*.tsx", "!src/stories/*.stories.tsx"]
+  },
   "designTokens": "src/designTokens/*.json"
 }
