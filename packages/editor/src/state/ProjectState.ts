@@ -17,7 +17,7 @@ import { getIncrementalUniqueName } from "@uimix/foundation/src/utils/Name";
 import { PageState } from "./PageState";
 import { ScrollState } from "./ScrollState";
 // eslint-disable-next-line import/no-unresolved
-import demoFile from "./demo.uimix?raw";
+import demoFile from "./demoFile/demo.uimix?raw";
 import { filesToProjectJSON } from "../../../cli/src/project/WorkspaceLoader";
 
 export class ProjectState {

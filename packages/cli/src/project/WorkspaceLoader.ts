@@ -71,7 +71,8 @@ export class WorkspaceLoader {
   }
 
   readonly filePattern: string;
-  readonly manifestName = "uimix.json";
+  readonly uimixProjectFile = "uimix.json";
+  readonly projectBoundary = "package.json"; // TODO: other project boundaries
   jsons = new Map<string, ProjectJSON>(); // project path -> project json
 
   get json(): ProjectJSON {
@@ -97,7 +98,7 @@ export class WorkspaceLoader {
 
   async load(): Promise<boolean> {
     const filePaths = await this.fileAccess.glob(
-      `{${this.filePattern},**/${this.manifestName}}`
+      `{${this.filePattern},**/${this.projectBoundary}}`
     );
     filePaths.sort();
 
@@ -106,14 +107,14 @@ export class WorkspaceLoader {
     ]);
 
     for (const manifestPaths of filePaths.filter((filePath) =>
-      filePath.endsWith(this.manifestName)
+      filePath.endsWith(this.projectBoundary)
     )) {
       const parentPath = path.dirname(manifestPaths);
       filePathsForProject.set(parentPath, []);
     }
 
     for (const filePath of filePaths) {
-      if (filePath.endsWith(this.manifestName)) {
+      if (filePath.endsWith(this.projectBoundary)) {
         continue;
       }
 
@@ -134,7 +135,7 @@ export class WorkspaceLoader {
         manifest = ProjectManifestJSON.parse(
           JSON.parse(
             await this.fileAccess.readText(
-              path.join(projectPath, this.manifestName)
+              path.join(projectPath, this.uimixProjectFile)
             )
           )
         );
@@ -145,9 +146,14 @@ export class WorkspaceLoader {
       const pages = new Map<string, PageJSON>();
 
       for (const pagePath of pagePaths) {
-        const pageJSON = PageJSON.parse(
-          JSON.parse(await this.fileAccess.readText(pagePath))
-        );
+        const pageText = await this.fileAccess.readText(pagePath);
+
+        const pageJSON =
+          pageText.trim() === ""
+            ? { nodes: {}, styles: {} }
+            : PageJSON.parse(
+                JSON.parse(await this.fileAccess.readText(pagePath))
+              );
 
         pages.set(
           path.relative(projectPath, pagePath).replace(/\.uimix$/, ""),
@@ -183,14 +189,8 @@ export class WorkspaceLoader {
 
       for (const [projectPath, json] of this.jsons) {
         const { manifest, pages } = projectJSONToFiles(json);
-        if (pages.size === 0) {
-          continue;
-        }
 
-        await this.fileAccess.writeText(
-          path.join(projectPath, this.manifestName),
-          formatJSON(JSON.stringify(manifest))
-        );
+        let projectSaved = false;
 
         for (const [pageName, pageJSON] of pages) {
           const pagePath = path.join(projectPath, pageName + ".uimix");
@@ -202,6 +202,14 @@ export class WorkspaceLoader {
             formatJSON(JSON.stringify(pageJSON))
           );
           pagePathsToDelete.delete(pagePath);
+          projectSaved = true;
+        }
+
+        if (projectSaved) {
+          await this.fileAccess.writeText(
+            path.join(projectPath, this.uimixProjectFile),
+            formatJSON(JSON.stringify(manifest))
+          );
         }
       }
 
@@ -216,18 +224,21 @@ export class WorkspaceLoader {
   watch(onChange: (projectJSON: ProjectJSON) => void): () => void {
     console.log("start watching...");
 
-    return this.fileAccess.watch(this.filePattern, async () => {
-      try {
-        if (this.isSaving) {
-          return;
+    return this.fileAccess.watch(
+      `{${this.filePattern},**/${this.projectBoundary}}`,
+      async () => {
+        try {
+          if (this.isSaving) {
+            return;
+          }
+          if (await this.load()) {
+            onChange(this.json);
+          }
+        } catch (e) {
+          console.error(e);
         }
-        if (await this.load()) {
-          onChange(this.json);
-        }
-      } catch (e) {
-        console.error(e);
       }
-    });
+    );
   }
 }
 
