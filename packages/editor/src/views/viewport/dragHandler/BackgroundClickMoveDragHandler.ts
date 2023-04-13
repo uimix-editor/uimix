@@ -3,6 +3,7 @@ import { projectState } from "../../../state/ProjectState";
 import { viewportState } from "../../../state/ViewportState";
 import { DragHandler } from "./DragHandler";
 import { ViewportEvent } from "./ViewportEvent";
+import { Selectable } from "@uimix/model/src/models";
 
 export class BackgroundClickMoveDragHandler implements DragHandler {
   constructor(event: ViewportEvent) {
@@ -22,12 +23,16 @@ export class BackgroundClickMoveDragHandler implements DragHandler {
 
     const selectables = projectState.page?.selectable.offsetChildren ?? [];
 
+    const intersected = new Set<Selectable>();
+
     for (const selectable of selectables) {
       const bounds = selectable.computedRect;
       if (bounds && rect.intersection(bounds)) {
-        selectable.select();
+        intersected.add(selectable);
       }
     }
+
+    projectState.project.replaceSelection(intersected);
   }
 
   end(): void {
