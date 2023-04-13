@@ -22,6 +22,73 @@ import { Input } from "@uimix/foundation/src/components/Input";
 import { startCase } from "lodash-es";
 import { viewOptions } from "../../state/ViewOptions";
 
+const FrameLabel: React.FC<{
+  selectable: Selectable;
+}> = observer(function FrameLabel({ selectable }) {
+  const pos = selectable.computedRect.transform(
+    projectState.scroll.documentToViewport
+  );
+
+  const ref = createRef<HTMLDivElement>();
+  useEffect(() => {
+    if (ref.current) {
+      selectableForDOM.set(ref.current, selectable);
+    }
+  });
+
+  const dragProps = usePointerStroke<Element, DragHandler | undefined>({
+    onBegin: action((e) => {
+      return new NodeClickMoveDragHandler(
+        selectable,
+        new ViewportEvent(e.nativeEvent, {
+          all: [selectable],
+        })
+      );
+    }),
+    onMove: action((e, { initData: dragHandler }) => {
+      dragHandler?.move(
+        new ViewportEvent(e.nativeEvent, {
+          all: [selectable],
+        })
+      );
+    }),
+    onEnd: action((e, { initData: dragHandler }) => {
+      dragHandler?.end(
+        new ViewportEvent(e.nativeEvent, {
+          all: [selectable],
+        })
+      );
+    }),
+    onHover: action(() => {
+      viewportState.hoveredSelectable = selectable;
+    }),
+  });
+  const onPointerLeave = action(() => {
+    viewportState.hoveredSelectable = undefined;
+  });
+
+  const bboxInView = selectable.computedRect.transform(
+    projectState.scroll.documentToViewport
+  );
+
+  return (
+    <div
+      className={twMerge(
+        "absolute text-macaron-base text-neutral-500 font-medium flex gap-1",
+        selectable.selected && "text-macaron-active"
+      )}
+      style={{
+        left: `${bboxInView.left}px`,
+        top: `${bboxInView.top - 20 * viewOptions.uiScaling}px`,
+      }}
+      {...dragProps}
+      onPointerLeave={onPointerLeave}
+    >
+      {selectable.node.name}
+    </div>
+  );
+});
+
 const componentSectionTopPadding = 48 * viewOptions.uiScaling;
 const componentSectionPadding = 16 * viewOptions.uiScaling;
 
@@ -327,13 +394,19 @@ const VariantLabel: React.FC<{
 });
 
 export const VariantLabels: React.FC = observer(function VariantLabels() {
-  const components =
-    projectState.page?.selectable.children.filter(
-      (s) => s.node.type === "component"
-    ) ?? [];
+  const rootSelectables = projectState.page?.selectable.children ?? [];
+
+  const components = rootSelectables.filter(
+    (s) => s.originalNode.type === "component"
+  );
+
+  const frames = rootSelectables.filter((s) => s.originalNode.type === "frame");
 
   return (
     <>
+      {frames.map((frame) => (
+        <FrameLabel selectable={frame} key={frame.id} />
+      ))}
       {components.map((component) => (
         <ComponentLabel component={component} key={component.id} />
       ))}
