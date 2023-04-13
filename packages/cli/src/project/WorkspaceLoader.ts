@@ -217,18 +217,21 @@ export class WorkspaceLoader {
   watch(onChange: (projectJSON: ProjectJSON) => void): () => void {
     console.log("start watching...");
 
-    return this.fileAccess.watch(this.filePattern, async () => {
-      try {
-        if (this.isSaving) {
-          return;
+    return this.fileAccess.watch(
+      `{${this.filePattern},**/${this.projectBoundary}}`,
+      async () => {
+        try {
+          if (this.isSaving) {
+            return;
+          }
+          if (await this.load()) {
+            onChange(this.json);
+          }
+        } catch (e) {
+          console.error(e);
         }
-        if (await this.load()) {
-          onChange(this.json);
-        }
-      } catch (e) {
-        console.error(e);
       }
-    });
+    );
   }
 }
 
