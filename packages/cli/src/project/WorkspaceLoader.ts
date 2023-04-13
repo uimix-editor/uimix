@@ -146,9 +146,14 @@ export class WorkspaceLoader {
       const pages = new Map<string, PageJSON>();
 
       for (const pagePath of pagePaths) {
-        const pageJSON = PageJSON.parse(
-          JSON.parse(await this.fileAccess.readText(pagePath))
-        );
+        const pageText = await this.fileAccess.readText(pagePath);
+
+        const pageJSON =
+          pageText.trim() === ""
+            ? { nodes: {}, styles: {} }
+            : PageJSON.parse(
+                JSON.parse(await this.fileAccess.readText(pagePath))
+              );
 
         pages.set(
           path.relative(projectPath, pagePath).replace(/\.uimix$/, ""),
