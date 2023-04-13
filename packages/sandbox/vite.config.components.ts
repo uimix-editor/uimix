@@ -54,7 +54,6 @@ function getComponents(): Omit<ForeignComponent, "createRenderer">[] {
           type: { type: "boolean" },
         });
       } else if (prop.type.name === "enum") {
-        console.log(prop.type.value);
         props.push({
           name,
           type: {
@@ -68,7 +67,7 @@ function getComponents(): Omit<ForeignComponent, "createRenderer">[] {
     const component: Omit<ForeignComponent, "createRenderer"> = {
       framework: "react",
       name: doc.displayName,
-      path: "",
+      path: doc.filePath,
       props,
     };
 
@@ -98,7 +97,13 @@ export function virtualModulePlugin() {
   };
 }
 
-console.log(JSON.stringify(getComponents(), null, 2));
+console.log("Found components:");
+
+for (const component of getComponents()) {
+  console.log(
+    `${component.name} (${component.path}): ${component.props.length} props`
+  );
+}
 
 // https://vitejs.dev/config/
 export default defineConfig({
