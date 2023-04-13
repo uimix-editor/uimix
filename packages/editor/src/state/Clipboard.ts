@@ -6,10 +6,39 @@ import { ClipboardHandler } from "../types/ClipboardHandler";
 export class Clipboard {
   static handler: ClipboardHandler = {
     get: async (type: "text" | "image") => {
-      return await navigator.clipboard.readText();
+      switch (type) {
+        case "text":
+          return await navigator.clipboard.readText();
+        case "image": {
+          const items = await navigator.clipboard.read();
+          const item = items.find((item) => item.types.includes(`image/png`));
+          if (!item) {
+            return;
+          }
+          const blob = await item.getType(`image/png`);
+
+          return await new Promise((resolve, reject) => {
+            const reader = new FileReader();
+            reader.onload = () => resolve(reader.result as string);
+            reader.onerror = reject;
+            reader.readAsDataURL(blob);
+          });
+        }
+      }
     },
     set: async (type: "text" | "image", textOrDataURL: string) => {
-      await navigator.clipboard.writeText(textOrDataURL);
+      switch (type) {
+        case "text":
+          await navigator.clipboard.writeText(textOrDataURL);
+        case "image": {
+          const blob = await fetch(textOrDataURL).then((r) => r.blob());
+          await navigator.clipboard.write([
+            new ClipboardItem({
+              "image/png": blob,
+            }),
+          ]);
+        }
+      }
     },
   };
 
