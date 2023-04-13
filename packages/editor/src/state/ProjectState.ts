@@ -13,6 +13,7 @@ import {
   Page,
   reassignNewIDs,
   Selectable,
+  usedImageHashesInStyle,
 } from "@uimix/model/src/models";
 import { getIncrementalUniqueName } from "@uimix/foundation/src/utils/Name";
 import { PageState } from "./PageState";
@@ -124,8 +125,8 @@ export class ProjectState {
     const imageHashes = new Set<string>();
 
     const visit = (json: SelectableJSON) => {
-      if (json.style.imageHash) {
-        imageHashes.add(json.style.imageHash);
+      for (const hash of usedImageHashesInStyle(json.style)) {
+        imageHashes.add(hash);
       }
       if (json.children) {
         json.children.forEach(visit);
