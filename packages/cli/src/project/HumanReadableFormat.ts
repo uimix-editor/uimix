@@ -61,7 +61,12 @@ type Node =
   | LeafNode
   | OverrideNode;
 
-export function toHumanReadableNode(json: HierarchicalNodeJSON): Node {
+export function toHumanReadableNode(
+  json: HierarchicalNodeJSON,
+  styles: Record<string, Partial<StyleJSON>>
+): Node {
+  const style = styles[json.id] ?? {};
+
   switch (json.type) {
     case "project":
       throw new Error("Project node is not supported in HumanReadableFormat");
@@ -71,8 +76,8 @@ export function toHumanReadableNode(json: HierarchicalNodeJSON): Node {
         props: {
           id: json.id,
         },
-        children: json.children.map(
-          toHumanReadableNode
+        children: json.children.map((c) =>
+          toHumanReadableNode(c, styles)
         ) as PageNode["children"],
       };
     case "component": {
@@ -81,8 +86,8 @@ export function toHumanReadableNode(json: HierarchicalNodeJSON): Node {
         props: {
           id: json.id,
         },
-        children: json.children.map(
-          toHumanReadableNode
+        children: json.children.map((c) =>
+          toHumanReadableNode(c, styles)
         ) as ComponentNode["children"],
       };
     }
@@ -91,7 +96,7 @@ export function toHumanReadableNode(json: HierarchicalNodeJSON): Node {
         type: json.type,
         props: {
           condition: json.condition!, // TODO: skip if not present
-          // TODO: styles
+          ...style,
         },
       };
     }
@@ -103,7 +108,7 @@ export function toHumanReadableNode(json: HierarchicalNodeJSON): Node {
         type: json.type,
         props: {
           id: json.id,
-          // TODO: styles
+          ...style,
         },
       };
     }
@@ -112,10 +117,10 @@ export function toHumanReadableNode(json: HierarchicalNodeJSON): Node {
         type: json.type,
         props: {
           id: json.id,
-          // TODO: styles
+          ...style,
         },
-        children: json.children.map(
-          toHumanReadableNode
+        children: json.children.map((c) =>
+          toHumanReadableNode(c, styles)
         ) as FrameNode["children"],
       };
     }
@@ -124,7 +129,7 @@ export function toHumanReadableNode(json: HierarchicalNodeJSON): Node {
         type: json.type,
         props: {
           id: json.id,
-          // TODO: styles
+          ...style,
         },
         children: [
           // TODO: overrides
@@ -136,10 +141,11 @@ export function toHumanReadableNode(json: HierarchicalNodeJSON): Node {
 
 export function stringifyAsJSX(node: Node): string {
   const propText = Object.entries(node.props)
-    .map(([key, value]) =>
-      typeof value === "string"
+    .map(
+      ([key, value]) =>
+        /* typeof value === "string"
         ? `${key}=${JSON.stringify(value)}`
-        : `${key}={${JSON.stringify(value)}}`
+        :  */ `${key}={${JSON.stringify(value)}}`
     )
     .join(" ");
 

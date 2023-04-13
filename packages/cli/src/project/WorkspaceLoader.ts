@@ -180,7 +180,7 @@ export class WorkspaceLoader {
             formatTypeScript(
               "export default <page>" +
                 toHierarchicalNodeJSONs(pageJSON.nodes)
-                  .map(toHumanReadableNode)
+                  .map((node) => toHumanReadableNode(node, json.styles))
                   .map(stringifyAsJSX)
                   .join("\n") +
                 "</page>"
