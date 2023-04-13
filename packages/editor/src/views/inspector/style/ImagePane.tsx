@@ -8,6 +8,7 @@ import { IconButton } from "@uimix/foundation/src/components/IconButton";
 import { Tooltip } from "@uimix/foundation/src/components/Tooltip";
 import { Clipboard } from "../../../state/Clipboard";
 import { runInAction } from "mobx";
+import { showImageInputDialog } from "../../../util/imageDialog";
 
 export const ImagePane: React.FC = observer(function FillPane() {
   const selectables = projectState.selectedSelectables.filter(
@@ -27,24 +28,51 @@ export const ImagePane: React.FC = observer(function FillPane() {
   const copyImage = async () => {
     const imageWithDataURL =
       imageHash && (await imageManager.getWithDataURL(imageHash));
-    if (imageWithDataURL) {
-      await Clipboard.handler.set("image", imageWithDataURL.url);
+    if (!imageWithDataURL) {
+      return;
     }
+    await Clipboard.handler.set("image", imageWithDataURL.url);
   };
 
   const pasteImage = async () => {
     const dataURL = await Clipboard.handler.get("image");
-    if (dataURL) {
-      const [hash] = await imageManager.insertDataURL(dataURL);
-
-      runInAction(() => {
-        for (const selectable of selectables) {
-          selectable.style.imageHash = hash;
-        }
-
-        projectState.undoManager.stopCapturing();
-      });
+    if (!dataURL) {
+      return;
     }
+    const [hash] = await imageManager.insertDataURL(dataURL);
+    runInAction(() => {
+      for (const selectable of selectables) {
+        selectable.style.imageHash = hash;
+      }
+      projectState.undoManager.stopCapturing();
+    });
+  };
+
+  const uploadImage = async () => {
+    const file = await showImageInputDialog();
+    if (!file) {
+      return;
+    }
+    const [hash] = await imageManager.insert(file);
+    runInAction(() => {
+      for (const selectable of selectables) {
+        selectable.style.imageHash = hash;
+      }
+      projectState.undoManager.stopCapturing();
+    });
+  };
+
+  const downloadImage = async () => {
+    const imageWithDataURL =
+      imageHash && (await imageManager.getWithDataURL(imageHash));
+    if (!imageWithDataURL) {
+      return;
+    }
+
+    const a = document.createElement("a");
+    a.href = imageWithDataURL.url;
+    a.download = "image.png";
+    a.click();
   };
 
   return (
@@ -70,6 +98,15 @@ export const ImagePane: React.FC = observer(function FillPane() {
             <IconButton
               icon="material-symbols:content-paste"
               onClick={pasteImage}
+            />
+          </Tooltip>
+          <Tooltip text="Select Image File...">
+            <IconButton icon="material-symbols:upload" onClick={uploadImage} />
+          </Tooltip>
+          <Tooltip text="Save Image...">
+            <IconButton
+              icon="material-symbols:download"
+              onClick={downloadImage}
             />
           </Tooltip>
         </div>

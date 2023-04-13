@@ -34,6 +34,7 @@ import { viewportGeometry } from "./ScrollState";
 import { compact } from "lodash-es";
 import { Rect, Vec2 } from "paintvec";
 import { snapper } from "./Snapper";
+import { showImageInputDialog } from "../util/imageDialog";
 
 class Commands {
   @computed get canUndo(): boolean {
@@ -121,15 +122,7 @@ class Commands {
   }
 
   async insertImage() {
-    const file = await new Promise<File | undefined>((resolve) => {
-      const input = document.createElement("input");
-      input.type = "file";
-      input.accept = "image/png,image/jpeg";
-      input.onchange = () => {
-        resolve(input.files?.[0]);
-      };
-      input.click();
-    });
+    const file = await showImageInputDialog();
     if (!file) {
       return;
     }
