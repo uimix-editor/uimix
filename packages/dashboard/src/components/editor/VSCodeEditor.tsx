@@ -6,7 +6,7 @@ import { RPC } from "@uimix/typed-rpc";
 import type {
   IRootToEditorRPCHandler,
   IEditorToRootRPCHandler,
-} from "@uimix/editor/src/state/IFrameRPC";
+} from "@uimix/editor/src/types/IFrameRPC";
 import { LoadingErrorOverlay } from "./LoadingErrorOverlay";
 import { assertNonNull } from "../../utils/assertNonNull";
 import {
