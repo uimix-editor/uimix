@@ -21,6 +21,14 @@ export const ImagePane: React.FC = observer(function FillPane() {
   const src =
     imageHash && projectState.project.imageManager.get(imageHash)?.url;
 
+  const copyImage = () => {
+    throw new Error("Not implemented");
+  };
+
+  const pasteImage = () => {
+    throw new Error("Not implemented");
+  };
+
   return (
     <InspectorPane>
       <InspectorHeading
@@ -35,10 +43,16 @@ export const ImagePane: React.FC = observer(function FillPane() {
         />
         <div className="flex gap-2">
           <Tooltip text="Copy Image">
-            <IconButton icon="material-symbols:content-copy-outline" />
+            <IconButton
+              icon="material-symbols:content-copy-outline"
+              onClick={copyImage}
+            />
           </Tooltip>
           <Tooltip text="Paste Image">
-            <IconButton icon="material-symbols:content-paste" />
+            <IconButton
+              icon="material-symbols:content-paste"
+              onClick={pasteImage}
+            />
           </Tooltip>
         </div>
       </InspectorTargetContext.Provider>
