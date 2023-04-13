@@ -11,6 +11,7 @@ import { ProjectData } from "@uimix/model/src/collaborative";
 import { LoadingErrorOverlay } from "./LoadingErrorOverlay";
 import { DocumentMetadata, getDesktopAPI } from "../../types/DesktopAPI";
 import { assertNonNull } from "../../utils/assertNonNull";
+import { DefaultClipboardHandler } from "@uimix/editor/src/state/DefaultClipboardHandler";
 
 // TODO: test
 
@@ -49,16 +50,10 @@ class Connection extends TypedEmitter<{
         },
 
         getClipboard: async (type) => {
-          if (type !== "text") {
-            throw new Error(`unsupported clipboard type: ${type}`);
-          }
-          return await navigator.clipboard.readText();
+          return await new DefaultClipboardHandler().get(type);
         },
         setClipboard: async (type, text) => {
-          if (type !== "text") {
-            throw new Error(`unsupported clipboard type: ${type}`);
-          }
-          await navigator.clipboard.writeText(text);
+          await new DefaultClipboardHandler().set(type, text);
         },
       }
     );

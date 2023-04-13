@@ -15,6 +15,7 @@ import { DocumentTitleEdit } from "../DocumentTitleEdit";
 import { toastController } from "@uimix/foundation/src/components/toast/ToastController";
 import { LoadingErrorOverlay } from "./LoadingErrorOverlay";
 import { assertNonNull } from "../../utils/assertNonNull";
+import { DefaultClipboardHandler } from "@uimix/editor/src/state/DefaultClipboardHandler";
 
 class Connection extends TypedEmitter<{
   readyToShow(): void;
@@ -73,16 +74,10 @@ class Connection extends TypedEmitter<{
           });
         },
         getClipboard: async (type) => {
-          if (type !== "text") {
-            throw new Error(`unsupported clipboard type: ${type}`);
-          }
-          return await navigator.clipboard.readText();
+          return await new DefaultClipboardHandler().get(type);
         },
         setClipboard: async (type, text) => {
-          if (type !== "text") {
-            throw new Error(`unsupported clipboard type: ${type}`);
-          }
-          await navigator.clipboard.writeText(text);
+          await new DefaultClipboardHandler().set(type, text);
         },
       }
     );
