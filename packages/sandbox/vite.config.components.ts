@@ -4,6 +4,10 @@ import * as path from "node:path";
 import * as url from "node:url";
 import { glob } from "glob";
 import docgen from "react-docgen-typescript";
+import type {
+  ForeignComponent,
+  ForeignComponentRenderer,
+} from "../editor/src/types/ForeignComponent";
 
 const __filename = url.fileURLToPath(import.meta.url);
 
@@ -32,6 +36,48 @@ function getComponentDocs(): docgen.ComponentDoc[] {
   return docs;
 }
 
+function getComponents(): Omit<ForeignComponent, "createRenderer">[] {
+  const docs = getComponentDocs();
+
+  const components = docs.map((doc) => {
+    const props: ForeignComponent["props"] = [];
+
+    for (const [name, prop] of Object.entries(doc.props)) {
+      if (prop.type.name === "string") {
+        props.push({
+          name,
+          type: { type: "string" },
+        });
+      } else if (prop.type.name === "boolean") {
+        props.push({
+          name,
+          type: { type: "boolean" },
+        });
+      } else if (prop.type.name === "enum") {
+        console.log(prop.type.value);
+        props.push({
+          name,
+          type: {
+            type: "enum",
+            values: prop.type.value.map((v: any) => JSON.parse(v.value)),
+          },
+        });
+      }
+    }
+
+    const component: Omit<ForeignComponent, "createRenderer"> = {
+      framework: "react",
+      name: doc.displayName,
+      path: "",
+      props,
+    };
+
+    return component;
+  });
+
+  return components;
+}
+
 export function virtualModulePlugin() {
   const virtualModuleId = "virtual:my-module";
   const resolvedVirtualModuleId = "\0" + virtualModuleId;
@@ -52,7 +98,7 @@ export function virtualModulePlugin() {
   };
 }
 
-console.log(getComponentDocs());
+console.log(JSON.stringify(getComponents(), null, 2));
 
 // https://vitejs.dev/config/
 export default defineConfig({
