@@ -6,6 +6,7 @@ import { FillPane } from "./FillPane";
 import { ImagePane } from "./ImagePane";
 import { LayoutPane } from "./LayoutPane";
 import { PropertyPane } from "./PropertyPane";
+import { SVGPane } from "./SVGPane";
 import { ShadowPane } from "./ShadowPane";
 import { TextPane } from "./TextPane";
 
@@ -20,6 +21,7 @@ export function StyleInspector(): JSX.Element {
       <TextPane />
       <PropertyPane />
       <ImagePane />
+      <SVGPane />
       <ElementPane />
       <DebugPane />
     </div>

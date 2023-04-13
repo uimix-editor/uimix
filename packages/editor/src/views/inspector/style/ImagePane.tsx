@@ -10,7 +10,7 @@ import { Clipboard } from "../../../state/Clipboard";
 import { runInAction } from "mobx";
 import { showImageInputDialog } from "../../../util/imageDialog";
 
-export const ImagePane: React.FC = observer(function FillPane() {
+export const ImagePane: React.FC = observer(function ImagePane() {
   const selectables = projectState.selectedSelectables.filter(
     (s) => s.node.type === "image"
   );
@@ -84,7 +84,7 @@ export const ImagePane: React.FC = observer(function FillPane() {
       <InspectorTargetContext.Provider value={selectables}>
         <img
           src={src ?? undefined}
-          className="w-full aspect-square object-contain border border-macaron-separator bg-macaron-uiBackground rounded-lg overflow-hidden p-2
+          className="w-full aspect-video object-contain border border-macaron-separator bg-macaron-uiBackground rounded-lg overflow-hidden p-2
         "
         />
         <div className="flex gap-2">
