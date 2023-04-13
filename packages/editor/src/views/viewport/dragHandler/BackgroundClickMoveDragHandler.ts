@@ -11,10 +11,21 @@ export class BackgroundClickMoveDragHandler implements DragHandler {
   }
 
   move(event: ViewportEvent): void {
-    viewportState.dragSelectionRect = Rect.boundingRect([
+    const rect = (viewportState.dragSelectionRect = Rect.boundingRect([
       this.startPos,
       event.pos,
-    ]);
+    ]));
+
+    // TODO: optimize hit test
+
+    const selectables = projectState.page?.selectable.offsetChildren ?? [];
+
+    for (const selectable of selectables) {
+      const bounds = selectable.computedRect;
+      if (bounds && rect.intersection(bounds)) {
+        selectable.select();
+      }
+    }
   }
 
   end(): void {
