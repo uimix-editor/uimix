@@ -260,13 +260,11 @@ export class ProjectState {
       const viewportRect = projectState.scroll.viewportRectInDocument;
       // fix position when bbox is outside of the page
       const isInside = !!bbox.intersection(viewportRect);
-      console.log("isInside", isInside);
       if (
         !isInside &&
         insertionTarget.parent?.selectable.style.layout === "none"
       ) {
         const offset = viewportRect.center.sub(bbox.center);
-        console.log(offset);
         for (const selectable of selectables) {
           resizeWithBoundingBox(
             selectable,
