@@ -78,6 +78,8 @@ export const DragHandlerOverlay: React.FC = observer(
           return;
         }
 
+        // background click
+
         projectState.project.clearSelection();
         dragHandlerRef.current = undefined;
       };
