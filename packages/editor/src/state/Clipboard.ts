@@ -38,6 +38,8 @@ export class Clipboard {
             type: "image",
             name: "Image",
             style: {
+              width: { type: "hug" },
+              height: { type: "hug" },
               imageHash: hash,
             },
             children: [],
