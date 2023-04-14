@@ -51,19 +51,22 @@ async function compileCommand(
         },
         load(id) {
           if (id === resolvedVirtualModuleId) {
+            const importPaths = [...new Set(components.map((c) => c.path))];
+
             // TODO: unique import name
-            const importCodes = components.map(
-              (component) =>
-                `import {${component.name}} from "./${component.path}";`
+            const importCodes = importPaths.map(
+              (path, i) => `import * as _${i} from "./${path}";`
             );
 
             const componentCodes = components.map((component) => {
               const json = JSON.stringify(component);
               console.log(json);
 
+              const moduleName = `_${importPaths.indexOf(component.path)}`;
+
               return (
                 json.slice(0, -1) +
-                `, createRenderer: e => new ReactRenderer(e, ${component.name})}`
+                `, createRenderer: e => new ReactRenderer(e, ${moduleName}.${component.name})}`
               );
             });
 
