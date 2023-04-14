@@ -88,7 +88,7 @@ async function compileCommand(
         fileName: "bundle",
       },
       outDir: path.resolve(rootPath, ".uimix/assets"),
-      // TODO: watch
+      watch: options.watch ? {} : undefined,
     },
   });
 }
