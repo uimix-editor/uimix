@@ -5,6 +5,7 @@ import * as path from "path";
 import mkdirp from "mkdirp";
 import { WorkspaceLoader } from "./project/WorkspaceLoader";
 import { NodeFileAccess } from "./project/NodeFileAccess";
+import { build } from "vite";
 
 async function compileProject(loader: WorkspaceLoader) {
   const outFiles = await generateCode(loader.rootPath, loader.json);
@@ -30,6 +31,18 @@ async function compileCommand(
   }
 
   void compileProject(loader);
+
+  await build({
+    root: rootPath,
+    build: {
+      lib: {
+        entry: path.resolve(rootPath, "src/uimix-components.tsx"),
+        name: "components",
+        fileName: "components",
+      },
+      watch: {},
+    },
+  });
 }
 
 const cli = cac("uimix");
