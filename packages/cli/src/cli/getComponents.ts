@@ -3,18 +3,16 @@ import type { ForeignComponent } from "@uimix/asset-types";
 import * as path from "node:path";
 import { globbySync } from "globby";
 
-function getComponentDocs(dirname: string): docgen.ComponentDoc[] {
+function getComponentDocs(
+  dirname: string,
+  pattern: string[]
+): docgen.ComponentDoc[] {
   const options = {
     savePropValueAsString: true,
     shouldExtractLiteralValuesFromEnum: true,
   };
 
-  // TODO: configurable
-  const pattern = ["src/stories/*.tsx", "!**/*.stories.tsx"];
-  const filePaths = globbySync(pattern, {
-    cwd: dirname,
-  });
-  console.log(filePaths);
+  const filePaths = globbySync(pattern, { cwd: dirname });
 
   // TODO: Load tsconfig
   const docs = docgen.parse(filePaths, options);
@@ -23,9 +21,10 @@ function getComponentDocs(dirname: string): docgen.ComponentDoc[] {
 }
 
 export function getComponents(
-  dirname: string
+  dirname: string,
+  pattern: string[]
 ): Omit<ForeignComponent, "createRenderer">[] {
-  const docs = getComponentDocs(dirname);
+  const docs = getComponentDocs(dirname, pattern);
 
   const components = docs.map((doc) => {
     const props: ForeignComponent["props"] = [];

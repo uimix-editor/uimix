@@ -34,7 +34,10 @@ async function compileCommand(
 
   void compileProject(loader);
 
-  const components = getComponents(rootPath);
+  const components = getComponents(rootPath, [
+    "src/stories/*.tsx",
+    "!**/*.stories.tsx",
+  ]);
 
   const resolvedVirtualModuleId = "\0:virtual-entry";
 
