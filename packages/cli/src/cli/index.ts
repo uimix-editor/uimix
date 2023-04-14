@@ -43,7 +43,7 @@ async function compileCommand(
         name: "components",
         fileName: "components",
       },
-      watch: {},
+      // TODO: watch
     },
   });
 }
