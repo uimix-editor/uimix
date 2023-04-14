@@ -1,10 +1,10 @@
 import { cac } from "cac";
-import { generateCode } from "./compiler/generateCode";
+import { generateCode } from "../compiler/generateCode";
 import * as fs from "fs";
 import * as path from "path";
 import mkdirp from "mkdirp";
-import { WorkspaceLoader } from "./project/WorkspaceLoader";
-import { NodeFileAccess } from "./project/NodeFileAccess";
+import { WorkspaceLoader } from "../project/WorkspaceLoader";
+import { NodeFileAccess } from "../project/NodeFileAccess";
 import { build } from "vite";
 
 async function compileProject(loader: WorkspaceLoader) {
