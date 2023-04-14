@@ -91,6 +91,7 @@ const ComponentThumbnails: React.FC<{
 
       return (
         <div
+          key={page.id}
           style={{
             display: "flex",
             flexDirection: "column",

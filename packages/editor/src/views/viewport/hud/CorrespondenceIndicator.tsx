@@ -25,14 +25,14 @@ export const CorrespondenceIndicator: React.FC = observer(
     }
 
     // TODO: group by variant and union?
-    const rects = [...correspondings].map((s) =>
-      s.computedRect.transform(documentToViewport)
-    );
 
     return (
       <>
-        {rects.map((rect) => (
+        {[...correspondings].map((s) => {
+          const rect = s.computedRect.transform(documentToViewport);
+
           <rect
+            id={s.id}
             x={rect.left}
             y={rect.top}
             width={rect.width}
@@ -41,8 +41,8 @@ export const CorrespondenceIndicator: React.FC = observer(
             strokeWidth={1}
             strokeDasharray="1"
             stroke={colors.active}
-          />
-        ))}
+          />;
+        })}
       </>
     );
   }

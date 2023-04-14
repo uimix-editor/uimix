@@ -64,7 +64,10 @@ export const ForeignComponentListDialog = observer(() => {
             </div>
             <ul>
               {urls.map((url, i) => (
-                <li className="flex justify-between items-center gap-2 py-1.5">
+                <li
+                  className="flex justify-between items-center gap-2 py-1.5"
+                  key={i}
+                >
                   <p>{url}</p>
                   <IconButton
                     icon="material-symbols:remove"
