@@ -3,9 +3,10 @@ import { generateCode } from "../compiler/generateCode";
 import * as fs from "fs";
 import * as path from "path";
 import mkdirp from "mkdirp";
+import react from "@vitejs/plugin-react";
 import { WorkspaceLoader } from "../project/WorkspaceLoader";
 import { NodeFileAccess } from "../project/NodeFileAccess";
-import { build } from "vite";
+import { Plugin, build } from "vite";
 import { getComponents } from "./getComponents";
 
 async function compileProject(loader: WorkspaceLoader) {
@@ -37,15 +38,37 @@ async function compileCommand(
 
   await build({
     root: rootPath,
+    plugins: [virtualModulePlugin(rootPath), react({ exclude: "**/*" })],
     build: {
       lib: {
-        entry: path.resolve(rootPath, "src/uimix-components.tsx"),
+        entry: path.resolve(rootPath, ':virtual-entry"'),
         name: "components",
         fileName: "components",
       },
       // TODO: watch
     },
   });
+}
+
+function virtualModulePlugin(rootPath: string): Plugin {
+  const virtualModuleId = "virtual:my-module";
+  const resolvedVirtualModuleId = "\0" + virtualModuleId;
+
+  return {
+    name: "my-plugin", // required, will show up in warnings and errors
+    resolveId(id) {
+      console.log(id);
+      if (id === path.resolve(rootPath, ':virtual-entry"')) {
+        return resolvedVirtualModuleId;
+      }
+    },
+    load(id) {
+      if (id === resolvedVirtualModuleId) {
+        return `export const msg = "from virtual module"`;
+      }
+    },
+    transform(src, id) {},
+  };
 }
 
 const cli = cac("uimix");
