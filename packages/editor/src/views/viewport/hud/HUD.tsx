@@ -13,9 +13,9 @@ export function HUD() {
     <>
       <svg className="absolute top-0 left-0 w-full h-full pointer-events-none">
         <MarginPaddingIndicator />
-        <CorrespondenceIndicator />
         <HoverIndicator />
         <FocusIndicator />
+        <CorrespondenceIndicator />
         <DragIndicators />
         <NodeResizeBox />
         <SnapIndicators />
