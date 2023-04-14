@@ -60,8 +60,6 @@ async function compileCommand(
 
             const componentCodes = components.map((component) => {
               const json = JSON.stringify(component);
-              console.log(json);
-
               const moduleName = `_${importPaths.indexOf(component.path)}`;
 
               return (
