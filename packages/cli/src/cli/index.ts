@@ -34,10 +34,16 @@ async function compileCommand(
 
   void compileProject(loader);
 
-  const components = getComponents(rootPath, [
-    "src/stories/*.tsx",
-    "!**/*.stories.tsx",
-  ]);
+  const patterns = ["src/stories/*.tsx", "!**/*.stories.tsx"];
+  const patternsFromRoot = patterns.map((pattern) => {
+    if (pattern.startsWith("!")) {
+      return pattern;
+    }
+    return path.join("/", pattern);
+  });
+  console.log(patternsFromRoot);
+
+  const components = getComponents(rootPath, patterns);
 
   const resolvedVirtualModuleId = "\0:virtual-entry";
 
@@ -54,26 +60,22 @@ async function compileCommand(
         },
         load(id) {
           if (id === resolvedVirtualModuleId) {
-            const importPaths = [...new Set(components.map((c) => c.path))];
-
-            // TODO: unique import name
-            const importCodes = importPaths.map(
-              (path, i) => `import * as _${i} from "./${path}";`
-            );
-
             const componentCodes = components.map((component) => {
               const json = JSON.stringify(component);
-              const moduleName = `_${importPaths.indexOf(component.path)}`;
 
               return (
                 json.slice(0, -1) +
-                `, createRenderer: e => new ReactRenderer(e, ${moduleName}.${component.name})}`
+                `, createRenderer: e => new ReactRenderer(e, modules[${JSON.stringify(
+                  "/" + component.path
+                )}].${component.name})}`
               );
             });
 
-            return `${reactRendererCode} ${importCodes.join(
-              "\n"
-            )} export const components = [${componentCodes.join(",")}]`;
+            return `${reactRendererCode}
+            const modules = import.meta.glob(${JSON.stringify(
+              patternsFromRoot
+            )}, {eager: true});
+            export const components = [${componentCodes.join(",")}]`;
           }
         },
       },
