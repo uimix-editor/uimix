@@ -1,7 +1,7 @@
-import { globSync } from "glob";
 import docgen from "react-docgen-typescript";
 import type { ForeignComponent } from "@uimix/asset-types";
 import * as path from "node:path";
+import { globbySync } from "globby";
 
 function getComponentDocs(dirname: string): docgen.ComponentDoc[] {
   const options = {
@@ -10,16 +10,11 @@ function getComponentDocs(dirname: string): docgen.ComponentDoc[] {
   };
 
   // TODO: configurable
-  const filePath = "src/stories/*.tsx";
-  const ignoreFilePath = "**/*.stories.tsx";
-
-  const ignoreFilePaths = globSync(ignoreFilePath, {
+  const pattern = ["src/stories/*.tsx", "!**/*.stories.tsx"];
+  const filePaths = globbySync(pattern, {
     cwd: dirname,
   });
-  const filePaths = globSync(filePath, {
-    ignore: ignoreFilePaths,
-    cwd: dirname,
-  });
+  console.log(filePaths);
 
   // TODO: Load tsconfig
   const docs = docgen.parse(filePaths, options);
