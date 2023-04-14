@@ -34,6 +34,7 @@
     "@uimix/foundation": "workspace:*",
     "@uimix/model": "workspace:*",
     "@uimix/typed-rpc": "workspace:*",
+    "@uimix/asset-types": "workspace:*",
     "any-base": "^1.1.0",
     "ariakit": "2.0.0-next.43",
     "buffer": "^6.0.3",

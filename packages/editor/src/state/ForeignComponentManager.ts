@@ -3,7 +3,7 @@ import { action, observable, reaction } from "mobx";
 import type React from "react";
 import type ReactDOM from "react-dom/client";
 import { projectState } from "./ProjectState";
-import { ForeignComponent } from "../types/ForeignComponent";
+import { ForeignComponent } from "@uimix/asset-types";
 
 export function foreignComponentKey(ref: { path: string; name: string }) {
   return `${ref.path}#${ref.name}`;

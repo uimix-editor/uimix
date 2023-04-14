@@ -4,10 +4,7 @@ import * as path from "node:path";
 import * as url from "node:url";
 import { glob } from "glob";
 import docgen from "react-docgen-typescript";
-import type {
-  ForeignComponent,
-  ForeignComponentRenderer,
-} from "../editor/src/types/ForeignComponent";
+import type { ForeignComponent } from "@uimix/asset-types";
 
 const __filename = url.fileURLToPath(import.meta.url);
 
