@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 import { Vec2 } from "paintvec";
 import { ResizeBox } from "./ResizeBox";
-import "../index.css";
 
 export default {
   component: ResizeBox,

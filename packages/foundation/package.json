@@ -12,7 +12,8 @@
     "lint": "eslint src",
     "storybook": "storybook dev -p 6006",
     "build": "tsc",
-    "test": "vitest run"
+    "test": "vitest run",
+    "create-index": "cti create ./src/components -i '*.stories.tsx' -i '*.test.ts' -b"
   },
   "dependencies": {
     "@emotion/react": "^11.10.6",
@@ -88,6 +89,7 @@
     "autoprefixer": "^10.4.14",
     "babel-loader": "^9.1.2",
     "color-namer": "^1.4.0",
+    "create-ts-index": "^1.14.0",
     "csstype": "^3.1.2",
     "html-tags": "^3.3.1",
     "postcss": "^8.4.21",

@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import styled from "@emotion/styled";
-import colors from "../colors";
-import { Color } from "../utils/Color";
+import colors from "../../colors";
+import { Color } from "../../utils/Color";
 
 const active02Color = Color.from(colors.active)?.withAlpha(0.2).toString();
 

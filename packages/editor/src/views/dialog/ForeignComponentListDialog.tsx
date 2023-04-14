@@ -4,7 +4,7 @@ import { dialogState } from "../../state/DialogState";
 import { action } from "mobx";
 import { Icon } from "@iconify/react";
 import { useState } from "react";
-import { IconButton } from "@uimix/foundation/src/components/IconButton";
+import { IconButton } from "@uimix/foundation/src/components";
 import { projectState } from "../../state/ProjectState";
 import { z } from "zod";
 

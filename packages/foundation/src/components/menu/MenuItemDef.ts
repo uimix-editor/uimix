@@ -1,4 +1,4 @@
-import { Shortcut } from "../utils/Shortcut";
+import { Shortcut } from "../../utils/Shortcut";
 
 export interface MenuCommandDef {
   type: "command";

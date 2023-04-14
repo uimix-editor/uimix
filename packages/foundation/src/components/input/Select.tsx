@@ -1,5 +1,5 @@
 import * as RadixSelect from "@radix-ui/react-select";
-import { popoverStyle } from "./styles";
+import { popoverStyle } from "../styles/styles";
 import checkIcon from "@iconify-icons/ic/check";
 import upIcon from "@iconify-icons/ic/keyboard-arrow-up";
 import downIcon from "@iconify-icons/ic/keyboard-arrow-down";

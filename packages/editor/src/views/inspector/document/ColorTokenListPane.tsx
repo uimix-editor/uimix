@@ -1,12 +1,14 @@
 import { observer } from "mobx-react-lite";
 import { InspectorHeading } from "../components/InspectorHeading";
 import { InspectorPane } from "../components/InspectorPane";
-import { IconButton } from "@uimix/foundation/src/components/IconButton";
+import {
+  IconButton,
+  DoubleClickToEdit,
+} from "@uimix/foundation/src/components";
 import { ReactSortable } from "react-sortablejs";
 import { projectState } from "../../../state/ProjectState";
 import { action } from "mobx";
 import { compact } from "lodash-es";
-import { DoubleClickToEdit } from "@uimix/foundation/src/components/DoubleClickToEdit";
 import { ColorPopover } from "../components/ColorInput";
 import { Color } from "@uimix/foundation/src/utils/Color";
 import { showContextMenu } from "../../ContextMenu";

@@ -1,7 +1,7 @@
 import { range, clamp } from "lodash-es";
 import React, { useState } from "react";
 import styled from "@emotion/styled";
-import colors from "../colors.js";
+import colors from "../../colors.js";
 
 export type StackAlign = "start" | "center" | "end";
 export type StackJustify = "start" | "center" | "end" | "spaceBetween";

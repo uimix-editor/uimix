@@ -1,14 +1,16 @@
 import { Icon } from "@iconify/react";
 import { observer } from "mobx-react-lite";
-import { DropdownMenu } from "@uimix/foundation/src/components/Menu";
-import { ToolButton } from "@uimix/foundation/src/components/ToolButton";
+import {
+  DropdownMenu,
+  ToolButton,
+  Tooltip,
+} from "@uimix/foundation/src/components";
 import { commands } from "../../state/Commands";
 import rectIcon from "@seanchas116/design-icons/json/rect.json";
 import textIcon from "@seanchas116/design-icons/json/text.json";
 import imageIcon from "@seanchas116/design-icons/json/image.json";
 import { viewportState } from "../../state/ViewportState";
 import { action } from "mobx";
-import { Tooltip } from "@uimix/foundation/src/components/Tooltip";
 import { twMerge } from "tailwind-merge";
 
 export const ToolBar: React.FC<{

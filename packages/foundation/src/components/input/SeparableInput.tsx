@@ -1,12 +1,13 @@
 import React, { useEffect, useState } from "react";
 import styled from "@emotion/styled";
 import { Icon, IconifyIcon } from "@iconify/react";
-import { Input, UnstyledInput } from "./Input";
-import { Mixed, sameOrMixed } from "../utils/Mixed";
-import { Tooltip } from "./Tooltip";
+import { Input } from "./Input";
+import { Mixed, sameOrMixed } from "../../utils/Mixed";
+import { Tooltip } from "../misc/Tooltip";
 import { css } from "@emotion/react";
 import clsx from "clsx";
 import { ToggleButton } from "./ToggleButton";
+import { UnstyledInput } from "./UnstyledInput";
 
 const inputClassNames =
   "outline-0 min-w-0 h-7 px-1.5 bg-transparent focus:ring-1 ring-inset ring-macaron-active text-macaron-text text-macaron-base placeholder:text-macaron-disabledText";

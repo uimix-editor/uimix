@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { ComboBox } from "./ComboBox";
-import googleFonts from "../fonts/GoogleFonts.json";
+import googleFonts from "../../fonts/GoogleFonts.json";
 import { SelectOption } from "./Select";
 
 export default {

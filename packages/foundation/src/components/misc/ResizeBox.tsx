@@ -1,7 +1,7 @@
 import React, { useId, useState } from "react";
 import { Vec2, Rect, EdgeOffsets } from "paintvec";
-import colors from "../colors.js";
-import { usePointerStroke } from "./hooks/usePointerStroke";
+import colors from "../../colors.js";
+import { usePointerStroke } from "../hooks/usePointerStroke.js";
 
 const handleSize = 8;
 const handleHitSize = 16;

@@ -13,7 +13,7 @@ import {
   handleShortcut,
   MenuCommandDef,
   MenuItemDef,
-} from "@uimix/foundation/src/components/MenuItemDef";
+} from "@uimix/foundation/src/components";
 import { Clipboard } from "./Clipboard";
 import {
   autoLayout,

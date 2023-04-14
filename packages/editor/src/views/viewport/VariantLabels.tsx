@@ -5,20 +5,22 @@ import { Selectable } from "@uimix/model/src/models";
 import { observer } from "mobx-react-lite";
 import { selectableForDOM } from "./renderer/NodeRenderer";
 import { Icon, IconifyIcon } from "@iconify/react";
-import { usePointerStroke } from "@uimix/foundation/src/components/hooks/usePointerStroke";
+import {
+  usePointerStroke,
+  DropdownMenu,
+  popoverStyle,
+  Select,
+  Input,
+} from "@uimix/foundation/src/components";
 import { DragHandler } from "./dragHandler/DragHandler";
 import { NodeClickMoveDragHandler } from "./dragHandler/NodeClickMoveDragHandler";
 import { ViewportEvent } from "./dragHandler/ViewportEvent";
 import { action } from "mobx";
 import { viewportState } from "../../state/ViewportState";
-import { DropdownMenu } from "@uimix/foundation/src/components/Menu";
-import { popoverStyle } from "@uimix/foundation/src/components/styles";
 import { Rect, Vec2 } from "paintvec";
 import { resizeWithBoundingBox } from "@uimix/model/src/services";
 import { twMerge } from "tailwind-merge";
 import { VariantCondition } from "@uimix/model/src/data/v1";
-import { Select } from "@uimix/foundation/src/components/Select";
-import { Input } from "@uimix/foundation/src/components/Input";
 import { startCase } from "lodash-es";
 import { viewOptions } from "../../state/ViewOptions";
 

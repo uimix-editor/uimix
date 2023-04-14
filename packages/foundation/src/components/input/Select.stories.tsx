@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Select } from "./Select";
+import { Select } from "../input/Select";
 import htmlTags from "html-tags";
 import tagIcon from "@iconify-icons/ic/sharp-numbers";
 import textIcon from "@seanchas116/design-icons/json/text.json";

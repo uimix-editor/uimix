@@ -1,5 +1,5 @@
 import { createRef, useEffect, useState } from "react";
-import { useDraftValue } from "./hooks/useDraftValue";
+import { useDraftValue } from "../hooks/useDraftValue";
 
 export function DoubleClickToEdit({
   className,

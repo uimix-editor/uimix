@@ -13,7 +13,7 @@ import { InspectorHeading } from "../components/InspectorHeading";
 import { InspectorNumberInput } from "./inputs/InspectorNumberInput";
 import { InspectorPane } from "../components/InspectorPane";
 import { InspectorToggleGroup } from "./inputs/InspectorToggleGroup";
-import { ToggleGroupItem } from "@uimix/foundation/src/components/ToggleGroup";
+import { ToggleGroupItem } from "@uimix/foundation/src/components";
 import {
   TextHorizontalAlign,
   TextVerticalAlign,

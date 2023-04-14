@@ -2,7 +2,7 @@ import { observer } from "mobx-react-lite";
 import { useEffect } from "react";
 import { Viewport } from "./viewport/Viewport";
 import { InspectorSideBar } from "./inspector/InspectorSideBar";
-import { TooltipProvider } from "@uimix/foundation/src/components/Tooltip";
+import { TooltipProvider, ScrollArea } from "@uimix/foundation/src/components";
 import { ContextMenu } from "./ContextMenu";
 import { commands } from "../state/Commands";
 import { action } from "mobx";
@@ -12,7 +12,6 @@ import { ToolBar } from "./toolbar/ToolBar";
 import { InstancePaletteOverlay } from "./viewport/InstancePaletteOverlay";
 import { ForeignComponentListDialog } from "./dialog/ForeignComponentListDialog";
 import { viewportState } from "../state/ViewportState";
-import { ScrollArea } from "@uimix/foundation/src/components/ScrollArea";
 import { NodeTreeView } from "./outline/NodeTreeView";
 import { viewOptions } from "../state/ViewOptions";
 

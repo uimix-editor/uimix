@@ -6,7 +6,7 @@ import edgeTopIcon from "@seanchas116/design-icons/json/edge-top.json";
 import edgeRightIcon from "@seanchas116/design-icons/json/edge-right.json";
 import edgeBottomIcon from "@seanchas116/design-icons/json/edge-bottom.json";
 import edgeLeftIcon from "@seanchas116/design-icons/json/edge-left.json";
-import { TooltipProvider } from "./Tooltip";
+import { TooltipProvider } from "../misc/Tooltip";
 
 export default {
   title: "SeparableInput",

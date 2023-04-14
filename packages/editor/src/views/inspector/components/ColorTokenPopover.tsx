@@ -1,12 +1,11 @@
 import * as RadixPopover from "@radix-ui/react-popover";
-import { Tooltip } from "@uimix/foundation/src/components/Tooltip";
+import { Tooltip, IconButton } from "@uimix/foundation/src/components";
 import { action } from "mobx";
 import { SearchInput } from "../../outline/SearchInput";
 import { projectState } from "../../../state/ProjectState";
 import { ColorToken, ColorRef } from "@uimix/model/src/models";
 import { Color } from "@uimix/foundation/src/utils/Color";
 import { useState } from "react";
-import { IconButton } from "@uimix/foundation/src/components/IconButton";
 import { twMerge } from "tailwind-merge";
 import { QueryTester } from "@uimix/foundation/src/utils/QueryTester";
 

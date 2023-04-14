@@ -2,7 +2,7 @@ import downIcon from "@iconify-icons/ic/keyboard-arrow-down";
 import { Icon, IconifyIcon } from "@iconify/react";
 import { twMerge } from "tailwind-merge";
 import { SelectOption } from "./Select";
-import { UnstyledInput } from "./Input";
+import { UnstyledInput } from "./UnstyledInput";
 import { useId } from "react";
 
 export function ComboBox({
