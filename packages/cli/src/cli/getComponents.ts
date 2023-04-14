@@ -2,27 +2,34 @@ import { globSync } from "glob";
 import docgen from "react-docgen-typescript";
 import type { ForeignComponent } from "@uimix/asset-types";
 
-function getComponentDocs(): docgen.ComponentDoc[] {
+function getComponentDocs(dirname: string): docgen.ComponentDoc[] {
   const options = {
     savePropValueAsString: true,
     shouldExtractLiteralValuesFromEnum: true,
   };
 
+  // TODO: configurable
   const filePath = "src/stories/*.tsx";
   const ignoreFilePath = "**/*.stories.tsx";
 
-  const ignoreFilePaths = globSync(ignoreFilePath);
+  const ignoreFilePaths = globSync(ignoreFilePath, {
+    cwd: dirname,
+  });
   const filePaths = globSync(filePath, {
     ignore: ignoreFilePaths,
+    cwd: dirname,
   });
 
+  // TODO: Load tsconfig
   const docs = docgen.parse(filePaths, options);
 
   return docs;
 }
 
-export function getComponents(): Omit<ForeignComponent, "createRenderer">[] {
-  const docs = getComponentDocs();
+export function getComponents(
+  dirname: string
+): Omit<ForeignComponent, "createRenderer">[] {
+  const docs = getComponentDocs(dirname);
 
   const components = docs.map((doc) => {
     const props: ForeignComponent["props"] = [];

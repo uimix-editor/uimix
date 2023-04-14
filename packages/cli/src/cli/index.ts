@@ -6,6 +6,7 @@ import mkdirp from "mkdirp";
 import { WorkspaceLoader } from "../project/WorkspaceLoader";
 import { NodeFileAccess } from "../project/NodeFileAccess";
 import { build } from "vite";
+import { getComponents } from "./getComponents";
 
 async function compileProject(loader: WorkspaceLoader) {
   const outFiles = await generateCode(loader.rootPath, loader.json);
@@ -31,6 +32,8 @@ async function compileCommand(
   }
 
   void compileProject(loader);
+
+  console.log(getComponents(rootPath));
 
   await build({
     root: rootPath,
