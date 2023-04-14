@@ -677,6 +677,12 @@ class Commands {
       viewportState.panMode = true;
     }
 
+    if (event.key === "Escape") {
+      viewportState.tool = undefined;
+      viewportState.focusedSelectable = undefined;
+      return true;
+    }
+
     if (!isTextInput(document.activeElement)) {
       // TODO: move elements in layout
 
@@ -703,10 +709,6 @@ class Commands {
     ) {
       if (event.key === "Delete" || event.key === "Backspace") {
         this.delete();
-        return true;
-      }
-      if (event.key === "Escape") {
-        viewportState.tool = undefined;
         return true;
       }
       if (event.key === "Alt") {
