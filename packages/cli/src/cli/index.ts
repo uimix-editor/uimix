@@ -51,7 +51,9 @@ async function compileCommand(
         },
         load(id) {
           if (id === resolvedVirtualModuleId) {
-            return `export const components = ${JSON.stringify(components)}`;
+            return `${reactRendererCode} export const components = ${JSON.stringify(
+              components
+            )}`;
           }
         },
       },
@@ -68,6 +70,30 @@ async function compileCommand(
     },
   });
 }
+
+const reactRendererCode = `
+import React from "react";
+import ReactDOM from "react-dom/client";
+
+class ReactRenderer {
+  constructor(element, Component) {
+    this.reactRoot = ReactDOM.createRoot(element);
+    this.component = Component;
+  }
+
+  render(props) {
+    return new Promise((resolve) => {
+      this.reactRoot.render(
+        React.createElement("div", { ref: () => resolve(), style: { display: "contents" } }, React.createElement(this.component, props))
+      );
+    });
+  }
+
+  dispose() {
+    this.reactRoot.unmount();
+  }
+}
+`;
 
 const cli = cac("uimix");
 
