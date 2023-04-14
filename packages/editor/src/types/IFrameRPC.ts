@@ -14,5 +14,5 @@ export interface IEditorToRootRPCHandler {
   updateThumbnail(pngData: Uint8Array): Promise<void>;
 
   setClipboard(type: "text" | "image", textOrDataURL: string): Promise<void>;
-  getClipboard(type: "text" | "image"): Promise<string>;
+  getClipboard(type: "text" | "image"): Promise<string | undefined>;
 }

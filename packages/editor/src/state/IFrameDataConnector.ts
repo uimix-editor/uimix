@@ -3,7 +3,10 @@ import { parentWindowTarget } from "@uimix/typed-rpc/browser";
 import { RPC } from "@uimix/typed-rpc";
 import { ProjectState } from "./ProjectState";
 import { action } from "mobx";
-import { IEditorToRootRPCHandler, IRootToEditorRPCHandler } from "./IFrameRPC";
+import {
+  IEditorToRootRPCHandler,
+  IRootToEditorRPCHandler,
+} from "../types/IFrameRPC";
 import { throttle } from "lodash-es";
 import { ThumbnailTakerHost } from "./ThumbnailTakerHost";
 import { Clipboard } from "./Clipboard";
@@ -46,7 +49,7 @@ export class IFrameDataConnector {
 
     void this.rpc.remote.ready();
 
-    Clipboard.externalClipboard = {
+    Clipboard.handler = {
       get: async (type) => {
         return this.rpc.remote.getClipboard(type);
       },

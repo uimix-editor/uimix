@@ -134,22 +134,9 @@ export class ProjectState {
 
     const images: Record<string, Image> = {};
     for (const hash of imageHashes) {
-      const image = this.project.imageManager.get(hash);
-      if (!image) {
-        continue;
-      }
-      const url = image.url;
-
-      // fetch and convert to dataURL
-      const response = await fetch(url);
-      const blob = await response.blob();
-      const dataURL = await blobToDataURL(blob);
-
+      const image = await this.project.imageManager.getWithDataURL(hash);
       if (image) {
-        images[hash] = {
-          ...image,
-          url: dataURL,
-        };
+        images[hash] = image;
       }
     }
 
