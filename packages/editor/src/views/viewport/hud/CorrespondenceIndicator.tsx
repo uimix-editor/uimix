@@ -3,35 +3,35 @@ import { observer } from "mobx-react-lite";
 import { viewportState } from "../../../state/ViewportState";
 import { projectState } from "../../../state/ProjectState.js";
 import { Selectable } from "@uimix/model/src/models";
-
-function variantCorrespondingsExcludingSelf(
-  selectable: Selectable
-): Selectable[] {
-  return selectable.variantCorrespondings.filter((s) => s !== selectable);
-}
+import colors from "@uimix/foundation/src/colors.js";
 
 export const CorrespondenceIndicator: React.FC = observer(
   function CorrespondenceIndicator() {
     const { documentToViewport } = projectState.scroll;
 
-    const hoverRects = (
-      viewportState.hoveredSelectable
-        ? variantCorrespondingsExcludingSelf(
-            viewportState.hoveredSelectable
-          ).map((s) => s.computedRect)
-        : []
-    ).map((rect) => rect.transform(documentToViewport));
+    const targets = new Set<Selectable>();
+    if (viewportState.hoveredSelectable) {
+      targets.add(viewportState.hoveredSelectable);
+    }
+    for (const selected of projectState.selectedSelectables) {
+      targets.add(selected);
+    }
 
-    // TODO: group by variant?
-    const selectedRects = projectState.selectedSelectables
-      .flatMap((s) =>
-        variantCorrespondingsExcludingSelf(s).map((s) => s.computedRect)
-      )
-      .map((rect) => rect.transform(documentToViewport));
+    const correspondings = new Set(
+      [...targets].flatMap((s) => s.variantCorrespondings)
+    );
+    for (const target of targets) {
+      correspondings.delete(target);
+    }
+
+    // TODO: group by variant and union?
+    const rects = [...correspondings].map((s) =>
+      s.computedRect.transform(documentToViewport)
+    );
 
     return (
       <>
-        {[...hoverRects, ...selectedRects].map((rect) => (
+        {rects.map((rect) => (
           <rect
             x={rect.left}
             y={rect.top}
@@ -39,8 +39,8 @@ export const CorrespondenceIndicator: React.FC = observer(
             height={rect.height}
             fill="none"
             strokeWidth={1}
-            strokeDasharray={1}
-            stroke="red"
+            strokeDasharray="1"
+            stroke={colors.active}
           />
         ))}
       </>
