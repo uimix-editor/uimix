@@ -43,8 +43,6 @@ async function compileCommand(
   });
   console.log(patternsFromRoot);
 
-  const components = getComponents(rootPath, patterns);
-
   const resolvedVirtualModuleId = "\0:virtual-entry";
 
   await build({
@@ -60,6 +58,8 @@ async function compileCommand(
         },
         load(id) {
           if (id === resolvedVirtualModuleId) {
+            const components = getComponents(rootPath, patterns);
+
             const componentCodes = components.map((component) => {
               const json = JSON.stringify(component);
 
