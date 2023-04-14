@@ -79,8 +79,8 @@ async function compileCommand(
     build: {
       lib: {
         entry: path.resolve(rootPath, ':virtual-entry"'),
-        name: "components",
-        fileName: "components",
+        name: "bundle",
+        fileName: "bundle",
       },
       outDir: path.resolve(rootPath, ".uimix/assets"),
       // TODO: watch
