@@ -5,7 +5,7 @@ const externals = Object.keys(require("./package.json").dependencies);
 
 /** @type import('esbuild').BuildOptions */
 const options = {
-  entryPoints: ["./src/cli.ts"],
+  entryPoints: ["./src/cli/index.ts"],
   bundle: true,
   format: "esm",
   platform: "node",
