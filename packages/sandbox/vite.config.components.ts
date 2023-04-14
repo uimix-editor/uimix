@@ -7,6 +7,7 @@ import docgen from "react-docgen-typescript";
 import type { ForeignComponent } from "@uimix/asset-types";
 
 const __filename = url.fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 
 const entry = path.resolve(__filename, "../src/dummy.tsx");
 
@@ -110,11 +111,11 @@ export default defineConfig({
 
   build: {
     lib: {
-      entry: path.resolve(__filename, "../src/dummy.tsx"),
+      entry: path.resolve(__dirname, "src/dummy.tsx"),
       name: "components",
       fileName: "components",
     },
-    outDir: path.resolve(__filename, "../dist-components"),
+    outDir: path.resolve(__dirname, ".uimix/assets"),
   },
 
   define: {
