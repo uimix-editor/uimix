@@ -16,6 +16,7 @@ import {
 import { Project } from "./Project";
 import { Component } from "./Component";
 import { ObjectData } from "./ObjectData";
+import { assertNonNull } from "@uimix/foundation/src/utils/Assert";
 
 export interface IComputedRectProvider {
   readonly value: Rect | undefined;
@@ -555,6 +556,13 @@ export class Selectable {
         }
       }
     }
+  }
+
+  get originalVariantCorresponding(): Selectable {
+    if (this.nodePath[0].type === "variant") {
+      return assertNonNull(this.superSelectable);
+    }
+    return this;
   }
 
   toJSON(): SelectableJSON {
