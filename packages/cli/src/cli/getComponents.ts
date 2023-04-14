@@ -1,6 +1,7 @@
 import { globSync } from "glob";
 import docgen from "react-docgen-typescript";
 import type { ForeignComponent } from "@uimix/asset-types";
+import * as path from "node:path";
 
 function getComponentDocs(dirname: string): docgen.ComponentDoc[] {
   const options = {
@@ -59,7 +60,7 @@ export function getComponents(
     const component: Omit<ForeignComponent, "createRenderer"> = {
       framework: "react",
       name: doc.displayName,
-      path: doc.filePath,
+      path: path.relative(dirname, doc.filePath),
       props,
     };
 
