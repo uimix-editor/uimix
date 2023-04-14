@@ -51,9 +51,25 @@ async function compileCommand(
         },
         load(id) {
           if (id === resolvedVirtualModuleId) {
-            return `${reactRendererCode} export const components = ${JSON.stringify(
-              components
-            )}`;
+            // TODO: unique import name
+            const importCodes = components.map(
+              (component) =>
+                `import {${component.name}} from "./${component.path}";`
+            );
+
+            const componentCodes = components.map((component) => {
+              const json = JSON.stringify(component);
+              console.log(json);
+
+              return (
+                json.slice(0, -1) +
+                `, createRenderer: e => new ReactRenderer(e, ${component.name})}`
+              );
+            });
+
+            return `${reactRendererCode} ${importCodes.join(
+              "\n"
+            )} export const components = [${componentCodes.join(",")}]`;
           }
         },
       },
