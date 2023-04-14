@@ -4,6 +4,7 @@ import React, { useEffect, useRef } from "react";
 import { Selectable, buildNodeCSS } from "@uimix/model/src/models";
 import { viewportState } from "../../state/ViewportState";
 import { projectState } from "../../state/ProjectState";
+import { assertNonNull } from "@uimix/foundation/src/utils/Assert";
 
 export const TextEditorBody: React.FC<{
   selectable: Selectable;
@@ -38,7 +39,14 @@ export const TextEditorBody: React.FC<{
     const onInput = action(() => {
       const textContent = editable.innerText;
       if (textContent !== style.textContent) {
-        style.textContent = textContent;
+        let target = selectable;
+
+        // variant content -> edit main variant
+        if (selectable.nodePath[0].type === "variant") {
+          target = assertNonNull(selectable.superSelectable);
+        }
+
+        target.style.textContent = textContent;
       }
     });
 
