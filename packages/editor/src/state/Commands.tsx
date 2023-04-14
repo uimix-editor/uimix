@@ -13,7 +13,7 @@ import {
   handleShortcut,
   MenuCommandDef,
   MenuItemDef,
-} from "@uimix/foundation/src/components/MenuItemDef";
+} from "@uimix/foundation/src/components";
 import { Clipboard } from "./Clipboard";
 import {
   autoLayout,
@@ -34,6 +34,7 @@ import { viewportGeometry } from "./ScrollState";
 import { compact } from "lodash-es";
 import { Rect, Vec2 } from "paintvec";
 import { snapper } from "./Snapper";
+import { showImageInputDialog } from "../util/imageDialog";
 
 class Commands {
   @computed get canUndo(): boolean {
@@ -57,7 +58,7 @@ class Commands {
   }
 
   async copy() {
-    const data = projectState.getNodeClipboardData();
+    const data = await projectState.getNodeClipboardData();
     if (!data) {
       return;
     }
@@ -121,15 +122,7 @@ class Commands {
   }
 
   async insertImage() {
-    const file = await new Promise<File | undefined>((resolve) => {
-      const input = document.createElement("input");
-      input.type = "file";
-      input.accept = "image/png,image/jpeg";
-      input.onchange = () => {
-        resolve(input.files?.[0]);
-      };
-      input.click();
-    });
+    const file = await showImageInputDialog();
     if (!file) {
       return;
     }
@@ -684,6 +677,12 @@ class Commands {
       viewportState.panMode = true;
     }
 
+    if (event.key === "Escape") {
+      viewportState.tool = undefined;
+      viewportState.focusedSelectable = undefined;
+      return true;
+    }
+
     if (!isTextInput(document.activeElement)) {
       // TODO: move elements in layout
 
@@ -710,10 +709,6 @@ class Commands {
     ) {
       if (event.key === "Delete" || event.key === "Backspace") {
         this.delete();
-        return true;
-      }
-      if (event.key === "Escape") {
-        viewportState.tool = undefined;
         return true;
       }
       if (event.key === "Alt") {

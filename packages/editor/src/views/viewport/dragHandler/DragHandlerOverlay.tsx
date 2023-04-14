@@ -13,6 +13,7 @@ import { observer } from "mobx-react-lite";
 import { showContextMenu } from "../../ContextMenu";
 import { viewportState } from "../../../state/ViewportState";
 import { assertNonNull } from "@uimix/foundation/src/utils/Assert";
+import { BackgroundClickMoveDragHandler } from "./BackgroundClickMoveDragHandler";
 
 function isFocusable(selectable: Selectable) {
   return selectable.originalNode.type === "text";
@@ -31,7 +32,7 @@ export const DragHandlerOverlay: React.FC = observer(
         return;
       }
 
-      const onPointerDown = (e: PointerEvent) => {
+      const onPointerDown = action((e: PointerEvent) => {
         if (e.button !== 0) {
           return;
         }
@@ -78,9 +79,10 @@ export const DragHandlerOverlay: React.FC = observer(
           return;
         }
 
-        projectState.project.clearSelection();
-        dragHandlerRef.current = undefined;
-      };
+        dragHandlerRef.current = new BackgroundClickMoveDragHandler(
+          viewportEvent
+        );
+      });
       const onPointerMove = action((e: PointerEvent) => {
         if (e.buttons === 0) {
           onEnd(e);

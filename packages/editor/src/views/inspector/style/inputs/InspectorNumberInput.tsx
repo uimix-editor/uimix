@@ -2,7 +2,7 @@ import { observer } from "mobx-react-lite";
 import { action } from "mobx";
 import { IconifyIcon } from "@iconify/react";
 import { useContext } from "react";
-import { Input } from "@uimix/foundation/src/components/Input";
+import { Input } from "@uimix/foundation/src/components";
 import { sameOrMixed } from "@uimix/foundation/src/utils/Mixed";
 import { roundToFixed } from "@uimix/foundation/src/utils/Math";
 import { InspectorTargetContext } from "../../components/InspectorTargetContext";

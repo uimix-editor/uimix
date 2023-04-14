@@ -2,7 +2,7 @@ import { clamp } from "lodash-es";
 import React from "react";
 import styled from "@emotion/styled";
 import { usePointerStroke } from "../hooks/usePointerStroke";
-import { checkPattern } from "../checkPattern";
+import { checkPattern } from "../styles/checkPattern";
 
 export const ColorHandle = styled.div`
   border-radius: 50%;

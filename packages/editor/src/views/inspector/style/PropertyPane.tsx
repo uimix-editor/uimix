@@ -4,11 +4,9 @@ import { InspectorHeading } from "../components/InspectorHeading";
 import { InspectorPane } from "../components/InspectorPane";
 import { InspectorTargetContext } from "../components/InspectorTargetContext";
 import { ForeignComponentManager } from "../../../state/ForeignComponentManager";
-import { Input } from "@uimix/foundation/src/components/Input";
-import { Select } from "@uimix/foundation/src/components/Select";
+import { Input, Select, Tooltip } from "@uimix/foundation/src/components";
 import { ForeignComponentRef } from "@uimix/model/src/data/v1";
 import { action } from "mobx";
-import { Tooltip } from "@uimix/foundation/src/components/Tooltip";
 import { Prop } from "../../../types/ForeignComponent";
 
 export const PropertyPane: React.FC = observer(function PropertyPane() {

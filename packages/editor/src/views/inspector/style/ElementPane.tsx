@@ -5,7 +5,7 @@ import { InspectorHeading } from "../components/InspectorHeading";
 import { InspectorPane } from "../components/InspectorPane";
 import { InspectorInput } from "./inputs/InspectorInput";
 import { InspectorTargetContext } from "../components/InspectorTargetContext";
-import { Tooltip } from "@uimix/foundation/src/components/Tooltip";
+import { Tooltip } from "@uimix/foundation/src/components";
 import { Icon } from "@iconify/react";
 
 export const ElementPane: React.FC = observer(function DebugPane() {

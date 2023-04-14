@@ -4,7 +4,7 @@ import { dialogState } from "../../state/DialogState";
 import { action } from "mobx";
 import { Icon } from "@iconify/react";
 import { useState } from "react";
-import { IconButton } from "@uimix/foundation/src/components/IconButton";
+import { IconButton } from "@uimix/foundation/src/components";
 import { projectState } from "../../state/ProjectState";
 import { z } from "zod";
 
@@ -64,7 +64,10 @@ export const ForeignComponentListDialog = observer(() => {
             </div>
             <ul>
               {urls.map((url, i) => (
-                <li className="flex justify-between items-center gap-2 py-1.5">
+                <li
+                  className="flex justify-between items-center gap-2 py-1.5"
+                  key={i}
+                >
                   <p>{url}</p>
                   <IconButton
                     icon="material-symbols:remove"

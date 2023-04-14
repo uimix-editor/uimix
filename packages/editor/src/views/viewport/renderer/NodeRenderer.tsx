@@ -15,6 +15,7 @@ import {
 } from "../../../types/ForeignComponent";
 import { ForeignComponentManager } from "../../../state/ForeignComponentManager";
 import htmlReactParser from "html-react-parser";
+import { action } from "mobx";
 
 export const selectableForDOM = new WeakMap<HTMLElement, Selectable>();
 export const domForSelectable = new WeakMap<Selectable, HTMLElement>();
@@ -86,13 +87,16 @@ export const NodeRenderer: React.FC<{
     const ref = createRef<HTMLDivElement | HTMLImageElement>();
 
     if (!forThumbnail) {
-      useEffect(() => {
-        if (ref.current) {
-          selectable.computedRectProvider = new ComputedRectProvider(
-            ref.current
-          );
-        }
-      }, []);
+      useEffect(
+        action(() => {
+          if (ref.current) {
+            selectable.computedRectProvider = new ComputedRectProvider(
+              ref.current
+            );
+          }
+        }),
+        []
+      );
 
       computedRectUpdater.add(selectable);
 

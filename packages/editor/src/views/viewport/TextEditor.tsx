@@ -38,7 +38,8 @@ export const TextEditorBody: React.FC<{
     const onInput = action(() => {
       const textContent = editable.innerText;
       if (textContent !== style.textContent) {
-        style.textContent = textContent;
+        const target = selectable.originalVariantCorresponding;
+        target.style.textContent = textContent;
       }
     });
 

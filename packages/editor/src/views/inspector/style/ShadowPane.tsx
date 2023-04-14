@@ -4,13 +4,15 @@ import { Color } from "@uimix/foundation/src/utils/Color";
 import { ColorInput } from "../components/ColorInput";
 import { Mixed, sameOrMixed } from "@uimix/foundation/src/utils/Mixed";
 import { projectState } from "../../../state/ProjectState";
-import { IconButton } from "@uimix/foundation/src/components/IconButton";
+import {
+  IconButton,
+  Input,
+  DropdownMenu,
+} from "@uimix/foundation/src/components";
 import { InspectorHeading } from "../components/InspectorHeading";
 import { InspectorPane } from "../components/InspectorPane";
 import { action } from "mobx";
 import { InspectorTargetContext } from "../components/InspectorTargetContext";
-import { Input } from "@uimix/foundation/src/components/Input";
-import { DropdownMenu } from "@uimix/foundation/src/components/Menu";
 import { Shadow } from "@uimix/model/src/data/v1";
 import { ColorRef } from "@uimix/model/src/models";
 

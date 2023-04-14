@@ -7,7 +7,11 @@ import {
   ProjectManifestJSON,
   StyleJSON,
 } from "@uimix/model/src/data/v1";
-import { getPageID, compareProjectJSONs } from "@uimix/model/src/data/util";
+import {
+  getPageID,
+  compareProjectJSONs,
+  usedImageHashesInStyle,
+} from "@uimix/model/src/data/util";
 import { omit } from "lodash-es";
 import { formatJSON } from "../format";
 import { FileAccess } from "./FileAccess";
@@ -303,8 +307,8 @@ export function projectJSONToFiles(projectJSON: ProjectJSON): {
 
     const usedImageHashes = new Set<string>();
     for (const style of Object.values(pageJSON.styles)) {
-      if (style.imageHash) {
-        usedImageHashes.add(style.imageHash);
+      for (const hash of usedImageHashesInStyle(style)) {
+        usedImageHashes.add(hash);
       }
     }
 

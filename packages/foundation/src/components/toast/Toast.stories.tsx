@@ -1,6 +1,5 @@
 import React from "react";
-import { ToastPresenter } from "./Toast";
-import { toastController } from "./ToastController";
+import { ToastPresenter, toastController } from "./Toast";
 
 export default {
   title: "Toast",

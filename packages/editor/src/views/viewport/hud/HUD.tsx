@@ -6,6 +6,7 @@ import { NodeResizeBox } from "./NodeResizeBox";
 import { SnapIndicators } from "./SnapIndicators";
 import { SelectionInfo } from "./SelectionInfo";
 import { MarginPaddingIndicator } from "./MarginPaddingIndicator";
+import { CorrespondenceIndicator } from "./CorrespondenceIndicator";
 
 export function HUD() {
   return (
@@ -14,6 +15,7 @@ export function HUD() {
         <MarginPaddingIndicator />
         <HoverIndicator />
         <FocusIndicator />
+        <CorrespondenceIndicator />
         <DragIndicators />
         <NodeResizeBox />
         <SnapIndicators />

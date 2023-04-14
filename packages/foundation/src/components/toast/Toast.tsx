@@ -1,7 +1,7 @@
 import { Icon } from "@iconify/react";
 import * as Toast from "@radix-ui/react-toast";
 import { observer } from "mobx-react-lite";
-import { toastController } from "./ToastController";
+import { makeAutoObservable } from "mobx";
 // @ts-ignore
 import styles from "./Toast.module.css";
 
@@ -40,3 +40,27 @@ export const ToastPresenter: React.FC = observer(() => {
     </Toast.Provider>
   );
 });
+
+export type ToastMessage = {
+  type: "error" | "success" | "info" | "warning" | "processing";
+  message: string;
+};
+
+class ToastController {
+  constructor() {
+    makeAutoObservable(this);
+  }
+
+  message: ToastMessage = {
+    type: "info",
+    message: "",
+  };
+  visible = false;
+
+  show(message: ToastMessage) {
+    this.message = message;
+    this.visible = true;
+  }
+}
+
+export const toastController = new ToastController();

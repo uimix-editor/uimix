@@ -5,22 +5,87 @@ import { Selectable } from "@uimix/model/src/models";
 import { observer } from "mobx-react-lite";
 import { selectableForDOM } from "./renderer/NodeRenderer";
 import { Icon, IconifyIcon } from "@iconify/react";
-import { usePointerStroke } from "@uimix/foundation/src/components/hooks/usePointerStroke";
+import {
+  usePointerStroke,
+  DropdownMenu,
+  popoverStyle,
+  Select,
+  Input,
+} from "@uimix/foundation/src/components";
 import { DragHandler } from "./dragHandler/DragHandler";
 import { NodeClickMoveDragHandler } from "./dragHandler/NodeClickMoveDragHandler";
 import { ViewportEvent } from "./dragHandler/ViewportEvent";
 import { action } from "mobx";
 import { viewportState } from "../../state/ViewportState";
-import { DropdownMenu } from "@uimix/foundation/src/components/Menu";
-import { popoverStyle } from "@uimix/foundation/src/components/styles";
 import { Rect, Vec2 } from "paintvec";
 import { resizeWithBoundingBox } from "@uimix/model/src/services";
 import { twMerge } from "tailwind-merge";
 import { VariantCondition } from "@uimix/model/src/data/v1";
-import { Select } from "@uimix/foundation/src/components/Select";
-import { Input } from "@uimix/foundation/src/components/Input";
 import { startCase } from "lodash-es";
 import { viewOptions } from "../../state/ViewOptions";
+
+const FrameLabel: React.FC<{
+  selectable: Selectable;
+}> = observer(function FrameLabel({ selectable }) {
+  const ref = createRef<HTMLDivElement>();
+  useEffect(() => {
+    if (ref.current) {
+      selectableForDOM.set(ref.current, selectable);
+    }
+  });
+
+  const dragProps = usePointerStroke<Element, DragHandler | undefined>({
+    onBegin: action((e) => {
+      return new NodeClickMoveDragHandler(
+        selectable,
+        new ViewportEvent(e.nativeEvent, {
+          all: [selectable],
+        })
+      );
+    }),
+    onMove: action((e, { initData: dragHandler }) => {
+      dragHandler?.move(
+        new ViewportEvent(e.nativeEvent, {
+          all: [selectable],
+        })
+      );
+    }),
+    onEnd: action((e, { initData: dragHandler }) => {
+      dragHandler?.end(
+        new ViewportEvent(e.nativeEvent, {
+          all: [selectable],
+        })
+      );
+    }),
+    onHover: action(() => {
+      viewportState.hoveredSelectable = selectable;
+    }),
+  });
+  const onPointerLeave = action(() => {
+    viewportState.hoveredSelectable = undefined;
+  });
+
+  const bboxInView = selectable.computedRect.transform(
+    projectState.scroll.documentToViewport
+  );
+
+  return (
+    <div
+      className={twMerge(
+        "absolute text-macaron-base text-neutral-500 font-medium flex gap-1",
+        selectable.selected && "text-macaron-active"
+      )}
+      style={{
+        left: `${bboxInView.left}px`,
+        top: `${bboxInView.top - 20 * viewOptions.uiScaling}px`,
+      }}
+      {...dragProps}
+      onPointerLeave={onPointerLeave}
+    >
+      {selectable.node.name}
+    </div>
+  );
+});
 
 const componentSectionTopPadding = 48 * viewOptions.uiScaling;
 const componentSectionPadding = 16 * viewOptions.uiScaling;
@@ -38,7 +103,7 @@ const ComponentSection: React.FC<{
   return (
     <div
       className={twMerge(
-        "border border-2 border-neutral-300 border-dotted rounded-md",
+        "border-2 border-neutral-300 border-dotted rounded-md",
         component.selected && "border-macaron-active"
       )}
       style={{
@@ -327,13 +392,19 @@ const VariantLabel: React.FC<{
 });
 
 export const VariantLabels: React.FC = observer(function VariantLabels() {
-  const components =
-    projectState.page?.selectable.children.filter(
-      (s) => s.node.type === "component"
-    ) ?? [];
+  const rootSelectables = projectState.page?.selectable.children ?? [];
+
+  const components = rootSelectables.filter(
+    (s) => s.originalNode.type === "component"
+  );
+
+  const frames = rootSelectables.filter((s) => s.originalNode.type === "frame");
 
   return (
     <>
+      {frames.map((frame) => (
+        <FrameLabel selectable={frame} key={frame.id} />
+      ))}
       {components.map((component) => (
         <ComponentLabel component={component} key={component.id} />
       ))}
