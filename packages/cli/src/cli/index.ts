@@ -34,41 +34,39 @@ async function compileCommand(
 
   void compileProject(loader);
 
-  console.log(getComponents(rootPath));
+  const components = getComponents(rootPath);
+
+  const resolvedVirtualModuleId = "\0:virtual-entry";
 
   await build({
     root: rootPath,
-    plugins: [virtualModulePlugin(rootPath), react({ exclude: "**/*" })],
+    plugins: [
+      {
+        name: "my-plugin", // required, will show up in warnings and errors
+        resolveId(id) {
+          console.log(id);
+          if (id === path.resolve(rootPath, ':virtual-entry"')) {
+            return resolvedVirtualModuleId;
+          }
+        },
+        load(id) {
+          if (id === resolvedVirtualModuleId) {
+            return `export const components = ${JSON.stringify(components)}`;
+          }
+        },
+      },
+      react({ exclude: "**/*" }),
+    ],
     build: {
       lib: {
         entry: path.resolve(rootPath, ':virtual-entry"'),
         name: "components",
         fileName: "components",
       },
+      outDir: path.resolve(rootPath, ".uimix/assets"),
       // TODO: watch
     },
   });
-}
-
-function virtualModulePlugin(rootPath: string): Plugin {
-  const virtualModuleId = "virtual:my-module";
-  const resolvedVirtualModuleId = "\0" + virtualModuleId;
-
-  return {
-    name: "my-plugin", // required, will show up in warnings and errors
-    resolveId(id) {
-      console.log(id);
-      if (id === path.resolve(rootPath, ':virtual-entry"')) {
-        return resolvedVirtualModuleId;
-      }
-    },
-    load(id) {
-      if (id === resolvedVirtualModuleId) {
-        return `export const msg = "from virtual module"`;
-      }
-    },
-    transform(src, id) {},
-  };
 }
 
 const cli = cac("uimix");
