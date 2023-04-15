@@ -5,6 +5,11 @@ import { ProjectData } from "@uimix/model/src/collaborative";
 import debounce from "just-debounce-it";
 import * as path from "path";
 import { getPageID } from "@uimix/model/src/data/util";
+import {
+  codeAssetsDestination,
+  codeAssetsJSName,
+  codeAssetsCSSName,
+} from "uimix/src/cli/constants";
 
 let lastSaveTime = 0;
 
@@ -87,12 +92,15 @@ export class WorkspaceData {
     this.codeAssetsWatcher = vscode.workspace.createFileSystemWatcher(
       new vscode.RelativePattern(
         this.rootFolder,
-        "**/.uimix/assets/{bundle.js,style.css}"
+        `**/${codeAssetsDestination}/{${codeAssetsJSName},${codeAssetsCSSName}}`
       )
     );
 
     const onChange = (uri: vscode.Uri) => {
-      const projectPath = uri.fsPath.replace(/\/\.uimix\/assets\/.*$/, "");
+      const projectPath = uri.fsPath.replace(
+        new RegExp(`\\/${codeAssetsDestination.replace(/\//g, "\\/")}.*`),
+        ""
+      );
       console.log("code assets changed", projectPath);
       this._onDidChangeCodeAssets.fire(projectPath);
     };

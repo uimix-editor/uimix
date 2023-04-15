@@ -9,6 +9,11 @@ import { RPC } from "@uimix/typed-rpc";
 import * as Y from "yjs";
 import debounce from "just-debounce-it";
 import path from "path";
+import {
+  codeAssetsDestination,
+  codeAssetsJSName,
+  codeAssetsCSSName,
+} from "uimix/src/cli/constants";
 
 export class CustomDocument implements vscode.CustomDocument {
   constructor(
@@ -88,14 +93,15 @@ export class CustomDocument implements vscode.CustomDocument {
         },
         getCodeAssets: async () => {
           try {
-            const assetURLs = ["bundle.js", "style.css"].map((assetName) =>
-              vscode.Uri.file(
-                path.join(
-                  this.workspaceData.rootFolder.uri.fsPath,
-                  ".uimix/assets",
-                  assetName
+            const assetURLs = [codeAssetsJSName, codeAssetsCSSName].map(
+              (assetName) =>
+                vscode.Uri.file(
+                  path.join(
+                    this.workspaceData.rootFolder.uri.fsPath,
+                    codeAssetsDestination,
+                    assetName
+                  )
                 )
-              )
             );
 
             const datas = await Promise.all(

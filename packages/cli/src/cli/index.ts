@@ -8,6 +8,7 @@ import { WorkspaceLoader } from "../project/WorkspaceLoader";
 import { NodeFileAccess } from "../project/NodeFileAccess";
 import { Plugin, build } from "vite";
 import { getComponents } from "./getComponents";
+import { codeAssetsDestination } from "./constants";
 
 async function compileProject(loader: WorkspaceLoader) {
   const outFiles = await generateCode(loader.rootPath, loader.json);
@@ -87,7 +88,7 @@ async function compileCommand(
         name: "bundle",
         fileName: "bundle",
       },
-      outDir: path.resolve(rootPath, ".uimix/assets"),
+      outDir: path.resolve(rootPath, codeAssetsDestination),
       watch: options.watch ? {} : undefined,
     },
     define: {
