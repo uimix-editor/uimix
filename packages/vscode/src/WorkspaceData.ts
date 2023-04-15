@@ -85,19 +85,31 @@ export class WorkspaceData {
     });
 
     this.codeAssetsWatcher = vscode.workspace.createFileSystemWatcher(
-      new vscode.RelativePattern(this.rootFolder, "**/.uimix/assets/**")
+      new vscode.RelativePattern(
+        this.rootFolder,
+        "**/.uimix/assets/{bundle.js,style.css}"
+      )
     );
-    this.codeAssetsWatcher.onDidChange(() => {
-      console.log("TODO: code asset change");
-    });
+
+    const onChange = (uri: vscode.Uri) => {
+      const projectPath = uri.fsPath.replace(/\.uimix\/assets\/.*$/, "");
+      console.log("code assets changed", projectPath);
+      this._onDidChangeCodeAssets.fire(projectPath);
+    };
+    this.codeAssetsWatcher.onDidCreate(onChange);
+    this.codeAssetsWatcher.onDidChange(onChange);
+    this.codeAssetsWatcher.onDidDelete(onChange);
     this.disposables.push(this.codeAssetsWatcher);
   }
 
   readonly rootFolder: vscode.WorkspaceFolder;
   readonly loader: WorkspaceLoader;
-  readonly codeAssetsWatcher: vscode.FileSystemWatcher;
 
   private readonly dataForProject = new Map<string /* path */, ProjectData>();
+
+  readonly codeAssetsWatcher: vscode.FileSystemWatcher;
+  private readonly _onDidChangeCodeAssets = new vscode.EventEmitter<string>();
+  readonly onDidChangeCodeAssets = this._onDidChangeCodeAssets.event;
 
   getDataForProject(projectPath: string): ProjectData {
     let data = this.dataForProject.get(projectPath);
