@@ -87,30 +87,27 @@ export class CustomDocument implements vscode.CustomDocument {
           throw new Error("should be intercepted in webview.");
         },
         getCodeAssets: async () => {
-          const jsFileURL = vscode.Uri.file(
-            path.join(
-              this.workspaceData.rootFolder.uri.fsPath,
-              ".uimix/assets/bundle.js"
-            )
-          );
-          const cssFileURL = vscode.Uri.file(
-            path.join(
-              this.workspaceData.rootFolder.uri.fsPath,
-              ".uimix/assets/style.css"
-            )
-          );
-
           try {
-            const bundleJSData = Buffer.from(
-              await vscode.workspace.fs.readFile(jsFileURL)
-            ).toString();
-            const styleCSSData = Buffer.from(
-              await vscode.workspace.fs.readFile(cssFileURL)
-            ).toString();
+            const assetURLs = ["bundle.js", "style.css"].map((assetName) =>
+              vscode.Uri.file(
+                path.join(
+                  this.workspaceData.rootFolder.uri.fsPath,
+                  ".uimix/assets",
+                  assetName
+                )
+              )
+            );
+
+            const datas = await Promise.all(
+              assetURLs.map((assetURL) =>
+                vscode.workspace.fs.readFile(assetURL)
+              )
+            );
+            const texts = datas.map((data) => Buffer.from(data).toString());
 
             return {
-              js: bundleJSData,
-              css: styleCSSData,
+              js: texts[0],
+              css: texts[1],
             };
           } catch {
             console.log("no assets");
