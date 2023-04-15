@@ -8,6 +8,7 @@ import {
 import { RPC } from "@uimix/typed-rpc";
 import * as Y from "yjs";
 import debounce from "just-debounce-it";
+import path from "path";
 
 export class CustomDocument implements vscode.CustomDocument {
   constructor(
@@ -86,9 +87,35 @@ export class CustomDocument implements vscode.CustomDocument {
           throw new Error("should be intercepted in webview.");
         },
         getCodeAssets: async () => {
-          // TODO: get code assets from the project
-          // (.uimix/assets/bundle.js, .uimix/assets/style.css)
-          return undefined;
+          const jsFileURL = vscode.Uri.file(
+            path.join(
+              this.workspaceData.rootFolder.uri.fsPath,
+              ".uimix/assets/bundle.js"
+            )
+          );
+          const cssFileURL = vscode.Uri.file(
+            path.join(
+              this.workspaceData.rootFolder.uri.fsPath,
+              ".uimix/assets/style.css"
+            )
+          );
+
+          try {
+            const bundleJSData = Buffer.from(
+              await vscode.workspace.fs.readFile(jsFileURL)
+            ).toString();
+            const styleCSSData = Buffer.from(
+              await vscode.workspace.fs.readFile(cssFileURL)
+            ).toString();
+
+            return {
+              js: bundleJSData,
+              css: styleCSSData,
+            };
+          } catch {
+            console.log("no assets");
+            return undefined;
+          }
         },
       }
     );

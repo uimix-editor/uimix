@@ -70,10 +70,11 @@ export class WorkspaceData {
   static async load(rootFolder: vscode.WorkspaceFolder) {
     const loader = new WorkspaceLoader(new VSCodeFileAccess(rootFolder));
     await loader.load();
-    return new WorkspaceData(loader);
+    return new WorkspaceData(rootFolder, loader);
   }
 
-  constructor(loader: WorkspaceLoader) {
+  constructor(rootFolder: vscode.WorkspaceFolder, loader: WorkspaceLoader) {
+    this.rootFolder = rootFolder;
     this.loader = loader;
     this.updateData();
     this.disposables.push({
@@ -84,6 +85,7 @@ export class WorkspaceData {
     });
   }
 
+  readonly rootFolder: vscode.WorkspaceFolder;
   readonly loader: WorkspaceLoader;
 
   private readonly dataForProject = new Map<string /* path */, ProjectData>();
