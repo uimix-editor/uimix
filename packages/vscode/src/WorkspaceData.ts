@@ -92,7 +92,7 @@ export class WorkspaceData {
     );
 
     const onChange = (uri: vscode.Uri) => {
-      const projectPath = uri.fsPath.replace(/\.uimix\/assets\/.*$/, "");
+      const projectPath = uri.fsPath.replace(/\/\.uimix\/assets\/.*$/, "");
       console.log("code assets changed", projectPath);
       this._onDidChangeCodeAssets.fire(projectPath);
     };
@@ -131,6 +131,10 @@ export class WorkspaceData {
       uri.fsPath
     );
     return getPageID(relativePath.replace(/\.uimix$/, ""));
+  }
+
+  projectPathForFile(uri: vscode.Uri): string {
+    return this.loader.projectPathForFile(uri.fsPath);
   }
 
   private updateData() {

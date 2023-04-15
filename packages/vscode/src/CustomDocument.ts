@@ -117,9 +117,24 @@ export class CustomDocument implements vscode.CustomDocument {
       }
     );
 
+    const unsubscribeAssetChanges = this.workspaceData.onDidChangeCodeAssets(
+      (projectPath) => {
+        console.log(
+          projectPath,
+          this.workspaceData.projectPathForFile(this.uri)
+        );
+        if (projectPath !== this.workspaceData.projectPathForFile(this.uri)) {
+          return;
+        }
+        console.log("TODO: update assets");
+        // TODO: debounce and update assets
+      }
+    );
+
     webviewPanel.onDidDispose(() => {
       rpc.dispose();
       unsubscribeDoc?.();
+      unsubscribeAssetChanges.dispose();
     });
   }
 
