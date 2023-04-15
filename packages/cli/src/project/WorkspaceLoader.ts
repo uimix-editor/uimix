@@ -223,6 +223,8 @@ export class WorkspaceLoader {
           }
           parsed.prebuiltAssets = manifest.prebuiltAssets;
 
+          // TODO: avoid overwriting malformed uimix.json
+
           await this.fileAccess.writeText(
             manifestPath,
             formatJSON(JSON.stringify(parsed))
