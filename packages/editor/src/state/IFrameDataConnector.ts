@@ -40,6 +40,9 @@ export class IFrameDataConnector {
           state.pageID = pageID ?? state.project.pages.all[0]?.id;
           state.undoManager.clear();
         }),
+        updateCodeAssets: action(async (assets) => {
+          throw new Error("Not implemented");
+        }),
       }
     );
 

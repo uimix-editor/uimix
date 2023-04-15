@@ -85,6 +85,11 @@ export class CustomDocument implements vscode.CustomDocument {
         setClipboard: async () => {
           throw new Error("should be intercepted in webview.");
         },
+        getCodeAssets: async () => {
+          // TODO: get code assets from the project
+          // (.uimix/assets/bundle.js, .uimix/assets/style.css)
+          return undefined;
+        },
       }
     );
 

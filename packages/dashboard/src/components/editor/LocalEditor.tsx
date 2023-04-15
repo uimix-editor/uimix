@@ -55,6 +55,11 @@ class Connection extends TypedEmitter<{
         setClipboard: async (type, text) => {
           await new DefaultClipboardHandler().set(type, text);
         },
+
+        getCodeAssets: async () => {
+          // TODO
+          return undefined;
+        },
       }
     );
 
