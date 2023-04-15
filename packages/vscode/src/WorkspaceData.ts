@@ -83,10 +83,18 @@ export class WorkspaceData {
         this.updateData();
       }),
     });
+
+    this.codeAssetsWatcher = vscode.workspace.createFileSystemWatcher(
+      new vscode.RelativePattern(this.rootFolder, "**/.uimix/assets/**")
+    );
+    this.codeAssetsWatcher.onDidChange(() => {
+      console.log("TODO: code asset change");
+    });
   }
 
   readonly rootFolder: vscode.WorkspaceFolder;
   readonly loader: WorkspaceLoader;
+  readonly codeAssetsWatcher: vscode.FileSystemWatcher;
 
   private readonly dataForProject = new Map<string /* path */, ProjectData>();
 
