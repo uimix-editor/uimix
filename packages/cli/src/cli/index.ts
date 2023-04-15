@@ -90,6 +90,11 @@ async function compileCommand(
       outDir: path.resolve(rootPath, ".uimix/assets"),
       watch: options.watch ? {} : undefined,
     },
+    define: {
+      "process.env": {
+        NODE_ENV: "production",
+      },
+    },
   });
 }
 
