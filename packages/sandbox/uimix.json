@@ -1,12 +1,7 @@
 {
-  // pre-bundled UIMix assets (exposes ForeignComponents and tokens)
   "prebuiltAssets": ["@uimix/mui-assets"],
   "components": {
-    // paths to React components
-    // the `uimix` command automatically collects component info using react-docgen-typescript
-    // and bundles files into a single JS file
     "react": ["./src/stories/*.tsx", "!./src/stories/*.stories.tsx"]
   },
-  // paths to design token JSON or JS files (W3C design tokens format)
   "designTokens": "./src/designTokens/*.json"
 }

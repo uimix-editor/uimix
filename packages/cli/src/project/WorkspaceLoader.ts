@@ -215,15 +215,18 @@ export class WorkspaceLoader {
 
           let parsed: ProjectManifestJSON;
           try {
-            parsed = ProjectManifestJSON.parse(
-              JSON.parse(await this.fileAccess.readText(manifestPath))
-            );
+            parsed = JSON.parse(
+              await this.fileAccess.readText(manifestPath)
+            ) as ProjectManifestJSON;
           } catch (e) {
             parsed = {};
           }
           parsed.prebuiltAssets = manifest.prebuiltAssets;
 
-          await this.fileAccess.writeText(manifestPath, JSON.stringify(parsed));
+          await this.fileAccess.writeText(
+            manifestPath,
+            formatJSON(JSON.stringify(parsed))
+          );
         }
       }
 
