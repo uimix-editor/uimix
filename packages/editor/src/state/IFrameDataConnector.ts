@@ -41,7 +41,8 @@ export class IFrameDataConnector {
           state.undoManager.clear();
         }),
         updateCodeAssets: action(async (assets) => {
-          throw new Error("Not implemented");
+          // TODO
+          console.log(assets);
         }),
       }
     );
@@ -60,6 +61,13 @@ export class IFrameDataConnector {
         void this.rpc.remote.setClipboard(type, text);
       },
     };
+
+    void this.rpc.remote.getCodeAssets().then((assets) => {
+      if (assets) {
+        // TODO
+        console.log(assets);
+      }
+    });
   }
 
   private state: ProjectState;
