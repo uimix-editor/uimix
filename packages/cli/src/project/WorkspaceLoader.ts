@@ -143,8 +143,9 @@ export class WorkspaceLoader {
             )
           )
         );
-      } catch {
-        manifest = { componentURLs: [] };
+      } catch (e) {
+        console.warn("cannot load uimix.json:", e);
+        manifest = {};
       }
 
       const pages = new Map<string, PageJSON>();
@@ -210,10 +211,19 @@ export class WorkspaceLoader {
         }
 
         if (projectSaved) {
-          await this.fileAccess.writeText(
-            path.join(projectPath, this.uimixProjectFile),
-            formatJSON(JSON.stringify(manifest))
-          );
+          const manifestPath = path.join(projectPath, this.uimixProjectFile);
+
+          let parsed: ProjectManifestJSON;
+          try {
+            parsed = ProjectManifestJSON.parse(
+              JSON.parse(await this.fileAccess.readText(manifestPath))
+            );
+          } catch (e) {
+            parsed = {};
+          }
+          parsed.prebuiltAssets = manifest.prebuiltAssets;
+
+          await this.fileAccess.writeText(manifestPath, JSON.stringify(parsed));
         }
       }
 
@@ -251,7 +261,7 @@ export function projectJSONToFiles(projectJSON: ProjectJSON): {
   pages: Map<string, PageJSON>;
 } {
   const manifest: ProjectManifestJSON = {
-    componentURLs: projectJSON.componentURLs,
+    prebuiltAssets: projectJSON.componentURLs,
   };
 
   const hierarchicalNodes = toHierarchicalNodeJSONs(projectJSON.nodes);
@@ -380,7 +390,7 @@ export function filesToProjectJSON(
   return {
     nodes,
     styles,
-    componentURLs: manifest.componentURLs,
+    componentURLs: manifest.prebuiltAssets,
     images,
     colors,
   };
