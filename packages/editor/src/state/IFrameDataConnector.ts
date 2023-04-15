@@ -43,6 +43,7 @@ export class IFrameDataConnector {
         updateCodeAssets: action(async (assets) => {
           // TODO
           console.log(assets);
+          this.state.project.localCodeAssets = assets;
         }),
       }
     );
