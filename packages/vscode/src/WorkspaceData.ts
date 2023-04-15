@@ -90,6 +90,7 @@ export class WorkspaceData {
     this.codeAssetsWatcher.onDidChange(() => {
       console.log("TODO: code asset change");
     });
+    this.disposables.push(this.codeAssetsWatcher);
   }
 
   readonly rootFolder: vscode.WorkspaceFolder;
