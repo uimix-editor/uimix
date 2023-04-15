@@ -42,6 +42,11 @@ export const PageJSON = z.object({
 export type PageJSON = z.infer<typeof PageJSON>;
 
 export const ProjectManifestJSON = z.object({
-  componentURLs: z.array(z.string()).optional(),
+  components: z
+    .object({
+      prebuilt: z.array(z.string()).optional(),
+      react: z.array(z.string()).optional(),
+    })
+    .optional(),
 });
 export type ProjectManifestJSON = z.infer<typeof ProjectManifestJSON>;
