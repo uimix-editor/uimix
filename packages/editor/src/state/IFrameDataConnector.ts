@@ -67,6 +67,7 @@ export class IFrameDataConnector {
       if (assets) {
         // TODO
         console.log(assets);
+        this.state.project.localCodeAssets = assets;
       }
     });
   }
