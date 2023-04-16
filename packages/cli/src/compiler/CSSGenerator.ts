@@ -40,6 +40,7 @@ export class CSSGenerator {
       css = buildNodeCSS(
         selectable.node.type,
         selectable.style,
+        // TODO: resolve code color tokens
         (tokenID) => selectable.project.colorTokens.resolve(tokenID),
         parentLayoutType
       ) as CSS.Properties;
