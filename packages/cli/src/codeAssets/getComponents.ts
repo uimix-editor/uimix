@@ -23,11 +23,11 @@ function getComponentDocs(
 export function getComponents(
   rootPath: string,
   pattern: string[]
-): Omit<CodeAsset.ForeignComponent, "createRenderer">[] {
+): Omit<CodeAsset.Component, "createRenderer">[] {
   const docs = getComponentDocs(rootPath, pattern);
 
   const components = docs.map((doc) => {
-    const props: CodeAsset.ForeignComponent["props"] = [];
+    const props: CodeAsset.Component["props"] = [];
 
     for (const [name, prop] of Object.entries(doc.props)) {
       if (prop.type.name === "string") {
@@ -52,7 +52,7 @@ export function getComponents(
       }
     }
 
-    const component: Omit<CodeAsset.ForeignComponent, "createRenderer"> = {
+    const component: Omit<CodeAsset.Component, "createRenderer"> = {
       framework: "react",
       name: doc.displayName,
       path: path.relative(rootPath, doc.filePath),

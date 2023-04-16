@@ -188,7 +188,7 @@ const ComponentThumbnails: React.FC<{
 });
 
 const ComponentThumbnail: React.FC<{
-  component: Component | CodeAsset.ForeignComponent;
+  component: Component | CodeAsset.Component;
   foreignComponentManager: ForeignComponentManager;
   iframe: HTMLIFrameElement;
 }> = observer(({ component, foreignComponentManager, iframe }) => {

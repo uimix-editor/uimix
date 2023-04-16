@@ -250,7 +250,7 @@ export const NodeRenderer: React.FC<{
 );
 
 export const ForeignComponentRenderer: React.FC<{
-  component: CodeAsset.ForeignComponent;
+  component: CodeAsset.Component;
   onRenderFinish?: () => void;
   props: Record<string, unknown>;
 }> = observer(({ component, onRenderFinish, props }) => {
@@ -260,7 +260,7 @@ export const ForeignComponentRenderer: React.FC<{
   const onRenderFinishRef = useRef(onRenderFinish);
   onRenderFinishRef.current = onRenderFinish;
 
-  const rendererRef = useRef<CodeAsset.ForeignComponentRenderer>();
+  const rendererRef = useRef<CodeAsset.ComponentRenderer>();
 
   useEffect(() => {
     const elem = ref.current;

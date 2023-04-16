@@ -51,7 +51,7 @@ export class ForeignComponentManager {
                 async (mod: {
                   React: typeof React;
                   ReactDOM: typeof ReactDOM;
-                  components: CodeAsset.ForeignComponent[];
+                  components: CodeAsset.Component[];
                 }) => {
                   for (const component of mod.components) {
                     this.components.set(foreignComponentKey(component), {
@@ -71,7 +71,7 @@ export class ForeignComponentManager {
   readonly window: Window;
   readonly components = observable.map<
     string,
-    CodeAsset.ForeignComponent & { key: number }
+    CodeAsset.Component & { key: number }
   >([], {
     deep: false,
   });
@@ -79,7 +79,7 @@ export class ForeignComponentManager {
 
   get(
     ref: ForeignComponentRef
-  ): (CodeAsset.ForeignComponent & { key: number }) | undefined {
+  ): (CodeAsset.Component & { key: number }) | undefined {
     return this.components.get(foreignComponentKey(ref));
   }
 

@@ -15,15 +15,15 @@ export interface Prop {
   type: PropType;
 }
 
-export interface ForeignComponent {
+export interface Component {
   framework: "react"; // TODO: support other frameworks
   path: string; // path relative to project root e.g. "src/Button.tsx"
   name: string; // export name; e.g. "Button" ("default" for default export)
   props: Prop[];
-  createRenderer: (element: HTMLElement) => ForeignComponentRenderer;
+  createRenderer: (element: HTMLElement) => ComponentRenderer;
 }
 
-export interface ForeignComponentRenderer {
+export interface ComponentRenderer {
   render(props: Record<string, unknown>): Promise<void>;
   dispose(): void;
 }
