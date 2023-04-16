@@ -1,6 +1,6 @@
 import * as fs from "fs";
 import * as path from "path";
-import { FileAccess } from "./FileAccess";
+import { FileAccess, Stats } from "./FileAccess";
 import { glob } from "glob";
 import chokidar from "chokidar";
 import { mkdirp } from "mkdirp";
@@ -28,6 +28,19 @@ export class NodeFileAccess implements FileAccess {
         cwd: this.rootPath,
       })
     ).map((filePath) => path.resolve(this.rootPath, filePath));
+  }
+
+  async stat(filePath: string): Promise<Stats | undefined> {
+    try {
+      const stat = await fs.promises.stat(
+        path.resolve(this.rootPath, filePath)
+      );
+      return {
+        type: stat.isDirectory() ? "directory" : "file",
+      };
+    } catch (e) {
+      return undefined;
+    }
   }
 
   async writeText(filePath: string, data: string): Promise<void> {

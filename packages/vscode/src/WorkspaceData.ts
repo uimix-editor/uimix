@@ -1,6 +1,6 @@
 import * as vscode from "vscode";
 import { WorkspaceLoader } from "uimix/src/project/WorkspaceLoader";
-import { FileAccess } from "uimix/src/project/FileAccess";
+import { FileAccess, Stats } from "uimix/src/project/FileAccess";
 import { ProjectData } from "@uimix/model/src/collaborative";
 import debounce from "just-debounce-it";
 import * as path from "path";
@@ -48,6 +48,17 @@ class VSCodeFileAccess implements FileAccess {
       "**/node_modules/**"
     );
     return urls.map((url) => url.fsPath);
+  }
+
+  async stat(filePath: string): Promise<Stats | undefined> {
+    try {
+      const stat = await vscode.workspace.fs.stat(vscode.Uri.file(filePath));
+      return {
+        type: stat.type & vscode.FileType.Directory ? "directory" : "file",
+      };
+    } catch (e) {
+      return undefined;
+    }
   }
 
   async writeText(filePath: string, data: string): Promise<void> {
