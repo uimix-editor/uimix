@@ -12,7 +12,7 @@ export async function buildCodeAssets(
     watch?: boolean;
   }
 ): Promise<void> {
-  const patterns = ["src/stories/*.tsx", "!**/*.stories.tsx"];
+  const patterns = manifest.components?.react ?? [];
   const patternsFromRoot = patterns.map((pattern) => {
     if (pattern.startsWith("!")) {
       return pattern;

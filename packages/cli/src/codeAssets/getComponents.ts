@@ -4,7 +4,7 @@ import * as path from "node:path";
 import { globbySync } from "globby";
 
 function getComponentDocs(
-  dirname: string,
+  rootPath: string,
   pattern: string[]
 ): docgen.ComponentDoc[] {
   const options = {
@@ -12,7 +12,7 @@ function getComponentDocs(
     shouldExtractLiteralValuesFromEnum: true,
   };
 
-  const filePaths = globbySync(pattern, { cwd: dirname });
+  const filePaths = globbySync(pattern, { cwd: rootPath });
 
   // TODO: Load tsconfig
   const docs = docgen.parse(filePaths, options);
@@ -21,10 +21,10 @@ function getComponentDocs(
 }
 
 export function getComponents(
-  dirname: string,
+  rootPath: string,
   pattern: string[]
 ): Omit<ForeignComponent, "createRenderer">[] {
-  const docs = getComponentDocs(dirname, pattern);
+  const docs = getComponentDocs(rootPath, pattern);
 
   const components = docs.map((doc) => {
     const props: ForeignComponent["props"] = [];
@@ -55,7 +55,7 @@ export function getComponents(
     const component: Omit<ForeignComponent, "createRenderer"> = {
       framework: "react",
       name: doc.displayName,
-      path: path.relative(dirname, doc.filePath),
+      path: path.relative(rootPath, doc.filePath),
       props,
     };
 
