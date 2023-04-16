@@ -66,7 +66,7 @@ export async function buildCodeAssets(
         name: "bundle",
         fileName: "bundle",
       },
-      outDir: path.resolve(rootPath, codeAssetsDestination),
+      outDir: path.resolve(rootPath, codeAssetsDestination.directory),
       watch: options.watch ? {} : undefined,
     },
     define: {

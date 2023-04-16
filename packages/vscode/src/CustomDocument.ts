@@ -9,11 +9,7 @@ import { RPC } from "@uimix/typed-rpc";
 import * as Y from "yjs";
 import debounce from "just-debounce-it";
 import path from "path";
-import {
-  codeAssetsDestination,
-  codeAssetsJSName,
-  codeAssetsCSSName,
-} from "uimix/src/cli/constants";
+import { codeAssetsDestination } from "uimix/src/codeAssets/constants";
 import { CodeAssets } from "@uimix/model/src/models/CodeAssets";
 
 export class CustomDocument implements vscode.CustomDocument {
@@ -127,11 +123,14 @@ export class CustomDocument implements vscode.CustomDocument {
 
   private async loadCodeAssets(): Promise<CodeAssets | undefined> {
     try {
-      const assetURLs = [codeAssetsJSName, codeAssetsCSSName].map((assetName) =>
+      const assetURLs = [
+        codeAssetsDestination.js,
+        codeAssetsDestination.css,
+      ].map((assetName) =>
         vscode.Uri.file(
           path.join(
             this.workspaceData.rootFolder.uri.fsPath,
-            codeAssetsDestination,
+            codeAssetsDestination.directory,
             assetName
           )
         )

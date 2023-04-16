@@ -1,3 +1,5 @@
-export const codeAssetsDestination = ".uimix/assets";
-export const codeAssetsJSName = "bundle.js";
-export const codeAssetsCSSName = "style.css";
+export const codeAssetsDestination = {
+  directory: ".uimix/assets",
+  js: "bundle.js",
+  css: "style.css",
+};
