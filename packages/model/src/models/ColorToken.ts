@@ -7,7 +7,7 @@ import { Project } from "./Project";
 import { Page } from "./Page";
 import { ObjectData } from "./ObjectData";
 import * as CodeAsset from "@uimix/code-asset-types";
-import { makeObservable, observable } from "mobx";
+import { observable } from "mobx";
 
 export class CodeColorToken {
   constructor(token: CodeAsset.ColorToken) {
@@ -80,7 +80,6 @@ export class ColorToken {
 export class ColorTokenMap {
   constructor(project: Project) {
     this.project = project;
-    makeObservable(this);
   }
 
   readonly project: Project;
