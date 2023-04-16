@@ -219,6 +219,7 @@ export const NodeRenderer: React.FC<{
         <div style={cssStyle} ref={ref}>
           {foreignComponent && (
             <ForeignComponentRenderer
+              key={foreignComponent.key}
               component={foreignComponent}
               onRenderFinish={() => {
                 if (!forThumbnail) {

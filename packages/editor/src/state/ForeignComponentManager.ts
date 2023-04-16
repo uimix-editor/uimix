@@ -56,10 +56,10 @@ export class ForeignComponentManager {
                   components: ForeignComponent[];
                 }) => {
                   for (const component of mod.components) {
-                    this.components.set(
-                      foreignComponentKey(component),
-                      component
-                    );
+                    this.components.set(foreignComponentKey(component), {
+                      ...component,
+                      key: Math.random(),
+                    });
                   }
                 }
               );
@@ -71,12 +71,17 @@ export class ForeignComponentManager {
   }
 
   readonly window: Window;
-  readonly components = observable.map<string, ForeignComponent>([], {
+  readonly components = observable.map<
+    string,
+    ForeignComponent & { key: number }
+  >([], {
     deep: false,
   });
   readonly loadedLinks: HTMLLinkElement[] = [];
 
-  get(ref: ForeignComponentRef): ForeignComponent | undefined {
+  get(
+    ref: ForeignComponentRef
+  ): (ForeignComponent & { key: number }) | undefined {
     return this.components.get(foreignComponentKey(ref));
   }
 
