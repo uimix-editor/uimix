@@ -17,7 +17,6 @@ import { ScrollState } from "./ScrollState";
 // eslint-disable-next-line import/no-unresolved
 import demoFile from "./demoFile/demo.uimix?raw";
 import { filesToProjectJSON } from "../../../cli/src/project/WorkspaceLoader";
-import { blobToDataURL } from "@uimix/foundation/src/utils/Blob";
 import { Rect } from "paintvec";
 import { resizeWithBoundingBox } from "@uimix/model/src/services";
 
@@ -73,7 +72,7 @@ export class ProjectState {
 
   loadDemoFile() {
     const manifest: ProjectManifestJSON = {
-      componentURLs: [
+      prebuiltAssets: [
         "https://cdn.jsdelivr.net/gh/uimix-editor/uimix@ba0157d5/packages/sandbox/dist-components/components.js",
         "https://cdn.jsdelivr.net/gh/uimix-editor/uimix@ba0157d5/packages/sandbox/dist-components/style.css",
       ],
