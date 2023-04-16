@@ -36,7 +36,7 @@ export const ColorTokenPopover: React.FC<{
             value={searchText}
             onChangeValue={setSearchText}
           />
-          <div className="w-64 p-3">
+          <div className="w-64 p-3 max-h-80 overflow-auto">
             <div className="flex items-center justify-between mb-2">
               <div className="text-macaron-label font-medium">
                 This Document
