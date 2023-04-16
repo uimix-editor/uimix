@@ -5,6 +5,7 @@ import {
   Selectable,
   PageHierarchyEntry,
   Component,
+  Page,
 } from "@uimix/model/src/models";
 import { exportToJSON as exportJSON, importJSON } from "./JSONExport";
 import { viewportState } from "./ViewportState";
@@ -27,6 +28,7 @@ import {
   createComponent,
   detachComponent,
   resizeWithBoundingBox,
+  moveToPage,
 } from "@uimix/model/src/services";
 import { posix as path } from "path-browserify";
 import { dialogState } from "./DialogState";
@@ -243,7 +245,7 @@ class Commands {
 
       const parent =
         absoluteSelectables[0].offsetParent ??
-        absoluteSelectables[0].pageSelectable;
+        absoluteSelectables[0].page?.selectable;
       if (!parent) {
         return;
       }
@@ -281,6 +283,16 @@ class Commands {
         parent.insertBefore([selectable], next);
       }
     }
+  }
+
+  moveToPage(page: Page) {
+    const selectables = projectState.selectedSelectables;
+
+    for (const selectable of selectables) {
+      moveToPage(selectable, page);
+    }
+
+    projectState.undoManager.stopCapturing();
   }
 
   readonly exportJSONCommand: MenuCommandDef = {
@@ -631,6 +643,20 @@ class Commands {
       { type: "separator" },
       this.autoLayoutCommand,
       this.removeLayoutCommand,
+      { type: "separator" },
+      {
+        type: "submenu",
+        text: "Move to Page",
+        children: projectState.project.pages.all.map((page): MenuItemDef => {
+          return {
+            type: "command",
+            text: page.filePath,
+            onClick: action(() => {
+              this.moveToPage(page);
+            }),
+          };
+        }),
+      },
     ];
   }
 

@@ -1,5 +1,4 @@
 import { Component } from "../models/Component";
-import { Page } from "../models/Page";
 import { Selectable } from "../models/Selectable";
 import { styleKeys } from "../models/Style";
 
@@ -21,8 +20,7 @@ export function canCreateComponent(selectable: Selectable) {
 }
 
 export function createComponent(selectable: Selectable) {
-  const page =
-    selectable.pageSelectable && Page.from(selectable.pageSelectable.node);
+  const page = selectable.page;
   if (!page) {
     return;
   }
