@@ -160,13 +160,12 @@ export class WorkspaceData {
   }
 
   save(uri: vscode.Uri) {
-    for (const projectPath of [...this.loader.jsons.keys()]) {
-      this.loader.jsons.set(
-        projectPath,
-        this.getDataForProject(projectPath).toJSON()
-      );
-    }
-    this.loader.save([uri.fsPath]);
+    const projectPath = this.loader.projectPathForFile(uri.fsPath);
+    this.loader.jsons.set(
+      projectPath,
+      this.getDataForProject(projectPath).toJSON()
+    );
+    this.loader.save(projectPath);
   }
 
   readonly disposables: vscode.Disposable[] = [];

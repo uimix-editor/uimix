@@ -17,6 +17,7 @@ import { Project } from "./Project";
 import { Component } from "./Component";
 import { ObjectData } from "./ObjectData";
 import { assertNonNull } from "@uimix/foundation/src/utils/Assert";
+import { Page } from "./Page";
 
 export interface IComputedRectProvider {
   readonly value: Rect | undefined;
@@ -132,11 +133,11 @@ export class Selectable {
     return children;
   }
 
-  @computed get pageSelectable(): Selectable | undefined {
+  @computed get page(): Page | undefined {
     if (this.originalNode.type === "page") {
-      return this;
+      return Page.from(this.originalNode);
     }
-    return this.parent?.pageSelectable;
+    return this.parent?.page;
   }
 
   // ancestors ([root, ..., parent, this])

@@ -187,7 +187,7 @@ export class WorkspaceLoader {
 
   private isSaving = false;
 
-  async save(filePaths?: string[]): Promise<void> {
+  async save(projectPathToSave?: string): Promise<void> {
     try {
       this.isSaving = true;
 
@@ -196,43 +196,39 @@ export class WorkspaceLoader {
       );
 
       for (const [projectPath, json] of this.jsons) {
-        const { manifest, pages } = projectJSONToFiles(json);
+        if (projectPathToSave && projectPath !== projectPathToSave) {
+          continue;
+        }
 
-        let projectSaved = false;
+        const { manifest, pages } = projectJSONToFiles(json);
 
         for (const [pageName, pageJSON] of pages) {
           const pagePath = path.join(projectPath, pageName + ".uimix");
-          if (filePaths && !filePaths.includes(pagePath)) {
-            continue;
-          }
           await this.fileAccess.writeText(
             pagePath,
             formatJSON(JSON.stringify(pageJSON))
           );
           pagePathsToDelete.delete(pagePath);
-          projectSaved = true;
         }
 
-        if (projectSaved) {
-          const manifestPath = path.join(projectPath, this.uimixProjectFile);
+        const manifestPath = path.join(projectPath, this.uimixProjectFile);
 
-          let parsed: ProjectManifestJSON;
-          try {
-            parsed = JSON.parse(
-              await this.fileAccess.readText(manifestPath)
-            ) as ProjectManifestJSON;
-          } catch (e) {
-            parsed = {};
-          }
-          parsed.prebuiltAssets = manifest.prebuiltAssets;
-
-          // TODO: avoid overwriting malformed uimix.json
-
-          await this.fileAccess.writeText(
-            manifestPath,
-            formatJSON(JSON.stringify(parsed))
-          );
+        let parsed: ProjectManifestJSON;
+        try {
+          parsed = JSON.parse(
+            await this.fileAccess.readText(manifestPath)
+          ) as ProjectManifestJSON;
+        } catch (e) {
+          parsed = {};
         }
+        parsed.prebuiltAssets = manifest.prebuiltAssets;
+
+        // TODO: avoid overwriting malformed uimix.json
+
+        await this.fileAccess.writeText(
+          manifestPath,
+          formatJSON(JSON.stringify(parsed))
+        );
       }
 
       for (const pagePath of pagePathsToDelete) {
