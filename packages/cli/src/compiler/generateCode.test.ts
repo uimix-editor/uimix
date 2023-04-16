@@ -8,8 +8,11 @@ describe(generateCode.name, () => {
   it("generates code", async () => {
     const rootDir = path.resolve("../sandbox");
     const files = await WorkspaceLoader.load(new NodeFileAccess(rootDir));
-    const json = files.rootProject.json;
-    const code = await generateCode(rootDir, json);
+    const code = await generateCode(
+      rootDir,
+      files.rootProject.manifest,
+      files.rootProject.json
+    );
     const result: Record<string, string> = {};
     for (const file of code) {
       if (
