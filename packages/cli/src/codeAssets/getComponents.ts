@@ -1,5 +1,5 @@
 import docgen from "react-docgen-typescript";
-import type { ForeignComponent } from "@uimix/asset-types";
+import type { ForeignComponent } from "@uimix/code-asset-types";
 import * as path from "node:path";
 import { globbySync } from "globby";
 

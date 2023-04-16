@@ -1,4 +1,4 @@
-import { DesignToken } from "@uimix/asset-types";
+import { DesignToken } from "@uimix/code-asset-types";
 
 // TODO: support W3C design tokens?
 const tokens: DesignToken[] = [

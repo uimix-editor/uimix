@@ -12,7 +12,7 @@ import { projectState } from "../../../state/ProjectState";
 import {
   ForeignComponent,
   ForeignComponentRenderer as IForeignComponentRenderer,
-} from "@uimix/asset-types";
+} from "@uimix/code-asset-types";
 import { ForeignComponentManager } from "../../../state/ForeignComponentManager";
 import htmlReactParser from "html-react-parser";
 import { action } from "mobx";

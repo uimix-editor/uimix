@@ -23,12 +23,6 @@ importers:
         specifier: ^1.9.1
         version: 1.9.1
 
-  packages/asset-types:
-    devDependencies:
-      typescript:
-        specifier: ^5.0.4
-        version: 5.0.4
-
   packages/cli:
     dependencies:
       '@vitejs/plugin-react':
@@ -101,9 +95,9 @@ importers:
       '@types/tmp':
         specifier: ^0.2.3
         version: 0.2.3
-      '@uimix/asset-types':
+      '@uimix/code-asset-types':
         specifier: workspace:*
-        version: link:../asset-types
+        version: link:../code-asset-types
       '@uimix/foundation':
         specifier: workspace:*
         version: link:../foundation
@@ -149,6 +143,12 @@ importers:
       yjs:
         specifier: ^13.5.52
         version: 13.5.52
+
+  packages/code-asset-types:
+    devDependencies:
+      typescript:
+        specifier: ^5.0.4
+        version: 5.0.4
 
   packages/collaborative-backend:
     dependencies:
@@ -382,9 +382,9 @@ importers:
       '@seanchas116/design-icons':
         specifier: ^1.0.1
         version: 1.0.1
-      '@uimix/asset-types':
+      '@uimix/code-asset-types':
         specifier: workspace:*
-        version: link:../asset-types
+        version: link:../code-asset-types
       '@uimix/foundation':
         specifier: workspace:*
         version: link:../foundation
@@ -1050,9 +1050,9 @@ importers:
       '@types/react-test-renderer':
         specifier: ^18.0.0
         version: 18.0.0
-      '@uimix/asset-types':
+      '@uimix/code-asset-types':
         specifier: workspace:*
-        version: link:../asset-types
+        version: link:../code-asset-types
       '@vitejs/plugin-react':
         specifier: ^3.1.0
         version: 3.1.0(vite@4.2.1)
