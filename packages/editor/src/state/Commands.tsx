@@ -537,6 +537,47 @@ class Commands {
     }),
   };
 
+  @computed get nodeMenu(): MenuItemDef[] {
+    return [
+      this.createComponentCommand,
+      { type: "separator" },
+      this.detachComponentCommand,
+      {
+        type: "submenu",
+        text: "Attach Component",
+        children: projectState.project.components.map((component) => {
+          return {
+            type: "command",
+            text: component.name,
+            onClick: action(() => {
+              this.attachComponent(component);
+            }),
+          };
+        }),
+      },
+      { type: "separator" },
+      this.groupCommand,
+      this.ungroupCommand,
+      { type: "separator" },
+      this.autoLayoutCommand,
+      this.removeLayoutCommand,
+      { type: "separator" },
+      {
+        type: "submenu",
+        text: "Move to Page",
+        children: projectState.project.pages.all.map((page): MenuItemDef => {
+          return {
+            type: "command",
+            text: page.filePath,
+            onClick: action(() => {
+              this.moveToPage(page);
+            }),
+          };
+        }),
+      },
+    ];
+  }
+
   @computed get menu(): MenuItemDef[] {
     return [
       {
@@ -584,17 +625,7 @@ class Commands {
       {
         type: "submenu",
         text: "Node",
-        children: [
-          this.createComponentCommand,
-          { type: "separator" },
-          this.detachComponentCommand,
-          { type: "separator" },
-          this.groupCommand,
-          this.ungroupCommand,
-          { type: "separator" },
-          this.autoLayoutCommand,
-          this.removeLayoutCommand,
-        ],
+        children: this.nodeMenu,
       },
       {
         type: "submenu",
@@ -621,42 +652,7 @@ class Commands {
       this.pasteCommand,
       this.deleteCommand,
       { type: "separator" },
-      this.createComponentCommand,
-      { type: "separator" },
-      this.detachComponentCommand,
-      {
-        type: "submenu",
-        text: "Attach Component",
-        children: projectState.project.components.map((component) => {
-          return {
-            type: "command",
-            text: component.name,
-            onClick: action(() => {
-              this.attachComponent(component);
-            }),
-          };
-        }),
-      },
-      { type: "separator" },
-      this.groupCommand,
-      this.ungroupCommand,
-      { type: "separator" },
-      this.autoLayoutCommand,
-      this.removeLayoutCommand,
-      { type: "separator" },
-      {
-        type: "submenu",
-        text: "Move to Page",
-        children: projectState.project.pages.all.map((page): MenuItemDef => {
-          return {
-            type: "command",
-            text: page.filePath,
-            onClick: action(() => {
-              this.moveToPage(page);
-            }),
-          };
-        }),
-      },
+      ...this.nodeMenu,
     ];
   }
 
