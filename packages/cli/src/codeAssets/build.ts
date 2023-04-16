@@ -57,7 +57,7 @@ export async function buildCodeAssets(
 
             const tokensCode = manifest.designTokens
               ? `export { default as tokens } from "${manifest.designTokens}";`
-              : `export const tokens = [];`;
+              : `export const tokens = {};`;
 
             return `${reactRendererCode}
             const modules = import.meta.glob(${JSON.stringify(

@@ -5,6 +5,9 @@ import { CSSGenerator } from "./CSSGenerator.js";
 import { ReactGenerator } from "./ReactGenerator.js";
 import { dataUriToBuffer } from "data-uri-to-buffer";
 import * as mime from "mime-types";
+import { codeAssetsDestination } from "../codeAssets/constants.js";
+import * as path from "path";
+import { DesignTokens } from "@uimix/code-asset-types";
 
 export async function generateCode(
   rootPath: string,
@@ -18,6 +21,17 @@ export async function generateCode(
 > {
   const project = new Project();
   project.loadJSON(projectJSON);
+
+  const codeAssetJSPath = path.resolve(
+    rootPath,
+    codeAssetsDestination.directory,
+    codeAssetsDestination.js
+  );
+  // eslint-disable-next-line
+  const codeAssetJS: {
+    tokens: DesignTokens;
+  } = await import(codeAssetJSPath);
+  console.log(codeAssetJS.tokens);
 
   const imagesPath = ".uimix/images";
 
