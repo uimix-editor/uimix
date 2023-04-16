@@ -1,5 +1,5 @@
 import docgen from "react-docgen-typescript";
-import type { ForeignComponent } from "@uimix/code-asset-types";
+import type * as CodeAsset from "@uimix/code-asset-types";
 import * as path from "node:path";
 import { globbySync } from "globby";
 
@@ -23,11 +23,11 @@ function getComponentDocs(
 export function getComponents(
   rootPath: string,
   pattern: string[]
-): Omit<ForeignComponent, "createRenderer">[] {
+): Omit<CodeAsset.ForeignComponent, "createRenderer">[] {
   const docs = getComponentDocs(rootPath, pattern);
 
   const components = docs.map((doc) => {
-    const props: ForeignComponent["props"] = [];
+    const props: CodeAsset.ForeignComponent["props"] = [];
 
     for (const [name, prop] of Object.entries(doc.props)) {
       if (prop.type.name === "string") {
@@ -52,7 +52,7 @@ export function getComponents(
       }
     }
 
-    const component: Omit<ForeignComponent, "createRenderer"> = {
+    const component: Omit<CodeAsset.ForeignComponent, "createRenderer"> = {
       framework: "react",
       name: doc.displayName,
       path: path.relative(rootPath, doc.filePath),

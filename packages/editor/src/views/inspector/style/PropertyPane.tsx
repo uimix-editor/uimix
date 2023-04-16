@@ -7,7 +7,7 @@ import { ForeignComponentManager } from "../../../state/ForeignComponentManager"
 import { Input, Select, Tooltip } from "@uimix/foundation/src/components";
 import { ForeignComponentRef } from "@uimix/model/src/data/v1";
 import { action } from "mobx";
-import { Prop } from "@uimix/code-asset-types";
+import * as CodeAsset from "@uimix/code-asset-types";
 
 export const PropertyPane: React.FC = observer(function PropertyPane() {
   const selectables = projectState.selectedSelectables.filter(
@@ -71,7 +71,7 @@ export const PropertyPane: React.FC = observer(function PropertyPane() {
 });
 
 const PropertyEdit: React.FC<{
-  prop: Prop;
+  prop: CodeAsset.Prop;
   value: unknown;
   className?: string;
   onValueChange: (value: unknown) => void;

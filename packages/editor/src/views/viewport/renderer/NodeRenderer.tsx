@@ -9,10 +9,7 @@ import {
 import { viewportState } from "../../../state/ViewportState";
 import { ComputedRectProvider } from "./ComputedRectProvider";
 import { projectState } from "../../../state/ProjectState";
-import {
-  ForeignComponent,
-  ForeignComponentRenderer as IForeignComponentRenderer,
-} from "@uimix/code-asset-types";
+import * as CodeAsset from "@uimix/code-asset-types";
 import { ForeignComponentManager } from "../../../state/ForeignComponentManager";
 import htmlReactParser from "html-react-parser";
 import { action } from "mobx";
@@ -253,7 +250,7 @@ export const NodeRenderer: React.FC<{
 );
 
 export const ForeignComponentRenderer: React.FC<{
-  component: ForeignComponent;
+  component: CodeAsset.ForeignComponent;
   onRenderFinish?: () => void;
   props: Record<string, unknown>;
 }> = observer(({ component, onRenderFinish, props }) => {
@@ -263,7 +260,7 @@ export const ForeignComponentRenderer: React.FC<{
   const onRenderFinishRef = useRef(onRenderFinish);
   onRenderFinishRef.current = onRenderFinish;
 
-  const rendererRef = useRef<IForeignComponentRenderer>();
+  const rendererRef = useRef<CodeAsset.ForeignComponentRenderer>();
 
   useEffect(() => {
     const elem = ref.current;

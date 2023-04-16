@@ -3,7 +3,7 @@ import { action, observable, reaction } from "mobx";
 import type React from "react";
 import type ReactDOM from "react-dom/client";
 import { projectState } from "./ProjectState";
-import { ForeignComponent } from "@uimix/code-asset-types";
+import * as CodeAsset from "@uimix/code-asset-types";
 import { Buffer } from "buffer";
 
 export function foreignComponentKey(ref: { path: string; name: string }) {
@@ -51,7 +51,7 @@ export class ForeignComponentManager {
                 async (mod: {
                   React: typeof React;
                   ReactDOM: typeof ReactDOM;
-                  components: ForeignComponent[];
+                  components: CodeAsset.ForeignComponent[];
                 }) => {
                   for (const component of mod.components) {
                     this.components.set(foreignComponentKey(component), {
@@ -71,7 +71,7 @@ export class ForeignComponentManager {
   readonly window: Window;
   readonly components = observable.map<
     string,
-    ForeignComponent & { key: number }
+    CodeAsset.ForeignComponent & { key: number }
   >([], {
     deep: false,
   });
@@ -79,7 +79,7 @@ export class ForeignComponentManager {
 
   get(
     ref: ForeignComponentRef
-  ): (ForeignComponent & { key: number }) | undefined {
+  ): (CodeAsset.ForeignComponent & { key: number }) | undefined {
     return this.components.get(foreignComponentKey(ref));
   }
 
