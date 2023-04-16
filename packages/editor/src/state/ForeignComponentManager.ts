@@ -7,6 +7,32 @@ import * as CodeAsset from "@uimix/code-asset-types";
 import { Buffer } from "buffer";
 import { CodeColorToken } from "@uimix/model/src/models";
 
+function isDesignToken(
+  value: CodeAsset.DesignToken | CodeAsset.DesignTokens
+): value is CodeAsset.DesignToken {
+  return value.$type !== undefined;
+}
+
+function flattenDesignTokens(
+  namePath: string[],
+  designTokens: CodeAsset.DesignTokens
+): { path: string; token: CodeAsset.DesignToken }[] {
+  const tokens: { path: string; token: CodeAsset.DesignToken }[] = [];
+
+  for (const [name, value] of Object.entries(designTokens)) {
+    if (isDesignToken(value)) {
+      tokens.push({
+        path: [...namePath, name].join("/"),
+        token: value,
+      });
+    } else {
+      tokens.push(...flattenDesignTokens([...namePath, name], value));
+    }
+  }
+
+  return tokens;
+}
+
 export function foreignComponentKey(ref: { path: string; name: string }) {
   return `${ref.path}#${ref.name}`;
 }
@@ -55,7 +81,7 @@ export class ForeignComponentManager {
                     React: typeof React;
                     ReactDOM: typeof ReactDOM;
                     components: CodeAsset.Component[];
-                    tokens: CodeAsset.DesignToken[];
+                    tokens: CodeAsset.DesignTokens;
                   }) => {
                     for (const component of mod.components) {
                       this.components.set(foreignComponentKey(component), {
@@ -64,13 +90,13 @@ export class ForeignComponentManager {
                       });
                     }
 
-                    for (const token of mod.tokens) {
-                      if (token.type === "color") {
-                        projectState.project.colorTokens.codeColorTokens.set(
-                          token.id,
-                          new CodeColorToken(token)
-                        );
-                      }
+                    const tokens = flattenDesignTokens([], mod.tokens);
+
+                    for (const token of tokens) {
+                      projectState.project.colorTokens.codeColorTokens.set(
+                        token.path,
+                        new CodeColorToken(token.path, token.token)
+                      );
                     }
                   }
                 )

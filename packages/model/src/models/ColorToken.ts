@@ -10,14 +10,19 @@ import * as CodeAsset from "@uimix/code-asset-types";
 import { observable } from "mobx";
 
 export class CodeColorToken {
-  constructor(token: CodeAsset.ColorToken) {
-    this.id = token.id;
-    this.name = token.name;
-    this.value = Color.from(token.value) ?? Color.black;
+  constructor(path: string, token: CodeAsset.ColorToken) {
+    this.path = path;
+    this.value = Color.from(token.$value) ?? Color.black;
   }
 
-  readonly id: string;
-  readonly name: string;
+  readonly path: string;
+  get id(): string {
+    return this.path;
+  }
+  get name(): string {
+    return this.path;
+  }
+
   readonly value: Color;
 
   get type(): "code" {
