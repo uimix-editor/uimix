@@ -29,7 +29,10 @@ export interface ForeignComponentRenderer {
 }
 
 export interface ColorToken {
+  type: "color";
   id: string;
   name: string;
   value: string;
 }
+
+export type DesignToken = ColorToken; // TODO: add more
