@@ -55,11 +55,17 @@ export async function buildCodeAssets(
               );
             });
 
+            const tokensCode = manifest.designTokens
+              ? `export { default as tokens } from "${manifest.designTokens}";`
+              : `export const tokens = [];`;
+
             return `${reactRendererCode}
             const modules = import.meta.glob(${JSON.stringify(
               patternsFromRoot
             )}, {eager: true});
-            export const components = [${componentCodes.join(",")}]`;
+            export const components = [${componentCodes.join(",")}]
+            ${tokensCode}
+            `;
           }
         },
       },
