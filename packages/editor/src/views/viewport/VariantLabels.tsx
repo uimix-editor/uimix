@@ -23,6 +23,18 @@ import { twMerge } from "tailwind-merge";
 import { VariantCondition } from "@uimix/model/src/data/v1";
 import { startCase } from "lodash-es";
 import { viewOptions } from "../../state/ViewOptions";
+import { showContextMenu } from "../ContextMenu";
+import { commands } from "../../state/Commands";
+
+function onContextMenuForSelectable(selectable: Selectable) {
+  return action((e: React.MouseEvent) => {
+    e.preventDefault();
+    e.stopPropagation();
+    projectState.project.clearSelection();
+    selectable.select();
+    showContextMenu(e, commands.contextMenuForSelectable(selectable));
+  });
+}
 
 const FrameLabel: React.FC<{
   selectable: Selectable;
@@ -64,6 +76,7 @@ const FrameLabel: React.FC<{
   const onPointerLeave = action(() => {
     viewportState.hoveredSelectable = undefined;
   });
+  const onContextMenu = onContextMenuForSelectable(selectable);
 
   const bboxInView = selectable.computedRect.transform(
     projectState.scroll.documentToViewport
@@ -81,6 +94,7 @@ const FrameLabel: React.FC<{
       }}
       {...dragProps}
       onPointerLeave={onPointerLeave}
+      onContextMenu={onContextMenu}
     >
       {selectable.node.name}
     </div>
@@ -195,6 +209,7 @@ const ComponentLabel: React.FC<{
   const onPointerLeave = action(() => {
     viewportState.hoveredSelectable = undefined;
   });
+  const onContextMenu = onContextMenuForSelectable(component);
 
   if (!bbox) {
     return null;
@@ -213,6 +228,7 @@ const ComponentLabel: React.FC<{
       }}
       {...dragProps}
       onPointerLeave={onPointerLeave}
+      onContextMenu={onContextMenu}
     >
       <Icon
         icon="material-symbols:widgets-rounded"
@@ -273,6 +289,7 @@ const VariantLabel: React.FC<{
   const onPointerLeave = action(() => {
     viewportState.hoveredSelectable = undefined;
   });
+  const onContextMenu = onContextMenuForSelectable(variantSelectable);
 
   const [conditionEditorOpen, setConditionEditorOpen] = useState(false);
 
@@ -333,6 +350,7 @@ const VariantLabel: React.FC<{
         className="absolute inset-0 z-0"
         {...dragProps}
         onPointerLeave={onPointerLeave}
+        onContextMenu={onContextMenu}
         onDoubleClick={() => {
           setConditionEditorOpen(true);
         }}
