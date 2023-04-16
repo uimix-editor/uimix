@@ -15,5 +15,11 @@ export function moveToPage(selectable: Selectable, page: Page) {
     return;
   }
 
-  page.node.append([selectable.originalNode]);
+  let node = selectable.originalNode;
+  // always move whole component instead of just move variants/component roots
+  if (node.parent?.type === "component") {
+    node = node.parent;
+  }
+
+  page.node.append([node]);
 }
