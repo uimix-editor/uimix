@@ -17,6 +17,10 @@ export const ColorTokenPopover: React.FC<{
   const [searchText, setSearchText] = useState("");
   const queryTester = new QueryTester(searchText);
 
+  const isTokenSelected = (token: ColorToken) => {
+    return value?.value.type === "token" && value?.value.value.id === token.id;
+  };
+
   return (
     <RadixPopover.Root>
       <Tooltip text="Color Tokens">
@@ -53,31 +57,40 @@ export const ColorTokenPopover: React.FC<{
             <div className="flex gap-1 flex-wrap">
               {projectState.project.colorTokens.all
                 .filter((token) => queryTester.test(token.name ?? ""))
-                .map((token) => {
-                  const selected =
-                    value?.value.type === "token" &&
-                    value?.value.value.id === token.id;
-                  return (
-                    <Tooltip text={token.name} key={token.id} delayDuration={0}>
-                      <div
-                        className={twMerge(
-                          "w-6 h-6 rounded-full border border-macaron-uiBackground",
-                          selected && "ring-2 ring-macaron-active"
-                        )}
-                        style={{
-                          backgroundColor: token.value?.toHex(),
-                        }}
-                        onClick={action(() => {
-                          onChange(token);
-                        })}
-                      />
-                    </Tooltip>
-                  );
-                })}
+                .map((token) => (
+                  <ColorTokenIcon
+                    token={token}
+                    selected={isTokenSelected(token)}
+                    onClick={action(() => {
+                      onChange(token);
+                    })}
+                  />
+                ))}
             </div>
           </div>
         </RadixPopover.Content>
       </RadixPopover.Portal>
     </RadixPopover.Root>
+  );
+};
+
+const ColorTokenIcon: React.FC<{
+  token: ColorToken;
+  selected: boolean;
+  onClick: () => void;
+}> = ({ token, selected, onClick }) => {
+  return (
+    <Tooltip text={token.name} key={token.id} delayDuration={0}>
+      <div
+        className={twMerge(
+          "w-6 h-6 rounded-full border border-macaron-uiBackground",
+          selected && "ring-2 ring-macaron-active"
+        )}
+        style={{
+          backgroundColor: token.value?.toHex(),
+        }}
+        onClick={onClick}
+      />
+    </Tooltip>
   );
 };
