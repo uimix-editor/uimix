@@ -35,7 +35,7 @@ export class ForeignComponentManager {
           link.remove();
         }
         this.components.clear();
-        projectState.project.colorTokens.codeColorTokens = [];
+        projectState.project.colorTokens.codeColorTokens.clear();
 
         for (const url of urls) {
           if (url.endsWith(".css") || url.startsWith("data:text/css")) {
