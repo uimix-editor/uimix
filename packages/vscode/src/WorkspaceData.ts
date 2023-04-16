@@ -9,7 +9,7 @@ import {
   codeAssetsDestination,
   codeAssetsJSName,
   codeAssetsCSSName,
-} from "uimix/src/cli/constants";
+} from "uimix/src/codeAssets/constants";
 
 let lastSaveTime = 0;
 
