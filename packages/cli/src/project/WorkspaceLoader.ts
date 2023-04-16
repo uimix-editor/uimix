@@ -187,7 +187,7 @@ export class WorkspaceLoader {
 
   private isSaving = false;
 
-  async save(filePaths?: string[]): Promise<void> {
+  async save(projectPathToSave?: string): Promise<void> {
     try {
       this.isSaving = true;
 
@@ -196,15 +196,16 @@ export class WorkspaceLoader {
       );
 
       for (const [projectPath, json] of this.jsons) {
+        if (projectPathToSave && projectPath !== projectPathToSave) {
+          continue;
+        }
+
         const { manifest, pages } = projectJSONToFiles(json);
 
         let projectSaved = false;
 
         for (const [pageName, pageJSON] of pages) {
           const pagePath = path.join(projectPath, pageName + ".uimix");
-          if (filePaths && !filePaths.includes(pagePath)) {
-            continue;
-          }
           await this.fileAccess.writeText(
             pagePath,
             formatJSON(JSON.stringify(pageJSON))
