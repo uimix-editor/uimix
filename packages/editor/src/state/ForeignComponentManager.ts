@@ -5,6 +5,7 @@ import type ReactDOM from "react-dom/client";
 import { projectState } from "./ProjectState";
 import * as CodeAsset from "@uimix/code-asset-types";
 import { Buffer } from "buffer";
+import { CodeColorToken } from "@uimix/model/src/models";
 
 export function foreignComponentKey(ref: { path: string; name: string }) {
   return `${ref.path}#${ref.name}`;
@@ -34,6 +35,7 @@ export class ForeignComponentManager {
           link.remove();
         }
         this.components.clear();
+        projectState.project.colorTokens.codeColorTokens = [];
 
         for (const url of urls) {
           if (url.endsWith(".css") || url.startsWith("data:text/css")) {
@@ -48,18 +50,24 @@ export class ForeignComponentManager {
               // @ts-ignore
               .eval(`import(${JSON.stringify(url)})`)
               .then(
-                async (mod: {
-                  React: typeof React;
-                  ReactDOM: typeof ReactDOM;
-                  components: CodeAsset.Component[];
-                }) => {
-                  for (const component of mod.components) {
-                    this.components.set(foreignComponentKey(component), {
-                      ...component,
-                      key: Math.random(),
-                    });
+                action(
+                  (mod: {
+                    React: typeof React;
+                    ReactDOM: typeof ReactDOM;
+                    components: CodeAsset.Component[];
+                    tokens: CodeAsset.DesignToken[];
+                  }) => {
+                    for (const component of mod.components) {
+                      this.components.set(foreignComponentKey(component), {
+                        ...component,
+                        key: Math.random(),
+                      });
+                    }
+                    projectState.project.colorTokens.codeColorTokens.push(
+                      ...mod.tokens.map((token) => new CodeColorToken(token))
+                    );
                   }
-                }
+                )
               );
           }
         }

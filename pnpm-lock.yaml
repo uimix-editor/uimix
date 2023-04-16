@@ -931,6 +931,9 @@ importers:
 
   packages/model:
     dependencies:
+      '@uimix/code-asset-types':
+        specifier: workspace:*
+        version: link:../code-asset-types
       '@uimix/foundation':
         specifier: workspace:*
         version: link:../foundation

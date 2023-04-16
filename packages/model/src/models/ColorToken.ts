@@ -6,6 +6,24 @@ import { ColorToken as ColorTokenJSON } from "../data/v1";
 import { Project } from "./Project";
 import { Page } from "./Page";
 import { ObjectData } from "./ObjectData";
+import * as CodeAsset from "@uimix/code-asset-types";
+import { makeObservable, observable } from "mobx";
+
+export class CodeColorToken {
+  constructor(token: CodeAsset.ColorToken) {
+    this.id = token.id;
+    this.name = token.name;
+    this.value = Color.from(token.value) ?? Color.black;
+  }
+
+  readonly id: string;
+  readonly name: string;
+  readonly value: Color;
+
+  get type(): "code" {
+    return "code";
+  }
+}
 
 export class ColorToken {
   constructor(project: Project, id: string) {
@@ -20,6 +38,10 @@ export class ColorToken {
   readonly id: string;
   readonly project: Project;
   readonly data: ObjectData<ColorTokenJSON>;
+
+  get type(): "normal" {
+    return "normal";
+  }
 
   get name(): string | undefined {
     return this.data.get("name");
@@ -58,6 +80,7 @@ export class ColorToken {
 export class ColorTokenMap {
   constructor(project: Project) {
     this.project = project;
+    makeObservable(this);
   }
 
   readonly project: Project;
@@ -84,6 +107,8 @@ export class ColorTokenMap {
   get all(): ColorToken[] {
     return [...this.data.keys()].map((id) => new ColorToken(this.project, id));
   }
+
+  readonly codeColorTokens = observable.array<CodeColorToken>();
 }
 
 export class ColorTokenList {
