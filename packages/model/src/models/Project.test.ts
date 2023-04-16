@@ -11,7 +11,7 @@ describe(Project.name, () => {
       const loader = await WorkspaceLoader.load(new NodeFileAccess(rootDir), {
         filePattern: "src/components.uimix",
       });
-      const projectJSON = loader.json;
+      const projectJSON = loader.rootProject.json;
 
       const project = new Project();
       project.loadJSON(projectJSON);
@@ -30,7 +30,7 @@ describe(Project.name, () => {
       const loader = await WorkspaceLoader.load(new NodeFileAccess(rootDir), {
         filePattern: "src/components.uimix",
       });
-      const projectJSON = loader.json;
+      const projectJSON = loader.rootProject.json;
 
       const project = new Project();
       project.loadJSON(projectJSON);

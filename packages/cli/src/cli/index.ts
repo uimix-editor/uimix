@@ -8,7 +8,7 @@ import { NodeFileAccess } from "../project/NodeFileAccess";
 import { buildCodeAssets } from "../codeAssets/build";
 
 async function compileProject(loader: WorkspaceLoader) {
-  const outFiles = await generateCode(loader.rootPath, loader.json);
+  const outFiles = await generateCode(loader.rootPath, loader.rootProject.json);
 
   for (const outFile of outFiles) {
     const outPath = path.join(loader.rootPath, outFile.filePath);

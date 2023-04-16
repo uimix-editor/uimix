@@ -2,7 +2,6 @@ import * as vscode from "vscode";
 import { WorkspaceLoader } from "uimix/src/project/WorkspaceLoader";
 import { FileAccess, Stats } from "uimix/src/project/FileAccess";
 import { ProjectData } from "@uimix/model/src/collaborative";
-import debounce from "just-debounce-it";
 import * as path from "path";
 import { getPageID } from "@uimix/model/src/data/util";
 import { codeAssetsDestination } from "uimix/src/codeAssets/constants";
@@ -154,17 +153,15 @@ export class WorkspaceData {
   }
 
   private updateData() {
-    for (const [projectPath, json] of this.loader.jsons) {
-      this.getDataForProject(projectPath).loadJSON(json);
+    for (const [projectPath, project] of this.loader.projects) {
+      this.getDataForProject(projectPath).loadJSON(project.json);
     }
   }
 
   save(uri: vscode.Uri) {
     const projectPath = this.loader.projectPathForFile(uri.fsPath);
-    this.loader.jsons.set(
-      projectPath,
-      this.getDataForProject(projectPath).toJSON()
-    );
+    this.loader.getOrCreateProject(projectPath).json =
+      this.getDataForProject(projectPath).toJSON();
     this.loader.save(projectPath);
   }
 
