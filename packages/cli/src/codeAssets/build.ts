@@ -37,6 +37,11 @@ export async function buildCodeAssets(
           if (id === resolvedVirtualModuleId) {
             const components = getComponents(rootPath, patterns);
 
+            console.log("Found Components:");
+            for (const component of components) {
+              console.log(`  ${component.name} (${component.path})`);
+            }
+
             const componentCodes = components.map((component) => {
               const json = JSON.stringify(component);
 
