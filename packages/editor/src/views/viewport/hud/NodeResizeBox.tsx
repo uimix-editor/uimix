@@ -23,7 +23,9 @@ class NodeResizeBoxState {
   private heightChanged = false;
 
   get selectedInstances(): Selectable[] {
-    return projectState.selectedSelectables;
+    return projectState.selectedSelectables.filter(
+      (s) => s.originalNode.type !== "component"
+    );
   }
 
   @computed get stroke(): string {
