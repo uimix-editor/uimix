@@ -134,18 +134,21 @@ export class WorkspaceLoader {
     let changed = false;
 
     for (const [projectPath, pagePaths] of filePathsForProject) {
-      let manifest: ProjectManifestJSON;
-      try {
-        manifest = ProjectManifestJSON.parse(
-          JSON.parse(
-            await this.fileAccess.readText(
-              path.join(projectPath, this.uimixProjectFile)
+      let manifest: ProjectManifestJSON = {};
+
+      const manifestPath = path.join(projectPath, this.uimixProjectFile);
+      if ((await this.fileAccess.stat(manifestPath))?.type === "file") {
+        try {
+          manifest = ProjectManifestJSON.parse(
+            JSON.parse(
+              await this.fileAccess.readText(
+                path.join(projectPath, this.uimixProjectFile)
+              )
             )
-          )
-        );
-      } catch (e) {
-        console.warn("cannot load uimix.json:", e);
-        manifest = {};
+          );
+        } catch (e) {
+          console.warn("cannot load uimix.json:", e);
+        }
       }
 
       const pages = new Map<string, PageJSON>();
