@@ -1,4 +1,4 @@
-export type Type =
+export type PropType =
   | {
       type: "string";
     }
@@ -12,7 +12,7 @@ export type Type =
 
 export interface Prop {
   name: string;
-  type: Type;
+  type: PropType;
 }
 
 export interface ForeignComponent {
@@ -26,4 +26,10 @@ export interface ForeignComponent {
 export interface ForeignComponentRenderer {
   render(props: Record<string, unknown>): Promise<void>;
   dispose(): void;
+}
+
+export interface ColorToken {
+  id: string;
+  name: string;
+  value: string;
 }
