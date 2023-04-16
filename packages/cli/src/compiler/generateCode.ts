@@ -8,7 +8,7 @@ import * as mime from "mime-types";
 
 export async function generateCode(
   rootPath: string,
-  manifestJSON: ProjectManifestJSON,
+  manifest: ProjectManifestJSON,
   projectJSON: ProjectJSON
 ): Promise<
   {
@@ -37,7 +37,9 @@ export async function generateCode(
 
   for (const page of project.pages.all) {
     const tsContent = formatTypeScript(
-      new ReactGenerator({ rootPath, page, imagesPath }).render().join("\n")
+      new ReactGenerator({ rootPath, manifest, page, imagesPath })
+        .render()
+        .join("\n")
     );
     const cssContent = new CSSGenerator(page).generate();
 
