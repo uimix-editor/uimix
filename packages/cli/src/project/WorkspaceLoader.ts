@@ -202,8 +202,6 @@ export class WorkspaceLoader {
 
         const { manifest, pages } = projectJSONToFiles(json);
 
-        let projectSaved = false;
-
         for (const [pageName, pageJSON] of pages) {
           const pagePath = path.join(projectPath, pageName + ".uimix");
           await this.fileAccess.writeText(
@@ -211,29 +209,26 @@ export class WorkspaceLoader {
             formatJSON(JSON.stringify(pageJSON))
           );
           pagePathsToDelete.delete(pagePath);
-          projectSaved = true;
         }
 
-        if (projectSaved) {
-          const manifestPath = path.join(projectPath, this.uimixProjectFile);
+        const manifestPath = path.join(projectPath, this.uimixProjectFile);
 
-          let parsed: ProjectManifestJSON;
-          try {
-            parsed = JSON.parse(
-              await this.fileAccess.readText(manifestPath)
-            ) as ProjectManifestJSON;
-          } catch (e) {
-            parsed = {};
-          }
-          parsed.prebuiltAssets = manifest.prebuiltAssets;
-
-          // TODO: avoid overwriting malformed uimix.json
-
-          await this.fileAccess.writeText(
-            manifestPath,
-            formatJSON(JSON.stringify(parsed))
-          );
+        let parsed: ProjectManifestJSON;
+        try {
+          parsed = JSON.parse(
+            await this.fileAccess.readText(manifestPath)
+          ) as ProjectManifestJSON;
+        } catch (e) {
+          parsed = {};
         }
+        parsed.prebuiltAssets = manifest.prebuiltAssets;
+
+        // TODO: avoid overwriting malformed uimix.json
+
+        await this.fileAccess.writeText(
+          manifestPath,
+          formatJSON(JSON.stringify(parsed))
+        );
       }
 
       for (const pagePath of pagePathsToDelete) {
