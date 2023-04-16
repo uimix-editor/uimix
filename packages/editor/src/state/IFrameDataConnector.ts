@@ -41,8 +41,6 @@ export class IFrameDataConnector {
           state.undoManager.clear();
         }),
         updateCodeAssets: action(async (assets) => {
-          // TODO
-          console.log(assets);
           this.state.project.localCodeAssets = assets;
         }),
       }
@@ -65,8 +63,6 @@ export class IFrameDataConnector {
 
     void this.rpc.remote.getCodeAssets().then((assets) => {
       if (assets) {
-        // TODO
-        console.log(assets);
         this.state.project.localCodeAssets = assets;
       }
     });

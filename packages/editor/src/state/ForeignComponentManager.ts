@@ -29,8 +29,6 @@ export class ForeignComponentManager {
           : []),
       ],
       action((urls) => {
-        console.log("update", urls);
-
         // unload
         for (const link of this.loadedLinks) {
           link.remove();

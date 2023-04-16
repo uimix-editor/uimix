@@ -17,7 +17,6 @@ export async function buildCodeAssets(
     }
     return path.join("/", pattern);
   });
-  console.log(patternsFromRoot);
 
   const resolvedVirtualModuleId = "\0:virtual-entry";
 
@@ -30,7 +29,6 @@ export async function buildCodeAssets(
       {
         name: "my-plugin", // required, will show up in warnings and errors
         resolveId(id) {
-          console.log(id);
           if (id === path.resolve(rootPath, ':virtual-entry"')) {
             return resolvedVirtualModuleId;
           }

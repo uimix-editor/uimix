@@ -94,10 +94,6 @@ export class CustomDocument implements vscode.CustomDocument {
 
     const unsubscribeAssetChanges = this.workspaceData.onDidChangeCodeAssets(
       async (projectPath) => {
-        console.log(
-          projectPath,
-          this.workspaceData.projectPathForFile(this.uri)
-        );
         if (projectPath !== this.workspaceData.projectPathForFile(this.uri)) {
           return;
         }
@@ -146,7 +142,6 @@ export class CustomDocument implements vscode.CustomDocument {
         css: texts[1],
       };
     } catch {
-      console.log("no assets");
       return undefined;
     }
   }

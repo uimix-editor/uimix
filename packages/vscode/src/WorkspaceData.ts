@@ -110,7 +110,6 @@ export class WorkspaceData {
         ),
         ""
       );
-      console.log("code assets changed", projectPath);
       this._onDidChangeCodeAssets.fire(projectPath);
     };
     this.codeAssetsWatcher.onDidCreate(onChange);
