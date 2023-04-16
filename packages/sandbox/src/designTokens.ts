@@ -12,7 +12,7 @@ function flattenColors(
     } else {
       result.push(
         ...flattenColors(value).map((v) => ({
-          name: `${name}-${v.name}`,
+          name: `${name}/${v.name}`,
           value: v.value,
         }))
       );
@@ -38,7 +38,7 @@ const tokens: DesignToken[] = [
   // },
   ...flattenColors(colors).map(({ name, value }) => ({
     type: "color",
-    id: `@uimix/sandbox/${name}`,
+    id: name,
     name,
     value,
   })),
