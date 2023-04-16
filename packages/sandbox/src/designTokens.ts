@@ -1,17 +1,7 @@
+import { DesignTokens } from "@uimix/code-asset-types";
 import colors from "tailwindcss/colors";
 
 type DefaultColors = typeof colors;
-
-interface ColorToken {
-  $value: string;
-  $type: "color";
-}
-
-type DesignToken = ColorToken;
-
-interface DesignTokens {
-  [key: string]: DesignToken | DesignTokens;
-}
 
 function colorsToDesignTokens(colors: DefaultColors): DesignTokens {
   const designTokens: DesignTokens = {};

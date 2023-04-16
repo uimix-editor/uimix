@@ -28,11 +28,15 @@ export interface ComponentRenderer {
   dispose(): void;
 }
 
+// W3C design tokens https://design-tokens.github.io/community-group/format
+
 export interface ColorToken {
-  type: "color";
-  id: string;
-  name: string;
-  value: string;
+  $value: string;
+  $type: "color";
 }
 
-export type DesignToken = ColorToken; // TODO: add more
+export type DesignToken = ColorToken;
+
+export interface DesignTokens {
+  [key: string]: DesignToken | DesignTokens;
+}
