@@ -46,7 +46,10 @@ async function compileCommand(
 
   const resolvedVirtualModuleId = "\0:virtual-entry";
 
+  // TODO: make build options configurable
+
   await build({
+    configFile: false,
     root: rootPath,
     plugins: [
       {
@@ -80,7 +83,7 @@ async function compileCommand(
           }
         },
       },
-      react({ exclude: "**/*" }),
+      react(),
     ],
     build: {
       lib: {

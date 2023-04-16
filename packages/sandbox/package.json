@@ -16,8 +16,7 @@
     "dev:vite": "vite --port 5174",
     "preview": "vite preview",
     "storybook": "storybook dev -p 6006",
-    "test": "vitest run",
-    "uimix": "uimix --port 4001"
+    "test": "vitest run"
   },
   "dependencies": {
     "react": "^18.2.0",
