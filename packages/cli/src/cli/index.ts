@@ -6,7 +6,7 @@ import mkdirp from "mkdirp";
 import react from "@vitejs/plugin-react";
 import { WorkspaceLoader } from "../project/WorkspaceLoader";
 import { NodeFileAccess } from "../project/NodeFileAccess";
-import { Plugin, build } from "vite";
+import { build } from "vite";
 import { getComponents } from "./getComponents";
 import { codeAssetsDestination } from "./constants";
 
