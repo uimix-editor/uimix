@@ -88,11 +88,14 @@ export class ColorTokenMap {
     return ObservableYMap.get(this.project.data.colors);
   }
 
-  get(id: string): ColorToken | undefined {
-    if (!this.data.has(id)) {
-      return undefined;
+  get(id: string): ColorToken | CodeColorToken | undefined {
+    const codeToken = this.codeColorTokens.get(id);
+    if (codeToken) {
+      return codeToken;
     }
-    return new ColorToken(this.project, id);
+    if (this.data.has(id)) {
+      return new ColorToken(this.project, id);
+    }
   }
 
   resolve(id: string): string {
@@ -107,7 +110,7 @@ export class ColorTokenMap {
     return [...this.data.keys()].map((id) => new ColorToken(this.project, id));
   }
 
-  readonly codeColorTokens = observable.array<CodeColorToken>();
+  readonly codeColorTokens = observable.map<string, CodeColorToken>();
 }
 
 export class ColorTokenList {

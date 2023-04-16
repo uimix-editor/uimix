@@ -72,7 +72,7 @@ export const ColorTokenPopover: React.FC<{
               <div className="text-macaron-label font-medium">Code</div>
             </div>
             <div className="flex gap-1 flex-wrap">
-              {projectState.project.colorTokens.codeColorTokens
+              {[...projectState.project.colorTokens.codeColorTokens.values()]
                 .filter((token) => queryTester.test(token.name ?? ""))
                 .map((token) => (
                   <ColorTokenIcon

@@ -63,9 +63,15 @@ export class ForeignComponentManager {
                         key: Math.random(),
                       });
                     }
-                    projectState.project.colorTokens.codeColorTokens.push(
-                      ...mod.tokens.map((token) => new CodeColorToken(token))
-                    );
+
+                    for (const token of mod.tokens) {
+                      if (token.type === "color") {
+                        projectState.project.colorTokens.codeColorTokens.set(
+                          token.id,
+                          new CodeColorToken(token)
+                        );
+                      }
+                    }
                   }
                 )
               );
