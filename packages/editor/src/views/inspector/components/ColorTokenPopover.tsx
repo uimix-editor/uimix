@@ -3,7 +3,7 @@ import { Tooltip, IconButton } from "@uimix/foundation/src/components";
 import { action } from "mobx";
 import { SearchInput } from "../../outline/SearchInput";
 import { projectState } from "../../../state/ProjectState";
-import { ColorToken, ColorRef } from "@uimix/model/src/models";
+import { ColorToken, ColorRef, CodeColorToken } from "@uimix/model/src/models";
 import { Color } from "@uimix/foundation/src/utils/Color";
 import { useState } from "react";
 import { twMerge } from "tailwind-merge";
@@ -11,13 +11,13 @@ import { QueryTester } from "@uimix/foundation/src/utils/QueryTester";
 
 export const ColorTokenPopover: React.FC<{
   value?: ColorRef;
-  onChange: (token: ColorToken) => void;
+  onChange: (token: ColorToken | CodeColorToken) => void;
   children: React.ReactNode;
 }> = ({ value, onChange, children }) => {
   const [searchText, setSearchText] = useState("");
   const queryTester = new QueryTester(searchText);
 
-  const isTokenSelected = (token: ColorToken) => {
+  const isTokenSelected = (token: ColorToken | CodeColorToken) => {
     return value?.value.type === "token" && value?.value.value.id === token.id;
   };
 
@@ -67,6 +67,23 @@ export const ColorTokenPopover: React.FC<{
                   />
                 ))}
             </div>
+
+            <div className="flex items-center justify-between mb-2">
+              <div className="text-macaron-label font-medium">Code</div>
+            </div>
+            <div className="flex gap-1 flex-wrap">
+              {projectState.project.colorTokens.codeColorTokens
+                .filter((token) => queryTester.test(token.name ?? ""))
+                .map((token) => (
+                  <ColorTokenIcon
+                    token={token}
+                    selected={isTokenSelected(token)}
+                    onClick={action(() => {
+                      onChange(token);
+                    })}
+                  />
+                ))}
+            </div>
           </div>
         </RadixPopover.Content>
       </RadixPopover.Portal>
@@ -75,7 +92,7 @@ export const ColorTokenPopover: React.FC<{
 };
 
 const ColorTokenIcon: React.FC<{
-  token: ColorToken;
+  token: ColorToken | CodeColorToken;
   selected: boolean;
   onClick: () => void;
 }> = ({ token, selected, onClick }) => {

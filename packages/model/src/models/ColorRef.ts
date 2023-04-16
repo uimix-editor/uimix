@@ -1,10 +1,10 @@
 import { Color } from "@uimix/foundation/src/utils/Color";
 import { Color as ColorJSON } from "../data/v1";
-import { ColorToken } from "./ColorToken";
+import { CodeColorToken, ColorToken } from "./ColorToken";
 import { Project } from "./Project";
 
 export class ColorRef {
-  constructor(value: Color | ColorToken) {
+  constructor(value: Color | ColorToken | CodeColorToken) {
     if (value instanceof Color) {
       this.value = {
         type: "color",
@@ -53,6 +53,6 @@ export class ColorRef {
       }
     | {
         type: "token";
-        value: ColorToken;
+        value: ColorToken | CodeColorToken;
       };
 }
