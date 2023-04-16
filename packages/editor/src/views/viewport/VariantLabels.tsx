@@ -82,11 +82,14 @@ const FrameLabel: React.FC<{
     projectState.scroll.documentToViewport
   );
 
+  const selectedOrHovered =
+    selectable.selected || viewportState.hoveredSelectable === selectable;
+
   return (
     <div
       className={twMerge(
         "absolute text-macaron-base text-neutral-500 font-medium flex gap-1",
-        selectable.selected && "text-macaron-active"
+        selectedOrHovered && "text-macaron-active"
       )}
       style={{
         left: `${bboxInView.left}px`,
@@ -114,11 +117,14 @@ const ComponentSection: React.FC<{
   }
   const bboxInView = bbox.transform(projectState.scroll.documentToViewport);
 
+  const selectedOrHovered =
+    component.selected || viewportState.hoveredSelectable === component;
+
   return (
     <div
       className={twMerge(
         "border-2 border-neutral-300 border-dotted rounded-md",
-        component.selected && "border-macaron-active"
+        selectedOrHovered && "border-macaron-active"
       )}
       style={{
         position: "absolute",
@@ -216,11 +222,14 @@ const ComponentLabel: React.FC<{
   }
   const bboxInView = bbox.transform(projectState.scroll.documentToViewport);
 
+  const selectedOrHovered =
+    component.selected || viewportState.hoveredSelectable === component;
+
   return (
     <div
       className={twMerge(
         "absolute text-macaron-base text-neutral-500 font-medium flex gap-1",
-        component.selected && "text-macaron-active"
+        selectedOrHovered && "text-macaron-active"
       )}
       style={{
         left: `${bboxInView.left - componentSectionPadding}px`,
