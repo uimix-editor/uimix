@@ -7,7 +7,7 @@ import { ForeignComponentManager } from "../../../state/ForeignComponentManager"
 import { Input, Select, Tooltip } from "@uimix/foundation/src/components";
 import { ForeignComponentRef } from "@uimix/model/src/data/v1";
 import { action } from "mobx";
-import { Prop } from "../../../types/ForeignComponent";
+import { Prop } from "@uimix/asset-types";
 
 export const PropertyPane: React.FC = observer(function PropertyPane() {
   const selectables = projectState.selectedSelectables.filter(

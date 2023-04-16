@@ -84,7 +84,6 @@ exports[`Project > loadJSON > works 3`] = `
 
 exports[`Project > loadJSON > works 4`] = `
 [
-  "https://cdn.jsdelivr.net/gh/uimix-editor/uimix@ba0157d5/packages/sandbox/dist-components/components.js",
-  "https://cdn.jsdelivr.net/gh/uimix-editor/uimix@ba0157d5/packages/sandbox/dist-components/style.css",
+  "@uimix/mui-assets",
 ]
 `;

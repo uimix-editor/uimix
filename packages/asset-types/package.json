@@ -1,0 +1,13 @@
+{
+  "name": "@uimix/asset-types",
+  "license": "MIT",
+  "type": "module",
+  "main": "src/index.ts",
+  "scripts": {
+    "lint": "eslint src"
+  },
+  "dependencies": {},
+  "devDependencies": {
+    "typescript": "^5.0.4"
+  }
+}

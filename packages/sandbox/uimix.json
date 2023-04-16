@@ -1,6 +1,7 @@
 {
-  "componentURLs": [
-    "https://cdn.jsdelivr.net/gh/uimix-editor/uimix@ba0157d5/packages/sandbox/dist-components/components.js",
-    "https://cdn.jsdelivr.net/gh/uimix-editor/uimix@ba0157d5/packages/sandbox/dist-components/style.css"
-  ]
+  "prebuiltAssets": ["@uimix/mui-assets"],
+  "components": {
+    "react": ["./src/stories/*.tsx", "!./src/stories/*.stories.tsx"]
+  },
+  "designTokens": "./src/designTokens/*.json"
 }

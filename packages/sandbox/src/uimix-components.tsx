@@ -5,7 +5,7 @@ import { Header } from "./stories/Header";
 import type {
   ForeignComponent,
   ForeignComponentRenderer,
-} from "../../editor/src/types/ForeignComponent";
+} from "@uimix/asset-types";
 
 class ReactRenderer implements ForeignComponentRenderer {
   constructor(element: HTMLElement, Component: React.ElementType) {

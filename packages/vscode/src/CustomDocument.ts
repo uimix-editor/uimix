@@ -8,6 +8,9 @@ import {
 import { RPC } from "@uimix/typed-rpc";
 import * as Y from "yjs";
 import debounce from "just-debounce-it";
+import path from "path";
+import { codeAssetsDestination } from "uimix/src/codeAssets/constants";
+import { CodeAssets } from "@uimix/model/src/models/CodeAssets";
 
 export class CustomDocument implements vscode.CustomDocument {
   constructor(
@@ -85,12 +88,27 @@ export class CustomDocument implements vscode.CustomDocument {
         setClipboard: async () => {
           throw new Error("should be intercepted in webview.");
         },
+        getCodeAssets: async () => this.loadCodeAssets(),
+      }
+    );
+
+    const unsubscribeAssetChanges = this.workspaceData.onDidChangeCodeAssets(
+      async (projectPath) => {
+        if (projectPath !== this.workspaceData.projectPathForFile(this.uri)) {
+          return;
+        }
+
+        const codeAssets = await this.loadCodeAssets();
+        if (codeAssets) {
+          await rpc.remote.updateCodeAssets(codeAssets);
+        }
       }
     );
 
     webviewPanel.onDidDispose(() => {
       rpc.dispose();
       unsubscribeDoc?.();
+      unsubscribeAssetChanges.dispose();
     });
   }
 
@@ -98,6 +116,35 @@ export class CustomDocument implements vscode.CustomDocument {
     this.workspaceData.save(this.uri);
     console.log("save");
   }, 500);
+
+  private async loadCodeAssets(): Promise<CodeAssets | undefined> {
+    try {
+      const assetURLs = [
+        codeAssetsDestination.js,
+        codeAssetsDestination.css,
+      ].map((assetName) =>
+        vscode.Uri.file(
+          path.join(
+            this.workspaceData.rootFolder.uri.fsPath,
+            codeAssetsDestination.directory,
+            assetName
+          )
+        )
+      );
+
+      const datas = await Promise.all(
+        assetURLs.map((assetURL) => vscode.workspace.fs.readFile(assetURL))
+      );
+      const texts = datas.map((data) => Buffer.from(data).toString());
+
+      return {
+        js: texts[0],
+        css: texts[1],
+      };
+    } catch {
+      return undefined;
+    }
+  }
 
   private getHTMLForWebview(webview: vscode.Webview): string {
     const nonce = getNonce();

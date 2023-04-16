@@ -40,6 +40,9 @@ export class IFrameDataConnector {
           state.pageID = pageID ?? state.project.pages.all[0]?.id;
           state.undoManager.clear();
         }),
+        updateCodeAssets: action(async (assets) => {
+          this.state.project.localCodeAssets = assets;
+        }),
       }
     );
 
@@ -57,6 +60,12 @@ export class IFrameDataConnector {
         void this.rpc.remote.setClipboard(type, text);
       },
     };
+
+    void this.rpc.remote.getCodeAssets().then((assets) => {
+      if (assets) {
+        this.state.project.localCodeAssets = assets;
+      }
+    });
   }
 
   private state: ProjectState;

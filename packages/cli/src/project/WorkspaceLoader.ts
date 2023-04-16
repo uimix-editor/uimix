@@ -134,17 +134,21 @@ export class WorkspaceLoader {
     let changed = false;
 
     for (const [projectPath, pagePaths] of filePathsForProject) {
-      let manifest: ProjectManifestJSON;
-      try {
-        manifest = ProjectManifestJSON.parse(
-          JSON.parse(
-            await this.fileAccess.readText(
-              path.join(projectPath, this.uimixProjectFile)
+      let manifest: ProjectManifestJSON = {};
+
+      const manifestPath = path.join(projectPath, this.uimixProjectFile);
+      if ((await this.fileAccess.stat(manifestPath))?.type === "file") {
+        try {
+          manifest = ProjectManifestJSON.parse(
+            JSON.parse(
+              await this.fileAccess.readText(
+                path.join(projectPath, this.uimixProjectFile)
+              )
             )
-          )
-        );
-      } catch {
-        manifest = { componentURLs: [] };
+          );
+        } catch (e) {
+          console.warn("cannot load uimix.json:", e);
+        }
       }
 
       const pages = new Map<string, PageJSON>();
@@ -210,9 +214,23 @@ export class WorkspaceLoader {
         }
 
         if (projectSaved) {
+          const manifestPath = path.join(projectPath, this.uimixProjectFile);
+
+          let parsed: ProjectManifestJSON;
+          try {
+            parsed = JSON.parse(
+              await this.fileAccess.readText(manifestPath)
+            ) as ProjectManifestJSON;
+          } catch (e) {
+            parsed = {};
+          }
+          parsed.prebuiltAssets = manifest.prebuiltAssets;
+
+          // TODO: avoid overwriting malformed uimix.json
+
           await this.fileAccess.writeText(
-            path.join(projectPath, this.uimixProjectFile),
-            formatJSON(JSON.stringify(manifest))
+            manifestPath,
+            formatJSON(JSON.stringify(parsed))
           );
         }
       }
@@ -251,7 +269,7 @@ export function projectJSONToFiles(projectJSON: ProjectJSON): {
   pages: Map<string, PageJSON>;
 } {
   const manifest: ProjectManifestJSON = {
-    componentURLs: projectJSON.componentURLs,
+    prebuiltAssets: projectJSON.componentURLs,
   };
 
   const hierarchicalNodes = toHierarchicalNodeJSONs(projectJSON.nodes);
@@ -380,7 +398,7 @@ export function filesToProjectJSON(
   return {
     nodes,
     styles,
-    componentURLs: manifest.componentURLs,
+    componentURLs: manifest.prebuiltAssets,
     images,
     colors,
   };

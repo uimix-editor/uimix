@@ -1,10 +1,11 @@
 import { cac } from "cac";
-import { generateCode } from "./compiler/generateCode";
+import { generateCode } from "../compiler/generateCode";
 import * as fs from "fs";
 import * as path from "path";
 import mkdirp from "mkdirp";
-import { WorkspaceLoader } from "./project/WorkspaceLoader";
-import { NodeFileAccess } from "./project/NodeFileAccess";
+import { WorkspaceLoader } from "../project/WorkspaceLoader";
+import { NodeFileAccess } from "../project/NodeFileAccess";
+import { buildCodeAssets } from "../codeAssets/build";
 
 async function compileProject(loader: WorkspaceLoader) {
   const outFiles = await generateCode(loader.rootPath, loader.json);
@@ -30,6 +31,7 @@ async function compileCommand(
   }
 
   void compileProject(loader);
+  void buildCodeAssets(rootPath, options);
 }
 
 const cli = cac("uimix");
