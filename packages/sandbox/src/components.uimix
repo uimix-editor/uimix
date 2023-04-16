@@ -183,10 +183,7 @@
         "y": { "type": "start", "start": 400 }
       },
       "fills": [
-        {
-          "type": "solid",
-          "color": { "type": "token", "id": "@uimix/sandbox/accent" }
-        }
+        { "type": "solid", "color": { "type": "token", "id": "blue/500" } }
       ]
     },
     "1Bvi2z3UVsEskiSt2TcdL7:1Bvi2z3UGTM64JtRT7Qc1S": {
