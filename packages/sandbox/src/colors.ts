@@ -1,5 +1,6 @@
 import { ColorToken } from "@uimix/asset-types";
 
+// TODO: support W3C design tokens?
 export const colors: ColorToken[] = [
   {
     id: "@uimix/sandbox/accent",
