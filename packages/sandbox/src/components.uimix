@@ -182,7 +182,12 @@
         "x": { "type": "start", "start": 200 },
         "y": { "type": "start", "start": 400 }
       },
-      "fills": [{ "type": "solid", "color": "#3B82F6" }]
+      "fills": [
+        {
+          "type": "solid",
+          "color": { "type": "token", "id": "@uimix/sandbox/accent" }
+        }
+      ]
     },
     "1Bvi2z3UVsEskiSt2TcdL7:1Bvi2z3UGTM64JtRT7Qc1S": {
       "fills": [{ "type": "solid", "color": "#FFFFFF" }]
