@@ -49,7 +49,9 @@ export const ColorTokenListPane = observer(() => {
               list.map((item) => projectState.project.colorTokens.get(item.id))
             );
             for (const [i, token] of newTokens.entries()) {
-              token.index = i;
+              if (token.type === "normal") {
+                token.index = i;
+              }
             }
             projectState.undoManager.stopCapturing();
           })}
