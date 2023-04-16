@@ -30,13 +30,20 @@ export class ForeignComponentManager {
       ],
       action((urls) => {
         console.log("update", urls);
-        // TODO: unload
+
+        // unload
+        for (const link of this.loadedLinks) {
+          link.remove();
+        }
+        this.components.clear();
+
         for (const url of urls) {
           if (url.endsWith(".css") || url.startsWith("data:text/css")) {
-            window.document.head.insertAdjacentHTML(
-              "beforeend",
-              `<link rel="stylesheet" href=${JSON.stringify(url)}>`
-            );
+            const link = window.document.createElement("link");
+            link.rel = "stylesheet";
+            link.href = url;
+            window.document.head.appendChild(link);
+            this.loadedLinks.push(link);
           } else {
             // eslint-disable-next-line
             void window
@@ -67,6 +74,7 @@ export class ForeignComponentManager {
   readonly components = observable.map<string, ForeignComponent>([], {
     deep: false,
   });
+  readonly loadedLinks: HTMLLinkElement[] = [];
 
   get(ref: ForeignComponentRef): ForeignComponent | undefined {
     return this.components.get(foreignComponentKey(ref));

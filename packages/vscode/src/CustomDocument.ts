@@ -14,6 +14,7 @@ import {
   codeAssetsJSName,
   codeAssetsCSSName,
 } from "uimix/src/cli/constants";
+import { CodeAssets } from "@uimix/model/src/models/CodeAssets";
 
 export class CustomDocument implements vscode.CustomDocument {
   constructor(
@@ -91,40 +92,12 @@ export class CustomDocument implements vscode.CustomDocument {
         setClipboard: async () => {
           throw new Error("should be intercepted in webview.");
         },
-        getCodeAssets: async () => {
-          try {
-            const assetURLs = [codeAssetsJSName, codeAssetsCSSName].map(
-              (assetName) =>
-                vscode.Uri.file(
-                  path.join(
-                    this.workspaceData.rootFolder.uri.fsPath,
-                    codeAssetsDestination,
-                    assetName
-                  )
-                )
-            );
-
-            const datas = await Promise.all(
-              assetURLs.map((assetURL) =>
-                vscode.workspace.fs.readFile(assetURL)
-              )
-            );
-            const texts = datas.map((data) => Buffer.from(data).toString());
-
-            return {
-              js: texts[0],
-              css: texts[1],
-            };
-          } catch {
-            console.log("no assets");
-            return undefined;
-          }
-        },
+        getCodeAssets: async () => this.loadCodeAssets(),
       }
     );
 
     const unsubscribeAssetChanges = this.workspaceData.onDidChangeCodeAssets(
-      (projectPath) => {
+      async (projectPath) => {
         console.log(
           projectPath,
           this.workspaceData.projectPathForFile(this.uri)
@@ -132,8 +105,11 @@ export class CustomDocument implements vscode.CustomDocument {
         if (projectPath !== this.workspaceData.projectPathForFile(this.uri)) {
           return;
         }
-        console.log("TODO: update assets");
-        // TODO: debounce and update assets
+
+        const codeAssets = await this.loadCodeAssets();
+        if (codeAssets) {
+          await rpc.remote.updateCodeAssets(codeAssets);
+        }
       }
     );
 
@@ -148,6 +124,33 @@ export class CustomDocument implements vscode.CustomDocument {
     this.workspaceData.save(this.uri);
     console.log("save");
   }, 500);
+
+  private async loadCodeAssets(): Promise<CodeAssets | undefined> {
+    try {
+      const assetURLs = [codeAssetsJSName, codeAssetsCSSName].map((assetName) =>
+        vscode.Uri.file(
+          path.join(
+            this.workspaceData.rootFolder.uri.fsPath,
+            codeAssetsDestination,
+            assetName
+          )
+        )
+      );
+
+      const datas = await Promise.all(
+        assetURLs.map((assetURL) => vscode.workspace.fs.readFile(assetURL))
+      );
+      const texts = datas.map((data) => Buffer.from(data).toString());
+
+      return {
+        js: texts[0],
+        css: texts[1],
+      };
+    } catch {
+      console.log("no assets");
+      return undefined;
+    }
+  }
 
   private getHTMLForWebview(webview: vscode.Webview): string {
     const nonce = getNonce();
