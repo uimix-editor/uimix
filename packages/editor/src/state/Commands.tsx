@@ -538,6 +538,10 @@ class Commands {
   };
 
   @computed get nodeMenu(): MenuItemDef[] {
+    const otherPages = projectState.project.pages.all.filter(
+      (page) => page !== projectState.page
+    );
+
     return [
       this.createComponentCommand,
       { type: "separator" },
@@ -565,7 +569,7 @@ class Commands {
       {
         type: "submenu",
         text: "Move to Page",
-        children: projectState.project.pages.all.map((page): MenuItemDef => {
+        children: otherPages.map((page): MenuItemDef => {
           return {
             type: "command",
             text: page.filePath,
