@@ -7,6 +7,35 @@ import {
 import { kebabCase } from "lodash-es";
 import * as CSS from "csstype";
 import { Page } from "@uimix/model/src/models/Page";
+import * as CodeAsset from "@uimix/code-asset-types";
+
+function isDesignToken(
+  value: CodeAsset.DesignToken | CodeAsset.DesignTokens
+): value is CodeAsset.DesignToken {
+  return value.$type !== undefined;
+}
+
+function getColorToken(
+  designTokens: CodeAsset.DesignTokens,
+  path: string[]
+): CodeAsset.ColorToken | undefined {
+  if (path.length === 0) {
+    return undefined;
+  }
+
+  const child = designTokens[path[0]];
+  if (!child) {
+    return;
+  }
+
+  if (path.length > 1 && !isDesignToken(child)) {
+    return getColorToken(child, path.slice(1));
+  }
+
+  if (isDesignToken(child) && child.$type === "color") {
+    return child;
+  }
+}
 
 const baseCSS = [
   `box-sizing: border-box;`,
@@ -15,9 +44,11 @@ const baseCSS = [
 
 export class CSSGenerator {
   page: Page;
+  designTokens: CodeAsset.DesignTokens;
 
-  constructor(page: Page) {
+  constructor(page: Page, designTokens: CodeAsset.DesignTokens) {
     this.page = page;
+    this.designTokens = designTokens;
   }
 
   generate(): string {
@@ -40,8 +71,9 @@ export class CSSGenerator {
       css = buildNodeCSS(
         selectable.node.type,
         selectable.style,
-        // TODO: resolve code color tokens
-        (tokenID) => selectable.project.colorTokens.resolve(tokenID),
+        (tokenID) =>
+          getColorToken(this.designTokens, tokenID.split("/"))?.$value ??
+          selectable.project.colorTokens.resolve(tokenID),
         parentLayoutType
       ) as CSS.Properties;
 

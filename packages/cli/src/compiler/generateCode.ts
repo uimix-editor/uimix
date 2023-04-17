@@ -31,7 +31,8 @@ export async function generateCode(
   const codeAssetJS: {
     tokens: DesignTokens;
   } = await import(codeAssetJSPath);
-  console.log(codeAssetJS.tokens);
+  const designTokens = codeAssetJS.tokens;
+  console.log(designTokens);
 
   const imagesPath = ".uimix/images";
 
@@ -55,7 +56,7 @@ export async function generateCode(
         .render()
         .join("\n")
     );
-    const cssContent = new CSSGenerator(page).generate();
+    const cssContent = new CSSGenerator(page, designTokens).generate();
 
     results.push(
       {
