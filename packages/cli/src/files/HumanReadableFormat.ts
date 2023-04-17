@@ -8,7 +8,13 @@ export type StyleProps = Partial<StyleJSON> & {
 
 export interface PageNode {
   type: "page";
-  children: (InstanceNode | FrameNode | LeafNode | ComponentNode)[];
+  children: (
+    | InstanceNode
+    | FrameNode
+    | LeafNode
+    | ComponentNode
+    | ColorTokenNode
+  )[];
 }
 
 export interface ComponentNode {
@@ -48,6 +54,14 @@ export interface OverrideNode {
   props: { id: string } & StyleProps;
 }
 
+export interface ColorTokenNode {
+  type: "colorToken";
+  props: {
+    id: string;
+    value: string;
+  };
+}
+
 export type Node =
   | PageNode
   | ComponentNode
@@ -55,7 +69,8 @@ export type Node =
   | InstanceNode
   | FrameNode
   | LeafNode
-  | OverrideNode;
+  | OverrideNode
+  | ColorTokenNode;
 
 export function stringifyAsJSX(node: Node): string {
   const propText = Object.entries("props" in node ? node.props : {})

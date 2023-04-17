@@ -1,7 +1,7 @@
 import * as HumanReadable from "./HumanReadableFormat";
 import { Page } from "@uimix/model/src/models/Page";
 import { Component } from "@uimix/model/src/models/Component";
-import { compact, over } from "lodash-es";
+import { compact } from "lodash-es";
 import { StyleJSON, VariantCondition } from "@uimix/model/src/data/v1";
 import { Selectable } from "@uimix/model/src/models/Selectable";
 
@@ -16,9 +16,20 @@ export class PageFileEmitter {
     const components = this.page.components;
     // TODO: non-component nodes
 
+    const colorTokens = this.page.colorTokens;
+
     return {
       type: "page",
-      children: components.map((c) => new ComponentEmitter(c).emit()),
+      children: [
+        ...components.map((c) => new ComponentEmitter(c).emit()),
+        ...colorTokens.all.map((token) => ({
+          type: "colorToken" as const,
+          props: {
+            id: token.name ?? "",
+            value: token.value?.toString() ?? "",
+          },
+        })),
+      ],
     };
   }
 }
