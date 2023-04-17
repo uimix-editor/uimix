@@ -1,3 +1,5 @@
+import { lowerFirst, upperFirst } from "lodash-es";
+
 export function incrementAlphanumeric(str: string): string {
   const numMatches = /[1-9][0-9]*$/.exec(str);
   if (numMatches) {
@@ -86,6 +88,13 @@ export function generateJSIdentifier(name: string): string {
   return result;
 }
 
+export function generateLowerJSIdentifier(name: string): string {
+  return lowerFirst(generateJSIdentifier(name));
+}
+export function generateUpperJSIdentifier(name: string): string {
+  return upperFirst(generateJSIdentifier(name));
+}
+
 interface NodeLike {
   name?: string;
   id: string;
@@ -116,8 +125,4 @@ export function generateRefIDs(rootNode: NodeLike): Map<string, string> {
   }
 
   return refIDs;
-}
-
-function lowerFirst(str: string) {
-  return str.charAt(0).toLowerCase() + str.slice(1);
 }

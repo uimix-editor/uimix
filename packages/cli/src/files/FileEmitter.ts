@@ -4,6 +4,7 @@ import { Component } from "@uimix/model/src/models/Component";
 import { compact } from "lodash-es";
 import { StyleJSON, VariantCondition } from "@uimix/model/src/data/v1";
 import { Selectable } from "@uimix/model/src/models/Selectable";
+import { generateLowerJSIdentifier } from "@uimix/foundation/src/utils/Name";
 
 export class PageFileEmitter {
   constructor(page: Page) {
@@ -25,7 +26,8 @@ export class PageFileEmitter {
         ...colorTokens.all.map((token) => ({
           type: "colorToken" as const,
           props: {
-            id: token.name ?? "",
+            id: generateLowerJSIdentifier(token.name ?? ""),
+            name: token.name,
             value: token.value?.toString() ?? "",
           },
         })),
