@@ -36,53 +36,57 @@ export const ColorTokenPopover: React.FC<{
             value={searchText}
             onChangeValue={setSearchText}
           />
-          <div className="w-64 p-3 max-h-80 overflow-auto">
-            <div className="flex items-center justify-between mb-2">
-              <div className="text-macaron-label font-medium">
-                This Document
+          <div className="w-64 p-3 max-h-80 overflow-auto flex flex-col gap-2">
+            <div className="flex flex-col gap-2">
+              <div className="flex items-center justify-between">
+                <div className="text-macaron-label font-medium">
+                  This Document
+                </div>
+                <IconButton
+                  icon="material-symbols:add"
+                  onClick={action(() => {
+                    const colorTokens = projectState.page?.colorTokens;
+                    if (!colorTokens) return;
+                    // Add
+                    const token = colorTokens.add();
+                    token.value = value?.color ?? Color.black;
+                    token.name = token.value?.getName();
+                    onChange(token);
+                  })}
+                />
               </div>
-              <IconButton
-                icon="material-symbols:add"
-                onClick={action(() => {
-                  const colorTokens = projectState.page?.colorTokens;
-                  if (!colorTokens) return;
-                  // Add
-                  const token = colorTokens.add();
-                  token.value = value?.color ?? Color.black;
-                  token.name = token.value?.getName();
-                  onChange(token);
-                })}
-              />
-            </div>
-            <div className="flex gap-1 flex-wrap">
-              {projectState.project.colorTokens.all
-                .filter((token) => queryTester.test(token.name ?? ""))
-                .map((token) => (
-                  <ColorTokenIcon
-                    token={token}
-                    selected={isTokenSelected(token)}
-                    onClick={action(() => {
-                      onChange(token);
-                    })}
-                  />
-                ))}
+              <div className="flex gap-2 flex-wrap">
+                {projectState.project.colorTokens.all
+                  .filter((token) => queryTester.test(token.name ?? ""))
+                  .map((token) => (
+                    <ColorTokenIcon
+                      token={token}
+                      selected={isTokenSelected(token)}
+                      onClick={action(() => {
+                        onChange(token);
+                      })}
+                    />
+                  ))}
+              </div>
             </div>
 
-            <div className="flex items-center justify-between mb-2">
-              <div className="text-macaron-label font-medium">Code</div>
-            </div>
-            <div className="flex gap-1 flex-wrap">
-              {[...projectState.project.colorTokens.codeColorTokens.values()]
-                .filter((token) => queryTester.test(token.name ?? ""))
-                .map((token) => (
-                  <ColorTokenIcon
-                    token={token}
-                    selected={isTokenSelected(token)}
-                    onClick={action(() => {
-                      onChange(token);
-                    })}
-                  />
-                ))}
+            <div className="flex flex-col gap-2">
+              <div className="flex items-center justify-between mb-2">
+                <div className="text-macaron-label font-medium">Code</div>
+              </div>
+              <div className="flex gap-2 flex-wrap">
+                {[...projectState.project.colorTokens.codeColorTokens.values()]
+                  .filter((token) => queryTester.test(token.name ?? ""))
+                  .map((token) => (
+                    <ColorTokenIcon
+                      token={token}
+                      selected={isTokenSelected(token)}
+                      onClick={action(() => {
+                        onChange(token);
+                      })}
+                    />
+                  ))}
+              </div>
             </div>
           </div>
         </RadixPopover.Content>
@@ -100,7 +104,7 @@ const ColorTokenIcon: React.FC<{
     <Tooltip text={token.name} key={token.id} delayDuration={0}>
       <div
         className={twMerge(
-          "w-6 h-6 rounded-full border border-macaron-uiBackground",
+          "w-6 h-6 rounded-full border border-macaron-separator",
           selected && "ring-2 ring-macaron-active"
         )}
         style={{
