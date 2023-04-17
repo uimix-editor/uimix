@@ -52,8 +52,13 @@ export class ComponentEmitter {
 
     const refID = this.refIDs.get(selectable.node.id);
 
+    const children =
+      selectable.originalNode.type === "instance"
+        ? [] // TODO: create override elements
+        : selectable.children.map((child) => this.emitNode(child));
+
     return {
-      type: "frame",
+      type: selectable.originalNode.type,
       props: {
         id: refID ?? "TODO",
         ...selectable.selfStyle.toJSON(),
@@ -66,7 +71,7 @@ export class ComponentEmitter {
           })
         ),
       },
-      children: selectable.children.map((child) => this.emitNode(child)),
+      children,
     };
   }
 
