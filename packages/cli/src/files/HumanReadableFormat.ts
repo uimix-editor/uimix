@@ -1,21 +1,18 @@
 import { StyleJSON, VariantCondition } from "@uimix/model/src/data/v1";
 import { HierarchicalNodeJSON } from "../project/HierarchicalNodeJSON";
 
-type Variants = Record<string, Partial<StyleJSON>>;
+export type Variants = Record<string, Partial<StyleJSON>>;
 
-type StyleProps = Partial<StyleJSON> & {
+export type StyleProps = Partial<StyleJSON> & {
   variants?: Variants;
 };
 
-interface PageNode {
+export interface PageNode {
   type: "page";
-  props: {
-    id: string;
-  };
   children: (InstanceNode | FrameNode | LeafNode | ComponentNode)[];
 }
 
-interface ComponentNode {
+export interface ComponentNode {
   type: "component";
   props: {
     id: string;
@@ -23,36 +20,36 @@ interface ComponentNode {
   children: (FrameNode | VariantNode)[];
 }
 
-interface VariantNode {
+export interface VariantNode {
   type: "variant";
   props: {
     condition: VariantCondition;
-  } & StyleProps;
+  };
 }
 
-interface InstanceNode {
+export interface InstanceNode {
   type: "instance";
   props: { id: string } & StyleProps;
   children: OverrideNode[];
 }
 
-interface FrameNode {
+export interface FrameNode {
   type: "frame";
   props: { id: string } & StyleProps;
   children: (InstanceNode | FrameNode | LeafNode)[];
 }
 
-interface LeafNode {
+export interface LeafNode {
   type: "text" | "svg" | "image" | "foreign";
   props: { id: string } & StyleProps;
 }
 
-interface OverrideNode {
+export interface OverrideNode {
   type: "override";
   props: { id: string } & StyleProps;
 }
 
-type Node =
+export type Node =
   | PageNode
   | ComponentNode
   | VariantNode
