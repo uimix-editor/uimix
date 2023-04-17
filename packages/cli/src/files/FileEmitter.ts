@@ -44,13 +44,20 @@ export class ComponentEmitter {
     const variants = root.variantCorrespondings.filter(
       (corresponding) => corresponding.variant
     );
-    // TODO: variants
 
     return {
       type: "frame",
       props: {
         id: "TODO",
         ...root.selfStyle.toJSON(),
+        variants: Object.fromEntries(
+          variants.map((corresponding) => {
+            return [
+              variantConditionToText(corresponding.variant!.condition!),
+              corresponding.selectable.selfStyle.toJSON(),
+            ];
+          })
+        ),
       },
       children: [], // TODO
     };
@@ -75,5 +82,8 @@ export class ComponentEmitter {
 
 // e.g., "hover" or "maxWidth:767"
 function variantConditionToText(condition: VariantCondition): string {
-  throw new Error("Not implemented");
+  if (condition.type === "maxWidth") {
+    return `maxWidth:${condition.value}`;
+  }
+  return condition.type;
 }
