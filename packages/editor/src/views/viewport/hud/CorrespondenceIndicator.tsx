@@ -18,7 +18,9 @@ export const CorrespondenceIndicator: React.FC = observer(
     }
 
     const correspondings = new Set(
-      [...targets].flatMap((s) => s.variantCorrespondings)
+      [...targets].flatMap((s) =>
+        s.variantCorrespondings.map(({ selectable }) => selectable)
+      )
     );
     for (const target of targets) {
       correspondings.delete(target);

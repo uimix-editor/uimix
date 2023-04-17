@@ -14,7 +14,7 @@ import {
   StyleJSON,
 } from "../data/v1";
 import { Project } from "./Project";
-import { Component } from "./Component";
+import { Component, Variant } from "./Component";
 import { ObjectData } from "./ObjectData";
 import { assertNonNull } from "@uimix/foundation/src/utils/Assert";
 import { Page } from "./Page";
@@ -573,25 +573,31 @@ export class Selectable {
     return this;
   }
 
-  get variantCorrespondings(): Selectable[] {
+  get variantCorrespondings(): { variant?: Variant; selectable: Selectable }[] {
     const original = this.originalVariantCorresponding;
     const component = original.ownerComponent;
     if (!component) {
-      return [this];
+      return [{ selectable: this }];
     }
 
     if (component.rootNode === original.originalNode) {
       return [
-        component.rootNode.selectable,
-        ...component.variants.map((v) => v.selectable),
+        { selectable: component.rootNode.selectable },
+        ...component.variants.map((v) => ({
+          variant: v,
+          selectable: v.selectable,
+        })),
       ];
     }
 
     return [
-      original,
-      ...component.variants.map((v) =>
-        this.selectableMap.get([v.node.id, ...original.idPath])
-      ),
+      {
+        selectable: original,
+      },
+      ...component.variants.map((v) => ({
+        variant: v,
+        selectable: this.selectableMap.get([v.node.id, ...original.idPath]),
+      })),
     ];
   }
 

@@ -42,7 +42,7 @@ export class ComponentEmitter {
   emitRootNode(): HumanReadable.FrameNode {
     const root = this.component.rootNode.selectable;
     const variants = root.variantCorrespondings.filter(
-      (corresponding) => corresponding !== root
+      (corresponding) => corresponding.variant
     );
     // TODO: variants
 
