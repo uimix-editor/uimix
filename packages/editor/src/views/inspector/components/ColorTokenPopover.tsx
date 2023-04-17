@@ -1,5 +1,5 @@
 import * as RadixPopover from "@radix-ui/react-popover";
-import { Tooltip } from "@uimix/foundation/src/components";
+import { IconButton, Tooltip } from "@uimix/foundation/src/components";
 import { action } from "mobx";
 import { SearchInput } from "../../outline/SearchInput";
 import { projectState } from "../../../state/ProjectState";
@@ -7,6 +7,7 @@ import { ColorToken, ColorRef, CodeColorToken } from "@uimix/model/src/models";
 import { useState } from "react";
 import { twMerge } from "tailwind-merge";
 import { QueryTester } from "@uimix/foundation/src/utils/QueryTester";
+import { Color } from "@uimix/foundation/src/utils/Color";
 
 export const ColorTokenPopover: React.FC<{
   value?: ColorRef;
@@ -35,18 +36,26 @@ export const ColorTokenPopover: React.FC<{
             <ColorTokenGroupsView
               name="This Project"
               tokens={projectState.project.colorTokens.all}
+              queryTester={queryTester}
               value={value}
               onChange={onChange}
-              queryTester={queryTester}
+              onAdd={action(() => {
+                const colorTokens = projectState.page?.colorTokens;
+                if (!colorTokens) return;
+                const token = colorTokens.add();
+                token.value = value?.color ?? Color.black;
+                token.name = token.value?.getName();
+                onChange(token);
+              })}
             />
             <ColorTokenGroupsView
               name="Code"
               tokens={[
                 ...projectState.project.colorTokens.codeColorTokens.values(),
               ]}
+              queryTester={queryTester}
               value={value}
               onChange={onChange}
-              queryTester={queryTester}
             />
           </div>
         </RadixPopover.Content>
@@ -61,14 +70,19 @@ const ColorTokenGroupsView: React.FC<{
   queryTester: QueryTester;
   onChange: (token: ColorToken | CodeColorToken) => void;
   value?: ColorRef;
-}> = ({ name, tokens, queryTester, onChange, value }) => {
+  onAdd?: () => void;
+}> = ({ name, tokens, queryTester, onChange, value, onAdd }) => {
   const groups = colorTokensToGroups(tokens);
 
   return (
     <div className="flex flex-col gap-2">
       <div className="flex items-center justify-between font-semibold">
         <div>{name}</div>
+        {onAdd && <IconButton icon="material-symbols:add" onClick={onAdd} />}
       </div>
+      {tokens.length === 0 && (
+        <div className="text-macaron-disabledText">No tokens</div>
+      )}
       {[...groups].map(([group, tokens]) => {
         const filteredTokens = tokens.filter((token) =>
           queryTester.test(token.name ?? "")
