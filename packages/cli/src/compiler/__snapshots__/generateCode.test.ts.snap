@@ -280,7 +280,7 @@ box-sizing: border-box;
   padding-right: 0px;
   padding-top: 0px;
   padding-bottom: 0px;
-  background: #3B82F6;
+  background: #3b82f6;
   border-style: solid;
   border-color: transparent;
   border-top-width: 0px;
