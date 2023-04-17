@@ -20,7 +20,10 @@ import {
   HierarchicalNodeJSON,
   toHierarchicalNodeJSONs,
 } from "./HierarchicalNodeJSON";
-import { stringifyAsJSX, toHumanReadableNode } from "./HumanReadableFormat";
+import {
+  stringifyAsJSX,
+  toHumanReadableNode,
+} from "../files/HumanReadableFormat";
 
 interface WorkspaceLoaderOptions {
   filePattern?: string;

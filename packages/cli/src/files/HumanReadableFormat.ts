@@ -1,5 +1,5 @@
 import { StyleJSON, VariantCondition } from "@uimix/model/src/data/v1";
-import { HierarchicalNodeJSON } from "./HierarchicalNodeJSON";
+import { HierarchicalNodeJSON } from "../project/HierarchicalNodeJSON";
 
 type Variants = Record<string, Partial<StyleJSON>>;
 
