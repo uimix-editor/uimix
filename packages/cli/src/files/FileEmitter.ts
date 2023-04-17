@@ -3,6 +3,7 @@ import { Page } from "@uimix/model/src/models/Page";
 import { Component } from "@uimix/model/src/models/Component";
 import { compact } from "lodash-es";
 import { VariantCondition } from "@uimix/model/src/data/v1";
+import { Selectable } from "@uimix/model/src/models/Selectable";
 
 export class PageFileEmitter {
   constructor(page: Page) {
@@ -35,13 +36,15 @@ export class ComponentEmitter {
       props: {
         id: this.component.name,
       },
-      children: [this.emitRootNode(), ...this.emitVariants()],
+      children: [
+        this.emitNode(this.component.rootNode.selectable),
+        ...this.emitVariants(),
+      ],
     };
   }
 
-  emitRootNode(): HumanReadable.FrameNode {
-    const root = this.component.rootNode.selectable;
-    const variants = root.variantCorrespondings.filter(
+  emitNode(selectable: Selectable): HumanReadable.FrameNode {
+    const variants = selectable.variantCorrespondings.filter(
       (corresponding) => corresponding.variant
     );
 
@@ -49,7 +52,7 @@ export class ComponentEmitter {
       type: "frame",
       props: {
         id: "TODO",
-        ...root.selfStyle.toJSON(),
+        ...selectable.selfStyle.toJSON(),
         variants: Object.fromEntries(
           variants.map((corresponding) => {
             return [
@@ -59,7 +62,7 @@ export class ComponentEmitter {
           })
         ),
       },
-      children: [], // TODO
+      children: selectable.children.map((child) => this.emitNode(child)),
     };
   }
 
