@@ -41,7 +41,9 @@ export const SelectionInfo: React.FC = observer(function SelectionInfo() {
     return null;
   }
 
-  const selectables = projectState.selectedSelectables;
+  const selectables = projectState.selectedSelectables.filter(
+    (s) => s.originalNode.type !== "component"
+  );
 
   const bboxes = selectables.map((i) => i.computedRect);
   const bbox = Rect.union(...bboxes);

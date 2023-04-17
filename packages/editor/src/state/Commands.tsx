@@ -5,6 +5,7 @@ import {
   Selectable,
   PageHierarchyEntry,
   Component,
+  Page,
 } from "@uimix/model/src/models";
 import { exportToJSON as exportJSON, importJSON } from "./JSONExport";
 import { viewportState } from "./ViewportState";
@@ -13,7 +14,7 @@ import {
   handleShortcut,
   MenuCommandDef,
   MenuItemDef,
-} from "@uimix/foundation/src/components/MenuItemDef";
+} from "@uimix/foundation/src/components";
 import { Clipboard } from "./Clipboard";
 import {
   autoLayout,
@@ -27,6 +28,7 @@ import {
   createComponent,
   detachComponent,
   resizeWithBoundingBox,
+  moveToPage,
 } from "@uimix/model/src/services";
 import { posix as path } from "path-browserify";
 import { dialogState } from "./DialogState";
@@ -34,6 +36,7 @@ import { viewportGeometry } from "./ScrollState";
 import { compact } from "lodash-es";
 import { Rect, Vec2 } from "paintvec";
 import { snapper } from "./Snapper";
+import { showImageInputDialog } from "../util/imageDialog";
 
 class Commands {
   @computed get canUndo(): boolean {
@@ -57,7 +60,7 @@ class Commands {
   }
 
   async copy() {
-    const data = projectState.getNodeClipboardData();
+    const data = await projectState.getNodeClipboardData();
     if (!data) {
       return;
     }
@@ -121,15 +124,7 @@ class Commands {
   }
 
   async insertImage() {
-    const file = await new Promise<File | undefined>((resolve) => {
-      const input = document.createElement("input");
-      input.type = "file";
-      input.accept = "image/png,image/jpeg";
-      input.onchange = () => {
-        resolve(input.files?.[0]);
-      };
-      input.click();
-    });
+    const file = await showImageInputDialog();
     if (!file) {
       return;
     }
@@ -250,7 +245,7 @@ class Commands {
 
       const parent =
         absoluteSelectables[0].offsetParent ??
-        absoluteSelectables[0].pageSelectable;
+        absoluteSelectables[0].page?.selectable;
       if (!parent) {
         return;
       }
@@ -288,6 +283,16 @@ class Commands {
         parent.insertBefore([selectable], next);
       }
     }
+  }
+
+  moveToPage(page: Page) {
+    const selectables = projectState.selectedSelectables;
+
+    for (const selectable of selectables) {
+      moveToPage(selectable, page);
+    }
+
+    projectState.undoManager.stopCapturing();
   }
 
   readonly exportJSONCommand: MenuCommandDef = {
@@ -532,6 +537,51 @@ class Commands {
     }),
   };
 
+  @computed get nodeMenu(): MenuItemDef[] {
+    const otherPages = projectState.project.pages.all.filter(
+      (page) => page !== projectState.page
+    );
+
+    return [
+      this.createComponentCommand,
+      { type: "separator" },
+      this.detachComponentCommand,
+      {
+        type: "submenu",
+        text: "Attach Component",
+        children: projectState.project.components.map((component) => {
+          return {
+            type: "command",
+            text: component.name,
+            onClick: action(() => {
+              this.attachComponent(component);
+            }),
+          };
+        }),
+      },
+      { type: "separator" },
+      this.groupCommand,
+      this.ungroupCommand,
+      { type: "separator" },
+      this.autoLayoutCommand,
+      this.removeLayoutCommand,
+      { type: "separator" },
+      {
+        type: "submenu",
+        text: "Move to Page",
+        children: otherPages.map((page): MenuItemDef => {
+          return {
+            type: "command",
+            text: page.filePath,
+            onClick: action(() => {
+              this.moveToPage(page);
+            }),
+          };
+        }),
+      },
+    ];
+  }
+
   @computed get menu(): MenuItemDef[] {
     return [
       {
@@ -579,17 +629,7 @@ class Commands {
       {
         type: "submenu",
         text: "Node",
-        children: [
-          this.createComponentCommand,
-          { type: "separator" },
-          this.detachComponentCommand,
-          { type: "separator" },
-          this.groupCommand,
-          this.ungroupCommand,
-          { type: "separator" },
-          this.autoLayoutCommand,
-          this.removeLayoutCommand,
-        ],
+        children: this.nodeMenu,
       },
       {
         type: "submenu",
@@ -616,28 +656,7 @@ class Commands {
       this.pasteCommand,
       this.deleteCommand,
       { type: "separator" },
-      this.createComponentCommand,
-      { type: "separator" },
-      this.detachComponentCommand,
-      {
-        type: "submenu",
-        text: "Attach Component",
-        children: projectState.project.components.map((component) => {
-          return {
-            type: "command",
-            text: component.name,
-            onClick: action(() => {
-              this.attachComponent(component);
-            }),
-          };
-        }),
-      },
-      { type: "separator" },
-      this.groupCommand,
-      this.ungroupCommand,
-      { type: "separator" },
-      this.autoLayoutCommand,
-      this.removeLayoutCommand,
+      ...this.nodeMenu,
     ];
   }
 
@@ -684,6 +703,12 @@ class Commands {
       viewportState.panMode = true;
     }
 
+    if (event.key === "Escape") {
+      viewportState.tool = undefined;
+      viewportState.focusedSelectable = undefined;
+      return true;
+    }
+
     if (!isTextInput(document.activeElement)) {
       // TODO: move elements in layout
 
@@ -710,10 +735,6 @@ class Commands {
     ) {
       if (event.key === "Delete" || event.key === "Backspace") {
         this.delete();
-        return true;
-      }
-      if (event.key === "Escape") {
-        viewportState.tool = undefined;
         return true;
       }
       if (event.key === "Alt") {

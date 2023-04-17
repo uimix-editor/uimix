@@ -16,6 +16,8 @@ import {
 import { Project } from "./Project";
 import { Component } from "./Component";
 import { ObjectData } from "./ObjectData";
+import { assertNonNull } from "@uimix/foundation/src/utils/Assert";
+import { Page } from "./Page";
 
 export interface IComputedRectProvider {
   readonly value: Rect | undefined;
@@ -131,11 +133,11 @@ export class Selectable {
     return children;
   }
 
-  @computed get pageSelectable(): Selectable | undefined {
+  @computed get page(): Page | undefined {
     if (this.originalNode.type === "page") {
-      return this;
+      return Page.from(this.originalNode);
     }
-    return this.parent?.pageSelectable;
+    return this.parent?.page;
   }
 
   // ancestors ([root, ..., parent, this])
@@ -555,6 +557,42 @@ export class Selectable {
         }
       }
     }
+  }
+
+  get ownerComponent(): Component | undefined {
+    if (this.originalNode.type === "component") {
+      return Component.from(this.originalNode);
+    }
+    return this.parent?.ownerComponent;
+  }
+
+  get originalVariantCorresponding(): Selectable {
+    if (this.nodePath[0].type === "variant") {
+      return assertNonNull(this.superSelectable);
+    }
+    return this;
+  }
+
+  get variantCorrespondings(): Selectable[] {
+    const original = this.originalVariantCorresponding;
+    const component = original.ownerComponent;
+    if (!component) {
+      return [this];
+    }
+
+    if (component.rootNode === original.originalNode) {
+      return [
+        component.rootNode.selectable,
+        ...component.variants.map((v) => v.selectable),
+      ];
+    }
+
+    return [
+      original,
+      ...component.variants.map((v) =>
+        this.selectableMap.get([v.node.id, ...original.idPath])
+      ),
+    ];
   }
 
   toJSON(): SelectableJSON {

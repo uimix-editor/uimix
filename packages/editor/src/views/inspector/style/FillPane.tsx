@@ -5,7 +5,7 @@ import { Color } from "@uimix/foundation/src/utils/Color";
 import { Mixed, sameOrMixed } from "@uimix/foundation/src/utils/Mixed";
 import { ColorInput } from "../components/ColorInput";
 import { projectState } from "../../../state/ProjectState";
-import { IconButton } from "@uimix/foundation/src/components/IconButton";
+import { IconButton } from "@uimix/foundation/src/components";
 import { InspectorHeading } from "../components/InspectorHeading";
 import { InspectorPane } from "../components/InspectorPane";
 import { action } from "mobx";

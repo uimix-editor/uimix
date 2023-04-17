@@ -8,6 +8,8 @@ import { ObservableYArray } from "@uimix/foundation/src/utils/ObservableYArray";
 import { ColorTokenMap } from "./ColorToken";
 import { PageList } from "./PageList";
 import { ProjectData } from "../collaborative/ProjectData";
+import { CodeAssets } from "./CodeAssets";
+import { makeObservable, observable } from "mobx";
 
 export class Project {
   constructor() {
@@ -16,6 +18,7 @@ export class Project {
     this.colorTokens = new ColorTokenMap(this);
     this.node = this.nodes.create("project", "project");
     this.pages = new PageList(this);
+    makeObservable(this);
   }
 
   readonly data = new ProjectData();
@@ -55,6 +58,8 @@ export class Project {
   get componentURLs(): ObservableYArray<string> {
     return ObservableYArray.get(this.data.componentURLs);
   }
+
+  @observable localCodeAssets: CodeAssets | undefined = undefined;
 
   clearSelection() {
     this.selectables.selectionData.clear();

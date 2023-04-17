@@ -7,7 +7,11 @@ import {
   ProjectManifestJSON,
   StyleJSON,
 } from "@uimix/model/src/data/v1";
-import { getPageID, compareProjectJSONs } from "@uimix/model/src/data/util";
+import {
+  getPageID,
+  compareProjectJSONs,
+  usedImageHashesInStyle,
+} from "@uimix/model/src/data/util";
 import { omit } from "lodash-es";
 import { formatJSON, formatTypeScript } from "../format";
 import { FileAccess } from "./FileAccess";
@@ -20,6 +24,11 @@ import { stringifyAsJSX, toHumanReadableNode } from "./HumanReadableFormat";
 
 interface WorkspaceLoaderOptions {
   filePattern?: string;
+}
+
+interface Project {
+  manifest: ProjectManifestJSON;
+  json: ProjectJSON;
 }
 
 // Important TODO: fix paths in Windows!!
@@ -47,23 +56,27 @@ export class WorkspaceLoader {
   readonly filePattern: string;
   readonly uimixProjectFile = "uimix.json";
   readonly projectBoundary = "package.json"; // TODO: other project boundaries
-  jsons = new Map<string, ProjectJSON>(); // project path -> project json
+  projects = new Map<string, Project>(); // project path -> project json
 
-  get json(): ProjectJSON {
-    return (
-      this.jsons.get(this.rootPath) ?? {
-        nodes: {},
-        styles: {},
-      }
-    );
+  get rootProject(): Project {
+    return this.getOrCreateProject(this.rootPath);
   }
-  set json(json: ProjectJSON) {
-    this.jsons.set(this.rootPath, json);
+
+  getOrCreateProject(projectPath: string): Project {
+    let project = this.projects.get(projectPath);
+    if (!project) {
+      project = {
+        manifest: {},
+        json: { nodes: {}, styles: {} },
+      };
+      this.projects.set(projectPath, project);
+    }
+    return project;
   }
 
   projectPathForFile(pagePath: string): string {
     return (
-      [...this.jsons.keys()]
+      [...this.projects.keys()]
         .sort((a, b) => b.length - a.length)
         .find((projectPath) => pagePath.startsWith(projectPath + path.sep)) ??
       this.rootPath
@@ -104,17 +117,21 @@ export class WorkspaceLoader {
     let changed = false;
 
     for (const [projectPath, pagePaths] of filePathsForProject) {
-      let manifest: ProjectManifestJSON;
-      try {
-        manifest = ProjectManifestJSON.parse(
-          JSON.parse(
-            await this.fileAccess.readText(
-              path.join(projectPath, this.uimixProjectFile)
+      let manifest: ProjectManifestJSON = {};
+
+      const manifestPath = path.join(projectPath, this.uimixProjectFile);
+      if ((await this.fileAccess.stat(manifestPath))?.type === "file") {
+        try {
+          manifest = ProjectManifestJSON.parse(
+            JSON.parse(
+              await this.fileAccess.readText(
+                path.join(projectPath, this.uimixProjectFile)
+              )
             )
-          )
-        );
-      } catch {
-        manifest = { componentURLs: [] };
+          );
+        } catch (e) {
+          console.warn("cannot load uimix.json:", e);
+        }
       }
 
       const pages = new Map<string, PageJSON>();
@@ -138,14 +155,17 @@ export class WorkspaceLoader {
 
       if (
         !compareProjectJSONs(
-          this.jsons.get(projectPath) ?? { nodes: {}, styles: {} },
+          this.projects.get(projectPath)?.json ?? { nodes: {}, styles: {} },
           newProjectJSON
         )
       ) {
         changed = true;
       }
 
-      this.jsons.set(projectPath, newProjectJSON);
+      this.projects.set(projectPath, {
+        manifest,
+        json: newProjectJSON,
+      });
     }
 
     return changed;
@@ -153,7 +173,7 @@ export class WorkspaceLoader {
 
   private isSaving = false;
 
-  async save(filePaths?: string[]): Promise<void> {
+  async save(projectPathToSave?: string): Promise<void> {
     try {
       this.isSaving = true;
 
@@ -161,16 +181,15 @@ export class WorkspaceLoader {
         await this.fileAccess.glob(this.filePattern)
       );
 
-      for (const [projectPath, json] of this.jsons) {
-        const { manifest, pages } = projectJSONToFiles(json);
+      for (const [projectPath, project] of this.projects) {
+        if (projectPathToSave && projectPath !== projectPathToSave) {
+          continue;
+        }
 
-        let projectSaved = false;
+        const { manifest, pages } = projectJSONToFiles(project.json);
 
         for (const [pageName, pageJSON] of pages) {
           const pagePath = path.join(projectPath, pageName + ".uimix");
-          if (filePaths && !filePaths.includes(pagePath)) {
-            continue;
-          }
           await this.fileAccess.writeText(
             pagePath,
             formatJSON(JSON.stringify(pageJSON))
@@ -187,15 +206,26 @@ export class WorkspaceLoader {
             )
           );
           pagePathsToDelete.delete(pagePath);
-          projectSaved = true;
         }
 
-        if (projectSaved) {
-          await this.fileAccess.writeText(
-            path.join(projectPath, this.uimixProjectFile),
-            formatJSON(JSON.stringify(manifest))
-          );
+        const manifestPath = path.join(projectPath, this.uimixProjectFile);
+
+        let parsed: ProjectManifestJSON;
+        try {
+          parsed = JSON.parse(
+            await this.fileAccess.readText(manifestPath)
+          ) as ProjectManifestJSON;
+        } catch (e) {
+          parsed = {};
         }
+        parsed.prebuiltAssets = manifest.prebuiltAssets;
+
+        // TODO: avoid overwriting malformed uimix.json
+
+        await this.fileAccess.writeText(
+          manifestPath,
+          formatJSON(JSON.stringify(parsed))
+        );
       }
 
       for (const pagePath of pagePathsToDelete) {
@@ -206,7 +236,7 @@ export class WorkspaceLoader {
     }
   }
 
-  watch(onChange: (projectJSON: ProjectJSON) => void): () => void {
+  watch(onChange: () => void): () => void {
     console.log("start watching...");
 
     return this.fileAccess.watch(
@@ -217,7 +247,7 @@ export class WorkspaceLoader {
             return;
           }
           if (await this.load()) {
-            onChange(this.json);
+            onChange();
           }
         } catch (e) {
           console.error(e);
@@ -232,7 +262,7 @@ export function projectJSONToFiles(projectJSON: ProjectJSON): {
   pages: Map<string, PageJSON>;
 } {
   const manifest: ProjectManifestJSON = {
-    componentURLs: projectJSON.componentURLs,
+    prebuiltAssets: projectJSON.componentURLs,
   };
 
   const hierarchicalNodes = toHierarchicalNodeJSONs(projectJSON.nodes);
@@ -288,8 +318,8 @@ export function projectJSONToFiles(projectJSON: ProjectJSON): {
 
     const usedImageHashes = new Set<string>();
     for (const style of Object.values(pageJSON.styles)) {
-      if (style.imageHash) {
-        usedImageHashes.add(style.imageHash);
+      for (const hash of usedImageHashesInStyle(style)) {
+        usedImageHashes.add(hash);
       }
     }
 
@@ -361,7 +391,7 @@ export function filesToProjectJSON(
   return {
     nodes,
     styles,
-    componentURLs: manifest.componentURLs,
+    componentURLs: manifest.prebuiltAssets,
     images,
     colors,
   };

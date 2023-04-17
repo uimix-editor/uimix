@@ -1,8 +1,5 @@
 import { observer } from "mobx-react-lite";
-import {
-  ToggleGroup,
-  ToggleGroupItem,
-} from "@uimix/foundation/src/components/ToggleGroup";
+import { ToggleGroup, ToggleGroupItem } from "@uimix/foundation/src/components";
 import { Mixed, sameOrMixed } from "@uimix/foundation/src/utils/Mixed";
 import { InspectorTargetContext } from "../../components/InspectorTargetContext";
 import { useContext } from "react";

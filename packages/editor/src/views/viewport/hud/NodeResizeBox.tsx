@@ -5,7 +5,7 @@ import { observer } from "mobx-react-lite";
 import { Selectable } from "@uimix/model/src/models";
 import { projectState } from "../../../state/ProjectState";
 import colors from "@uimix/foundation/src/colors";
-import { ResizeBox } from "@uimix/foundation/src/components/ResizeBox";
+import { ResizeBox } from "@uimix/foundation/src/components";
 import { roundRectXYWH } from "../../../types/Rect";
 import { snapper } from "../../../state/Snapper";
 import { assertNonNull } from "@uimix/foundation/src/utils/Assert";
@@ -23,7 +23,9 @@ class NodeResizeBoxState {
   private heightChanged = false;
 
   get selectedInstances(): Selectable[] {
-    return projectState.selectedSelectables;
+    return projectState.selectedSelectables.filter(
+      (s) => s.originalNode.type !== "component"
+    );
   }
 
   @computed get stroke(): string {

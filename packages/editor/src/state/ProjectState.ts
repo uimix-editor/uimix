@@ -1,24 +1,24 @@
 import { computed, makeObservable, observable } from "mobx";
 import * as Y from "yjs";
 import {
+  Image,
   NodeClipboardData,
   PageJSON,
   ProjectJSON,
   ProjectManifestJSON,
   SelectableJSON,
 } from "@uimix/model/src/data/v1";
-import {
-  Project,
-  Page,
-  reassignNewIDs,
-  Selectable,
-} from "@uimix/model/src/models";
+import { usedImageHashesInStyle } from "@uimix/model/src/data/util";
+import { reassignNewIDs } from "@uimix/model/src/data/util/reassignNewIDs";
+import { Project, Page, Selectable } from "@uimix/model/src/models";
 import { getIncrementalUniqueName } from "@uimix/foundation/src/utils/Name";
 import { PageState } from "./PageState";
 import { ScrollState } from "./ScrollState";
 // eslint-disable-next-line import/no-unresolved
 import demoFile from "./demoFile/demo.uimix?raw";
 import { filesToProjectJSON } from "../../../cli/src/project/WorkspaceLoader";
+import { Rect } from "paintvec";
+import { resizeWithBoundingBox } from "@uimix/model/src/services";
 
 export class ProjectState {
   constructor() {
@@ -72,7 +72,7 @@ export class ProjectState {
 
   loadDemoFile() {
     const manifest: ProjectManifestJSON = {
-      componentURLs: [
+      prebuiltAssets: [
         "https://cdn.jsdelivr.net/gh/uimix-editor/uimix@ba0157d5/packages/sandbox/dist-components/components.js",
         "https://cdn.jsdelivr.net/gh/uimix-editor/uimix@ba0157d5/packages/sandbox/dist-components/style.css",
       ],
@@ -104,7 +104,7 @@ export class ProjectState {
     }
   }
 
-  getNodeClipboardData(): NodeClipboardData | undefined {
+  async getNodeClipboardData(): Promise<NodeClipboardData | undefined> {
     const selection = this.selectedSelectables;
     if (selection.length === 0) {
       return undefined;
@@ -118,11 +118,32 @@ export class ProjectState {
       }
       return s.toJSON();
     });
+
+    const imageHashes = new Set<string>();
+
+    const visit = (json: SelectableJSON) => {
+      for (const hash of usedImageHashesInStyle(json.style)) {
+        imageHashes.add(hash);
+      }
+      if (json.children) {
+        json.children.forEach(visit);
+      }
+    };
+    nodes.forEach(visit);
+
+    const images: Record<string, Image> = {};
+    for (const hash of imageHashes) {
+      const image = await this.project.imageManager.getWithDataURL(hash);
+      if (image) {
+        images[hash] = image;
+      }
+    }
+
     return {
       uimixClipboardVersion: "0.0.1",
       type: "nodes",
       nodes,
-      images: {}, // TODO
+      images,
     };
   }
 
@@ -213,6 +234,33 @@ export class ProjectState {
 
     for (const selectable of selectables) {
       selectable.select();
+    }
+
+    // wait for render
+    // TODO: better time
+    await new Promise((resolve) => setTimeout(resolve, 100));
+
+    const bbox = Rect.union(...selectables.map((s) => s.computedRect));
+    if (bbox) {
+      const viewportRect = projectState.scroll.viewportRectInDocument;
+      // fix position when bbox is outside of the page
+      const isInside = !!bbox.intersection(viewportRect);
+      if (
+        !isInside &&
+        insertionTarget.parent?.selectable.style.layout === "none"
+      ) {
+        const offset = viewportRect.center.sub(bbox.center);
+        for (const selectable of selectables) {
+          resizeWithBoundingBox(
+            selectable,
+            selectable.computedRect.translate(offset),
+            {
+              x: true,
+              y: true,
+            }
+          );
+        }
+      }
     }
 
     // load images

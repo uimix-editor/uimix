@@ -4,11 +4,12 @@
   "type": "module",
   "main": "src/index.ts",
   "scripts": {
-    "lint": "eslint src",
     "build": "tsc",
+    "lint": "eslint src",
     "test": "vitest run"
   },
   "dependencies": {
+    "@uimix/code-asset-types": "workspace:*",
     "@uimix/foundation": "workspace:*",
     "crypto-js": "^4.1.1",
     "lodash-es": "^4.17.21",
@@ -24,6 +25,6 @@
     "@types/path-browserify": "^1.0.0",
     "tailwindcss": "^3.3.1",
     "typescript": "^5.0.4",
-    "vitest": "^0.30.0"
+    "vitest": "^0.30.1"
   }
 }

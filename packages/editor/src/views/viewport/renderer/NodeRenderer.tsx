@@ -9,12 +9,10 @@ import {
 import { viewportState } from "../../../state/ViewportState";
 import { ComputedRectProvider } from "./ComputedRectProvider";
 import { projectState } from "../../../state/ProjectState";
-import {
-  ForeignComponent,
-  ForeignComponentRenderer as IForeignComponentRenderer,
-} from "../../../types/ForeignComponent";
+import * as CodeAsset from "@uimix/code-asset-types";
 import { ForeignComponentManager } from "../../../state/ForeignComponentManager";
 import htmlReactParser from "html-react-parser";
+import { action } from "mobx";
 
 export const selectableForDOM = new WeakMap<HTMLElement, Selectable>();
 export const domForSelectable = new WeakMap<Selectable, HTMLElement>();
@@ -86,13 +84,16 @@ export const NodeRenderer: React.FC<{
     const ref = createRef<HTMLDivElement | HTMLImageElement>();
 
     if (!forThumbnail) {
-      useEffect(() => {
-        if (ref.current) {
-          selectable.computedRectProvider = new ComputedRectProvider(
-            ref.current
-          );
-        }
-      }, []);
+      useEffect(
+        action(() => {
+          if (ref.current) {
+            selectable.computedRectProvider = new ComputedRectProvider(
+              ref.current
+            );
+          }
+        }),
+        []
+      );
 
       computedRectUpdater.add(selectable);
 
@@ -215,6 +216,7 @@ export const NodeRenderer: React.FC<{
         <div style={cssStyle} ref={ref}>
           {foreignComponent && (
             <ForeignComponentRenderer
+              key={foreignComponent.key}
               component={foreignComponent}
               onRenderFinish={() => {
                 if (!forThumbnail) {
@@ -248,7 +250,7 @@ export const NodeRenderer: React.FC<{
 );
 
 export const ForeignComponentRenderer: React.FC<{
-  component: ForeignComponent;
+  component: CodeAsset.Component;
   onRenderFinish?: () => void;
   props: Record<string, unknown>;
 }> = observer(({ component, onRenderFinish, props }) => {
@@ -258,7 +260,7 @@ export const ForeignComponentRenderer: React.FC<{
   const onRenderFinishRef = useRef(onRenderFinish);
   onRenderFinishRef.current = onRenderFinish;
 
-  const rendererRef = useRef<IForeignComponentRenderer>();
+  const rendererRef = useRef<CodeAsset.ComponentRenderer>();
 
   useEffect(() => {
     const elem = ref.current;

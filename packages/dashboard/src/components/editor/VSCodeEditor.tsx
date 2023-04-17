@@ -6,7 +6,7 @@ import { RPC } from "@uimix/typed-rpc";
 import type {
   IRootToEditorRPCHandler,
   IEditorToRootRPCHandler,
-} from "@uimix/editor/src/state/IFrameRPC";
+} from "@uimix/editor/src/types/IFrameRPC";
 import { LoadingErrorOverlay } from "./LoadingErrorOverlay";
 import { assertNonNull } from "../../utils/assertNonNull";
 import {
@@ -57,6 +57,10 @@ class Connection extends TypedEmitter<{
         setClipboard: async (type, text) => {
           await this.vscodeRPC.remote.setClipboard(type, text);
         },
+
+        getCodeAssets: async () => {
+          return this.vscodeRPC.remote.getCodeAssets();
+        },
       }
     );
 
@@ -74,6 +78,9 @@ class Connection extends TypedEmitter<{
       },
       update: async (update) => {
         Y.applyUpdate(this.doc, update);
+      },
+      updateCodeAssets: async (assets) => {
+        await this.rpc.remote.updateCodeAssets(assets);
       },
     });
     this.doc.on("update", (update: Uint8Array) => {

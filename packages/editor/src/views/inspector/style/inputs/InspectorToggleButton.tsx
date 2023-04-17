@@ -6,7 +6,7 @@ import { Selectable } from "@uimix/model/src/models";
 import { projectState } from "../../../../state/ProjectState";
 import { action } from "mobx";
 import { IconProps } from "@iconify/react";
-import { ToggleButton } from "@uimix/foundation/src/components/ToggleButton";
+import { ToggleButton } from "@uimix/foundation/src/components";
 
 export const InspectorToggleButton = observer(function InspectorCheckBox({
   className,

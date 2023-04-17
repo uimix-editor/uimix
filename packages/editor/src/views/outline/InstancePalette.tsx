@@ -7,13 +7,15 @@ import {
   ForeignComponentRenderer,
   NodeRenderer,
 } from "../viewport/renderer/NodeRenderer";
-import { usePointerStroke } from "@uimix/foundation/src/components/hooks/usePointerStroke";
+import {
+  usePointerStroke,
+  useResizeObserver,
+} from "@uimix/foundation/src/components";
 import { viewportGeometry } from "../../state/ScrollState";
 import { NodeMoveDragHandler } from "../viewport/dragHandler/NodeMoveDragHandler";
 import { ReactNode, useRef, useState } from "react";
 import { DragHandler } from "../viewport/dragHandler/DragHandler";
 import { Vec2 } from "paintvec";
-import { useResizeObserver } from "@uimix/foundation/src/components/hooks/useResizeObserver";
 import { QueryTester } from "@uimix/foundation/src/utils/QueryTester";
 import { ForeignComponentManager } from "../../state/ForeignComponentManager";
 import { IFrame } from "../components/IFrame";
@@ -22,7 +24,7 @@ import colors from "@uimix/foundation/src/colors";
 import { Color } from "@uimix/foundation/src/utils/Color";
 import { FontLoader } from "../viewport/renderer/FontLoader";
 import { dialogState } from "../../state/DialogState";
-import { ForeignComponent } from "../../types/ForeignComponent";
+import * as CodeAsset from "@uimix/code-asset-types";
 import { ViewportEvent } from "../viewport/dragHandler/ViewportEvent";
 
 class InstancePaletteState {
@@ -89,6 +91,7 @@ const ComponentThumbnails: React.FC<{
 
       return (
         <div
+          key={page.id}
           style={{
             display: "flex",
             flexDirection: "column",
@@ -185,7 +188,7 @@ const ComponentThumbnails: React.FC<{
 });
 
 const ComponentThumbnail: React.FC<{
-  component: Component | ForeignComponent;
+  component: Component | CodeAsset.Component;
   foreignComponentManager: ForeignComponentManager;
   iframe: HTMLIFrameElement;
 }> = observer(({ component, foreignComponentManager, iframe }) => {

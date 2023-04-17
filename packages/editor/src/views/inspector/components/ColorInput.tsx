@@ -1,13 +1,15 @@
 import styled from "@emotion/styled";
 import * as RadixPopover from "@radix-ui/react-popover";
-import { checkPattern } from "@uimix/foundation/src/components/checkPattern";
-import { ColorPicker } from "@uimix/foundation/src/components/color/ColorPicker";
-import { Input } from "@uimix/foundation/src/components/Input";
+import {
+  checkPattern,
+  ColorPicker,
+  Input,
+  IconButton,
+  Tooltip,
+} from "@uimix/foundation/src/components";
 import { Color } from "@uimix/foundation/src/utils/Color";
 import { twMerge } from "tailwind-merge";
 import { ColorTokenPopover } from "./ColorTokenPopover";
-import { IconButton } from "@uimix/foundation/src/components/IconButton";
-import { Tooltip } from "@uimix/foundation/src/components/Tooltip";
 import { ColorRef } from "@uimix/model/src/models";
 
 const ColorLabelBackground = styled.div`

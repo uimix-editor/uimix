@@ -14,17 +14,19 @@ import pinIcon from "@iconify-icons/ic/outline-location-on";
 import staticPositionIcon from "@seanchas116/design-icons/json/static-position.json";
 import { InspectorNumberInput } from "./inputs/InspectorNumberInput";
 import { InspectorToggleGroup } from "./inputs/InspectorToggleGroup";
-import { ToggleGroupItem } from "@uimix/foundation/src/components/ToggleGroup";
+import {
+  ToggleGroupItem,
+  SeparableInput,
+  SimpleAnchorEdit,
+} from "@uimix/foundation/src/components";
 import { InspectorPane } from "../components/InspectorPane";
 import { projectState } from "../../../state/ProjectState";
 import { InspectorTargetContext } from "../components/InspectorTargetContext";
 import { Selectable } from "@uimix/model/src/models";
 import { sameOrMixed } from "@uimix/foundation/src/utils/Mixed";
 import { InspectorHeading } from "../components/InspectorHeading";
-import { SeparableInput } from "@uimix/foundation/src/components/SeparableInput";
 import { InspectorCheckBox } from "./inputs/InspectorCheckBox";
 import { action } from "mobx";
-import { SimpleAnchorEdit } from "@uimix/foundation/src/components/SimpleAnchorEdit";
 import { InspectorToggleButton } from "./inputs/InspectorToggleButton";
 import edgeTopIcon from "@seanchas116/design-icons/json/edge-top.json";
 

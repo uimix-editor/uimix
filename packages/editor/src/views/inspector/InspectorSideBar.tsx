@@ -1,6 +1,6 @@
 import { observer } from "mobx-react-lite";
 import { StyleInspector } from "./style/StyleInspector";
-import { ScrollArea } from "@uimix/foundation/src/components/ScrollArea";
+import { ScrollArea } from "@uimix/foundation/src/components";
 import { projectState } from "../../state/ProjectState";
 import { DocumentInspector } from "./document/DocumentInspector";
 import { twMerge } from "tailwind-merge";

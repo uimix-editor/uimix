@@ -3,7 +3,10 @@ import { parentWindowTarget } from "@uimix/typed-rpc/browser";
 import { RPC } from "@uimix/typed-rpc";
 import { ProjectState } from "./ProjectState";
 import { action } from "mobx";
-import { IEditorToRootRPCHandler, IRootToEditorRPCHandler } from "./IFrameRPC";
+import {
+  IEditorToRootRPCHandler,
+  IRootToEditorRPCHandler,
+} from "../types/IFrameRPC";
 import { throttle } from "lodash-es";
 import { ThumbnailTakerHost } from "./ThumbnailTakerHost";
 import { Clipboard } from "./Clipboard";
@@ -37,6 +40,9 @@ export class IFrameDataConnector {
           state.pageID = pageID ?? state.project.pages.all[0]?.id;
           state.undoManager.clear();
         }),
+        updateCodeAssets: action(async (assets) => {
+          this.state.project.localCodeAssets = assets;
+        }),
       }
     );
 
@@ -46,7 +52,7 @@ export class IFrameDataConnector {
 
     void this.rpc.remote.ready();
 
-    Clipboard.externalClipboard = {
+    Clipboard.handler = {
       get: async (type) => {
         return this.rpc.remote.getClipboard(type);
       },
@@ -54,6 +60,12 @@ export class IFrameDataConnector {
         void this.rpc.remote.setClipboard(type, text);
       },
     };
+
+    void this.rpc.remote.getCodeAssets().then((assets) => {
+      if (assets) {
+        this.state.project.localCodeAssets = assets;
+      }
+    });
   }
 
   private state: ProjectState;

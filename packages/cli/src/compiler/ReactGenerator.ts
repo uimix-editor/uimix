@@ -11,6 +11,7 @@ import reactElementToJSXString from "react-element-to-jsx-string";
 import React from "react";
 import { Page } from "@uimix/model/src/models/Page";
 import mime from "mime-types";
+import { ProjectManifestJSON } from "@uimix/model/src/data/v1";
 
 // TODO: remove this when react-element-to-jsx-string is fixed
 const reactElementToJSXStringFixed =
@@ -84,9 +85,15 @@ function getExternalModulePaths(components: Component[]): Set<string> {
 }
 
 export class ReactGenerator {
-  constructor(options: { rootPath: string; page: Page; imagesPath: string }) {
+  constructor(options: {
+    rootPath: string;
+    manifest: ProjectManifestJSON;
+    page: Page;
+    imagesPath: string;
+  }) {
     this.imagesPath = options.imagesPath;
     this.rootPath = options.rootPath;
+    this.manifest = options.manifest;
     this.page = options.page;
 
     const componentNames = new Set<string>();
@@ -102,6 +109,7 @@ export class ReactGenerator {
 
   imagesPath: string;
   rootPath: string;
+  manifest: ProjectManifestJSON;
   page: Page;
   componentsWithNames: [Component, string][] = [];
   refIDs = new Map<string, string>();

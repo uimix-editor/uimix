@@ -51,9 +51,15 @@ describe(WorkspaceLoader.name, () => {
     const loader = new WorkspaceLoader(
       new NodeFileAccess(tmpObj.name + "/demo-project")
     );
-    loader.json = project.toJSON();
-    loader.jsons.set(innerProjectPath, innerProject.toJSON());
-    loader.jsons.set(deepInnerProjectPath, deepInnerProject.toJSON());
+    loader.rootProject.json = project.toJSON();
+    loader.projects.set(innerProjectPath, {
+      manifest: {},
+      json: innerProject.toJSON(),
+    });
+    loader.projects.set(deepInnerProjectPath, {
+      manifest: {},
+      json: deepInnerProject.toJSON(),
+    });
     await loader.save();
 
     fs.writeFileSync(tmpObj.name + "/demo-project/inner/package.json", "{}");
@@ -93,8 +99,9 @@ describe(WorkspaceLoader.name, () => {
       new NodeFileAccess(tmpObj.name + "/demo-project")
     );
 
-    expect(projectFiles2.json).toEqual(project.toJSON());
-    expect(projectFiles2.jsons.get(innerProjectPath)).toEqual(
+    // TODO: test manifest loading
+    expect(projectFiles2.rootProject.json).toEqual(project.toJSON());
+    expect(projectFiles2.projects.get(innerProjectPath)?.json).toEqual(
       innerProject.toJSON()
     );
   });
@@ -114,11 +121,11 @@ describe(WorkspaceLoader.name, () => {
     const loader = new WorkspaceLoader(
       new NodeFileAccess(tmpObj.name + "/demo-project")
     );
-    loader.json = project.toJSON();
-    loader.jsons.set(
-      path.resolve(loader.rootPath, "inner"),
-      innerProject.toJSON()
-    );
+    loader.rootProject.json = project.toJSON();
+    loader.projects.set(path.resolve(loader.rootPath, "inner"), {
+      manifest: {},
+      json: innerProject.toJSON(),
+    });
     await loader.save();
 
     fs.writeFileSync(tmpObj.name + "/demo-project/inner/package.json", "{}");
@@ -145,7 +152,7 @@ describe(WorkspaceLoader.name, () => {
     await new Promise((resolve) => setTimeout(resolve, 500));
     expect(watchCount).toBe(2);
 
-    project.loadJSON(loader.json);
+    project.loadJSON(loader.rootProject.json);
 
     expect(project.pages.all.map((page) => page.filePath)).toEqual([
       "src/page2",

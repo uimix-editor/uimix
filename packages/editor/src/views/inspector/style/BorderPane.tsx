@@ -5,7 +5,7 @@ import { Color } from "@uimix/foundation/src/utils/Color";
 import { Mixed, sameOrMixed } from "@uimix/foundation/src/utils/Mixed";
 import { ColorInput } from "../components/ColorInput";
 import { projectState } from "../../../state/ProjectState";
-import { IconButton } from "@uimix/foundation/src/components/IconButton";
+import { IconButton, SeparableInput } from "@uimix/foundation/src/components";
 import { InspectorHeading } from "../components/InspectorHeading";
 import { InspectorPane } from "../components/InspectorPane";
 import { action } from "mobx";
@@ -16,7 +16,6 @@ import edgeTopIcon from "@seanchas116/design-icons/json/edge-top.json";
 import edgeRightIcon from "@seanchas116/design-icons/json/edge-right.json";
 import edgeBottomIcon from "@seanchas116/design-icons/json/edge-bottom.json";
 import edgeLeftIcon from "@seanchas116/design-icons/json/edge-left.json";
-import { SeparableInput } from "@uimix/foundation/src/components/SeparableInput";
 import { useContext } from "react";
 import { ColorRef } from "@uimix/model/src/models";
 

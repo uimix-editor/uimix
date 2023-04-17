@@ -6,8 +6,7 @@ import { Mixed, sameOrMixed } from "@uimix/foundation/src/utils/Mixed";
 import { Selectable } from "@uimix/model/src/models";
 import { InspectorTargetContext } from "../../components/InspectorTargetContext";
 import { projectState } from "../../../../state/ProjectState";
-import { SelectOption } from "@uimix/foundation/src/components/Select";
-import { ComboBox } from "@uimix/foundation/src/components/ComboBox";
+import { SelectOption, ComboBox } from "@uimix/foundation/src/components";
 
 export const InspectorComboBox = observer(function InspectorComboBox({
   className,

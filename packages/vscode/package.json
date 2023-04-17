@@ -17,7 +17,7 @@
   "main": "./out/extension.js",
   "scripts": {
     "//test": "node ./out/test/runTest.js",
-    "build": "node build.js",
+    "build": "tsc && node build.js",
     "dev": "node build.js --watch",
     "lint": "eslint src --ext ts",
     "package": "vsce package --no-dependencies",
@@ -64,7 +64,7 @@
     "@uimix/model": "workspace:*",
     "@uimix/typed-rpc": "workspace:*",
     "@vscode/test-electron": "^2.3.0",
-    "@vscode/vsce": "^2.18.0",
+    "@vscode/vsce": "^2.19.0",
     "esbuild": "^0.17.16",
     "eslint": "^8.38.0",
     "glob": "^8.1.0",

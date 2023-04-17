@@ -1,10 +1,10 @@
 import * as vscode from "vscode";
 import { WorkspaceLoader } from "uimix/src/project/WorkspaceLoader";
-import { FileAccess } from "uimix/src/project/FileAccess";
+import { FileAccess, Stats } from "uimix/src/project/FileAccess";
 import { ProjectData } from "@uimix/model/src/collaborative";
-import debounce from "just-debounce-it";
 import * as path from "path";
 import { getPageID } from "@uimix/model/src/data/util";
+import { codeAssetsDestination } from "uimix/src/codeAssets/constants";
 
 let lastSaveTime = 0;
 
@@ -45,6 +45,17 @@ class VSCodeFileAccess implements FileAccess {
     return urls.map((url) => url.fsPath);
   }
 
+  async stat(filePath: string): Promise<Stats | undefined> {
+    try {
+      const stat = await vscode.workspace.fs.stat(vscode.Uri.file(filePath));
+      return {
+        type: stat.type & vscode.FileType.Directory ? "directory" : "file",
+      };
+    } catch (e) {
+      return undefined;
+    }
+  }
+
   async writeText(filePath: string, data: string): Promise<void> {
     lastSaveTime = Date.now();
 
@@ -70,10 +81,11 @@ export class WorkspaceData {
   static async load(rootFolder: vscode.WorkspaceFolder) {
     const loader = new WorkspaceLoader(new VSCodeFileAccess(rootFolder));
     await loader.load();
-    return new WorkspaceData(loader);
+    return new WorkspaceData(rootFolder, loader);
   }
 
-  constructor(loader: WorkspaceLoader) {
+  constructor(rootFolder: vscode.WorkspaceFolder, loader: WorkspaceLoader) {
+    this.rootFolder = rootFolder;
     this.loader = loader;
     this.updateData();
     this.disposables.push({
@@ -82,11 +94,37 @@ export class WorkspaceData {
         this.updateData();
       }),
     });
+
+    this.codeAssetsWatcher = vscode.workspace.createFileSystemWatcher(
+      new vscode.RelativePattern(
+        this.rootFolder,
+        `**/${codeAssetsDestination.directory}/{${codeAssetsDestination.js},${codeAssetsDestination.css}}`
+      )
+    );
+
+    const onChange = (uri: vscode.Uri) => {
+      const projectPath = uri.fsPath.replace(
+        new RegExp(
+          `\\/${codeAssetsDestination.directory.replace(/\//g, "\\/")}.*`
+        ),
+        ""
+      );
+      this._onDidChangeCodeAssets.fire(projectPath);
+    };
+    this.codeAssetsWatcher.onDidCreate(onChange);
+    this.codeAssetsWatcher.onDidChange(onChange);
+    this.codeAssetsWatcher.onDidDelete(onChange);
+    this.disposables.push(this.codeAssetsWatcher);
   }
 
+  readonly rootFolder: vscode.WorkspaceFolder;
   readonly loader: WorkspaceLoader;
 
   private readonly dataForProject = new Map<string /* path */, ProjectData>();
+
+  readonly codeAssetsWatcher: vscode.FileSystemWatcher;
+  private readonly _onDidChangeCodeAssets = new vscode.EventEmitter<string>();
+  readonly onDidChangeCodeAssets = this._onDidChangeCodeAssets.event;
 
   getDataForProject(projectPath: string): ProjectData {
     let data = this.dataForProject.get(projectPath);
@@ -110,20 +148,21 @@ export class WorkspaceData {
     return getPageID(relativePath.replace(/\.uimix$/, ""));
   }
 
+  projectPathForFile(uri: vscode.Uri): string {
+    return this.loader.projectPathForFile(uri.fsPath);
+  }
+
   private updateData() {
-    for (const [projectPath, json] of this.loader.jsons) {
-      this.getDataForProject(projectPath).loadJSON(json);
+    for (const [projectPath, project] of this.loader.projects) {
+      this.getDataForProject(projectPath).loadJSON(project.json);
     }
   }
 
   save(uri: vscode.Uri) {
-    for (const projectPath of [...this.loader.jsons.keys()]) {
-      this.loader.jsons.set(
-        projectPath,
-        this.getDataForProject(projectPath).toJSON()
-      );
-    }
-    this.loader.save([uri.fsPath]);
+    const projectPath = this.loader.projectPathForFile(uri.fsPath);
+    this.loader.getOrCreateProject(projectPath).json =
+      this.getDataForProject(projectPath).toJSON();
+    this.loader.save(projectPath);
   }
 
   readonly disposables: vscode.Disposable[] = [];
