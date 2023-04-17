@@ -34,8 +34,8 @@ async function compileCommand(
     loader.watch(() => compileProject(loader));
   }
 
-  void compileProject(loader);
-  void buildCodeAssets(rootPath, loader.rootProject.manifest, options);
+  await buildCodeAssets(rootPath, loader.rootProject.manifest, options);
+  await compileProject(loader);
 }
 
 const cli = cac("uimix");
