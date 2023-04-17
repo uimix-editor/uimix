@@ -52,6 +52,11 @@ interface WorkspaceLoaderOptions {
   filePattern?: string;
 }
 
+interface Project {
+  manifest: ProjectManifestJSON;
+  json: ProjectJSON;
+}
+
 // Important TODO: fix paths in Windows!!
 export class WorkspaceLoader {
   static async load(
@@ -77,23 +82,27 @@ export class WorkspaceLoader {
   readonly filePattern: string;
   readonly uimixProjectFile = "uimix.json";
   readonly projectBoundary = "package.json"; // TODO: other project boundaries
-  jsons = new Map<string, ProjectJSON>(); // project path -> project json
+  projects = new Map<string, Project>(); // project path -> project json
 
-  get json(): ProjectJSON {
-    return (
-      this.jsons.get(this.rootPath) ?? {
-        nodes: {},
-        styles: {},
-      }
-    );
+  get rootProject(): Project {
+    return this.getOrCreateProject(this.rootPath);
   }
-  set json(json: ProjectJSON) {
-    this.jsons.set(this.rootPath, json);
+
+  getOrCreateProject(projectPath: string): Project {
+    let project = this.projects.get(projectPath);
+    if (!project) {
+      project = {
+        manifest: {},
+        json: { nodes: {}, styles: {} },
+      };
+      this.projects.set(projectPath, project);
+    }
+    return project;
   }
 
   projectPathForFile(pagePath: string): string {
     return (
-      [...this.jsons.keys()]
+      [...this.projects.keys()]
         .sort((a, b) => b.length - a.length)
         .find((projectPath) => pagePath.startsWith(projectPath + path.sep)) ??
       this.rootPath
@@ -172,14 +181,17 @@ export class WorkspaceLoader {
 
       if (
         !compareProjectJSONs(
-          this.jsons.get(projectPath) ?? { nodes: {}, styles: {} },
+          this.projects.get(projectPath)?.json ?? { nodes: {}, styles: {} },
           newProjectJSON
         )
       ) {
         changed = true;
       }
 
-      this.jsons.set(projectPath, newProjectJSON);
+      this.projects.set(projectPath, {
+        manifest,
+        json: newProjectJSON,
+      });
     }
 
     return changed;
@@ -195,12 +207,12 @@ export class WorkspaceLoader {
         await this.fileAccess.glob(this.filePattern)
       );
 
-      for (const [projectPath, json] of this.jsons) {
+      for (const [projectPath, project] of this.projects) {
         if (projectPathToSave && projectPath !== projectPathToSave) {
           continue;
         }
 
-        const { manifest, pages } = projectJSONToFiles(json);
+        const { manifest, pages } = projectJSONToFiles(project.json);
 
         for (const [pageName, pageJSON] of pages) {
           const pagePath = path.join(projectPath, pageName + ".uimix");
@@ -239,7 +251,7 @@ export class WorkspaceLoader {
     }
   }
 
-  watch(onChange: (projectJSON: ProjectJSON) => void): () => void {
+  watch(onChange: () => void): () => void {
     console.log("start watching...");
 
     return this.fileAccess.watch(
@@ -250,7 +262,7 @@ export class WorkspaceLoader {
             return;
           }
           if (await this.load()) {
-            onChange(this.json);
+            onChange();
           }
         } catch (e) {
           console.error(e);

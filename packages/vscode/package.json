@@ -17,7 +17,7 @@
   "main": "./out/extension.js",
   "scripts": {
     "//test": "node ./out/test/runTest.js",
-    "build": "node build.js",
+    "build": "tsc && node build.js",
     "dev": "node build.js --watch",
     "lint": "eslint src --ext ts",
     "package": "vsce package --no-dependencies",

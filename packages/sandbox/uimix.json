@@ -3,5 +3,5 @@
   "components": {
     "react": ["./src/stories/*.tsx", "!./src/stories/*.stories.tsx"]
   },
-  "designTokens": "./src/designTokens/*.json"
+  "designTokens": "./src/designTokens.ts"
 }

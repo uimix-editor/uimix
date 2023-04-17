@@ -182,7 +182,9 @@
         "x": { "type": "start", "start": 200 },
         "y": { "type": "start", "start": 400 }
       },
-      "fills": [{ "type": "solid", "color": "#3B82F6" }]
+      "fills": [
+        { "type": "solid", "color": { "type": "token", "id": "blue/500" } }
+      ]
     },
     "1Bvi2z3UVsEskiSt2TcdL7:1Bvi2z3UGTM64JtRT7Qc1S": {
       "fills": [{ "type": "solid", "color": "#FFFFFF" }]
@@ -233,7 +235,9 @@
     "1Bvi2z3UB1xUVg4Xz9WTpJ": {
       "width": { "type": "fixed", "value": 80 },
       "height": { "type": "fixed", "value": 40 },
-      "fills": [{ "type": "solid", "color": "#3B82F6" }]
+      "fills": [
+        { "type": "solid", "color": { "type": "token", "id": "blue/500" } }
+      ]
     },
     "1Bvi2z3U3SiK6r7gf9vh7N": {
       "width": { "type": "hug" },

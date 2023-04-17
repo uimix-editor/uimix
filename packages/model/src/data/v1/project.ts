@@ -48,5 +48,6 @@ export const ProjectManifestJSON = z.object({
       react: z.array(z.string()).optional(),
     })
     .optional(),
+  designTokens: z.string().optional(),
 });
 export type ProjectManifestJSON = z.infer<typeof ProjectManifestJSON>;

@@ -1,10 +1,10 @@
 import docgen from "react-docgen-typescript";
-import type { ForeignComponent } from "@uimix/asset-types";
+import type * as CodeAsset from "@uimix/code-asset-types";
 import * as path from "node:path";
 import { globbySync } from "globby";
 
 function getComponentDocs(
-  dirname: string,
+  rootPath: string,
   pattern: string[]
 ): docgen.ComponentDoc[] {
   const options = {
@@ -12,7 +12,7 @@ function getComponentDocs(
     shouldExtractLiteralValuesFromEnum: true,
   };
 
-  const filePaths = globbySync(pattern, { cwd: dirname });
+  const filePaths = globbySync(pattern, { cwd: rootPath });
 
   // TODO: Load tsconfig
   const docs = docgen.parse(filePaths, options);
@@ -21,13 +21,13 @@ function getComponentDocs(
 }
 
 export function getComponents(
-  dirname: string,
+  rootPath: string,
   pattern: string[]
-): Omit<ForeignComponent, "createRenderer">[] {
-  const docs = getComponentDocs(dirname, pattern);
+): Omit<CodeAsset.Component, "createRenderer">[] {
+  const docs = getComponentDocs(rootPath, pattern);
 
   const components = docs.map((doc) => {
-    const props: ForeignComponent["props"] = [];
+    const props: CodeAsset.Component["props"] = [];
 
     for (const [name, prop] of Object.entries(doc.props)) {
       if (prop.type.name === "string") {
@@ -52,10 +52,10 @@ export function getComponents(
       }
     }
 
-    const component: Omit<ForeignComponent, "createRenderer"> = {
+    const component: Omit<CodeAsset.Component, "createRenderer"> = {
       framework: "react",
       name: doc.displayName,
-      path: path.relative(dirname, doc.filePath),
+      path: path.relative(rootPath, doc.filePath),
       props,
     };
 

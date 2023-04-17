@@ -3,14 +3,16 @@ import react from "@vitejs/plugin-react";
 import { build } from "vite";
 import { getComponents } from "../codeAssets/getComponents";
 import { codeAssetsDestination } from "./constants";
+import { ProjectManifestJSON } from "@uimix/model/src/data/v1";
 
 export async function buildCodeAssets(
   rootPath: string,
+  manifest: ProjectManifestJSON,
   options: {
     watch?: boolean;
   }
 ): Promise<void> {
-  const patterns = ["src/stories/*.tsx", "!**/*.stories.tsx"];
+  const patterns = manifest.components?.react ?? [];
   const patternsFromRoot = patterns.map((pattern) => {
     if (pattern.startsWith("!")) {
       return pattern;
@@ -53,11 +55,17 @@ export async function buildCodeAssets(
               );
             });
 
+            const tokensCode = manifest.designTokens
+              ? `export { default as tokens } from "${manifest.designTokens}";`
+              : `export const tokens = {};`;
+
             return `${reactRendererCode}
             const modules = import.meta.glob(${JSON.stringify(
               patternsFromRoot
             )}, {eager: true});
-            export const components = [${componentCodes.join(",")}]`;
+            export const components = [${componentCodes.join(",")}]
+            ${tokensCode}
+            `;
           }
         },
       },

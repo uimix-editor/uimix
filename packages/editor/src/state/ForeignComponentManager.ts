@@ -3,8 +3,35 @@ import { action, observable, reaction } from "mobx";
 import type React from "react";
 import type ReactDOM from "react-dom/client";
 import { projectState } from "./ProjectState";
-import { ForeignComponent } from "@uimix/asset-types";
+import * as CodeAsset from "@uimix/code-asset-types";
 import { Buffer } from "buffer";
+import { CodeColorToken } from "@uimix/model/src/models";
+
+function isDesignToken(
+  value: CodeAsset.DesignToken | CodeAsset.DesignTokens
+): value is CodeAsset.DesignToken {
+  return value.$type !== undefined;
+}
+
+function flattenDesignTokens(
+  namePath: string[],
+  designTokens: CodeAsset.DesignTokens
+): { path: string; token: CodeAsset.DesignToken }[] {
+  const tokens: { path: string; token: CodeAsset.DesignToken }[] = [];
+
+  for (const [name, value] of Object.entries(designTokens)) {
+    if (isDesignToken(value)) {
+      tokens.push({
+        path: [...namePath, name].join("/"),
+        token: value,
+      });
+    } else {
+      tokens.push(...flattenDesignTokens([...namePath, name], value));
+    }
+  }
+
+  return tokens;
+}
 
 export function foreignComponentKey(ref: { path: string; name: string }) {
   return `${ref.path}#${ref.name}`;
@@ -34,6 +61,7 @@ export class ForeignComponentManager {
           link.remove();
         }
         this.components.clear();
+        projectState.project.colorTokens.codeColorTokens.clear();
 
         for (const url of urls) {
           if (url.endsWith(".css") || url.startsWith("data:text/css")) {
@@ -48,18 +76,30 @@ export class ForeignComponentManager {
               // @ts-ignore
               .eval(`import(${JSON.stringify(url)})`)
               .then(
-                async (mod: {
-                  React: typeof React;
-                  ReactDOM: typeof ReactDOM;
-                  components: ForeignComponent[];
-                }) => {
-                  for (const component of mod.components) {
-                    this.components.set(foreignComponentKey(component), {
-                      ...component,
-                      key: Math.random(),
-                    });
+                action(
+                  (mod: {
+                    React: typeof React;
+                    ReactDOM: typeof ReactDOM;
+                    components: CodeAsset.Component[];
+                    tokens: CodeAsset.DesignTokens;
+                  }) => {
+                    for (const component of mod.components) {
+                      this.components.set(foreignComponentKey(component), {
+                        ...component,
+                        key: Math.random(),
+                      });
+                    }
+
+                    const tokens = flattenDesignTokens([], mod.tokens);
+
+                    for (const token of tokens) {
+                      projectState.project.colorTokens.codeColorTokens.set(
+                        token.path,
+                        new CodeColorToken(token.path, token.token)
+                      );
+                    }
                   }
-                }
+                )
               );
           }
         }
@@ -71,7 +111,7 @@ export class ForeignComponentManager {
   readonly window: Window;
   readonly components = observable.map<
     string,
-    ForeignComponent & { key: number }
+    CodeAsset.Component & { key: number }
   >([], {
     deep: false,
   });
@@ -79,7 +119,7 @@ export class ForeignComponentManager {
 
   get(
     ref: ForeignComponentRef
-  ): (ForeignComponent & { key: number }) | undefined {
+  ): (CodeAsset.Component & { key: number }) | undefined {
     return this.components.get(foreignComponentKey(ref));
   }
 

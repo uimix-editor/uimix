@@ -1,5 +1,5 @@
 {
-  "name": "@uimix/asset-types",
+  "name": "@uimix/code-asset-types",
   "license": "MIT",
   "type": "module",
   "main": "src/index.ts",
