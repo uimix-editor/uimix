@@ -9,6 +9,25 @@ import { useState } from "react";
 import { twMerge } from "tailwind-merge";
 import { QueryTester } from "@uimix/foundation/src/utils/QueryTester";
 
+function colorTokensToGroups(
+  allTokens: (ColorToken | CodeColorToken)[]
+): Map<string, (ColorToken | CodeColorToken)[]> {
+  const groups = new Map<string, (ColorToken | CodeColorToken)[]>();
+
+  for (const token of allTokens) {
+    const path = (token.name ?? "").split("/");
+    const group = path.slice(0, path.length - 1).join("/");
+    let tokens = groups.get(group);
+    if (!tokens) {
+      tokens = [];
+      groups.set(group, tokens);
+    }
+    tokens.push(token);
+  }
+
+  return groups;
+}
+
 export const ColorTokenPopover: React.FC<{
   value?: ColorRef;
   onChange: (token: ColorToken | CodeColorToken) => void;
@@ -21,6 +40,10 @@ export const ColorTokenPopover: React.FC<{
     return value?.value.type === "token" && value?.value.value.id === token.id;
   };
 
+  const codeTokenGroups = colorTokensToGroups([
+    ...projectState.project.colorTokens.codeColorTokens.values(),
+  ]);
+
   return (
     <RadixPopover.Root>
       <Tooltip text="Color Tokens">
@@ -29,7 +52,7 @@ export const ColorTokenPopover: React.FC<{
       <RadixPopover.Portal>
         <RadixPopover.Content
           align="start"
-          className="bg-macaron-background z-10 border border-macaron-separator rounded-lg shadow-xl overflow-hidden text-xs"
+          className="bg-macaron-background z-10 border border-macaron-separator rounded-lg shadow-xl overflow-hidden text-xs text-macaron-text"
         >
           <SearchInput
             placeholder="Search"
@@ -39,9 +62,7 @@ export const ColorTokenPopover: React.FC<{
           <div className="w-64 p-3 max-h-80 overflow-auto flex flex-col gap-2">
             <div className="flex flex-col gap-2">
               <div className="flex items-center justify-between">
-                <div className="text-macaron-label font-medium">
-                  This Document
-                </div>
+                <div>This Document</div>
                 <IconButton
                   icon="material-symbols:add"
                   onClick={action(() => {
@@ -72,39 +93,33 @@ export const ColorTokenPopover: React.FC<{
 
             <div className="flex flex-col gap-2">
               <div className="flex items-center justify-between mb-2">
-                <div className="text-macaron-label font-medium">Code</div>
+                <div>Code</div>
               </div>
 
-              {[...projectState.project.colorTokens.codeColorTokensByGroup].map(
-                ([group, tokens]) => {
-                  const filteredTokens = tokens.filter((token) =>
-                    queryTester.test(token.name ?? "")
-                  );
-                  if (!filteredTokens.length) {
-                    return null;
-                  }
-                  return (
-                    <div className="flex flex-col gap-1">
-                      {group !== "" && (
-                        <div className="text-macaron-label font-medium">
-                          {group}
-                        </div>
-                      )}
-                      <div className="flex gap-1 flex-wrap">
-                        {filteredTokens.map((token) => (
-                          <ColorTokenIcon
-                            token={token}
-                            selected={isTokenSelected(token)}
-                            onClick={action(() => {
-                              onChange(token);
-                            })}
-                          />
-                        ))}
-                      </div>
-                    </div>
-                  );
+              {[...codeTokenGroups].map(([group, tokens]) => {
+                const filteredTokens = tokens.filter((token) =>
+                  queryTester.test(token.name ?? "")
+                );
+                if (!filteredTokens.length) {
+                  return null;
                 }
-              )}
+                return (
+                  <div className="flex flex-col gap-1">
+                    {!!group && <div>{group}</div>}
+                    <div className="flex gap-1 flex-wrap">
+                      {filteredTokens.map((token) => (
+                        <ColorTokenIcon
+                          token={token}
+                          selected={isTokenSelected(token)}
+                          onClick={action(() => {
+                            onChange(token);
+                          })}
+                        />
+                      ))}
+                    </div>
+                  </div>
+                );
+              })}
             </div>
           </div>
         </RadixPopover.Content>
