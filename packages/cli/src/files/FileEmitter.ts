@@ -26,9 +26,11 @@ export class PageFileEmitter {
 export class ComponentEmitter {
   constructor(component: Component) {
     this.component = component;
+    this.refIDs = component.refIDs;
   }
 
   component: Component;
+  refIDs: Map<string, string>;
 
   emit(): HumanReadable.ComponentNode {
     return {
@@ -48,10 +50,12 @@ export class ComponentEmitter {
       (corresponding) => corresponding.variant
     );
 
+    const refID = this.refIDs.get(selectable.node.id);
+
     return {
       type: "frame",
       props: {
-        id: "TODO",
+        id: refID ?? "TODO",
         ...selectable.selfStyle.toJSON(),
         variants: Object.fromEntries(
           variants.map((corresponding) => {
