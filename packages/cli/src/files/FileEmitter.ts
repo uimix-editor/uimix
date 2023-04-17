@@ -52,6 +52,30 @@ export class ComponentEmitter {
 
     const refID = this.refIDs.get(selectable.node.id);
 
+    const children =
+      selectable.originalNode.type === "instance"
+        ? []
+        : selectable.children.map((child) => this.emitNode(child));
+
+    return {
+      type: selectable.originalNode.type,
+      props: {
+        id: refID ?? "TODO",
+        ...this.getStyleForSelectable(selectable),
+        variants: Object.fromEntries(
+          variants.map((corresponding) => {
+            return [
+              variantConditionToText(corresponding.variant!.condition!),
+              this.getStyleForSelectable(corresponding.selectable),
+            ];
+          })
+        ),
+      },
+      children,
+    };
+  }
+
+  getStyleForSelectable(selectable: Selectable) {
     const getInstanceOverrides = (
       instanceSelectable: Selectable
     ): Record<string, Partial<StyleJSON>> => {
@@ -82,31 +106,13 @@ export class ComponentEmitter {
       return overrides;
     };
 
-    const children =
-      selectable.originalNode.type === "instance"
-        ? []
-        : selectable.children.map((child) => this.emitNode(child));
-
     return {
-      type: selectable.originalNode.type,
-      props: {
-        id: refID ?? "TODO",
-        ...selectable.selfStyle.toJSON(),
-        variants: Object.fromEntries(
-          variants.map((corresponding) => {
-            return [
-              variantConditionToText(corresponding.variant!.condition!),
-              corresponding.selectable.selfStyle.toJSON(),
-            ];
-          })
-        ),
-        ...(selectable.originalNode.type === "instance"
-          ? {
-              overrides: getInstanceOverrides(selectable),
-            }
-          : {}),
-      },
-      children,
+      ...selectable.selfStyle.toJSON(),
+      ...(selectable.originalNode.type === "instance"
+        ? {
+            overrides: getInstanceOverrides(selectable),
+          }
+        : {}),
     };
   }
 
