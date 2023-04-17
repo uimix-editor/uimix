@@ -32,7 +32,6 @@ export async function generateCode(
     tokens: DesignTokens;
   } = await import(codeAssetJSPath);
   const designTokens = codeAssetJS.tokens;
-  console.log(designTokens);
 
   const imagesPath = ".uimix/images";
 
