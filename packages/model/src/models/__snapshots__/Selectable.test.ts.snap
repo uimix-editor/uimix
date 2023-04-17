@@ -285,7 +285,10 @@ exports[`selectablesToProjectJSON > works 1`] = `
     "1Bvi2z3UB1xUVg4Xz9WTpJ": {
       "fills": [
         {
-          "color": "#3B82F6",
+          "color": {
+            "id": "blue/500",
+            "type": "token",
+          },
           "type": "solid",
         },
       ],
@@ -346,7 +349,10 @@ exports[`selectablesToProjectJSON > works 1`] = `
     "1Bvi2z3UVsEskiSt2TcdL7": {
       "fills": [
         {
-          "color": "#3B82F6",
+          "color": {
+            "id": "blue/500",
+            "type": "token",
+          },
           "type": "solid",
         },
       ],
