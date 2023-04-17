@@ -74,19 +74,31 @@ export const ColorTokenPopover: React.FC<{
               <div className="flex items-center justify-between mb-2">
                 <div className="text-macaron-label font-medium">Code</div>
               </div>
-              <div className="flex gap-2 flex-wrap">
-                {[...projectState.project.colorTokens.codeColorTokens.values()]
-                  .filter((token) => queryTester.test(token.name ?? ""))
-                  .map((token) => (
-                    <ColorTokenIcon
-                      token={token}
-                      selected={isTokenSelected(token)}
-                      onClick={action(() => {
-                        onChange(token);
-                      })}
-                    />
-                  ))}
-              </div>
+
+              {[...projectState.project.colorTokens.codeColorTokensByGroup].map(
+                ([group, tokens]) => (
+                  <div className="flex flex-col gap-2">
+                    {group !== "" && (
+                      <div className="text-macaron-label font-medium">
+                        {group}
+                      </div>
+                    )}
+                    <div className="flex gap-2 flex-wrap">
+                      {[...tokens.values()]
+                        .filter((token) => queryTester.test(token.name ?? ""))
+                        .map((token) => (
+                          <ColorTokenIcon
+                            token={token}
+                            selected={isTokenSelected(token)}
+                            onClick={action(() => {
+                              onChange(token);
+                            })}
+                          />
+                        ))}
+                    </div>
+                  </div>
+                )
+              )}
             </div>
           </div>
         </RadixPopover.Content>

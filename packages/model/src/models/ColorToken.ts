@@ -7,7 +7,7 @@ import { Project } from "./Project";
 import { Page } from "./Page";
 import { ObjectData } from "./ObjectData";
 import * as CodeAsset from "@uimix/code-asset-types";
-import { observable } from "mobx";
+import { computed, observable } from "mobx";
 
 export class CodeColorToken {
   constructor(path: string, token: CodeAsset.ColorToken) {
@@ -116,6 +116,23 @@ export class ColorTokenMap {
   }
 
   readonly codeColorTokens = observable.map<string, CodeColorToken>();
+
+  @computed get codeColorTokensByGroup(): Map<string, CodeColorToken[]> {
+    const groups = new Map<string, CodeColorToken[]>();
+
+    for (const token of this.codeColorTokens.values()) {
+      const path = token.path.split("/");
+      const group = path.slice(0, path.length - 1).join("/");
+      let tokens = groups.get(group);
+      if (!tokens) {
+        tokens = [];
+        groups.set(group, tokens);
+      }
+      tokens.push(token);
+    }
+
+    return groups;
+  }
 }
 
 export class ColorTokenList {
