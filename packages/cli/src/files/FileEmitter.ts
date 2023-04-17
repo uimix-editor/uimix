@@ -1,7 +1,7 @@
 import * as HumanReadable from "./HumanReadableFormat";
 import { Page } from "@uimix/model/src/models/Page";
 import { Component } from "@uimix/model/src/models/Component";
-import { compact } from "lodash-es";
+import { compact, over } from "lodash-es";
 import { StyleJSON, VariantCondition } from "@uimix/model/src/data/v1";
 import { Selectable } from "@uimix/model/src/models/Selectable";
 
@@ -70,12 +70,14 @@ export class ComponentEmitter {
           overrides[refID] = selectable.selfStyle.toJSON();
         }
 
-        if (selectable.originalNode.type !== "instance") {
+        if (selectable.originalNode.type === "instance") {
+          overrides[refID!]["overrides"] = getInstanceOverrides(selectable);
+        } else {
           selectable.children.forEach((child) => visit(child));
         }
       };
 
-      mainComponent.rootNode.selectable.children.forEach(visit);
+      instanceSelectable.children.forEach(visit);
 
       return overrides;
     };
