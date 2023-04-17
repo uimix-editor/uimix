@@ -2,7 +2,7 @@ import * as HumanReadable from "./HumanReadableFormat";
 import { Page } from "@uimix/model/src/models/Page";
 import { Component } from "@uimix/model/src/models/Component";
 import { compact } from "lodash-es";
-import { VariantCondition } from "@uimix/model/src/data/v1";
+import { StyleJSON, VariantCondition } from "@uimix/model/src/data/v1";
 import { Selectable } from "@uimix/model/src/models/Selectable";
 
 export class PageFileEmitter {
@@ -52,9 +52,37 @@ export class ComponentEmitter {
 
     const refID = this.refIDs.get(selectable.node.id);
 
+    const getInstanceOverrides = (
+      instanceSelectable: Selectable
+    ): Record<string, Partial<StyleJSON>> => {
+      const mainComponent = instanceSelectable.mainComponent;
+      if (!mainComponent) {
+        return {};
+      }
+      const refIDs = mainComponent.refIDs;
+
+      const overrides: Record<string, Partial<StyleJSON>> = {};
+
+      const visit = (selectable: Selectable) => {
+        const refID = refIDs.get(selectable.node.id);
+
+        if (refID) {
+          overrides[refID] = selectable.selfStyle.toJSON();
+        }
+
+        if (selectable.originalNode.type !== "instance") {
+          selectable.children.forEach((child) => visit(child));
+        }
+      };
+
+      mainComponent.rootNode.selectable.children.forEach(visit);
+
+      return overrides;
+    };
+
     const children =
       selectable.originalNode.type === "instance"
-        ? [] // TODO: create override elements
+        ? []
         : selectable.children.map((child) => this.emitNode(child));
 
     return {
@@ -70,6 +98,11 @@ export class ComponentEmitter {
             ];
           })
         ),
+        ...(selectable.originalNode.type === "instance"
+          ? {
+              overrides: getInstanceOverrides(selectable),
+            }
+          : {}),
       },
       children,
     };
