@@ -1,4 +1,3 @@
-import { Project } from "@uimix/model/src/models/Project";
 import * as HumanReadable from "./HumanReadableFormat";
 import { Page } from "@uimix/model/src/models/Page";
 import { Component } from "@uimix/model/src/models/Component";

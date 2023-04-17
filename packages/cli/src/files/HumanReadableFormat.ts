@@ -1,5 +1,4 @@
 import { StyleJSON, VariantCondition } from "@uimix/model/src/data/v1";
-import { HierarchicalNodeJSON } from "../project/HierarchicalNodeJSON";
 
 export type Variants = Record<string, Partial<StyleJSON>>;
 
@@ -58,86 +57,8 @@ export type Node =
   | LeafNode
   | OverrideNode;
 
-export function toHumanReadableNode(
-  json: HierarchicalNodeJSON,
-  styles: Record<string, Partial<StyleJSON>>
-): Node {
-  const style = styles[json.id] ?? {}; // TODO: variant styles
-
-  switch (json.type) {
-    case "project":
-      throw new Error("Project node is not supported in HumanReadableFormat");
-    case "page":
-      return {
-        type: json.type,
-        props: {
-          id: json.id,
-        },
-        children: json.children.map((c) =>
-          toHumanReadableNode(c, styles)
-        ) as PageNode["children"],
-      };
-    case "component": {
-      return {
-        type: json.type,
-        props: {
-          id: json.id,
-        },
-        children: json.children.map((c) =>
-          toHumanReadableNode(c, styles)
-        ) as ComponentNode["children"],
-      };
-    }
-    case "variant": {
-      return {
-        type: json.type,
-        props: {
-          condition: json.condition!, // TODO: skip if not present
-          ...style,
-        },
-      };
-    }
-    case "text":
-    case "image":
-    case "svg":
-    case "foreign": {
-      return {
-        type: json.type,
-        props: {
-          id: json.id,
-          ...style,
-        },
-      };
-    }
-    case "frame": {
-      return {
-        type: json.type,
-        props: {
-          id: json.id,
-          ...style,
-        },
-        children: json.children.map((c) =>
-          toHumanReadableNode(c, styles)
-        ) as FrameNode["children"],
-      };
-    }
-    case "instance": {
-      return {
-        type: json.type,
-        props: {
-          id: json.id,
-          ...style,
-        },
-        children: [
-          // TODO: overrides
-        ],
-      };
-    }
-  }
-}
-
 export function stringifyAsJSX(node: Node): string {
-  const propText = Object.entries(node.props)
+  const propText = Object.entries("props" in node ? node.props : {})
     .map(
       ([key, value]) =>
         /* typeof value === "string"

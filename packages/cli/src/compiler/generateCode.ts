@@ -8,6 +8,8 @@ import * as mime from "mime-types";
 import { codeAssetsDestination } from "../codeAssets/constants.js";
 import * as path from "path";
 import { DesignTokens } from "@uimix/code-asset-types";
+import { PageFileEmitter } from "../files/FileEmitter.js";
+import { stringifyAsJSX } from "../files/HumanReadableFormat.js";
 
 export async function generateCode(
   rootPath: string,
@@ -57,6 +59,8 @@ export async function generateCode(
     );
     const cssContent = new CSSGenerator(page, designTokens).generate();
 
+    const pageEmitter = new PageFileEmitter(page);
+
     results.push(
       {
         filePath: page.filePath + ".uimix.tsx",
@@ -65,6 +69,10 @@ export async function generateCode(
       {
         filePath: page.filePath + ".uimix.css",
         content: cssContent,
+      },
+      {
+        filePath: page.filePath + ".newformat.js",
+        content: formatTypeScript(stringifyAsJSX(pageEmitter.emit())),
       }
     );
   }
