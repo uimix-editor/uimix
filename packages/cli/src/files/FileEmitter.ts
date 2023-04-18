@@ -4,6 +4,7 @@ import { Component } from "@uimix/model/src/models/Component";
 import { compact } from "lodash-es";
 import {
   Color,
+  ColorToken,
   NodeJSON,
   ProjectJSON,
   SolidFill,
@@ -30,9 +31,28 @@ export class ProjectFileEmitter {
   emit(): Map<string, HumanReadable.PageNode> {
     const project = this.nodes["project"];
 
+    const colorsForPage = new Map<string, ColorToken[]>();
+    for (const color of Object.values(this.projectJSON.colors)) {
+      if (!color.page) {
+        continue;
+      }
+
+      let colors = colorsForPage.get(color.page);
+      if (!colors) {
+        colors = [];
+        colorsForPage.set(color.page, colors);
+      }
+      colors.push(color);
+    }
+
     const result = new Map<string, HumanReadable.PageNode>();
     for (const page of project.children) {
-      const pageEmitter = new PageFileEmitter(page);
+      const pageEmitter = new PageFileEmitter(
+        this.projectJSON,
+        this.nodes,
+        page,
+        colorsForPage.get(page.id) ?? []
+      );
       const pageNode = pageEmitter.emit();
       const pagePath = path.join(page.name ?? "", "index.tsx");
       result.set(pagePath, pageNode);
@@ -45,16 +65,19 @@ export class PageFileEmitter {
   constructor(
     projectJSON: ProjectJSON,
     nodes: Record<string, HierarchicalNodeJSON>,
-    page: HierarchicalNodeJSON
+    page: HierarchicalNodeJSON,
+    colors: ColorToken[]
   ) {
     this.projectJSON = projectJSON;
     this.nodes = nodes;
     this.page = page;
+    this.colors = colors;
   }
 
   projectJSON: ProjectJSON;
   nodes: Record<string, HierarchicalNodeJSON>;
   page: HierarchicalNodeJSON;
+  colors: ColorToken[];
 
   emit(): HumanReadable.PageNode {
     const children: (HumanReadable.SceneNode | HumanReadable.ColorTokenNode)[] =
@@ -68,10 +91,7 @@ export class PageFileEmitter {
       }
     }
 
-    // TODO: don't iterate whole colors each time
-    for (const color of Object.values(this.projectJSON.colors)) {
-      if (color.page !== this.page.id) continue;
-
+    for (const color of this.colors) {
       children.push({
         type: "colorToken" as const,
         props: {
