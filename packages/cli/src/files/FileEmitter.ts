@@ -70,19 +70,23 @@ export class ComponentEmitter {
         ? []
         : selectable.children.map((child) => this.emitNode(child));
 
+    const variantStyles = Object.fromEntries(
+      variants.map((corresponding) => {
+        return [
+          variantConditionToText(corresponding.variant!.condition!),
+          this.getStyleForSelectable(corresponding.selectable),
+        ];
+      })
+    );
+
     return {
       type: selectable.originalNode.type,
       props: {
         id: refID ?? "TODO",
         ...this.getStyleForSelectable(selectable),
-        variants: Object.fromEntries(
-          variants.map((corresponding) => {
-            return [
-              variantConditionToText(corresponding.variant!.condition!),
-              this.getStyleForSelectable(corresponding.selectable),
-            ];
-          })
-        ),
+        ...(Object.keys(variantStyles).length > 0
+          ? { variants: variantStyles }
+          : {}),
       },
       children,
     };
