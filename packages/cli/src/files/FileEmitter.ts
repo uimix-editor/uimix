@@ -10,6 +10,7 @@ import {
 } from "@uimix/model/src/data/v1";
 import { Selectable } from "@uimix/model/src/models/Selectable";
 import { generateLowerJSIdentifier } from "@uimix/foundation/src/utils/Name";
+import { posix as path } from "path-browserify";
 
 export class PageFileEmitter {
   constructor(page: Page) {
@@ -154,8 +155,17 @@ export class ComponentEmitter {
     );
   }
 
+  relativePathFromPage(filePath: string): string {
+    const pagePath = this.component.page?.filePath ?? "";
+    const relativePath = path.relative(path.dirname(pagePath), filePath);
+    if (!relativePath.startsWith(".")) {
+      return "./" + relativePath;
+    }
+    return relativePath;
+  }
+
   pathForExport(page: Page, name: string) {
-    return page.filePath + ".uimix#" + name;
+    return this.relativePathFromPage(page.filePath) + ".uimix#" + name;
   }
 
   transformColor(color: Color): Color {
@@ -257,7 +267,9 @@ export class ComponentEmitter {
       svg: style.svgContent,
 
       component: style.foreignComponent
-        ? `${style.foreignComponent.path}#${style.foreignComponent.name}`
+        ? `${this.relativePathFromPage(style.foreignComponent.path)}#${
+            style.foreignComponent.name
+          }`
         : mainComponentPath,
       componentType: style.foreignComponent?.type,
       props: style.foreignComponent?.props,
