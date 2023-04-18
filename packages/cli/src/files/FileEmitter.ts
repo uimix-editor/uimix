@@ -158,6 +158,30 @@ export class ComponentEmitter {
     return page.filePath + ".uimix#" + name;
   }
 
+  transformColor(color: Color): Color {
+    if (typeof color === "object") {
+      const project = this.component.project;
+      const token = project.colorTokens.get(color.id);
+      if (token?.type === "normal" && token.page) {
+        return {
+          type: "token",
+          id: this.pathForExport(
+            token.page,
+            generateLowerJSIdentifier(token.name ?? "")
+          ),
+        };
+      }
+    }
+    return color;
+  }
+
+  transformFill(fill: SolidFill): SolidFill {
+    return {
+      type: "solid",
+      color: this.transformColor(fill.color),
+    };
+  }
+
   toHumanReadableStyle(
     style: Partial<StyleJSON>
   ): Partial<HumanReadable.BaseStyleProps> {
@@ -170,30 +194,6 @@ export class ComponentEmitter {
       mainComponent &&
       mainComponent.page &&
       this.pathForExport(mainComponent.page, mainComponent.name);
-
-    const transformColor = (color: Color): Color => {
-      if (typeof color === "object") {
-        const project = this.component.project;
-        const token = project.colorTokens.get(color.id);
-        if (token?.type === "normal" && token.page) {
-          return {
-            type: "token",
-            id: this.pathForExport(
-              token.page,
-              generateLowerJSIdentifier(token.name ?? "")
-            ),
-          };
-        }
-      }
-      return color;
-    };
-
-    const transformFill = (fill: SolidFill): SolidFill => {
-      return {
-        type: "solid",
-        color: transformColor(fill.color),
-      };
-    };
 
     return {
       hidden: style.hidden,
@@ -208,8 +208,8 @@ export class ComponentEmitter {
       bottomRightRadius: style.bottomRightRadius,
       bottomLeftRadius: style.bottomLeftRadius,
 
-      fills: style.fills?.map(transformFill),
-      border: style.border && transformFill(style.border),
+      fills: style.fills?.map((fill) => this.transformFill(fill)),
+      border: style.border && this.transformFill(style.border),
       borderTopWidth: style.borderTopWidth,
       borderRightWidth: style.borderRightWidth,
       borderBottomWidth: style.borderBottomWidth,
