@@ -2,7 +2,12 @@ import * as HumanReadable from "./HumanReadableFormat";
 import { Page } from "@uimix/model/src/models/Page";
 import { Component } from "@uimix/model/src/models/Component";
 import { compact } from "lodash-es";
-import { StyleJSON, VariantCondition } from "@uimix/model/src/data/v1";
+import {
+  Color,
+  SolidFill,
+  StyleJSON,
+  VariantCondition,
+} from "@uimix/model/src/data/v1";
 import { Selectable } from "@uimix/model/src/models/Selectable";
 import { generateLowerJSIdentifier } from "@uimix/foundation/src/utils/Name";
 
@@ -165,6 +170,28 @@ export class ComponentEmitter {
         mainComponent?.name ?? ""
       }`;
 
+    const transformColor = (color: Color): Color => {
+      if (typeof color === "object") {
+        const project = this.component.project;
+        const token = project.colorTokens.get(color.id);
+        if (token) {
+          return {
+            type: "token",
+            // TODO: include page path
+            id: generateLowerJSIdentifier(token.name ?? ""),
+          };
+        }
+      }
+      return color;
+    };
+
+    const transformFill = (fill: SolidFill): SolidFill => {
+      return {
+        type: "solid",
+        color: transformColor(fill.color),
+      };
+    };
+
     return {
       hidden: style.hidden,
       locked: style.locked,
@@ -178,8 +205,8 @@ export class ComponentEmitter {
       bottomRightRadius: style.bottomRightRadius,
       bottomLeftRadius: style.bottomLeftRadius,
 
-      fills: style.fills,
-      border: style.border,
+      fills: style.fills?.map(transformFill),
+      border: style.border && transformFill(style.border),
       borderTopWidth: style.borderTopWidth,
       borderRightWidth: style.borderRightWidth,
       borderBottomWidth: style.borderBottomWidth,
