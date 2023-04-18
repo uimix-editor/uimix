@@ -18,7 +18,6 @@ import {
   toHierarchicalNodeJSONRecord,
 } from "../project/HierarchicalNodeJSON";
 import { assertNonNull } from "@uimix/foundation/src/utils/Assert";
-import { assert } from "vitest";
 
 export class ProjectFileEmitter {
   constructor(projectJSON: ProjectJSON) {
@@ -55,7 +54,7 @@ export class ProjectFileEmitter {
         colorsForPage.get(page.id) ?? []
       );
       const pageNode = pageEmitter.emit();
-      const pagePath = path.join(page.name ?? "", "index.tsx");
+      const pagePath = path.join((page.name ?? "") + ".newformat.js");
       result.set(pagePath, pageNode);
     }
     return result;
@@ -257,7 +256,11 @@ export class ComponentEmitter {
       return overrides;
     };
 
-    const idPath = variant ? [node.id, variant] : [node.id];
+    const idPath = variant
+      ? node.parent === this.component.id
+        ? [variant]
+        : [node.id, variant]
+      : [node.id];
 
     return {
       ...this.toHumanReadableStyle(
