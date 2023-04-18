@@ -53,7 +53,7 @@ export class PageFileEmitter {
           type: "colorToken" as const,
           props: {
             id: generateLowerJSIdentifier(token.name ?? ""),
-            name: token.name,
+            name: token.name ?? "",
             value: token.value?.toString() ?? "",
           },
         })),
