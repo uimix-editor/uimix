@@ -2,6 +2,9 @@
 
 exports[`selectablesToProjectJSON > works 1`] = `
 {
+  "colors": {},
+  "componentURLs": [],
+  "images": {},
   "nodes": {
     "1Bvi2z3TfkSpYXW29daTN8": {
       "condition": undefined,

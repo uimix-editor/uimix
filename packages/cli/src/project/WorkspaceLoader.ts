@@ -66,7 +66,13 @@ export class WorkspaceLoader {
     if (!project) {
       project = {
         manifest: {},
-        json: { nodes: {}, styles: {} },
+        json: {
+          nodes: {},
+          styles: {},
+          componentURLs: [],
+          images: {},
+          colors: {},
+        },
       };
       this.projects.set(projectPath, project);
     }
@@ -154,7 +160,13 @@ export class WorkspaceLoader {
 
       if (
         !compareProjectJSONs(
-          this.projects.get(projectPath)?.json ?? { nodes: {}, styles: {} },
+          this.projects.get(projectPath)?.json ?? {
+            nodes: {},
+            styles: {},
+            componentURLs: [],
+            images: {},
+            colors: {},
+          },
           newProjectJSON
         )
       ) {
@@ -379,7 +391,7 @@ export function filesToProjectJSON(
   return {
     nodes,
     styles,
-    componentURLs: manifest.prebuiltAssets,
+    componentURLs: manifest.prebuiltAssets ?? [],
     images,
     colors,
   };

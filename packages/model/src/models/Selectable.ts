@@ -688,5 +688,8 @@ export function selectablesToProjectJSON(
   return {
     nodes: nodeJSONs,
     styles,
+    componentURLs: [],
+    images: {},
+    colors: {},
   };
 }
