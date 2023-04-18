@@ -8,7 +8,7 @@ import {
 } from "@uimix/model/src/data/v1";
 import { generateID } from "@uimix/foundation/src/utils/ID";
 
-function loadPage(
+export function loadPage(
   projectJSON: ProjectJSON,
   page: HumanReadable.PageNode,
   index: number
