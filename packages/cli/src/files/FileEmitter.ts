@@ -154,6 +154,10 @@ export class ComponentEmitter {
     );
   }
 
+  pathForExport(page: Page, name: string) {
+    return page.filePath + ".uimix#" + name;
+  }
+
   toHumanReadableStyle(
     style: Partial<StyleJSON>
   ): Partial<HumanReadable.BaseStyleProps> {
@@ -164,19 +168,20 @@ export class ComponentEmitter {
 
     const mainComponentPath =
       mainComponent &&
-      `${mainComponent?.page?.filePath ?? ""}.uimix#${
-        mainComponent?.name ?? ""
-      }`;
+      mainComponent.page &&
+      this.pathForExport(mainComponent.page, mainComponent.name);
 
     const transformColor = (color: Color): Color => {
       if (typeof color === "object") {
         const project = this.component.project;
         const token = project.colorTokens.get(color.id);
-        if (token) {
+        if (token?.type === "normal" && token.page) {
           return {
             type: "token",
-            // TODO: include page path
-            id: generateLowerJSIdentifier(token.name ?? ""),
+            id: this.pathForExport(
+              token.page,
+              generateLowerJSIdentifier(token.name ?? "")
+            ),
           };
         }
       }
