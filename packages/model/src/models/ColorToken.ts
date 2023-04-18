@@ -80,6 +80,13 @@ export class ColorToken {
   set pageID(value: string | undefined) {
     this.data.set({ page: value });
   }
+
+  get page(): Page | undefined {
+    const pageID = this.pageID;
+    if (pageID) {
+      return this.project.pageForID(pageID);
+    }
+  }
 }
 
 export class ColorTokenMap {

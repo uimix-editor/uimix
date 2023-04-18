@@ -157,12 +157,10 @@ export class ComponentEmitter {
   toHumanReadableStyle(
     style: Partial<StyleJSON>
   ): Partial<HumanReadable.BaseStyleProps> {
-    const mainComponentNode =
-      style.mainComponent != null
-        ? this.component.project.nodes.get(style.mainComponent)
-        : undefined;
     const mainComponent =
-      mainComponentNode && Component.from(mainComponentNode);
+      style.mainComponent != null
+        ? this.component.project.componentForID(style.mainComponent)
+        : undefined;
 
     const mainComponentPath =
       mainComponent &&
