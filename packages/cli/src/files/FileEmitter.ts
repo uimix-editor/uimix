@@ -337,7 +337,7 @@ export class ComponentEmitter {
       mainComponent?.parent &&
       this.pathForExport(mainComponent.parent, mainComponent.name!);
 
-    return {
+    return filterUndefined({
       hidden: style.hidden,
       locked: style.locked,
       position: style.position && [style.position.x, style.position.y],
@@ -410,7 +410,7 @@ export class ComponentEmitter {
       props: style.foreignComponent?.props,
 
       tagName: style.tagName,
-    };
+    });
   }
 }
 
@@ -420,4 +420,16 @@ function variantConditionToText(condition: VariantCondition): string {
     return `maxWidth:${condition.value}`;
   }
   return condition.type;
+}
+
+function filterUndefined<T>(
+  obj: Record<string, T | undefined>
+): Record<string, T> {
+  const result: Record<string, T> = {};
+  for (const key in obj) {
+    if (obj[key] !== undefined) {
+      result[key] = obj[key]!;
+    }
+  }
+  return result;
 }
