@@ -29,7 +29,13 @@ function loadPage(
       continue;
     }
     if (childNode.type === "colorToken") {
-      // TODO
+      const colorID = generateID();
+      projectJSON.colors[colorID] = {
+        name: childNode.props.name,
+        value: childNode.props.value,
+        index: i,
+        page: id,
+      };
       continue;
     }
     loadNode(projectJSON, [], childNode, id, i);

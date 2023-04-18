@@ -123,6 +123,7 @@ export interface ColorTokenNode {
   props: {
     id: string;
     value: string;
+    name: string;
   };
 }
 
