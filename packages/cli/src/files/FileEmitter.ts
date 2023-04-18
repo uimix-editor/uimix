@@ -108,7 +108,7 @@ export class ComponentEmitter {
         const refID = refIDs.get(selectable.node.id);
 
         if (refID) {
-          overrides[refID] = toHumanReadableStyle(selectable.selfStyle);
+          overrides[refID] = this.toHumanReadableStyle(selectable.selfStyle);
         }
 
         if (selectable.originalNode.type === "instance") {
@@ -124,7 +124,7 @@ export class ComponentEmitter {
     };
 
     return {
-      ...toHumanReadableStyle(selectable.selfStyle),
+      ...this.toHumanReadableStyle(selectable.selfStyle),
       ...(selectable.originalNode.type === "instance"
         ? {
             overrides: getInstanceOverrides(selectable),
@@ -148,6 +148,93 @@ export class ComponentEmitter {
       })
     );
   }
+
+  toHumanReadableStyle(
+    style: Partial<StyleJSON>
+  ): Partial<HumanReadable.BaseStyleProps> {
+    const mainComponentNode =
+      style.mainComponent != null
+        ? this.component.project.nodes.get(style.mainComponent)
+        : undefined;
+    const mainComponent =
+      mainComponentNode && Component.from(mainComponentNode);
+
+    const mainComponentPath =
+      mainComponent &&
+      `${mainComponent?.page?.filePath ?? ""}.uimix#${
+        mainComponent?.name ?? ""
+      }`;
+
+    return {
+      hidden: style.hidden,
+      locked: style.locked,
+      position: style.position && [style.position.x, style.position.y],
+      absolute: style.absolute,
+      width: style.width,
+      height: style.height,
+
+      topLeftRadius: style.topLeftRadius,
+      topRightRadius: style.topRightRadius,
+      bottomRightRadius: style.bottomRightRadius,
+      bottomLeftRadius: style.bottomLeftRadius,
+
+      fills: style.fills,
+      border: style.border,
+      borderTopWidth: style.borderTopWidth,
+      borderRightWidth: style.borderRightWidth,
+      borderBottomWidth: style.borderBottomWidth,
+      borderLeftWidth: style.borderLeftWidth,
+
+      opacity: style.opacity,
+      overflowHidden: style.overflowHidden,
+
+      shadows: style.shadows,
+
+      marginTop: style.marginTop,
+      marginRight: style.marginRight,
+      marginBottom: style.marginBottom,
+      marginLeft: style.marginLeft,
+
+      layout: style.layout,
+      flexDirection: style.flexDirection,
+      flexAlign: style.flexAlign,
+      flexJustify: style.flexJustify,
+      gridRowCount: style.gridRowCount,
+      gridColumnCount: style.gridColumnCount,
+      rowGap: style.rowGap,
+      columnGap: style.columnGap,
+      paddingTop: style.paddingTop,
+      paddingRight: style.paddingRight,
+      paddingBottom: style.paddingBottom,
+      paddingLeft: style.paddingLeft,
+
+      textContent: style.textContent,
+      fontFamily: style.fontFamily,
+      fontWeight: style.fontWeight,
+      fontSize: style.fontSize,
+      lineHeight:
+        style.lineHeight && typeof style.lineHeight === "object"
+          ? style.lineHeight.join("")
+          : style.lineHeight,
+      letterSpacing:
+        style.letterSpacing && typeof style.letterSpacing === "object"
+          ? style.letterSpacing.join("")
+          : style.letterSpacing,
+      textHorizontalAlign: style.textHorizontalAlign,
+      textVerticalAlign: style.textVerticalAlign,
+
+      image: style.imageHash, // TODO: use image path
+      svg: style.svgContent,
+
+      component: style.foreignComponent
+        ? `${style.foreignComponent.path}#${style.foreignComponent.name}`
+        : mainComponentPath,
+      componentType: style.foreignComponent?.type,
+      props: style.foreignComponent?.props,
+
+      tagName: style.tagName,
+    };
+  }
 }
 
 // e.g., "hover" or "maxWidth:767"
@@ -156,78 +243,4 @@ function variantConditionToText(condition: VariantCondition): string {
     return `maxWidth:${condition.value}`;
   }
   return condition.type;
-}
-
-function toHumanReadableStyle(
-  style: Partial<StyleJSON>
-): Partial<HumanReadable.BaseStyleProps> {
-  return {
-    hidden: style.hidden,
-    locked: style.locked,
-    position: style.position && [style.position.x, style.position.y],
-    absolute: style.absolute,
-    width: style.width,
-    height: style.height,
-
-    topLeftRadius: style.topLeftRadius,
-    topRightRadius: style.topRightRadius,
-    bottomRightRadius: style.bottomRightRadius,
-    bottomLeftRadius: style.bottomLeftRadius,
-
-    fills: style.fills,
-    border: style.border,
-    borderTopWidth: style.borderTopWidth,
-    borderRightWidth: style.borderRightWidth,
-    borderBottomWidth: style.borderBottomWidth,
-    borderLeftWidth: style.borderLeftWidth,
-
-    opacity: style.opacity,
-    overflowHidden: style.overflowHidden,
-
-    shadows: style.shadows,
-
-    marginTop: style.marginTop,
-    marginRight: style.marginRight,
-    marginBottom: style.marginBottom,
-    marginLeft: style.marginLeft,
-
-    layout: style.layout,
-    flexDirection: style.flexDirection,
-    flexAlign: style.flexAlign,
-    flexJustify: style.flexJustify,
-    gridRowCount: style.gridRowCount,
-    gridColumnCount: style.gridColumnCount,
-    rowGap: style.rowGap,
-    columnGap: style.columnGap,
-    paddingTop: style.paddingTop,
-    paddingRight: style.paddingRight,
-    paddingBottom: style.paddingBottom,
-    paddingLeft: style.paddingLeft,
-
-    textContent: style.textContent,
-    fontFamily: style.fontFamily,
-    fontWeight: style.fontWeight,
-    fontSize: style.fontSize,
-    lineHeight:
-      style.lineHeight && typeof style.lineHeight === "object"
-        ? style.lineHeight.join("")
-        : style.lineHeight,
-    letterSpacing:
-      style.letterSpacing && typeof style.letterSpacing === "object"
-        ? style.letterSpacing.join("")
-        : style.letterSpacing,
-    textHorizontalAlign: style.textHorizontalAlign,
-    textVerticalAlign: style.textVerticalAlign,
-
-    image: style.imageHash, // TODO: use image path
-    svg: style.svgContent,
-
-    component: style.foreignComponent
-      ? `${style.foreignComponent.path}#${style.foreignComponent.name}`
-      : style.mainComponent,
-    componentType: style.foreignComponent?.type,
-    props: style.foreignComponent?.props,
-
-    tagName: style.tagName,
-  };
 }
