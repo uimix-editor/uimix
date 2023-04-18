@@ -263,7 +263,10 @@ export class ComponentEmitter {
       textHorizontalAlign: style.textHorizontalAlign,
       textVerticalAlign: style.textVerticalAlign,
 
-      image: style.imageHash, // TODO: use image path
+      image:
+        style.imageHash &&
+        this.relativePathFromPage("src/images/" + style.imageHash + ".png"),
+
       svg: style.svgContent,
 
       component: style.foreignComponent
