@@ -4,10 +4,9 @@ export interface HierarchicalNodeJSON extends NodeJSON {
   id: string;
   children: HierarchicalNodeJSON[];
 }
-
-export function toHierarchicalNodeJSONs(
+export function toHierarchicalNodeJSONRecord(
   nodes: Record<string, NodeJSON>
-): HierarchicalNodeJSON[] {
+): Record<string, HierarchicalNodeJSON> {
   const hierarchicalNodes: Record<string, HierarchicalNodeJSON> = {};
 
   for (const [id, node] of Object.entries(nodes)) {
@@ -28,5 +27,12 @@ export function toHierarchicalNodeJSONs(
     node.children.sort((a, b) => a.index - b.index);
   }
 
+  return hierarchicalNodes;
+}
+
+export function toHierarchicalNodeJSONs(
+  nodes: Record<string, NodeJSON>
+): HierarchicalNodeJSON[] {
+  const hierarchicalNodes = toHierarchicalNodeJSONRecord(nodes);
   return Object.values(hierarchicalNodes).filter((node) => !node.parent);
 }
