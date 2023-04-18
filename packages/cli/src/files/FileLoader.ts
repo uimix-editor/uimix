@@ -8,41 +8,31 @@ import {
 } from "@uimix/model/src/data/v1";
 import { generateID } from "@uimix/foundation/src/utils/ID";
 
-export class ComponentLoader {
-  constructor(component: Component) {
-    this.project = component.project;
-    this.component = component;
-  }
+function loadPage(
+  projectJSON: ProjectJSON,
+  page: HumanReadable.PageNode,
+  index: number
+) {
+  // TODO: reuse id if possible
+  const id = generateID();
 
-  readonly project: Project;
-  readonly component: Component;
-  projectJSON: ProjectJSON;
+  projectJSON.nodes[id] = {
+    type: "page",
+    name: "Page", // TODO
+    parent: "project",
+    index,
+  };
 
-  load(node: HumanReadable.ComponentNode) {
-    const componetNode: NodeJSON = {
-      type: "component",
-      name: node.props.id,
-      parent: pageID,
-      index: 0,
-    };
-    const id = generateID();
-
-    this.projectJSON.nodes[id] = componetNode;
-
-    for (const [i, childNode] of node.children.entries()) {
-      if (childNode.type === "variant") {
-        const id = generateID();
-
-        this.projectJSON.nodes[id] = {
-          type: "variant",
-          condition: childNode.props.condition,
-          parent: id,
-          index: i,
-        };
-      } else {
-        // TODO
-      }
+  for (const [i, childNode] of page.children.entries()) {
+    if (childNode.type === "component") {
+      loadComponent(projectJSON, childNode, id, i);
+      continue;
     }
+    if (childNode.type === "colorToken") {
+      // TODO
+      continue;
+    }
+    loadNode(projectJSON, [], childNode, id, i);
   }
 }
 
@@ -106,6 +96,8 @@ function loadNode(
     parent,
     index,
   };
+
+  // TODO: load variants
 
   for (const [i, childNode] of node.children.entries()) {
     loadNode(projectJSON, variants, childNode, id, i);
