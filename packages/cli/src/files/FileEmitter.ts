@@ -259,7 +259,7 @@ export class ComponentEmitter {
     const idPath = variant
       ? node.parent === this.component.id
         ? [variant] // root variant
-        : [node.id, variant] // variant content
+        : [variant, node.id] // variant content
       : [node.id];
 
     return {
