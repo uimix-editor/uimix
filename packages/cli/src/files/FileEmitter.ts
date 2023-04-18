@@ -88,23 +88,23 @@ export class ComponentEmitter {
     };
   }
 
-  getStyleForSelectable(selectable: Selectable) {
+  getStyleForSelectable(selectable: Selectable): HumanReadable.StyleProps {
     const getInstanceOverrides = (
       instanceSelectable: Selectable
-    ): Record<string, Partial<StyleJSON>> => {
+    ): Record<string, HumanReadable.StyleProps> => {
       const mainComponent = instanceSelectable.mainComponent;
       if (!mainComponent) {
         return {};
       }
       const refIDs = mainComponent.refIDs;
 
-      const overrides: Record<string, Partial<StyleJSON>> = {};
+      const overrides: Record<string, HumanReadable.StyleProps> = {};
 
       const visit = (selectable: Selectable) => {
         const refID = refIDs.get(selectable.node.id);
 
         if (refID) {
-          overrides[refID] = selectable.selfStyle.toJSON();
+          overrides[refID] = toHumanReadableStyle(selectable.selfStyle);
         }
 
         if (selectable.originalNode.type === "instance") {
@@ -120,7 +120,7 @@ export class ComponentEmitter {
     };
 
     return {
-      ...selectable.selfStyle.toJSON(),
+      ...toHumanReadableStyle(selectable.selfStyle),
       ...(selectable.originalNode.type === "instance"
         ? {
             overrides: getInstanceOverrides(selectable),
@@ -154,7 +154,7 @@ function variantConditionToText(condition: VariantCondition): string {
   return condition.type;
 }
 
-function styleToHumanReadable(
+function toHumanReadableStyle(
   style: Partial<StyleJSON>
 ): Partial<HumanReadable.BaseStyleProps> {
   return {

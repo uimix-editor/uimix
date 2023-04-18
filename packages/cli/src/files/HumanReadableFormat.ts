@@ -160,11 +160,10 @@ export type Node =
 
 export function stringifyAsJSX(node: Node): string {
   const propText = Object.entries("props" in node ? node.props : {})
-    .map(
-      ([key, value]) =>
-        /* typeof value === "string"
+    .map(([key, value]) =>
+      /* typeof value === "string"
         ? `${key}=${JSON.stringify(value)}`
-        :  */ `${key}={${JSON.stringify(value)}}`
+        :  */ value !== undefined ? `${key}={${JSON.stringify(value)}}` : ""
     )
     .join(" ");
 
