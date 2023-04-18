@@ -106,7 +106,7 @@ export class PageFileEmitter {
       if (child.type === "component") {
         children.push(new ComponentEmitter(this, child).emit());
       } else {
-        // TODO
+        children.push(this.emitNode(child, []));
       }
     }
 
