@@ -1,18 +1,17 @@
 import * as HumanReadable from "./HumanReadableFormat";
-import { Page } from "@uimix/model/src/models/Page";
-import { Component } from "@uimix/model/src/models/Component";
 import { compact } from "lodash-es";
 import {
   Color,
   ColorToken,
-  NodeJSON,
   ProjectJSON,
   SolidFill,
   StyleJSON,
   VariantCondition,
 } from "@uimix/model/src/data/v1";
-import { Selectable } from "@uimix/model/src/models/Selectable";
-import { generateLowerJSIdentifier } from "@uimix/foundation/src/utils/Name";
+import {
+  generateLowerJSIdentifier,
+  generateRefIDs,
+} from "@uimix/foundation/src/utils/Name";
 import { posix as path } from "path-browserify";
 import {
   HierarchicalNodeJSON,
@@ -80,12 +79,17 @@ export class PageFileEmitter {
   colors: ColorToken[];
 
   emit(): HumanReadable.PageNode {
-    const children: (HumanReadable.SceneNode | HumanReadable.ColorTokenNode)[] =
-      [];
+    const children: (
+      | HumanReadable.SceneNode
+      | HumanReadable.ComponentNode
+      | HumanReadable.ColorTokenNode
+    )[] = [];
 
     for (const child of this.page.children) {
       if (child.type === "component") {
-        children.push(new ComponentEmitter(child).emit());
+        children.push(
+          new ComponentEmitter(this.projectJSON, this.nodes, child).emit()
+        );
       } else {
         // TODO
       }
@@ -95,7 +99,7 @@ export class PageFileEmitter {
       children.push({
         type: "colorToken" as const,
         props: {
-          // TODO: avoid name collision
+          // TODO: avoid name collision inside page
           id: generateLowerJSIdentifier(color.name ?? ""),
           name: color.name ?? "",
           value: color.value?.toString() ?? "",
@@ -111,98 +115,155 @@ export class PageFileEmitter {
 }
 
 export class ComponentEmitter {
-  constructor(component: Component) {
+  constructor(
+    projectJSON: ProjectJSON,
+    nodes: Record<string, HierarchicalNodeJSON>,
+    component: HierarchicalNodeJSON
+  ) {
+    this.projectJSON = projectJSON;
+    this.nodes = nodes;
     this.component = component;
-    this.refIDs = component.refIDs;
+    this.refIDs = generateRefIDs(component.children[0]);
+
+    this.variants = [];
+    for (const child of component.children) {
+      if (child.type === "variant" && child.condition) {
+        this.variants.push({
+          id: child.id,
+          condition: child.condition,
+        });
+      }
+    }
   }
 
-  component: Component;
+  projectJSON: ProjectJSON;
+  nodes: Record<string, HierarchicalNodeJSON>;
+  component: HierarchicalNodeJSON;
   refIDs: Map<string, string>;
+  variants: {
+    id: string;
+    condition: VariantCondition;
+  }[];
 
   emit(): HumanReadable.ComponentNode {
     return {
       type: "component",
       props: {
-        id: this.component.name,
+        // TODO: avoid name collision inside page
+        id: this.component.name ?? "",
       },
       children: [
-        this.emitNode(this.component.rootNode.selectable),
+        this.emitNode(this.component.children[0]),
         ...this.emitVariants(),
       ],
     };
   }
 
-  emitNode(selectable: Selectable): HumanReadable.SceneNode {
-    const variants = selectable.variantCorrespondings.filter(
-      (corresponding) => corresponding.variant
-    );
-
-    const refID = this.refIDs.get(selectable.node.id);
-
-    const children =
-      selectable.originalNode.type === "instance"
-        ? []
-        : selectable.children.map((child) => this.emitNode(child));
-
-    const variantStyles = Object.fromEntries(
-      variants.map((corresponding) => {
-        return [
-          variantConditionToText(corresponding.variant!.condition!),
-          this.getStyleForSelectable(corresponding.selectable),
-        ];
-      })
-    );
-
+  emitNode(node: HierarchicalNodeJSON): HumanReadable.SceneNode {
     return {
-      // TODO: better typing
-      type: selectable.originalNode.type as HumanReadable.SceneNode["type"],
+      type: node.type as HumanReadable.SceneNode["type"],
       props: {
-        id: refID ?? "TODO",
-        ...this.getStyleForSelectable(selectable),
-        ...(Object.keys(variantStyles).length > 0
-          ? { variants: variantStyles }
-          : {}),
+        id: this.refIDs.get(node.id) ?? "TODO",
+        ...this.getStyleForSelectable(node),
+        variants: Object.fromEntries(
+          this.variants.map((variant) => {
+            return [
+              variantConditionToText(variant.condition),
+              this.getStyleForSelectable(node, variant.id),
+            ];
+          })
+        ),
       },
-      children,
+      children: node.children.map((child) => this.emitNode(child)),
     };
+
+    // const variants = selectable.variantCorrespondings.filter(
+    //   (corresponding) => corresponding.variant
+    // );
+
+    // const refID = this.refIDs.get(selectable.node.id);
+
+    // const children =
+    //   selectable.originalNode.type === "instance"
+    //     ? []
+    //     : selectable.children.map((child) => this.emitNode(child));
+
+    // const variantStyles = Object.fromEntries(
+    //   variants.map((corresponding) => {
+    //     return [
+    //       variantConditionToText(corresponding.variant!.condition!),
+    //       this.getStyleForSelectable(corresponding.selectable),
+    //     ];
+    //   })
+    // );
+
+    // return {
+    //   // TODO: better typing
+    //   type: selectable.originalNode.type as HumanReadable.SceneNode["type"],
+    //   props: {
+    //     id: refID ?? "TODO",
+    //     ...this.getStyleForSelectable(selectable),
+    //     ...(Object.keys(variantStyles).length > 0
+    //       ? { variants: variantStyles }
+    //       : {}),
+    //   },
+    //   children,
+    // };
   }
 
-  getStyleForSelectable(selectable: Selectable): HumanReadable.StyleProps {
+  getStyleForSelectable(
+    node: HierarchicalNodeJSON,
+    variant?: string
+  ): HumanReadable.StyleProps {
     const getInstanceOverrides = (
-      instanceSelectable: Selectable
+      instancePath: string[]
     ): Record<string, HumanReadable.StyleProps> => {
-      const mainComponent = instanceSelectable.mainComponent;
+      const mainComponentID =
+        this.projectJSON.styles[instancePath[instancePath.length - 1]]
+          ?.mainComponent;
+      if (!mainComponentID) {
+        return {};
+      }
+      const mainComponent = this.nodes[mainComponentID];
       if (!mainComponent) {
         return {};
       }
-      const refIDs = mainComponent.refIDs;
+      // TODO: cache refIDs
+      const refIDs = generateRefIDs(mainComponent);
 
       const overrides: Record<string, HumanReadable.StyleProps> = {};
 
-      const visit = (selectable: Selectable) => {
-        const refID = refIDs.get(selectable.node.id);
+      const visit = (node: HierarchicalNodeJSON) => {
+        const refID = refIDs.get(node.id);
+        const idPath = [...instancePath, node.id];
+
+        const styleJSON = this.projectJSON.styles[idPath.join(":")] ?? {};
 
         if (refID) {
-          overrides[refID] = this.toHumanReadableStyle(selectable.selfStyle);
+          overrides[refID] = this.toHumanReadableStyle(styleJSON);
         }
 
-        if (selectable.originalNode.type === "instance") {
-          overrides[refID!]["overrides"] = getInstanceOverrides(selectable);
+        if (node.type === "instance") {
+          overrides[refID!]["overrides"] = getInstanceOverrides(idPath);
         } else {
-          selectable.children.forEach((child) => visit(child));
+          node.children.forEach((child) => visit(child));
         }
       };
 
-      instanceSelectable.children.forEach(visit);
+      mainComponent.children[0].children.forEach(visit);
 
       return overrides;
     };
 
+    const idPath = variant ? [node.id, variant] : [node.id];
+
     return {
-      ...this.toHumanReadableStyle(selectable.selfStyle),
-      ...(selectable.originalNode.type === "instance"
+      ...this.toHumanReadableStyle(
+        this.projectJSON.styles[idPath.join(":")] ?? {}
+      ),
+      ...(node.type === "instance"
         ? {
-            overrides: getInstanceOverrides(selectable),
+            overrides: getInstanceOverrides(idPath),
           }
         : {}),
     };
@@ -210,10 +271,7 @@ export class ComponentEmitter {
 
   emitVariants(): HumanReadable.VariantNode[] {
     return compact(
-      this.component.variants.map((variant) => {
-        if (!variant.condition) {
-          return;
-        }
+      this.variants.map((variant) => {
         return {
           type: "variant",
           props: {
