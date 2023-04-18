@@ -17,6 +17,8 @@ import {
   HierarchicalNodeJSON,
   toHierarchicalNodeJSONRecord,
 } from "../project/HierarchicalNodeJSON";
+import { assertNonNull } from "@uimix/foundation/src/utils/Assert";
+import { assert } from "vitest";
 
 export class ProjectFileEmitter {
   constructor(projectJSON: ProjectJSON) {
@@ -283,7 +285,8 @@ export class ComponentEmitter {
   }
 
   relativePathFromPage(filePath: string): string {
-    const pagePath = this.component.page?.filePath ?? "";
+    const pageNode = this.nodes[assertNonNull(this.component.parent)];
+    const pagePath = assertNonNull(pageNode.name);
     const relativePath = path.relative(path.dirname(pagePath), filePath);
     if (!relativePath.startsWith(".")) {
       return "./" + relativePath;
@@ -291,15 +294,17 @@ export class ComponentEmitter {
     return relativePath;
   }
 
-  pathForExport(page: Page, name: string) {
-    return this.relativePathFromPage(page.filePath) + ".uimix#" + name;
+  pathForExport(pageID: string, name: string) {
+    const pageNode = this.nodes[pageID];
+    return this.relativePathFromPage(
+      assertNonNull(pageNode.name) + ".uimix#" + name
+    );
   }
 
   transformColor(color: Color): Color {
     if (typeof color === "object") {
-      const project = this.component.project;
-      const token = project.colorTokens.get(color.id);
-      if (token?.type === "normal" && token.page) {
+      const token = this.projectJSON.colors[color.id];
+      if (token && token.page) {
         return {
           type: "token",
           id: this.pathForExport(
@@ -323,14 +328,11 @@ export class ComponentEmitter {
     style: Partial<StyleJSON>
   ): Partial<HumanReadable.BaseStyleProps> {
     const mainComponent =
-      style.mainComponent != null
-        ? this.component.project.componentForID(style.mainComponent)
-        : undefined;
+      style.mainComponent != null ? this.nodes[style.mainComponent] : undefined;
 
     const mainComponentPath =
-      mainComponent &&
-      mainComponent.page &&
-      this.pathForExport(mainComponent.page, mainComponent.name);
+      mainComponent?.parent &&
+      this.pathForExport(mainComponent.parent, mainComponent.name!);
 
     return {
       hidden: style.hidden,
