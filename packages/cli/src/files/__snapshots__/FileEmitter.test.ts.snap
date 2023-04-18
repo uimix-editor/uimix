@@ -52,7 +52,7 @@ Map {
               "height": {
                 "type": "hug",
               },
-              "id": undefined,
+              "id": "",
               "layout": "flex",
               "paddingBottom": 4,
               "paddingLeft": 8,
@@ -277,7 +277,7 @@ Map {
               "height": {
                 "type": "hug",
               },
-              "id": undefined,
+              "id": "",
               "layout": "flex",
               "paddingBottom": 30,
               "paddingLeft": 40,
@@ -499,7 +499,7 @@ Map {
                 "type": "fixed",
                 "value": 456,
               },
-              "id": undefined,
+              "id": "",
               "layout": "flex",
               "position": [
                 {
@@ -663,7 +663,7 @@ Map {
                 "type": "hug",
               },
               "hidden": false,
-              "id": undefined,
+              "id": "",
               "layout": "flex",
               "opacity": 1,
               "overflowHidden": false,
@@ -1203,7 +1203,7 @@ Map {
                 "type": "fixed",
                 "value": 72,
               },
-              "id": undefined,
+              "id": "",
               "layout": "flex",
               "paddingBottom": 24,
               "paddingTop": 24,
@@ -3738,7 +3738,7 @@ Easily import UIMix components into React apps or export final designs back to F
                 "value": 4000,
               },
               "hidden": false,
-              "id": undefined,
+              "id": "",
               "layout": "flex",
               "opacity": 1,
               "overflowHidden": true,

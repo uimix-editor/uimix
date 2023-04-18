@@ -29,7 +29,7 @@ export class ProjectFileEmitter {
         if (item.type === "component") {
           const refIDs = generateRefIDs(item.children[0]);
           for (const [id, refID] of refIDs) {
-            this.refIDs[id] = refID;
+            this.refIDs.set(id, refID);
           }
         }
       }
@@ -38,7 +38,7 @@ export class ProjectFileEmitter {
 
   projectJSON: ProjectJSON;
   nodes: Record<string, HierarchicalNodeJSON>;
-  refIDs: Record<string, string> = {};
+  refIDs = new Map<string, string>();
 
   emit(): Map<string, HumanReadable.PageNode> {
     const project = this.nodes["project"];
@@ -78,7 +78,7 @@ export class PageFileEmitter {
   constructor(
     projectJSON: ProjectJSON,
     nodes: Record<string, HierarchicalNodeJSON>,
-    refIDs: Record<string, string>,
+    refIDs: Map<string, string>,
     page: HierarchicalNodeJSON,
     colors: ColorToken[]
   ) {
@@ -91,7 +91,7 @@ export class PageFileEmitter {
 
   projectJSON: ProjectJSON;
   nodes: Record<string, HierarchicalNodeJSON>;
-  refIDs: Record<string, string>;
+  refIDs: Map<string, string>;
   page: HierarchicalNodeJSON;
   colors: ColorToken[];
 
@@ -135,7 +135,7 @@ export class PageFileEmitter {
     return {
       type: node.type as HumanReadable.SceneNode["type"],
       props: {
-        id: this.refIDs[node.id],
+        id: this.refIDs.get(node.id) ?? "",
         ...this.getStyleForSelectable(node),
         variants: Object.fromEntries(
           variants.map((variant) => {
@@ -167,13 +167,11 @@ export class PageFileEmitter {
       if (!mainComponent) {
         return {};
       }
-      // TODO: cache refIDs
-      const refIDs = generateRefIDs(mainComponent);
 
       const overrides: Record<string, HumanReadable.StyleProps> = {};
 
       const visit = (node: HierarchicalNodeJSON) => {
-        const refID = refIDs.get(node.id);
+        const refID = this.refIDs.get(node.id) ?? "";
         const idPath = [...instancePath, node.id];
 
         const styleJSON = this.projectJSON.styles[idPath.join(":")] ?? {};
@@ -183,7 +181,7 @@ export class PageFileEmitter {
         }
 
         if (node.type === "instance") {
-          overrides[refID!]["overrides"] = getInstanceOverrides(idPath);
+          overrides[refID]["overrides"] = getInstanceOverrides(idPath);
         } else {
           node.children.forEach((child) => visit(child));
         }
