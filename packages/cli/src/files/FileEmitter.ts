@@ -204,15 +204,25 @@ function styleToHumanReadable(
     fontFamily: style.fontFamily,
     fontWeight: style.fontWeight,
     fontSize: style.fontSize,
-    lineHeight: style.lineHeight,
-    letterSpacing: style.letterSpacing,
+    lineHeight:
+      style.lineHeight && typeof style.lineHeight === "object"
+        ? style.lineHeight.join("")
+        : style.lineHeight,
+    letterSpacing:
+      style.letterSpacing && typeof style.letterSpacing === "object"
+        ? style.letterSpacing.join("")
+        : style.letterSpacing,
     textHorizontalAlign: style.textHorizontalAlign,
     textVerticalAlign: style.textVerticalAlign,
 
     image: style.imageHash, // TODO: use image path
     svg: style.svgContent,
 
-    component: style.mainComponent,
+    component: style.foreignComponent
+      ? `${style.foreignComponent.path}#${style.foreignComponent.name}`
+      : style.mainComponent,
+    componentType: style.foreignComponent?.type,
+    props: style.foreignComponent?.props,
 
     tagName: style.tagName,
   };

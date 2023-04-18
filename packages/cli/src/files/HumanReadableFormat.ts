@@ -73,7 +73,7 @@ export const BaseStyleProps = z.object({
   image: z.union([z.string(), z.null()]),
 
   // svg
-  svgContent: z.string(),
+  svg: z.string(),
 
   // instance
   component: z.union([z.string(), z.null()]),
