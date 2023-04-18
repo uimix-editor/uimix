@@ -11,6 +11,26 @@ import {
 import { Selectable } from "@uimix/model/src/models/Selectable";
 import { generateLowerJSIdentifier } from "@uimix/foundation/src/utils/Name";
 import { posix as path } from "path-browserify";
+import { Project } from "@uimix/model/src/models/Project";
+
+export class ProjectFileEmitter {
+  constructor(project: Project) {
+    this.project = project;
+  }
+
+  project: Project;
+
+  emit(): Map<string, HumanReadable.PageNode> {
+    const result = new Map<string, HumanReadable.PageNode>();
+    for (const page of this.project.pages.all) {
+      const pageEmitter = new PageFileEmitter(page);
+      const pageNode = pageEmitter.emit();
+      const pagePath = path.join(page.filePath, "index.tsx");
+      result.set(pagePath, pageNode);
+    }
+    return result;
+  }
+}
 
 export class PageFileEmitter {
   constructor(page: Page) {
@@ -86,7 +106,8 @@ export class ComponentEmitter {
     );
 
     return {
-      type: selectable.originalNode.type,
+      // TODO: better typing
+      type: selectable.originalNode.type as "frame",
       props: {
         id: refID ?? "TODO",
         ...this.getStyleForSelectable(selectable),
