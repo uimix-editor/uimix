@@ -153,3 +153,67 @@ function variantConditionToText(condition: VariantCondition): string {
   }
   return condition.type;
 }
+
+function styleToHumanReadable(
+  style: Partial<StyleJSON>
+): Partial<HumanReadable.BaseStyleProps> {
+  return {
+    hidden: style.hidden,
+    locked: style.locked,
+    position: style.position && [style.position.x, style.position.y],
+    absolute: style.absolute,
+    width: style.width,
+    height: style.height,
+
+    topLeftRadius: style.topLeftRadius,
+    topRightRadius: style.topRightRadius,
+    bottomRightRadius: style.bottomRightRadius,
+    bottomLeftRadius: style.bottomLeftRadius,
+
+    fills: style.fills,
+    border: style.border,
+    borderTopWidth: style.borderTopWidth,
+    borderRightWidth: style.borderRightWidth,
+    borderBottomWidth: style.borderBottomWidth,
+    borderLeftWidth: style.borderLeftWidth,
+
+    opacity: style.opacity,
+    overflowHidden: style.overflowHidden,
+
+    shadows: style.shadows,
+
+    marginTop: style.marginTop,
+    marginRight: style.marginRight,
+    marginBottom: style.marginBottom,
+    marginLeft: style.marginLeft,
+
+    layout: style.layout,
+    flexDirection: style.flexDirection,
+    flexAlign: style.flexAlign,
+    flexJustify: style.flexJustify,
+    gridRowCount: style.gridRowCount,
+    gridColumnCount: style.gridColumnCount,
+    rowGap: style.rowGap,
+    columnGap: style.columnGap,
+    paddingTop: style.paddingTop,
+    paddingRight: style.paddingRight,
+    paddingBottom: style.paddingBottom,
+    paddingLeft: style.paddingLeft,
+
+    textContent: style.textContent,
+    fontFamily: style.fontFamily,
+    fontWeight: style.fontWeight,
+    fontSize: style.fontSize,
+    lineHeight: style.lineHeight,
+    letterSpacing: style.letterSpacing,
+    textHorizontalAlign: style.textHorizontalAlign,
+    textVerticalAlign: style.textVerticalAlign,
+
+    image: style.imageHash, // TODO: use image path
+    svg: style.svgContent,
+
+    component: style.mainComponent,
+
+    tagName: style.tagName,
+  };
+}
