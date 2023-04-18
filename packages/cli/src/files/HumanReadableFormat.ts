@@ -94,13 +94,7 @@ export interface StyleProps extends Partial<BaseStyleProps> {
 
 export interface PageNode {
   type: "page";
-  children: (
-    | InstanceNode
-    | FrameNode
-    | LeafNode
-    | ComponentNode
-    | ColorTokenNode
-  )[];
+  children: (SceneNode | ComponentNode | ColorTokenNode)[];
 }
 
 export interface ComponentNode {
@@ -108,7 +102,7 @@ export interface ComponentNode {
   props: {
     id: string;
   };
-  children: (FrameNode | VariantNode)[];
+  children: (SceneNode | VariantNode)[];
 }
 
 export interface VariantNode {
@@ -118,26 +112,10 @@ export interface VariantNode {
   };
 }
 
-export interface InstanceNode {
-  type: "instance";
+export interface SceneNode {
+  type: "frame" | "instance" | "text" | "svg" | "image" | "foreign";
   props: { id: string } & StyleProps;
-  children: OverrideNode[];
-}
-
-export interface FrameNode {
-  type: "frame";
-  props: { id: string } & StyleProps;
-  children: (InstanceNode | FrameNode | LeafNode)[];
-}
-
-export interface LeafNode {
-  type: "text" | "svg" | "image" | "foreign";
-  props: { id: string } & StyleProps;
-}
-
-export interface OverrideNode {
-  type: "override";
-  props: { id: string } & StyleProps;
+  children: SceneNode[];
 }
 
 export interface ColorTokenNode {
@@ -152,10 +130,7 @@ export type Node =
   | PageNode
   | ComponentNode
   | VariantNode
-  | InstanceNode
-  | FrameNode
-  | LeafNode
-  | OverrideNode
+  | SceneNode
   | ColorTokenNode;
 
 export function stringifyAsJSX(node: Node): string {

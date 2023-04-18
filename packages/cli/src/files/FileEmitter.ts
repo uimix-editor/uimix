@@ -84,7 +84,7 @@ export class ComponentEmitter {
     };
   }
 
-  emitNode(selectable: Selectable): HumanReadable.FrameNode {
+  emitNode(selectable: Selectable): HumanReadable.SceneNode {
     const variants = selectable.variantCorrespondings.filter(
       (corresponding) => corresponding.variant
     );
@@ -107,7 +107,7 @@ export class ComponentEmitter {
 
     return {
       // TODO: better typing
-      type: selectable.originalNode.type as "frame",
+      type: selectable.originalNode.type as HumanReadable.SceneNode["type"],
       props: {
         id: refID ?? "TODO",
         ...this.getStyleForSelectable(selectable),
