@@ -23,10 +23,22 @@ export class ProjectFileEmitter {
   constructor(projectJSON: ProjectJSON) {
     this.projectJSON = projectJSON;
     this.nodes = toHierarchicalNodeJSONRecord(projectJSON.nodes);
+
+    for (const page of this.nodes["project"].children) {
+      for (const item of page.children) {
+        if (item.type === "component") {
+          const refIDs = generateRefIDs(item.children[0]);
+          for (const [id, refID] of refIDs) {
+            this.refIDs[id] = refID;
+          }
+        }
+      }
+    }
   }
 
   projectJSON: ProjectJSON;
   nodes: Record<string, HierarchicalNodeJSON>;
+  refIDs: Record<string, string> = {};
 
   emit(): Map<string, HumanReadable.PageNode> {
     const project = this.nodes["project"];
@@ -50,6 +62,7 @@ export class ProjectFileEmitter {
       const pageEmitter = new PageFileEmitter(
         this.projectJSON,
         this.nodes,
+        this.refIDs,
         page,
         colorsForPage.get(page.id) ?? []
       );
@@ -65,17 +78,20 @@ export class PageFileEmitter {
   constructor(
     projectJSON: ProjectJSON,
     nodes: Record<string, HierarchicalNodeJSON>,
+    refIDs: Record<string, string>,
     page: HierarchicalNodeJSON,
     colors: ColorToken[]
   ) {
     this.projectJSON = projectJSON;
     this.nodes = nodes;
+    this.refIDs = refIDs;
     this.page = page;
     this.colors = colors;
   }
 
   projectJSON: ProjectJSON;
   nodes: Record<string, HierarchicalNodeJSON>;
+  refIDs: Record<string, string>;
   page: HierarchicalNodeJSON;
   colors: ColorToken[];
 
@@ -88,9 +104,7 @@ export class PageFileEmitter {
 
     for (const child of this.page.children) {
       if (child.type === "component") {
-        children.push(
-          new ComponentEmitter(this.projectJSON, this.nodes, child).emit()
-        );
+        children.push(new ComponentEmitter(this, child).emit());
       } else {
         // TODO
       }
@@ -113,61 +127,18 @@ export class PageFileEmitter {
       children,
     };
   }
-}
 
-export class ComponentEmitter {
-  constructor(
-    projectJSON: ProjectJSON,
-    nodes: Record<string, HierarchicalNodeJSON>,
-    component: HierarchicalNodeJSON
-  ) {
-    this.projectJSON = projectJSON;
-    this.nodes = nodes;
-    this.component = component;
-    this.refIDs = generateRefIDs(component.children[0]);
-
-    this.variants = [];
-    for (const child of component.children) {
-      if (child.type === "variant" && child.condition) {
-        this.variants.push({
-          id: child.id,
-          condition: child.condition,
-        });
-      }
-    }
-  }
-
-  projectJSON: ProjectJSON;
-  nodes: Record<string, HierarchicalNodeJSON>;
-  component: HierarchicalNodeJSON;
-  refIDs: Map<string, string>;
-  variants: {
-    id: string;
-    condition: VariantCondition;
-  }[];
-
-  emit(): HumanReadable.ComponentNode {
-    return {
-      type: "component",
-      props: {
-        // TODO: avoid name collision inside page
-        id: this.component.name ?? "",
-      },
-      children: [
-        this.emitNode(this.component.children[0]),
-        ...this.emitVariants(),
-      ],
-    };
-  }
-
-  emitNode(node: HierarchicalNodeJSON): HumanReadable.SceneNode {
+  emitNode(
+    node: HierarchicalNodeJSON,
+    variants: Variant[]
+  ): HumanReadable.SceneNode {
     return {
       type: node.type as HumanReadable.SceneNode["type"],
       props: {
-        id: this.refIDs.get(node.id) ?? "TODO",
+        id: this.refIDs[node.id],
         ...this.getStyleForSelectable(node),
         variants: Object.fromEntries(
-          this.variants.map((variant) => {
+          variants.map((variant) => {
             return [
               variantConditionToText(variant.condition),
               this.getStyleForSelectable(node, variant.id),
@@ -175,41 +146,8 @@ export class ComponentEmitter {
           })
         ),
       },
-      children: node.children.map((child) => this.emitNode(child)),
+      children: node.children.map((child) => this.emitNode(child, variants)),
     };
-
-    // const variants = selectable.variantCorrespondings.filter(
-    //   (corresponding) => corresponding.variant
-    // );
-
-    // const refID = this.refIDs.get(selectable.node.id);
-
-    // const children =
-    //   selectable.originalNode.type === "instance"
-    //     ? []
-    //     : selectable.children.map((child) => this.emitNode(child));
-
-    // const variantStyles = Object.fromEntries(
-    //   variants.map((corresponding) => {
-    //     return [
-    //       variantConditionToText(corresponding.variant!.condition!),
-    //       this.getStyleForSelectable(corresponding.selectable),
-    //     ];
-    //   })
-    // );
-
-    // return {
-    //   // TODO: better typing
-    //   type: selectable.originalNode.type as HumanReadable.SceneNode["type"],
-    //   props: {
-    //     id: refID ?? "TODO",
-    //     ...this.getStyleForSelectable(selectable),
-    //     ...(Object.keys(variantStyles).length > 0
-    //       ? { variants: variantStyles }
-    //       : {}),
-    //   },
-    //   children,
-    // };
   }
 
   getStyleForSelectable(
@@ -257,7 +195,7 @@ export class ComponentEmitter {
     };
 
     const idPath = variant
-      ? node.parent === this.component.id
+      ? node.parent && this.nodes[node.parent].type === "component"
         ? [variant] // root variant
         : [variant, node.id] // variant content
       : [node.id];
@@ -274,22 +212,8 @@ export class ComponentEmitter {
     };
   }
 
-  emitVariants(): HumanReadable.VariantNode[] {
-    return compact(
-      this.variants.map((variant) => {
-        return {
-          type: "variant",
-          props: {
-            condition: variant.condition,
-          },
-        };
-      })
-    );
-  }
-
   relativePathFromPage(filePath: string): string {
-    const pageNode = this.nodes[assertNonNull(this.component.parent)];
-    const pagePath = assertNonNull(pageNode.name);
+    const pagePath = assertNonNull(this.page.name);
     const relativePath = path.relative(path.dirname(pagePath), filePath);
     if (!relativePath.startsWith(".")) {
       return "./" + relativePath;
@@ -414,6 +338,51 @@ export class ComponentEmitter {
   }
 }
 
+export class ComponentEmitter {
+  constructor(pageEmitter: PageFileEmitter, component: HierarchicalNodeJSON) {
+    this.pageEmitter = pageEmitter;
+    this.component = component;
+    this.refIDs = generateRefIDs(component.children[0]);
+
+    this.variants = [];
+    for (const child of component.children) {
+      if (child.type === "variant" && child.condition) {
+        this.variants.push({
+          id: child.id,
+          condition: child.condition,
+        });
+      }
+    }
+  }
+
+  pageEmitter: PageFileEmitter;
+  component: HierarchicalNodeJSON;
+  refIDs: Map<string, string>;
+  variants: Variant[];
+
+  emit(): HumanReadable.ComponentNode {
+    return {
+      type: "component",
+      props: {
+        // TODO: avoid name collision inside page
+        id: this.component.name ?? "",
+      },
+      children: [
+        this.pageEmitter.emitNode(this.component.children[0], this.variants),
+        ...this.emitVariants(),
+      ],
+    };
+  }
+
+  emitVariants(): HumanReadable.VariantNode[] {
+    return compact(
+      this.variants.map((variant) => {
+        return { type: "variant", props: { condition: variant.condition } };
+      })
+    );
+  }
+}
+
 // e.g., "hover" or "maxWidth:767"
 function variantConditionToText(condition: VariantCondition): string {
   if (condition.type === "maxWidth") {
@@ -432,4 +401,9 @@ function filterUndefined<T>(
     }
   }
   return result;
+}
+
+interface Variant {
+  id: string;
+  condition: VariantCondition;
 }
