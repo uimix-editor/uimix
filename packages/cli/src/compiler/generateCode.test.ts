@@ -16,7 +16,7 @@ describe(generateCode.name, () => {
     const result: Record<string, string> = {};
     for (const file of code) {
       if (
-        file.filePath.includes("components.") &&
+        file.filePath.includes("components.uimix.") &&
         typeof file.content === "string"
       ) {
         result[file.filePath] = file.content;
