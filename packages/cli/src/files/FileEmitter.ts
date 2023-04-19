@@ -6,7 +6,6 @@ import {
   ProjectJSON,
   SolidFill,
   StyleJSON,
-  VariantCondition,
 } from "@uimix/model/src/data/v1";
 import {
   generateLowerJSIdentifier,
@@ -20,6 +19,7 @@ import {
   toHierarchicalNodeJSONRecord,
 } from "../project/HierarchicalNodeJSON";
 import { assertNonNull } from "@uimix/foundation/src/utils/Assert";
+import { variantConditionToText, filterUndefined, Variant } from "./util";
 
 export class ProjectFileEmitter {
   constructor(projectJSON: ProjectJSON) {
@@ -272,7 +272,7 @@ export class PageFileEmitter {
       mainComponent?.parent &&
       this.pathForExport(mainComponent.parent, mainComponent.name!);
 
-    return filterUndefined({
+    return filterUndefined<Partial<HumanReadable.BaseStyleProps>>({
       hidden: style.hidden,
       locked: style.locked,
       position: style.position && [style.position.x, style.position.y],
@@ -393,29 +393,4 @@ export class ComponentEmitter {
       })
     );
   }
-}
-
-// e.g., "hover" or "maxWidth:767"
-function variantConditionToText(condition: VariantCondition): string {
-  if (condition.type === "maxWidth") {
-    return `maxWidth:${condition.value}`;
-  }
-  return condition.type;
-}
-
-function filterUndefined<T>(
-  obj: Record<string, T | undefined>
-): Record<string, T> {
-  const result: Record<string, T> = {};
-  for (const key in obj) {
-    if (obj[key] !== undefined) {
-      result[key] = obj[key]!;
-    }
-  }
-  return result;
-}
-
-interface Variant {
-  id: string;
-  condition: VariantCondition;
 }

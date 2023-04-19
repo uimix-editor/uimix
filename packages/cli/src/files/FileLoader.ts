@@ -1,7 +1,16 @@
 import * as HumanReadable from "./HumanReadableFormat";
-import { ProjectJSON, VariantCondition } from "@uimix/model/src/data/v1";
+import {
+  Color,
+  ForeignComponentRef,
+  ProjectJSON,
+  PxPercentValue,
+  SolidFill,
+  StyleJSON,
+  VariantCondition,
+} from "@uimix/model/src/data/v1";
 import { generateID } from "@uimix/foundation/src/utils/ID";
 import { getPageID } from "@uimix/model/src/data/util";
+import { filterUndefined } from "./util";
 
 export class ProjectLoader {
   constructor(pages: Map<string, HumanReadable.PageNode>) {
@@ -144,4 +153,134 @@ class PageLoader {
       this.loadNode(variants, childNode, id, i);
     }
   }
+
+  // Get id from relative path of components/tokens
+  idFromRelativePath(id: string): string {
+    throw new Error("Not implemented");
+  }
+
+  transformColor(color: Color): Color {
+    if (typeof color === "object") {
+      const tokenPath = color.id;
+      const tokenId = this.idFromRelativePath(tokenPath);
+      if (!tokenId) {
+        console.error(`token ${tokenPath} not found`);
+        return "#000000";
+      } else {
+        return {
+          type: "token",
+          id: tokenId,
+        };
+      }
+    }
+    return color;
+  }
+
+  transformFill(fill: SolidFill): SolidFill {
+    return {
+      type: "solid",
+      color: this.transformColor(fill.color),
+    };
+  }
+
+  getImageHashFromImagePath(imagePath: string): string {
+    throw new Error("Not implemented");
+  }
+
+  transformStyle(style: HumanReadable.StyleProps): Partial<StyleJSON> {
+    let mainComponentID: string | undefined;
+    let foreignComponentRef: ForeignComponentRef | undefined;
+
+    if (style.componentType && style.component) {
+      const [path, name] = style.component.split("#");
+
+      foreignComponentRef = {
+        type: style.componentType,
+        path,
+        name,
+        props: style.props ?? {},
+      };
+    } else {
+      if (style.component) {
+        mainComponentID = this.idFromRelativePath(style.component);
+        if (!mainComponentID) {
+          console.error(`component ${style.component} not found`);
+        }
+      }
+    }
+
+    return filterUndefined<Partial<StyleJSON>>({
+      hidden: style.hidden,
+      locked: style.locked,
+      position: style.position && {
+        x: style.position[0],
+        y: style.position[1],
+      },
+      absolute: style.absolute,
+      width: style.width,
+      height: style.height,
+
+      topLeftRadius: style.topLeftRadius,
+      topRightRadius: style.topRightRadius,
+      bottomRightRadius: style.bottomRightRadius,
+      bottomLeftRadius: style.bottomLeftRadius,
+
+      fills: style.fills && style.fills.map((fill) => this.transformFill(fill)),
+      border: style.border && this.transformFill(style.border),
+      borderTopWidth: style.borderTopWidth,
+      borderRightWidth: style.borderRightWidth,
+      borderBottomWidth: style.borderBottomWidth,
+      borderLeftWidth: style.borderLeftWidth,
+
+      opacity: style.opacity,
+      overflowHidden: style.overflowHidden,
+
+      shadows: style.shadows,
+
+      marginTop: style.marginTop,
+      marginRight: style.marginRight,
+      marginBottom: style.marginBottom,
+      marginLeft: style.marginLeft,
+
+      layout: style.layout,
+      flexDirection: style.flexDirection,
+      flexAlign: style.flexAlign,
+      flexJustify: style.flexJustify,
+      gridRowCount: style.gridRowCount,
+      gridColumnCount: style.gridColumnCount,
+      rowGap: style.rowGap,
+      columnGap: style.columnGap,
+      paddingTop: style.paddingTop,
+      paddingRight: style.paddingRight,
+      paddingBottom: style.paddingBottom,
+      paddingLeft: style.paddingLeft,
+
+      textContent: style.textContent,
+      fontFamily: style.fontFamily,
+      fontWeight: style.fontWeight,
+      fontSize: style.fontSize,
+      lineHeight:
+        style.lineHeight != null
+          ? transformPxPercentage(style.lineHeight)
+          : style.lineHeight,
+      letterSpacing:
+        style.letterSpacing != null
+          ? transformPxPercentage(style.letterSpacing)
+          : style.letterSpacing,
+      textHorizontalAlign: style.textHorizontalAlign,
+      textVerticalAlign: style.textVerticalAlign,
+
+      imageHash: style.image && this.getImageHashFromImagePath(style.image),
+      svgContent: style.svg,
+
+      mainComponent: mainComponentID,
+      foreignComponent: foreignComponentRef,
+
+      tagName: style.tagName,
+    });
+  }
+}
+
+function transformPxPercentage(pxPercentage: number | string): PxPercentValue {
+  throw new Error("Not implemented");
 }
