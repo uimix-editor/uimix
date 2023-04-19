@@ -3,7 +3,11 @@ import { Page } from "@uimix/model/src/models/Page";
 import { compact } from "lodash-es";
 import { Color, SolidFill, StyleJSON } from "@uimix/model/src/data/v1";
 import { Selectable, Component, Project } from "@uimix/model/src/models";
-import { generateLowerJSIdentifier } from "@uimix/foundation/src/utils/Name";
+import {
+  generateLowerJSIdentifier,
+  generateUpperJSIdentifier,
+  getIncrementalUniqueName,
+} from "@uimix/foundation/src/utils/Name";
 import { posix as path } from "path-browserify";
 import { filterUndefined, variantConditionToText } from "./util";
 
@@ -38,26 +42,38 @@ export class PageEmitter {
   }
 
   emit(): HumanReadable.PageNode {
+    const exportNames = new Set<string>();
+
     return {
       type: "page",
       children: [
         ...this.page.selectable.children.map((child) => {
           const component = Component.from(child.originalNode);
-
           if (component) {
-            return new ComponentEmitter(this, component).emit();
+            const readableID = getIncrementalUniqueName(
+              exportNames,
+              generateUpperJSIdentifier(component.name)
+            );
+            return new ComponentEmitter(this, component, readableID).emit();
           } else {
             return this.emitNode(child, new Map<string, string>());
           }
         }),
-        ...this.page.colorTokens.all.map((token) => ({
-          type: "colorToken" as const,
-          props: {
-            id: generateLowerJSIdentifier(token.name ?? ""),
-            name: token.name ?? "",
-            value: token.value?.toString() ?? "",
-          },
-        })),
+        ...this.page.colorTokens.all.map((token) => {
+          const id = getIncrementalUniqueName(
+            exportNames,
+            generateLowerJSIdentifier(token.name ?? "")
+          );
+
+          return {
+            type: "colorToken" as const,
+            props: {
+              id,
+              name: token.name ?? "",
+              value: token.value?.toString() ?? "",
+            },
+          };
+        }),
       ],
     };
   }
@@ -111,6 +127,7 @@ export class PageEmitter {
       if (!mainComponent) {
         return {};
       }
+      // TODO: cache refIDs
       const refIDs = mainComponent.refIDs;
 
       const overrides: Record<string, HumanReadable.StyleProps> = {};
@@ -271,21 +288,27 @@ export class PageEmitter {
 }
 
 export class ComponentEmitter {
-  constructor(pageEmitter: PageEmitter, component: Component) {
+  constructor(
+    pageEmitter: PageEmitter,
+    component: Component,
+    componentID: string
+  ) {
     this.pageEmitter = pageEmitter;
     this.component = component;
+    this.componentID = componentID;
     this.refIDs = component.refIDs;
   }
 
   pageEmitter: PageEmitter;
   component: Component;
+  componentID: string;
   refIDs: Map<string, string>;
 
   emit(): HumanReadable.ComponentNode {
     return {
       type: "component",
       props: {
-        id: this.component.name,
+        id: this.componentID,
         name: this.component.name,
       },
       children: [
