@@ -10,7 +10,7 @@ import {
 } from "@uimix/model/src/data/v1";
 import { generateID } from "@uimix/foundation/src/utils/ID";
 import { getPageID } from "@uimix/model/src/data/util";
-import { filterUndefined } from "./util";
+import { filterUndefined, variantConditionToText } from "./util";
 import { posix as path } from "path";
 import { assertNonNull } from "@uimix/foundation/src/utils/Assert";
 
@@ -169,6 +169,26 @@ class PageLoader {
     };
 
     projectJSON.styles[id] = this.transformStyle(node.props);
+
+    for (const [variantText, variantStyle] of Object.entries(
+      node.props.variants ?? {}
+    )) {
+      const variantID = variants.find(
+        (v) => variantConditionToText(v.condition) == variantText
+      )?.id;
+      if (!variantID) {
+        console.error(`variant ${variantText} not found`);
+      }
+
+      const idPath =
+        projectJSON.nodes[parent].type === "component"
+          ? [variantID]
+          : [variantID, id];
+
+      console.log(idPath);
+
+      projectJSON.styles[idPath.join(":")] = this.transformStyle(variantStyle);
+    }
 
     // TODO: load variants
 
