@@ -11,6 +11,8 @@ import {
 import {
   generateLowerJSIdentifier,
   generateRefIDs,
+  generateUpperJSIdentifier,
+  getIncrementalUniqueName,
 } from "@uimix/foundation/src/utils/Name";
 import { posix as path } from "path-browserify";
 import {
@@ -25,11 +27,20 @@ export class ProjectFileEmitter {
     this.nodes = toHierarchicalNodeJSONRecord(projectJSON.nodes);
 
     for (const page of this.nodes["project"].children) {
+      const componentNames = new Set<string>();
+
       for (const item of page.children) {
         if (item.type === "component") {
+          const name = getIncrementalUniqueName(
+            componentNames,
+            generateUpperJSIdentifier(item.name ?? "")
+          );
+          this.readableIDs.set(item.id, name);
+
+          // component element names
           const refIDs = generateRefIDs(item.children[0]);
           for (const [id, refID] of refIDs) {
-            this.refIDs.set(id, refID);
+            this.readableIDs.set(id, refID);
           }
         }
       }
@@ -38,7 +49,7 @@ export class ProjectFileEmitter {
 
   projectJSON: ProjectJSON;
   nodes: Record<string, HierarchicalNodeJSON>;
-  refIDs = new Map<string, string>();
+  readableIDs = new Map<string, string>();
 
   emit(): Map<string, HumanReadable.PageNode> {
     const project = this.nodes["project"];
@@ -60,9 +71,7 @@ export class ProjectFileEmitter {
     const result = new Map<string, HumanReadable.PageNode>();
     for (const page of project.children) {
       const pageEmitter = new PageFileEmitter(
-        this.projectJSON,
-        this.nodes,
-        this.refIDs,
+        this,
         page,
         colorsForPage.get(page.id) ?? []
       );
@@ -76,24 +85,31 @@ export class ProjectFileEmitter {
 
 export class PageFileEmitter {
   constructor(
-    projectJSON: ProjectJSON,
-    nodes: Record<string, HierarchicalNodeJSON>,
-    refIDs: Map<string, string>,
+    projectEmitter: ProjectFileEmitter,
     page: HierarchicalNodeJSON,
     colors: ColorToken[]
   ) {
-    this.projectJSON = projectJSON;
-    this.nodes = nodes;
-    this.refIDs = refIDs;
+    this.projectEmitter = projectEmitter;
     this.page = page;
     this.colors = colors;
   }
 
-  projectJSON: ProjectJSON;
-  nodes: Record<string, HierarchicalNodeJSON>;
-  refIDs: Map<string, string>;
+  projectEmitter: ProjectFileEmitter;
   page: HierarchicalNodeJSON;
   colors: ColorToken[];
+
+  get nodes() {
+    return this.projectEmitter.nodes;
+  }
+  get styles() {
+    return this.projectEmitter.projectJSON.styles;
+  }
+  get readableIDs() {
+    return this.projectEmitter.readableIDs;
+  }
+  get colorTokens() {
+    return this.projectEmitter.projectJSON.colors;
+  }
 
   emit(): HumanReadable.PageNode {
     const children: (
@@ -135,7 +151,7 @@ export class PageFileEmitter {
     return {
       type: node.type as HumanReadable.SceneNode["type"],
       props: {
-        id: this.refIDs.get(node.id) ?? "",
+        id: this.readableIDs.get(node.id) ?? "",
         ...this.getStyleForSelectable(node),
         variants: Object.fromEntries(
           variants.map((variant) => {
@@ -158,8 +174,7 @@ export class PageFileEmitter {
       instancePath: string[]
     ): Record<string, HumanReadable.StyleProps> => {
       const mainComponentID =
-        this.projectJSON.styles[instancePath[instancePath.length - 1]]
-          ?.mainComponent;
+        this.styles[instancePath[instancePath.length - 1]]?.mainComponent;
       if (!mainComponentID) {
         return {};
       }
@@ -171,10 +186,10 @@ export class PageFileEmitter {
       const overrides: Record<string, HumanReadable.StyleProps> = {};
 
       const visit = (node: HierarchicalNodeJSON) => {
-        const refID = this.refIDs.get(node.id) ?? "";
+        const refID = this.readableIDs.get(node.id) ?? "";
         const idPath = [...instancePath, node.id];
 
-        const styleJSON = this.projectJSON.styles[idPath.join(":")] ?? {};
+        const styleJSON = this.styles[idPath.join(":")] ?? {};
 
         if (refID) {
           overrides[refID] = this.toHumanReadableStyle(styleJSON);
@@ -199,9 +214,7 @@ export class PageFileEmitter {
       : [node.id];
 
     return {
-      ...this.toHumanReadableStyle(
-        this.projectJSON.styles[idPath.join(":")] ?? {}
-      ),
+      ...this.toHumanReadableStyle(this.styles[idPath.join(":")] ?? {}),
       ...(node.type === "instance"
         ? {
             overrides: getInstanceOverrides(idPath),
@@ -228,7 +241,7 @@ export class PageFileEmitter {
 
   transformColor(color: Color): Color {
     if (typeof color === "object") {
-      const token = this.projectJSON.colors[color.id];
+      const token = this.colorTokens[color.id];
       if (token && token.page) {
         return {
           type: "token",
@@ -340,7 +353,6 @@ export class ComponentEmitter {
   constructor(pageEmitter: PageFileEmitter, component: HierarchicalNodeJSON) {
     this.pageEmitter = pageEmitter;
     this.component = component;
-    this.refIDs = generateRefIDs(component.children[0]);
 
     this.variants = [];
     for (const child of component.children) {
@@ -355,15 +367,17 @@ export class ComponentEmitter {
 
   pageEmitter: PageFileEmitter;
   component: HierarchicalNodeJSON;
-  refIDs: Map<string, string>;
   variants: Variant[];
+
+  get readableIDs() {
+    return this.pageEmitter.readableIDs;
+  }
 
   emit(): HumanReadable.ComponentNode {
     return {
       type: "component",
       props: {
-        // TODO: avoid name collision inside page
-        id: this.component.name ?? "",
+        id: this.readableIDs.get(this.component.id) ?? "ID not found",
       },
       children: [
         this.pageEmitter.emitNode(this.component.children[0], this.variants),

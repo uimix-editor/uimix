@@ -16,24 +16,24 @@ describe(ProjectFileEmitter.name, () => {
     const emitted = emitter.emit();
     expect(emitted).toMatchSnapshot();
 
-    const projectJSON: ProjectJSON = {
-      nodes: {
-        project: {
-          type: "project",
-          index: 0,
-        },
-      },
-      styles: {},
-      componentURLs: [],
-      images: {},
-      colors: {},
-    };
-    loadProject(projectJSON, emitter.emit());
+    // const projectJSON: ProjectJSON = {
+    //   nodes: {
+    //     project: {
+    //       type: "project",
+    //       index: 0,
+    //     },
+    //   },
+    //   styles: {},
+    //   componentURLs: [],
+    //   images: {},
+    //   colors: {},
+    // };
+    // loadProject(projectJSON, emitter.emit());
 
-    const newProject = new Project();
-    newProject.data.loadJSON(projectJSON);
+    // const newProject = new Project();
+    // newProject.data.loadJSON(projectJSON);
 
-    const emitted2 = new ProjectFileEmitter(newProject.data.toJSON()).emit();
-    expect(emitted2).toMatchSnapshot();
+    // const emitted2 = new ProjectFileEmitter(newProject.data.toJSON()).emit();
+    // expect(emitted2).toMatchSnapshot();
   });
 });

@@ -1,11 +1,5 @@
-import { Component } from "@uimix/model/src/models/Component";
 import * as HumanReadable from "./HumanReadableFormat";
-import { Project } from "@uimix/model/src/models/Project";
-import {
-  NodeJSON,
-  ProjectJSON,
-  VariantCondition,
-} from "@uimix/model/src/data/v1";
+import { ProjectJSON, VariantCondition } from "@uimix/model/src/data/v1";
 import { generateID } from "@uimix/foundation/src/utils/ID";
 import { getPageID } from "@uimix/model/src/data/util";
 
