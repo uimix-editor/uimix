@@ -7,20 +7,29 @@ import {
   VariantCondition,
 } from "@uimix/model/src/data/v1";
 import { generateID } from "@uimix/foundation/src/utils/ID";
+import { getPageID } from "@uimix/model/src/data/util";
+
+export function loadProject(
+  projectJSON: ProjectJSON,
+  pages: Map<string, HumanReadable.PageNode>
+) {
+  for (const [name, page] of pages.entries()) {
+    loadPage(projectJSON, page, name);
+  }
+}
 
 export function loadPage(
   projectJSON: ProjectJSON,
   page: HumanReadable.PageNode,
-  index: number
+  name: string
 ) {
-  // TODO: reuse id if possible
-  const id = generateID();
+  const id = getPageID(name);
 
   projectJSON.nodes[id] = {
     type: "page",
-    name: "Page", // TODO
+    name: name,
     parent: "project",
-    index,
+    index: 0,
   };
 
   for (const [i, childNode] of page.children.entries()) {

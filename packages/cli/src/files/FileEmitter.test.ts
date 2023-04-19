@@ -3,6 +3,9 @@ import { WorkspaceLoader } from "../project/WorkspaceLoader";
 import * as path from "path";
 import { NodeFileAccess } from "../project/NodeFileAccess";
 import { ProjectFileEmitter } from "./FileEmitter";
+import { Project } from "@uimix/model/src/models/Project";
+import { ProjectJSON } from "@uimix/model/src/data/v1";
+import { loadProject } from "./FileLoader";
 
 describe(ProjectFileEmitter.name, () => {
   it("works", async () => {
@@ -10,6 +13,27 @@ describe(ProjectFileEmitter.name, () => {
     const files = await WorkspaceLoader.load(new NodeFileAccess(rootDir));
 
     const emitter = new ProjectFileEmitter(files.rootProject.json);
-    expect(emitter.emit()).toMatchSnapshot();
+    const emitted = emitter.emit();
+    expect(emitted).toMatchSnapshot();
+
+    const projectJSON: ProjectJSON = {
+      nodes: {
+        project: {
+          type: "project",
+          index: 0,
+        },
+      },
+      styles: {},
+      componentURLs: [],
+      images: {},
+      colors: {},
+    };
+    loadProject(projectJSON, emitter.emit());
+
+    const newProject = new Project();
+    newProject.data.loadJSON(projectJSON);
+
+    const emitted2 = new ProjectFileEmitter(newProject.data.toJSON()).emit();
+    expect(emitted2).toMatchSnapshot();
   });
 });

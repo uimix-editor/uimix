@@ -4001,3 +4001,963 @@ Easily import UIMix components into React apps or export final designs back to F
   },
 }
 `;
+
+exports[`ProjectFileEmitter > works 2`] = `
+Map {
+  "src/components.newformat.js.newformat.js" => {
+    "children": [
+      {
+        "children": [
+          {
+            "children": [
+              {
+                "children": [],
+                "props": {
+                  "id": "text",
+                  "variants": {},
+                },
+                "type": "component",
+              },
+            ],
+            "props": {
+              "id": "",
+              "variants": {},
+            },
+            "type": "component",
+          },
+        ],
+        "props": {
+          "id": "Button",
+        },
+        "type": "component",
+      },
+      {
+        "children": [
+          {
+            "children": [
+              {
+                "children": [],
+                "props": {
+                  "id": "item_0",
+                  "variants": {},
+                },
+                "type": "component",
+              },
+              {
+                "children": [],
+                "props": {
+                  "id": "item_1",
+                  "variants": {},
+                },
+                "type": "component",
+              },
+              {
+                "children": [],
+                "props": {
+                  "id": "hidden_Item",
+                  "variants": {},
+                },
+                "type": "component",
+              },
+              {
+                "children": [],
+                "props": {
+                  "id": "item_2",
+                  "variants": {},
+                },
+                "type": "component",
+              },
+              {
+                "children": [],
+                "props": {
+                  "id": "text",
+                  "variants": {},
+                },
+                "type": "component",
+              },
+            ],
+            "props": {
+              "id": "",
+              "variants": {},
+            },
+            "type": "component",
+          },
+        ],
+        "props": {
+          "id": "Stack",
+        },
+        "type": "component",
+      },
+      {
+        "children": [
+          {
+            "children": [
+              {
+                "children": [],
+                "props": {
+                  "id": "header",
+                  "variants": {},
+                },
+                "type": "component",
+              },
+              {
+                "children": [
+                  {
+                    "children": [],
+                    "props": {
+                      "id": "button",
+                      "variants": {},
+                    },
+                    "type": "component",
+                  },
+                  {
+                    "children": [],
+                    "props": {
+                      "id": "instance",
+                      "variants": {},
+                    },
+                    "type": "component",
+                  },
+                  {
+                    "children": [],
+                    "props": {
+                      "id": "image",
+                      "variants": {},
+                    },
+                    "type": "component",
+                  },
+                  {
+                    "children": [],
+                    "props": {
+                      "id": "stack",
+                      "variants": {},
+                    },
+                    "type": "component",
+                  },
+                ],
+                "props": {
+                  "id": "frame",
+                  "variants": {},
+                },
+                "type": "component",
+              },
+            ],
+            "props": {
+              "id": "",
+              "variants": {},
+            },
+            "type": "component",
+          },
+        ],
+        "props": {
+          "id": "Page",
+        },
+        "type": "component",
+      },
+      {
+        "children": [
+          {
+            "children": [
+              {
+                "children": [
+                  {
+                    "children": [],
+                    "props": {
+                      "id": "heroicons_code_bracket",
+                      "variants": {},
+                    },
+                    "type": "component",
+                  },
+                ],
+                "props": {
+                  "id": "icon",
+                  "variants": {},
+                },
+                "type": "component",
+              },
+              {
+                "children": [],
+                "props": {
+                  "id": "title",
+                  "variants": {},
+                },
+                "type": "component",
+              },
+              {
+                "children": [],
+                "props": {
+                  "id": "description",
+                  "variants": {},
+                },
+                "type": "component",
+              },
+            ],
+            "props": {
+              "id": "",
+              "variants": {},
+            },
+            "type": "component",
+          },
+        ],
+        "props": {
+          "id": "Card",
+        },
+        "type": "component",
+      },
+      {
+        "children": [
+          {
+            "children": [
+              {
+                "children": [],
+                "props": {
+                  "id": "_",
+                  "variants": {},
+                },
+                "type": "component",
+              },
+              {
+                "children": [],
+                "props": {
+                  "id": "_1",
+                  "variants": {},
+                },
+                "type": "component",
+              },
+              {
+                "children": [],
+                "props": {
+                  "id": "_2",
+                  "variants": {},
+                },
+                "type": "component",
+              },
+              {
+                "children": [],
+                "props": {
+                  "id": "_3",
+                  "variants": {},
+                },
+                "type": "component",
+              },
+              {
+                "children": [],
+                "props": {
+                  "id": "_4",
+                  "variants": {},
+                },
+                "type": "component",
+              },
+            ],
+            "props": {
+              "id": "",
+              "variants": {},
+            },
+            "type": "component",
+          },
+        ],
+        "props": {
+          "id": "",
+        },
+        "type": "component",
+      },
+      {
+        "props": {
+          "id": "red_Orange",
+          "name": "Red Orange",
+          "value": "#EF4444",
+        },
+        "type": "colorToken",
+      },
+    ],
+    "type": "page",
+  },
+  "src/landing.newformat.js.newformat.js" => {
+    "children": [
+      {
+        "children": [
+          {
+            "children": [
+              {
+                "children": [
+                  {
+                    "children": [],
+                    "props": {
+                      "id": "frame_178",
+                      "variants": {},
+                    },
+                    "type": "component",
+                  },
+                  {
+                    "children": [],
+                    "props": {
+                      "id": "uIMix",
+                      "variants": {},
+                    },
+                    "type": "component",
+                  },
+                ],
+                "props": {
+                  "id": "frame_102",
+                  "variants": {},
+                },
+                "type": "component",
+              },
+              {
+                "children": [
+                  {
+                    "children": [
+                      {
+                        "children": [],
+                        "props": {
+                          "id": "sign_In",
+                          "variants": {},
+                        },
+                        "type": "component",
+                      },
+                    ],
+                    "props": {
+                      "id": "frame_3",
+                      "variants": {},
+                    },
+                    "type": "component",
+                  },
+                  {
+                    "children": [
+                      {
+                        "children": [],
+                        "props": {
+                          "id": "get_Early_Access",
+                          "variants": {},
+                        },
+                        "type": "component",
+                      },
+                    ],
+                    "props": {
+                      "id": "frame_4",
+                      "variants": {},
+                    },
+                    "type": "component",
+                  },
+                ],
+                "props": {
+                  "id": "frame_179",
+                  "variants": {},
+                },
+                "type": "component",
+              },
+              {
+                "children": [
+                  {
+                    "children": [],
+                    "props": {
+                      "id": "features",
+                      "variants": {},
+                    },
+                    "type": "component",
+                  },
+                  {
+                    "children": [],
+                    "props": {
+                      "id": "pricing",
+                      "variants": {},
+                    },
+                    "type": "component",
+                  },
+                  {
+                    "children": [],
+                    "props": {
+                      "id": "docs",
+                      "variants": {},
+                    },
+                    "type": "component",
+                  },
+                  {
+                    "children": [],
+                    "props": {
+                      "id": "gitHub",
+                      "variants": {},
+                    },
+                    "type": "component",
+                  },
+                ],
+                "props": {
+                  "id": "frame_180",
+                  "variants": {},
+                },
+                "type": "component",
+              },
+            ],
+            "props": {
+              "id": "",
+              "variants": {},
+            },
+            "type": "component",
+          },
+        ],
+        "props": {
+          "id": "Header",
+        },
+        "type": "component",
+      },
+      {
+        "children": [
+          {
+            "children": [
+              {
+                "children": [],
+                "props": {
+                  "id": "frame",
+                  "variants": {},
+                },
+                "type": "component",
+              },
+              {
+                "children": [
+                  {
+                    "children": [
+                      {
+                        "children": [],
+                        "props": {
+                          "id": "image_2",
+                          "variants": {},
+                        },
+                        "type": "component",
+                      },
+                    ],
+                    "props": {
+                      "id": "frame2",
+                      "variants": {},
+                    },
+                    "type": "component",
+                  },
+                  {
+                    "children": [],
+                    "props": {
+                      "id": "revolutionize_Your_Web_Design_and_Development_Workflow",
+                      "variants": {},
+                    },
+                    "type": "component",
+                  },
+                  {
+                    "children": [],
+                    "props": {
+                      "id": "uIMix_is_a_open_source_design_tool_that_combines_intuitive_editing__React_integration__AI_assistance__and_advanced_design_tokens_",
+                      "variants": {},
+                    },
+                    "type": "component",
+                  },
+                  {
+                    "children": [
+                      {
+                        "children": [
+                          {
+                            "children": [],
+                            "props": {
+                              "id": "get_Early_Access",
+                              "variants": {},
+                            },
+                            "type": "component",
+                          },
+                        ],
+                        "props": {
+                          "id": "frame_2",
+                          "variants": {},
+                        },
+                        "type": "component",
+                      },
+                    ],
+                    "props": {
+                      "id": "frame_4",
+                      "variants": {},
+                    },
+                    "type": "component",
+                  },
+                  {
+                    "children": [],
+                    "props": {
+                      "id": "image_1",
+                      "variants": {},
+                    },
+                    "type": "component",
+                  },
+                ],
+                "props": {
+                  "id": "frame1",
+                  "variants": {},
+                },
+                "type": "component",
+              },
+              {
+                "children": [
+                  {
+                    "children": [
+                      {
+                        "children": [
+                          {
+                            "children": [
+                              {
+                                "children": [],
+                                "props": {
+                                  "id": "heroicons_pencil_square",
+                                  "variants": {},
+                                },
+                                "type": "component",
+                              },
+                            ],
+                            "props": {
+                              "id": "frame_5",
+                              "variants": {},
+                            },
+                            "type": "component",
+                          },
+                          {
+                            "children": [],
+                            "props": {
+                              "id": "figma_like_Intuitive_Editing",
+                              "variants": {},
+                            },
+                            "type": "component",
+                          },
+                          {
+                            "children": [],
+                            "props": {
+                              "id": "experience_a_user_friendly_interface_with_familiar_design_tools__making_it_easy_for_both_beginners_and_professionals_to_create_stunning_web_designs_",
+                              "variants": {},
+                            },
+                            "type": "component",
+                          },
+                        ],
+                        "props": {
+                          "id": "frame_13",
+                          "variants": {},
+                        },
+                        "type": "component",
+                      },
+                      {
+                        "children": [
+                          {
+                            "children": [
+                              {
+                                "children": [],
+                                "props": {
+                                  "id": "heroicons_code_bracket",
+                                  "variants": {},
+                                },
+                                "type": "component",
+                              },
+                            ],
+                            "props": {
+                              "id": "frame_15",
+                              "variants": {},
+                            },
+                            "type": "component",
+                          },
+                          {
+                            "children": [],
+                            "props": {
+                              "id": "react_Components_Import_Export",
+                              "variants": {},
+                            },
+                            "type": "component",
+                          },
+                          {
+                            "children": [],
+                            "props": {
+                              "id": "seamlessly_work_with_React_components__boosting_your_design_to_development_workflow_",
+                              "variants": {},
+                            },
+                            "type": "component",
+                          },
+                        ],
+                        "props": {
+                          "id": "frame_14",
+                          "variants": {},
+                        },
+                        "type": "component",
+                      },
+                      {
+                        "children": [
+                          {
+                            "children": [
+                              {
+                                "children": [],
+                                "props": {
+                                  "id": "heroicons_cloud",
+                                  "variants": {},
+                                },
+                                "type": "component",
+                              },
+                            ],
+                            "props": {
+                              "id": "frame_17",
+                              "variants": {},
+                            },
+                            "type": "component",
+                          },
+                          {
+                            "children": [],
+                            "props": {
+                              "id": "collaboration_for_Everyone",
+                              "variants": {},
+                            },
+                            "type": "component",
+                          },
+                          {
+                            "children": [],
+                            "props": {
+                              "id": "collaborate_in_real_time_with_your_team__whether_they_re_designers__developers__or_stakeholders_",
+                              "variants": {},
+                            },
+                            "type": "component",
+                          },
+                        ],
+                        "props": {
+                          "id": "frame_16",
+                          "variants": {},
+                        },
+                        "type": "component",
+                      },
+                      {
+                        "children": [
+                          {
+                            "children": [
+                              {
+                                "children": [],
+                                "props": {
+                                  "id": "heroicons_computer_desktop",
+                                  "variants": {},
+                                },
+                                "type": "component",
+                              },
+                            ],
+                            "props": {
+                              "id": "frame_20",
+                              "variants": {},
+                            },
+                            "type": "component",
+                          },
+                          {
+                            "children": [],
+                            "props": {
+                              "id": "offline_Editing_Experience",
+                              "variants": {},
+                            },
+                            "type": "component",
+                          },
+                          {
+                            "children": [],
+                            "props": {
+                              "id": "benefit_from_UIMix_s_seamless_offline_editing__offering_local_file_management__hot_reloading__and_an_uninterrupted_workflow_",
+                              "variants": {},
+                            },
+                            "type": "component",
+                          },
+                        ],
+                        "props": {
+                          "id": "frame_18",
+                          "variants": {},
+                        },
+                        "type": "component",
+                      },
+                      {
+                        "children": [
+                          {
+                            "children": [
+                              {
+                                "children": [],
+                                "props": {
+                                  "id": "carbon_machine_learning",
+                                  "variants": {},
+                                },
+                                "type": "component",
+                              },
+                            ],
+                            "props": {
+                              "id": "frame_22",
+                              "variants": {},
+                            },
+                            "type": "component",
+                          },
+                          {
+                            "children": [],
+                            "props": {
+                              "id": "aI_Assistance",
+                              "variants": {},
+                            },
+                            "type": "component",
+                          },
+                          {
+                            "children": [],
+                            "props": {
+                              "id": "supercharge_your_design_process_with_AI_generated_and_refined_text_contents__as_well_as_AI_generated_images_that_fit_perfectly_into_your_project_",
+                              "variants": {},
+                            },
+                            "type": "component",
+                          },
+                        ],
+                        "props": {
+                          "id": "frame_21",
+                          "variants": {},
+                        },
+                        "type": "component",
+                      },
+                      {
+                        "children": [
+                          {
+                            "children": [
+                              {
+                                "children": [],
+                                "props": {
+                                  "id": "carbon_logo_figma",
+                                  "variants": {},
+                                },
+                                "type": "component",
+                              },
+                            ],
+                            "props": {
+                              "id": "frame_24",
+                              "variants": {},
+                            },
+                            "type": "component",
+                          },
+                          {
+                            "children": [],
+                            "props": {
+                              "id": "figma_Integration",
+                              "variants": {},
+                            },
+                            "type": "component",
+                          },
+                          {
+                            "children": [],
+                            "props": {
+                              "id": "easily_import_designs_from_Figma_and_export_components_back_to_Figma__ensuring_seamless_collaboration_between_UIMix_and_your_favorite_design_tool_",
+                              "variants": {},
+                            },
+                            "type": "component",
+                          },
+                        ],
+                        "props": {
+                          "id": "frame_23",
+                          "variants": {},
+                        },
+                        "type": "component",
+                      },
+                    ],
+                    "props": {
+                      "id": "frame_181",
+                      "variants": {},
+                    },
+                    "type": "component",
+                  },
+                ],
+                "props": {
+                  "id": "frame_19",
+                  "variants": {},
+                },
+                "type": "component",
+              },
+              {
+                "children": [
+                  {
+                    "children": [],
+                    "props": {
+                      "id": "open_Source",
+                      "variants": {},
+                    },
+                    "type": "component",
+                  },
+                  {
+                    "children": [],
+                    "props": {
+                      "id": "uIMix_s_open_source_editor_and_backend_promote_community_driven_development_and_offer_extensive_customization_options__Self_host_both_components_for_greater_control_over_your_design_environment_and_data_security_",
+                      "variants": {},
+                    },
+                    "type": "component",
+                  },
+                  {
+                    "children": [
+                      {
+                        "children": [],
+                        "props": {
+                          "id": "explore_GitHub_repo",
+                          "variants": {},
+                        },
+                        "type": "component",
+                      },
+                    ],
+                    "props": {
+                      "id": "frame_3",
+                      "variants": {},
+                    },
+                    "type": "component",
+                  },
+                  {
+                    "children": [],
+                    "props": {
+                      "id": "how_It_Works",
+                      "variants": {},
+                    },
+                    "type": "component",
+                  },
+                  {
+                    "children": [
+                      {
+                        "children": [
+                          {
+                            "children": [],
+                            "props": {
+                              "id": "a__Start_Your_Project",
+                              "variants": {},
+                            },
+                            "type": "component",
+                          },
+                          {
+                            "children": [],
+                            "props": {
+                              "id": "sign_up_for_a_free_account_or_log_in__Create_a_new_project_or_import_an_existing_Figma_design__Organize_your_components_and_design_tokens_in_the_user_friendly_interface_",
+                              "variants": {},
+                            },
+                            "type": "component",
+                          },
+                        ],
+                        "props": {
+                          "id": "frame5",
+                          "variants": {},
+                        },
+                        "type": "component",
+                      },
+                      {
+                        "children": [
+                          {
+                            "children": [],
+                            "props": {
+                              "id": "b__Design___Develop",
+                              "variants": {},
+                            },
+                            "type": "component",
+                          },
+                          {
+                            "children": [],
+                            "props": {
+                              "id": "utilize_Figma_like_editing_tools_to_create_and_modify_designs__Seamlessly_import_React_components_into_your_UIMix_project__Leverage_AI_assistance_to_efficiently_generate_and_refine_your_content_",
+                              "variants": {},
+                            },
+                            "type": "component",
+                          },
+                        ],
+                        "props": {
+                          "id": "frame6",
+                          "variants": {},
+                        },
+                        "type": "component",
+                      },
+                      {
+                        "children": [
+                          {
+                            "children": [],
+                            "props": {
+                              "id": "c__Collaborate___Publish",
+                              "variants": {},
+                            },
+                            "type": "component",
+                          },
+                          {
+                            "children": [],
+                            "props": {
+                              "id": "collaborate_using_the_online_editor_or_work_offline_for_an_optimized_development_experience__Integrate_with_GitHub_for_streamlined_version_control__Easily_import_UIMix_components_into_React_apps_or_export_final_designs_back_to_Figma_",
+                              "variants": {},
+                            },
+                            "type": "component",
+                          },
+                        ],
+                        "props": {
+                          "id": "frame7",
+                          "variants": {},
+                        },
+                        "type": "component",
+                      },
+                    ],
+                    "props": {
+                      "id": "frame4",
+                      "variants": {},
+                    },
+                    "type": "component",
+                  },
+                ],
+                "props": {
+                  "id": "frame3",
+                  "variants": {},
+                },
+                "type": "component",
+              },
+              {
+                "children": [
+                  {
+                    "children": [],
+                    "props": {
+                      "id": "image_4",
+                      "variants": {},
+                    },
+                    "type": "component",
+                  },
+                  {
+                    "children": [],
+                    "props": {
+                      "id": "ready_to_revolutionize_your_web_design_workflow_",
+                      "variants": {},
+                    },
+                    "type": "component",
+                  },
+                  {
+                    "children": [
+                      {
+                        "children": [
+                          {
+                            "children": [],
+                            "props": {
+                              "id": "get_Early_Access1",
+                              "variants": {},
+                            },
+                            "type": "component",
+                          },
+                        ],
+                        "props": {
+                          "id": "frame_6",
+                          "variants": {},
+                        },
+                        "type": "component",
+                      },
+                    ],
+                    "props": {
+                      "id": "frame_26",
+                      "variants": {},
+                    },
+                    "type": "component",
+                  },
+                ],
+                "props": {
+                  "id": "frame_25",
+                  "variants": {},
+                },
+                "type": "component",
+              },
+            ],
+            "props": {
+              "id": "",
+              "variants": {},
+            },
+            "type": "component",
+          },
+        ],
+        "props": {
+          "id": "Landing",
+        },
+        "type": "component",
+      },
+    ],
+    "type": "page",
+  },
+}
+`;
