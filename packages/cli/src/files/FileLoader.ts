@@ -190,8 +190,6 @@ class PageLoader {
       projectJSON.styles[idPath.join(":")] = this.transformStyle(variantStyle);
     }
 
-    // TODO: load variants
-
     for (const [i, childNode] of node.children.entries()) {
       this.loadNode(variants, childNode, id, i);
     }
