@@ -5,7 +5,6 @@ import { NodeFileAccess } from "../project/NodeFileAccess";
 import { ProjectFileEmitter } from "./FileEmitter";
 import { Project } from "@uimix/model/src/models/Project";
 import { ProjectJSON } from "@uimix/model/src/data/v1";
-import { loadProject } from "./FileLoader";
 
 describe(ProjectFileEmitter.name, () => {
   it("works", async () => {

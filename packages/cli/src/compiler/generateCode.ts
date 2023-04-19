@@ -10,7 +10,7 @@ import * as path from "path";
 import { DesignTokens } from "@uimix/code-asset-types";
 import { PageFileEmitter, ProjectFileEmitter } from "../files/FileEmitter.js";
 import { stringifyAsJSX } from "../files/HumanReadableFormat.js";
-import { loadPage, loadProject } from "../files/FileLoader.js";
+import { ProjectLoader } from "../files/FileLoader.js";
 
 export async function generateCode(
   rootPath: string,
@@ -84,21 +84,10 @@ export async function generateCode(
   // re-emit the project
 
   {
-    const projectJSON2: ProjectJSON = {
-      nodes: {
-        project: {
-          type: "project",
-          index: 0,
-        },
-      },
-      styles: {},
-      componentURLs: [],
-      images: {},
-      colors: {},
-    };
-    loadProject(projectJSON2, projectEmitter.emit());
+    const loader = new ProjectLoader(projectEmitter.emit());
+    loader.load();
 
-    const projectEmitter2 = new ProjectFileEmitter(projectJSON2);
+    const projectEmitter2 = new ProjectFileEmitter(loader.json);
 
     for (const [filePath, result] of projectEmitter2.emit()) {
       console.log(filePath);
