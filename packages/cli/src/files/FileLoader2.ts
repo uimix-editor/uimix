@@ -26,6 +26,10 @@ export class ProjectLoader2 {
     string, // path to token from root (e.g., "src/components.uimix#color1")
     ColorToken
   >();
+  componentToRefIDs = new Map<
+    string /* component ID */,
+    Map<string /* node ID */, string /* human-readable ref id */>
+  >();
 
   load(files: Map<string, HumanReadable.PageNode>) {
     const pageLoaders: PageLoader[] = [];
@@ -77,20 +81,26 @@ class PageLoader {
       } else if (inputChild.type === "component") {
         children.push(this.loadComponent(inputChild));
       } else {
-        children.push(this.loadNode(inputChild));
+        children.push(this.loadNode(inputChild, new Map<string, string>()));
       }
     }
 
     this.page.node.append(children);
   }
 
-  loadNode(inputNode: HumanReadable.SceneNode): Node {
+  loadNode(
+    inputNode: HumanReadable.SceneNode,
+    refIDs: Map<string, string>
+  ): Node {
     const node = this.project.nodes.create(inputNode.type);
     node.name = inputNode.props.name;
-    const children = inputNode.children.map((child) => this.loadNode(child));
+    const children = inputNode.children.map((child) =>
+      this.loadNode(child, refIDs)
+    );
     node.append(children);
 
     this.nodeToInput.set(node, inputNode);
+    refIDs.set(node.id, inputNode.props.id);
 
     return node;
   }
@@ -99,13 +109,16 @@ class PageLoader {
     const componentNode = this.project.nodes.create("component");
     componentNode.name = inputNode.props.name;
 
+    const refIDs = new Map<string, string>();
+    this.projectLoader.componentToRefIDs.set(componentNode.id, refIDs);
+
     const children = inputNode.children.map((child) => {
       if (child.type === "variant") {
         const variantNode = this.project.nodes.create("variant");
         variantNode.condition = child.props.condition;
         return variantNode;
       } else {
-        return this.loadNode(child);
+        return this.loadNode(child, refIDs);
       }
     });
 
@@ -150,10 +163,12 @@ class PageLoader {
       return;
     }
 
-    const refIDs = new Map<Node, string>(); // TODO: build map
+    const refIDs =
+      this.projectLoader.componentToRefIDs.get(mainComponent.id) ??
+      new Map<string, string>();
 
     const visit = (selectable: Selectable) => {
-      const refID = refIDs.get(selectable.originalNode);
+      const refID = refIDs.get(selectable.originalNode.id);
       if (refID) {
         selectable.selfStyle.loadJSON(
           this.transformStyle(overrides[refID] ?? {})

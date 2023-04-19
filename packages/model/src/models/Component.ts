@@ -22,6 +22,10 @@ export class Component {
     this.rootNode = rootNode;
   }
 
+  get id(): string {
+    return this.node.id;
+  }
+
   get name(): string {
     return this.node.name;
   }
