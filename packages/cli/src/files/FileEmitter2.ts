@@ -133,7 +133,7 @@ export class PageEmitter {
       const overrides: Record<string, HumanReadable.StyleProps> = {};
 
       const visit = (selectable: Selectable) => {
-        const refID = refIDs.get(selectable.node.id);
+        const refID = refIDs.get(selectable.originalNode.id);
 
         if (refID) {
           overrides[refID] = this.transformStyle(selectable.selfStyle);
