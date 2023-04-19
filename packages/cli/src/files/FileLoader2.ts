@@ -11,6 +11,7 @@ import * as Data from "@uimix/model/src/data/v1";
 import { posix as path } from "path-browserify";
 import { filterUndefined, variantConditionToText } from "./util";
 import { Color } from "@uimix/foundation/src/utils/Color";
+import { generateLowerJSIdentifier } from "@uimix/foundation/src/utils/Name";
 
 export class ProjectLoader2 {
   constructor() {
@@ -75,7 +76,7 @@ class PageLoader {
         token.value = Color.from(inputChild.props.value);
 
         this.projectLoader.pathToColorToken.set(
-          this.filePath + "#" + token.name,
+          this.filePath + "#" + generateLowerJSIdentifier(token.name),
           token
         );
       } else if (inputChild.type === "component") {
