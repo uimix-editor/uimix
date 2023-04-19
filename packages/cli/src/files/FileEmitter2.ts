@@ -7,7 +7,7 @@ import { generateLowerJSIdentifier } from "@uimix/foundation/src/utils/Name";
 import { posix as path } from "path-browserify";
 import { filterUndefined, variantConditionToText } from "./util";
 
-export class OldProjectEmitter {
+export class ProjectEmitter2 {
   constructor(project: Project) {
     this.project = project;
   }
