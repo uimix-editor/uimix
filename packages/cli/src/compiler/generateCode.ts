@@ -8,9 +8,9 @@ import * as mime from "mime-types";
 import { codeAssetsDestination } from "../codeAssets/constants.js";
 import * as path from "path";
 import { DesignTokens } from "@uimix/code-asset-types";
-import { PageFileEmitter, ProjectFileEmitter } from "../files/FileEmitter.js";
 import { stringifyAsJSX } from "../files/HumanReadableFormat.js";
-import { ProjectLoader } from "../files/FileLoader.js";
+import { ProjectEmitter2 } from "../files/FileEmitter2.js";
+import { ProjectLoader2 } from "../files/FileLoader2.js";
 
 export async function generateCode(
   rootPath: string,
@@ -72,7 +72,7 @@ export async function generateCode(
     );
   }
 
-  const projectEmitter = new ProjectFileEmitter(projectJSON);
+  const projectEmitter = new ProjectEmitter2(project);
 
   for (const [filePath, result] of projectEmitter.emit()) {
     results.push({
@@ -84,10 +84,10 @@ export async function generateCode(
   // re-emit the project
 
   {
-    const loader = new ProjectLoader(projectEmitter.emit());
-    loader.load();
+    const loader = new ProjectLoader2();
+    loader.load(projectEmitter.emit());
 
-    const projectEmitter2 = new ProjectFileEmitter(loader.json);
+    const projectEmitter2 = new ProjectEmitter2(loader.project);
 
     for (const [filePath, result] of projectEmitter2.emit()) {
       console.log(filePath);

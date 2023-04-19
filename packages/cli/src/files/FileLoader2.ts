@@ -75,7 +75,10 @@ class PageLoader {
       }
     });
 
-    componentNode.append(children);
+    // TODO: bulk append
+    for (const child of children) {
+      componentNode.append([child]);
+    }
     return componentNode;
   }
 
