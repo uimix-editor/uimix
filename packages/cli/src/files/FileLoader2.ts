@@ -4,6 +4,7 @@ import {
   Node,
   Page,
   Project,
+  Selectable,
 } from "@uimix/model/src/models";
 import * as HumanReadable from "./HumanReadableFormat";
 import * as Data from "@uimix/model/src/data/v1";
@@ -124,8 +125,7 @@ class PageLoader {
   loadStyles() {
     for (const [node, inputNode] of this.nodeToInput) {
       const selectable = node.selectable;
-      const style = this.transformStyle(inputNode.props);
-      selectable.selfStyle.loadJSON(style);
+      this.loadStyleForSelectable(selectable, inputNode.props);
 
       for (const corresponding of selectable.variantCorrespondings) {
         if (corresponding.variant?.condition) {
@@ -134,12 +134,53 @@ class PageLoader {
           );
           const variantStyle = inputNode.props.variants?.[variantText];
           if (variantStyle) {
-            corresponding.selectable.selfStyle.loadJSON(
-              this.transformStyle(variantStyle)
-            );
+            this.loadStyleForSelectable(corresponding.selectable, variantStyle);
           }
         }
       }
+    }
+  }
+
+  loadInstanceOverrides(
+    instanceSelectable: Selectable,
+    overrides: Record<string, HumanReadable.StyleProps>
+  ) {
+    const mainComponent = instanceSelectable.mainComponent;
+    if (!mainComponent) {
+      return;
+    }
+
+    const refIDs = new Map<Node, string>(); // TODO: build map
+
+    const visit = (selectable: Selectable) => {
+      const refID = refIDs.get(selectable.originalNode);
+      if (refID) {
+        selectable.selfStyle.loadJSON(
+          this.transformStyle(overrides[refID] ?? {})
+        );
+      }
+
+      if (selectable.originalNode.type === "instance") {
+        this.loadInstanceOverrides(
+          selectable,
+          overrides[refID!].overrides ?? {}
+        );
+      } else {
+        selectable.children.forEach(visit);
+      }
+    };
+
+    instanceSelectable.children.forEach(visit);
+  }
+
+  loadStyleForSelectable(
+    selectable: Selectable,
+    style: HumanReadable.StyleProps
+  ) {
+    selectable.selfStyle.loadJSON(this.transformStyle(style));
+
+    if (selectable.originalNode.type === "instance" && style.overrides) {
+      this.loadInstanceOverrides(selectable, style.overrides ?? {});
     }
   }
 
@@ -187,7 +228,9 @@ class PageLoader {
     return path.basename(imagePath, path.extname(imagePath));
   }
 
-  transformStyle(style: HumanReadable.StyleProps): Partial<Data.StyleJSON> {
+  transformStyle(
+    style: Partial<HumanReadable.BaseStyleProps>
+  ): Partial<Data.StyleJSON> {
     let mainComponentID: string | undefined;
     let foreignComponentRef: Data.ForeignComponentRef | undefined;
 
