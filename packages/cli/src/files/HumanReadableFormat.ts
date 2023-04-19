@@ -101,6 +101,7 @@ export interface ComponentNode {
   type: "component";
   props: {
     id: string;
+    name: string;
   };
   children: (SceneNode | VariantNode)[];
 }
@@ -114,7 +115,7 @@ export interface VariantNode {
 
 export interface SceneNode {
   type: "frame" | "instance" | "text" | "svg" | "image" | "foreign";
-  props: { id: string } & StyleProps;
+  props: { id: string; name: string } & StyleProps;
   children: SceneNode[];
 }
 
@@ -122,8 +123,8 @@ export interface ColorTokenNode {
   type: "colorToken";
   props: {
     id: string;
-    value: string;
     name: string;
+    value: string;
   };
 }
 

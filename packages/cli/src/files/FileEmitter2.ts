@@ -66,6 +66,8 @@ export class PageEmitter {
     selectable: Selectable,
     refIDs: Map<string, string>
   ): HumanReadable.SceneNode {
+    const node = selectable.originalNode;
+
     const variants = selectable.variantCorrespondings.filter(
       (corresponding) => corresponding.variant
     );
@@ -73,7 +75,7 @@ export class PageEmitter {
     const refID = refIDs?.get(selectable.originalNode.id);
 
     const children =
-      selectable.originalNode.type === "instance"
+      node.type === "instance"
         ? []
         : selectable.children.map((child) => this.emitNode(child, refIDs));
 
@@ -88,9 +90,10 @@ export class PageEmitter {
 
     return {
       // TODO: better typing
-      type: selectable.originalNode.type as HumanReadable.SceneNode["type"],
+      type: node.type as HumanReadable.SceneNode["type"],
       props: {
         id: refID ?? "",
+        name: node.name,
         ...this.getStyleForSelectable(selectable),
         ...(Object.keys(variantStyles).length > 0
           ? { variants: variantStyles }
@@ -283,6 +286,7 @@ export class ComponentEmitter {
       type: "component",
       props: {
         id: this.component.name,
+        name: this.component.name,
       },
       children: [
         this.pageEmitter.emitNode(

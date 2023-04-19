@@ -2,11 +2,10 @@ import { describe, expect, it } from "vitest";
 import { WorkspaceLoader } from "../project/WorkspaceLoader";
 import * as path from "path";
 import { NodeFileAccess } from "../project/NodeFileAccess";
-import { ProjectFileEmitter } from "./FileEmitter";
 import { Project } from "@uimix/model/src/models/Project";
 import { ProjectEmitter2 } from "./FileEmitter2";
 
-describe(ProjectFileEmitter.name, () => {
+describe("ProjectEmitter", () => {
   it("works", async () => {
     const rootDir = path.resolve("../sandbox");
     const files = await WorkspaceLoader.load(new NodeFileAccess(rootDir));
