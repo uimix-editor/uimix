@@ -22,6 +22,7 @@ export class ProjectLoader {
       for (const child of page.children) {
         if (child.type === "component" || child.type === "colorToken") {
           const path = name + ".uimix#" + child.props.id;
+          console.log("registering", path);
           this.pathToID.set(path, generateID()); // TODO: reuse ID
         }
       }
@@ -178,7 +179,7 @@ class PageLoader {
 
   // Get id from relative path of components/tokens
   idFromRelativePath(relativePath: string): string | undefined {
-    const absPath = path.join(this.pageName, relativePath);
+    const absPath = path.join(path.dirname(this.pageName), relativePath);
     return this.projectLoader.pathToID.get(absPath);
   }
 
@@ -188,7 +189,10 @@ class PageLoader {
       const tokenId = this.idFromRelativePath(tokenPath);
       if (!tokenId) {
         console.error(`token ${tokenPath} not found`);
-        return "#000000";
+        return {
+          type: "token",
+          id: tokenPath,
+        };
       } else {
         return {
           type: "token",
