@@ -1,14 +1,15 @@
-import { Component, Node, Page, Project } from "@uimix/model/src/models";
-import * as HumanReadable from "./HumanReadableFormat";
 import {
-  Color,
-  ForeignComponentRef,
-  PxPercentValue,
-  SolidFill,
-  StyleJSON,
-} from "@uimix/model/src/data/v1";
+  ColorToken,
+  Component,
+  Node,
+  Page,
+  Project,
+} from "@uimix/model/src/models";
+import * as HumanReadable from "./HumanReadableFormat";
+import * as Data from "@uimix/model/src/data/v1";
 import path from "path-browserify";
 import { filterUndefined } from "./util";
+import { Color } from "@uimix/foundation/src/utils/Color";
 
 export class ProjectLoader2 {
   constructor() {
@@ -16,6 +17,14 @@ export class ProjectLoader2 {
   }
 
   project: Project;
+  pathToComponent = new Map<
+    string, // path to component from root (e.g., "src/components.uimix#Button")
+    Component
+  >();
+  pathToColorToken = new Map<
+    string, // path to token from root (e.g., "src/components.uimix#color1")
+    ColorToken
+  >();
 
   load(files: Map<string, HumanReadable.PageNode>) {
     const pageLoaders: PageLoader[] = [];
@@ -46,12 +55,23 @@ class PageLoader {
     return this.page.project;
   }
 
+  get filePath() {
+    return this.page.filePath + ".uimix";
+  }
+
   load(inputNode: HumanReadable.PageNode) {
     const children: Node[] = [];
 
     for (const inputChild of inputNode.children) {
       if (inputChild.type === "colorToken") {
-        // TODO: color token
+        const token = this.page.colorTokens.add();
+        token.name = inputChild.props.name;
+        token.value = Color.from(inputChild.props.value);
+
+        this.projectLoader.pathToColorToken.set(
+          this.filePath + "#" + token.name,
+          token
+        );
       } else if (inputChild.type === "component") {
         children.push(this.loadComponent(inputChild));
       } else {
@@ -88,6 +108,12 @@ class PageLoader {
     for (const child of children) {
       componentNode.append([child]);
     }
+
+    this.projectLoader.pathToComponent.set(
+      this.filePath + "#" + inputNode.props.id,
+      Component.from(componentNode)!
+    );
+
     return componentNode;
   }
 
@@ -96,15 +122,21 @@ class PageLoader {
   }
 
   // Get id from relative path of components/tokens
-  idFromRelativePath(relativePath: string): string | undefined {
-    const absPath = path.join(path.dirname(this.pageName), relativePath);
-    return this.projectLoader.pathToID.get(absPath);
+  componentFromRelativePath(relativePath: string): Component | undefined {
+    const absPath = path.join(path.dirname(this.filePath), relativePath);
+    return this.projectLoader.pathToComponent.get(absPath);
   }
 
-  transformColor(color: Color): Color {
+  colorTokenFromRelativePath(relativePath: string): ColorToken | undefined {
+    const absPath = path.join(path.dirname(this.filePath), relativePath);
+    return this.projectLoader.pathToColorToken.get(absPath);
+  }
+
+  transformColor(color: Data.Color): Data.Color {
     if (typeof color === "object") {
       const tokenPath = color.id;
-      const tokenId = this.idFromRelativePath(tokenPath);
+      const tokenId = this.colorTokenFromRelativePath(tokenPath)?.id;
+
       if (!tokenId) {
         console.error(`token ${tokenPath} not found`);
         return {
@@ -121,7 +153,7 @@ class PageLoader {
     return color;
   }
 
-  transformFill(fill: SolidFill): SolidFill {
+  transformFill(fill: Data.SolidFill): Data.SolidFill {
     return {
       type: "solid",
       color: this.transformColor(fill.color),
@@ -133,9 +165,9 @@ class PageLoader {
     return path.basename(imagePath, path.extname(imagePath));
   }
 
-  transformStyle(style: HumanReadable.StyleProps): Partial<StyleJSON> {
+  transformStyle(style: HumanReadable.StyleProps): Partial<Data.StyleJSON> {
     let mainComponentID: string | undefined;
-    let foreignComponentRef: ForeignComponentRef | undefined;
+    let foreignComponentRef: Data.ForeignComponentRef | undefined;
 
     if (style.componentType && style.component) {
       const [path, name] = style.component.split("#");
@@ -148,14 +180,15 @@ class PageLoader {
       };
     } else {
       if (style.component) {
-        mainComponentID = this.idFromRelativePath(style.component);
+        mainComponentID = this.componentFromRelativePath(style.component)?.node
+          .id;
         if (!mainComponentID) {
           console.error(`component ${style.component} not found`);
         }
       }
     }
 
-    return filterUndefined<Partial<StyleJSON>>({
+    return filterUndefined<Partial<Data.StyleJSON>>({
       hidden: style.hidden,
       locked: style.locked,
       position: style.position && {
@@ -227,7 +260,9 @@ class PageLoader {
   }
 }
 
-function transformPxPercentage(pxPercentage: number | string): PxPercentValue {
+function transformPxPercentage(
+  pxPercentage: number | string
+): Data.PxPercentValue {
   if (typeof pxPercentage === "number") {
     return pxPercentage;
   }
