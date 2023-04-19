@@ -699,6 +699,207 @@ Map {
         "type": "component",
       },
       {
+        "children": [
+          {
+            "children": [
+              {
+                "children": [],
+                "props": {
+                  "fills": [
+                    {
+                      "color": {
+                        "id": "./components.uimix#red_Orange",
+                        "type": "token",
+                      },
+                      "type": "solid",
+                    },
+                  ],
+                  "height": {
+                    "max": 60,
+                    "min": 20,
+                    "type": "fill",
+                    "value": 50,
+                  },
+                  "id": "",
+                  "variants": {},
+                  "width": {
+                    "max": 100,
+                    "min": 25,
+                    "type": "fill",
+                    "value": 50,
+                  },
+                },
+                "type": "frame",
+              },
+              {
+                "children": [],
+                "props": {
+                  "fills": [
+                    {
+                      "color": "#22C55E",
+                      "type": "solid",
+                    },
+                  ],
+                  "height": {
+                    "type": "fixed",
+                    "value": 80,
+                  },
+                  "id": "",
+                  "variants": {},
+                  "width": {
+                    "type": "fixed",
+                    "value": 40,
+                  },
+                },
+                "type": "frame",
+              },
+              {
+                "children": [],
+                "props": {
+                  "fills": [
+                    {
+                      "color": "#22C55E",
+                      "type": "solid",
+                    },
+                  ],
+                  "height": {
+                    "type": "fixed",
+                    "value": 80,
+                  },
+                  "hidden": true,
+                  "id": "",
+                  "variants": {},
+                  "width": {
+                    "type": "fixed",
+                    "value": 40,
+                  },
+                },
+                "type": "frame",
+              },
+              {
+                "children": [],
+                "props": {
+                  "fills": [
+                    {
+                      "color": {
+                        "id": "blue/500",
+                        "type": "token",
+                      },
+                      "type": "solid",
+                    },
+                  ],
+                  "height": {
+                    "type": "fixed",
+                    "value": 40,
+                  },
+                  "id": "",
+                  "variants": {},
+                  "width": {
+                    "type": "fixed",
+                    "value": 80,
+                  },
+                },
+                "type": "frame",
+              },
+              {
+                "children": [],
+                "props": {
+                  "fills": [
+                    {
+                      "color": "#000000",
+                      "type": "solid",
+                    },
+                  ],
+                  "fontSize": 20,
+                  "height": {
+                    "type": "hug",
+                  },
+                  "id": "",
+                  "marginBottom": 30,
+                  "marginLeft": 40,
+                  "marginRight": 20,
+                  "marginTop": 10,
+                  "textContent": "Hello, world!",
+                  "variants": {},
+                  "width": {
+                    "type": "hug",
+                  },
+                },
+                "type": "text",
+              },
+            ],
+            "props": {
+              "columnGap": 10,
+              "fills": [
+                {
+                  "color": "#FFFFFF",
+                  "type": "solid",
+                },
+              ],
+              "height": {
+                "type": "hug",
+              },
+              "id": "",
+              "layout": "flex",
+              "paddingBottom": 30,
+              "paddingLeft": 40,
+              "paddingRight": 20,
+              "paddingTop": 10,
+              "position": [
+                {
+                  "start": 24,
+                  "type": "start",
+                },
+                {
+                  "start": 14,
+                  "type": "start",
+                },
+              ],
+              "rowGap": 10,
+              "variants": {},
+              "width": {
+                "type": "hug",
+              },
+            },
+            "type": "frame",
+          },
+        ],
+        "props": {
+          "fills": [
+            {
+              "color": "#FFFFFF",
+              "type": "solid",
+            },
+          ],
+          "height": {
+            "type": "fixed",
+            "value": 237,
+          },
+          "id": "",
+          "layout": "flex",
+          "paddingBottom": 12,
+          "paddingLeft": 12,
+          "paddingRight": 12,
+          "paddingTop": 12,
+          "position": [
+            {
+              "start": 508,
+              "type": "start",
+            },
+            {
+              "start": 184,
+              "type": "start",
+            },
+          ],
+          "variants": {},
+          "width": {
+            "type": "fixed",
+            "value": 459,
+          },
+        },
+        "type": "frame",
+      },
+      {
         "props": {
           "id": "red_Orange",
           "name": "Red Orange",

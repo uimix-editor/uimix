@@ -193,6 +193,55 @@ exports[`selectablesToProjectJSON > works 1`] = `
       "parent": "1Bvi2z3TfkSpYXW29daTN8",
       "type": "frame",
     },
+    "1BxRBweDJKiyL8XAfgwumW": {
+      "condition": undefined,
+      "index": 16,
+      "name": "Frame",
+      "parent": undefined,
+      "type": "frame",
+    },
+    "1BxRBwp75V9qydnZw9ELV5": {
+      "condition": undefined,
+      "index": 1,
+      "name": "Stack",
+      "parent": "1BxRBweDJKiyL8XAfgwumW",
+      "type": "frame",
+    },
+    "1BxRBwp7DTQBk2GZd4Kaff": {
+      "condition": undefined,
+      "index": 0,
+      "name": "Item 0",
+      "parent": "1BxRBwp75V9qydnZw9ELV5",
+      "type": "frame",
+    },
+    "1BxRBwp7EUNcQqqUynRiLy": {
+      "condition": undefined,
+      "index": 1,
+      "name": "Item 1",
+      "parent": "1BxRBwp75V9qydnZw9ELV5",
+      "type": "frame",
+    },
+    "1BxRBwp7JyoL6Pg7SAnjNt": {
+      "condition": undefined,
+      "index": 2,
+      "name": "Hidden Item",
+      "parent": "1BxRBwp75V9qydnZw9ELV5",
+      "type": "frame",
+    },
+    "1BxRBwp7SujkyGkmJEvAh2": {
+      "condition": undefined,
+      "index": 3,
+      "name": "Item 2",
+      "parent": "1BxRBwp75V9qydnZw9ELV5",
+      "type": "frame",
+    },
+    "1BxRBwp7YAH2Fi3hQxmpK3": {
+      "condition": undefined,
+      "index": 4,
+      "name": "Text",
+      "parent": "1BxRBwp75V9qydnZw9ELV5",
+      "type": "text",
+    },
   },
   "styles": {
     "1Bvi2z3TfkSpYXW29daTN8": {
@@ -716,6 +765,163 @@ exports[`selectablesToProjectJSON > works 1`] = `
       "width": {
         "type": "fixed",
         "value": 40,
+      },
+    },
+    "1BxRBweDJKiyL8XAfgwumW": {
+      "fills": [
+        {
+          "color": "#FFFFFF",
+          "type": "solid",
+        },
+      ],
+      "height": {
+        "type": "fixed",
+        "value": 237,
+      },
+      "layout": "flex",
+      "paddingBottom": 12,
+      "paddingLeft": 12,
+      "paddingRight": 12,
+      "paddingTop": 12,
+      "position": {
+        "x": {
+          "start": 508,
+          "type": "start",
+        },
+        "y": {
+          "start": 184,
+          "type": "start",
+        },
+      },
+      "width": {
+        "type": "fixed",
+        "value": 459,
+      },
+    },
+    "1BxRBwp75V9qydnZw9ELV5": {
+      "columnGap": 10,
+      "fills": [
+        {
+          "color": "#FFFFFF",
+          "type": "solid",
+        },
+      ],
+      "height": {
+        "type": "hug",
+      },
+      "layout": "flex",
+      "paddingBottom": 30,
+      "paddingLeft": 40,
+      "paddingRight": 20,
+      "paddingTop": 10,
+      "position": {
+        "x": {
+          "start": 24,
+          "type": "start",
+        },
+        "y": {
+          "start": 14,
+          "type": "start",
+        },
+      },
+      "rowGap": 10,
+      "width": {
+        "type": "hug",
+      },
+    },
+    "1BxRBwp7DTQBk2GZd4Kaff": {
+      "fills": [
+        {
+          "color": {
+            "id": "1BwuQkMEqq1sH8PAPnDWRJ",
+            "type": "token",
+          },
+          "type": "solid",
+        },
+      ],
+      "height": {
+        "max": 60,
+        "min": 20,
+        "type": "fill",
+        "value": 50,
+      },
+      "width": {
+        "max": 100,
+        "min": 25,
+        "type": "fill",
+        "value": 50,
+      },
+    },
+    "1BxRBwp7EUNcQqqUynRiLy": {
+      "fills": [
+        {
+          "color": "#22C55E",
+          "type": "solid",
+        },
+      ],
+      "height": {
+        "type": "fixed",
+        "value": 80,
+      },
+      "width": {
+        "type": "fixed",
+        "value": 40,
+      },
+    },
+    "1BxRBwp7JyoL6Pg7SAnjNt": {
+      "fills": [
+        {
+          "color": "#22C55E",
+          "type": "solid",
+        },
+      ],
+      "height": {
+        "type": "fixed",
+        "value": 80,
+      },
+      "hidden": true,
+      "width": {
+        "type": "fixed",
+        "value": 40,
+      },
+    },
+    "1BxRBwp7SujkyGkmJEvAh2": {
+      "fills": [
+        {
+          "color": {
+            "id": "blue/500",
+            "type": "token",
+          },
+          "type": "solid",
+        },
+      ],
+      "height": {
+        "type": "fixed",
+        "value": 40,
+      },
+      "width": {
+        "type": "fixed",
+        "value": 80,
+      },
+    },
+    "1BxRBwp7YAH2Fi3hQxmpK3": {
+      "fills": [
+        {
+          "color": "#000000",
+          "type": "solid",
+        },
+      ],
+      "fontSize": 20,
+      "height": {
+        "type": "hug",
+      },
+      "marginBottom": 30,
+      "marginLeft": 40,
+      "marginRight": 20,
+      "marginTop": 10,
+      "textContent": "Hello, world!",
+      "width": {
+        "type": "hug",
       },
     },
   },
