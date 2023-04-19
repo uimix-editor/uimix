@@ -79,7 +79,7 @@ box-sizing: border-box;
 box-sizing: border-box;
 -webkit-font-smoothing: antialiased;
   position: relative;
-  width: 744px;
+  width: 900px;
   height: 456px;
   opacity: 1;
   overflow: visible;
@@ -317,6 +317,14 @@ box-sizing: border-box;
   text-align: start;
   justify-content: flex-start;
 }
+.uimix-1BxSDQc9suV4UZUVEQsy6r {
+  margin-top: 0px;
+  margin-right: 0px;
+  margin-bottom: 0px;
+  margin-left: 0px;
+}
+.uimix-1BxSDQc9suV4UZUVEQsy6r-1Bvi2z3UGTM64JtRT7Qc1S {
+}
 .uimix-1Bvi31VKu8gfy6XzJ8xrHA {
 box-sizing: border-box;
 -webkit-font-smoothing: antialiased;
@@ -423,6 +431,10 @@ box-sizing: border-box;
 .uimix-1Bvi39mct9UNYZ9eTCCRdV-1Bvi2z3UB1xUVg4Xz9WTpJ {
 }
 .uimix-1Bvi39mct9UNYZ9eTCCRdV-1Bvi2z3U3SiK6r7gf9vh7N {
+}
+.uimix-1Bvi39mct9UNYZ9eTCCRdV-1BxSDQc9suV4UZUVEQsy6r {
+}
+.uimix-1Bvi39mct9UNYZ9eTCCRdV-1BxSDQc9suV4UZUVEQsy6r-1Bvi2z3UGTM64JtRT7Qc1S {
 }
 .uimix-1BwWRgjHyEzJjsehRefVBE {
 box-sizing: border-box;
@@ -621,6 +633,19 @@ export const Stack = React.forwardRef((props, ref) => {
       <div className={\\"uimix-1Bvi2z3U3SiK6r7gf9vh7N\\"} data-refID={[\\"text\\"]}>
         {\\"Hello, world!\\"}
       </div>
+      <div
+        className={\\"uimix-1BxSDQc9suV4UZUVEQsy6r uimix-1Bvi2z3UPfi6W3L8nDt5VA\\"}
+        data-refID={[\\"button\\"]}
+      >
+        <div
+          className={
+            \\"uimix-1BxSDQc9suV4UZUVEQsy6r-1Bvi2z3UGTM64JtRT7Qc1S uimix-1Bvi2z3UGTM64JtRT7Qc1S\\"
+          }
+          data-refID={[\\"button\\", \\"text\\"]}
+        >
+          {\\"Button\\"}
+        </div>
+      </div>
     </div>
   );
 }) as React.FC<
@@ -630,6 +655,7 @@ export const Stack = React.forwardRef((props, ref) => {
     hidden_ItemProps?: JSX.IntrinsicElements[\\"div\\"];
     item_2Props?: JSX.IntrinsicElements[\\"div\\"];
     textProps?: JSX.IntrinsicElements[\\"div\\"];
+    buttonProps?: JSX.IntrinsicElements[\\"div\\"];
   }
 >;
 
@@ -711,6 +737,21 @@ export const Page = React.forwardRef((props, ref) => {
             data-refID={[\\"stack\\", \\"text\\"]}
           >
             {\\"Hello, world!\\"}
+          </div>
+          <div
+            className={
+              \\"uimix-1Bvi39mct9UNYZ9eTCCRdV-1BxSDQc9suV4UZUVEQsy6r uimix-1BxSDQc9suV4UZUVEQsy6r\\"
+            }
+            data-refID={[\\"stack\\", \\"button\\"]}
+          >
+            <div
+              className={
+                \\"uimix-1Bvi39mct9UNYZ9eTCCRdV-1BxSDQc9suV4UZUVEQsy6r-1Bvi2z3UGTM64JtRT7Qc1S uimix-1BxSDQc9suV4UZUVEQsy6r-1Bvi2z3UGTM64JtRT7Qc1S uimix-1Bvi2z3UGTM64JtRT7Qc1S\\"
+              }
+              data-refID={[\\"stack\\", \\"button\\", \\"text\\"]}
+            >
+              {\\"Nested Override\\"}
+            </div>
           </div>
         </div>
       </div>

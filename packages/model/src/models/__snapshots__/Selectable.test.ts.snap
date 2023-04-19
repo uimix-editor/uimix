@@ -242,6 +242,13 @@ exports[`selectablesToProjectJSON > works 1`] = `
       "parent": "1BxRBwp75V9qydnZw9ELV5",
       "type": "text",
     },
+    "1BxSDQc9suV4UZUVEQsy6r": {
+      "condition": undefined,
+      "index": 4,
+      "name": "Button",
+      "parent": "1Bvi2z3TfkSpYXW29daTN8",
+      "type": "instance",
+    },
   },
   "styles": {
     "1Bvi2z3TfkSpYXW29daTN8": {
@@ -495,7 +502,7 @@ exports[`selectablesToProjectJSON > works 1`] = `
       },
       "width": {
         "type": "fixed",
-        "value": 744,
+        "value": 900,
       },
     },
     "1Bvi31VKu8gfy6XzJ8xrHA": {
@@ -614,6 +621,10 @@ exports[`selectablesToProjectJSON > works 1`] = `
     "1Bvi39mct9UNYZ9eTCCRdV:1Bvi2z3UB1xUVg4Xz9WTpJ": {},
     "1Bvi39mct9UNYZ9eTCCRdV:1BwspVKcGYvxVctYVzjPu6": {
       "hidden": false,
+    },
+    "1Bvi39mct9UNYZ9eTCCRdV:1BxSDQc9suV4UZUVEQsy6r": {},
+    "1Bvi39mct9UNYZ9eTCCRdV:1BxSDQc9suV4UZUVEQsy6r:1Bvi2z3UGTM64JtRT7Qc1S": {
+      "textContent": "Nested Override",
     },
     "1Bvi3BSSb2oaHb1ZqUEk6H": {},
     "1BwWRgjHmYZ8qLKDj3Tvdy": {
@@ -785,7 +796,7 @@ exports[`selectablesToProjectJSON > works 1`] = `
       "paddingTop": 12,
       "position": {
         "x": {
-          "start": 508,
+          "start": 631,
           "type": "start",
         },
         "y": {
@@ -924,6 +935,20 @@ exports[`selectablesToProjectJSON > works 1`] = `
         "type": "hug",
       },
     },
+    "1BxSDQc9suV4UZUVEQsy6r": {
+      "mainComponent": "1Bvi2z3USBZi1pWrvPd6Ut",
+      "position": {
+        "x": {
+          "start": 416,
+          "type": "start",
+        },
+        "y": {
+          "start": 234,
+          "type": "start",
+        },
+      },
+    },
+    "1BxSDQc9suV4UZUVEQsy6r:1Bvi2z3UGTM64JtRT7Qc1S": {},
   },
 }
 `;

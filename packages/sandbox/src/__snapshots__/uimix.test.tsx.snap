@@ -125,6 +125,15 @@ exports[`render 2`] = `
       >
         Override inner item
       </div>
+      <div
+        className="uimix-1Bvi39mct9UNYZ9eTCCRdV-1BxSDQc9suV4UZUVEQsy6r uimix-1BxSDQc9suV4UZUVEQsy6r"
+      >
+        <div
+          className="uimix-1Bvi39mct9UNYZ9eTCCRdV-1BxSDQc9suV4UZUVEQsy6r-1Bvi2z3UGTM64JtRT7Qc1S uimix-1BxSDQc9suV4UZUVEQsy6r-1Bvi2z3UGTM64JtRT7Qc1S uimix-1Bvi2z3UGTM64JtRT7Qc1S"
+        >
+          Nested Override
+        </div>
+      </div>
     </div>
   </div>
 </div>

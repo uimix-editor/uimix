@@ -268,6 +268,28 @@ Map {
                 },
                 "type": "text",
               },
+              {
+                "children": [],
+                "props": {
+                  "component": "./components.uimix#Button",
+                  "id": "button",
+                  "name": "Button",
+                  "overrides": {
+                    "text": {},
+                  },
+                  "position": [
+                    {
+                      "start": 416,
+                      "type": "start",
+                    },
+                    {
+                      "start": 234,
+                      "type": "start",
+                    },
+                  ],
+                },
+                "type": "instance",
+              },
             ],
             "props": {
               "columnGap": 10,
@@ -437,6 +459,13 @@ Map {
                       "id": "stack",
                       "name": "Stack",
                       "overrides": {
+                        "button": {
+                          "overrides": {
+                            "text": {
+                              "textContent": "Nested Override",
+                            },
+                          },
+                        },
                         "hidden_Item": {
                           "hidden": false,
                         },
@@ -518,7 +547,7 @@ Map {
               ],
               "width": {
                 "type": "fixed",
-                "value": 744,
+                "value": 900,
               },
             },
             "type": "frame",
@@ -890,7 +919,7 @@ Map {
           "paddingTop": 12,
           "position": [
             {
-              "start": 508,
+              "start": 631,
               "type": "start",
             },
             {
