@@ -159,7 +159,6 @@ Map {
                     "value": 50,
                   },
                   "id": "item_0",
-                  "variants": {},
                   "width": {
                     "max": 100,
                     "min": 25,
@@ -183,7 +182,6 @@ Map {
                     "value": 80,
                   },
                   "id": "item_1",
-                  "variants": {},
                   "width": {
                     "type": "fixed",
                     "value": 40,
@@ -206,7 +204,6 @@ Map {
                   },
                   "hidden": true,
                   "id": "hidden_Item",
-                  "variants": {},
                   "width": {
                     "type": "fixed",
                     "value": 40,
@@ -231,7 +228,6 @@ Map {
                     "value": 40,
                   },
                   "id": "item_2",
-                  "variants": {},
                   "width": {
                     "type": "fixed",
                     "value": 80,
@@ -258,7 +254,6 @@ Map {
                   "marginRight": 20,
                   "marginTop": 10,
                   "textContent": "Hello, world!",
-                  "variants": {},
                   "width": {
                     "type": "hug",
                   },
@@ -294,7 +289,6 @@ Map {
                 },
               ],
               "rowGap": 10,
-              "variants": {},
               "width": {
                 "type": "hug",
               },
@@ -321,7 +315,6 @@ Map {
                   },
                   "id": "header",
                   "props": {},
-                  "variants": {},
                   "width": {
                     "type": "fill",
                     "value": 744,
@@ -356,7 +349,6 @@ Map {
                         "primary": true,
                         "size": "large",
                       },
-                      "variants": {},
                       "width": {
                         "type": "hug",
                       },
@@ -389,7 +381,6 @@ Map {
                           "type": "start",
                         },
                       ],
-                      "variants": {},
                     },
                     "type": "instance",
                   },
@@ -418,7 +409,6 @@ Map {
                           "type": "start",
                         },
                       ],
-                      "variants": {},
                       "width": {
                         "type": "fixed",
                         "value": 100,
@@ -450,7 +440,6 @@ Map {
                           "type": "start",
                         },
                       ],
-                      "variants": {},
                     },
                     "type": "instance",
                   },
@@ -477,7 +466,6 @@ Map {
                       "type": "start",
                     },
                   ],
-                  "variants": {},
                   "width": {
                     "type": "fill",
                     "value": 428,
@@ -511,7 +499,6 @@ Map {
                   "type": "start",
                 },
               ],
-              "variants": {},
               "width": {
                 "type": "fixed",
                 "value": 744,
@@ -542,7 +529,6 @@ Map {
 <path d=\\"M17.25 6.75L22.5 12L17.25 17.25M6.75 17.25L1.5 12L6.75 6.75M14.25 3.75L9.75 20.25\\" stroke=\\"#0EA5E9\\" stroke-width=\\"1.5\\" stroke-linecap=\\"round\\" stroke-linejoin=\\"round\\"/>
 </svg>
 ",
-                      "variants": {},
                       "width": {
                         "type": "hug",
                       },
@@ -578,7 +564,6 @@ Map {
                   "rowGap": 10,
                   "topLeftRadius": 8,
                   "topRightRadius": 8,
-                  "variants": {},
                   "width": {
                     "type": "hug",
                   },
@@ -607,7 +592,6 @@ Map {
                   "textContent": "React Components Import/Export",
                   "textHorizontalAlign": "start",
                   "textVerticalAlign": "start",
-                  "variants": {},
                   "width": {
                     "type": "fill",
                     "value": 315.640625,
@@ -638,7 +622,6 @@ Map {
 ",
                   "textHorizontalAlign": "start",
                   "textVerticalAlign": "start",
-                  "variants": {},
                   "width": {
                     "type": "fill",
                   },
@@ -684,7 +667,6 @@ Map {
               "rowGap": 20,
               "topLeftRadius": 20,
               "topRightRadius": 20,
-              "variants": {},
               "width": {
                 "type": "fixed",
                 "value": 400,
@@ -721,7 +703,6 @@ Map {
                     "value": 50,
                   },
                   "id": "",
-                  "variants": {},
                   "width": {
                     "max": 100,
                     "min": 25,
@@ -745,7 +726,6 @@ Map {
                     "value": 80,
                   },
                   "id": "",
-                  "variants": {},
                   "width": {
                     "type": "fixed",
                     "value": 40,
@@ -768,7 +748,6 @@ Map {
                   },
                   "hidden": true,
                   "id": "",
-                  "variants": {},
                   "width": {
                     "type": "fixed",
                     "value": 40,
@@ -793,7 +772,6 @@ Map {
                     "value": 40,
                   },
                   "id": "",
-                  "variants": {},
                   "width": {
                     "type": "fixed",
                     "value": 80,
@@ -820,7 +798,6 @@ Map {
                   "marginRight": 20,
                   "marginTop": 10,
                   "textContent": "Hello, world!",
-                  "variants": {},
                   "width": {
                     "type": "hug",
                   },
@@ -856,7 +833,6 @@ Map {
                 },
               ],
               "rowGap": 10,
-              "variants": {},
               "width": {
                 "type": "hug",
               },
@@ -891,7 +867,6 @@ Map {
               "type": "start",
             },
           ],
-          "variants": {},
           "width": {
             "type": "fixed",
             "value": 459,
@@ -932,7 +907,6 @@ Map {
 <path d=\\"M13.5 18C13.5 16.6022 13.5 15.9033 13.7284 15.3519C14.0328 14.6169 14.6169 14.0328 15.3519 13.7284C15.9033 13.5 16.6022 13.5 18 13.5V13.5C19.3978 13.5 20.0967 13.5 20.6481 13.7284C21.3831 14.0328 21.9672 14.6169 22.2716 15.3519C22.5 15.9033 22.5 16.6022 22.5 18V18C22.5 19.3978 22.5 20.0967 22.2716 20.6481C21.9672 21.3831 21.3831 21.9672 20.6481 22.2716C20.0967 22.5 19.3978 22.5 18 22.5V22.5C16.6022 22.5 15.9033 22.5 15.3519 22.2716C14.6169 21.9672 14.0328 21.3831 13.7284 20.6481C13.5 20.0967 13.5 19.3978 13.5 18V18Z\\" fill=\\"#1E5DFF\\"/>
 </svg>
 ",
-                      "variants": {},
                       "width": {
                         "type": "hug",
                       },
@@ -962,7 +936,6 @@ Map {
                       "textContent": "UIMix",
                       "textHorizontalAlign": "start",
                       "textVerticalAlign": "center",
-                      "variants": {},
                       "width": {
                         "type": "hug",
                       },
@@ -1004,7 +977,6 @@ Map {
                   "shadows": [],
                   "topLeftRadius": 0,
                   "topRightRadius": 0,
-                  "variants": {},
                   "width": {
                     "type": "hug",
                   },
@@ -1038,7 +1010,6 @@ Map {
                           "textContent": "Sign In",
                           "textHorizontalAlign": "center",
                           "textVerticalAlign": "start",
-                          "variants": {},
                           "width": {
                             "type": "hug",
                           },
@@ -1092,7 +1063,6 @@ Map {
                       ],
                       "topLeftRadius": 25,
                       "topRightRadius": 25,
-                      "variants": {},
                       "width": {
                         "type": "hug",
                       },
@@ -1124,7 +1094,6 @@ Map {
                           "textContent": "Get Early Access",
                           "textHorizontalAlign": "center",
                           "textVerticalAlign": "start",
-                          "variants": {},
                           "width": {
                             "type": "hug",
                           },
@@ -1176,7 +1145,6 @@ Map {
                       ],
                       "topLeftRadius": 25,
                       "topRightRadius": 25,
-                      "variants": {},
                       "width": {
                         "type": "hug",
                       },
@@ -1219,7 +1187,6 @@ Map {
                   "shadows": [],
                   "topLeftRadius": 0,
                   "topRightRadius": 0,
-                  "variants": {},
                   "width": {
                     "type": "fixed",
                     "value": 247,
@@ -1252,7 +1219,6 @@ Map {
                       "textContent": "Features",
                       "textHorizontalAlign": "start",
                       "textVerticalAlign": "center",
-                      "variants": {},
                       "width": {
                         "type": "hug",
                       },
@@ -1282,7 +1248,6 @@ Map {
                       "textContent": "Pricing",
                       "textHorizontalAlign": "start",
                       "textVerticalAlign": "center",
-                      "variants": {},
                       "width": {
                         "type": "hug",
                       },
@@ -1312,7 +1277,6 @@ Map {
                       "textContent": "Docs",
                       "textHorizontalAlign": "start",
                       "textVerticalAlign": "center",
-                      "variants": {},
                       "width": {
                         "type": "hug",
                       },
@@ -1342,7 +1306,6 @@ Map {
                       "textContent": "GitHub",
                       "textHorizontalAlign": "start",
                       "textVerticalAlign": "center",
-                      "variants": {},
                       "width": {
                         "type": "hug",
                       },
@@ -1383,7 +1346,6 @@ Map {
                   "shadows": [],
                   "topLeftRadius": 0,
                   "topRightRadius": 0,
-                  "variants": {},
                   "width": {
                     "type": "hug",
                   },
@@ -1418,7 +1380,6 @@ Map {
                   "type": "start",
                 },
               ],
-              "variants": {},
               "width": {
                 "type": "fixed",
                 "value": 1183,

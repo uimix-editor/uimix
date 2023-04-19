@@ -1,19 +1,13 @@
 import * as HumanReadable from "./HumanReadableFormat";
 import { Page } from "@uimix/model/src/models/Page";
-import { Component } from "@uimix/model/src/models/Component";
 import { compact } from "lodash-es";
-import {
-  Color,
-  SolidFill,
-  StyleJSON,
-  VariantCondition,
-} from "@uimix/model/src/data/v1";
-import { Selectable } from "@uimix/model/src/models/Selectable";
+import { Color, SolidFill, StyleJSON } from "@uimix/model/src/data/v1";
+import { Selectable, Component, Project } from "@uimix/model/src/models";
 import { generateLowerJSIdentifier } from "@uimix/foundation/src/utils/Name";
 import { posix as path } from "path-browserify";
-import { Project } from "@uimix/model/src/models/Project";
+import { filterUndefined, variantConditionToText } from "./util";
 
-export class ProjectFileEmitter {
+export class OldProjectEmitter {
   constructor(project: Project) {
     this.project = project;
   }
@@ -23,33 +17,40 @@ export class ProjectFileEmitter {
   emit(): Map<string, HumanReadable.PageNode> {
     const result = new Map<string, HumanReadable.PageNode>();
     for (const page of this.project.pages.all) {
-      const pageEmitter = new PageFileEmitter(page);
+      const pageEmitter = new PageEmitter(page);
       const pageNode = pageEmitter.emit();
-      const pagePath = path.join(page.filePath, "index.tsx");
+      const pagePath = page.filePath;
       result.set(pagePath, pageNode);
     }
     return result;
   }
 }
 
-export class PageFileEmitter {
+export class PageEmitter {
   constructor(page: Page) {
     this.page = page;
   }
 
   page: Page;
 
+  get project(): Project {
+    return this.page.project;
+  }
+
   emit(): HumanReadable.PageNode {
-    const components = this.page.components;
-    // TODO: non-component nodes
-
-    const colorTokens = this.page.colorTokens;
-
     return {
       type: "page",
       children: [
-        ...components.map((c) => new ComponentEmitter(c).emit()),
-        ...colorTokens.all.map((token) => ({
+        ...this.page.selectable.children.map((child) => {
+          const component = Component.from(child.originalNode);
+
+          if (component) {
+            return new ComponentEmitter(this, component).emit();
+          } else {
+            return this.emitNode(child, new Map<string, string>());
+          }
+        }),
+        ...this.page.colorTokens.all.map((token) => ({
           type: "colorToken" as const,
           props: {
             id: generateLowerJSIdentifier(token.name ?? ""),
@@ -60,41 +61,21 @@ export class PageFileEmitter {
       ],
     };
   }
-}
 
-export class ComponentEmitter {
-  constructor(component: Component) {
-    this.component = component;
-    this.refIDs = component.refIDs;
-  }
-
-  component: Component;
-  refIDs: Map<string, string>;
-
-  emit(): HumanReadable.ComponentNode {
-    return {
-      type: "component",
-      props: {
-        id: this.component.name,
-      },
-      children: [
-        this.emitNode(this.component.rootNode.selectable),
-        ...this.emitVariants(),
-      ],
-    };
-  }
-
-  emitNode(selectable: Selectable): HumanReadable.SceneNode {
+  emitNode(
+    selectable: Selectable,
+    refIDs: Map<string, string>
+  ): HumanReadable.SceneNode {
     const variants = selectable.variantCorrespondings.filter(
       (corresponding) => corresponding.variant
     );
 
-    const refID = this.refIDs.get(selectable.node.id);
+    const refID = refIDs?.get(selectable.originalNode.id);
 
     const children =
       selectable.originalNode.type === "instance"
         ? []
-        : selectable.children.map((child) => this.emitNode(child));
+        : selectable.children.map((child) => this.emitNode(child, refIDs));
 
     const variantStyles = Object.fromEntries(
       variants.map((corresponding) => {
@@ -109,7 +90,7 @@ export class ComponentEmitter {
       // TODO: better typing
       type: selectable.originalNode.type as HumanReadable.SceneNode["type"],
       props: {
-        id: refID ?? "TODO",
+        id: refID ?? "",
         ...this.getStyleForSelectable(selectable),
         ...(Object.keys(variantStyles).length > 0
           ? { variants: variantStyles }
@@ -160,24 +141,8 @@ export class ComponentEmitter {
     };
   }
 
-  emitVariants(): HumanReadable.VariantNode[] {
-    return compact(
-      this.component.variants.map((variant) => {
-        if (!variant.condition) {
-          return;
-        }
-        return {
-          type: "variant",
-          props: {
-            condition: variant.condition,
-          },
-        };
-      })
-    );
-  }
-
   relativePathFromPage(filePath: string): string {
-    const pagePath = this.component.page?.filePath ?? "";
+    const pagePath = this.page.filePath;
     const relativePath = path.relative(path.dirname(pagePath), filePath);
     if (!relativePath.startsWith(".")) {
       return "./" + relativePath;
@@ -191,8 +156,7 @@ export class ComponentEmitter {
 
   transformColor(color: Color): Color {
     if (typeof color === "object") {
-      const project = this.component.project;
-      const token = project.colorTokens.get(color.id);
+      const token = this.project.colorTokens.get(color.id);
       if (token?.type === "normal" && token.page) {
         return {
           type: "token",
@@ -218,7 +182,7 @@ export class ComponentEmitter {
   ): Partial<HumanReadable.BaseStyleProps> {
     const mainComponent =
       style.mainComponent != null
-        ? this.component.project.componentForID(style.mainComponent)
+        ? this.project.componentForID(style.mainComponent)
         : undefined;
 
     const mainComponentPath =
@@ -226,7 +190,7 @@ export class ComponentEmitter {
       mainComponent.page &&
       this.pathForExport(mainComponent.page, mainComponent.name);
 
-    return {
+    return filterUndefined<Partial<HumanReadable.BaseStyleProps>>({
       hidden: style.hidden,
       locked: style.locked,
       position: style.position && [style.position.x, style.position.y],
@@ -299,14 +263,50 @@ export class ComponentEmitter {
       props: style.foreignComponent?.props,
 
       tagName: style.tagName,
-    };
+    });
   }
 }
 
-// e.g., "hover" or "maxWidth:767"
-function variantConditionToText(condition: VariantCondition): string {
-  if (condition.type === "maxWidth") {
-    return `maxWidth:${condition.value}`;
+export class ComponentEmitter {
+  constructor(pageEmitter: PageEmitter, component: Component) {
+    this.pageEmitter = pageEmitter;
+    this.component = component;
+    this.refIDs = component.refIDs;
   }
-  return condition.type;
+
+  pageEmitter: PageEmitter;
+  component: Component;
+  refIDs: Map<string, string>;
+
+  emit(): HumanReadable.ComponentNode {
+    return {
+      type: "component",
+      props: {
+        id: this.component.name,
+      },
+      children: [
+        this.pageEmitter.emitNode(
+          this.component.rootNode.selectable,
+          this.refIDs
+        ),
+        ...this.emitVariants(),
+      ],
+    };
+  }
+
+  emitVariants(): HumanReadable.VariantNode[] {
+    return compact(
+      this.component.variants.map((variant) => {
+        if (!variant.condition) {
+          return;
+        }
+        return {
+          type: "variant",
+          props: {
+            condition: variant.condition,
+          },
+        };
+      })
+    );
+  }
 }
