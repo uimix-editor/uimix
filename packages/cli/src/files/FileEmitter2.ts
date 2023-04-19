@@ -136,7 +136,7 @@ export class PageEmitter {
         const refID = refIDs.get(selectable.node.id);
 
         if (refID) {
-          overrides[refID] = this.toHumanReadableStyle(selectable.selfStyle);
+          overrides[refID] = this.transformStyle(selectable.selfStyle);
         }
 
         if (selectable.originalNode.type === "instance") {
@@ -152,7 +152,7 @@ export class PageEmitter {
     };
 
     return {
-      ...this.toHumanReadableStyle(selectable.selfStyle),
+      ...this.transformStyle(selectable.selfStyle),
       ...(selectable.originalNode.type === "instance"
         ? {
             overrides: getInstanceOverrides(selectable),
@@ -197,7 +197,7 @@ export class PageEmitter {
     };
   }
 
-  toHumanReadableStyle(
+  transformStyle(
     style: Partial<StyleJSON>
   ): Partial<HumanReadable.BaseStyleProps> {
     const mainComponent =
