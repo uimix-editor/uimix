@@ -11,10 +11,21 @@ import {
 import { generateID } from "@uimix/foundation/src/utils/ID";
 import { getPageID } from "@uimix/model/src/data/util";
 import { filterUndefined } from "./util";
+import { posix as path } from "path";
+import { assertNonNull } from "@uimix/foundation/src/utils/Assert";
 
 export class ProjectLoader {
   constructor(pages: Map<string, HumanReadable.PageNode>) {
     this.pages = pages;
+
+    for (const [name, page] of pages) {
+      for (const child of page.children) {
+        if (child.type === "component" || child.type === "colorToken") {
+          const path = name + ".uimix#" + child.props.id;
+          this.pathToID.set(path, generateID()); // TODO: reuse ID
+        }
+      }
+    }
   }
 
   pages: Map<string, HumanReadable.PageNode>;
@@ -30,6 +41,7 @@ export class ProjectLoader {
     images: {},
     colors: {},
   };
+  pathToID = new Map<string, string>();
 
   load(): void {
     for (const [name, page] of this.pages.entries()) {
@@ -71,7 +83,12 @@ class PageLoader {
         continue;
       }
       if (childNode.type === "colorToken") {
-        const colorID = generateID();
+        const colorID = assertNonNull(
+          this.projectLoader.pathToID.get(
+            this.pageName + ".uimix#" + childNode.props.id
+          )
+        );
+
         projectJSON.colors[colorID] = {
           name: childNode.props.name,
           value: childNode.props.value,
@@ -91,8 +108,11 @@ class PageLoader {
   ) {
     const projectJSON = this.projectLoader.json;
 
-    // TODO: reuse id if possible
-    const id = generateID();
+    const id = assertNonNull(
+      this.projectLoader.pathToID.get(
+        this.pageName + ".uimix#" + component.props.id
+      )
+    );
 
     projectJSON.nodes[id] = {
       type: "component",
@@ -147,6 +167,8 @@ class PageLoader {
       index,
     };
 
+    projectJSON.styles[id] = this.transformStyle(node.props);
+
     // TODO: load variants
 
     for (const [i, childNode] of node.children.entries()) {
@@ -155,8 +177,9 @@ class PageLoader {
   }
 
   // Get id from relative path of components/tokens
-  idFromRelativePath(id: string): string {
-    throw new Error("Not implemented");
+  idFromRelativePath(relativePath: string): string | undefined {
+    const absPath = path.join(this.pageName, relativePath);
+    return this.projectLoader.pathToID.get(absPath);
   }
 
   transformColor(color: Color): Color {
@@ -184,7 +207,8 @@ class PageLoader {
   }
 
   getImageHashFromImagePath(imagePath: string): string {
-    throw new Error("Not implemented");
+    // TODO: improve
+    return path.basename(imagePath, path.extname(imagePath));
   }
 
   transformStyle(style: HumanReadable.StyleProps): Partial<StyleJSON> {
@@ -282,5 +306,8 @@ class PageLoader {
 }
 
 function transformPxPercentage(pxPercentage: number | string): PxPercentValue {
-  throw new Error("Not implemented");
+  if (typeof pxPercentage === "number") {
+    return pxPercentage;
+  }
+  return [Number.parseFloat(pxPercentage), "%"];
 }
