@@ -50,6 +50,7 @@ class PageLoader {
 
   projectLoader: ProjectLoader2;
   page: Page;
+  nodeToInput = new Map<Node, HumanReadable.SceneNode>();
 
   get project() {
     return this.page.project;
@@ -84,15 +85,18 @@ class PageLoader {
 
   loadNode(inputNode: HumanReadable.SceneNode): Node {
     const node = this.project.nodes.create(inputNode.type);
+    node.name = inputNode.props.name;
     const children = inputNode.children.map((child) => this.loadNode(child));
     node.append(children);
 
-    // TODO: load styles (after all node structures are loaded)
+    this.nodeToInput.set(node, inputNode);
+
     return node;
   }
 
   loadComponent(inputNode: HumanReadable.ComponentNode): Node {
     const componentNode = this.project.nodes.create("component");
+    componentNode.name = inputNode.props.name;
 
     const children = inputNode.children.map((child) => {
       if (child.type === "variant") {
@@ -118,7 +122,11 @@ class PageLoader {
   }
 
   loadStyles() {
-    // TODO
+    for (const [node, inputNode] of this.nodeToInput) {
+      const selectable = node.selectable;
+      const style = this.transformStyle(inputNode.props);
+      selectable.selfStyle.loadJSON(style);
+    }
   }
 
   // Get id from relative path of components/tokens
