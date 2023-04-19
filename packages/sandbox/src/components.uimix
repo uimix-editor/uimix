@@ -72,6 +72,12 @@
       "parent": "1Bvi2z3TfkSpYXW29daTN8",
       "index": 3
     },
+    "1BxSDQc9suV4UZUVEQsy6r": {
+      "type": "instance",
+      "index": 4,
+      "parent": "1Bvi2z3TfkSpYXW29daTN8",
+      "name": "Button"
+    },
     "1Bvi3BSSb2oaHb1ZqUEk6H": {
       "type": "component",
       "name": "Page",
@@ -154,42 +160,42 @@
       "parent": "1BwWRgjHrhVbbuTV7m36kM",
       "index": 2
     },
-    "1BxRBweDJKiyL8XAfgwumW": { "type": "frame", "index": 16, "name": "Frame" },
+    "1BxRBweDJKiyL8XAfgwumW": { "type": "frame", "name": "Frame", "index": 16 },
     "1BxRBwp75V9qydnZw9ELV5": {
       "type": "frame",
-      "index": 1,
       "name": "Stack",
-      "parent": "1BxRBweDJKiyL8XAfgwumW"
+      "parent": "1BxRBweDJKiyL8XAfgwumW",
+      "index": 1
     },
     "1BxRBwp7DTQBk2GZd4Kaff": {
       "type": "frame",
-      "index": 0,
       "name": "Item 0",
-      "parent": "1BxRBwp75V9qydnZw9ELV5"
+      "parent": "1BxRBwp75V9qydnZw9ELV5",
+      "index": 0
     },
     "1BxRBwp7EUNcQqqUynRiLy": {
       "type": "frame",
-      "index": 1,
       "name": "Item 1",
-      "parent": "1BxRBwp75V9qydnZw9ELV5"
+      "parent": "1BxRBwp75V9qydnZw9ELV5",
+      "index": 1
     },
     "1BxRBwp7JyoL6Pg7SAnjNt": {
       "type": "frame",
-      "index": 2,
       "name": "Hidden Item",
-      "parent": "1BxRBwp75V9qydnZw9ELV5"
+      "parent": "1BxRBwp75V9qydnZw9ELV5",
+      "index": 2
     },
     "1BxRBwp7SujkyGkmJEvAh2": {
       "type": "frame",
-      "index": 3,
       "name": "Item 2",
-      "parent": "1BxRBwp75V9qydnZw9ELV5"
+      "parent": "1BxRBwp75V9qydnZw9ELV5",
+      "index": 3
     },
     "1BxRBwp7YAH2Fi3hQxmpK3": {
       "type": "text",
-      "index": 4,
       "name": "Text",
-      "parent": "1BxRBwp75V9qydnZw9ELV5"
+      "parent": "1BxRBwp75V9qydnZw9ELV5",
+      "index": 4
     }
   },
   "styles": {
@@ -293,7 +299,7 @@
         "x": { "type": "start", "start": 50 },
         "y": { "type": "start", "start": 585 }
       },
-      "width": { "type": "fixed", "value": 744 },
+      "width": { "type": "fixed", "value": 900 },
       "height": { "type": "fixed", "value": 456 },
       "fills": [{ "type": "solid", "color": "#FFFFFF" }],
       "layout": "flex",
@@ -459,18 +465,18 @@
     },
     "1Bvi39mct9UNYZ9eTCCRdV:1BwspVKcGYvxVctYVzjPu6": { "hidden": false },
     "1BxRBweDJKiyL8XAfgwumW": {
-      "fills": [{ "type": "solid", "color": "#FFFFFF" }],
-      "width": { "type": "fixed", "value": 459 },
-      "height": { "type": "fixed", "value": 237 },
       "position": {
-        "x": { "type": "start", "start": 508 },
+        "x": { "type": "start", "start": 631 },
         "y": { "type": "start", "start": 184 }
       },
-      "paddingLeft": 12,
+      "width": { "type": "fixed", "value": 459 },
+      "height": { "type": "fixed", "value": 237 },
+      "fills": [{ "type": "solid", "color": "#FFFFFF" }],
+      "layout": "flex",
       "paddingTop": 12,
       "paddingRight": 12,
       "paddingBottom": 12,
-      "layout": "flex"
+      "paddingLeft": 12
     },
     "1BxRBwp75V9qydnZw9ELV5": {
       "position": {
@@ -526,6 +532,16 @@
       "marginLeft": 40,
       "textContent": "Hello, world!",
       "fontSize": 20
+    },
+    "1BxSDQc9suV4UZUVEQsy6r": {
+      "position": {
+        "x": { "type": "start", "start": 416 },
+        "y": { "type": "start", "start": 234 }
+      },
+      "mainComponent": "1Bvi2z3USBZi1pWrvPd6Ut"
+    },
+    "1Bvi39mct9UNYZ9eTCCRdV:1BxSDQc9suV4UZUVEQsy6r:1Bvi2z3UGTM64JtRT7Qc1S": {
+      "textContent": "Nested Override"
     }
   },
   "images": {
