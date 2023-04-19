@@ -74,9 +74,9 @@
     },
     "1BxSDQc9suV4UZUVEQsy6r": {
       "type": "instance",
-      "index": 4,
+      "name": "Button",
       "parent": "1Bvi2z3TfkSpYXW29daTN8",
-      "name": "Button"
+      "index": 4
     },
     "1Bvi3BSSb2oaHb1ZqUEk6H": {
       "type": "component",
@@ -124,6 +124,12 @@
       "name": "Stack",
       "parent": "1Bvi365mtWZmXKDPeJTB4s",
       "index": 3
+    },
+    "1BxSDzwoUTryYrC5bjUUye": {
+      "type": "variant",
+      "index": 1,
+      "condition": { "type": "maxWidth", "value": 767 },
+      "parent": "1Bvi3BSSb2oaHb1ZqUEk6H"
     },
     "1BwWRiQqGA4gTdwZRLXFBh": {
       "type": "component",
@@ -542,6 +548,17 @@
     },
     "1Bvi39mct9UNYZ9eTCCRdV:1BxSDQc9suV4UZUVEQsy6r:1Bvi2z3UGTM64JtRT7Qc1S": {
       "textContent": "Nested Override"
+    },
+    "1BxSDzwoUTryYrC5bjUUye": {
+      "position": {
+        "x": { "type": "start", "start": 986 },
+        "y": { "type": "start", "start": 585 }
+      },
+      "width": { "type": "fixed", "value": 720 }
+    },
+    "1BxSDzwoUTryYrC5bjUUye:1Bvi39mct9UNYZ9eTCCRdV:1BxSDQc9suV4UZUVEQsy6r": {},
+    "1BxSDzwoUTryYrC5bjUUye:1Bvi39mct9UNYZ9eTCCRdV:1BxSDQc9suV4UZUVEQsy6r:1Bvi2z3UGTM64JtRT7Qc1S": {
+      "fills": [{ "type": "solid", "color": "#FF0000" }]
     }
   },
   "images": {

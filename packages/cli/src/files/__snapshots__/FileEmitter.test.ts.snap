@@ -348,6 +348,9 @@ Map {
                   "id": "header",
                   "name": "Header",
                   "props": {},
+                  "variants": {
+                    "maxWidth:767": {},
+                  },
                   "width": {
                     "type": "fill",
                     "value": 744,
@@ -383,6 +386,9 @@ Map {
                         "primary": true,
                         "size": "large",
                       },
+                      "variants": {
+                        "maxWidth:767": {},
+                      },
                       "width": {
                         "type": "hug",
                       },
@@ -416,6 +422,13 @@ Map {
                           "type": "start",
                         },
                       ],
+                      "variants": {
+                        "maxWidth:767": {
+                          "overrides": {
+                            "text": {},
+                          },
+                        },
+                      },
                     },
                     "type": "instance",
                   },
@@ -445,6 +458,9 @@ Map {
                           "type": "start",
                         },
                       ],
+                      "variants": {
+                        "maxWidth:767": {},
+                      },
                       "width": {
                         "type": "fixed",
                         "value": 100,
@@ -484,6 +500,29 @@ Map {
                           "type": "start",
                         },
                       ],
+                      "variants": {
+                        "maxWidth:767": {
+                          "overrides": {
+                            "button": {
+                              "overrides": {
+                                "text": {
+                                  "fills": [
+                                    {
+                                      "color": "#FF0000",
+                                      "type": "solid",
+                                    },
+                                  ],
+                                },
+                              },
+                            },
+                            "hidden_Item": {},
+                            "item_0": {},
+                            "item_1": {},
+                            "item_2": {},
+                            "text": {},
+                          },
+                        },
+                      },
                     },
                     "type": "instance",
                   },
@@ -511,6 +550,9 @@ Map {
                       "type": "start",
                     },
                   ],
+                  "variants": {
+                    "maxWidth:767": {},
+                  },
                   "width": {
                     "type": "fill",
                     "value": 428,
@@ -545,12 +587,39 @@ Map {
                   "type": "start",
                 },
               ],
+              "variants": {
+                "maxWidth:767": {
+                  "position": [
+                    {
+                      "start": 986,
+                      "type": "start",
+                    },
+                    {
+                      "start": 585,
+                      "type": "start",
+                    },
+                  ],
+                  "width": {
+                    "type": "fixed",
+                    "value": 720,
+                  },
+                },
+              },
               "width": {
                 "type": "fixed",
                 "value": 900,
               },
             },
             "type": "frame",
+          },
+          {
+            "props": {
+              "condition": {
+                "type": "maxWidth",
+                "value": 767,
+              },
+            },
+            "type": "variant",
           },
         ],
         "props": {
