@@ -60,16 +60,12 @@ Map {
               "paddingLeft": 8,
               "paddingRight": 8,
               "paddingTop": 4,
-              "position": [
-                {
-                  "start": 50,
-                  "type": "start",
-                },
-                {
-                  "start": 400,
-                  "type": "start",
-                },
-              ],
+              "position": {
+                "bottom": undefined,
+                "left": 50,
+                "right": undefined,
+                "top": 400,
+              },
               "variants": {
                 "hover": {
                   "fills": [
@@ -81,32 +77,24 @@ Map {
                       "type": "solid",
                     },
                   ],
-                  "position": [
-                    {
-                      "start": 200,
-                      "type": "start",
-                    },
-                    {
-                      "start": 400,
-                      "type": "start",
-                    },
-                  ],
+                  "position": {
+                    "bottom": undefined,
+                    "left": 200,
+                    "right": undefined,
+                    "top": 400,
+                  },
                 },
                 "maxWidth:767": {
                   "paddingBottom": 2,
                   "paddingLeft": 4,
                   "paddingRight": 4,
                   "paddingTop": 2,
-                  "position": [
-                    {
-                      "start": 350,
-                      "type": "start",
-                    },
-                    {
-                      "start": 400,
-                      "type": "start",
-                    },
-                  ],
+                  "position": {
+                    "bottom": undefined,
+                    "left": 350,
+                    "right": undefined,
+                    "top": 400,
+                  },
                 },
               },
               "width": {
@@ -277,16 +265,12 @@ Map {
                   "overrides": {
                     "text": {},
                   },
-                  "position": [
-                    {
-                      "start": 416,
-                      "type": "start",
-                    },
-                    {
-                      "start": 234,
-                      "type": "start",
-                    },
-                  ],
+                  "position": {
+                    "bottom": undefined,
+                    "left": 416,
+                    "right": undefined,
+                    "top": 234,
+                  },
                 },
                 "type": "instance",
               },
@@ -309,16 +293,12 @@ Map {
               "paddingLeft": 40,
               "paddingRight": 20,
               "paddingTop": 10,
-              "position": [
-                {
-                  "start": 50,
-                  "type": "start",
-                },
-                {
-                  "start": 184,
-                  "type": "start",
-                },
-              ],
+              "position": {
+                "bottom": undefined,
+                "left": 50,
+                "right": undefined,
+                "top": 184,
+              },
               "rowGap": 10,
               "width": {
                 "type": "hug",
@@ -370,16 +350,12 @@ Map {
                       },
                       "id": "button",
                       "name": "Button",
-                      "position": [
-                        {
-                          "start": 33,
-                          "type": "start",
-                        },
-                        {
-                          "start": 28,
-                          "type": "start",
-                        },
-                      ],
+                      "position": {
+                        "bottom": undefined,
+                        "left": 33,
+                        "right": undefined,
+                        "top": 28,
+                      },
                       "props": {
                         "backgroundColor": "red",
                         "label": "Button1",
@@ -412,16 +388,12 @@ Map {
                           "textContent": "Override Name",
                         },
                       },
-                      "position": [
-                        {
-                          "start": 160,
-                          "type": "start",
-                        },
-                        {
-                          "start": 28,
-                          "type": "start",
-                        },
-                      ],
+                      "position": {
+                        "bottom": undefined,
+                        "left": 160,
+                        "right": undefined,
+                        "top": 28,
+                      },
                       "variants": {
                         "maxWidth:767": {
                           "overrides": {
@@ -448,16 +420,12 @@ Map {
                       "id": "image",
                       "image": "./images/YmY-tuteU03QY-k_2ARy1uacNmXDNmOX-FFAlj2qCIo.png",
                       "name": "Image",
-                      "position": [
-                        {
-                          "start": 33,
-                          "type": "start",
-                        },
-                        {
-                          "start": 97,
-                          "type": "start",
-                        },
-                      ],
+                      "position": {
+                        "bottom": undefined,
+                        "left": 33,
+                        "right": undefined,
+                        "top": 97,
+                      },
                       "variants": {
                         "maxWidth:767": {},
                       },
@@ -490,16 +458,12 @@ Map {
                         "item_2": {},
                         "text": {},
                       },
-                      "position": [
-                        {
-                          "start": 165,
-                          "type": "start",
-                        },
-                        {
-                          "start": 86,
-                          "type": "start",
-                        },
-                      ],
+                      "position": {
+                        "bottom": undefined,
+                        "left": 165,
+                        "right": undefined,
+                        "top": 86,
+                      },
                       "variants": {
                         "maxWidth:767": {
                           "overrides": {
@@ -540,16 +504,12 @@ Map {
                   },
                   "id": "frame",
                   "name": "Frame",
-                  "position": [
-                    {
-                      "start": 210,
-                      "type": "start",
-                    },
-                    {
-                      "start": 142,
-                      "type": "start",
-                    },
-                  ],
+                  "position": {
+                    "bottom": undefined,
+                    "left": 210,
+                    "right": undefined,
+                    "top": 142,
+                  },
                   "variants": {
                     "maxWidth:767": {},
                   },
@@ -577,28 +537,20 @@ Map {
               "id": "",
               "layout": "flex",
               "name": "Frame",
-              "position": [
-                {
-                  "start": 50,
-                  "type": "start",
-                },
-                {
-                  "start": 585,
-                  "type": "start",
-                },
-              ],
+              "position": {
+                "bottom": undefined,
+                "left": 50,
+                "right": undefined,
+                "top": 585,
+              },
               "variants": {
                 "maxWidth:767": {
-                  "position": [
-                    {
-                      "start": 986,
-                      "type": "start",
-                    },
-                    {
-                      "start": 585,
-                      "type": "start",
-                    },
-                  ],
+                  "position": {
+                    "bottom": undefined,
+                    "left": 986,
+                    "right": undefined,
+                    "top": 585,
+                  },
                   "width": {
                     "type": "fixed",
                     "value": 720,
@@ -775,16 +727,12 @@ Map {
               "paddingLeft": 19,
               "paddingRight": 19,
               "paddingTop": 19,
-              "position": [
-                {
-                  "start": 50,
-                  "type": "start",
-                },
-                {
-                  "start": 1144,
-                  "type": "start",
-                },
-              ],
+              "position": {
+                "bottom": undefined,
+                "left": 50,
+                "right": undefined,
+                "top": 1144,
+              },
               "rowGap": 20,
               "topLeftRadius": 20,
               "topRightRadius": 20,
@@ -950,16 +898,12 @@ Map {
               "paddingLeft": 40,
               "paddingRight": 20,
               "paddingTop": 10,
-              "position": [
-                {
-                  "start": 24,
-                  "type": "start",
-                },
-                {
-                  "start": 14,
-                  "type": "start",
-                },
-              ],
+              "position": {
+                "bottom": undefined,
+                "left": 24,
+                "right": undefined,
+                "top": 14,
+              },
               "rowGap": 10,
               "width": {
                 "type": "hug",
@@ -986,16 +930,12 @@ Map {
           "paddingLeft": 12,
           "paddingRight": 12,
           "paddingTop": 12,
-          "position": [
-            {
-              "start": 631,
-              "type": "start",
-            },
-            {
-              "start": 184,
-              "type": "start",
-            },
-          ],
+          "position": {
+            "bottom": undefined,
+            "left": 631,
+            "right": undefined,
+            "top": 184,
+          },
           "width": {
             "type": "fixed",
             "value": 459,
@@ -1095,16 +1035,12 @@ Map {
                   "paddingLeft": 0,
                   "paddingRight": 0,
                   "paddingTop": 0,
-                  "position": [
-                    {
-                      "start": 48,
-                      "type": "start",
-                    },
-                    {
-                      "start": 24,
-                      "type": "start",
-                    },
-                  ],
+                  "position": {
+                    "bottom": undefined,
+                    "left": 48,
+                    "right": undefined,
+                    "top": 24,
+                  },
                   "rowGap": 8,
                   "shadows": [],
                   "topLeftRadius": 0,
@@ -1310,16 +1246,12 @@ Map {
                   "paddingLeft": 0,
                   "paddingRight": 0,
                   "paddingTop": 0,
-                  "position": [
-                    {
-                      "end": 47.99984677551083,
-                      "type": "end",
-                    },
-                    {
-                      "start": 16,
-                      "type": "start",
-                    },
-                  ],
+                  "position": {
+                    "bottom": undefined,
+                    "left": undefined,
+                    "right": 47.99984677551083,
+                    "top": 16,
+                  },
                   "rowGap": 24,
                   "shadows": [],
                   "topLeftRadius": 0,
@@ -1474,16 +1406,12 @@ Map {
                   "paddingLeft": 0,
                   "paddingRight": 0,
                   "paddingTop": 0,
-                  "position": [
-                    {
-                      "start": 546,
-                      "type": "start",
-                    },
-                    {
-                      "start": 27,
-                      "type": "start",
-                    },
-                  ],
+                  "position": {
+                    "bottom": undefined,
+                    "left": 546,
+                    "right": undefined,
+                    "top": 27,
+                  },
                   "rowGap": 48,
                   "shadows": [],
                   "topLeftRadius": 0,
@@ -1513,16 +1441,12 @@ Map {
               "name": "Frame",
               "paddingBottom": 24,
               "paddingTop": 24,
-              "position": [
-                {
-                  "start": 20,
-                  "type": "start",
-                },
-                {
-                  "start": 20,
-                  "type": "start",
-                },
-              ],
+              "position": {
+                "bottom": undefined,
+                "left": 20,
+                "right": undefined,
+                "top": 20,
+              },
               "width": {
                 "type": "fixed",
                 "value": 1183,
@@ -1562,16 +1486,12 @@ Map {
                     "sign_In": {},
                     "uIMix": {},
                   },
-                  "position": [
-                    {
-                      "start": 0,
-                      "type": "start",
-                    },
-                    {
-                      "start": 0,
-                      "type": "start",
-                    },
-                  ],
+                  "position": {
+                    "bottom": undefined,
+                    "left": 0,
+                    "right": undefined,
+                    "top": 0,
+                  },
                   "variants": {
                     "maxWidth:767": {
                       "overrides": {
@@ -1617,16 +1537,12 @@ Map {
                           "name": "image 2",
                           "opacity": 0.5,
                           "overflowHidden": true,
-                          "position": [
-                            {
-                              "start": 343,
-                              "type": "start",
-                            },
-                            {
-                              "start": 45,
-                              "type": "start",
-                            },
-                          ],
+                          "position": {
+                            "bottom": undefined,
+                            "left": 343,
+                            "right": undefined,
+                            "top": 45,
+                          },
                           "shadows": [],
                           "topLeftRadius": 0,
                           "topRightRadius": 0,
@@ -1652,17 +1568,12 @@ Map {
                       "locked": true,
                       "marginBottom": -422,
                       "name": "Frame",
-                      "position": [
-                        {
-                          "end": 0,
-                          "start": 0,
-                          "type": "both",
-                        },
-                        {
-                          "start": 0,
-                          "type": "start",
-                        },
-                      ],
+                      "position": {
+                        "bottom": undefined,
+                        "left": 0,
+                        "right": 0,
+                        "top": 0,
+                      },
                       "variants": {
                         "maxWidth:767": {},
                       },
@@ -1696,16 +1607,12 @@ Map {
                       "marginTop": 96,
                       "name": "Revolutionize Your Web Design and Development Workflow",
                       "opacity": 1,
-                      "position": [
-                        {
-                          "start": 360,
-                          "type": "start",
-                        },
-                        {
-                          "start": 173,
-                          "type": "start",
-                        },
-                      ],
+                      "position": {
+                        "bottom": undefined,
+                        "left": 360,
+                        "right": undefined,
+                        "top": 173,
+                      },
                       "textContent": "Revolutionize Your Web Design
 and Development Workflow",
                       "textHorizontalAlign": "center",
@@ -1742,16 +1649,12 @@ and Development Workflow",
                       "marginBottom": 48,
                       "name": "UIMix is a open-source design tool that combines intuitive editing, React integration, AI assistance, and advanced design tokens.",
                       "opacity": 1,
-                      "position": [
-                        {
-                          "start": 412,
-                          "type": "start",
-                        },
-                        {
-                          "start": 354,
-                          "type": "start",
-                        },
-                      ],
+                      "position": {
+                        "bottom": undefined,
+                        "left": 412,
+                        "right": undefined,
+                        "top": 354,
+                      },
                       "textContent": "UIMix is a open-source design tool that combines intuitive editing,
 React integration, AI assistance, and advanced design tokens.",
                       "textHorizontalAlign": "center",
@@ -1880,16 +1783,12 @@ React integration, AI assistance, and advanced design tokens.",
                       "paddingLeft": 0,
                       "paddingRight": 0,
                       "paddingTop": 0,
-                      "position": [
-                        {
-                          "start": 629,
-                          "type": "start",
-                        },
-                        {
-                          "start": 465,
-                          "type": "start",
-                        },
-                      ],
+                      "position": {
+                        "bottom": undefined,
+                        "left": 629,
+                        "right": undefined,
+                        "top": 465,
+                      },
                       "rowGap": 32,
                       "shadows": [],
                       "topLeftRadius": 0,
@@ -1926,16 +1825,12 @@ React integration, AI assistance, and advanced design tokens.",
                       "name": "image 1",
                       "opacity": 1,
                       "overflowHidden": true,
-                      "position": [
-                        {
-                          "start": 360,
-                          "type": "start",
-                        },
-                        {
-                          "start": 581,
-                          "type": "start",
-                        },
-                      ],
+                      "position": {
+                        "bottom": undefined,
+                        "left": 360,
+                        "right": undefined,
+                        "top": 581,
+                      },
                       "shadows": [
                         {
                           "blur": 10,
@@ -1976,16 +1871,12 @@ React integration, AI assistance, and advanced design tokens.",
                   "name": "Frame",
                   "paddingLeft": 24,
                   "paddingRight": 24,
-                  "position": [
-                    {
-                      "start": 0,
-                      "type": "start",
-                    },
-                    {
-                      "start": 45,
-                      "type": "start",
-                    },
-                  ],
+                  "position": {
+                    "bottom": undefined,
+                    "left": 0,
+                    "right": undefined,
+                    "top": 45,
+                  },
                   "variants": {
                     "maxWidth:767": {},
                   },
@@ -3116,16 +3007,12 @@ React integration, AI assistance, and advanced design tokens.",
                   "paddingLeft": 24,
                   "paddingRight": 24,
                   "paddingTop": 48,
-                  "position": [
-                    {
-                      "start": -1,
-                      "type": "start",
-                    },
-                    {
-                      "start": 1134,
-                      "type": "start",
-                    },
-                  ],
+                  "position": {
+                    "bottom": undefined,
+                    "left": -1,
+                    "right": undefined,
+                    "top": 1134,
+                  },
                   "rowGap": 24,
                   "shadows": [],
                   "topLeftRadius": 0,
@@ -3164,16 +3051,12 @@ React integration, AI assistance, and advanced design tokens.",
                       "marginBottom": 24,
                       "name": "Open Source",
                       "opacity": 1,
-                      "position": [
-                        {
-                          "start": 594,
-                          "type": "start",
-                        },
-                        {
-                          "start": 101,
-                          "type": "start",
-                        },
-                      ],
+                      "position": {
+                        "bottom": undefined,
+                        "left": 594,
+                        "right": undefined,
+                        "top": 101,
+                      },
                       "textContent": "Open Source",
                       "textHorizontalAlign": "center",
                       "textVerticalAlign": "start",
@@ -3209,16 +3092,12 @@ React integration, AI assistance, and advanced design tokens.",
                       "marginBottom": 48,
                       "name": "UIMix's open-source editor and backend promote community-driven development and offer extensive customization options. Self-host both components for greater control over your design environment and data security.",
                       "opacity": 1,
-                      "position": [
-                        {
-                          "start": 421,
-                          "type": "start",
-                        },
-                        {
-                          "start": 187,
-                          "type": "start",
-                        },
-                      ],
+                      "position": {
+                        "bottom": undefined,
+                        "left": 421,
+                        "right": undefined,
+                        "top": 187,
+                      },
                       "textContent": "UIMix's open-source editor and backend promote community-driven development and offer extensive customization options.
 Self-host both components for greater control over your design environment and data security.",
                       "textHorizontalAlign": "center",
@@ -3298,16 +3177,12 @@ Self-host both components for greater control over your design environment and d
                       "paddingLeft": 22.5,
                       "paddingRight": 22.5,
                       "paddingTop": 10.5,
-                      "position": [
-                        {
-                          "start": 618,
-                          "type": "start",
-                        },
-                        {
-                          "start": 342,
-                          "type": "start",
-                        },
-                      ],
+                      "position": {
+                        "bottom": undefined,
+                        "left": 618,
+                        "right": undefined,
+                        "top": 342,
+                      },
                       "rowGap": 10,
                       "shadows": [
                         {
@@ -3358,16 +3233,12 @@ Self-host both components for greater control over your design environment and d
                       "marginBottom": 72,
                       "name": "How It Works",
                       "opacity": 1,
-                      "position": [
-                        {
-                          "start": 589,
-                          "type": "start",
-                        },
-                        {
-                          "start": 525,
-                          "type": "start",
-                        },
-                      ],
+                      "position": {
+                        "bottom": undefined,
+                        "left": 589,
+                        "right": undefined,
+                        "top": 525,
+                      },
                       "textContent": "How It Works",
                       "textHorizontalAlign": "center",
                       "textVerticalAlign": "start",
@@ -3407,16 +3278,12 @@ Self-host both components for greater control over your design environment and d
                               "marginBottom": 26,
                               "name": "A. Start Your Project",
                               "opacity": 1,
-                              "position": [
-                                {
-                                  "start": 118,
-                                  "type": "start",
-                                },
-                                {
-                                  "start": 662,
-                                  "type": "start",
-                                },
-                              ],
+                              "position": {
+                                "bottom": undefined,
+                                "left": 118,
+                                "right": undefined,
+                                "top": 662,
+                              },
                               "textContent": "A. Start Your Project",
                               "textHorizontalAlign": "start",
                               "textVerticalAlign": "start",
@@ -3451,16 +3318,12 @@ Self-host both components for greater control over your design environment and d
                               "lineHeight": "150%",
                               "name": "Sign up for a free account or log in. Create a new project or import an existing Figma design. Organize your components and design tokens in the user-friendly interface.",
                               "opacity": 1,
-                              "position": [
-                                {
-                                  "start": 110,
-                                  "type": "start",
-                                },
-                                {
-                                  "start": 718,
-                                  "type": "start",
-                                },
-                              ],
+                              "position": {
+                                "bottom": undefined,
+                                "left": 110,
+                                "right": undefined,
+                                "top": 718,
+                              },
                               "textContent": "Sign up for a free account or log in.
 Create a new project or import an existing Figma design.
 Organize your components and design tokens in the user-friendly interface.",
@@ -3485,16 +3348,12 @@ Organize your components and design tokens in the user-friendly interface.",
                           "id": "frame5",
                           "layout": "flex",
                           "name": "Frame",
-                          "position": [
-                            {
-                              "start": 110,
-                              "type": "start",
-                            },
-                            {
-                              "start": 662,
-                              "type": "start",
-                            },
-                          ],
+                          "position": {
+                            "bottom": undefined,
+                            "left": 110,
+                            "right": undefined,
+                            "top": 662,
+                          },
                           "variants": {
                             "maxWidth:767": {},
                           },
@@ -3529,16 +3388,12 @@ Organize your components and design tokens in the user-friendly interface.",
                               "marginBottom": 20,
                               "name": "B. Design & Develop",
                               "opacity": 1,
-                              "position": [
-                                {
-                                  "start": 561,
-                                  "type": "start",
-                                },
-                                {
-                                  "start": 662,
-                                  "type": "start",
-                                },
-                              ],
+                              "position": {
+                                "bottom": undefined,
+                                "left": 561,
+                                "right": undefined,
+                                "top": 662,
+                              },
                               "textContent": "B. Design & Develop",
                               "textHorizontalAlign": "start",
                               "textVerticalAlign": "start",
@@ -3573,16 +3428,12 @@ Organize your components and design tokens in the user-friendly interface.",
                               "lineHeight": "150%",
                               "name": "Utilize Figma-like editing tools to create and modify designs. Seamlessly import React components into your UIMix project. Leverage AI assistance to efficiently generate and refine your content.",
                               "opacity": 1,
-                              "position": [
-                                {
-                                  "start": 553,
-                                  "type": "start",
-                                },
-                                {
-                                  "start": 712,
-                                  "type": "start",
-                                },
-                              ],
+                              "position": {
+                                "bottom": undefined,
+                                "left": 553,
+                                "right": undefined,
+                                "top": 712,
+                              },
                               "textContent": "Utilize Figma-like editing tools to create and modify designs.
 Seamlessly import React components into your UIMix project.
 Leverage AI assistance to efficiently generate and refine your content.",
@@ -3607,16 +3458,12 @@ Leverage AI assistance to efficiently generate and refine your content.",
                           "id": "frame6",
                           "layout": "flex",
                           "name": "Frame",
-                          "position": [
-                            {
-                              "start": 553,
-                              "type": "start",
-                            },
-                            {
-                              "start": 662,
-                              "type": "start",
-                            },
-                          ],
+                          "position": {
+                            "bottom": undefined,
+                            "left": 553,
+                            "right": undefined,
+                            "top": 662,
+                          },
                           "variants": {
                             "maxWidth:767": {},
                           },
@@ -3651,16 +3498,12 @@ Leverage AI assistance to efficiently generate and refine your content.",
                               "marginBottom": 20,
                               "name": "C. Collaborate & Publish",
                               "opacity": 1,
-                              "position": [
-                                {
-                                  "start": 990,
-                                  "type": "start",
-                                },
-                                {
-                                  "start": 662,
-                                  "type": "start",
-                                },
-                              ],
+                              "position": {
+                                "bottom": undefined,
+                                "left": 990,
+                                "right": undefined,
+                                "top": 662,
+                              },
                               "textContent": "C. Collaborate & Publish",
                               "textHorizontalAlign": "start",
                               "textVerticalAlign": "start",
@@ -3695,16 +3538,12 @@ Leverage AI assistance to efficiently generate and refine your content.",
                               "lineHeight": "150%",
                               "name": "Collaborate using the online editor or work offline for an optimized development experience. Integrate with GitHub for streamlined version control. Easily import UIMix components into React apps or export final designs back to Figma.",
                               "opacity": 1,
-                              "position": [
-                                {
-                                  "start": 988,
-                                  "type": "start",
-                                },
-                                {
-                                  "start": 712,
-                                  "type": "start",
-                                },
-                              ],
+                              "position": {
+                                "bottom": undefined,
+                                "left": 988,
+                                "right": undefined,
+                                "top": 712,
+                              },
                               "textContent": "Collaborate using the online editor or work offline for an optimized development experience.
 Integrate with GitHub for streamlined version control.
 Easily import UIMix components into React apps or export final designs back to Figma.",
@@ -3729,16 +3568,12 @@ Easily import UIMix components into React apps or export final designs back to F
                           "id": "frame7",
                           "layout": "flex",
                           "name": "Frame",
-                          "position": [
-                            {
-                              "start": 988,
-                              "type": "start",
-                            },
-                            {
-                              "start": 662,
-                              "type": "start",
-                            },
-                          ],
+                          "position": {
+                            "bottom": undefined,
+                            "left": 988,
+                            "right": undefined,
+                            "top": 662,
+                          },
                           "variants": {
                             "maxWidth:767": {},
                           },
@@ -3759,16 +3594,12 @@ Easily import UIMix components into React apps or export final designs back to F
                       "id": "frame4",
                       "layout": "flex",
                       "name": "Frame",
-                      "position": [
-                        {
-                          "start": 110,
-                          "type": "start",
-                        },
-                        {
-                          "start": 662,
-                          "type": "start",
-                        },
-                      ],
+                      "position": {
+                        "bottom": undefined,
+                        "left": 110,
+                        "right": undefined,
+                        "top": 662,
+                      },
                       "rowGap": 24,
                       "variants": {
                         "maxWidth:767": {},
@@ -3794,16 +3625,12 @@ Easily import UIMix components into React apps or export final designs back to F
                   "paddingLeft": 24,
                   "paddingRight": 24,
                   "paddingTop": 128,
-                  "position": [
-                    {
-                      "start": 0,
-                      "type": "start",
-                    },
-                    {
-                      "start": 1730,
-                      "type": "start",
-                    },
-                  ],
+                  "position": {
+                    "bottom": undefined,
+                    "left": 0,
+                    "right": undefined,
+                    "top": 1730,
+                  },
                   "variants": {
                     "maxWidth:767": {},
                   },
@@ -3832,16 +3659,12 @@ Easily import UIMix components into React apps or export final designs back to F
                       "name": "image 4",
                       "opacity": 1,
                       "overflowHidden": true,
-                      "position": [
-                        {
-                          "start": -23,
-                          "type": "start",
-                        },
-                        {
-                          "start": -368,
-                          "type": "start",
-                        },
-                      ],
+                      "position": {
+                        "bottom": undefined,
+                        "left": -23,
+                        "right": undefined,
+                        "top": -368,
+                      },
                       "shadows": [],
                       "topLeftRadius": 0,
                       "topRightRadius": 0,
@@ -3877,16 +3700,12 @@ Easily import UIMix components into React apps or export final designs back to F
                       "marginBottom": 48,
                       "name": "Ready to revolutionize your web design workflow?",
                       "opacity": 1,
-                      "position": [
-                        {
-                          "start": 248,
-                          "type": "start",
-                        },
-                        {
-                          "start": 96,
-                          "type": "start",
-                        },
-                      ],
+                      "position": {
+                        "bottom": undefined,
+                        "left": 248,
+                        "right": undefined,
+                        "top": 96,
+                      },
                       "textContent": "Ready to revolutionize your web design workflow?",
                       "textHorizontalAlign": "center",
                       "textVerticalAlign": "start",
@@ -4013,16 +3832,12 @@ Easily import UIMix components into React apps or export final designs back to F
                       "paddingLeft": 0,
                       "paddingRight": 0,
                       "paddingTop": 0,
-                      "position": [
-                        {
-                          "start": 622,
-                          "type": "start",
-                        },
-                        {
-                          "start": 205,
-                          "type": "start",
-                        },
-                      ],
+                      "position": {
+                        "bottom": undefined,
+                        "left": 622,
+                        "right": undefined,
+                        "top": 205,
+                      },
                       "rowGap": 32,
                       "shadows": [
                         {
@@ -4068,16 +3883,12 @@ Easily import UIMix components into React apps or export final designs back to F
                   "overflowHidden": true,
                   "paddingBottom": 96,
                   "paddingTop": 96,
-                  "position": [
-                    {
-                      "start": -1,
-                      "type": "start",
-                    },
-                    {
-                      "start": 2728,
-                      "type": "start",
-                    },
-                  ],
+                  "position": {
+                    "bottom": undefined,
+                    "left": -1,
+                    "right": undefined,
+                    "top": 2728,
+                  },
                   "shadows": [],
                   "topLeftRadius": 0,
                   "topRightRadius": 0,
@@ -4113,31 +3924,23 @@ Easily import UIMix components into React apps or export final designs back to F
               "name": "Landing",
               "opacity": 1,
               "overflowHidden": true,
-              "position": [
-                {
-                  "start": 20,
-                  "type": "start",
-                },
-                {
-                  "start": 200,
-                  "type": "start",
-                },
-              ],
+              "position": {
+                "bottom": undefined,
+                "left": 20,
+                "right": undefined,
+                "top": 200,
+              },
               "shadows": [],
               "topLeftRadius": 0,
               "topRightRadius": 0,
               "variants": {
                 "maxWidth:767": {
-                  "position": [
-                    {
-                      "start": 1500,
-                      "type": "start",
-                    },
-                    {
-                      "start": 200,
-                      "type": "start",
-                    },
-                  ],
+                  "position": {
+                    "bottom": undefined,
+                    "left": 1500,
+                    "right": undefined,
+                    "top": 200,
+                  },
                   "width": {
                     "type": "fixed",
                     "value": 720,

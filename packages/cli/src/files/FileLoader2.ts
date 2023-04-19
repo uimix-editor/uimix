@@ -274,8 +274,28 @@ class PageLoader {
       hidden: style.hidden,
       locked: style.locked,
       position: style.position && {
-        x: style.position[0],
-        y: style.position[1],
+        x:
+          style.position.left !== undefined &&
+          style.position.right !== undefined
+            ? {
+                type: "both",
+                start: style.position.left,
+                end: style.position.right,
+              }
+            : style.position.right !== undefined
+            ? { type: "end", end: style.position.right }
+            : { type: "start", start: style.position.left ?? 0 },
+        y:
+          style.position.top !== undefined &&
+          style.position.bottom !== undefined
+            ? {
+                type: "both",
+                start: style.position.top,
+                end: style.position.bottom,
+              }
+            : style.position.bottom !== undefined
+            ? { type: "end", end: style.position.bottom }
+            : { type: "start", start: style.position.top ?? 0 },
       },
       absolute: style.absolute,
       width: style.width,

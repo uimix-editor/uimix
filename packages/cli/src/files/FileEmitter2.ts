@@ -213,7 +213,16 @@ export class PageEmitter {
     return filterUndefined<Partial<HumanReadable.BaseStyleProps>>({
       hidden: style.hidden,
       locked: style.locked,
-      position: style.position && [style.position.x, style.position.y],
+      position: style.position && {
+        left:
+          style.position.x.type !== "end" ? style.position.x.start : undefined,
+        right:
+          style.position.x.type !== "start" ? style.position.x.end : undefined,
+        top:
+          style.position.y.type !== "end" ? style.position.y.start : undefined,
+        bottom:
+          style.position.y.type !== "start" ? style.position.y.end : undefined,
+      },
       absolute: style.absolute,
       width: style.width,
       height: style.height,

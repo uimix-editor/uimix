@@ -15,7 +15,12 @@ import { z } from "zod";
 export const BaseStyleProps = z.object({
   hidden: z.boolean(),
   locked: z.boolean(),
-  position: z.tuple([PositionConstraint, PositionConstraint]),
+  position: z.object({
+    left: z.number().optional(),
+    top: z.number().optional(),
+    right: z.number().optional(),
+    bottom: z.number().optional(),
+  }),
   absolute: z.boolean(),
   width: SizeConstraint,
   height: SizeConstraint,
