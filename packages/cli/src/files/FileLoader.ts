@@ -106,7 +106,7 @@ function loadNode(
   const id = generateID();
 
   projectJSON.nodes[id] = {
-    type: "component",
+    type: node.type,
     name: node.props.id,
     parent,
     index,

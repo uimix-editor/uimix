@@ -8,8 +8,9 @@ import * as mime from "mime-types";
 import { codeAssetsDestination } from "../codeAssets/constants.js";
 import * as path from "path";
 import { DesignTokens } from "@uimix/code-asset-types";
-import { ProjectFileEmitter } from "../files/FileEmitter.js";
+import { PageFileEmitter, ProjectFileEmitter } from "../files/FileEmitter.js";
 import { stringifyAsJSX } from "../files/HumanReadableFormat.js";
+import { loadPage, loadProject } from "../files/FileLoader.js";
 
 export async function generateCode(
   rootPath: string,
@@ -73,13 +74,40 @@ export async function generateCode(
 
   const projectEmitter = new ProjectFileEmitter(projectJSON);
 
-  results.push(
-    ...[...projectEmitter.emit()].map(([filePath, content]) => ({
-      filePath,
-      content: formatTypeScript(stringifyAsJSX(content)),
-    }))
-  );
-  console.log(results.map((r) => r.filePath));
+  for (const [filePath, result] of projectEmitter.emit()) {
+    results.push({
+      filePath: filePath + ".newformat.js",
+      content: formatTypeScript(stringifyAsJSX(result)),
+    });
+  }
+
+  // re-emit the project
+
+  {
+    const projectJSON2: ProjectJSON = {
+      nodes: {
+        project: {
+          type: "project",
+          index: 0,
+        },
+      },
+      styles: {},
+      componentURLs: [],
+      images: {},
+      colors: {},
+    };
+    loadProject(projectJSON2, projectEmitter.emit());
+
+    const projectEmitter2 = new ProjectFileEmitter(projectJSON2);
+
+    for (const [filePath, result] of projectEmitter2.emit()) {
+      console.log(filePath);
+      results.push({
+        filePath: filePath + ".2.newformat.js",
+        content: formatTypeScript(stringifyAsJSX(result)),
+      });
+    }
+  }
 
   return results;
 }

@@ -67,7 +67,7 @@ export class ProjectFileEmitter {
         colorsForPage.get(page.id) ?? []
       );
       const pageNode = pageEmitter.emit();
-      const pagePath = path.join((page.name ?? "") + ".newformat.js");
+      const pagePath = page.name ?? "";
       result.set(pagePath, pageNode);
     }
     return result;
