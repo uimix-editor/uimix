@@ -129,14 +129,14 @@ class PageLoader {
 
     for (const [i, childNode] of component.children.entries()) {
       if (childNode.type === "variant") {
-        const id = generateID();
-        projectJSON.nodes[id] = {
+        const variantID = generateID();
+        projectJSON.nodes[variantID] = {
           type: "variant",
           condition: childNode.props.condition,
           parent: id,
           index: i,
         };
-        variants.push({ id, condition: childNode.props.condition });
+        variants.push({ id: variantID, condition: childNode.props.condition });
       }
     }
 
