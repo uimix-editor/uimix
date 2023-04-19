@@ -239,6 +239,25 @@ class PageLoader {
     };
   }
 
+  transformPosition(
+    position: HumanReadable.Position
+  ): Data.PositionConstraints {
+    return {
+      x:
+        position.left !== undefined && position.right !== undefined
+          ? { type: "both", start: position.left, end: position.right }
+          : position.right !== undefined
+          ? { type: "end", end: position.right }
+          : { type: "start", start: position.left ?? 0 },
+      y:
+        position.top !== undefined && position.bottom !== undefined
+          ? { type: "both", start: position.top, end: position.bottom }
+          : position.bottom !== undefined
+          ? { type: "end", end: position.bottom }
+          : { type: "start", start: position.top ?? 0 },
+    };
+  }
+
   getImageHashFromImagePath(imagePath: string): string {
     // TODO: improve
     return path.basename(imagePath, path.extname(imagePath));
@@ -273,30 +292,7 @@ class PageLoader {
     return filterUndefined<Partial<Data.StyleJSON>>({
       hidden: style.hidden,
       locked: style.locked,
-      position: style.position && {
-        x:
-          style.position.left !== undefined &&
-          style.position.right !== undefined
-            ? {
-                type: "both",
-                start: style.position.left,
-                end: style.position.right,
-              }
-            : style.position.right !== undefined
-            ? { type: "end", end: style.position.right }
-            : { type: "start", start: style.position.left ?? 0 },
-        y:
-          style.position.top !== undefined &&
-          style.position.bottom !== undefined
-            ? {
-                type: "both",
-                start: style.position.top,
-                end: style.position.bottom,
-              }
-            : style.position.bottom !== undefined
-            ? { type: "end", end: style.position.bottom }
-            : { type: "start", start: style.position.top ?? 0 },
-      },
+      position: style.position && this.transformPosition(style.position),
       absolute: style.absolute,
       width: style.width,
       height: style.height,

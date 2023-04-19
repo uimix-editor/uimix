@@ -1,7 +1,7 @@
 import * as HumanReadable from "./HumanReadableFormat";
 import { Page } from "@uimix/model/src/models/Page";
 import { compact } from "lodash-es";
-import { Color, SolidFill, StyleJSON } from "@uimix/model/src/data/v1";
+import * as Data from "@uimix/model/src/data/v1";
 import { Selectable, Component, Project } from "@uimix/model/src/models";
 import {
   generateLowerJSIdentifier,
@@ -174,7 +174,7 @@ export class PageEmitter {
     return this.relativePathFromPage(page.filePath) + ".uimix#" + name;
   }
 
-  transformColor(color: Color): Color {
+  transformColor(color: Data.Color): Data.Color {
     if (typeof color === "object") {
       const token = this.project.colorTokens.get(color.id);
       if (token?.type === "normal" && token.page) {
@@ -190,15 +190,26 @@ export class PageEmitter {
     return color;
   }
 
-  transformFill(fill: SolidFill): SolidFill {
+  transformFill(fill: Data.SolidFill): Data.SolidFill {
     return {
       type: "solid",
       color: this.transformColor(fill.color),
     };
   }
 
+  transformPosition(
+    position: Data.PositionConstraints
+  ): HumanReadable.Position {
+    return {
+      left: position.x.type !== "end" ? position.x.start : undefined,
+      right: position.x.type !== "start" ? position.x.end : undefined,
+      top: position.y.type !== "end" ? position.y.start : undefined,
+      bottom: position.y.type !== "start" ? position.y.end : undefined,
+    };
+  }
+
   transformStyle(
-    style: Partial<StyleJSON>
+    style: Partial<Data.StyleJSON>
   ): Partial<HumanReadable.BaseStyleProps> {
     const mainComponent =
       style.mainComponent != null
@@ -213,16 +224,7 @@ export class PageEmitter {
     return filterUndefined<Partial<HumanReadable.BaseStyleProps>>({
       hidden: style.hidden,
       locked: style.locked,
-      position: style.position && {
-        left:
-          style.position.x.type !== "end" ? style.position.x.start : undefined,
-        right:
-          style.position.x.type !== "start" ? style.position.x.end : undefined,
-        top:
-          style.position.y.type !== "end" ? style.position.y.start : undefined,
-        bottom:
-          style.position.y.type !== "start" ? style.position.y.end : undefined,
-      },
+      position: style.position && this.transformPosition(style.position),
       absolute: style.absolute,
       width: style.width,
       height: style.height,

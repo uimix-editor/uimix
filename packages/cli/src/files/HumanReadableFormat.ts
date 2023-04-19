@@ -12,15 +12,18 @@ import {
 } from "@uimix/model/src/data/v1";
 import { z } from "zod";
 
+export const Position = z.object({
+  left: z.number().optional(),
+  top: z.number().optional(),
+  right: z.number().optional(),
+  bottom: z.number().optional(),
+});
+export type Position = z.infer<typeof Position>;
+
 export const BaseStyleProps = z.object({
   hidden: z.boolean(),
   locked: z.boolean(),
-  position: z.object({
-    left: z.number().optional(),
-    top: z.number().optional(),
-    right: z.number().optional(),
-    bottom: z.number().optional(),
-  }),
+  position: Position,
   absolute: z.boolean(),
   width: SizeConstraint,
   height: SizeConstraint,
