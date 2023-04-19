@@ -8,7 +8,7 @@ import {
 } from "@uimix/model/src/models";
 import * as HumanReadable from "./HumanReadableFormat";
 import * as Data from "@uimix/model/src/data/v1";
-import path from "path-browserify";
+import { posix as path } from "path-browserify";
 import { filterUndefined, variantConditionToText } from "./util";
 import { Color } from "@uimix/foundation/src/utils/Color";
 
@@ -250,11 +250,12 @@ class PageLoader {
     let foreignComponentRef: Data.ForeignComponentRef | undefined;
 
     if (style.componentType && style.component) {
-      const [path, name] = style.component.split("#");
+      const [filePath, name] = style.component.split("#");
+      const absPath = path.join(path.dirname(this.filePath), filePath);
 
       foreignComponentRef = {
         type: style.componentType,
-        path,
+        path: absPath,
         name,
         props: style.props ?? {},
       };

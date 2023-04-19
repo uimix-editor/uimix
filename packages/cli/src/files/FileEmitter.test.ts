@@ -4,6 +4,7 @@ import * as path from "path";
 import { NodeFileAccess } from "../project/NodeFileAccess";
 import { Project } from "@uimix/model/src/models/Project";
 import { ProjectEmitter2 } from "./FileEmitter2";
+import { ProjectLoader2 } from "./FileLoader2";
 
 describe("ProjectEmitter", () => {
   it("works", async () => {
@@ -16,6 +17,12 @@ describe("ProjectEmitter", () => {
 
     const emitted = emitter.emit();
     expect(emitted).toMatchSnapshot();
+
+    const loader = new ProjectLoader2();
+    loader.load(emitted);
+
+    const emitted2 = new ProjectEmitter2(loader.project).emit();
+    expect(emitted2).toEqual(emitted);
 
     // const projectJSON: ProjectJSON = {
     //   nodes: {
