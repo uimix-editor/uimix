@@ -8,7 +8,7 @@ import {
 import * as HumanReadable from "./HumanReadableFormat";
 import * as Data from "@uimix/model/src/data/v1";
 import path from "path-browserify";
-import { filterUndefined } from "./util";
+import { filterUndefined, variantConditionToText } from "./util";
 import { Color } from "@uimix/foundation/src/utils/Color";
 
 export class ProjectLoader2 {
@@ -126,6 +126,20 @@ class PageLoader {
       const selectable = node.selectable;
       const style = this.transformStyle(inputNode.props);
       selectable.selfStyle.loadJSON(style);
+
+      for (const corresponding of selectable.variantCorrespondings) {
+        if (corresponding.variant?.condition) {
+          const variantText = variantConditionToText(
+            corresponding.variant.condition
+          );
+          const variantStyle = inputNode.props.variants?.[variantText];
+          if (variantStyle) {
+            corresponding.selectable.selfStyle.loadJSON(
+              this.transformStyle(variantStyle)
+            );
+          }
+        }
+      }
     }
   }
 
