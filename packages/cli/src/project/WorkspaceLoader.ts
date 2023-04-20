@@ -6,6 +6,7 @@ import {
   ProjectJSON,
   ProjectManifestJSON,
   StyleJSON,
+  ImageType,
 } from "@uimix/model/src/data/v1";
 import { getPageID, usedImageHashesInStyle } from "@uimix/model/src/data/util";
 import { isEqual, omit } from "lodash-es";
@@ -24,6 +25,9 @@ import {
   stringifyAsJSXFile,
 } from "../files/HumanReadableFormat";
 import { ProjectLoader } from "../files/ProjectLoader";
+import { getURLSafeBase64Hash } from "@uimix/foundation/src/utils/Hash";
+import * as mime from "mime-types";
+import sizeOf from "image-size";
 
 interface ProjectData {
   manifest: ProjectManifestJSON;
@@ -134,9 +138,12 @@ export class WorkspaceLoader {
         }
       }
 
+      const images = new Map<string, Image>();
       const pages = new Map<string, PageNode>();
 
       for (const filePath of filePaths) {
+        // TODO: reload changed files only
+
         if (filePath.endsWith(".uimix")) {
           const pageText = (
             await this.fileAccess.readFile(filePath)
@@ -147,12 +154,28 @@ export class WorkspaceLoader {
             .replace(/\.uimix$/, "");
           pages.set(pageName, pageNode);
         } else {
-          // TODO: image files
+          // TODO: lookup specific directories only
+          console.log(filePath);
+          const imageData = await this.fileAccess.readFile(filePath);
+          const hash = await getURLSafeBase64Hash(imageData);
+          const mimeType = mime.lookup(filePath) || "image/png";
+          const size = sizeOf(imageData);
+
+          const image: Image = {
+            width: size.width ?? 0,
+            height: size.height ?? 0,
+            type: mimeType as ImageType,
+            url: `data:${mimeType};base64,${imageData.toString("base64")}`,
+          };
+          images.set(hash, image);
         }
       }
 
       const loader = new ProjectLoader();
       loader.load(pages);
+      for (const [key, image] of images) {
+        loader.project.imageManager.images.set(key, image);
+      }
 
       if (!isEqual(pages, this.projects.get(projectPath)?.pages ?? new Map())) {
         changed = true;

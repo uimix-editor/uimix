@@ -1,9 +1,9 @@
 import * as fs from "fs";
 import * as path from "path";
 import { FileAccess, Stats } from "./FileAccess";
-import { glob } from "glob";
 import chokidar from "chokidar";
 import { mkdirp } from "mkdirp";
+import { globby } from "globby";
 
 export class NodeFileAccess implements FileAccess {
   constructor(rootPath: string) {
@@ -24,8 +24,9 @@ export class NodeFileAccess implements FileAccess {
 
   async glob(pattern: string): Promise<string[]> {
     return (
-      await glob(pattern, {
+      await globby(pattern, {
         cwd: this.rootPath,
+        ignore: ["**/node_modules/**", "**/.git/**"],
       })
     ).map((filePath) => path.resolve(this.rootPath, filePath));
   }
