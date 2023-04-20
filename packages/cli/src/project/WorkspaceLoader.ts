@@ -20,6 +20,8 @@ import {
   HierarchicalNodeJSON,
   toHierarchicalNodeJSONs,
 } from "./HierarchicalNodeJSON";
+import { Project } from "@uimix/model/src/models";
+import { ProjectEmitter } from "../files/ProjectEmitter";
 
 interface WorkspaceLoaderOptions {
   filePattern?: string;
@@ -206,6 +208,15 @@ export class WorkspaceLoader {
             formatJSON(JSON.stringify(pageJSON))
           );
           pagePathsToDelete.delete(pagePath);
+        }
+
+        // Emit new file format
+        const projectModel = new Project();
+        projectModel.loadJSON(project.json);
+        const projectEmitter = new ProjectEmitter(projectModel);
+        for (const [pageName, pageText] of projectEmitter.emitFiles()) {
+          const pagePath = path.join(projectPath, pageName + ".uimix2");
+          await this.fileAccess.writeText(pagePath, pageText);
         }
 
         const manifestPath = path.join(projectPath, this.uimixProjectFile);

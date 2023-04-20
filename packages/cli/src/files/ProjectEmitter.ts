@@ -28,6 +28,14 @@ export class ProjectEmitter {
     }
     return result;
   }
+
+  emitFiles(): Map<string, string> {
+    const result = new Map<string, string>();
+    for (const [name, node] of this.emit()) {
+      result.set(name, HumanReadable.stringifyAsJSXFile(node));
+    }
+    return result;
+  }
 }
 
 export class PageEmitter {
