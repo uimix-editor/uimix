@@ -8,6 +8,8 @@ import {
   VariantCondition,
 } from "@uimix/model/src/data/v1";
 import { z } from "zod";
+import Babel from "@babel/standalone";
+import vm from "node:vm";
 
 export const Position = z.object({
   left: z.number().optional(),
@@ -183,4 +185,58 @@ export function stringifyAsJSX(node: Node): string {
   } else {
     return `<${node.type} ${propText}/>`;
   }
+}
+
+export function stringifyAsJSXFile(node: Node): string {
+  return `export default ${stringifyAsJSX(node)};`;
+}
+
+export function loadFromJSX(text: string): void {
+  // use babel to transform jsx to js
+  // evaluate the js to get the node
+
+  const transformedJS = Babel.transform(text, {
+    presets: [
+      [
+        "react",
+        {
+          runtime: "classic",
+          throwIfNamespace: false,
+        },
+      ],
+    ],
+    plugins: ["transform-modules-commonjs"],
+  }).code;
+  if (!transformedJS) {
+    throw new Error("Failed to transform JSX");
+  }
+  console.log(transformedJS);
+
+  const jsxFactory = (
+    type: string,
+    props: Record<string, unknown>,
+    ...children: unknown[]
+  ) => ({
+    type,
+    props: props || {},
+    children,
+  });
+
+  const exports = {
+    default: undefined,
+  };
+  const sandbox = {
+    exports,
+    module: { exports },
+    console,
+    React: {
+      createElement: jsxFactory,
+    },
+  };
+
+  vm.createContext(sandbox);
+  vm.runInContext(transformedJS, sandbox);
+
+  const jsonOutput = exports.default;
+  console.log(JSON.stringify(jsonOutput, null, 2));
 }

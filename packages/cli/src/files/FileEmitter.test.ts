@@ -5,7 +5,10 @@ import { NodeFileAccess } from "../project/NodeFileAccess";
 import { Project } from "@uimix/model/src/models/Project";
 import { ProjectEmitter2 } from "./FileEmitter2";
 import { ProjectLoader2 } from "./FileLoader2";
-import { stringifyAsJSX } from "./HumanReadableFormat";
+import {
+  loadFromJSX as loadFromJSXFile,
+  stringifyAsJSXFile,
+} from "./HumanReadableFormat";
 import { formatTypeScript } from "../format";
 
 describe("ProjectEmitter", () => {
@@ -19,16 +22,17 @@ describe("ProjectEmitter", () => {
 
     const emitted = emitter.emit();
     const emittedFile = formatTypeScript(
-      stringifyAsJSX(emitted.get("src/components")!)
+      stringifyAsJSXFile(emitted.get("src/components")!)
     );
     expect(emittedFile).toMatchSnapshot();
+    loadFromJSXFile(emittedFile);
 
     const loader = new ProjectLoader2();
     loader.load(emitted);
 
     const emitted2 = new ProjectEmitter2(loader.project).emit();
     const emittedFile2 = formatTypeScript(
-      stringifyAsJSX(emitted2.get("src/components")!)
+      stringifyAsJSXFile(emitted2.get("src/components")!)
     );
     expect(emittedFile2).toEqual(emittedFile);
 

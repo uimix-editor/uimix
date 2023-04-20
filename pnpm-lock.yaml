@@ -74,6 +74,12 @@ importers:
         specifier: ^3.21.4
         version: 3.21.4
     devDependencies:
+      '@babel/standalone':
+        specifier: ^7.21.4
+        version: 7.21.4
+      '@types/babel__standalone':
+        specifier: ^7.1.4
+        version: 7.1.4
       '@types/glob':
         specifier: ^8.1.0
         version: 8.1.0
@@ -2388,6 +2394,11 @@ packages:
     engines: {node: '>=6.9.0'}
     dependencies:
       regenerator-runtime: 0.13.11
+
+  /@babel/standalone@7.21.4:
+    resolution: {integrity: sha512-Rw4nGqH/iyVeYxARKcz7iGP+njkPsVqJ45TmXMONoGoxooWjXCAs+CUcLeAZdBGCLqgaPvHKCYvIaDT2Iq+KfA==}
+    engines: {node: '>=6.9.0'}
+    dev: true
 
   /@babel/template@7.20.7:
     resolution: {integrity: sha512-8SegXApWe6VoNw0r9JHpSteLKTpTiLZ4rMlGIm9JQ18KiCtyQiAMEazujAHrUS5flrcqYZa75ukev3P6QmUwUw==}
@@ -5294,6 +5305,14 @@ packages:
     resolution: {integrity: sha512-tFkciB9j2K755yrTALxD44McOrk+gfpIpvC3sxHjRawj6PfnQxrse4Clq5y/Rq+G3mrBurMax/lG8Qn2t9mSsg==}
     dependencies:
       '@babel/types': 7.21.4
+    dev: true
+
+  /@types/babel__standalone@7.1.4:
+    resolution: {integrity: sha512-HijIDmcNl3Wmo0guqjYkQvMzyRCM6zMCkYcdG8f+2X7mPBNa9ikSeaQlWs2Yg18KN1klOJzyupX5BPOf+7ahaw==}
+    dependencies:
+      '@babel/core': 7.21.4
+    transitivePeerDependencies:
+      - supports-color
     dev: true
 
   /@types/babel__template@7.4.1:
