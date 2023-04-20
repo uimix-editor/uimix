@@ -12,6 +12,7 @@ import { posix as path } from "path-browserify";
 import { filterUndefined, variantConditionToText } from "./util";
 import { Color } from "@uimix/foundation/src/utils/Color";
 import { generateLowerJSIdentifier } from "@uimix/foundation/src/utils/Name";
+import { assertNonNull } from "@uimix/foundation/src/utils/Assert";
 
 export class ProjectLoader2 {
   constructor() {
@@ -130,7 +131,7 @@ class PageLoader {
 
     this.projectLoader.pathToComponent.set(
       this.filePath + "#" + inputNode.props.id,
-      Component.from(componentNode)!
+      assertNonNull(Component.from(componentNode))
     );
 
     return componentNode;
@@ -170,16 +171,17 @@ class PageLoader {
 
     const visit = (selectable: Selectable) => {
       const refID = refIDs.get(selectable.originalNode.id);
-      if (refID) {
-        selectable.selfStyle.loadJSON(
-          this.transformStyle(overrides[refID] ?? {})
-        );
+      if (!refID) {
+        return;
       }
 
+      selectable.selfStyle.loadJSON(
+        this.transformStyle(overrides[refID] ?? {})
+      );
       if (selectable.originalNode.type === "instance") {
         this.loadInstanceOverrides(
           selectable,
-          overrides[refID!].overrides ?? {}
+          overrides[refID].overrides ?? {}
         );
       } else {
         selectable.children.forEach(visit);

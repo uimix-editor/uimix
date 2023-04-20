@@ -84,10 +84,6 @@ export class PageEmitter {
   ): HumanReadable.SceneNode {
     const node = selectable.originalNode;
 
-    const variants = selectable.variantCorrespondings.filter(
-      (corresponding) => corresponding.variant
-    );
-
     const refID = refIDs?.get(selectable.originalNode.id);
 
     const children =
@@ -96,12 +92,18 @@ export class PageEmitter {
         : selectable.children.map((child) => this.emitNode(child, refIDs));
 
     const variantStyles = Object.fromEntries(
-      variants.map((corresponding) => {
-        return [
-          variantConditionToText(corresponding.variant!.condition!),
-          this.getStyleForSelectable(corresponding.selectable),
-        ];
-      })
+      compact(
+        selectable.variantCorrespondings.map((corresponding) => {
+          const condition = corresponding.variant?.condition;
+          if (!condition) {
+            return;
+          }
+          return [
+            variantConditionToText(condition),
+            this.getStyleForSelectable(corresponding.selectable),
+          ];
+        })
+      )
     );
 
     return {
@@ -134,13 +136,14 @@ export class PageEmitter {
 
       const visit = (selectable: Selectable) => {
         const refID = refIDs.get(selectable.originalNode.id);
-
-        if (refID) {
-          overrides[refID] = this.transformStyle(selectable.selfStyle);
+        if (!refID) {
+          return;
         }
 
+        overrides[refID] = this.transformStyle(selectable.selfStyle);
+
         if (selectable.originalNode.type === "instance") {
-          overrides[refID!]["overrides"] = getInstanceOverrides(selectable);
+          overrides[refID]["overrides"] = getInstanceOverrides(selectable);
         } else {
           selectable.children.forEach((child) => visit(child));
         }
