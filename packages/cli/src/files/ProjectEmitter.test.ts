@@ -3,19 +3,19 @@ import { WorkspaceLoader } from "../project/WorkspaceLoader";
 import * as path from "path";
 import { NodeFileAccess } from "../project/NodeFileAccess";
 import { Project } from "@uimix/model/src/models/Project";
-import { ProjectEmitter2 } from "./FileEmitter2";
-import { ProjectLoader2 } from "./FileLoader2";
+import { ProjectEmitter } from "./ProjectEmitter";
+import { ProjectLoader } from "./ProjectLoader";
 import { loadFromJSXFile, stringifyAsJSXFile } from "./HumanReadableFormat";
 import { formatTypeScript } from "../format";
 
-describe("ProjectEmitter", () => {
+describe(ProjectEmitter.name, () => {
   it("works", async () => {
     const rootDir = path.resolve("../sandbox");
     const files = await WorkspaceLoader.load(new NodeFileAccess(rootDir));
     const project = new Project();
     project.loadJSON(files.rootProject.json);
 
-    const emitter = new ProjectEmitter2(project);
+    const emitter = new ProjectEmitter(project);
 
     const emitted = emitter.emit();
 
@@ -27,10 +27,10 @@ describe("ProjectEmitter", () => {
     const parsed = loadFromJSXFile(emittedFile);
     //expect(parsed).toEqual(emitted.get("src/components"));
 
-    const loader = new ProjectLoader2();
+    const loader = new ProjectLoader();
     loader.load(new Map([["src/components", parsed]]));
 
-    const emitted2 = new ProjectEmitter2(loader.project).emit();
+    const emitted2 = new ProjectEmitter(loader.project).emit();
     const emittedFile2 = formatTypeScript(
       stringifyAsJSXFile(emitted2.get("src/components")!)
     );

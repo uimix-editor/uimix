@@ -34,7 +34,7 @@ box-sizing: border-box;
   box-shadow: none;
 }
 .uimix-1Bvi2z3UPfi6W3L8nDt5VA:hover {
-  background: transparent;
+  background: #3b82f6;
 }
 @media (max-width: 767px) {
 .uimix-1Bvi2z3UPfi6W3L8nDt5VA {
@@ -285,7 +285,7 @@ box-sizing: border-box;
   padding-right: 0px;
   padding-top: 0px;
   padding-bottom: 0px;
-  background: transparent;
+  background: #3b82f6;
   border-style: solid;
   border-color: transparent;
   border-top-width: 0px;

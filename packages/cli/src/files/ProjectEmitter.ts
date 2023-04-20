@@ -11,7 +11,7 @@ import {
 import { posix as path } from "path-browserify";
 import { filterUndefined, variantConditionToText } from "./util";
 
-export class ProjectEmitter2 {
+export class ProjectEmitter {
   constructor(project: Project) {
     this.project = project;
   }

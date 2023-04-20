@@ -14,7 +14,7 @@ import { Color } from "@uimix/foundation/src/utils/Color";
 import { generateLowerJSIdentifier } from "@uimix/foundation/src/utils/Name";
 import { assertNonNull } from "@uimix/foundation/src/utils/Assert";
 
-export class ProjectLoader2 {
+export class ProjectLoader {
   constructor() {
     this.project = new Project();
   }
@@ -50,12 +50,12 @@ export class ProjectLoader2 {
 }
 
 class PageLoader {
-  constructor(projectLoader: ProjectLoader2, page: Page) {
+  constructor(projectLoader: ProjectLoader, page: Page) {
     this.projectLoader = projectLoader;
     this.page = page;
   }
 
-  projectLoader: ProjectLoader2;
+  projectLoader: ProjectLoader;
   page: Page;
   nodeToInput = new Map<Node, HumanReadable.SceneNode>();
 
