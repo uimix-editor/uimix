@@ -191,7 +191,7 @@ export function stringifyAsJSXFile(node: Node): string {
   return `export default ${stringifyAsJSX(node)};`;
 }
 
-export function loadFromJSX(text: string): void {
+export function loadFromJSXFile(text: string): Node {
   // use babel to transform jsx to js
   // evaluate the js to get the node
 
@@ -238,5 +238,6 @@ export function loadFromJSX(text: string): void {
   vm.runInContext(transformedJS, sandbox);
 
   const jsonOutput = exports.default;
-  console.log(JSON.stringify(jsonOutput, null, 2));
+
+  return jsonOutput as Node;
 }

@@ -5,10 +5,7 @@ import { NodeFileAccess } from "../project/NodeFileAccess";
 import { Project } from "@uimix/model/src/models/Project";
 import { ProjectEmitter2 } from "./FileEmitter2";
 import { ProjectLoader2 } from "./FileLoader2";
-import {
-  loadFromJSX as loadFromJSXFile,
-  stringifyAsJSXFile,
-} from "./HumanReadableFormat";
+import { loadFromJSXFile, stringifyAsJSXFile } from "./HumanReadableFormat";
 import { formatTypeScript } from "../format";
 
 describe("ProjectEmitter", () => {
