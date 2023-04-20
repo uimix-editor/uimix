@@ -1,19 +1,20 @@
 import { describe, expect, it } from "vitest";
-import { WorkspaceLoader } from "../project/WorkspaceLoader";
-import * as path from "path";
-import { NodeFileAccess } from "../project/NodeFileAccess";
 import { Project } from "@uimix/model/src/models/Project";
 import { ProjectEmitter } from "./ProjectEmitter";
 import { ProjectLoader } from "./ProjectLoader";
 import { loadFromJSXFile, stringifyAsJSXFile } from "./HumanReadableFormat";
 import { formatTypeScript } from "../format";
+// @ts-ignore
+import projectJSONFile from "../../../model/src/models/__fixtures__/project.uimixproject?raw";
+import { ProjectJSON } from "@uimix/model/src/data/v1";
 
 describe(ProjectEmitter.name, () => {
   it("works", async () => {
-    const rootDir = path.resolve("../sandbox");
-    const files = await WorkspaceLoader.load(new NodeFileAccess(rootDir));
+    const projectJSON = ProjectJSON.parse(
+      JSON.parse(projectJSONFile as string)
+    );
     const project = new Project();
-    project.loadJSON(files.rootProject.json);
+    project.loadJSON(projectJSON);
 
     const emitter = new ProjectEmitter(project);
 

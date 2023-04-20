@@ -614,9 +614,6 @@ box-sizing: border-box;
 import * as header from \\"../../sandbox/src/stories/Header\\";
 import * as button from \\"../../sandbox/src/stories/Button\\";
 import image_YmY$tuteU03QY$k_2ARy1uacNmXDNmOX$FFAlj2qCIo from \\"../.uimix/images/YmY-tuteU03QY-k_2ARy1uacNmXDNmOX-FFAlj2qCIo.png\\";
-import image_XMIUgNq9VxH1FiVdc4M95ZcfqaSP3aF07GtbcGHi9AY from \\"../.uimix/images/XMIUgNq9VxH1FiVdc4M95ZcfqaSP3aF07GtbcGHi9AY.png\\";
-import image_DGLFxM8eMqBjHUQYEekprnB3xC$f5uvLxL7x2odVAEU from \\"../.uimix/images/DGLFxM8eMqBjHUQYEekprnB3xC-f5uvLxL7x2odVAEU.png\\";
-import image_1yKf5NvwGW$XtLSBDlS3GqZfbEGnLshgQrjyQJImqaM from \\"../.uimix/images/1yKf5NvwGW-XtLSBDlS3GqZfbEGnLshgQrjyQJImqaM.png\\";
 import \\"./components.uimix.css\\";
 
 function applyOverrides(
