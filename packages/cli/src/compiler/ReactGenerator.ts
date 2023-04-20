@@ -11,6 +11,7 @@ import reactElementToJSXString from "react-element-to-jsx-string";
 import React from "react";
 import { Page } from "@uimix/model/src/models/Page";
 import { ProjectManifestJSON } from "@uimix/model/src/data/v1";
+import { ClassNameGenerator } from "./CSSGenerator";
 
 // TODO: remove this when react-element-to-jsx-string is fixed
 const reactElementToJSXStringFixed =
@@ -89,11 +90,13 @@ export class ReactGenerator {
     manifest: ProjectManifestJSON;
     page: Page;
     imagePaths: Map<string, string>;
+    classNameGenerator: ClassNameGenerator;
   }) {
     this.rootPath = options.rootPath;
     this.manifest = options.manifest;
     this.page = options.page;
     this.imagePaths = options.imagePaths;
+    this.classNameGenerator = options.classNameGenerator;
 
     const componentNames = new Set<string>();
     for (const component of this.page.components) {
@@ -110,6 +113,7 @@ export class ReactGenerator {
   manifest: ProjectManifestJSON;
   page: Page;
   imagePaths: Map<string, string>;
+  classNameGenerator: ClassNameGenerator;
   componentsWithNames: [Component, string][] = [];
   refIDs = new Map<string, string>();
   moduleVarNames = new Map<string, string>(); // path -> varName
@@ -213,7 +217,7 @@ export class ReactGenerator {
 
     const classNames: string[] = [];
     for (let i = 0; i < idPath.length; ++i) {
-      classNames.push("uimix-" + idPath.slice(i).join("-"));
+      classNames.push(this.classNameGenerator.get(idPath.slice(i)));
     }
 
     if (
@@ -222,7 +226,9 @@ export class ReactGenerator {
     ) {
       const mainComponent = selectable.mainComponent;
       if (mainComponent) {
-        classNames.push(`uimix-${mainComponent.rootNode.id}`);
+        classNames.push(
+          this.classNameGenerator.get([mainComponent.rootNode.id])
+        );
       }
     }
 

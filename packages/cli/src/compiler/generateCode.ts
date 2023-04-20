@@ -44,7 +44,13 @@ export async function generateCode(
 
   for (const page of project.pages.all) {
     const tsContent = formatTypeScript(
-      new ReactGenerator({ rootPath, manifest, page, imagePaths })
+      new ReactGenerator({
+        rootPath,
+        manifest,
+        page,
+        imagePaths,
+        classNameGenerator,
+      })
         .render()
         .join("\n")
     );
