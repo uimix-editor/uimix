@@ -66,7 +66,7 @@ exports[`ProjectEmitter > works 1`] = `
         name=\\"Item 0\\"
         width={{ min: 25, max: 100 }}
         height={{ min: 20, max: 60 }}
-        fills={[{ solid: { token: \\"./components.uimix#red_Orange\\" } }]}
+        fills={[{ solid: { token: \\"red_Orange\\" } }]}
       />
       <frame
         id=\\"item_1\\"
@@ -107,7 +107,7 @@ exports[`ProjectEmitter > works 1`] = `
         id=\\"button\\"
         name=\\"Button\\"
         position={{ left: 416, top: 234 }}
-        component=\\"./components.uimix#Button\\"
+        component=\\"Button\\"
         overrides={{ text: {} }}
       />
     </frame>
@@ -167,7 +167,7 @@ exports[`ProjectEmitter > works 1`] = `
           name=\\"Instance\\"
           position={{ left: 160, top: 28 }}
           fills={[{ solid: \\"#BABABA\\" }]}
-          component=\\"./components.uimix#Button\\"
+          component=\\"Button\\"
           overrides={{ text: { textContent: \\"Override Name\\" } }}
           variants={{ \\"maxWidth:767\\": { overrides: { text: {} } } }}
         />
@@ -185,7 +185,7 @@ exports[`ProjectEmitter > works 1`] = `
           id=\\"stack\\"
           name=\\"Stack\\"
           position={{ left: 165, top: 86 }}
-          component=\\"./components.uimix#Stack\\"
+          component=\\"Stack\\"
           overrides={{
             item_0: {},
             item_1: {},
@@ -340,7 +340,7 @@ exports[`ProjectEmitter > works 1`] = `
         name=\\"Item 0\\"
         width={{ min: 25, max: 100 }}
         height={{ min: 20, max: 60 }}
-        fills={[{ solid: { token: \\"./components.uimix#red_Orange\\" } }]}
+        fills={[{ solid: { token: \\"red_Orange\\" } }]}
       />
       <frame
         id=\\"\\"

@@ -174,6 +174,9 @@ export class PageEmitter {
   }
 
   pathForExport(page: Page, name: string) {
+    if (this.page === page) {
+      return name;
+    }
     return this.relativePathFromPage(page.filePath) + ".uimix#" + name;
   }
 

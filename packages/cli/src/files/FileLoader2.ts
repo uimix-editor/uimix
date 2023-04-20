@@ -8,7 +8,7 @@ import {
 } from "@uimix/model/src/models";
 import * as HumanReadable from "./HumanReadableFormat";
 import * as Data from "@uimix/model/src/data/v1";
-import { posix as path } from "path-browserify";
+import { posix as path, relative } from "path-browserify";
 import { filterUndefined, variantConditionToText } from "./util";
 import { Color } from "@uimix/foundation/src/utils/Color";
 import { generateLowerJSIdentifier } from "@uimix/foundation/src/utils/Name";
@@ -202,15 +202,24 @@ class PageLoader {
     }
   }
 
+  absoluteExportPath(exportPath: string): string {
+    if (!exportPath.includes("#")) {
+      return this.filePath + "#" + exportPath;
+    }
+    return path.join(path.dirname(this.filePath), exportPath);
+  }
+
   // Get id from relative path of components/tokens
   componentFromRelativePath(relativePath: string): Component | undefined {
-    const absPath = path.join(path.dirname(this.filePath), relativePath);
-    return this.projectLoader.pathToComponent.get(absPath);
+    return this.projectLoader.pathToComponent.get(
+      this.absoluteExportPath(relativePath)
+    );
   }
 
   colorTokenFromRelativePath(relativePath: string): ColorToken | undefined {
-    const absPath = path.join(path.dirname(this.filePath), relativePath);
-    return this.projectLoader.pathToColorToken.get(absPath);
+    return this.projectLoader.pathToColorToken.get(
+      this.absoluteExportPath(relativePath)
+    );
   }
 
   transformColor(color: HumanReadable.Color): Data.Color {
