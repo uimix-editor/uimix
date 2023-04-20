@@ -13,13 +13,10 @@ Map {
                 "props": {
                   "fills": [
                     {
-                      "color": "#111827",
-                      "type": "solid",
+                      "solid": "#111827",
                     },
                   ],
-                  "height": {
-                    "type": "hug",
-                  },
+                  "height": "hug",
                   "id": "text",
                   "name": "Text",
                   "textContent": "Button",
@@ -27,8 +24,7 @@ Map {
                     "hover": {
                       "fills": [
                         {
-                          "color": "#FFFFFF",
-                          "type": "solid",
+                          "solid": "#FFFFFF",
                         },
                       ],
                     },
@@ -36,9 +32,7 @@ Map {
                       "fontSize": 14,
                     },
                   },
-                  "width": {
-                    "type": "hug",
-                  },
+                  "width": "hug",
                 },
                 "type": "text",
               },
@@ -46,13 +40,10 @@ Map {
             "props": {
               "fills": [
                 {
-                  "color": "#E5E7EB",
-                  "type": "solid",
+                  "solid": "#E5E7EB",
                 },
               ],
-              "height": {
-                "type": "hug",
-              },
+              "height": "hug",
               "id": "",
               "layout": "flex",
               "name": "",
@@ -70,11 +61,9 @@ Map {
                 "hover": {
                   "fills": [
                     {
-                      "color": {
-                        "id": "blue/500",
-                        "type": "token",
+                      "solid": {
+                        "token": "blue/500",
                       },
-                      "type": "solid",
                     },
                   ],
                   "position": {
@@ -97,9 +86,7 @@ Map {
                   },
                 },
               },
-              "width": {
-                "type": "hug",
-              },
+              "width": "hug",
             },
             "type": "frame",
           },
@@ -136,26 +123,20 @@ Map {
                 "props": {
                   "fills": [
                     {
-                      "color": {
-                        "id": "./components.uimix#red_Orange",
-                        "type": "token",
+                      "solid": {
+                        "token": "./components.uimix#red_Orange",
                       },
-                      "type": "solid",
                     },
                   ],
                   "height": {
                     "max": 60,
                     "min": 20,
-                    "type": "fill",
-                    "value": 50,
                   },
                   "id": "item_0",
                   "name": "Item 0",
                   "width": {
                     "max": 100,
                     "min": 25,
-                    "type": "fill",
-                    "value": 50,
                   },
                 },
                 "type": "frame",
@@ -165,20 +146,13 @@ Map {
                 "props": {
                   "fills": [
                     {
-                      "color": "#22C55E",
-                      "type": "solid",
+                      "solid": "#22C55E",
                     },
                   ],
-                  "height": {
-                    "type": "fixed",
-                    "value": 80,
-                  },
+                  "height": 80,
                   "id": "item_1",
                   "name": "Item 1",
-                  "width": {
-                    "type": "fixed",
-                    "value": 40,
-                  },
+                  "width": 40,
                 },
                 "type": "frame",
               },
@@ -187,21 +161,14 @@ Map {
                 "props": {
                   "fills": [
                     {
-                      "color": "#22C55E",
-                      "type": "solid",
+                      "solid": "#22C55E",
                     },
                   ],
-                  "height": {
-                    "type": "fixed",
-                    "value": 80,
-                  },
+                  "height": 80,
                   "hidden": true,
                   "id": "hidden_Item",
                   "name": "Hidden Item",
-                  "width": {
-                    "type": "fixed",
-                    "value": 40,
-                  },
+                  "width": 40,
                 },
                 "type": "frame",
               },
@@ -210,23 +177,15 @@ Map {
                 "props": {
                   "fills": [
                     {
-                      "color": {
-                        "id": "blue/500",
-                        "type": "token",
+                      "solid": {
+                        "token": "blue/500",
                       },
-                      "type": "solid",
                     },
                   ],
-                  "height": {
-                    "type": "fixed",
-                    "value": 40,
-                  },
+                  "height": 40,
                   "id": "item_2",
                   "name": "Item 2",
-                  "width": {
-                    "type": "fixed",
-                    "value": 80,
-                  },
+                  "width": 80,
                 },
                 "type": "frame",
               },
@@ -235,14 +194,11 @@ Map {
                 "props": {
                   "fills": [
                     {
-                      "color": "#000000",
-                      "type": "solid",
+                      "solid": "#000000",
                     },
                   ],
                   "fontSize": 20,
-                  "height": {
-                    "type": "hug",
-                  },
+                  "height": "hug",
                   "id": "text",
                   "marginBottom": 30,
                   "marginLeft": 40,
@@ -250,9 +206,7 @@ Map {
                   "marginTop": 10,
                   "name": "Text",
                   "textContent": "Hello, world!",
-                  "width": {
-                    "type": "hug",
-                  },
+                  "width": "hug",
                 },
                 "type": "text",
               },
@@ -279,13 +233,10 @@ Map {
               "columnGap": 10,
               "fills": [
                 {
-                  "color": "#FFFFFF",
-                  "type": "solid",
+                  "solid": "#FFFFFF",
                 },
               ],
-              "height": {
-                "type": "hug",
-              },
+              "height": "hug",
               "id": "",
               "layout": "flex",
               "name": "Stack",
@@ -300,9 +251,7 @@ Map {
                 "top": 184,
               },
               "rowGap": 10,
-              "width": {
-                "type": "hug",
-              },
+              "width": "hug",
             },
             "type": "frame",
           },
@@ -322,9 +271,7 @@ Map {
                 "props": {
                   "component": "./stories/Header.tsx#Header",
                   "componentType": "react",
-                  "height": {
-                    "type": "hug",
-                  },
+                  "height": "hug",
                   "id": "header",
                   "name": "Header",
                   "props": {},
@@ -332,8 +279,8 @@ Map {
                     "maxWidth:767": {},
                   },
                   "width": {
-                    "type": "fill",
-                    "value": 744,
+                    "max": undefined,
+                    "min": 0,
                   },
                 },
                 "type": "foreign",
@@ -345,9 +292,7 @@ Map {
                     "props": {
                       "component": "./stories/Button.tsx#Button",
                       "componentType": "react",
-                      "height": {
-                        "type": "hug",
-                      },
+                      "height": "hug",
                       "id": "button",
                       "name": "Button",
                       "position": {
@@ -365,9 +310,7 @@ Map {
                       "variants": {
                         "maxWidth:767": {},
                       },
-                      "width": {
-                        "type": "hug",
-                      },
+                      "width": "hug",
                     },
                     "type": "foreign",
                   },
@@ -377,8 +320,7 @@ Map {
                       "component": "./components.uimix#Button",
                       "fills": [
                         {
-                          "color": "#BABABA",
-                          "type": "solid",
+                          "solid": "#BABABA",
                         },
                       ],
                       "id": "instance",
@@ -409,14 +351,10 @@ Map {
                     "props": {
                       "fills": [
                         {
-                          "color": "#FFFFFF",
-                          "type": "solid",
+                          "solid": "#FFFFFF",
                         },
                       ],
-                      "height": {
-                        "type": "fixed",
-                        "value": 100,
-                      },
+                      "height": 100,
                       "id": "image",
                       "image": "./images/YmY-tuteU03QY-k_2ARy1uacNmXDNmOX-FFAlj2qCIo.png",
                       "name": "Image",
@@ -429,10 +367,7 @@ Map {
                       "variants": {
                         "maxWidth:767": {},
                       },
-                      "width": {
-                        "type": "fixed",
-                        "value": 100,
-                      },
+                      "width": 100,
                     },
                     "type": "image",
                   },
@@ -472,8 +407,7 @@ Map {
                                 "text": {
                                   "fills": [
                                     {
-                                      "color": "#FF0000",
-                                      "type": "solid",
+                                      "solid": "#FF0000",
                                     },
                                   ],
                                 },
@@ -494,13 +428,12 @@ Map {
                 "props": {
                   "fills": [
                     {
-                      "color": "#FFFFFF",
-                      "type": "solid",
+                      "solid": "#FFFFFF",
                     },
                   ],
                   "height": {
-                    "type": "fill",
-                    "value": 173,
+                    "max": undefined,
+                    "min": 0,
                   },
                   "id": "frame",
                   "name": "Frame",
@@ -514,8 +447,8 @@ Map {
                     "maxWidth:767": {},
                   },
                   "width": {
-                    "type": "fill",
-                    "value": 428,
+                    "max": undefined,
+                    "min": 0,
                   },
                 },
                 "type": "frame",
@@ -524,16 +457,12 @@ Map {
             "props": {
               "fills": [
                 {
-                  "color": "#FFFFFF",
-                  "type": "solid",
+                  "solid": "#FFFFFF",
                 },
               ],
               "flexAlign": "center",
               "flexDirection": "y",
-              "height": {
-                "type": "fixed",
-                "value": 456,
-              },
+              "height": 456,
               "id": "",
               "layout": "flex",
               "name": "Frame",
@@ -551,16 +480,10 @@ Map {
                     "right": undefined,
                     "top": 585,
                   },
-                  "width": {
-                    "type": "fixed",
-                    "value": 720,
-                  },
+                  "width": 720,
                 },
               },
-              "width": {
-                "type": "fixed",
-                "value": 900,
-              },
+              "width": 900,
             },
             "type": "frame",
           },
@@ -589,18 +512,14 @@ Map {
                   {
                     "children": [],
                     "props": {
-                      "height": {
-                        "type": "hug",
-                      },
+                      "height": "hug",
                       "id": "heroicons_code_bracket",
                       "name": "heroicons:code-bracket",
                       "svg": "<svg width=\\"24\\" height=\\"24\\" viewBox=\\"0 0 24 24\\" fill=\\"none\\" xmlns=\\"http://www.w3.org/2000/svg\\">
 <path d=\\"M17.25 6.75L22.5 12L17.25 17.25M6.75 17.25L1.5 12L6.75 6.75M14.25 3.75L9.75 20.25\\" stroke=\\"#0EA5E9\\" stroke-width=\\"1.5\\" stroke-linecap=\\"round\\" stroke-linejoin=\\"round\\"/>
 </svg>
 ",
-                      "width": {
-                        "type": "hug",
-                      },
+                      "width": "hug",
                     },
                     "type": "svg",
                   },
@@ -611,16 +530,13 @@ Map {
                   "columnGap": 10,
                   "fills": [
                     {
-                      "color": "#f0f9ff",
-                      "type": "solid",
+                      "solid": "#f0f9ff",
                     },
                   ],
                   "flexAlign": "start",
                   "flexDirection": "x",
                   "flexJustify": "start",
-                  "height": {
-                    "type": "hug",
-                  },
+                  "height": "hug",
                   "hidden": false,
                   "id": "icon",
                   "layout": "flex",
@@ -634,9 +550,7 @@ Map {
                   "rowGap": 10,
                   "topLeftRadius": 8,
                   "topRightRadius": 8,
-                  "width": {
-                    "type": "hug",
-                  },
+                  "width": "hug",
                 },
                 "type": "frame",
               },
@@ -645,16 +559,13 @@ Map {
                 "props": {
                   "fills": [
                     {
-                      "color": "#1f2937",
-                      "type": "solid",
+                      "solid": "#1f2937",
                     },
                   ],
                   "fontFamily": "Satoshi",
                   "fontSize": 20,
                   "fontWeight": 700,
-                  "height": {
-                    "type": "hug",
-                  },
+                  "height": "hug",
                   "hidden": false,
                   "id": "title",
                   "letterSpacing": 0,
@@ -664,8 +575,8 @@ Map {
                   "textHorizontalAlign": "start",
                   "textVerticalAlign": "start",
                   "width": {
-                    "type": "fill",
-                    "value": 315.640625,
+                    "max": undefined,
+                    "min": 0,
                   },
                 },
                 "type": "text",
@@ -675,16 +586,13 @@ Map {
                 "props": {
                   "fills": [
                     {
-                      "color": "#4b5563",
-                      "type": "solid",
+                      "solid": "#4b5563",
                     },
                   ],
                   "fontFamily": "Inter",
                   "fontSize": 16,
                   "fontWeight": 400,
-                  "height": {
-                    "type": "hug",
-                  },
+                  "height": "hug",
                   "hidden": false,
                   "id": "description",
                   "letterSpacing": 0,
@@ -695,7 +603,8 @@ Map {
                   "textHorizontalAlign": "start",
                   "textVerticalAlign": "start",
                   "width": {
-                    "type": "fill",
+                    "max": undefined,
+                    "min": 0,
                   },
                 },
                 "type": "text",
@@ -707,16 +616,13 @@ Map {
               "columnGap": 20,
               "fills": [
                 {
-                  "color": "#ffffff",
-                  "type": "solid",
+                  "solid": "#ffffff",
                 },
               ],
               "flexAlign": "start",
               "flexDirection": "y",
               "flexJustify": "start",
-              "height": {
-                "type": "hug",
-              },
+              "height": "hug",
               "hidden": false,
               "id": "",
               "layout": "flex",
@@ -736,10 +642,7 @@ Map {
               "rowGap": 20,
               "topLeftRadius": 20,
               "topRightRadius": 20,
-              "width": {
-                "type": "fixed",
-                "value": 400,
-              },
+              "width": 400,
             },
             "type": "frame",
           },
@@ -759,26 +662,20 @@ Map {
                 "props": {
                   "fills": [
                     {
-                      "color": {
-                        "id": "./components.uimix#red_Orange",
-                        "type": "token",
+                      "solid": {
+                        "token": "./components.uimix#red_Orange",
                       },
-                      "type": "solid",
                     },
                   ],
                   "height": {
                     "max": 60,
                     "min": 20,
-                    "type": "fill",
-                    "value": 50,
                   },
                   "id": "",
                   "name": "Item 0",
                   "width": {
                     "max": 100,
                     "min": 25,
-                    "type": "fill",
-                    "value": 50,
                   },
                 },
                 "type": "frame",
@@ -788,20 +685,13 @@ Map {
                 "props": {
                   "fills": [
                     {
-                      "color": "#22C55E",
-                      "type": "solid",
+                      "solid": "#22C55E",
                     },
                   ],
-                  "height": {
-                    "type": "fixed",
-                    "value": 80,
-                  },
+                  "height": 80,
                   "id": "",
                   "name": "Item 1",
-                  "width": {
-                    "type": "fixed",
-                    "value": 40,
-                  },
+                  "width": 40,
                 },
                 "type": "frame",
               },
@@ -810,21 +700,14 @@ Map {
                 "props": {
                   "fills": [
                     {
-                      "color": "#22C55E",
-                      "type": "solid",
+                      "solid": "#22C55E",
                     },
                   ],
-                  "height": {
-                    "type": "fixed",
-                    "value": 80,
-                  },
+                  "height": 80,
                   "hidden": true,
                   "id": "",
                   "name": "Hidden Item",
-                  "width": {
-                    "type": "fixed",
-                    "value": 40,
-                  },
+                  "width": 40,
                 },
                 "type": "frame",
               },
@@ -833,23 +716,15 @@ Map {
                 "props": {
                   "fills": [
                     {
-                      "color": {
-                        "id": "blue/500",
-                        "type": "token",
+                      "solid": {
+                        "token": "blue/500",
                       },
-                      "type": "solid",
                     },
                   ],
-                  "height": {
-                    "type": "fixed",
-                    "value": 40,
-                  },
+                  "height": 40,
                   "id": "",
                   "name": "Item 2",
-                  "width": {
-                    "type": "fixed",
-                    "value": 80,
-                  },
+                  "width": 80,
                 },
                 "type": "frame",
               },
@@ -858,14 +733,11 @@ Map {
                 "props": {
                   "fills": [
                     {
-                      "color": "#000000",
-                      "type": "solid",
+                      "solid": "#000000",
                     },
                   ],
                   "fontSize": 20,
-                  "height": {
-                    "type": "hug",
-                  },
+                  "height": "hug",
                   "id": "",
                   "marginBottom": 30,
                   "marginLeft": 40,
@@ -873,9 +745,7 @@ Map {
                   "marginTop": 10,
                   "name": "Text",
                   "textContent": "Hello, world!",
-                  "width": {
-                    "type": "hug",
-                  },
+                  "width": "hug",
                 },
                 "type": "text",
               },
@@ -884,13 +754,10 @@ Map {
               "columnGap": 10,
               "fills": [
                 {
-                  "color": "#FFFFFF",
-                  "type": "solid",
+                  "solid": "#FFFFFF",
                 },
               ],
-              "height": {
-                "type": "hug",
-              },
+              "height": "hug",
               "id": "",
               "layout": "flex",
               "name": "Stack",
@@ -905,9 +772,7 @@ Map {
                 "top": 14,
               },
               "rowGap": 10,
-              "width": {
-                "type": "hug",
-              },
+              "width": "hug",
             },
             "type": "frame",
           },
@@ -915,14 +780,10 @@ Map {
         "props": {
           "fills": [
             {
-              "color": "#FFFFFF",
-              "type": "solid",
+              "solid": "#FFFFFF",
             },
           ],
-          "height": {
-            "type": "fixed",
-            "value": 237,
-          },
+          "height": 237,
           "id": "",
           "layout": "flex",
           "name": "Frame",
@@ -936,10 +797,7 @@ Map {
             "right": undefined,
             "top": 184,
           },
-          "width": {
-            "type": "fixed",
-            "value": 459,
-          },
+          "width": 459,
         },
         "type": "frame",
       },
@@ -965,9 +823,7 @@ Map {
                   {
                     "children": [],
                     "props": {
-                      "height": {
-                        "type": "hug",
-                      },
+                      "height": "hug",
                       "id": "frame_178",
                       "name": "Frame 178",
                       "svg": "<svg width=\\"24\\" height=\\"24\\" viewBox=\\"0 0 24 24\\" fill=\\"none\\" xmlns=\\"http://www.w3.org/2000/svg\\">
@@ -977,9 +833,7 @@ Map {
 <path d=\\"M13.5 18C13.5 16.6022 13.5 15.9033 13.7284 15.3519C14.0328 14.6169 14.6169 14.0328 15.3519 13.7284C15.9033 13.5 16.6022 13.5 18 13.5V13.5C19.3978 13.5 20.0967 13.5 20.6481 13.7284C21.3831 14.0328 21.9672 14.6169 22.2716 15.3519C22.5 15.9033 22.5 16.6022 22.5 18V18C22.5 19.3978 22.5 20.0967 22.2716 20.6481C21.9672 21.3831 21.3831 21.9672 20.6481 22.2716C20.0967 22.5 19.3978 22.5 18 22.5V22.5C16.6022 22.5 15.9033 22.5 15.3519 22.2716C14.6169 21.9672 14.0328 21.3831 13.7284 20.6481C13.5 20.0967 13.5 19.3978 13.5 18V18Z\\" fill=\\"#1E5DFF\\"/>
 </svg>
 ",
-                      "width": {
-                        "type": "hug",
-                      },
+                      "width": "hug",
                     },
                     "type": "svg",
                   },
@@ -988,16 +842,13 @@ Map {
                     "props": {
                       "fills": [
                         {
-                          "color": "#1f2937",
-                          "type": "solid",
+                          "solid": "#1f2937",
                         },
                       ],
                       "fontFamily": "Satoshi",
                       "fontSize": 24,
                       "fontWeight": 900,
-                      "height": {
-                        "type": "hug",
-                      },
+                      "height": "hug",
                       "hidden": false,
                       "id": "uIMix",
                       "letterSpacing": "-2%",
@@ -1007,9 +858,7 @@ Map {
                       "textContent": "UIMix",
                       "textHorizontalAlign": "start",
                       "textVerticalAlign": "center",
-                      "width": {
-                        "type": "hug",
-                      },
+                      "width": "hug",
                     },
                     "type": "text",
                   },
@@ -1022,9 +871,7 @@ Map {
                   "flexAlign": "center",
                   "flexDirection": "x",
                   "flexJustify": "start",
-                  "height": {
-                    "type": "hug",
-                  },
+                  "height": "hug",
                   "hidden": false,
                   "id": "frame_102",
                   "layout": "flex",
@@ -1045,9 +892,7 @@ Map {
                   "shadows": [],
                   "topLeftRadius": 0,
                   "topRightRadius": 0,
-                  "width": {
-                    "type": "hug",
-                  },
+                  "width": "hug",
                 },
                 "type": "frame",
               },
@@ -1060,16 +905,13 @@ Map {
                         "props": {
                           "fills": [
                             {
-                              "color": "#1f2937",
-                              "type": "solid",
+                              "solid": "#1f2937",
                             },
                           ],
                           "fontFamily": "Satoshi",
                           "fontSize": 14,
                           "fontWeight": 700,
-                          "height": {
-                            "type": "hug",
-                          },
+                          "height": "hug",
                           "hidden": false,
                           "id": "sign_In",
                           "letterSpacing": "0%",
@@ -1079,17 +921,14 @@ Map {
                           "textContent": "Sign In",
                           "textHorizontalAlign": "center",
                           "textVerticalAlign": "start",
-                          "width": {
-                            "type": "hug",
-                          },
+                          "width": "hug",
                         },
                         "type": "text",
                       },
                     ],
                     "props": {
                       "border": {
-                        "color": "#1f2937",
-                        "type": "solid",
+                        "solid": "#1f2937",
                       },
                       "borderBottomWidth": 1.5,
                       "borderLeftWidth": 1.5,
@@ -1101,9 +940,7 @@ Map {
                       "flexAlign": "start",
                       "flexDirection": "x",
                       "flexJustify": "start",
-                      "height": {
-                        "type": "hug",
-                      },
+                      "height": "hug",
                       "hidden": false,
                       "id": "frame_3",
                       "layout": "flex",
@@ -1133,9 +970,7 @@ Map {
                       ],
                       "topLeftRadius": 25,
                       "topRightRadius": 25,
-                      "width": {
-                        "type": "hug",
-                      },
+                      "width": "hug",
                     },
                     "type": "frame",
                   },
@@ -1146,16 +981,13 @@ Map {
                         "props": {
                           "fills": [
                             {
-                              "color": "#ffffff",
-                              "type": "solid",
+                              "solid": "#ffffff",
                             },
                           ],
                           "fontFamily": "Satoshi",
                           "fontSize": 14,
                           "fontWeight": 900,
-                          "height": {
-                            "type": "hug",
-                          },
+                          "height": "hug",
                           "hidden": false,
                           "id": "get_Early_Access",
                           "letterSpacing": "0%",
@@ -1165,9 +997,7 @@ Map {
                           "textContent": "Get Early Access",
                           "textHorizontalAlign": "center",
                           "textVerticalAlign": "start",
-                          "width": {
-                            "type": "hug",
-                          },
+                          "width": "hug",
                         },
                         "type": "text",
                       },
@@ -1178,16 +1008,13 @@ Map {
                       "columnGap": 10,
                       "fills": [
                         {
-                          "color": "#3b82f6",
-                          "type": "solid",
+                          "solid": "#3b82f6",
                         },
                       ],
                       "flexAlign": "start",
                       "flexDirection": "x",
                       "flexJustify": "start",
-                      "height": {
-                        "type": "hug",
-                      },
+                      "height": "hug",
                       "hidden": false,
                       "id": "frame_4",
                       "layout": "flex",
@@ -1217,9 +1044,7 @@ Map {
                       ],
                       "topLeftRadius": 25,
                       "topRightRadius": 25,
-                      "width": {
-                        "type": "hug",
-                      },
+                      "width": "hug",
                     },
                     "type": "frame",
                   },
@@ -1232,10 +1057,7 @@ Map {
                   "flexAlign": "start",
                   "flexDirection": "x",
                   "flexJustify": "start",
-                  "height": {
-                    "type": "fixed",
-                    "value": 41,
-                  },
+                  "height": 41,
                   "hidden": false,
                   "id": "frame_179",
                   "layout": "flex",
@@ -1256,10 +1078,7 @@ Map {
                   "shadows": [],
                   "topLeftRadius": 0,
                   "topRightRadius": 0,
-                  "width": {
-                    "type": "fixed",
-                    "value": 247,
-                  },
+                  "width": 247,
                 },
                 "type": "frame",
               },
@@ -1270,16 +1089,13 @@ Map {
                     "props": {
                       "fills": [
                         {
-                          "color": "#000000",
-                          "type": "solid",
+                          "solid": "#000000",
                         },
                       ],
                       "fontFamily": "Satoshi",
                       "fontSize": 16,
                       "fontWeight": 500,
-                      "height": {
-                        "type": "hug",
-                      },
+                      "height": "hug",
                       "hidden": false,
                       "id": "features",
                       "letterSpacing": "0%",
@@ -1289,9 +1105,7 @@ Map {
                       "textContent": "Features",
                       "textHorizontalAlign": "start",
                       "textVerticalAlign": "center",
-                      "width": {
-                        "type": "hug",
-                      },
+                      "width": "hug",
                     },
                     "type": "text",
                   },
@@ -1300,16 +1114,13 @@ Map {
                     "props": {
                       "fills": [
                         {
-                          "color": "#000000",
-                          "type": "solid",
+                          "solid": "#000000",
                         },
                       ],
                       "fontFamily": "Satoshi",
                       "fontSize": 16,
                       "fontWeight": 500,
-                      "height": {
-                        "type": "hug",
-                      },
+                      "height": "hug",
                       "hidden": false,
                       "id": "pricing",
                       "letterSpacing": "0%",
@@ -1319,9 +1130,7 @@ Map {
                       "textContent": "Pricing",
                       "textHorizontalAlign": "start",
                       "textVerticalAlign": "center",
-                      "width": {
-                        "type": "hug",
-                      },
+                      "width": "hug",
                     },
                     "type": "text",
                   },
@@ -1330,16 +1139,13 @@ Map {
                     "props": {
                       "fills": [
                         {
-                          "color": "#000000",
-                          "type": "solid",
+                          "solid": "#000000",
                         },
                       ],
                       "fontFamily": "Satoshi",
                       "fontSize": 16,
                       "fontWeight": 500,
-                      "height": {
-                        "type": "hug",
-                      },
+                      "height": "hug",
                       "hidden": false,
                       "id": "docs",
                       "letterSpacing": "0%",
@@ -1349,9 +1155,7 @@ Map {
                       "textContent": "Docs",
                       "textHorizontalAlign": "start",
                       "textVerticalAlign": "center",
-                      "width": {
-                        "type": "hug",
-                      },
+                      "width": "hug",
                     },
                     "type": "text",
                   },
@@ -1360,16 +1164,13 @@ Map {
                     "props": {
                       "fills": [
                         {
-                          "color": "#000000",
-                          "type": "solid",
+                          "solid": "#000000",
                         },
                       ],
                       "fontFamily": "Satoshi",
                       "fontSize": 16,
                       "fontWeight": 500,
-                      "height": {
-                        "type": "hug",
-                      },
+                      "height": "hug",
                       "hidden": false,
                       "id": "gitHub",
                       "letterSpacing": "0%",
@@ -1379,9 +1180,7 @@ Map {
                       "textContent": "GitHub",
                       "textHorizontalAlign": "start",
                       "textVerticalAlign": "center",
-                      "width": {
-                        "type": "hug",
-                      },
+                      "width": "hug",
                     },
                     "type": "text",
                   },
@@ -1393,9 +1192,7 @@ Map {
                   "flexAlign": "end",
                   "flexDirection": "x",
                   "flexJustify": "start",
-                  "height": {
-                    "type": "hug",
-                  },
+                  "height": "hug",
                   "hidden": false,
                   "id": "frame_180",
                   "layout": "flex",
@@ -1416,9 +1213,7 @@ Map {
                   "shadows": [],
                   "topLeftRadius": 0,
                   "topRightRadius": 0,
-                  "width": {
-                    "type": "hug",
-                  },
+                  "width": "hug",
                 },
                 "type": "frame",
               },
@@ -1426,16 +1221,12 @@ Map {
             "props": {
               "fills": [
                 {
-                  "color": "#FFFFFF",
-                  "type": "solid",
+                  "solid": "#FFFFFF",
                 },
               ],
               "flexAlign": "center",
               "flexJustify": "center",
-              "height": {
-                "type": "fixed",
-                "value": 72,
-              },
+              "height": 72,
               "id": "",
               "layout": "flex",
               "name": "Frame",
@@ -1447,10 +1238,7 @@ Map {
                 "right": undefined,
                 "top": 20,
               },
-              "width": {
-                "type": "fixed",
-                "value": 1183,
-              },
+              "width": 1183,
             },
             "type": "frame",
           },
@@ -1512,8 +1300,8 @@ Map {
                     },
                   },
                   "width": {
-                    "type": "fill",
-                    "value": 1183,
+                    "max": undefined,
+                    "min": 0,
                   },
                 },
                 "type": "instance",
@@ -1527,10 +1315,7 @@ Map {
                         "props": {
                           "bottomLeftRadius": 0,
                           "bottomRightRadius": 0,
-                          "height": {
-                            "type": "fixed",
-                            "value": 550,
-                          },
+                          "height": 550,
                           "hidden": false,
                           "id": "image_2",
                           "image": "./images/XMIUgNq9VxH1FiVdc4M95ZcfqaSP3aF07GtbcGHi9AY.png",
@@ -1549,10 +1334,7 @@ Map {
                           "variants": {
                             "maxWidth:767": {},
                           },
-                          "width": {
-                            "type": "fixed",
-                            "value": 750,
-                          },
+                          "width": 750,
                         },
                         "type": "image",
                       },
@@ -1560,9 +1342,7 @@ Map {
                     "props": {
                       "absolute": true,
                       "flexJustify": "center",
-                      "height": {
-                        "type": "hug",
-                      },
+                      "height": "hug",
                       "id": "frame2",
                       "layout": "flex",
                       "locked": true,
@@ -1578,8 +1358,8 @@ Map {
                         "maxWidth:767": {},
                       },
                       "width": {
-                        "type": "fill",
-                        "value": 750,
+                        "max": undefined,
+                        "min": 0,
                       },
                     },
                     "type": "frame",
@@ -1589,16 +1369,13 @@ Map {
                     "props": {
                       "fills": [
                         {
-                          "color": "#1F2937",
-                          "type": "solid",
+                          "solid": "#1F2937",
                         },
                       ],
                       "fontFamily": "Satoshi",
                       "fontSize": 48,
                       "fontWeight": 900,
-                      "height": {
-                        "type": "hug",
-                      },
+                      "height": "hug",
                       "hidden": false,
                       "id": "revolutionize_Your_Web_Design_and_Development_Workflow",
                       "letterSpacing": "0%",
@@ -1621,8 +1398,8 @@ and Development Workflow",
                         "maxWidth:767": {},
                       },
                       "width": {
-                        "type": "fill",
-                        "value": 717.171875,
+                        "max": undefined,
+                        "min": 0,
                       },
                     },
                     "type": "text",
@@ -1632,16 +1409,13 @@ and Development Workflow",
                     "props": {
                       "fills": [
                         {
-                          "color": "#6b7280",
-                          "type": "solid",
+                          "solid": "#6b7280",
                         },
                       ],
                       "fontFamily": "Inter",
                       "fontSize": 20,
                       "fontWeight": 400,
-                      "height": {
-                        "type": "hug",
-                      },
+                      "height": "hug",
                       "hidden": false,
                       "id": "uIMix_is_a_open_source_design_tool_that_combines_intuitive_editing__React_integration__AI_assistance__and_advanced_design_tokens_",
                       "letterSpacing": "0%",
@@ -1663,8 +1437,8 @@ React integration, AI assistance, and advanced design tokens.",
                         "maxWidth:767": {},
                       },
                       "width": {
-                        "type": "fill",
-                        "value": 624.1796875,
+                        "max": undefined,
+                        "min": 0,
                       },
                     },
                     "type": "text",
@@ -1678,16 +1452,13 @@ React integration, AI assistance, and advanced design tokens.",
                             "props": {
                               "fills": [
                                 {
-                                  "color": "#ffffff",
-                                  "type": "solid",
+                                  "solid": "#ffffff",
                                 },
                               ],
                               "fontFamily": "Satoshi",
                               "fontSize": 16,
                               "fontWeight": 900,
-                              "height": {
-                                "type": "hug",
-                              },
+                              "height": "hug",
                               "hidden": false,
                               "id": "get_Early_Access",
                               "letterSpacing": "0%",
@@ -1700,9 +1471,7 @@ React integration, AI assistance, and advanced design tokens.",
                               "variants": {
                                 "maxWidth:767": {},
                               },
-                              "width": {
-                                "type": "hug",
-                              },
+                              "width": "hug",
                             },
                             "type": "text",
                           },
@@ -1713,16 +1482,13 @@ React integration, AI assistance, and advanced design tokens.",
                           "columnGap": 10,
                           "fills": [
                             {
-                              "color": "#3b82f6",
-                              "type": "solid",
+                              "solid": "#3b82f6",
                             },
                           ],
                           "flexAlign": "start",
                           "flexDirection": "x",
                           "flexJustify": "start",
-                          "height": {
-                            "type": "hug",
-                          },
+                          "height": "hug",
                           "hidden": false,
                           "id": "frame_2",
                           "layout": "flex",
@@ -1755,9 +1521,7 @@ React integration, AI assistance, and advanced design tokens.",
                           "variants": {
                             "maxWidth:767": {},
                           },
-                          "width": {
-                            "type": "hug",
-                          },
+                          "width": "hug",
                         },
                         "type": "frame",
                       },
@@ -1769,9 +1533,7 @@ React integration, AI assistance, and advanced design tokens.",
                       "flexAlign": "start",
                       "flexDirection": "x",
                       "flexJustify": "start",
-                      "height": {
-                        "type": "hug",
-                      },
+                      "height": "hug",
                       "hidden": false,
                       "id": "frame_4",
                       "layout": "flex",
@@ -1796,9 +1558,7 @@ React integration, AI assistance, and advanced design tokens.",
                       "variants": {
                         "maxWidth:767": {},
                       },
-                      "width": {
-                        "type": "hug",
-                      },
+                      "width": "hug",
                     },
                     "type": "frame",
                   },
@@ -1806,8 +1566,7 @@ React integration, AI assistance, and advanced design tokens.",
                     "children": [],
                     "props": {
                       "border": {
-                        "color": "#e5e7eb",
-                        "type": "solid",
+                        "solid": "#e5e7eb",
                       },
                       "borderBottomWidth": 1,
                       "borderLeftWidth": 1,
@@ -1815,9 +1574,7 @@ React integration, AI assistance, and advanced design tokens.",
                       "borderTopWidth": 1,
                       "bottomLeftRadius": 10,
                       "bottomRightRadius": 10,
-                      "height": {
-                        "type": "hug",
-                      },
+                      "height": "hug",
                       "hidden": false,
                       "id": "image_1",
                       "image": "./images/1yKf5NvwGW-XtLSBDlS3GqZfbEGnLshgQrjyQJImqaM.png",
@@ -1854,7 +1611,7 @@ React integration, AI assistance, and advanced design tokens.",
                       },
                       "width": {
                         "max": 720,
-                        "type": "fill",
+                        "min": 0,
                       },
                     },
                     "type": "image",
@@ -1863,9 +1620,7 @@ React integration, AI assistance, and advanced design tokens.",
                 "props": {
                   "flexAlign": "center",
                   "flexDirection": "y",
-                  "height": {
-                    "type": "hug",
-                  },
+                  "height": "hug",
                   "id": "frame1",
                   "layout": "flex",
                   "name": "Frame",
@@ -1881,8 +1636,8 @@ React integration, AI assistance, and advanced design tokens.",
                     "maxWidth:767": {},
                   },
                   "width": {
-                    "type": "fill",
-                    "value": 1440,
+                    "max": undefined,
+                    "min": 0,
                   },
                 },
                 "type": "frame",
@@ -1898,9 +1653,7 @@ React integration, AI assistance, and advanced design tokens.",
                               {
                                 "children": [],
                                 "props": {
-                                  "height": {
-                                    "type": "hug",
-                                  },
+                                  "height": "hug",
                                   "id": "heroicons_pencil_square",
                                   "name": "heroicons:pencil-square",
                                   "svg": "<svg width=\\"24\\" height=\\"24\\" viewBox=\\"0 0 24 24\\" fill=\\"none\\" xmlns=\\"http://www.w3.org/2000/svg\\">
@@ -1910,9 +1663,7 @@ React integration, AI assistance, and advanced design tokens.",
                                   "variants": {
                                     "maxWidth:767": {},
                                   },
-                                  "width": {
-                                    "type": "hug",
-                                  },
+                                  "width": "hug",
                                 },
                                 "type": "svg",
                               },
@@ -1923,16 +1674,13 @@ React integration, AI assistance, and advanced design tokens.",
                               "columnGap": 10,
                               "fills": [
                                 {
-                                  "color": "#eff6ff",
-                                  "type": "solid",
+                                  "solid": "#eff6ff",
                                 },
                               ],
                               "flexAlign": "start",
                               "flexDirection": "x",
                               "flexJustify": "start",
-                              "height": {
-                                "type": "hug",
-                              },
+                              "height": "hug",
                               "hidden": false,
                               "id": "frame_5",
                               "layout": "flex",
@@ -1950,9 +1698,7 @@ React integration, AI assistance, and advanced design tokens.",
                               "variants": {
                                 "maxWidth:767": {},
                               },
-                              "width": {
-                                "type": "hug",
-                              },
+                              "width": "hug",
                             },
                             "type": "frame",
                           },
@@ -1961,16 +1707,13 @@ React integration, AI assistance, and advanced design tokens.",
                             "props": {
                               "fills": [
                                 {
-                                  "color": "#1f2937",
-                                  "type": "solid",
+                                  "solid": "#1f2937",
                                 },
                               ],
                               "fontFamily": "Satoshi",
                               "fontSize": 20,
                               "fontWeight": 700,
-                              "height": {
-                                "type": "hug",
-                              },
+                              "height": "hug",
                               "hidden": false,
                               "id": "figma_like_Intuitive_Editing",
                               "letterSpacing": "0%",
@@ -1984,8 +1727,8 @@ React integration, AI assistance, and advanced design tokens.",
                                 "maxWidth:767": {},
                               },
                               "width": {
-                                "type": "fill",
-                                "value": 247.546875,
+                                "max": undefined,
+                                "min": 0,
                               },
                             },
                             "type": "text",
@@ -1995,16 +1738,13 @@ React integration, AI assistance, and advanced design tokens.",
                             "props": {
                               "fills": [
                                 {
-                                  "color": "#4b5563",
-                                  "type": "solid",
+                                  "solid": "#4b5563",
                                 },
                               ],
                               "fontFamily": "Inter",
                               "fontSize": 16,
                               "fontWeight": 400,
-                              "height": {
-                                "type": "hug",
-                              },
+                              "height": "hug",
                               "hidden": false,
                               "id": "experience_a_user_friendly_interface_with_familiar_design_tools__making_it_easy_for_both_beginners_and_professionals_to_create_stunning_web_designs_",
                               "letterSpacing": "0%",
@@ -2018,7 +1758,8 @@ React integration, AI assistance, and advanced design tokens.",
                                 "maxWidth:767": {},
                               },
                               "width": {
-                                "type": "fill",
+                                "max": undefined,
+                                "min": 0,
                               },
                             },
                             "type": "text",
@@ -2030,16 +1771,15 @@ React integration, AI assistance, and advanced design tokens.",
                           "columnGap": 20,
                           "fills": [
                             {
-                              "color": "#ffffff",
-                              "type": "solid",
+                              "solid": "#ffffff",
                             },
                           ],
                           "flexAlign": "start",
                           "flexDirection": "y",
                           "flexJustify": "start",
                           "height": {
-                            "type": "fill",
-                            "value": 238,
+                            "max": undefined,
+                            "min": 0,
                           },
                           "hidden": false,
                           "id": "frame_13",
@@ -2059,8 +1799,8 @@ React integration, AI assistance, and advanced design tokens.",
                             "maxWidth:767": {},
                           },
                           "width": {
-                            "type": "fill",
-                            "value": 400,
+                            "max": undefined,
+                            "min": 0,
                           },
                         },
                         "type": "frame",
@@ -2072,9 +1812,7 @@ React integration, AI assistance, and advanced design tokens.",
                               {
                                 "children": [],
                                 "props": {
-                                  "height": {
-                                    "type": "hug",
-                                  },
+                                  "height": "hug",
                                   "id": "heroicons_code_bracket",
                                   "name": "heroicons:code-bracket",
                                   "svg": "<svg width=\\"24\\" height=\\"24\\" viewBox=\\"0 0 24 24\\" fill=\\"none\\" xmlns=\\"http://www.w3.org/2000/svg\\">
@@ -2084,9 +1822,7 @@ React integration, AI assistance, and advanced design tokens.",
                                   "variants": {
                                     "maxWidth:767": {},
                                   },
-                                  "width": {
-                                    "type": "hug",
-                                  },
+                                  "width": "hug",
                                 },
                                 "type": "svg",
                               },
@@ -2097,16 +1833,13 @@ React integration, AI assistance, and advanced design tokens.",
                               "columnGap": 10,
                               "fills": [
                                 {
-                                  "color": "#f0f9ff",
-                                  "type": "solid",
+                                  "solid": "#f0f9ff",
                                 },
                               ],
                               "flexAlign": "start",
                               "flexDirection": "x",
                               "flexJustify": "start",
-                              "height": {
-                                "type": "hug",
-                              },
+                              "height": "hug",
                               "hidden": false,
                               "id": "frame_15",
                               "layout": "flex",
@@ -2124,9 +1857,7 @@ React integration, AI assistance, and advanced design tokens.",
                               "variants": {
                                 "maxWidth:767": {},
                               },
-                              "width": {
-                                "type": "hug",
-                              },
+                              "width": "hug",
                             },
                             "type": "frame",
                           },
@@ -2135,16 +1866,13 @@ React integration, AI assistance, and advanced design tokens.",
                             "props": {
                               "fills": [
                                 {
-                                  "color": "#1f2937",
-                                  "type": "solid",
+                                  "solid": "#1f2937",
                                 },
                               ],
                               "fontFamily": "Satoshi",
                               "fontSize": 20,
                               "fontWeight": 700,
-                              "height": {
-                                "type": "hug",
-                              },
+                              "height": "hug",
                               "hidden": false,
                               "id": "react_Components_Import_Export",
                               "letterSpacing": "0%",
@@ -2158,8 +1886,8 @@ React integration, AI assistance, and advanced design tokens.",
                                 "maxWidth:767": {},
                               },
                               "width": {
-                                "type": "fill",
-                                "value": 315.640625,
+                                "max": undefined,
+                                "min": 0,
                               },
                             },
                             "type": "text",
@@ -2169,16 +1897,13 @@ React integration, AI assistance, and advanced design tokens.",
                             "props": {
                               "fills": [
                                 {
-                                  "color": "#4b5563",
-                                  "type": "solid",
+                                  "solid": "#4b5563",
                                 },
                               ],
                               "fontFamily": "Inter",
                               "fontSize": 16,
                               "fontWeight": 400,
-                              "height": {
-                                "type": "hug",
-                              },
+                              "height": "hug",
                               "hidden": false,
                               "id": "seamlessly_work_with_React_components__boosting_your_design_to_development_workflow_",
                               "letterSpacing": "0%",
@@ -2193,7 +1918,8 @@ React integration, AI assistance, and advanced design tokens.",
                                 "maxWidth:767": {},
                               },
                               "width": {
-                                "type": "fill",
+                                "max": undefined,
+                                "min": 0,
                               },
                             },
                             "type": "text",
@@ -2205,16 +1931,15 @@ React integration, AI assistance, and advanced design tokens.",
                           "columnGap": 20,
                           "fills": [
                             {
-                              "color": "#ffffff",
-                              "type": "solid",
+                              "solid": "#ffffff",
                             },
                           ],
                           "flexAlign": "start",
                           "flexDirection": "y",
                           "flexJustify": "start",
                           "height": {
-                            "type": "fill",
-                            "value": 214,
+                            "max": undefined,
+                            "min": 0,
                           },
                           "hidden": false,
                           "id": "frame_14",
@@ -2234,8 +1959,8 @@ React integration, AI assistance, and advanced design tokens.",
                             "maxWidth:767": {},
                           },
                           "width": {
-                            "type": "fill",
-                            "value": 400,
+                            "max": undefined,
+                            "min": 0,
                           },
                         },
                         "type": "frame",
@@ -2247,9 +1972,7 @@ React integration, AI assistance, and advanced design tokens.",
                               {
                                 "children": [],
                                 "props": {
-                                  "height": {
-                                    "type": "hug",
-                                  },
+                                  "height": "hug",
                                   "id": "heroicons_cloud",
                                   "name": "heroicons:cloud",
                                   "svg": "<svg width=\\"24\\" height=\\"24\\" viewBox=\\"0 0 24 24\\" fill=\\"none\\" xmlns=\\"http://www.w3.org/2000/svg\\">
@@ -2259,9 +1982,7 @@ React integration, AI assistance, and advanced design tokens.",
                                   "variants": {
                                     "maxWidth:767": {},
                                   },
-                                  "width": {
-                                    "type": "hug",
-                                  },
+                                  "width": "hug",
                                 },
                                 "type": "svg",
                               },
@@ -2272,16 +1993,13 @@ React integration, AI assistance, and advanced design tokens.",
                               "columnGap": 10,
                               "fills": [
                                 {
-                                  "color": "#fff1f2",
-                                  "type": "solid",
+                                  "solid": "#fff1f2",
                                 },
                               ],
                               "flexAlign": "start",
                               "flexDirection": "x",
                               "flexJustify": "start",
-                              "height": {
-                                "type": "hug",
-                              },
+                              "height": "hug",
                               "hidden": false,
                               "id": "frame_17",
                               "layout": "flex",
@@ -2299,9 +2017,7 @@ React integration, AI assistance, and advanced design tokens.",
                               "variants": {
                                 "maxWidth:767": {},
                               },
-                              "width": {
-                                "type": "hug",
-                              },
+                              "width": "hug",
                             },
                             "type": "frame",
                           },
@@ -2310,16 +2026,13 @@ React integration, AI assistance, and advanced design tokens.",
                             "props": {
                               "fills": [
                                 {
-                                  "color": "#1f2937",
-                                  "type": "solid",
+                                  "solid": "#1f2937",
                                 },
                               ],
                               "fontFamily": "Satoshi",
                               "fontSize": 20,
                               "fontWeight": 700,
-                              "height": {
-                                "type": "hug",
-                              },
+                              "height": "hug",
                               "hidden": false,
                               "id": "collaboration_for_Everyone",
                               "letterSpacing": "0%",
@@ -2333,8 +2046,8 @@ React integration, AI assistance, and advanced design tokens.",
                                 "maxWidth:767": {},
                               },
                               "width": {
-                                "type": "fill",
-                                "value": 249.1640625,
+                                "max": undefined,
+                                "min": 0,
                               },
                             },
                             "type": "text",
@@ -2344,16 +2057,13 @@ React integration, AI assistance, and advanced design tokens.",
                             "props": {
                               "fills": [
                                 {
-                                  "color": "#4b5563",
-                                  "type": "solid",
+                                  "solid": "#4b5563",
                                 },
                               ],
                               "fontFamily": "Inter",
                               "fontSize": 16,
                               "fontWeight": 400,
-                              "height": {
-                                "type": "hug",
-                              },
+                              "height": "hug",
                               "hidden": false,
                               "id": "collaborate_in_real_time_with_your_team__whether_they_re_designers__developers__or_stakeholders_",
                               "letterSpacing": "0%",
@@ -2368,7 +2078,8 @@ React integration, AI assistance, and advanced design tokens.",
                                 "maxWidth:767": {},
                               },
                               "width": {
-                                "type": "fill",
+                                "max": undefined,
+                                "min": 0,
                               },
                             },
                             "type": "text",
@@ -2380,16 +2091,15 @@ React integration, AI assistance, and advanced design tokens.",
                           "columnGap": 20,
                           "fills": [
                             {
-                              "color": "#ffffff",
-                              "type": "solid",
+                              "solid": "#ffffff",
                             },
                           ],
                           "flexAlign": "start",
                           "flexDirection": "y",
                           "flexJustify": "start",
                           "height": {
-                            "type": "fill",
-                            "value": 214,
+                            "max": undefined,
+                            "min": 0,
                           },
                           "hidden": false,
                           "id": "frame_16",
@@ -2409,8 +2119,8 @@ React integration, AI assistance, and advanced design tokens.",
                             "maxWidth:767": {},
                           },
                           "width": {
-                            "type": "fill",
-                            "value": 400,
+                            "max": undefined,
+                            "min": 0,
                           },
                         },
                         "type": "frame",
@@ -2422,9 +2132,7 @@ React integration, AI assistance, and advanced design tokens.",
                               {
                                 "children": [],
                                 "props": {
-                                  "height": {
-                                    "type": "hug",
-                                  },
+                                  "height": "hug",
                                   "id": "heroicons_computer_desktop",
                                   "name": "heroicons:computer-desktop",
                                   "svg": "<svg width=\\"24\\" height=\\"24\\" viewBox=\\"0 0 24 24\\" fill=\\"none\\" xmlns=\\"http://www.w3.org/2000/svg\\">
@@ -2434,9 +2142,7 @@ React integration, AI assistance, and advanced design tokens.",
                                   "variants": {
                                     "maxWidth:767": {},
                                   },
-                                  "width": {
-                                    "type": "hug",
-                                  },
+                                  "width": "hug",
                                 },
                                 "type": "svg",
                               },
@@ -2447,16 +2153,13 @@ React integration, AI assistance, and advanced design tokens.",
                               "columnGap": 10,
                               "fills": [
                                 {
-                                  "color": "#fefce8",
-                                  "type": "solid",
+                                  "solid": "#fefce8",
                                 },
                               ],
                               "flexAlign": "start",
                               "flexDirection": "x",
                               "flexJustify": "start",
-                              "height": {
-                                "type": "hug",
-                              },
+                              "height": "hug",
                               "hidden": false,
                               "id": "frame_20",
                               "layout": "flex",
@@ -2474,9 +2177,7 @@ React integration, AI assistance, and advanced design tokens.",
                               "variants": {
                                 "maxWidth:767": {},
                               },
-                              "width": {
-                                "type": "hug",
-                              },
+                              "width": "hug",
                             },
                             "type": "frame",
                           },
@@ -2485,16 +2186,13 @@ React integration, AI assistance, and advanced design tokens.",
                             "props": {
                               "fills": [
                                 {
-                                  "color": "#1f2937",
-                                  "type": "solid",
+                                  "solid": "#1f2937",
                                 },
                               ],
                               "fontFamily": "Satoshi",
                               "fontSize": 20,
                               "fontWeight": 700,
-                              "height": {
-                                "type": "hug",
-                              },
+                              "height": "hug",
                               "hidden": false,
                               "id": "offline_Editing_Experience",
                               "letterSpacing": "0%",
@@ -2508,8 +2206,8 @@ React integration, AI assistance, and advanced design tokens.",
                                 "maxWidth:767": {},
                               },
                               "width": {
-                                "type": "fill",
-                                "value": 241.203125,
+                                "max": undefined,
+                                "min": 0,
                               },
                             },
                             "type": "text",
@@ -2519,16 +2217,13 @@ React integration, AI assistance, and advanced design tokens.",
                             "props": {
                               "fills": [
                                 {
-                                  "color": "#4b5563",
-                                  "type": "solid",
+                                  "solid": "#4b5563",
                                 },
                               ],
                               "fontFamily": "Inter",
                               "fontSize": 16,
                               "fontWeight": 400,
-                              "height": {
-                                "type": "hug",
-                              },
+                              "height": "hug",
                               "hidden": false,
                               "id": "benefit_from_UIMix_s_seamless_offline_editing__offering_local_file_management__hot_reloading__and_an_uninterrupted_workflow_",
                               "letterSpacing": "0%",
@@ -2544,7 +2239,8 @@ React integration, AI assistance, and advanced design tokens.",
                                 "maxWidth:767": {},
                               },
                               "width": {
-                                "type": "fill",
+                                "max": undefined,
+                                "min": 0,
                               },
                             },
                             "type": "text",
@@ -2556,16 +2252,15 @@ React integration, AI assistance, and advanced design tokens.",
                           "columnGap": 20,
                           "fills": [
                             {
-                              "color": "#ffffff",
-                              "type": "solid",
+                              "solid": "#ffffff",
                             },
                           ],
                           "flexAlign": "start",
                           "flexDirection": "y",
                           "flexJustify": "start",
                           "height": {
-                            "type": "fill",
-                            "value": 238,
+                            "max": undefined,
+                            "min": 0,
                           },
                           "hidden": false,
                           "id": "frame_18",
@@ -2585,8 +2280,8 @@ React integration, AI assistance, and advanced design tokens.",
                             "maxWidth:767": {},
                           },
                           "width": {
-                            "type": "fill",
-                            "value": 400,
+                            "max": undefined,
+                            "min": 0,
                           },
                         },
                         "type": "frame",
@@ -2598,9 +2293,7 @@ React integration, AI assistance, and advanced design tokens.",
                               {
                                 "children": [],
                                 "props": {
-                                  "height": {
-                                    "type": "hug",
-                                  },
+                                  "height": "hug",
                                   "id": "carbon_machine_learning",
                                   "name": "carbon:machine-learning",
                                   "svg": "<svg width=\\"24\\" height=\\"24\\" viewBox=\\"0 0 24 24\\" fill=\\"none\\" xmlns=\\"http://www.w3.org/2000/svg\\">
@@ -2611,9 +2304,7 @@ React integration, AI assistance, and advanced design tokens.",
                                   "variants": {
                                     "maxWidth:767": {},
                                   },
-                                  "width": {
-                                    "type": "hug",
-                                  },
+                                  "width": "hug",
                                 },
                                 "type": "svg",
                               },
@@ -2624,16 +2315,13 @@ React integration, AI assistance, and advanced design tokens.",
                               "columnGap": 10,
                               "fills": [
                                 {
-                                  "color": "#ecfdf5",
-                                  "type": "solid",
+                                  "solid": "#ecfdf5",
                                 },
                               ],
                               "flexAlign": "start",
                               "flexDirection": "x",
                               "flexJustify": "start",
-                              "height": {
-                                "type": "hug",
-                              },
+                              "height": "hug",
                               "hidden": false,
                               "id": "frame_22",
                               "layout": "flex",
@@ -2651,9 +2339,7 @@ React integration, AI assistance, and advanced design tokens.",
                               "variants": {
                                 "maxWidth:767": {},
                               },
-                              "width": {
-                                "type": "hug",
-                              },
+                              "width": "hug",
                             },
                             "type": "frame",
                           },
@@ -2662,16 +2348,13 @@ React integration, AI assistance, and advanced design tokens.",
                             "props": {
                               "fills": [
                                 {
-                                  "color": "#1f2937",
-                                  "type": "solid",
+                                  "solid": "#1f2937",
                                 },
                               ],
                               "fontFamily": "Satoshi",
                               "fontSize": 20,
                               "fontWeight": 700,
-                              "height": {
-                                "type": "hug",
-                              },
+                              "height": "hug",
                               "hidden": false,
                               "id": "aI_Assistance",
                               "letterSpacing": "0%",
@@ -2685,8 +2368,8 @@ React integration, AI assistance, and advanced design tokens.",
                                 "maxWidth:767": {},
                               },
                               "width": {
-                                "type": "fill",
-                                "value": 122.8046875,
+                                "max": undefined,
+                                "min": 0,
                               },
                             },
                             "type": "text",
@@ -2696,16 +2379,13 @@ React integration, AI assistance, and advanced design tokens.",
                             "props": {
                               "fills": [
                                 {
-                                  "color": "#4b5563",
-                                  "type": "solid",
+                                  "solid": "#4b5563",
                                 },
                               ],
                               "fontFamily": "Inter",
                               "fontSize": 16,
                               "fontWeight": 400,
-                              "height": {
-                                "type": "hug",
-                              },
+                              "height": "hug",
                               "hidden": false,
                               "id": "supercharge_your_design_process_with_AI_generated_and_refined_text_contents__as_well_as_AI_generated_images_that_fit_perfectly_into_your_project_",
                               "letterSpacing": "0%",
@@ -2719,7 +2399,8 @@ React integration, AI assistance, and advanced design tokens.",
                                 "maxWidth:767": {},
                               },
                               "width": {
-                                "type": "fill",
+                                "max": undefined,
+                                "min": 0,
                               },
                             },
                             "type": "text",
@@ -2731,16 +2412,15 @@ React integration, AI assistance, and advanced design tokens.",
                           "columnGap": 20,
                           "fills": [
                             {
-                              "color": "#ffffff",
-                              "type": "solid",
+                              "solid": "#ffffff",
                             },
                           ],
                           "flexAlign": "start",
                           "flexDirection": "y",
                           "flexJustify": "start",
                           "height": {
-                            "type": "fill",
-                            "value": 238,
+                            "max": undefined,
+                            "min": 0,
                           },
                           "hidden": false,
                           "id": "frame_21",
@@ -2760,8 +2440,8 @@ React integration, AI assistance, and advanced design tokens.",
                             "maxWidth:767": {},
                           },
                           "width": {
-                            "type": "fill",
-                            "value": 400,
+                            "max": undefined,
+                            "min": 0,
                           },
                         },
                         "type": "frame",
@@ -2773,9 +2453,7 @@ React integration, AI assistance, and advanced design tokens.",
                               {
                                 "children": [],
                                 "props": {
-                                  "height": {
-                                    "type": "hug",
-                                  },
+                                  "height": "hug",
                                   "id": "carbon_logo_figma",
                                   "name": "carbon:logo-figma",
                                   "svg": "<svg width=\\"24\\" height=\\"24\\" viewBox=\\"0 0 24 24\\" fill=\\"none\\" xmlns=\\"http://www.w3.org/2000/svg\\">
@@ -2785,9 +2463,7 @@ React integration, AI assistance, and advanced design tokens.",
                                   "variants": {
                                     "maxWidth:767": {},
                                   },
-                                  "width": {
-                                    "type": "hug",
-                                  },
+                                  "width": "hug",
                                 },
                                 "type": "svg",
                               },
@@ -2798,16 +2474,13 @@ React integration, AI assistance, and advanced design tokens.",
                               "columnGap": 10,
                               "fills": [
                                 {
-                                  "color": "#faf5ff",
-                                  "type": "solid",
+                                  "solid": "#faf5ff",
                                 },
                               ],
                               "flexAlign": "start",
                               "flexDirection": "x",
                               "flexJustify": "start",
-                              "height": {
-                                "type": "hug",
-                              },
+                              "height": "hug",
                               "hidden": false,
                               "id": "frame_24",
                               "layout": "flex",
@@ -2825,9 +2498,7 @@ React integration, AI assistance, and advanced design tokens.",
                               "variants": {
                                 "maxWidth:767": {},
                               },
-                              "width": {
-                                "type": "hug",
-                              },
+                              "width": "hug",
                             },
                             "type": "frame",
                           },
@@ -2836,16 +2507,13 @@ React integration, AI assistance, and advanced design tokens.",
                             "props": {
                               "fills": [
                                 {
-                                  "color": "#1f2937",
-                                  "type": "solid",
+                                  "solid": "#1f2937",
                                 },
                               ],
                               "fontFamily": "Satoshi",
                               "fontSize": 20,
                               "fontWeight": 700,
-                              "height": {
-                                "type": "hug",
-                              },
+                              "height": "hug",
                               "hidden": false,
                               "id": "figma_Integration",
                               "letterSpacing": "0%",
@@ -2859,8 +2527,8 @@ React integration, AI assistance, and advanced design tokens.",
                                 "maxWidth:767": {},
                               },
                               "width": {
-                                "type": "fill",
-                                "value": 164.0859375,
+                                "max": undefined,
+                                "min": 0,
                               },
                             },
                             "type": "text",
@@ -2870,16 +2538,13 @@ React integration, AI assistance, and advanced design tokens.",
                             "props": {
                               "fills": [
                                 {
-                                  "color": "#4b5563",
-                                  "type": "solid",
+                                  "solid": "#4b5563",
                                 },
                               ],
                               "fontFamily": "Inter",
                               "fontSize": 16,
                               "fontWeight": 400,
-                              "height": {
-                                "type": "hug",
-                              },
+                              "height": "hug",
                               "hidden": false,
                               "id": "easily_import_designs_from_Figma_and_export_components_back_to_Figma__ensuring_seamless_collaboration_between_UIMix_and_your_favorite_design_tool_",
                               "letterSpacing": "0%",
@@ -2893,7 +2558,8 @@ React integration, AI assistance, and advanced design tokens.",
                                 "maxWidth:767": {},
                               },
                               "width": {
-                                "type": "fill",
+                                "max": undefined,
+                                "min": 0,
                               },
                             },
                             "type": "text",
@@ -2905,16 +2571,15 @@ React integration, AI assistance, and advanced design tokens.",
                           "columnGap": 20,
                           "fills": [
                             {
-                              "color": "#ffffff",
-                              "type": "solid",
+                              "solid": "#ffffff",
                             },
                           ],
                           "flexAlign": "start",
                           "flexDirection": "y",
                           "flexJustify": "start",
                           "height": {
-                            "type": "fill",
-                            "value": 238,
+                            "max": undefined,
+                            "min": 0,
                           },
                           "hidden": false,
                           "id": "frame_23",
@@ -2934,8 +2599,8 @@ React integration, AI assistance, and advanced design tokens.",
                             "maxWidth:767": {},
                           },
                           "width": {
-                            "type": "fill",
-                            "value": 400,
+                            "max": undefined,
+                            "min": 0,
                           },
                         },
                         "type": "frame",
@@ -2950,8 +2615,8 @@ React integration, AI assistance, and advanced design tokens.",
                       "flexJustify": "start",
                       "gridColumnCount": 3,
                       "height": {
-                        "type": "fill",
-                        "value": 238,
+                        "max": undefined,
+                        "min": 0,
                       },
                       "hidden": false,
                       "id": "frame_181",
@@ -2974,8 +2639,7 @@ React integration, AI assistance, and advanced design tokens.",
                       },
                       "width": {
                         "max": 1200,
-                        "type": "fill",
-                        "value": 1248,
+                        "min": 0,
                       },
                     },
                     "type": "frame",
@@ -2987,16 +2651,13 @@ React integration, AI assistance, and advanced design tokens.",
                   "columnGap": 24,
                   "fills": [
                     {
-                      "color": "#f9fafb",
-                      "type": "solid",
+                      "solid": "#f9fafb",
                     },
                   ],
                   "flexAlign": "center",
                   "flexDirection": "y",
                   "flexJustify": "start",
-                  "height": {
-                    "type": "hug",
-                  },
+                  "height": "hug",
                   "hidden": false,
                   "id": "frame_19",
                   "layout": "flex",
@@ -3021,8 +2682,8 @@ React integration, AI assistance, and advanced design tokens.",
                     "maxWidth:767": {},
                   },
                   "width": {
-                    "type": "fill",
-                    "value": 1440,
+                    "max": undefined,
+                    "min": 0,
                   },
                 },
                 "type": "frame",
@@ -3034,16 +2695,13 @@ React integration, AI assistance, and advanced design tokens.",
                     "props": {
                       "fills": [
                         {
-                          "color": "#1f2937",
-                          "type": "solid",
+                          "solid": "#1f2937",
                         },
                       ],
                       "fontFamily": "Satoshi",
                       "fontSize": 40,
                       "fontWeight": 900,
-                      "height": {
-                        "type": "hug",
-                      },
+                      "height": "hug",
                       "hidden": false,
                       "id": "open_Source",
                       "letterSpacing": "0%",
@@ -3064,8 +2722,8 @@ React integration, AI assistance, and advanced design tokens.",
                         "maxWidth:767": {},
                       },
                       "width": {
-                        "type": "fill",
-                        "value": 249.8437499999999,
+                        "max": undefined,
+                        "min": 0,
                       },
                     },
                     "type": "text",
@@ -3075,16 +2733,13 @@ React integration, AI assistance, and advanced design tokens.",
                     "props": {
                       "fills": [
                         {
-                          "color": "#4b5563",
-                          "type": "solid",
+                          "solid": "#4b5563",
                         },
                       ],
                       "fontFamily": "Inter",
                       "fontSize": 18,
                       "fontWeight": 400,
-                      "height": {
-                        "type": "hug",
-                      },
+                      "height": "hug",
                       "hidden": false,
                       "id": "uIMix_s_open_source_editor_and_backend_promote_community_driven_development_and_offer_extensive_customization_options__Self_host_both_components_for_greater_control_over_your_design_environment_and_data_security_",
                       "letterSpacing": "0%",
@@ -3106,8 +2761,8 @@ Self-host both components for greater control over your design environment and d
                         "maxWidth:767": {},
                       },
                       "width": {
-                        "type": "fill",
-                        "value": 596,
+                        "max": undefined,
+                        "min": 0,
                       },
                     },
                     "type": "text",
@@ -3119,16 +2774,13 @@ Self-host both components for greater control over your design environment and d
                         "props": {
                           "fills": [
                             {
-                              "color": "#1f2937",
-                              "type": "solid",
+                              "solid": "#1f2937",
                             },
                           ],
                           "fontFamily": "Satoshi",
                           "fontSize": 16,
                           "fontWeight": 700,
-                          "height": {
-                            "type": "hug",
-                          },
+                          "height": "hug",
                           "hidden": false,
                           "id": "explore_GitHub_repo",
                           "letterSpacing": "0%",
@@ -3141,17 +2793,14 @@ Self-host both components for greater control over your design environment and d
                           "variants": {
                             "maxWidth:767": {},
                           },
-                          "width": {
-                            "type": "hug",
-                          },
+                          "width": "hug",
                         },
                         "type": "text",
                       },
                     ],
                     "props": {
                       "border": {
-                        "color": "#1f2937",
-                        "type": "solid",
+                        "solid": "#1f2937",
                       },
                       "borderBottomWidth": 1.5,
                       "borderLeftWidth": 1.5,
@@ -3163,9 +2812,7 @@ Self-host both components for greater control over your design environment and d
                       "flexAlign": "start",
                       "flexDirection": "x",
                       "flexJustify": "start",
-                      "height": {
-                        "type": "hug",
-                      },
+                      "height": "hug",
                       "hidden": false,
                       "id": "frame_3",
                       "layout": "flex",
@@ -3205,9 +2852,7 @@ Self-host both components for greater control over your design environment and d
                       "variants": {
                         "maxWidth:767": {},
                       },
-                      "width": {
-                        "type": "hug",
-                      },
+                      "width": "hug",
                     },
                     "type": "frame",
                   },
@@ -3216,16 +2861,13 @@ Self-host both components for greater control over your design environment and d
                     "props": {
                       "fills": [
                         {
-                          "color": "#1f2937",
-                          "type": "solid",
+                          "solid": "#1f2937",
                         },
                       ],
                       "fontFamily": "Satoshi",
                       "fontSize": 40,
                       "fontWeight": 900,
-                      "height": {
-                        "type": "hug",
-                      },
+                      "height": "hug",
                       "hidden": false,
                       "id": "how_It_Works",
                       "letterSpacing": "0%",
@@ -3246,8 +2888,8 @@ Self-host both components for greater control over your design environment and d
                         "maxWidth:767": {},
                       },
                       "width": {
-                        "type": "fill",
-                        "value": 258.6405818370165,
+                        "max": undefined,
+                        "min": 0,
                       },
                     },
                     "type": "text",
@@ -3261,16 +2903,13 @@ Self-host both components for greater control over your design environment and d
                             "props": {
                               "fills": [
                                 {
-                                  "color": "#1f2937",
-                                  "type": "solid",
+                                  "solid": "#1f2937",
                                 },
                               ],
                               "fontFamily": "Satoshi",
                               "fontSize": 20,
                               "fontWeight": 700,
-                              "height": {
-                                "type": "hug",
-                              },
+                              "height": "hug",
                               "hidden": false,
                               "id": "a__Start_Your_Project",
                               "letterSpacing": "0%",
@@ -3291,8 +2930,8 @@ Self-host both components for greater control over your design environment and d
                                 "maxWidth:767": {},
                               },
                               "width": {
-                                "type": "fill",
-                                "value": 188.765625,
+                                "max": undefined,
+                                "min": 0,
                               },
                             },
                             "type": "text",
@@ -3302,16 +2941,13 @@ Self-host both components for greater control over your design environment and d
                             "props": {
                               "fills": [
                                 {
-                                  "color": "#4b5563",
-                                  "type": "solid",
+                                  "solid": "#4b5563",
                                 },
                               ],
                               "fontFamily": "Inter",
                               "fontSize": 16,
                               "fontWeight": 400,
-                              "height": {
-                                "type": "hug",
-                              },
+                              "height": "hug",
                               "hidden": false,
                               "id": "sign_up_for_a_free_account_or_log_in__Create_a_new_project_or_import_an_existing_Figma_design__Organize_your_components_and_design_tokens_in_the_user_friendly_interface_",
                               "letterSpacing": "0%",
@@ -3333,8 +2969,8 @@ Organize your components and design tokens in the user-friendly interface.",
                                 "maxWidth:767": {},
                               },
                               "width": {
-                                "type": "fill",
-                                "value": 360,
+                                "max": undefined,
+                                "min": 0,
                               },
                             },
                             "type": "text",
@@ -3342,9 +2978,7 @@ Organize your components and design tokens in the user-friendly interface.",
                         ],
                         "props": {
                           "flexDirection": "y",
-                          "height": {
-                            "type": "hug",
-                          },
+                          "height": "hug",
                           "id": "frame5",
                           "layout": "flex",
                           "name": "Frame",
@@ -3358,8 +2992,8 @@ Organize your components and design tokens in the user-friendly interface.",
                             "maxWidth:767": {},
                           },
                           "width": {
-                            "type": "fill",
-                            "value": 360,
+                            "max": undefined,
+                            "min": 0,
                           },
                         },
                         "type": "frame",
@@ -3371,16 +3005,13 @@ Organize your components and design tokens in the user-friendly interface.",
                             "props": {
                               "fills": [
                                 {
-                                  "color": "#1f2937",
-                                  "type": "solid",
+                                  "solid": "#1f2937",
                                 },
                               ],
                               "fontFamily": "Satoshi",
                               "fontSize": 20,
                               "fontWeight": 700,
-                              "height": {
-                                "type": "hug",
-                              },
+                              "height": "hug",
                               "hidden": false,
                               "id": "b__Design___Develop",
                               "letterSpacing": "0%",
@@ -3401,8 +3032,8 @@ Organize your components and design tokens in the user-friendly interface.",
                                 "maxWidth:767": {},
                               },
                               "width": {
-                                "type": "fill",
-                                "value": 188.5,
+                                "max": undefined,
+                                "min": 0,
                               },
                             },
                             "type": "text",
@@ -3412,16 +3043,13 @@ Organize your components and design tokens in the user-friendly interface.",
                             "props": {
                               "fills": [
                                 {
-                                  "color": "#4b5563",
-                                  "type": "solid",
+                                  "solid": "#4b5563",
                                 },
                               ],
                               "fontFamily": "Inter",
                               "fontSize": 16,
                               "fontWeight": 400,
-                              "height": {
-                                "type": "hug",
-                              },
+                              "height": "hug",
                               "hidden": false,
                               "id": "utilize_Figma_like_editing_tools_to_create_and_modify_designs__Seamlessly_import_React_components_into_your_UIMix_project__Leverage_AI_assistance_to_efficiently_generate_and_refine_your_content_",
                               "letterSpacing": "0%",
@@ -3443,8 +3071,8 @@ Leverage AI assistance to efficiently generate and refine your content.",
                                 "maxWidth:767": {},
                               },
                               "width": {
-                                "type": "fill",
-                                "value": 360,
+                                "max": undefined,
+                                "min": 0,
                               },
                             },
                             "type": "text",
@@ -3452,9 +3080,7 @@ Leverage AI assistance to efficiently generate and refine your content.",
                         ],
                         "props": {
                           "flexDirection": "y",
-                          "height": {
-                            "type": "hug",
-                          },
+                          "height": "hug",
                           "id": "frame6",
                           "layout": "flex",
                           "name": "Frame",
@@ -3468,8 +3094,8 @@ Leverage AI assistance to efficiently generate and refine your content.",
                             "maxWidth:767": {},
                           },
                           "width": {
-                            "type": "fill",
-                            "value": 360,
+                            "max": undefined,
+                            "min": 0,
                           },
                         },
                         "type": "frame",
@@ -3481,16 +3107,13 @@ Leverage AI assistance to efficiently generate and refine your content.",
                             "props": {
                               "fills": [
                                 {
-                                  "color": "#1f2937",
-                                  "type": "solid",
+                                  "solid": "#1f2937",
                                 },
                               ],
                               "fontFamily": "Satoshi",
                               "fontSize": 20,
                               "fontWeight": 700,
-                              "height": {
-                                "type": "hug",
-                              },
+                              "height": "hug",
                               "hidden": false,
                               "id": "c__Collaborate___Publish",
                               "letterSpacing": "0%",
@@ -3511,8 +3134,8 @@ Leverage AI assistance to efficiently generate and refine your content.",
                                 "maxWidth:767": {},
                               },
                               "width": {
-                                "type": "fill",
-                                "value": 226.1875,
+                                "max": undefined,
+                                "min": 0,
                               },
                             },
                             "type": "text",
@@ -3522,16 +3145,13 @@ Leverage AI assistance to efficiently generate and refine your content.",
                             "props": {
                               "fills": [
                                 {
-                                  "color": "#4b5563",
-                                  "type": "solid",
+                                  "solid": "#4b5563",
                                 },
                               ],
                               "fontFamily": "Inter",
                               "fontSize": 16,
                               "fontWeight": 400,
-                              "height": {
-                                "type": "hug",
-                              },
+                              "height": "hug",
                               "hidden": false,
                               "id": "collaborate_using_the_online_editor_or_work_offline_for_an_optimized_development_experience__Integrate_with_GitHub_for_streamlined_version_control__Easily_import_UIMix_components_into_React_apps_or_export_final_designs_back_to_Figma_",
                               "letterSpacing": "0%",
@@ -3553,8 +3173,8 @@ Easily import UIMix components into React apps or export final designs back to F
                                 "maxWidth:767": {},
                               },
                               "width": {
-                                "type": "fill",
-                                "value": 360,
+                                "max": undefined,
+                                "min": 0,
                               },
                             },
                             "type": "text",
@@ -3562,9 +3182,7 @@ Easily import UIMix components into React apps or export final designs back to F
                         ],
                         "props": {
                           "flexDirection": "y",
-                          "height": {
-                            "type": "hug",
-                          },
+                          "height": "hug",
                           "id": "frame7",
                           "layout": "flex",
                           "name": "Frame",
@@ -3578,8 +3196,8 @@ Easily import UIMix components into React apps or export final designs back to F
                             "maxWidth:767": {},
                           },
                           "width": {
-                            "type": "fill",
-                            "value": 360,
+                            "max": undefined,
+                            "min": 0,
                           },
                         },
                         "type": "frame",
@@ -3588,9 +3206,7 @@ Easily import UIMix components into React apps or export final designs back to F
                     "props": {
                       "columnGap": 24,
                       "flexJustify": "center",
-                      "height": {
-                        "type": "hug",
-                      },
+                      "height": "hug",
                       "id": "frame4",
                       "layout": "flex",
                       "name": "Frame",
@@ -3606,7 +3222,7 @@ Easily import UIMix components into React apps or export final designs back to F
                       },
                       "width": {
                         "max": 1280,
-                        "type": "fill",
+                        "min": 0,
                       },
                     },
                     "type": "frame",
@@ -3615,9 +3231,7 @@ Easily import UIMix components into React apps or export final designs back to F
                 "props": {
                   "flexAlign": "center",
                   "flexDirection": "y",
-                  "height": {
-                    "type": "hug",
-                  },
+                  "height": "hug",
                   "id": "frame3",
                   "layout": "flex",
                   "name": "Frame",
@@ -3635,8 +3249,8 @@ Easily import UIMix components into React apps or export final designs back to F
                     "maxWidth:767": {},
                   },
                   "width": {
-                    "type": "fill",
-                    "value": 1439,
+                    "max": undefined,
+                    "min": 0,
                   },
                 },
                 "type": "frame",
@@ -3649,10 +3263,7 @@ Easily import UIMix components into React apps or export final designs back to F
                       "absolute": true,
                       "bottomLeftRadius": 0,
                       "bottomRightRadius": 0,
-                      "height": {
-                        "type": "fixed",
-                        "value": 1100,
-                      },
+                      "height": 1100,
                       "hidden": false,
                       "id": "image_4",
                       "image": "./images/DGLFxM8eMqBjHUQYEekprnB3xC-f5uvLxL7x2odVAEU.png",
@@ -3671,10 +3282,7 @@ Easily import UIMix components into React apps or export final designs back to F
                       "variants": {
                         "maxWidth:767": {},
                       },
-                      "width": {
-                        "type": "fixed",
-                        "value": 1500,
-                      },
+                      "width": 1500,
                     },
                     "type": "image",
                   },
@@ -3683,16 +3291,13 @@ Easily import UIMix components into React apps or export final designs back to F
                     "props": {
                       "fills": [
                         {
-                          "color": "#ffffff",
-                          "type": "solid",
+                          "solid": "#ffffff",
                         },
                       ],
                       "fontFamily": "Satoshi",
                       "fontSize": 40,
                       "fontWeight": 900,
-                      "height": {
-                        "type": "hug",
-                      },
+                      "height": "hug",
                       "hidden": false,
                       "id": "ready_to_revolutionize_your_web_design_workflow_",
                       "letterSpacing": "0%",
@@ -3713,8 +3318,8 @@ Easily import UIMix components into React apps or export final designs back to F
                         "maxWidth:767": {},
                       },
                       "width": {
-                        "type": "fill",
-                        "value": 966.3672306629835,
+                        "max": undefined,
+                        "min": 0,
                       },
                     },
                     "type": "text",
@@ -3728,16 +3333,13 @@ Easily import UIMix components into React apps or export final designs back to F
                             "props": {
                               "fills": [
                                 {
-                                  "color": "#3b82f6",
-                                  "type": "solid",
+                                  "solid": "#3b82f6",
                                 },
                               ],
                               "fontFamily": "Satoshi",
                               "fontSize": 16,
                               "fontWeight": 900,
-                              "height": {
-                                "type": "hug",
-                              },
+                              "height": "hug",
                               "hidden": false,
                               "id": "get_Early_Access1",
                               "letterSpacing": "0%",
@@ -3750,9 +3352,7 @@ Easily import UIMix components into React apps or export final designs back to F
                               "variants": {
                                 "maxWidth:767": {},
                               },
-                              "width": {
-                                "type": "hug",
-                              },
+                              "width": "hug",
                             },
                             "type": "text",
                           },
@@ -3763,16 +3363,13 @@ Easily import UIMix components into React apps or export final designs back to F
                           "columnGap": 10,
                           "fills": [
                             {
-                              "color": "#ffffff",
-                              "type": "solid",
+                              "solid": "#ffffff",
                             },
                           ],
                           "flexAlign": "start",
                           "flexDirection": "x",
                           "flexJustify": "start",
-                          "height": {
-                            "type": "hug",
-                          },
+                          "height": "hug",
                           "hidden": false,
                           "id": "frame_6",
                           "layout": "flex",
@@ -3805,9 +3402,7 @@ Easily import UIMix components into React apps or export final designs back to F
                           "variants": {
                             "maxWidth:767": {},
                           },
-                          "width": {
-                            "type": "hug",
-                          },
+                          "width": "hug",
                         },
                         "type": "frame",
                       },
@@ -3819,9 +3414,7 @@ Easily import UIMix components into React apps or export final designs back to F
                       "flexAlign": "start",
                       "flexDirection": "x",
                       "flexJustify": "start",
-                      "height": {
-                        "type": "hug",
-                      },
+                      "height": "hug",
                       "hidden": false,
                       "id": "frame_26",
                       "layout": "flex",
@@ -3860,9 +3453,7 @@ Easily import UIMix components into React apps or export final designs back to F
                       "variants": {
                         "maxWidth:767": {},
                       },
-                      "width": {
-                        "type": "hug",
-                      },
+                      "width": "hug",
                     },
                     "type": "frame",
                   },
@@ -3872,9 +3463,7 @@ Easily import UIMix components into React apps or export final designs back to F
                   "bottomRightRadius": 0,
                   "flexAlign": "center",
                   "flexDirection": "y",
-                  "height": {
-                    "type": "hug",
-                  },
+                  "height": "hug",
                   "hidden": false,
                   "id": "frame_25",
                   "layout": "flex",
@@ -3896,8 +3485,8 @@ Easily import UIMix components into React apps or export final designs back to F
                     "maxWidth:767": {},
                   },
                   "width": {
-                    "type": "fill",
-                    "value": 1440,
+                    "max": undefined,
+                    "min": 0,
                   },
                 },
                 "type": "frame",
@@ -3908,15 +3497,14 @@ Easily import UIMix components into React apps or export final designs back to F
               "bottomRightRadius": 0,
               "fills": [
                 {
-                  "color": "#ffffff",
-                  "type": "solid",
+                  "solid": "#ffffff",
                 },
               ],
               "flexAlign": "center",
               "flexDirection": "y",
               "height": {
-                "type": "fill",
-                "value": 4000,
+                "max": undefined,
+                "min": 0,
               },
               "hidden": false,
               "id": "",
@@ -3941,16 +3529,10 @@ Easily import UIMix components into React apps or export final designs back to F
                     "right": undefined,
                     "top": 200,
                   },
-                  "width": {
-                    "type": "fixed",
-                    "value": 720,
-                  },
+                  "width": 720,
                 },
               },
-              "width": {
-                "type": "fixed",
-                "value": 1440,
-              },
+              "width": 1440,
             },
             "type": "frame",
           },
