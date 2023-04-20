@@ -33,6 +33,7 @@ interface ProjectData {
   manifest: ProjectManifestJSON;
   project: Project;
   pages: Map<string, PageNode>;
+  imagePaths: Map<string, string>; // hash to path
 }
 
 // Important TODO: fix paths in Windows!!
@@ -70,6 +71,7 @@ export class WorkspaceLoader {
         manifest: {},
         project: new Project(),
         pages: new Map(),
+        imagePaths: new Map(),
       };
       this.projects.set(projectPath, project);
     }
@@ -140,6 +142,7 @@ export class WorkspaceLoader {
 
       const images = new Map<string, Image>();
       const pages = new Map<string, PageNode>();
+      const imagePaths = new Map<string, string>();
 
       for (const filePath of filePaths) {
         // TODO: reload changed files only
@@ -168,6 +171,7 @@ export class WorkspaceLoader {
             url: `data:${mimeType};base64,${imageData.toString("base64")}`,
           };
           images.set(hash, image);
+          imagePaths.set(hash, filePath);
         }
       }
 
@@ -185,6 +189,7 @@ export class WorkspaceLoader {
         manifest,
         project: loader.project,
         pages,
+        imagePaths,
       });
     }
 

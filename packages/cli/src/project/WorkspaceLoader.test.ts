@@ -58,11 +58,13 @@ describe(WorkspaceLoader.name, () => {
       manifest: {},
       project: innerProject,
       pages: new Map(),
+      imagePaths: new Map(),
     });
     loader.projects.set(deepInnerProjectPath, {
       manifest: {},
       project: deepInnerProject,
       pages: new Map(),
+      imagePaths: new Map(),
     });
     await loader.save();
 
@@ -133,6 +135,7 @@ describe(WorkspaceLoader.name, () => {
       manifest: {},
       project: innerProject,
       pages: new Map(),
+      imagePaths: new Map(),
     });
     mkdirpSync(tmpObj.name + "/demo-project/inner");
     fs.writeFileSync(tmpObj.name + "/demo-project/inner/package.json", "{}");
