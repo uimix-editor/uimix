@@ -13,7 +13,7 @@ import {
   usedImageHashesInStyle,
 } from "@uimix/model/src/data/util";
 import { omit } from "lodash-es";
-import { formatJSON, formatTypeScript } from "../format";
+import { formatJSON } from "../format";
 import { FileAccess } from "./FileAccess";
 import * as path from "path";
 import {
