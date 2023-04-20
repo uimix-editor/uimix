@@ -25,7 +25,7 @@ interface WorkspaceLoaderOptions {
   filePattern?: string;
 }
 
-interface Project {
+interface ProjectData {
   manifest: ProjectManifestJSON;
   json: ProjectJSON;
 }
@@ -55,13 +55,13 @@ export class WorkspaceLoader {
   readonly filePattern: string;
   readonly uimixProjectFile = "uimix.json";
   readonly projectBoundary = "package.json"; // TODO: other project boundaries
-  projects = new Map<string, Project>(); // project path -> project json
+  projects = new Map<string, ProjectData>(); // project path -> project json
 
-  get rootProject(): Project {
+  get rootProject(): ProjectData {
     return this.getOrCreateProject(this.rootPath);
   }
 
-  getOrCreateProject(projectPath: string): Project {
+  getOrCreateProject(projectPath: string): ProjectData {
     let project = this.projects.get(projectPath);
     if (!project) {
       project = {
