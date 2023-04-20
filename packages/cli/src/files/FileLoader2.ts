@@ -8,7 +8,7 @@ import {
 } from "@uimix/model/src/models";
 import * as HumanReadable from "./HumanReadableFormat";
 import * as Data from "@uimix/model/src/data/v1";
-import { posix as path, relative } from "path-browserify";
+import { posix as path } from "path-browserify";
 import { filterUndefined, variantConditionToText } from "./util";
 import { Color } from "@uimix/foundation/src/utils/Color";
 import { generateLowerJSIdentifier } from "@uimix/foundation/src/utils/Name";
