@@ -43,13 +43,13 @@ export class NodeFileAccess implements FileAccess {
     }
   }
 
-  async writeText(filePath: string, data: string): Promise<void> {
+  async writeFile(filePath: string, data: Buffer): Promise<void> {
     await mkdirp(path.dirname(filePath));
     await fs.promises.writeFile(filePath, data);
   }
 
-  async readText(filePath: string): Promise<string> {
-    return await fs.promises.readFile(filePath, "utf8");
+  async readFile(filePath: string): Promise<Buffer> {
+    return await fs.promises.readFile(filePath);
   }
 
   async remove(filePath: string): Promise<void> {

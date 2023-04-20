@@ -50,6 +50,7 @@ export class WorkspaceLoader {
   }
 
   readonly filePattern = "**/*.uimix";
+  readonly imagePattern = "**/*.{png,jpg}"; // TODO: other image formats
   readonly uimixProjectFile = "uimix.json";
   readonly projectBoundary = "package.json"; // TODO: other project boundaries
   projects = new Map<string, ProjectData>(); // project path -> project json
@@ -82,7 +83,7 @@ export class WorkspaceLoader {
 
   async load(): Promise<boolean> {
     const filePaths = await this.fileAccess.glob(
-      `{${this.filePattern},**/${this.projectBoundary}}`
+      `{${this.filePattern},${this.imagePattern},**/${this.projectBoundary}}`
     );
     filePaths.sort();
 
@@ -113,7 +114,7 @@ export class WorkspaceLoader {
 
     let changed = false;
 
-    for (const [projectPath, pagePaths] of filePathsForProject) {
+    for (const [projectPath, filePaths] of filePathsForProject) {
       let manifest: ProjectManifestJSON = {};
 
       const manifestPath = path.join(projectPath, this.uimixProjectFile);
@@ -121,9 +122,11 @@ export class WorkspaceLoader {
         try {
           manifest = ProjectManifestJSON.parse(
             JSON.parse(
-              await this.fileAccess.readText(
-                path.join(projectPath, this.uimixProjectFile)
-              )
+              (
+                await this.fileAccess.readFile(
+                  path.join(projectPath, this.uimixProjectFile)
+                )
+              ).toString()
             )
           );
         } catch (e) {
@@ -133,13 +136,19 @@ export class WorkspaceLoader {
 
       const pages = new Map<string, PageNode>();
 
-      for (const pagePath of pagePaths) {
-        const pageText = await this.fileAccess.readText(pagePath);
-        const pageNode = loadFromJSXFile(pageText);
-        pages.set(
-          path.relative(projectPath, pagePath).replace(/\.uimix$/, ""),
-          pageNode
-        );
+      for (const filePath of filePaths) {
+        if (filePath.endsWith(".uimix")) {
+          const pageText = (
+            await this.fileAccess.readFile(filePath)
+          ).toString();
+          const pageNode = loadFromJSXFile(pageText);
+          const pageName = path
+            .relative(projectPath, filePath)
+            .replace(/\.uimix$/, "");
+          pages.set(pageName, pageNode);
+        } else {
+          // TODO: image files
+        }
       }
 
       const loader = new ProjectLoader();
@@ -179,9 +188,9 @@ export class WorkspaceLoader {
 
         for (const [pageName, pageNode] of pages) {
           const pagePath = path.join(projectPath, pageName + ".uimix");
-          await this.fileAccess.writeText(
+          await this.fileAccess.writeFile(
             pagePath,
-            formatTypeScript(stringifyAsJSXFile(pageNode))
+            Buffer.from(formatTypeScript(stringifyAsJSXFile(pageNode)))
           );
           pagePathsToDelete.delete(pagePath);
         }
@@ -191,7 +200,7 @@ export class WorkspaceLoader {
         let parsed: ProjectManifestJSON;
         try {
           parsed = JSON.parse(
-            await this.fileAccess.readText(manifestPath)
+            (await this.fileAccess.readFile(manifestPath)).toString()
           ) as ProjectManifestJSON;
         } catch (e) {
           parsed = {};
@@ -200,9 +209,9 @@ export class WorkspaceLoader {
 
         // TODO: avoid overwriting malformed uimix.json
 
-        await this.fileAccess.writeText(
+        await this.fileAccess.writeFile(
           manifestPath,
-          formatJSON(JSON.stringify(parsed))
+          Buffer.from(formatJSON(JSON.stringify(parsed)))
         );
 
         project.pages = pages;
