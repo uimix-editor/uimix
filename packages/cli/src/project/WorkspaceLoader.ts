@@ -223,6 +223,8 @@ export class WorkspaceLoader {
           pagePathsToDelete.delete(pagePath);
         }
 
+        // TODO: save images
+
         const manifestPath = path.join(projectPath, this.uimixProjectFile);
 
         let parsed: ProjectManifestJSON;
