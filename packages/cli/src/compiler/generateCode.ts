@@ -1,7 +1,7 @@
 import { ProjectJSON, ProjectManifestJSON } from "@uimix/model/src/data/v1";
 import { Project } from "@uimix/model/src/models/Project";
 import { formatTypeScript } from "../format.js";
-import { CSSGenerator } from "./CSSGenerator.js";
+import { CSSGenerator, ClassNameGenerator } from "./CSSGenerator.js";
 import { ReactGenerator } from "./ReactGenerator.js";
 import { codeAssetsDestination } from "../codeAssets/constants.js";
 import * as path from "path";
@@ -40,13 +40,19 @@ export async function generateCode(
     content: string | Buffer;
   }[] = [];
 
+  const classNameGenerator = new ClassNameGenerator(project);
+
   for (const page of project.pages.all) {
     const tsContent = formatTypeScript(
       new ReactGenerator({ rootPath, manifest, page, imagePaths })
         .render()
         .join("\n")
     );
-    const cssContent = new CSSGenerator(page, designTokens).generate();
+    const cssContent = new CSSGenerator(
+      page,
+      designTokens,
+      classNameGenerator
+    ).generate();
 
     results.push(
       {

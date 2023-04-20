@@ -8,6 +8,11 @@ import { kebabCase } from "lodash-es";
 import * as CSS from "csstype";
 import { Page } from "@uimix/model/src/models/Page";
 import * as CodeAsset from "@uimix/code-asset-types";
+import { Project } from "@uimix/model/src/models";
+import {
+  IncrementalUniqueNameGenerator,
+  generateUpperJSIdentifier,
+} from "@uimix/foundation/src/utils/Name";
 
 function isDesignToken(
   value: CodeAsset.DesignToken | CodeAsset.DesignTokens
@@ -42,16 +47,70 @@ const baseCSS = [
   `-webkit-font-smoothing: antialiased;`,
 ];
 
+export class ClassNameGenerator {
+  constructor(project: Project) {
+    this.project = project;
+
+    for (const page of project.pages.all) {
+      const namegen = new IncrementalUniqueNameGenerator();
+
+      const pageID = page.id.slice(0, 6);
+
+      for (const component of page.components) {
+        const componentName = namegen.generate(
+          generateUpperJSIdentifier(component.name)
+        );
+
+        const refIDs = component.refIDs;
+        for (const [nodeID, refID] of refIDs) {
+          const className = `${componentName}${pageID}__${refID}`;
+          this.uniqueNames.set(nodeID, className);
+        }
+
+        this.uniqueNames.set(
+          component.rootNode.id,
+          `${componentName}${pageID}`
+        );
+      }
+    }
+    console.log(this.uniqueNames);
+  }
+
+  getUniqueName(nodeID: string): string {
+    const className = this.uniqueNames.get(nodeID);
+    if (!className) {
+      throw new Error(`No class name for node ${nodeID}`);
+    }
+    return className;
+  }
+
+  get(nodePath: string[]) {
+    const readableIDPath = nodePath.map((id) => this.getUniqueName(id));
+    return `uimix-${readableIDPath.join("-")}`;
+  }
+
+  project: Project;
+  uniqueNames = new Map<string /* node id */, string>();
+}
+
 export class CSSGenerator {
   page: Page;
   designTokens: CodeAsset.DesignTokens;
+  classNameGenerator: ClassNameGenerator;
 
-  constructor(page: Page, designTokens: CodeAsset.DesignTokens) {
+  constructor(
+    page: Page,
+    designTokens: CodeAsset.DesignTokens,
+    classNameGenerator: ClassNameGenerator
+  ) {
     this.page = page;
     this.designTokens = designTokens;
+    this.classNameGenerator = classNameGenerator;
   }
 
   generate(): string {
+    const { classNameGenerator } = this;
+
     const results: string[] = [];
 
     const cssForSelectable = new Map<Selectable, CSS.Properties>();
@@ -75,7 +134,7 @@ export class CSSGenerator {
           getColorToken(this.designTokens, tokenID.split("/"))?.$value ??
           selectable.project.colorTokens.resolve(tokenID),
         parentLayoutType
-      ) as CSS.Properties;
+      );
 
       if (!parent) {
         css.position = "relative";
@@ -142,9 +201,10 @@ export class CSSGenerator {
         const condition = variant.condition;
         if (condition?.type === "maxWidth") {
           const selector =
-            selectable.nodePath.length === 1
-              ? `.uimix-${mainComponent.rootNode.id}`
-              : `.uimix-${selectable.idPath.slice(1).join("-")}`;
+            "." +
+            (selectable.nodePath.length === 1
+              ? classNameGenerator.get([mainComponent.rootNode.id])
+              : classNameGenerator.get(selectable.idPath.slice(1)));
 
           results.push(
             `@media (max-width: ${condition.value}px) {`,
@@ -157,20 +217,22 @@ export class CSSGenerator {
         }
 
         if (selectable.nodePath.length === 1) {
-          const selector = `.uimix-${mainComponent.rootNode.id}:hover`;
+          const selector = `.${classNameGenerator.get([
+            mainComponent.rootNode.id,
+          ])}:hover`;
           results.push(`${selector} {`, ...body, "}");
           return;
         } else {
           const innerIDPath = selectable.idPath.slice(1);
-          const selector = `.uimix-${
-            mainComponent.rootNode.id
-          }:hover .uimix-${innerIDPath.join("-")}`;
+          const selector = `.${classNameGenerator.get([
+            mainComponent.rootNode.id,
+          ])}:hover .${classNameGenerator.get(innerIDPath)}`;
           results.push(`${selector} {`, ...body, "}");
           return;
         }
       }
 
-      const selector = ".uimix-" + selectable.idPath.join("-");
+      const selector = "." + classNameGenerator.get(selectable.idPath);
       results.push(`${selector} {`, ...body, "}");
     };
 

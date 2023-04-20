@@ -12,6 +12,20 @@ export function incrementAlphanumeric(str: string): string {
   return str + "1";
 }
 
+export class IncrementalUniqueNameGenerator {
+  constructor(existingNames: Iterable<string> = []) {
+    this.existingNames = new Set(existingNames);
+  }
+
+  generate(name: string): string {
+    const generated = getIncrementalUniqueName(this.existingNames, name);
+    this.existingNames.add(generated);
+    return generated;
+  }
+
+  readonly existingNames: Set<string>;
+}
+
 export function getIncrementalUniqueName(
   existings: ReadonlySet<string>,
   name: string
