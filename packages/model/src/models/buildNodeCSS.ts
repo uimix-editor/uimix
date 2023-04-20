@@ -1,4 +1,5 @@
 import { Color, NodeType, StackDirection, StyleJSON } from "../data/v1";
+import * as CSS from "csstype";
 
 export function getLayoutType(
   style: StyleJSON
@@ -16,7 +17,7 @@ export function buildNodeCSS(
   style: StyleJSON,
   getColorToken: (id: string) => string,
   parentLayout?: StackDirection | "grid"
-): React.CSSProperties {
+): CSS.Properties {
   const resolveColorToken = (color: Color): string => {
     if (typeof color === "string") {
       return color;
@@ -28,7 +29,7 @@ export function buildNodeCSS(
     return {};
   }
 
-  const cssStyle: React.CSSProperties = {};
+  const cssStyle: CSS.Properties = {};
 
   const cssPosition = parentLayout && !style.absolute ? "relative" : "absolute";
   cssStyle.position = cssPosition;

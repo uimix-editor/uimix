@@ -980,6 +980,9 @@ importers:
       '@types/path-browserify':
         specifier: ^1.0.0
         version: 1.0.0
+      csstype:
+        specifier: ^3.1.2
+        version: 3.1.2
       tailwindcss:
         specifier: ^3.3.1
         version: 3.3.1(postcss@8.4.21)
