@@ -11,7 +11,8 @@ async function compileProject(loader: WorkspaceLoader) {
   const outFiles = await generateCode(
     loader.rootPath,
     loader.rootProject.manifest,
-    loader.rootProject.project.toJSON()
+    loader.rootProject.project.toJSON(),
+    loader.rootProject.imagePaths
   );
 
   for (const outFile of outFiles) {

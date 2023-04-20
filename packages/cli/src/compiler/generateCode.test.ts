@@ -22,7 +22,8 @@ describe(generateCode.name, () => {
         },
         designTokens: "./src/designTokens.ts",
       },
-      projectJSON
+      projectJSON,
+      new Map() // TODO
     );
     const result: Record<string, string> = {};
     for (const file of code) {

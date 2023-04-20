@@ -10,7 +10,6 @@ import htmlReactParser from "html-react-parser";
 import reactElementToJSXString from "react-element-to-jsx-string";
 import React from "react";
 import { Page } from "@uimix/model/src/models/Page";
-import mime from "mime-types";
 import { ProjectManifestJSON } from "@uimix/model/src/data/v1";
 
 // TODO: remove this when react-element-to-jsx-string is fixed
@@ -89,12 +88,12 @@ export class ReactGenerator {
     rootPath: string;
     manifest: ProjectManifestJSON;
     page: Page;
-    imagesPath: string;
+    imagePaths: Map<string, string>;
   }) {
-    this.imagesPath = options.imagesPath;
     this.rootPath = options.rootPath;
     this.manifest = options.manifest;
     this.page = options.page;
+    this.imagePaths = options.imagePaths;
 
     const componentNames = new Set<string>();
     for (const component of this.page.components) {
@@ -107,10 +106,10 @@ export class ReactGenerator {
     }
   }
 
-  imagesPath: string;
   rootPath: string;
   manifest: ProjectManifestJSON;
   page: Page;
+  imagePaths: Map<string, string>;
   componentsWithNames: [Component, string][] = [];
   refIDs = new Map<string, string>();
   moduleVarNames = new Map<string, string>(); // path -> varName
@@ -140,16 +139,14 @@ export class ReactGenerator {
       this.moduleVarNames.set(modulePath, varName);
     }
 
-    for (const [hash, image] of this.page.project.imageManager.images) {
-      const extension = mime.extension(image.type) || "";
-      const imagePathFromRoot = path.join(
-        this.imagesPath,
-        hash + "." + extension
-      );
-      const imagePathFromPage = path.relative(
+    for (const [hash, imagePathFromRoot] of this.imagePaths) {
+      let imagePathFromPage = path.relative(
         path.dirname(this.page.filePath),
         imagePathFromRoot
       );
+      if (!imagePathFromPage.startsWith(".")) {
+        imagePathFromPage = "./" + imagePathFromPage;
+      }
 
       const varName = imageHashToVarName(hash);
       results.push(`import ${varName} from "${imagePathFromPage}";`);
