@@ -120,27 +120,11 @@ export interface StyleProps extends Partial<BaseStyleProps> {
   variants?: Record<string, StyleProps>;
   overrides?: Record<string, StyleProps>;
 }
-
-export interface PageNode {
-  type: "page";
-  children: (SceneNode | ComponentNode | ColorTokenNode)[];
-}
-
-export interface ComponentNode {
-  type: "component";
-  props: {
-    id: string;
-    name: string;
-  };
-  children: (SceneNode | VariantNode)[];
-}
-
-export interface VariantNode {
-  type: "variant";
-  props: {
-    condition: VariantCondition;
-  };
-}
+export const StyleProps: z.ZodType<StyleProps> =
+  BaseStyleProps.partial().extend({
+    variants: z.lazy(() => z.record(StyleProps)).optional(),
+    overrides: z.lazy(() => z.record(StyleProps)).optional(),
+  });
 
 export interface SceneNode {
   type: "frame" | "instance" | "text" | "svg" | "image" | "foreign";
@@ -148,14 +132,51 @@ export interface SceneNode {
   children: SceneNode[];
 }
 
-export interface ColorTokenNode {
-  type: "colorToken";
-  props: {
-    id: string;
-    name: string;
-    value: string;
-  };
-}
+export const SceneNode: z.ZodType<SceneNode> = z.object({
+  type: z.enum(["frame", "instance", "text", "svg", "image", "foreign"]),
+  props: z.intersection(
+    z.object({
+      id: z.string(),
+      name: z.string(),
+    }),
+    StyleProps
+  ),
+  children: z.lazy(() => z.array(SceneNode)),
+});
+
+export const VariantNode = z.object({
+  type: z.literal("variant"),
+  props: z.object({
+    condition: VariantCondition,
+  }),
+});
+export type VariantNode = z.infer<typeof VariantNode>;
+
+export const ComponentNode = z.object({
+  type: z.literal("component"),
+  props: z.object({
+    id: z.string(),
+    name: z.string(),
+  }),
+  children: z.array(z.union([SceneNode, VariantNode])),
+});
+export type ComponentNode = z.infer<typeof ComponentNode>;
+
+export const ColorTokenNode = z.object({
+  type: z.literal("colorToken"),
+  props: z.object({
+    id: z.string(),
+    name: z.string(),
+    value: z.string(),
+  }),
+});
+export type ColorTokenNode = z.infer<typeof ColorTokenNode>;
+
+export const PageNode = z.object({
+  type: z.literal("page"),
+  children: z.array(z.union([SceneNode, ComponentNode, ColorTokenNode])),
+});
+export type PageNode = z.infer<typeof PageNode>;
 
 export type Node =
   | PageNode
