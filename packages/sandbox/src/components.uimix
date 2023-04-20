@@ -127,9 +127,9 @@
     },
     "1BxSDzwoUTryYrC5bjUUye": {
       "type": "variant",
-      "index": 1,
       "condition": { "type": "maxWidth", "value": 767 },
-      "parent": "1Bvi3BSSb2oaHb1ZqUEk6H"
+      "parent": "1Bvi3BSSb2oaHb1ZqUEk6H",
+      "index": 1
     },
     "1BwWRiQqGA4gTdwZRLXFBh": {
       "type": "component",

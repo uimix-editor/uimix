@@ -10,6 +10,7 @@ import {
 } from "@uimix/foundation/src/utils/Name";
 import { posix as path } from "path-browserify";
 import { filterUndefined, variantConditionToText } from "./util";
+import { formatTypeScript } from "../format";
 
 export class ProjectEmitter {
   constructor(project: Project) {
@@ -32,7 +33,10 @@ export class ProjectEmitter {
   emitFiles(): Map<string, string> {
     const result = new Map<string, string>();
     for (const [name, node] of this.emit()) {
-      result.set(name, HumanReadable.stringifyAsJSXFile(node));
+      result.set(
+        name,
+        formatTypeScript(HumanReadable.stringifyAsJSXFile(node))
+      );
     }
     return result;
   }
