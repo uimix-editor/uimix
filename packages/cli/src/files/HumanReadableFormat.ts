@@ -234,7 +234,6 @@ export function loadFromJSXFile(text: string): PageNode {
   if (!transformedJS) {
     throw new Error("Failed to transform JSX");
   }
-  console.log(transformedJS);
 
   const jsxFactory = (
     type: string,

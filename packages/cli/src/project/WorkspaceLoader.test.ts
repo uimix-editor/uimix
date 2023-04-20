@@ -6,6 +6,8 @@ import shell from "shelljs";
 import tmp from "tmp";
 import { Project } from "@uimix/model/src/models/Project";
 import { NodeFileAccess } from "./NodeFileAccess";
+import { mkdirpSync } from "mkdirp";
+import { ProjectEmitter } from "../files/ProjectEmitter";
 
 describe(WorkspaceLoader.name, () => {
   let tmpObj: tmp.DirResult;
@@ -51,14 +53,16 @@ describe(WorkspaceLoader.name, () => {
     const loader = new WorkspaceLoader(
       new NodeFileAccess(tmpObj.name + "/demo-project")
     );
-    loader.rootProject.json = project.toJSON();
+    loader.rootProject.project = project;
     loader.projects.set(innerProjectPath, {
       manifest: {},
-      json: innerProject.toJSON(),
+      project: innerProject,
+      pages: new Map(),
     });
     loader.projects.set(deepInnerProjectPath, {
       manifest: {},
-      json: deepInnerProject.toJSON(),
+      project: deepInnerProject,
+      pages: new Map(),
     });
     await loader.save();
 
@@ -95,15 +99,18 @@ describe(WorkspaceLoader.name, () => {
     );
     expect(innerPage1File).toMatchSnapshot();
 
-    const projectFiles2 = await WorkspaceLoader.load(
+    const workspaceIO2 = await WorkspaceLoader.load(
       new NodeFileAccess(tmpObj.name + "/demo-project")
     );
 
-    // TODO: test manifest loading
-    expect(projectFiles2.rootProject.json).toEqual(project.toJSON());
-    expect(projectFiles2.projects.get(innerProjectPath)?.json).toEqual(
-      innerProject.toJSON()
+    expect(new ProjectEmitter(workspaceIO2.rootProject.project).emit()).toEqual(
+      new ProjectEmitter(project).emit()
     );
+    expect(
+      new ProjectEmitter(
+        workspaceIO2.projects.get(innerProjectPath)!.project
+      ).emit()
+    ).toEqual(new ProjectEmitter(innerProject).emit());
   });
 
   it("watches project", async () => {
@@ -121,14 +128,16 @@ describe(WorkspaceLoader.name, () => {
     const loader = new WorkspaceLoader(
       new NodeFileAccess(tmpObj.name + "/demo-project")
     );
-    loader.rootProject.json = project.toJSON();
+    loader.rootProject.project = project;
     loader.projects.set(path.resolve(loader.rootPath, "inner"), {
       manifest: {},
-      json: innerProject.toJSON(),
+      project: innerProject,
+      pages: new Map(),
     });
-    await loader.save();
-
+    mkdirpSync(tmpObj.name + "/demo-project/inner");
     fs.writeFileSync(tmpObj.name + "/demo-project/inner/package.json", "{}");
+    await loader.save();
+    await new Promise((resolve) => setTimeout(resolve, 500));
 
     let watchCount = 0;
     loader.watch(() => {
@@ -137,11 +146,13 @@ describe(WorkspaceLoader.name, () => {
     await new Promise((resolve) => setTimeout(resolve, 500));
     expect(watchCount).toBe(0);
 
+    console.log("save");
     // saves not cause watch
     await loader.save();
     await new Promise((resolve) => setTimeout(resolve, 500));
     expect(watchCount).toBe(0);
 
+    console.log("change");
     // change file
     fs.rmSync(tmpObj.name + "/demo-project/src/page1.uimix");
     await new Promise((resolve) => setTimeout(resolve, 500));
@@ -152,10 +163,8 @@ describe(WorkspaceLoader.name, () => {
     await new Promise((resolve) => setTimeout(resolve, 500));
     expect(watchCount).toBe(2);
 
-    project.loadJSON(loader.rootProject.json);
-
-    expect(project.pages.all.map((page) => page.filePath)).toEqual([
-      "src/page2",
-    ]);
+    expect(
+      loader.rootProject.project.pages.all.map((page) => page.filePath)
+    ).toEqual(["src/page2"]);
   });
 });

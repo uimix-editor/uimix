@@ -7,13 +7,9 @@ import {
   ProjectManifestJSON,
   StyleJSON,
 } from "@uimix/model/src/data/v1";
-import {
-  getPageID,
-  compareProjectJSONs,
-  usedImageHashesInStyle,
-} from "@uimix/model/src/data/util";
-import { omit } from "lodash-es";
-import { formatJSON } from "../format";
+import { getPageID, usedImageHashesInStyle } from "@uimix/model/src/data/util";
+import { isEqual, omit } from "lodash-es";
+import { formatJSON, formatTypeScript } from "../format";
 import { FileAccess } from "./FileAccess";
 import * as path from "path";
 import {
@@ -22,6 +18,12 @@ import {
 } from "./HierarchicalNodeJSON";
 import { Project } from "@uimix/model/src/models";
 import { ProjectEmitter } from "../files/ProjectEmitter";
+import {
+  PageNode,
+  loadFromJSXFile,
+  stringifyAsJSXFile,
+} from "../files/HumanReadableFormat";
+import { ProjectLoader } from "../files/ProjectLoader";
 
 interface WorkspaceLoaderOptions {
   filePattern?: string;
@@ -29,7 +31,8 @@ interface WorkspaceLoaderOptions {
 
 interface ProjectData {
   manifest: ProjectManifestJSON;
-  json: ProjectJSON;
+  project: Project;
+  pages: Map<string, PageNode>;
 }
 
 // Important TODO: fix paths in Windows!!
@@ -68,13 +71,8 @@ export class WorkspaceLoader {
     if (!project) {
       project = {
         manifest: {},
-        json: {
-          nodes: {},
-          styles: {},
-          componentURLs: [],
-          images: {},
-          colors: {},
-        },
+        project: new Project(),
+        pages: new Map(),
       };
       this.projects.set(projectPath, project);
     }
@@ -141,43 +139,28 @@ export class WorkspaceLoader {
         }
       }
 
-      const pages = new Map<string, PageJSON>();
+      const pages = new Map<string, PageNode>();
 
       for (const pagePath of pagePaths) {
         const pageText = await this.fileAccess.readText(pagePath);
-
-        const pageJSON =
-          pageText.trim() === ""
-            ? { nodes: {}, styles: {} }
-            : PageJSON.parse(
-                JSON.parse(await this.fileAccess.readText(pagePath))
-              );
-
+        const pageNode = loadFromJSXFile(pageText);
         pages.set(
           path.relative(projectPath, pagePath).replace(/\.uimix$/, ""),
-          pageJSON
+          pageNode
         );
       }
-      const newProjectJSON = filesToProjectJSON(manifest, pages);
 
-      if (
-        !compareProjectJSONs(
-          this.projects.get(projectPath)?.json ?? {
-            nodes: {},
-            styles: {},
-            componentURLs: [],
-            images: {},
-            colors: {},
-          },
-          newProjectJSON
-        )
-      ) {
+      const loader = new ProjectLoader();
+      loader.load(pages);
+
+      if (!isEqual(pages, this.projects.get(projectPath)?.pages ?? new Map())) {
         changed = true;
       }
 
       this.projects.set(projectPath, {
         manifest,
-        json: newProjectJSON,
+        project: loader.project,
+        pages,
       });
     }
 
@@ -199,24 +182,16 @@ export class WorkspaceLoader {
           continue;
         }
 
-        const { manifest, pages } = projectJSONToFiles(project.json);
+        const projectEmitter = new ProjectEmitter(project.project);
+        const pages = projectEmitter.emit();
 
-        for (const [pageName, pageJSON] of pages) {
+        for (const [pageName, pageNode] of pages) {
           const pagePath = path.join(projectPath, pageName + ".uimix");
           await this.fileAccess.writeText(
             pagePath,
-            formatJSON(JSON.stringify(pageJSON))
+            formatTypeScript(stringifyAsJSXFile(pageNode))
           );
           pagePathsToDelete.delete(pagePath);
-        }
-
-        // Emit new file format
-        const projectModel = new Project();
-        projectModel.loadJSON(project.json);
-        const projectEmitter = new ProjectEmitter(projectModel);
-        for (const [pageName, pageText] of projectEmitter.emitFiles()) {
-          const pagePath = path.join(projectPath, pageName + ".uimix2");
-          await this.fileAccess.writeText(pagePath, pageText);
         }
 
         const manifestPath = path.join(projectPath, this.uimixProjectFile);
@@ -229,7 +204,7 @@ export class WorkspaceLoader {
         } catch (e) {
           parsed = {};
         }
-        parsed.prebuiltAssets = manifest.prebuiltAssets;
+        parsed.prebuiltAssets = project.manifest.prebuiltAssets;
 
         // TODO: avoid overwriting malformed uimix.json
 
@@ -237,6 +212,8 @@ export class WorkspaceLoader {
           manifestPath,
           formatJSON(JSON.stringify(parsed))
         );
+
+        project.pages = pages;
       }
 
       for (const pagePath of pagePathsToDelete) {
