@@ -18,14 +18,17 @@ describe("ProjectEmitter", () => {
     const emitter = new ProjectEmitter2(project);
 
     const emitted = emitter.emit();
+
     const emittedFile = formatTypeScript(
       stringifyAsJSXFile(emitted.get("src/components")!)
     );
     expect(emittedFile).toMatchSnapshot();
-    loadFromJSXFile(emittedFile);
+
+    const parsed = loadFromJSXFile(emittedFile);
+    //expect(parsed).toEqual(emitted.get("src/components"));
 
     const loader = new ProjectLoader2();
-    loader.load(emitted);
+    loader.load(new Map([["src/components", parsed]]));
 
     const emitted2 = new ProjectEmitter2(loader.project).emit();
     const emittedFile2 = formatTypeScript(

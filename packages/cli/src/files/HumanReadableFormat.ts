@@ -187,11 +187,11 @@ export function stringifyAsJSX(node: Node): string {
   }
 }
 
-export function stringifyAsJSXFile(node: Node): string {
+export function stringifyAsJSXFile(node: PageNode): string {
   return `export default ${stringifyAsJSX(node)};`;
 }
 
-export function loadFromJSXFile(text: string): Node {
+export function loadFromJSXFile(text: string): PageNode {
   // use babel to transform jsx to js
   // evaluate the js to get the node
 
@@ -222,22 +222,10 @@ export function loadFromJSXFile(text: string): Node {
     children,
   });
 
-  const exports = {
-    default: undefined,
-  };
-  const sandbox = {
-    exports,
-    module: { exports },
-    console,
-    React: {
-      createElement: jsxFactory,
-    },
-  };
+  const exports: Record<string, unknown> = {};
 
-  vm.createContext(sandbox);
-  vm.runInContext(transformedJS, sandbox);
-
-  const jsonOutput = exports.default;
-
-  return jsonOutput as Node;
+  new Function("exports", "React", transformedJS)(exports, {
+    createElement: jsxFactory,
+  });
+  return exports.default as PageNode;
 }
