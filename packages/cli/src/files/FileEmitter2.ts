@@ -174,26 +174,27 @@ export class PageEmitter {
     return this.relativePathFromPage(page.filePath) + ".uimix#" + name;
   }
 
-  transformColor(color: Data.Color): Data.Color {
+  transformColor(color: Data.Color): HumanReadable.Color {
     if (typeof color === "object") {
       const token = this.project.colorTokens.get(color.id);
       if (token?.type === "normal" && token.page) {
         return {
-          type: "token",
-          id: this.pathForExport(
+          token: this.pathForExport(
             token.page,
             generateLowerJSIdentifier(token.name ?? "")
           ),
         };
       }
+      return {
+        token: color.id,
+      };
     }
     return color;
   }
 
-  transformFill(fill: Data.SolidFill): Data.SolidFill {
+  transformFill(fill: Data.SolidFill): HumanReadable.Fill {
     return {
-      type: "solid",
-      color: this.transformColor(fill.color),
+      solid: this.transformColor(fill.color),
     };
   }
 
@@ -206,6 +207,20 @@ export class PageEmitter {
       top: position.y.type !== "end" ? position.y.start : undefined,
       bottom: position.y.type !== "start" ? position.y.end : undefined,
     };
+  }
+
+  transformSize(size: Data.SizeConstraint): HumanReadable.Size {
+    switch (size.type) {
+      case "hug":
+        return "hug";
+      case "fixed":
+        return size.value;
+      case "fill":
+        return {
+          min: size.min ?? 0,
+          max: size.max,
+        };
+    }
   }
 
   transformStyle(
@@ -226,8 +241,8 @@ export class PageEmitter {
       locked: style.locked,
       position: style.position && this.transformPosition(style.position),
       absolute: style.absolute,
-      width: style.width,
-      height: style.height,
+      width: style.width && this.transformSize(style.width),
+      height: style.height && this.transformSize(style.height),
 
       topLeftRadius: style.topLeftRadius,
       topRightRadius: style.topRightRadius,

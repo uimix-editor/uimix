@@ -211,9 +211,9 @@ class PageLoader {
     return this.projectLoader.pathToColorToken.get(absPath);
   }
 
-  transformColor(color: Data.Color): Data.Color {
+  transformColor(color: HumanReadable.Color): Data.Color {
     if (typeof color === "object") {
-      const tokenPath = color.id;
+      const tokenPath = color.token;
       const tokenId = this.colorTokenFromRelativePath(tokenPath)?.id;
 
       if (!tokenId) {
@@ -232,10 +232,10 @@ class PageLoader {
     return color;
   }
 
-  transformFill(fill: Data.SolidFill): Data.SolidFill {
+  transformFill(fill: HumanReadable.Fill): Data.SolidFill {
     return {
       type: "solid",
-      color: this.transformColor(fill.color),
+      color: this.transformColor(fill.solid),
     };
   }
 
@@ -255,6 +255,20 @@ class PageLoader {
           : position.bottom !== undefined
           ? { type: "end", end: position.bottom }
           : { type: "start", start: position.top ?? 0 },
+    };
+  }
+
+  transformSize(size: HumanReadable.Size): Data.SizeConstraint {
+    if (size === "hug") {
+      return { type: "hug" };
+    }
+    if (typeof size === "number") {
+      return { type: "fixed", value: size };
+    }
+    return {
+      type: "fill",
+      min: size.min || undefined,
+      max: size.max,
     };
   }
 
@@ -294,8 +308,12 @@ class PageLoader {
       locked: style.locked,
       position: style.position && this.transformPosition(style.position),
       absolute: style.absolute,
-      width: style.width,
-      height: style.height,
+      width:
+        style.width !== undefined ? this.transformSize(style.width) : undefined,
+      height:
+        style.height !== undefined
+          ? this.transformSize(style.height)
+          : undefined,
 
       topLeftRadius: style.topLeftRadius,
       topRightRadius: style.topRightRadius,

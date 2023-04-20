@@ -20,21 +20,44 @@ export const Position = z.object({
 });
 export type Position = z.infer<typeof Position>;
 
+export const Size = z.union([
+  z.literal("hug"),
+  z.number(),
+  z.object({
+    min: z.number(),
+    max: z.number().optional(),
+  }),
+]);
+export type Size = z.infer<typeof Size>;
+
+export const Color = z.union([
+  z.string(), // hex
+  z.object({
+    token: z.string(),
+  }),
+]);
+export type Color = z.infer<typeof Color>;
+
+export const Fill = z.object({
+  solid: Color,
+});
+export type Fill = z.infer<typeof Fill>;
+
 export const BaseStyleProps = z.object({
   hidden: z.boolean(),
   locked: z.boolean(),
   position: Position,
   absolute: z.boolean(),
-  width: SizeConstraint,
-  height: SizeConstraint,
+  width: Size,
+  height: Size,
 
   topLeftRadius: z.number(),
   topRightRadius: z.number(),
   bottomRightRadius: z.number(),
   bottomLeftRadius: z.number(),
 
-  fills: z.array(SolidFill),
-  border: z.union([SolidFill, z.null()]),
+  fills: z.array(Fill),
+  border: z.union([Fill, z.null()]),
   borderTopWidth: z.number(),
   borderRightWidth: z.number(),
   borderBottomWidth: z.number(),
