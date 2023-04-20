@@ -2,7 +2,7 @@
 
 exports[`generateCode > generates code 1`] = `
 {
-  "src/components.uimix.css": ".uimix-1Bvi2z3UPfi6W3L8nDt5VA {
+  "src/components.uimix.css": ".uimix-ButtonRBRbRk {
 box-sizing: border-box;
 -webkit-font-smoothing: antialiased;
   position: relative;
@@ -33,18 +33,18 @@ box-sizing: border-box;
   border-bottom-left-radius: 0px;
   box-shadow: none;
 }
-.uimix-1Bvi2z3UPfi6W3L8nDt5VA:hover {
+.uimix-ButtonRBRbRk:hover {
   background: #3b82f6;
 }
 @media (max-width: 767px) {
-.uimix-1Bvi2z3UPfi6W3L8nDt5VA {
+.uimix-ButtonRBRbRk {
   padding-left: 4px;
   padding-right: 4px;
   padding-top: 2px;
   padding-bottom: 2px;
 }
 }
-.uimix-1Bvi2z3TfkSpYXW29daTN8 {
+.uimix-StackRBRbRk {
 box-sizing: border-box;
 -webkit-font-smoothing: antialiased;
   position: relative;
@@ -75,7 +75,7 @@ box-sizing: border-box;
   border-bottom-left-radius: 0px;
   box-shadow: none;
 }
-.uimix-1Bvi319YVxZELz4tEskN1S {
+.uimix-PageRBRbRk {
 box-sizing: border-box;
 -webkit-font-smoothing: antialiased;
   position: relative;
@@ -107,11 +107,11 @@ box-sizing: border-box;
   box-shadow: none;
 }
 @media (max-width: 767px) {
-.uimix-1Bvi319YVxZELz4tEskN1S {
+.uimix-PageRBRbRk {
   width: 720px;
 }
 }
-.uimix-1BwWRgjHrhVbbuTV7m36kM {
+.uimix-CardRBRbRk {
 box-sizing: border-box;
 -webkit-font-smoothing: antialiased;
   position: relative;
@@ -142,7 +142,7 @@ box-sizing: border-box;
   border-bottom-left-radius: 20px;
   box-shadow: none;
 }
-.uimix-1Bvi2z3UGTM64JtRT7Qc1S {
+.uimix-ButtonRBRbRk__text {
 box-sizing: border-box;
 -webkit-font-smoothing: antialiased;
   position: relative;
@@ -166,15 +166,15 @@ box-sizing: border-box;
   text-align: start;
   justify-content: flex-start;
 }
-.uimix-1Bvi2z3UPfi6W3L8nDt5VA:hover .uimix-1Bvi2z3UGTM64JtRT7Qc1S {
+.uimix-ButtonRBRbRk:hover .uimix-ButtonRBRbRk__text {
   color: #FFFFFF;
 }
 @media (max-width: 767px) {
-.uimix-1Bvi2z3UGTM64JtRT7Qc1S {
+.uimix-ButtonRBRbRk__text {
   font-size: 14px;
 }
 }
-.uimix-1Bvi2z3TpKXtTJLTRPTEd8 {
+.uimix-StackRBRbRk__item_0 {
 box-sizing: border-box;
 -webkit-font-smoothing: antialiased;
   position: relative;
@@ -208,7 +208,7 @@ box-sizing: border-box;
   border-bottom-left-radius: 0px;
   box-shadow: none;
 }
-.uimix-1Bvi2z3To8ddXo6R6ZftVD {
+.uimix-StackRBRbRk__item_1 {
 box-sizing: border-box;
 -webkit-font-smoothing: antialiased;
   position: relative;
@@ -238,7 +238,7 @@ box-sizing: border-box;
   border-bottom-left-radius: 0px;
   box-shadow: none;
 }
-.uimix-1BwspVKcGYvxVctYVzjPu6 {
+.uimix-StackRBRbRk__hidden_Item {
 box-sizing: border-box;
 -webkit-font-smoothing: antialiased;
   position: relative;
@@ -268,7 +268,7 @@ box-sizing: border-box;
   border-bottom-left-radius: 0px;
   box-shadow: none;
 }
-.uimix-1Bvi2z3UB1xUVg4Xz9WTpJ {
+.uimix-StackRBRbRk__item_2 {
 box-sizing: border-box;
 -webkit-font-smoothing: antialiased;
   position: relative;
@@ -298,7 +298,7 @@ box-sizing: border-box;
   border-bottom-left-radius: 0px;
   box-shadow: none;
 }
-.uimix-1Bvi2z3U3SiK6r7gf9vh7N {
+.uimix-StackRBRbRk__text {
 box-sizing: border-box;
 -webkit-font-smoothing: antialiased;
   position: relative;
@@ -322,15 +322,15 @@ box-sizing: border-box;
   text-align: start;
   justify-content: flex-start;
 }
-.uimix-1BxSDQc9suV4UZUVEQsy6r {
+.uimix-StackRBRbRk__button {
   margin-top: 0px;
   margin-right: 0px;
   margin-bottom: 0px;
   margin-left: 0px;
 }
-.uimix-1BxSDQc9suV4UZUVEQsy6r-1Bvi2z3UGTM64JtRT7Qc1S {
+.uimix-StackRBRbRk__button-ButtonRBRbRk__text {
 }
-.uimix-1Bvi31VKu8gfy6XzJ8xrHA {
+.uimix-PageRBRbRk__header {
 box-sizing: border-box;
 -webkit-font-smoothing: antialiased;
   position: relative;
@@ -345,7 +345,7 @@ box-sizing: border-box;
   opacity: 1;
   overflow: visible;
 }
-.uimix-1Bvi365mtWZmXKDPeJTB4s {
+.uimix-PageRBRbRk__frame {
 box-sizing: border-box;
 -webkit-font-smoothing: antialiased;
   position: relative;
@@ -379,7 +379,7 @@ box-sizing: border-box;
   border-bottom-left-radius: 0px;
   box-shadow: none;
 }
-.uimix-1Bvi32d9RMi3ES5kk2UvuM {
+.uimix-PageRBRbRk__button {
 box-sizing: border-box;
 -webkit-font-smoothing: antialiased;
   position: absolute;
@@ -390,15 +390,15 @@ box-sizing: border-box;
   opacity: 1;
   overflow: visible;
 }
-.uimix-1Bvi2z3UrU9VkawwAteXs8 {
+.uimix-PageRBRbRk__instance {
   position: absolute;
   left: 160px;
   top: 28px;
   background: #BABABA;
 }
-.uimix-1Bvi2z3UrU9VkawwAteXs8-1Bvi2z3UGTM64JtRT7Qc1S {
+.uimix-PageRBRbRk__instance-ButtonRBRbRk__text {
 }
-.uimix-1Bvi392qBdMy93LGLcVymb {
+.uimix-PageRBRbRk__image {
 box-sizing: border-box;
 -webkit-font-smoothing: antialiased;
   position: absolute;
@@ -421,84 +421,84 @@ box-sizing: border-box;
   border-bottom-left-radius: 0px;
   box-shadow: none;
 }
-.uimix-1Bvi39mct9UNYZ9eTCCRdV {
+.uimix-PageRBRbRk__stack {
   position: absolute;
   left: 165px;
   top: 86px;
 }
-.uimix-1Bvi39mct9UNYZ9eTCCRdV-1Bvi2z3TpKXtTJLTRPTEd8 {
+.uimix-PageRBRbRk__stack-StackRBRbRk__item_0 {
 }
-.uimix-1Bvi39mct9UNYZ9eTCCRdV-1Bvi2z3To8ddXo6R6ZftVD {
+.uimix-PageRBRbRk__stack-StackRBRbRk__item_1 {
 }
-.uimix-1Bvi39mct9UNYZ9eTCCRdV-1BwspVKcGYvxVctYVzjPu6 {
+.uimix-PageRBRbRk__stack-StackRBRbRk__hidden_Item {
   display: block;
 }
-.uimix-1Bvi39mct9UNYZ9eTCCRdV-1Bvi2z3UB1xUVg4Xz9WTpJ {
+.uimix-PageRBRbRk__stack-StackRBRbRk__item_2 {
 }
-.uimix-1Bvi39mct9UNYZ9eTCCRdV-1Bvi2z3U3SiK6r7gf9vh7N {
+.uimix-PageRBRbRk__stack-StackRBRbRk__text {
 }
-.uimix-1Bvi39mct9UNYZ9eTCCRdV-1BxSDQc9suV4UZUVEQsy6r {
+.uimix-PageRBRbRk__stack-StackRBRbRk__button {
 }
-.uimix-1Bvi39mct9UNYZ9eTCCRdV-1BxSDQc9suV4UZUVEQsy6r-1Bvi2z3UGTM64JtRT7Qc1S {
-}
-@media (max-width: 767px) {
-.uimix-1Bvi31VKu8gfy6XzJ8xrHA {
-}
+.uimix-PageRBRbRk__stack-StackRBRbRk__button-ButtonRBRbRk__text {
 }
 @media (max-width: 767px) {
-.uimix-1Bvi365mtWZmXKDPeJTB4s {
+.uimix-PageRBRbRk__header {
 }
 }
 @media (max-width: 767px) {
-.uimix-1Bvi32d9RMi3ES5kk2UvuM {
+.uimix-PageRBRbRk__frame {
 }
 }
 @media (max-width: 767px) {
-.uimix-1Bvi2z3UrU9VkawwAteXs8 {
+.uimix-PageRBRbRk__button {
 }
 }
 @media (max-width: 767px) {
-.uimix-1Bvi2z3UrU9VkawwAteXs8-1Bvi2z3UGTM64JtRT7Qc1S {
+.uimix-PageRBRbRk__instance {
 }
 }
 @media (max-width: 767px) {
-.uimix-1Bvi392qBdMy93LGLcVymb {
+.uimix-PageRBRbRk__instance-ButtonRBRbRk__text {
 }
 }
 @media (max-width: 767px) {
-.uimix-1Bvi39mct9UNYZ9eTCCRdV {
+.uimix-PageRBRbRk__image {
 }
 }
 @media (max-width: 767px) {
-.uimix-1Bvi39mct9UNYZ9eTCCRdV-1Bvi2z3TpKXtTJLTRPTEd8 {
+.uimix-PageRBRbRk__stack {
 }
 }
 @media (max-width: 767px) {
-.uimix-1Bvi39mct9UNYZ9eTCCRdV-1Bvi2z3To8ddXo6R6ZftVD {
+.uimix-PageRBRbRk__stack-StackRBRbRk__item_0 {
 }
 }
 @media (max-width: 767px) {
-.uimix-1Bvi39mct9UNYZ9eTCCRdV-1BwspVKcGYvxVctYVzjPu6 {
+.uimix-PageRBRbRk__stack-StackRBRbRk__item_1 {
 }
 }
 @media (max-width: 767px) {
-.uimix-1Bvi39mct9UNYZ9eTCCRdV-1Bvi2z3UB1xUVg4Xz9WTpJ {
+.uimix-PageRBRbRk__stack-StackRBRbRk__hidden_Item {
 }
 }
 @media (max-width: 767px) {
-.uimix-1Bvi39mct9UNYZ9eTCCRdV-1Bvi2z3U3SiK6r7gf9vh7N {
+.uimix-PageRBRbRk__stack-StackRBRbRk__item_2 {
 }
 }
 @media (max-width: 767px) {
-.uimix-1Bvi39mct9UNYZ9eTCCRdV-1BxSDQc9suV4UZUVEQsy6r {
+.uimix-PageRBRbRk__stack-StackRBRbRk__text {
 }
 }
 @media (max-width: 767px) {
-.uimix-1Bvi39mct9UNYZ9eTCCRdV-1BxSDQc9suV4UZUVEQsy6r-1Bvi2z3UGTM64JtRT7Qc1S {
+.uimix-PageRBRbRk__stack-StackRBRbRk__button {
+}
+}
+@media (max-width: 767px) {
+.uimix-PageRBRbRk__stack-StackRBRbRk__button-ButtonRBRbRk__text {
   color: #FF0000;
 }
 }
-.uimix-1BwWRgjHyEzJjsehRefVBE {
+.uimix-CardRBRbRk__icon {
 box-sizing: border-box;
 -webkit-font-smoothing: antialiased;
   position: relative;
@@ -533,7 +533,7 @@ box-sizing: border-box;
   border-bottom-left-radius: 8px;
   box-shadow: none;
 }
-.uimix-1BwWRgjHr8HNgX8BRooGv7 {
+.uimix-CardRBRbRk__heroicons_code_bracket {
 box-sizing: border-box;
 -webkit-font-smoothing: antialiased;
   position: relative;
@@ -558,7 +558,7 @@ box-sizing: border-box;
   border-bottom-left-radius: 0px;
   box-shadow: none;
 }
-.uimix-1BwWRgjHmYZ8qLKDj3Tvdy {
+.uimix-CardRBRbRk__title {
 box-sizing: border-box;
 -webkit-font-smoothing: antialiased;
   position: relative;
@@ -584,7 +584,7 @@ box-sizing: border-box;
   text-align: start;
   justify-content: flex-start;
 }
-.uimix-1BwWRgjHuAe9UTxVhowwYu {
+.uimix-CardRBRbRk__description {
 box-sizing: border-box;
 -webkit-font-smoothing: antialiased;
   position: relative;
@@ -613,7 +613,10 @@ box-sizing: border-box;
   "src/components.uimix.tsx": "import React from \\"react\\";
 import * as header from \\"../../sandbox/src/stories/Header\\";
 import * as button from \\"../../sandbox/src/stories/Button\\";
-import image_YmY$tuteU03QY$k_2ARy1uacNmXDNmOX$FFAlj2qCIo from \\"../.uimix/images/YmY-tuteU03QY-k_2ARy1uacNmXDNmOX-FFAlj2qCIo.png\\";
+import image_1yKf5NvwGW$XtLSBDlS3GqZfbEGnLshgQrjyQJImqaM from \\"../../sandbox/src/images/1yKf5NvwGW-XtLSBDlS3GqZfbEGnLshgQrjyQJImqaM.png\\";
+import image_DGLFxM8eMqBjHUQYEekprnB3xC$f5uvLxL7x2odVAEU from \\"../../sandbox/src/images/DGLFxM8eMqBjHUQYEekprnB3xC-f5uvLxL7x2odVAEU.png\\";
+import image_XMIUgNq9VxH1FiVdc4M95ZcfqaSP3aF07GtbcGHi9AY from \\"../../sandbox/src/images/XMIUgNq9VxH1FiVdc4M95ZcfqaSP3aF07GtbcGHi9AY.png\\";
+import image_YmY$tuteU03QY$k_2ARy1uacNmXDNmOX$FFAlj2qCIo from \\"../../sandbox/src/images/YmY-tuteU03QY-k_2ARy1uacNmXDNmOX-FFAlj2qCIo.png\\";
 import \\"./components.uimix.css\\";
 
 function applyOverrides(
@@ -657,8 +660,8 @@ function applyOverrides(
 export const Button = React.forwardRef((props, ref) => {
   return applyOverrides(
     { ...props, ref },
-    <div className={\\"uimix-1Bvi2z3UPfi6W3L8nDt5VA\\"}>
-      <div className={\\"uimix-1Bvi2z3UGTM64JtRT7Qc1S\\"} data-refID={[\\"text\\"]}>
+    <div className={\\"uimix-ButtonRBRbRk\\"}>
+      <div className={\\"uimix-ButtonRBRbRk__text\\"} data-refID={[\\"text\\"]}>
         {\\"Button\\"}
       </div>
     </div>
@@ -672,33 +675,33 @@ export const Button = React.forwardRef((props, ref) => {
 export const Stack = React.forwardRef((props, ref) => {
   return applyOverrides(
     { ...props, ref },
-    <div className={\\"uimix-1Bvi2z3TfkSpYXW29daTN8\\"}>
+    <div className={\\"uimix-StackRBRbRk\\"}>
       <div
-        className={\\"uimix-1Bvi2z3TpKXtTJLTRPTEd8\\"}
+        className={\\"uimix-StackRBRbRk__item_0\\"}
         data-refID={[\\"item_0\\"]}
       ></div>
       <div
-        className={\\"uimix-1Bvi2z3To8ddXo6R6ZftVD\\"}
+        className={\\"uimix-StackRBRbRk__item_1\\"}
         data-refID={[\\"item_1\\"]}
       ></div>
       <div
-        className={\\"uimix-1BwspVKcGYvxVctYVzjPu6\\"}
+        className={\\"uimix-StackRBRbRk__hidden_Item\\"}
         data-refID={[\\"hidden_Item\\"]}
       ></div>
       <div
-        className={\\"uimix-1Bvi2z3UB1xUVg4Xz9WTpJ\\"}
+        className={\\"uimix-StackRBRbRk__item_2\\"}
         data-refID={[\\"item_2\\"]}
       ></div>
-      <div className={\\"uimix-1Bvi2z3U3SiK6r7gf9vh7N\\"} data-refID={[\\"text\\"]}>
+      <div className={\\"uimix-StackRBRbRk__text\\"} data-refID={[\\"text\\"]}>
         {\\"Hello, world!\\"}
       </div>
       <div
-        className={\\"uimix-1BxSDQc9suV4UZUVEQsy6r uimix-1Bvi2z3UPfi6W3L8nDt5VA\\"}
+        className={\\"uimix-StackRBRbRk__button uimix-ButtonRBRbRk\\"}
         data-refID={[\\"button\\"]}
       >
         <div
           className={
-            \\"uimix-1BxSDQc9suV4UZUVEQsy6r-1Bvi2z3UGTM64JtRT7Qc1S uimix-1Bvi2z3UGTM64JtRT7Qc1S\\"
+            \\"uimix-StackRBRbRk__button-ButtonRBRbRk__text uimix-ButtonRBRbRk__text\\"
           }
           data-refID={[\\"button\\", \\"text\\"]}
         >
@@ -721,15 +724,15 @@ export const Stack = React.forwardRef((props, ref) => {
 export const Page = React.forwardRef((props, ref) => {
   return applyOverrides(
     { ...props, ref },
-    <div className={\\"uimix-1Bvi319YVxZELz4tEskN1S\\"}>
+    <div className={\\"uimix-PageRBRbRk\\"}>
       <header.Header
-        className={\\"uimix-1Bvi31VKu8gfy6XzJ8xrHA\\"}
+        className={\\"uimix-PageRBRbRk__header\\"}
         data-refID={[\\"header\\"]}
         {...{}}
       />
-      <div className={\\"uimix-1Bvi365mtWZmXKDPeJTB4s\\"} data-refID={[\\"frame\\"]}>
+      <div className={\\"uimix-PageRBRbRk__frame\\"} data-refID={[\\"frame\\"]}>
         <button.Button
-          className={\\"uimix-1Bvi32d9RMi3ES5kk2UvuM\\"}
+          className={\\"uimix-PageRBRbRk__button\\"}
           data-refID={[\\"button\\"]}
           {...{
             label: \\"Button1\\",
@@ -739,14 +742,12 @@ export const Page = React.forwardRef((props, ref) => {
           }}
         />
         <div
-          className={
-            \\"uimix-1Bvi2z3UrU9VkawwAteXs8 uimix-1Bvi2z3UPfi6W3L8nDt5VA\\"
-          }
+          className={\\"uimix-PageRBRbRk__instance uimix-ButtonRBRbRk\\"}
           data-refID={[\\"instance\\"]}
         >
           <div
             className={
-              \\"uimix-1Bvi2z3UrU9VkawwAteXs8-1Bvi2z3UGTM64JtRT7Qc1S uimix-1Bvi2z3UGTM64JtRT7Qc1S\\"
+              \\"uimix-PageRBRbRk__instance-ButtonRBRbRk__text uimix-ButtonRBRbRk__text\\"
             }
             data-refID={[\\"instance\\", \\"text\\"]}
           >
@@ -754,44 +755,42 @@ export const Page = React.forwardRef((props, ref) => {
           </div>
         </div>
         <img
-          className={\\"uimix-1Bvi392qBdMy93LGLcVymb\\"}
+          className={\\"uimix-PageRBRbRk__image\\"}
           data-refID={[\\"image\\"]}
           src={image_YmY$tuteU03QY$k_2ARy1uacNmXDNmOX$FFAlj2qCIo}
           alt=\\"Image\\"
         />
         <div
-          className={
-            \\"uimix-1Bvi39mct9UNYZ9eTCCRdV uimix-1Bvi2z3TfkSpYXW29daTN8\\"
-          }
+          className={\\"uimix-PageRBRbRk__stack uimix-StackRBRbRk\\"}
           data-refID={[\\"stack\\"]}
         >
           <div
             className={
-              \\"uimix-1Bvi39mct9UNYZ9eTCCRdV-1Bvi2z3TpKXtTJLTRPTEd8 uimix-1Bvi2z3TpKXtTJLTRPTEd8\\"
+              \\"uimix-PageRBRbRk__stack-StackRBRbRk__item_0 uimix-StackRBRbRk__item_0\\"
             }
             data-refID={[\\"stack\\", \\"item_0\\"]}
           ></div>
           <div
             className={
-              \\"uimix-1Bvi39mct9UNYZ9eTCCRdV-1Bvi2z3To8ddXo6R6ZftVD uimix-1Bvi2z3To8ddXo6R6ZftVD\\"
+              \\"uimix-PageRBRbRk__stack-StackRBRbRk__item_1 uimix-StackRBRbRk__item_1\\"
             }
             data-refID={[\\"stack\\", \\"item_1\\"]}
           ></div>
           <div
             className={
-              \\"uimix-1Bvi39mct9UNYZ9eTCCRdV-1BwspVKcGYvxVctYVzjPu6 uimix-1BwspVKcGYvxVctYVzjPu6\\"
+              \\"uimix-PageRBRbRk__stack-StackRBRbRk__hidden_Item uimix-StackRBRbRk__hidden_Item\\"
             }
             data-refID={[\\"stack\\", \\"hidden_Item\\"]}
           ></div>
           <div
             className={
-              \\"uimix-1Bvi39mct9UNYZ9eTCCRdV-1Bvi2z3UB1xUVg4Xz9WTpJ uimix-1Bvi2z3UB1xUVg4Xz9WTpJ\\"
+              \\"uimix-PageRBRbRk__stack-StackRBRbRk__item_2 uimix-StackRBRbRk__item_2\\"
             }
             data-refID={[\\"stack\\", \\"item_2\\"]}
           ></div>
           <div
             className={
-              \\"uimix-1Bvi39mct9UNYZ9eTCCRdV-1Bvi2z3U3SiK6r7gf9vh7N uimix-1Bvi2z3U3SiK6r7gf9vh7N\\"
+              \\"uimix-PageRBRbRk__stack-StackRBRbRk__text uimix-StackRBRbRk__text\\"
             }
             data-refID={[\\"stack\\", \\"text\\"]}
           >
@@ -799,13 +798,13 @@ export const Page = React.forwardRef((props, ref) => {
           </div>
           <div
             className={
-              \\"uimix-1Bvi39mct9UNYZ9eTCCRdV-1BxSDQc9suV4UZUVEQsy6r uimix-1BxSDQc9suV4UZUVEQsy6r\\"
+              \\"uimix-PageRBRbRk__stack-StackRBRbRk__button uimix-StackRBRbRk__button\\"
             }
             data-refID={[\\"stack\\", \\"button\\"]}
           >
             <div
               className={
-                \\"uimix-1Bvi39mct9UNYZ9eTCCRdV-1BxSDQc9suV4UZUVEQsy6r-1Bvi2z3UGTM64JtRT7Qc1S uimix-1BxSDQc9suV4UZUVEQsy6r-1Bvi2z3UGTM64JtRT7Qc1S uimix-1Bvi2z3UGTM64JtRT7Qc1S\\"
+                \\"uimix-PageRBRbRk__stack-StackRBRbRk__button-ButtonRBRbRk__text uimix-StackRBRbRk__button-ButtonRBRbRk__text uimix-ButtonRBRbRk__text\\"
               }
               data-refID={[\\"stack\\", \\"button\\", \\"text\\"]}
             >
@@ -830,10 +829,10 @@ export const Page = React.forwardRef((props, ref) => {
 export const Card = React.forwardRef((props, ref) => {
   return applyOverrides(
     { ...props, ref },
-    <div className={\\"uimix-1BwWRgjHrhVbbuTV7m36kM\\"}>
-      <div className={\\"uimix-1BwWRgjHyEzJjsehRefVBE\\"} data-refID={[\\"icon\\"]}>
+    <div className={\\"uimix-CardRBRbRk\\"}>
+      <div className={\\"uimix-CardRBRbRk__icon\\"} data-refID={[\\"icon\\"]}>
         <svg
-          className=\\"uimix-1BwWRgjHr8HNgX8BRooGv7\\"
+          className=\\"uimix-CardRBRbRk__heroicons_code_bracket\\"
           data-refID={[\\"heroicons_code_bracket\\"]}
           fill=\\"none\\"
           height=\\"24\\"
@@ -850,11 +849,11 @@ export const Card = React.forwardRef((props, ref) => {
           />
         </svg>
       </div>
-      <div className={\\"uimix-1BwWRgjHmYZ8qLKDj3Tvdy\\"} data-refID={[\\"title\\"]}>
+      <div className={\\"uimix-CardRBRbRk__title\\"} data-refID={[\\"title\\"]}>
         {\\"React Components Import/Export\\"}
       </div>
       <div
-        className={\\"uimix-1BwWRgjHuAe9UTxVhowwYu\\"}
+        className={\\"uimix-CardRBRbRk__description\\"}
         data-refID={[\\"description\\"]}
       >
         {
