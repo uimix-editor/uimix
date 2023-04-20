@@ -25,10 +25,6 @@ import {
 } from "../files/HumanReadableFormat";
 import { ProjectLoader } from "../files/ProjectLoader";
 
-interface WorkspaceLoaderOptions {
-  filePattern?: string;
-}
-
 interface ProjectData {
   manifest: ProjectManifestJSON;
   project: Project;
@@ -37,18 +33,14 @@ interface ProjectData {
 
 // Important TODO: fix paths in Windows!!
 export class WorkspaceLoader {
-  static async load(
-    fileAccess: FileAccess,
-    options: WorkspaceLoaderOptions = {}
-  ) {
-    const loader = new WorkspaceLoader(fileAccess, options);
+  static async load(fileAccess: FileAccess) {
+    const loader = new WorkspaceLoader(fileAccess);
     await loader.load();
     return loader;
   }
 
-  constructor(fileAccess: FileAccess, options: WorkspaceLoaderOptions = {}) {
+  constructor(fileAccess: FileAccess) {
     this.fileAccess = fileAccess;
-    this.filePattern = options.filePattern ?? "**/*.uimix";
   }
 
   readonly fileAccess: FileAccess;
@@ -57,7 +49,7 @@ export class WorkspaceLoader {
     return this.fileAccess.rootPath;
   }
 
-  readonly filePattern: string;
+  readonly filePattern = "**/*.uimix";
   readonly uimixProjectFile = "uimix.json";
   readonly projectBoundary = "package.json"; // TODO: other project boundaries
   projects = new Map<string, ProjectData>(); // project path -> project json
