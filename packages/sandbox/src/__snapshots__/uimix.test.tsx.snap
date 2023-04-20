@@ -2,10 +2,10 @@
 
 exports[`render 1`] = `
 <div
-  className="uimix-1Bvi2z3UPfi6W3L8nDt5VA other-class"
+  className="uimix-ButtonRBRbRk other-class"
 >
   <div
-    className="uimix-1Bvi2z3UGTM64JtRT7Qc1S"
+    className="uimix-ButtonRBRbRk__text"
   >
     Hello, world!
   </div>
@@ -14,10 +14,10 @@ exports[`render 1`] = `
 
 exports[`render 2`] = `
 <div
-  className="uimix-1Bvi319YVxZELz4tEskN1S"
+  className="uimix-PageRBRbRk"
 >
   <header
-    className="uimix-1Bvi31VKu8gfy6XzJ8xrHA"
+    className="uimix-PageRBRbRk__header"
   >
     <div
       className="wrapper"
@@ -78,10 +78,10 @@ exports[`render 2`] = `
     </div>
   </header>
   <div
-    className="uimix-1Bvi365mtWZmXKDPeJTB4s"
+    className="uimix-PageRBRbRk__frame"
   >
     <button
-      className="storybook-button storybook-button--large storybook-button--primary uimix-1Bvi32d9RMi3ES5kk2UvuM"
+      className="storybook-button storybook-button--large storybook-button--primary uimix-PageRBRbRk__button"
       style={
         {
           "backgroundColor": "red",
@@ -92,44 +92,44 @@ exports[`render 2`] = `
       Override Button Label
     </button>
     <div
-      className="uimix-1Bvi2z3UrU9VkawwAteXs8 uimix-1Bvi2z3UPfi6W3L8nDt5VA"
+      className="uimix-PageRBRbRk__instance uimix-ButtonRBRbRk"
     >
       <div
-        className="uimix-1Bvi2z3UrU9VkawwAteXs8-1Bvi2z3UGTM64JtRT7Qc1S uimix-1Bvi2z3UGTM64JtRT7Qc1S"
+        className="uimix-PageRBRbRk__instance-ButtonRBRbRk__text uimix-ButtonRBRbRk__text"
       >
         Override Name
       </div>
     </div>
     <img
       alt="Image"
-      className="uimix-1Bvi392qBdMy93LGLcVymb"
-      src="/.uimix/images/YmY-tuteU03QY-k_2ARy1uacNmXDNmOX-FFAlj2qCIo.png"
+      className="uimix-PageRBRbRk__image"
+      src="/src/images/YmY-tuteU03QY-k_2ARy1uacNmXDNmOX-FFAlj2qCIo.png"
     />
     <div
-      className="uimix-1Bvi39mct9UNYZ9eTCCRdV uimix-1Bvi2z3TfkSpYXW29daTN8"
+      className="uimix-PageRBRbRk__stack uimix-StackRBRbRk"
     >
       <div
-        className="uimix-1Bvi39mct9UNYZ9eTCCRdV-1Bvi2z3TpKXtTJLTRPTEd8 uimix-1Bvi2z3TpKXtTJLTRPTEd8"
+        className="uimix-PageRBRbRk__stack-StackRBRbRk__item_0 uimix-StackRBRbRk__item_0"
       />
       <div
-        className="uimix-1Bvi39mct9UNYZ9eTCCRdV-1Bvi2z3To8ddXo6R6ZftVD uimix-1Bvi2z3To8ddXo6R6ZftVD"
+        className="uimix-PageRBRbRk__stack-StackRBRbRk__item_1 uimix-StackRBRbRk__item_1"
       />
       <div
-        className="uimix-1Bvi39mct9UNYZ9eTCCRdV-1BwspVKcGYvxVctYVzjPu6 uimix-1BwspVKcGYvxVctYVzjPu6"
+        className="uimix-PageRBRbRk__stack-StackRBRbRk__hidden_Item uimix-StackRBRbRk__hidden_Item"
       />
       <div
-        className="uimix-1Bvi39mct9UNYZ9eTCCRdV-1Bvi2z3UB1xUVg4Xz9WTpJ uimix-1Bvi2z3UB1xUVg4Xz9WTpJ"
+        className="uimix-PageRBRbRk__stack-StackRBRbRk__item_2 uimix-StackRBRbRk__item_2"
       />
       <div
-        className="uimix-1Bvi39mct9UNYZ9eTCCRdV-1Bvi2z3U3SiK6r7gf9vh7N uimix-1Bvi2z3U3SiK6r7gf9vh7N"
+        className="uimix-PageRBRbRk__stack-StackRBRbRk__text uimix-StackRBRbRk__text"
       >
         Override inner item
       </div>
       <div
-        className="uimix-1Bvi39mct9UNYZ9eTCCRdV-1BxSDQc9suV4UZUVEQsy6r uimix-1BxSDQc9suV4UZUVEQsy6r"
+        className="uimix-PageRBRbRk__stack-StackRBRbRk__button uimix-StackRBRbRk__button"
       >
         <div
-          className="uimix-1Bvi39mct9UNYZ9eTCCRdV-1BxSDQc9suV4UZUVEQsy6r-1Bvi2z3UGTM64JtRT7Qc1S uimix-1BxSDQc9suV4UZUVEQsy6r-1Bvi2z3UGTM64JtRT7Qc1S uimix-1Bvi2z3UGTM64JtRT7Qc1S"
+          className="uimix-PageRBRbRk__stack-StackRBRbRk__button-ButtonRBRbRk__text uimix-StackRBRbRk__button-ButtonRBRbRk__text uimix-ButtonRBRbRk__text"
         >
           Nested Override
         </div>
@@ -141,13 +141,13 @@ exports[`render 2`] = `
 
 exports[`render 3`] = `
 <div
-  className="uimix-1BwWRgjHrhVbbuTV7m36kM"
+  className="uimix-CardRBRbRk"
 >
   <div
-    className="uimix-1BwWRgjHyEzJjsehRefVBE"
+    className="uimix-CardRBRbRk__icon"
   >
     <svg
-      className="uimix-1BwWRgjHr8HNgX8BRooGv7"
+      className="uimix-CardRBRbRk__heroicons_code_bracket"
       fill="none"
       height="24"
       viewBox="0 0 24 24"
@@ -164,12 +164,12 @@ exports[`render 3`] = `
     </svg>
   </div>
   <div
-    className="uimix-1BwWRgjHmYZ8qLKDj3Tvdy"
+    className="uimix-CardRBRbRk__title"
   >
     React Components Import/Export
   </div>
   <div
-    className="uimix-1BwWRgjHuAe9UTxVhowwYu"
+    className="uimix-CardRBRbRk__description"
   >
     Seamlessly work with React components, boosting your design-to-development workflow.
 
