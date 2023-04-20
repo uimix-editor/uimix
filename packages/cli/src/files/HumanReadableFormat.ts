@@ -248,8 +248,9 @@ export function loadFromJSXFile(text: string): PageNode {
 
   const exports: Record<string, unknown> = {};
 
+  // eslint-disable-next-line @typescript-eslint/no-implied-eval
   new Function("exports", "React", transformedJS)(exports, {
     createElement: jsxFactory,
   });
-  return exports.default as PageNode;
+  return PageNode.parse(exports.default);
 }
