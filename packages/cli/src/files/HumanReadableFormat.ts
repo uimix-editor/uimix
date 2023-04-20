@@ -9,7 +9,6 @@ import {
 } from "@uimix/model/src/data/v1";
 import { z } from "zod";
 import Babel from "@babel/standalone";
-import vm from "node:vm";
 
 export const Position = z.object({
   left: z.number().optional(),
@@ -171,7 +170,11 @@ export function stringifyAsJSX(node: Node): string {
       if (value === undefined) {
         return "";
       }
-      if (typeof value === "string" && !value.includes("//")) {
+      if (
+        typeof value === "string" &&
+        !value.includes("//") &&
+        !value.includes("\n")
+      ) {
         return `${key}=${JSON.stringify(value)}`;
       }
       return `${key}={${JSON.stringify(value)}}`;

@@ -300,7 +300,9 @@ exports[`ProjectEmitter > works 1`] = `
           height=\\"hug\\"
           fills={[{ solid: \\"#4b5563\\" }]}
           opacity={1}
-          textContent=\\"Seamlessly work with React components, boosting your design-to-development workflow.\\\\n\\"
+          textContent={
+            \\"Seamlessly work with React components, boosting your design-to-development workflow.\\\\n\\"
+          }
           fontFamily=\\"Inter\\"
           fontWeight={400}
           fontSize={16}
