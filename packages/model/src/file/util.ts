@@ -12,13 +12,9 @@ export function filterUndefined<T extends object>(obj: T): T {
   const result = {} as T;
   for (const key in obj) {
     if (obj[key] !== undefined) {
+      // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
       result[key] = obj[key]!;
     }
   }
   return result;
-}
-
-export interface Variant {
-  id: string;
-  condition: VariantCondition;
 }
