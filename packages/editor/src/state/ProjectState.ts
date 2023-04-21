@@ -3,20 +3,15 @@ import * as Y from "yjs";
 import {
   Image,
   NodeClipboardData,
-  PageJSON,
   ProjectJSON,
-  ProjectManifestJSON,
   SelectableJSON,
 } from "@uimix/model/src/data/v1";
 import { usedImageHashesInStyle } from "@uimix/model/src/data/util";
-import { reassignNewIDs } from "@uimix/model/src/data/util/reassignNewIDs";
 import { Project, Page, Selectable } from "@uimix/model/src/models";
 import { getIncrementalUniqueName } from "@uimix/foundation/src/utils/Name";
 import { PageState } from "./PageState";
 import { ScrollState } from "./ScrollState";
-// eslint-disable-next-line import/no-unresolved
-// import demoFile from "./demoFile/demo.uimix?raw";
-// import { filesToProjectJSON } from "../../../cli/src/project/WorkspaceLoader";
+import demoFile from "./demoFile/landing.uimixproject?raw";
 import { Rect } from "paintvec";
 import { resizeWithBoundingBox } from "@uimix/model/src/services";
 
@@ -71,24 +66,14 @@ export class ProjectState {
   // MARK: Nodes
 
   loadDemoFile() {
-    // TODO
-    /*
-    const manifest: ProjectManifestJSON = {
-      prebuiltAssets: [
-        "https://cdn.jsdelivr.net/gh/uimix-editor/uimix@ba0157d5/packages/sandbox/dist-components/components.js",
-        "https://cdn.jsdelivr.net/gh/uimix-editor/uimix@ba0157d5/packages/sandbox/dist-components/style.css",
-      ],
-    };
-    const pageJSON: PageJSON = PageJSON.parse(JSON.parse(demoFile));
-
-    const projectJSON = reassignNewIDs(
-      filesToProjectJSON(manifest, new Map([["demo.uimix", pageJSON]]))
-    );
-
+    const projectJSON = ProjectJSON.parse(JSON.parse(demoFile));
     this.project.loadJSON(projectJSON);
+    this.project.componentURLs.push([
+      "https://cdn.jsdelivr.net/gh/uimix-editor/uimix@ba0157d5/packages/sandbox/dist-components/components.js",
+      "https://cdn.jsdelivr.net/gh/uimix-editor/uimix@ba0157d5/packages/sandbox/dist-components/style.css",
+    ]);
     this.pageID = this.project.pages.all[0].id;
     this.undoManager.clear();
-    */
   }
 
   loadJSON(projectJSON: ProjectJSON) {
