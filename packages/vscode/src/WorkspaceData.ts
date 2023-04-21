@@ -82,6 +82,9 @@ export class WorkspaceData {
   constructor(rootFolder: vscode.WorkspaceFolder, loader: WorkspaceLoader) {
     this.rootFolder = rootFolder;
     this.loader = loader;
+    this.disposables.push({
+      dispose: loader.watch(() => {}),
+    });
 
     this.codeAssetsWatcher = vscode.workspace.createFileSystemWatcher(
       new vscode.RelativePattern(
