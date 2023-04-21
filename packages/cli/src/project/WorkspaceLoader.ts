@@ -55,7 +55,7 @@ export class WorkspaceLoader {
   }
 
   readonly filePattern = "**/*.uimix";
-  readonly imagePattern = "**/*.{png,jpg}"; // TODO: other image formats
+  readonly imagePatterns = ["**/*.png", "**/*.jpg", "**/*.jpeg"];
   readonly uimixProjectFile = "uimix.json";
   readonly projectBoundary = "package.json"; // TODO: other project boundaries
   projects = new Map<string, ProjectData>(); // project path -> project json
@@ -89,7 +89,9 @@ export class WorkspaceLoader {
 
   async load(): Promise<boolean> {
     const filePaths = await this.fileAccess.glob(
-      `{${this.filePattern},${this.imagePattern},**/${this.projectBoundary}}`
+      `{${this.filePattern},${this.imagePatterns.join(",")},**/${
+        this.projectBoundary
+      }}`
     );
     filePaths.sort();
 
