@@ -46,6 +46,7 @@ export class Project {
 
   clear(): void {
     this.data.clear();
+    this.nodes.create("project", "project");
   }
 
   toJSON(): ProjectJSON {
