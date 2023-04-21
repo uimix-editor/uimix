@@ -14,23 +14,18 @@ describe(generateCode.name, () => {
 
     // FIXME: you need to build code assets before generating code
 
-    const code = await generateCode(
+    const files = await generateCode(
       rootDir,
       // TODO: better args
       workspaceLoader.rootProject.manifest,
       workspaceLoader.rootProject.project.toJSON(),
       workspaceLoader.rootProject.imagePaths
     );
-    const result: Record<string, string> = {};
-    for (const file of code) {
-      if (
-        file.filePath.includes("components.uimix.") &&
-        typeof file.content === "string"
-      ) {
-        result[file.filePath] = file.content;
+
+    for (const file of files) {
+      if (typeof file.content === "string") {
+        expect(file.content).toMatchSnapshot(file.filePath);
       }
     }
-
-    expect(result).toMatchSnapshot();
   });
 });
