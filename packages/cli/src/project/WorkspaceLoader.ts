@@ -148,6 +148,7 @@ export class WorkspaceLoader {
 
       for (const filePath of filePaths) {
         // TODO: reload changed files only
+        console.log(filePath);
 
         if (filePath.endsWith(".uimix")) {
           const pageText = (
@@ -160,7 +161,6 @@ export class WorkspaceLoader {
           pages.set(pageName, pageNode);
         } else {
           // TODO: lookup specific directories only
-          console.log(filePath);
           const imageData = await this.fileAccess.readFile(filePath);
           const hash = await getURLSafeBase64Hash(imageData);
           const mimeType = mime.lookup(filePath) || "image/png";
@@ -229,24 +229,25 @@ export class WorkspaceLoader {
 
         // TODO: save images
 
-        const manifestPath = path.join(projectPath, this.uimixProjectFile);
+        // TODO: save manifest
 
-        let parsed: ProjectManifestJSON;
-        try {
-          parsed = JSON.parse(
-            (await this.fileAccess.readFile(manifestPath)).toString()
-          ) as ProjectManifestJSON;
-        } catch (e) {
-          parsed = {};
-        }
-        parsed.prebuiltAssets = project.manifest.prebuiltAssets;
+        // const manifestPath = path.join(projectPath, this.uimixProjectFile);
+
+        // let parsed: ProjectManifestJSON;
+        // try {
+        //   parsed = JSON.parse(
+        //     (await this.fileAccess.readFile(manifestPath)).toString()
+        //   ) as ProjectManifestJSON;
+        // } catch (e) {
+        //   parsed = {};
+        // }
+        // parsed.prebuiltAssets = project.manifest.prebuiltAssets;
 
         // TODO: avoid overwriting malformed uimix.json
-
-        await this.fileAccess.writeFile(
-          manifestPath,
-          Buffer.from(formatJSON(JSON.stringify(parsed)))
-        );
+        // await this.fileAccess.writeFile(
+        //   manifestPath,
+        //   Buffer.from(formatJSON(JSON.stringify(parsed)))
+        // );
 
         project.pages = pages;
       }
