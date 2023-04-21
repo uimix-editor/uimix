@@ -155,9 +155,11 @@ export class ReactGenerator {
       this.imageVarNames.set(hash, varName);
     }
 
-    const basename = path.basename(this.page.filePath);
-
-    results.push(`import './${basename}.uimix.css';`);
+    // TODO: import needed CSS files only
+    for (const page of this.page.project.pages.all) {
+      const basename = path.basename(page.filePath);
+      results.push(`import './${basename}.uimix.css';`);
+    }
 
     results.push(applyOverridesSnippet);
 
