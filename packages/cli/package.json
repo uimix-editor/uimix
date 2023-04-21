@@ -48,8 +48,6 @@
     "zod": "^3.21.4"
   },
   "devDependencies": {
-    "@babel/standalone": "^7.21.4",
-    "@types/babel__standalone": "^7.1.4",
     "@types/glob": "^8.1.0",
     "@types/lodash-es": "^4.17.7",
     "@types/mime-types": "^2.1.1",

@@ -1,4 +1,4 @@
-import { VariantCondition } from "@uimix/model/src/data/v1";
+import { VariantCondition } from "../data/v1";
 
 // e.g., "hover" or "maxWidth:767"
 export function variantConditionToText(condition: VariantCondition): string {

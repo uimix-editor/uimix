@@ -1,13 +1,13 @@
 import { describe, it, expect, beforeEach, afterEach } from "vitest";
-import { WorkspaceLoader } from "./WorkspaceLoader";
 import * as fs from "fs";
 import * as path from "path";
 import shell from "shelljs";
 import tmp from "tmp";
-import { Project } from "@uimix/model/src/models/Project";
-import { NodeFileAccess } from "./NodeFileAccess";
 import { mkdirpSync } from "mkdirp";
-import { ProjectEmitter } from "../files/ProjectEmitter";
+import { Project } from "@uimix/model/src/models";
+import { ProjectEmitter } from "@uimix/model/src/file";
+import { NodeFileAccess } from "./NodeFileAccess";
+import { WorkspaceLoader } from "./WorkspaceLoader";
 
 describe(WorkspaceLoader.name, () => {
   let tmpObj: tmp.DirResult;

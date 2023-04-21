@@ -6,7 +6,7 @@ import {
   TextHorizontalAlign,
   TextVerticalAlign,
   VariantCondition,
-} from "@uimix/model/src/data/v1";
+} from "../data/v1";
 import { z } from "zod";
 import Babel from "@babel/standalone";
 

@@ -1,12 +1,20 @@
 import { describe, expect, it } from "vitest";
-import { Project } from "@uimix/model/src/models/Project";
+import { Project } from "../models";
 import { ProjectEmitter } from "./ProjectEmitter";
 import { ProjectLoader } from "./ProjectLoader";
 import { loadFromJSXFile, stringifyAsJSXFile } from "./HumanReadableFormat";
-import { formatTypeScript } from "../format";
+import { ProjectJSON } from "../data/v1";
+import prettier from "prettier/standalone";
+import parserTypeScript from "prettier/parser-typescript";
 // @ts-ignore
-import projectJSONFile from "../../../model/src/models/__fixtures__/project.uimixproject?raw";
-import { ProjectJSON } from "@uimix/model/src/data/v1";
+import projectJSONFile from "../models/__fixtures__/project.uimixproject?raw";
+
+function formatTypeScript(text: string): string {
+  return prettier.format(text, {
+    parser: "typescript",
+    plugins: [parserTypeScript],
+  });
+}
 
 describe(ProjectEmitter.name, () => {
   it("works", async () => {

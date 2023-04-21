@@ -5,9 +5,9 @@ import {
   Page,
   Project,
   Selectable,
-} from "@uimix/model/src/models";
+} from "../models";
 import * as HumanReadable from "./HumanReadableFormat";
-import * as Data from "@uimix/model/src/data/v1";
+import * as Data from "../data/v1";
 import { posix as path } from "path-browserify";
 import { filterUndefined, variantConditionToText } from "./util";
 import { Color } from "@uimix/foundation/src/utils/Color";

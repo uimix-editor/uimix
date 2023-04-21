@@ -74,12 +74,6 @@ importers:
         specifier: ^3.21.4
         version: 3.21.4
     devDependencies:
-      '@babel/standalone':
-        specifier: ^7.21.4
-        version: 7.21.4
-      '@types/babel__standalone':
-        specifier: ^7.1.4
-        version: 7.1.4
       '@types/glob':
         specifier: ^8.1.0
         version: 8.1.0
@@ -943,6 +937,9 @@ importers:
 
   packages/model:
     dependencies:
+      '@babel/standalone':
+        specifier: ^7.21.4
+        version: 7.21.4
       '@uimix/code-asset-types':
         specifier: workspace:*
         version: link:../code-asset-types
@@ -964,6 +961,9 @@ importers:
       path-browserify:
         specifier: ^1.0.1
         version: 1.0.1
+      prettier:
+        specifier: ^2.8.7
+        version: 2.8.7
       yjs:
         specifier: ^13.5.52
         version: 13.5.52
@@ -971,6 +971,9 @@ importers:
         specifier: ^3.21.4
         version: 3.21.4
     devDependencies:
+      '@types/babel__standalone':
+        specifier: ^7.1.4
+        version: 7.1.4
       '@types/crypto-js':
         specifier: ^4.1.1
         version: 4.1.1
@@ -980,6 +983,9 @@ importers:
       '@types/path-browserify':
         specifier: ^1.0.0
         version: 1.0.0
+      '@types/prettier':
+        specifier: ^2.7.2
+        version: 2.7.2
       csstype:
         specifier: ^3.1.2
         version: 3.1.2
@@ -2401,7 +2407,7 @@ packages:
   /@babel/standalone@7.21.4:
     resolution: {integrity: sha512-Rw4nGqH/iyVeYxARKcz7iGP+njkPsVqJ45TmXMONoGoxooWjXCAs+CUcLeAZdBGCLqgaPvHKCYvIaDT2Iq+KfA==}
     engines: {node: '>=6.9.0'}
-    dev: true
+    dev: false
 
   /@babel/template@7.20.7:
     resolution: {integrity: sha512-8SegXApWe6VoNw0r9JHpSteLKTpTiLZ4rMlGIm9JQ18KiCtyQiAMEazujAHrUS5flrcqYZa75ukev3P6QmUwUw==}

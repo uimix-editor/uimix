@@ -14,7 +14,7 @@ import {
   usedImageHashesInStyle,
 } from "@uimix/model/src/data/util";
 import { isEqual, omit } from "lodash-es";
-import { formatJSON, formatTypeScript } from "../format";
+import { formatTypeScript } from "../format";
 import { FileAccess } from "./FileAccess";
 import * as path from "path";
 import {
@@ -22,13 +22,13 @@ import {
   toHierarchicalNodeJSONs,
 } from "./HierarchicalNodeJSON";
 import { Project } from "@uimix/model/src/models";
-import { ProjectEmitter } from "../files/ProjectEmitter";
 import {
+  ProjectEmitter,
+  ProjectLoader,
   PageNode,
   loadFromJSXFile,
   stringifyAsJSXFile,
-} from "../files/HumanReadableFormat";
-import { ProjectLoader } from "../files/ProjectLoader";
+} from "@uimix/model/src/file";
 import { getURLSafeBase64Hash } from "@uimix/foundation/src/utils/Hash";
 import sizeOf from "image-size";
 import { dataUriToBuffer } from "data-uri-to-buffer";

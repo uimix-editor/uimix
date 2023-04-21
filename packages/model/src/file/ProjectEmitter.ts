@@ -1,8 +1,7 @@
 import * as HumanReadable from "./HumanReadableFormat";
-import { Page } from "@uimix/model/src/models/Page";
 import { compact } from "lodash-es";
-import * as Data from "@uimix/model/src/data/v1";
-import { Selectable, Component, Project } from "@uimix/model/src/models";
+import { Page, Selectable, Component, Project } from "../models";
+import * as Data from "../data/v1";
 import {
   generateLowerJSIdentifier,
   generateUpperJSIdentifier,
@@ -10,7 +9,6 @@ import {
 } from "@uimix/foundation/src/utils/Name";
 import { posix as path } from "path-browserify";
 import { filterUndefined, variantConditionToText } from "./util";
-import { formatTypeScript } from "../format";
 
 export class ProjectEmitter {
   constructor(project: Project) {
@@ -26,17 +24,6 @@ export class ProjectEmitter {
       const pageNode = pageEmitter.emit();
       const pagePath = page.filePath;
       result.set(pagePath, pageNode);
-    }
-    return result;
-  }
-
-  emitFiles(): Map<string, string> {
-    const result = new Map<string, string>();
-    for (const [name, node] of this.emit()) {
-      result.set(
-        name,
-        formatTypeScript(HumanReadable.stringifyAsJSXFile(node))
-      );
     }
     return result;
   }
