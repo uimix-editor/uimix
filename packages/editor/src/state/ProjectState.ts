@@ -15,8 +15,8 @@ import { getIncrementalUniqueName } from "@uimix/foundation/src/utils/Name";
 import { PageState } from "./PageState";
 import { ScrollState } from "./ScrollState";
 // eslint-disable-next-line import/no-unresolved
-import demoFile from "./demoFile/demo.uimix?raw";
-import { filesToProjectJSON } from "../../../cli/src/project/WorkspaceLoader";
+// import demoFile from "./demoFile/demo.uimix?raw";
+// import { filesToProjectJSON } from "../../../cli/src/project/WorkspaceLoader";
 import { Rect } from "paintvec";
 import { resizeWithBoundingBox } from "@uimix/model/src/services";
 
@@ -71,6 +71,8 @@ export class ProjectState {
   // MARK: Nodes
 
   loadDemoFile() {
+    // TODO
+    /*
     const manifest: ProjectManifestJSON = {
       prebuiltAssets: [
         "https://cdn.jsdelivr.net/gh/uimix-editor/uimix@ba0157d5/packages/sandbox/dist-components/components.js",
@@ -86,6 +88,7 @@ export class ProjectState {
     this.project.loadJSON(projectJSON);
     this.pageID = this.project.pages.all[0].id;
     this.undoManager.clear();
+    */
   }
 
   loadJSON(projectJSON: ProjectJSON) {
