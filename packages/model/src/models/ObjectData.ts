@@ -2,6 +2,7 @@ import * as Y from "yjs";
 import { ObservableYMap } from "@uimix/foundation/src/utils/ObservableYMap";
 import { getOrCreate } from "@uimix/foundation/src/utils/Collection";
 import { isEqual } from "lodash-es";
+import { assertNonNull } from "@uimix/foundation/src/utils/Assert";
 
 export class ObjectData<T extends Record<string, unknown>> {
   readonly id: string;
@@ -59,10 +60,13 @@ export class ObjectData<T extends Record<string, unknown>> {
   }
 
   loadJSON(json: Partial<T>) {
-    const data = this.dataForWrite;
-    data.clear();
-    for (const [key, value] of Object.entries(json)) {
-      data.set(key, value as T[keyof T]);
-    }
+    const doc = assertNonNull(this.dataMap.y.doc);
+    doc.transact(() => {
+      const data = this.dataForWrite;
+      data.clear();
+      for (const [key, value] of Object.entries(json)) {
+        data.set(key, value as T[keyof T]);
+      }
+    });
   }
 }
