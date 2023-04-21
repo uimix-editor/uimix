@@ -1,17 +1,15 @@
-import { Component } from "@uimix/model/src/models/Component";
-import { Selectable } from "@uimix/model/src/models/Selectable";
-import {
-  generateJSIdentifier,
-  getIncrementalUniqueName,
-} from "@uimix/foundation/src/utils/Name";
 import { camelCase, compact } from "lodash-es";
 import { posix as path } from "path";
 import htmlReactParser from "html-react-parser";
 import reactElementToJSXString from "react-element-to-jsx-string";
 import React from "react";
-import { Page } from "@uimix/model/src/models/Page";
+import {
+  generateJSIdentifier,
+  getIncrementalUniqueName,
+} from "@uimix/foundation/src/utils/Name";
+import { Component, Selectable, Page } from "@uimix/model/src/models";
 import { ProjectManifestJSON } from "@uimix/model/src/data/v1";
-import { ClassNameGenerator } from "./CSSGenerator";
+import { ClassNameGenerator } from "./ClassNameGenerator";
 
 // TODO: remove this when react-element-to-jsx-string is fixed
 const reactElementToJSXStringFixed =
