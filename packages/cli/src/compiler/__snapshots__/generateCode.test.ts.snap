@@ -1,7 +1,7 @@
 // Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`generateCode > generates code > src/components.uimix.css 1`] = `
-".uimix-ButtonRBRbRk {
+exports[`generateCode > generates code > src/button.uimix.css 1`] = `
+".uimix-Buttonv4qeOq {
 box-sizing: border-box;
 -webkit-font-smoothing: antialiased;
   position: relative;
@@ -32,18 +32,116 @@ box-sizing: border-box;
   border-bottom-left-radius: 0px;
   box-shadow: none;
 }
-.uimix-ButtonRBRbRk:hover {
+.uimix-Buttonv4qeOq:hover {
   background: #3b82f6;
 }
 @media (max-width: 767px) {
-.uimix-ButtonRBRbRk {
+.uimix-Buttonv4qeOq {
   padding-left: 4px;
   padding-right: 4px;
   padding-top: 2px;
   padding-bottom: 2px;
 }
 }
-.uimix-StackRBRbRk {
+.uimix-Buttonv4qeOq__text {
+box-sizing: border-box;
+-webkit-font-smoothing: antialiased;
+  position: relative;
+  margin-top: 0px;
+  margin-right: 0px;
+  margin-bottom: 0px;
+  margin-left: 0px;
+  width: max-content;
+  height: max-content;
+  opacity: 1;
+  overflow: visible;
+  white-space: break-spaces;
+  display: flex;
+  flex-direction: column;
+  color: #111827;
+  font-family: Inter;
+  font-size: 16px;
+  font-weight: 400;
+  line-height: normal;
+  letter-spacing: 0px;
+  text-align: start;
+  justify-content: flex-start;
+}
+.uimix-Buttonv4qeOq:hover .uimix-Buttonv4qeOq__text {
+  color: #FFFFFF;
+}
+@media (max-width: 767px) {
+.uimix-Buttonv4qeOq__text {
+  font-size: 14px;
+}
+}"
+`;
+
+exports[`generateCode > generates code > src/button.uimix.tsx 1`] = `
+"import React from \\"react\\";
+import image_1yKf5NvwGW$XtLSBDlS3GqZfbEGnLshgQrjyQJImqaM from \\"../../sandbox/src/images/1yKf5NvwGW-XtLSBDlS3GqZfbEGnLshgQrjyQJImqaM.png\\";
+import image_DGLFxM8eMqBjHUQYEekprnB3xC$f5uvLxL7x2odVAEU from \\"../../sandbox/src/images/DGLFxM8eMqBjHUQYEekprnB3xC-f5uvLxL7x2odVAEU.png\\";
+import image_XMIUgNq9VxH1FiVdc4M95ZcfqaSP3aF07GtbcGHi9AY from \\"../../sandbox/src/images/XMIUgNq9VxH1FiVdc4M95ZcfqaSP3aF07GtbcGHi9AY.png\\";
+import image_YmY$tuteU03QY$k_2ARy1uacNmXDNmOX$FFAlj2qCIo from \\"../../sandbox/src/images/YmY-tuteU03QY-k_2ARy1uacNmXDNmOX-FFAlj2qCIo.png\\";
+import \\"./button.uimix.css\\";
+
+function applyOverrides(
+  rootProps: any,
+  element: React.ReactElement
+): React.ReactElement {
+  const { \\"data-refID\\": refID, ...props } = element.props;
+
+  let additionalProps: any = rootProps;
+  for (const id of refID ?? []) {
+    additionalProps = additionalProps[id + \\"Props\\"] ?? {};
+  }
+  additionalProps = { ...additionalProps };
+  for (const key of Object.keys(additionalProps)) {
+    if (key.endsWith(\\"Props\\")) {
+      delete additionalProps[key];
+    }
+  }
+
+  const result = React.cloneElement(
+    { ...element, props },
+    {
+      ...additionalProps,
+      className: additionalProps.className
+        ? props.className + \\" \\" + additionalProps.className
+        : props.className,
+      children:
+        additionalProps.children ??
+        React.Children.map(element.props.children, (child) => {
+          if (React.isValidElement(child)) {
+            return applyOverrides(rootProps, child);
+          } else {
+            return child;
+          }
+        }),
+    }
+  );
+  return result;
+}
+
+export const Button = React.forwardRef((props, ref) => {
+  return applyOverrides(
+    { ...props, ref },
+    <div className={\\"uimix-Buttonv4qeOq\\"}>
+      <div className={\\"uimix-Buttonv4qeOq__text\\"} data-refID={[\\"text\\"]}>
+        {\\"Button\\"}
+      </div>
+    </div>
+  );
+}) as React.FC<
+  JSX.IntrinsicElements[\\"div\\"] & {
+    textProps?: JSX.IntrinsicElements[\\"div\\"];
+  }
+>;
+"
+`;
+
+exports[`generateCode > generates code > src/components.uimix.css 1`] = `
+".uimix-StackRBRbRk {
 box-sizing: border-box;
 -webkit-font-smoothing: antialiased;
   position: relative;
@@ -140,38 +238,6 @@ box-sizing: border-box;
   border-bottom-right-radius: 20px;
   border-bottom-left-radius: 20px;
   box-shadow: none;
-}
-.uimix-ButtonRBRbRk__text {
-box-sizing: border-box;
--webkit-font-smoothing: antialiased;
-  position: relative;
-  margin-top: 0px;
-  margin-right: 0px;
-  margin-bottom: 0px;
-  margin-left: 0px;
-  width: max-content;
-  height: max-content;
-  opacity: 1;
-  overflow: visible;
-  white-space: break-spaces;
-  display: flex;
-  flex-direction: column;
-  color: #111827;
-  font-family: Inter;
-  font-size: 16px;
-  font-weight: 400;
-  line-height: normal;
-  letter-spacing: 0px;
-  text-align: start;
-  justify-content: flex-start;
-}
-.uimix-ButtonRBRbRk:hover .uimix-ButtonRBRbRk__text {
-  color: #FFFFFF;
-}
-@media (max-width: 767px) {
-.uimix-ButtonRBRbRk__text {
-  font-size: 14px;
-}
 }
 .uimix-StackRBRbRk__item_0 {
 box-sizing: border-box;
@@ -327,7 +393,7 @@ box-sizing: border-box;
   margin-bottom: 0px;
   margin-left: 0px;
 }
-.uimix-StackRBRbRk__button-ButtonRBRbRk__text {
+.uimix-StackRBRbRk__button-Buttonv4qeOq__text {
 }
 .uimix-PageRBRbRk__header {
 box-sizing: border-box;
@@ -395,7 +461,7 @@ box-sizing: border-box;
   top: 28px;
   background: #BABABA;
 }
-.uimix-PageRBRbRk__instance-ButtonRBRbRk__text {
+.uimix-PageRBRbRk__instance-Buttonv4qeOq__text {
 }
 .uimix-PageRBRbRk__image {
 box-sizing: border-box;
@@ -438,7 +504,7 @@ box-sizing: border-box;
 }
 .uimix-PageRBRbRk__stack-StackRBRbRk__button {
 }
-.uimix-PageRBRbRk__stack-StackRBRbRk__button-ButtonRBRbRk__text {
+.uimix-PageRBRbRk__stack-StackRBRbRk__button-Buttonv4qeOq__text {
 }
 @media (max-width: 767px) {
 .uimix-PageRBRbRk__header {
@@ -457,7 +523,7 @@ box-sizing: border-box;
 }
 }
 @media (max-width: 767px) {
-.uimix-PageRBRbRk__instance-ButtonRBRbRk__text {
+.uimix-PageRBRbRk__instance-Buttonv4qeOq__text {
 }
 }
 @media (max-width: 767px) {
@@ -493,7 +559,7 @@ box-sizing: border-box;
 }
 }
 @media (max-width: 767px) {
-.uimix-PageRBRbRk__stack-StackRBRbRk__button-ButtonRBRbRk__text {
+.uimix-PageRBRbRk__stack-StackRBRbRk__button-Buttonv4qeOq__text {
   color: #FF0000;
 }
 }
@@ -659,21 +725,6 @@ function applyOverrides(
   return result;
 }
 
-export const Button = React.forwardRef((props, ref) => {
-  return applyOverrides(
-    { ...props, ref },
-    <div className={\\"uimix-ButtonRBRbRk\\"}>
-      <div className={\\"uimix-ButtonRBRbRk__text\\"} data-refID={[\\"text\\"]}>
-        {\\"Button\\"}
-      </div>
-    </div>
-  );
-}) as React.FC<
-  JSX.IntrinsicElements[\\"div\\"] & {
-    textProps?: JSX.IntrinsicElements[\\"div\\"];
-  }
->;
-
 export const Stack = React.forwardRef((props, ref) => {
   return applyOverrides(
     { ...props, ref },
@@ -698,14 +749,14 @@ export const Stack = React.forwardRef((props, ref) => {
         {\\"Hello, world!\\"}
       </div>
       <div
-        className={\\"uimix-StackRBRbRk__button uimix-ButtonRBRbRk\\"}
+        className={\\"uimix-StackRBRbRk__button uimix-Buttonv4qeOq\\"}
         data-refID={[\\"button\\"]}
       >
         <div
           className={
-            \\"uimix-StackRBRbRk__button-ButtonRBRbRk__text uimix-ButtonRBRbRk__text\\"
+            \\"uimix-StackRBRbRk__button-Buttonv4qeOq__text uimix-Buttonv4qeOq__text\\"
           }
-          data-refID={[\\"button\\", \\"text\\"]}
+          data-refID={[\\"button\\"]}
         >
           {\\"Button\\"}
         </div>
@@ -744,14 +795,14 @@ export const Page = React.forwardRef((props, ref) => {
           }}
         />
         <div
-          className={\\"uimix-PageRBRbRk__instance uimix-ButtonRBRbRk\\"}
+          className={\\"uimix-PageRBRbRk__instance uimix-Buttonv4qeOq\\"}
           data-refID={[\\"instance\\"]}
         >
           <div
             className={
-              \\"uimix-PageRBRbRk__instance-ButtonRBRbRk__text uimix-ButtonRBRbRk__text\\"
+              \\"uimix-PageRBRbRk__instance-Buttonv4qeOq__text uimix-Buttonv4qeOq__text\\"
             }
-            data-refID={[\\"instance\\", \\"text\\"]}
+            data-refID={[\\"instance\\"]}
           >
             {\\"Override Name\\"}
           </div>
@@ -806,9 +857,9 @@ export const Page = React.forwardRef((props, ref) => {
           >
             <div
               className={
-                \\"uimix-PageRBRbRk__stack-StackRBRbRk__button-ButtonRBRbRk__text uimix-StackRBRbRk__button-ButtonRBRbRk__text uimix-ButtonRBRbRk__text\\"
+                \\"uimix-PageRBRbRk__stack-StackRBRbRk__button-Buttonv4qeOq__text uimix-StackRBRbRk__button-Buttonv4qeOq__text uimix-Buttonv4qeOq__text\\"
               }
-              data-refID={[\\"stack\\", \\"button\\", \\"text\\"]}
+              data-refID={[\\"stack\\", \\"button\\"]}
             >
               {\\"Nested Override\\"}
             </div>

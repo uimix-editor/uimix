@@ -1,0 +1,47 @@
+export default (
+  <page>
+    <component id="Button" name="Button">
+      <frame
+        id=""
+        name=""
+        position={{ left: 50, top: 400 }}
+        width="hug"
+        height="hug"
+        fills={[{ solid: "#E5E7EB" }]}
+        layout="flex"
+        paddingTop={4}
+        paddingRight={8}
+        paddingBottom={4}
+        paddingLeft={8}
+        variants={{
+          hover: {
+            position: { left: 200, top: 400 },
+            fills: [{ solid: { token: "blue/500" } }],
+          },
+          "maxWidth:767": {
+            position: { left: 350, top: 400 },
+            paddingTop: 2,
+            paddingRight: 4,
+            paddingBottom: 2,
+            paddingLeft: 4,
+          },
+        }}
+      >
+        <text
+          id="text"
+          name="Text"
+          width="hug"
+          height="hug"
+          fills={[{ solid: "#111827" }]}
+          textContent="Button"
+          variants={{
+            hover: { fills: [{ solid: "#FFFFFF" }] },
+            "maxWidth:767": { fontSize: 14 },
+          }}
+        />
+      </frame>
+      <variant condition={{ type: "hover" }} />
+      <variant condition={{ type: "maxWidth", value: 767 }} />
+    </component>
+  </page>
+);
