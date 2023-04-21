@@ -30,7 +30,6 @@ export class ClassNameGenerator {
         );
       }
     }
-    console.log(this.uniqueNames);
   }
 
   getUniqueName(nodeID: string): string {
