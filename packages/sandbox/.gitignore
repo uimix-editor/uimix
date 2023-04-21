@@ -27,4 +27,3 @@ dist-ssr
 .uimix
 *.uimix.tsx
 *.uimix.css
-*.newformat.js
