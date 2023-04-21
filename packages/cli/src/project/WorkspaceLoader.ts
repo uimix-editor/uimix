@@ -26,8 +26,9 @@ import {
 } from "../files/HumanReadableFormat";
 import { ProjectLoader } from "../files/ProjectLoader";
 import { getURLSafeBase64Hash } from "@uimix/foundation/src/utils/Hash";
-import * as mime from "mime-types";
 import sizeOf from "image-size";
+import { dataUriToBuffer } from "data-uri-to-buffer";
+import * as mime from "mime-types";
 
 interface ProjectData {
   manifest: ProjectManifestJSON;
@@ -227,7 +228,14 @@ export class WorkspaceLoader {
           pagePathsToDelete.delete(pagePath);
         }
 
-        // TODO: save images
+        for (const [hash, image] of project.project.imageManager.images) {
+          const decoded = dataUriToBuffer(image.url);
+          const suffix = mime.extension(decoded.type) || "bin";
+          await this.fileAccess.writeFile(
+            path.join(projectPath, "src/images", `${hash}.${suffix}`),
+            decoded
+          );
+        }
 
         // TODO: save manifest
 
