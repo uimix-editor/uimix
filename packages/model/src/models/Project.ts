@@ -44,6 +44,10 @@ export class Project {
     ]);
   }
 
+  clear(): void {
+    this.data.clear();
+  }
+
   toJSON(): ProjectJSON {
     return this.data.toJSON();
   }
