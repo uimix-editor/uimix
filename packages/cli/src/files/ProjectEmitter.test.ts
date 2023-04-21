@@ -19,23 +19,30 @@ describe(ProjectEmitter.name, () => {
     const emitter = new ProjectEmitter(project);
 
     const emitted = emitter.emit();
-
-    const emittedFile = formatTypeScript(
-      stringifyAsJSXFile(emitted.get("src/components")!)
+    const emittedFiles = new Map(
+      [...emitted.entries()].map(([path, content]) => {
+        return [path, formatTypeScript(stringifyAsJSXFile(content))];
+      })
     );
-    expect(emittedFile).toMatchSnapshot();
+    for (const [path, content] of emittedFiles) {
+      expect(content).toMatchSnapshot(path);
+    }
 
-    const parsed = loadFromJSXFile(emittedFile);
+    const parsedFiles = new Map(
+      [...emittedFiles.entries()].map(([path, content]) => {
+        return [path, loadFromJSXFile(content)];
+      })
+    );
     //expect(parsed).toEqual(emitted.get("src/components"));
 
     const loader = new ProjectLoader();
-    loader.load(new Map([["src/components", parsed]]));
+    loader.load(parsedFiles);
 
     const emitted2 = new ProjectEmitter(loader.project).emit();
-    const emittedFile2 = formatTypeScript(
-      stringifyAsJSXFile(emitted2.get("src/components")!)
-    );
-    expect(emittedFile2).toEqual(emittedFile);
+
+    for (const [path, content] of emitted2) {
+      expect(content).toEqual(emitted.get(path));
+    }
 
     // const projectJSON: ProjectJSON = {
     //   nodes: {

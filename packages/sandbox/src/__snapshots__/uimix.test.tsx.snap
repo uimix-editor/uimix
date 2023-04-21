@@ -2,10 +2,10 @@
 
 exports[`render 1`] = `
 <div
-  className="uimix-ButtonRBRbRk other-class"
+  className="uimix-Buttonv4qeOq other-class"
 >
   <div
-    className="uimix-ButtonRBRbRk__text"
+    className="uimix-Buttonv4qeOq__text"
   >
     Hello, world!
   </div>
@@ -92,10 +92,10 @@ exports[`render 2`] = `
       Override Button Label
     </button>
     <div
-      className="uimix-PageRBRbRk__instance uimix-ButtonRBRbRk"
+      className="uimix-PageRBRbRk__instance uimix-Buttonv4qeOq"
     >
       <div
-        className="uimix-PageRBRbRk__instance-ButtonRBRbRk__text uimix-ButtonRBRbRk__text"
+        className="uimix-PageRBRbRk__instance-Buttonv4qeOq__text uimix-Buttonv4qeOq__text"
       >
         Override Name
       </div>
@@ -129,7 +129,7 @@ exports[`render 2`] = `
         className="uimix-PageRBRbRk__stack-StackRBRbRk__button uimix-StackRBRbRk__button"
       >
         <div
-          className="uimix-PageRBRbRk__stack-StackRBRbRk__button-ButtonRBRbRk__text uimix-StackRBRbRk__button-ButtonRBRbRk__text uimix-ButtonRBRbRk__text"
+          className="uimix-PageRBRbRk__stack-StackRBRbRk__button-Buttonv4qeOq__text uimix-StackRBRbRk__button-Buttonv4qeOq__text uimix-Buttonv4qeOq__text"
         >
           Nested Override
         </div>
