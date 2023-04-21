@@ -186,6 +186,7 @@ export class PageEmitter {
         return {
           token: this.pathForExport(
             token.page,
+            // TODO: correct color token import name
             generateLowerJSIdentifier(token.name ?? "")
           ),
         };
@@ -235,6 +236,7 @@ export class PageEmitter {
     const mainComponentPath =
       mainComponent &&
       mainComponent.page &&
+      // TODO: correct component import name
       this.pathForExport(mainComponent.page, mainComponent.name);
 
     return filterUndefined<Partial<File.BaseStyleProps>>({
