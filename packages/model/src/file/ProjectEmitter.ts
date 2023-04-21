@@ -1,4 +1,4 @@
-import * as HumanReadable from "./HumanReadableFormat";
+import * as File from "./types";
 import { compact } from "lodash-es";
 import { Page, Selectable, Component, Project } from "../models";
 import * as Data from "../data/v1";
@@ -17,8 +17,8 @@ export class ProjectEmitter {
 
   project: Project;
 
-  emit(): Map<string, HumanReadable.PageNode> {
-    const result = new Map<string, HumanReadable.PageNode>();
+  emit(): Map<string, File.PageNode> {
+    const result = new Map<string, File.PageNode>();
     for (const page of this.project.pages.all) {
       const pageEmitter = new PageEmitter(page);
       const pageNode = pageEmitter.emit();
@@ -40,7 +40,7 @@ export class PageEmitter {
     return this.page.project;
   }
 
-  emit(): HumanReadable.PageNode {
+  emit(): File.PageNode {
     const exportNames = new Set<string>();
 
     return {
@@ -80,7 +80,7 @@ export class PageEmitter {
   emitNode(
     selectable: Selectable,
     refIDs: Map<string, string>
-  ): HumanReadable.SceneNode {
+  ): File.SceneNode {
     const node = selectable.originalNode;
 
     const refID = refIDs?.get(selectable.originalNode.id);
@@ -107,7 +107,7 @@ export class PageEmitter {
 
     return {
       // TODO: better typing
-      type: node.type as HumanReadable.SceneNode["type"],
+      type: node.type as File.SceneNode["type"],
       props: {
         id: refID ?? "",
         name: node.name,
@@ -120,10 +120,10 @@ export class PageEmitter {
     };
   }
 
-  getStyleForSelectable(selectable: Selectable): HumanReadable.StyleProps {
+  getStyleForSelectable(selectable: Selectable): File.StyleProps {
     const getInstanceOverrides = (
       instanceSelectable: Selectable
-    ): Record<string, HumanReadable.StyleProps> => {
+    ): Record<string, File.StyleProps> => {
       const mainComponent = instanceSelectable.mainComponent;
       if (!mainComponent) {
         return {};
@@ -131,7 +131,7 @@ export class PageEmitter {
       // TODO: cache refIDs
       const refIDs = mainComponent.refIDs;
 
-      const overrides: Record<string, HumanReadable.StyleProps> = {};
+      const overrides: Record<string, File.StyleProps> = {};
 
       const visit = (selectable: Selectable) => {
         const refID = refIDs.get(selectable.originalNode.id);
@@ -179,7 +179,7 @@ export class PageEmitter {
     return this.relativePathFromPage(page.filePath) + ".uimix#" + name;
   }
 
-  transformColor(color: Data.Color): HumanReadable.Color {
+  transformColor(color: Data.Color): File.Color {
     if (typeof color === "object") {
       const token = this.project.colorTokens.get(color.id);
       if (token?.type === "normal" && token.page) {
@@ -197,15 +197,13 @@ export class PageEmitter {
     return color;
   }
 
-  transformFill(fill: Data.SolidFill): HumanReadable.Fill {
+  transformFill(fill: Data.SolidFill): File.Fill {
     return {
       solid: this.transformColor(fill.color),
     };
   }
 
-  transformPosition(
-    position: Data.PositionConstraints
-  ): HumanReadable.Position {
+  transformPosition(position: Data.PositionConstraints): File.Position {
     return {
       left: position.x.type !== "end" ? position.x.start : undefined,
       right: position.x.type !== "start" ? position.x.end : undefined,
@@ -214,7 +212,7 @@ export class PageEmitter {
     };
   }
 
-  transformSize(size: Data.SizeConstraint): HumanReadable.Size {
+  transformSize(size: Data.SizeConstraint): File.Size {
     switch (size.type) {
       case "hug":
         return "hug";
@@ -228,9 +226,7 @@ export class PageEmitter {
     }
   }
 
-  transformStyle(
-    style: Partial<Data.StyleJSON>
-  ): Partial<HumanReadable.BaseStyleProps> {
+  transformStyle(style: Partial<Data.StyleJSON>): Partial<File.BaseStyleProps> {
     const mainComponent =
       style.mainComponent != null
         ? this.project.componentForID(style.mainComponent)
@@ -241,7 +237,7 @@ export class PageEmitter {
       mainComponent.page &&
       this.pathForExport(mainComponent.page, mainComponent.name);
 
-    return filterUndefined<Partial<HumanReadable.BaseStyleProps>>({
+    return filterUndefined<Partial<File.BaseStyleProps>>({
       hidden: style.hidden,
       locked: style.locked,
       position: style.position && this.transformPosition(style.position),
@@ -335,7 +331,7 @@ export class ComponentEmitter {
   componentID: string;
   refIDs: Map<string, string>;
 
-  emit(): HumanReadable.ComponentNode {
+  emit(): File.ComponentNode {
     return {
       type: "component",
       props: {
@@ -352,7 +348,7 @@ export class ComponentEmitter {
     };
   }
 
-  emitVariants(): HumanReadable.VariantNode[] {
+  emitVariants(): File.VariantNode[] {
     return compact(
       this.component.variants.map((variant) => {
         if (!variant.condition) {

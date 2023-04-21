@@ -6,7 +6,7 @@ import {
   Project,
   Selectable,
 } from "../models";
-import * as HumanReadable from "./HumanReadableFormat";
+import * as File from "./types";
 import * as Data from "../data/v1";
 import { posix as path } from "path-browserify";
 import { filterUndefined, variantConditionToText } from "./util";
@@ -33,7 +33,7 @@ export class ProjectLoader {
     Map<string /* node ID */, string /* human-readable ref id */>
   >();
 
-  load(files: Map<string, HumanReadable.PageNode>) {
+  load(files: Map<string, File.PageNode>) {
     this.project.clear();
 
     const pageLoaders: PageLoader[] = [];
@@ -59,7 +59,7 @@ class PageLoader {
 
   projectLoader: ProjectLoader;
   page: Page;
-  nodeToInput = new Map<Node, HumanReadable.SceneNode>();
+  nodeToInput = new Map<Node, File.SceneNode>();
 
   get project() {
     return this.page.project;
@@ -69,7 +69,7 @@ class PageLoader {
     return this.page.filePath + ".uimix";
   }
 
-  load(inputNode: HumanReadable.PageNode) {
+  load(inputNode: File.PageNode) {
     const children: Node[] = [];
 
     for (const inputChild of inputNode.children) {
@@ -92,10 +92,7 @@ class PageLoader {
     this.page.node.append(children);
   }
 
-  loadNode(
-    inputNode: HumanReadable.SceneNode,
-    refIDs: Map<string, string>
-  ): Node {
+  loadNode(inputNode: File.SceneNode, refIDs: Map<string, string>): Node {
     const node = this.project.nodes.create(inputNode.type);
     node.name = inputNode.props.name;
     const children = inputNode.children.map((child) =>
@@ -109,7 +106,7 @@ class PageLoader {
     return node;
   }
 
-  loadComponent(inputNode: HumanReadable.ComponentNode): Node {
+  loadComponent(inputNode: File.ComponentNode): Node {
     const componentNode = this.project.nodes.create("component");
     componentNode.name = inputNode.props.name;
 
@@ -160,7 +157,7 @@ class PageLoader {
 
   loadInstanceOverrides(
     instanceSelectable: Selectable,
-    overrides: Record<string, HumanReadable.StyleProps>
+    overrides: Record<string, File.StyleProps>
   ) {
     const mainComponent = instanceSelectable.mainComponent;
     if (!mainComponent) {
@@ -193,10 +190,7 @@ class PageLoader {
     instanceSelectable.children.forEach(visit);
   }
 
-  loadStyleForSelectable(
-    selectable: Selectable,
-    style: HumanReadable.StyleProps
-  ) {
+  loadStyleForSelectable(selectable: Selectable, style: File.StyleProps) {
     selectable.selfStyle.loadJSON(this.transformStyle(style));
 
     if (selectable.originalNode.type === "instance" && style.overrides) {
@@ -224,7 +218,7 @@ class PageLoader {
     );
   }
 
-  transformColor(color: HumanReadable.Color): Data.Color {
+  transformColor(color: File.Color): Data.Color {
     if (typeof color === "object") {
       const tokenPath = color.token;
       const tokenId = this.colorTokenFromRelativePath(tokenPath)?.id;
@@ -245,16 +239,14 @@ class PageLoader {
     return color;
   }
 
-  transformFill(fill: HumanReadable.Fill): Data.SolidFill {
+  transformFill(fill: File.Fill): Data.SolidFill {
     return {
       type: "solid",
       color: this.transformColor(fill.solid),
     };
   }
 
-  transformPosition(
-    position: HumanReadable.Position
-  ): Data.PositionConstraints {
+  transformPosition(position: File.Position): Data.PositionConstraints {
     return {
       x:
         position.left !== undefined && position.right !== undefined
@@ -271,7 +263,7 @@ class PageLoader {
     };
   }
 
-  transformSize(size: HumanReadable.Size): Data.SizeConstraint {
+  transformSize(size: File.Size): Data.SizeConstraint {
     if (size === "hug") {
       return { type: "hug" };
     }
@@ -290,9 +282,7 @@ class PageLoader {
     return path.basename(imagePath, path.extname(imagePath));
   }
 
-  transformStyle(
-    style: Partial<HumanReadable.BaseStyleProps>
-  ): Partial<Data.StyleJSON> {
+  transformStyle(style: Partial<File.BaseStyleProps>): Partial<Data.StyleJSON> {
     let mainComponentID: string | undefined;
     let foreignComponentRef: Data.ForeignComponentRef | undefined;
 

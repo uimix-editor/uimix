@@ -2,7 +2,7 @@ import { describe, expect, it } from "vitest";
 import { Project } from "../models";
 import { ProjectEmitter } from "./ProjectEmitter";
 import { ProjectLoader } from "./ProjectLoader";
-import { loadFromJSXFile, stringifyAsJSXFile } from "./HumanReadableFormat";
+import { loadFromJSXFile, stringifyAsJSXFile } from "./types";
 import { ProjectJSON } from "../data/v1";
 import prettier from "prettier/standalone";
 import parserTypeScript from "prettier/parser-typescript";
