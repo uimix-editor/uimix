@@ -216,6 +216,14 @@ export function stringifyAsJSXFile(node: PageNode): string {
 }
 
 export function loadFromJSXFile(text: string): PageNode {
+  // blank
+  if (/^\s*$/.test(text)) {
+    return {
+      type: "page",
+      children: [],
+    };
+  }
+
   // use babel to transform jsx to js
   // evaluate the js to get the node
 
