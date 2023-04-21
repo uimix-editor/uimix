@@ -198,23 +198,23 @@ class PageLoader {
     }
   }
 
-  absoluteExportPath(exportPath: string): string {
-    if (!exportPath.includes("#")) {
-      return this.filePath + "#" + exportPath;
+  absolutePath(relativePath: string): string {
+    if (!relativePath.includes("#")) {
+      return this.filePath + "#" + relativePath;
     }
-    return path.join(path.dirname(this.filePath), exportPath);
+    return path.join(path.dirname(this.filePath), relativePath);
   }
 
   // Get id from relative path of components/tokens
   componentFromRelativePath(relativePath: string): Component | undefined {
     return this.projectLoader.pathToComponent.get(
-      this.absoluteExportPath(relativePath)
+      this.absolutePath(relativePath)
     );
   }
 
   colorTokenFromRelativePath(relativePath: string): ColorToken | undefined {
     return this.projectLoader.pathToColorToken.get(
-      this.absoluteExportPath(relativePath)
+      this.absolutePath(relativePath)
     );
   }
 

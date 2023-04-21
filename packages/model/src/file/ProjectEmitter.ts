@@ -198,16 +198,16 @@ export class PageEmitter {
     };
   }
 
-  relativePath(filePath: string): string {
+  relativePath(absolutePath: string): string {
     const pagePath = this.page.filePath;
-    const relativePath = path.relative(path.dirname(pagePath), filePath);
+    const relativePath = path.relative(path.dirname(pagePath), absolutePath);
     if (!relativePath.startsWith(".")) {
       return "./" + relativePath;
     }
     return relativePath;
   }
 
-  relativeComponentPath(component: Component): string {
+  componentRelativePath(component: Component): string {
     const { path, readableID } = assertNonNull(
       this.projectEmitter.componentPaths.get(component.id)
     );
@@ -218,7 +218,7 @@ export class PageEmitter {
     return this.relativePath(path);
   }
 
-  relativeColorTokenPath(token: ColorToken): string {
+  colorTokenRelativePath(token: ColorToken): string {
     const { path, readableID } = assertNonNull(
       this.projectEmitter.colorTokenPaths.get(token.id)
     );
@@ -234,7 +234,7 @@ export class PageEmitter {
       const token = this.project.colorTokens.get(color.id);
       if (token?.type === "normal") {
         return {
-          token: this.relativeColorTokenPath(token),
+          token: this.colorTokenRelativePath(token),
         };
       }
       return {
@@ -282,7 +282,7 @@ export class PageEmitter {
     const mainComponentPath =
       mainComponent &&
       mainComponent.page &&
-      this.relativeComponentPath(mainComponent);
+      this.componentRelativePath(mainComponent);
 
     return filterUndefined<Partial<File.BaseStyleProps>>({
       hidden: style.hidden,
