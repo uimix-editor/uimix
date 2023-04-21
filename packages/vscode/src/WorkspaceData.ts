@@ -82,13 +82,6 @@ export class WorkspaceData {
   constructor(rootFolder: vscode.WorkspaceFolder, loader: WorkspaceLoader) {
     this.rootFolder = rootFolder;
     this.loader = loader;
-    this.updateData();
-    this.disposables.push({
-      dispose: this.loader.watch(() => {
-        console.log("reload");
-        this.updateData();
-      }),
-    });
 
     this.codeAssetsWatcher = vscode.workspace.createFileSystemWatcher(
       new vscode.RelativePattern(
@@ -115,19 +108,12 @@ export class WorkspaceData {
   readonly rootFolder: vscode.WorkspaceFolder;
   readonly loader: WorkspaceLoader;
 
-  private readonly dataForProject = new Map<string /* path */, ProjectData>();
-
   readonly codeAssetsWatcher: vscode.FileSystemWatcher;
   private readonly _onDidChangeCodeAssets = new vscode.EventEmitter<string>();
   readonly onDidChangeCodeAssets = this._onDidChangeCodeAssets.event;
 
   getDataForProject(projectPath: string): ProjectData {
-    let data = this.dataForProject.get(projectPath);
-    if (!data) {
-      data = new ProjectData();
-      this.dataForProject.set(projectPath, data);
-    }
-    return data;
+    return this.loader.getOrCreateProject(projectPath).project.data;
   }
 
   getDataForFile(uri: vscode.Uri): ProjectData {
@@ -147,16 +133,8 @@ export class WorkspaceData {
     return this.loader.projectPathForFile(uri.fsPath);
   }
 
-  private updateData() {
-    for (const [projectPath, project] of this.loader.projects) {
-      this.getDataForProject(projectPath).loadJSON(project.json);
-    }
-  }
-
   save(uri: vscode.Uri) {
     const projectPath = this.loader.projectPathForFile(uri.fsPath);
-    this.loader.getOrCreateProject(projectPath).json =
-      this.getDataForProject(projectPath).toJSON();
     this.loader.save(projectPath);
   }
 
