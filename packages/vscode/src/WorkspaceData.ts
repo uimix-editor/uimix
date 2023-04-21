@@ -56,20 +56,15 @@ class VSCodeFileAccess implements FileAccess {
     }
   }
 
-  async writeText(filePath: string, data: string): Promise<void> {
+  async writeFile(filePath: string, data: Buffer): Promise<void> {
     lastSaveTime = Date.now();
 
-    await vscode.workspace.fs.writeFile(
-      vscode.Uri.file(filePath),
-      Buffer.from(data)
-    );
+    await vscode.workspace.fs.writeFile(vscode.Uri.file(filePath), data);
   }
 
-  async readText(filePath: string): Promise<string> {
+  async readFile(filePath: string): Promise<Buffer> {
     const url = vscode.Uri.file(filePath);
-    const buffer = await vscode.workspace.fs.readFile(url);
-    const text = buffer.toString();
-    return text;
+    return Buffer.from(await vscode.workspace.fs.readFile(url));
   }
 
   async remove(filePath: string): Promise<void> {
