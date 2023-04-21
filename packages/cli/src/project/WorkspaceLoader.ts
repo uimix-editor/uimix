@@ -8,7 +8,11 @@ import {
   StyleJSON,
   ImageType,
 } from "@uimix/model/src/data/v1";
-import { getPageID, usedImageHashesInStyle } from "@uimix/model/src/data/util";
+import {
+  getPageID,
+  usedImageHashesInProject,
+  usedImageHashesInStyle,
+} from "@uimix/model/src/data/util";
 import { isEqual, omit } from "lodash-es";
 import { formatJSON, formatTypeScript } from "../format";
 import { FileAccess } from "./FileAccess";
@@ -228,7 +232,15 @@ export class WorkspaceLoader {
           pagePathsToDelete.delete(pagePath);
         }
 
+        const usedImageHashes = usedImageHashesInProject(
+          project.project.toJSON()
+        );
+
         for (const [hash, image] of project.project.imageManager.images) {
+          if (!usedImageHashes.has(hash)) {
+            continue;
+          }
+
           const decoded = dataUriToBuffer(image.url);
           const suffix = mime.extension(decoded.type) || "bin";
           await this.fileAccess.writeFile(
