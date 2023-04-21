@@ -1,7 +1,7 @@
 import { VariantCondition } from "../data/v1";
 
 // e.g., "hover" or "maxWidth:767"
-export function variantConditionToText(condition: VariantCondition): string {
+export function variantConditionText(condition: VariantCondition): string {
   if (condition.type === "maxWidth") {
     return `maxWidth:${condition.value}`;
   }

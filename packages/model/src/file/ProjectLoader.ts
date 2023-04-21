@@ -9,7 +9,7 @@ import {
 import * as File from "./types";
 import * as Data from "../data/v1";
 import { posix as path } from "path-browserify";
-import { filterUndefined, variantConditionToText } from "./util";
+import { filterUndefined, variantConditionText } from "./util";
 import { Color } from "@uimix/foundation/src/utils/Color";
 import { generateLowerJSIdentifier } from "@uimix/foundation/src/utils/Name";
 import { assertNonNull } from "@uimix/foundation/src/utils/Assert";
@@ -143,7 +143,7 @@ class PageLoader {
 
       for (const corresponding of selectable.variantCorrespondings) {
         if (corresponding.variant?.condition) {
-          const variantText = variantConditionToText(
+          const variantText = variantConditionText(
             corresponding.variant.condition
           );
           const variantStyle = inputNode.props.variants?.[variantText];

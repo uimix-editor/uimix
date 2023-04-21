@@ -8,7 +8,7 @@ import {
   getIncrementalUniqueName,
 } from "@uimix/foundation/src/utils/Name";
 import { posix as path } from "path-browserify";
-import { filterUndefined, variantConditionToText } from "./util";
+import { filterUndefined, variantConditionText } from "./util";
 
 export class ProjectEmitter {
   constructor(project: Project) {
@@ -98,7 +98,7 @@ export class PageEmitter {
             return;
           }
           return [
-            variantConditionToText(condition),
+            variantConditionText(condition),
             this.getStyleForSelectable(corresponding.selectable),
           ];
         })
