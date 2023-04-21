@@ -15,8 +15,8 @@ import { generateLowerJSIdentifier } from "@uimix/foundation/src/utils/Name";
 import { assertNonNull } from "@uimix/foundation/src/utils/Assert";
 
 export class ProjectLoader {
-  constructor() {
-    this.project = new Project();
+  constructor(project?: Project) {
+    this.project = project ?? new Project();
   }
 
   project: Project;
@@ -34,6 +34,8 @@ export class ProjectLoader {
   >();
 
   load(files: Map<string, HumanReadable.PageNode>) {
+    this.project.clear();
+
     const pageLoaders: PageLoader[] = [];
 
     for (const [pageName, pageNode] of files) {

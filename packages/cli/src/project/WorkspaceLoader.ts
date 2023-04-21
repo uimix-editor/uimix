@@ -175,13 +175,15 @@ export class WorkspaceLoader {
         }
       }
 
-      const loader = new ProjectLoader();
+      const existingProject = this.projects.get(projectPath);
+
+      const loader = new ProjectLoader(existingProject?.project);
       loader.load(pages);
       for (const [key, image] of images) {
         loader.project.imageManager.images.set(key, image);
       }
 
-      if (!isEqual(pages, this.projects.get(projectPath)?.pages ?? new Map())) {
+      if (!isEqual(pages, existingProject?.pages ?? new Map())) {
         changed = true;
       }
 
