@@ -1,14 +1,15 @@
 import * as File from "./types";
 import { compact } from "lodash-es";
-import { Page, Selectable, Component, Project } from "../models";
+import { Page, Selectable, Component, Project, ColorToken } from "../models";
 import * as Data from "../data/v1";
 import {
+  IncrementalUniqueNameGenerator,
   generateLowerJSIdentifier,
   generateUpperJSIdentifier,
-  getIncrementalUniqueName,
 } from "@uimix/foundation/src/utils/Name";
 import { posix as path } from "path-browserify";
 import { filterUndefined, variantConditionText } from "./util";
+import { assertNonNull } from "@uimix/foundation/src/utils/Assert";
 
 export class ProjectEmitter {
   constructor(project: Project) {
@@ -17,10 +18,46 @@ export class ProjectEmitter {
 
   project: Project;
 
+  componentPaths = new Map<
+    string,
+    {
+      path: string;
+      readableID: string;
+    }
+  >();
+  colorTokenPaths = new Map<
+    string,
+    {
+      path: string;
+      readableID: string;
+    }
+  >();
+
   emit(): Map<string, File.PageNode> {
+    const pages = this.project.pages.all;
+
+    for (const page of pages) {
+      const namer = new IncrementalUniqueNameGenerator();
+
+      for (const component of page.components) {
+        const readableID = namer.generate(
+          generateUpperJSIdentifier(component.name)
+        );
+        const path = `${page.filePath}.uimix#${readableID}`;
+        this.componentPaths.set(component.id, { path, readableID });
+      }
+      for (const colorToken of page.colorTokens.all) {
+        const readableID = namer.generate(
+          generateLowerJSIdentifier(colorToken.name ?? "")
+        );
+        const path = `${page.filePath}.uimix#${readableID}`;
+        this.colorTokenPaths.set(colorToken.id, { path, readableID });
+      }
+    }
+
     const result = new Map<string, File.PageNode>();
-    for (const page of this.project.pages.all) {
-      const pageEmitter = new PageEmitter(page);
+    for (const page of pages) {
+      const pageEmitter = new PageEmitter(this, page);
       const pageNode = pageEmitter.emit();
       const pagePath = page.filePath;
       result.set(pagePath, pageNode);
@@ -30,10 +67,12 @@ export class ProjectEmitter {
 }
 
 export class PageEmitter {
-  constructor(page: Page) {
+  constructor(projectEmitter: ProjectEmitter, page: Page) {
+    this.projectEmitter = projectEmitter;
     this.page = page;
   }
 
+  projectEmitter: ProjectEmitter;
   page: Page;
 
   get project(): Project {
@@ -41,17 +80,14 @@ export class PageEmitter {
   }
 
   emit(): File.PageNode {
-    const exportNames = new Set<string>();
-
     return {
       type: "page",
       children: [
         ...this.page.selectable.children.map((child) => {
           const component = Component.from(child.originalNode);
           if (component) {
-            const readableID = getIncrementalUniqueName(
-              exportNames,
-              generateUpperJSIdentifier(component.name)
+            const { readableID } = assertNonNull(
+              this.projectEmitter.componentPaths.get(component.id)
             );
             return new ComponentEmitter(this, component, readableID).emit();
           } else {
@@ -59,15 +95,14 @@ export class PageEmitter {
           }
         }),
         ...this.page.colorTokens.all.map((token) => {
-          const id = getIncrementalUniqueName(
-            exportNames,
-            generateLowerJSIdentifier(token.name ?? "")
+          const { readableID } = assertNonNull(
+            this.projectEmitter.colorTokenPaths.get(token.id)
           );
 
           return {
             type: "colorToken" as const,
             props: {
-              id,
+              id: readableID,
               name: token.name ?? "",
               value: token.value?.toString() ?? "",
             },
@@ -163,7 +198,7 @@ export class PageEmitter {
     };
   }
 
-  relativePathFromPage(filePath: string): string {
+  relativePath(filePath: string): string {
     const pagePath = this.page.filePath;
     const relativePath = path.relative(path.dirname(pagePath), filePath);
     if (!relativePath.startsWith(".")) {
@@ -172,23 +207,34 @@ export class PageEmitter {
     return relativePath;
   }
 
-  pathForExport(page: Page, name: string) {
-    if (this.page === page) {
-      return name;
+  relativeComponentPath(component: Component): string {
+    const { path, readableID } = assertNonNull(
+      this.projectEmitter.componentPaths.get(component.id)
+    );
+
+    if (component.page === this.page) {
+      return readableID;
     }
-    return this.relativePathFromPage(page.filePath) + ".uimix#" + name;
+    return this.relativePath(path);
+  }
+
+  relativeColorTokenPath(token: ColorToken): string {
+    const { path, readableID } = assertNonNull(
+      this.projectEmitter.colorTokenPaths.get(token.id)
+    );
+
+    if (token.page === this.page) {
+      return readableID;
+    }
+    return this.relativePath(path);
   }
 
   transformColor(color: Data.Color): File.Color {
     if (typeof color === "object") {
       const token = this.project.colorTokens.get(color.id);
-      if (token?.type === "normal" && token.page) {
+      if (token?.type === "normal") {
         return {
-          token: this.pathForExport(
-            token.page,
-            // TODO: correct color token import name
-            generateLowerJSIdentifier(token.name ?? "")
-          ),
+          token: this.relativeColorTokenPath(token),
         };
       }
       return {
@@ -236,8 +282,7 @@ export class PageEmitter {
     const mainComponentPath =
       mainComponent &&
       mainComponent.page &&
-      // TODO: correct component import name
-      this.pathForExport(mainComponent.page, mainComponent.name);
+      this.relativeComponentPath(mainComponent);
 
     return filterUndefined<Partial<File.BaseStyleProps>>({
       hidden: style.hidden,
@@ -299,12 +344,12 @@ export class PageEmitter {
 
       image:
         style.imageHash &&
-        this.relativePathFromPage("src/images/" + style.imageHash + ".png"),
+        this.relativePath("src/images/" + style.imageHash + ".png"),
 
       svg: style.svgContent,
 
       component: style.foreignComponent
-        ? `${this.relativePathFromPage(style.foreignComponent.path)}#${
+        ? `${this.relativePath(style.foreignComponent.path)}#${
             style.foreignComponent.name
           }`
         : mainComponentPath,
