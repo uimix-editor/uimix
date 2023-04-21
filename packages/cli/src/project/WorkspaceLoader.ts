@@ -153,7 +153,6 @@ export class WorkspaceLoader {
 
       for (const filePath of filePaths) {
         // TODO: reload changed files only
-        console.log(filePath);
 
         if (filePath.endsWith(".uimix")) {
           const pageText = (
