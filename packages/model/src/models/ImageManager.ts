@@ -36,6 +36,11 @@ export class ImageManager {
     return ObservableYMap.get(this.project.data.images);
   }
 
+  get images(): Image[] {
+    const paths = [...this.data.keys()];
+    return paths.map((path) => new Image(this, path));
+  }
+
   uploadImage?: (
     hash: string,
     contentType: string,
