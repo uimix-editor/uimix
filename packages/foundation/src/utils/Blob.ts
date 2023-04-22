@@ -37,3 +37,12 @@ export async function imageToBlob(imageURL: string): Promise<Blob> {
     canvas.toBlob((blob) => resolve(assertNonNull(blob)), "image/png");
   });
 }
+
+export async function dataURLFromURL(url: string) {
+  if (url.startsWith("data:")) {
+    return url;
+  }
+  const response = await fetch(url);
+  const blob = await response.blob();
+  return await blobToDataURL(blob);
+}

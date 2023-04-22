@@ -1,4 +1,4 @@
-import { blobToDataURL, imageFromURL } from "@uimix/foundation/src/utils/Blob";
+import { dataURLFromURL, imageFromURL } from "@uimix/foundation/src/utils/Blob";
 import { Project } from "./Project";
 import { ObservableYMap } from "@uimix/foundation/src/utils/ObservableYMap";
 import * as Data from "../data/v1";
@@ -44,13 +44,7 @@ export class Image {
   }
 
   async getDataURL(): Promise<string> {
-    if (this.url.startsWith("data:")) {
-      return this.url;
-    }
-
-    const response = await fetch(this.url);
-    const blob = await response.blob();
-    return await blobToDataURL(blob);
+    return await dataURLFromURL(this.url);
   }
 
   readonly manager: ImageManager;
