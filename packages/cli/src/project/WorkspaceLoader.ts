@@ -295,9 +295,13 @@ export class WorkspaceLoader {
           }
 
           const decoded = dataUriToBuffer(image.url);
-          const suffix = mime.extension(decoded.type) || "bin";
+          // const suffix = mime.extension(decoded.type) || "bin";
+          const filePath = path.join(projectPath, image.filePath);
+          if (await this.fileAccess.stat(filePath)) {
+            continue;
+          }
           await this.fileAccess.writeFile(
-            path.join(projectPath, "src/images", `${hash}.${suffix}`),
+            path.join(projectPath, image.filePath),
             decoded
           );
         }
