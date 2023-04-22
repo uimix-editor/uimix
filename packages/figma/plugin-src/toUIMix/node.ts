@@ -1,5 +1,5 @@
 import { compact } from "../util";
-import * as UIMix from "@uimix/model/src/data/v1";
+import * as Data from "@uimix/model/src/data/v1";
 import { svgLikeNodeChecker } from "./SVGLikeNodeChecker";
 import {
   getFrameStyle,
@@ -18,11 +18,11 @@ function isSingleImageFill(
 }
 
 async function figmaToMacaron(
-  images: Map<string, UIMix.Image>,
+  images: Map<string, Data.Image>,
   node: SceneNode,
   parentLayout: BaseFrameMixin["layoutMode"],
   offset: [number, number]
-): Promise<UIMix.SelectableJSON | undefined> {
+): Promise<Data.SelectableJSON | undefined> {
   // TODO: export hidden nodes as well
   if (!node.visible) {
     return;
@@ -130,11 +130,11 @@ async function figmaToMacaron(
 }
 
 export async function figmaNodesToMacaron(
-  images: Map<string, UIMix.Image>,
+  images: Map<string, Data.Image>,
   nodes: readonly SceneNode[],
   parentLayout: BaseFrameMixin["layoutMode"],
   offset: [number, number]
-): Promise<UIMix.SelectableJSON[]> {
+): Promise<Data.SelectableJSON[]> {
   return compact(
     await Promise.all(
       nodes.map((child) => figmaToMacaron(images, child, parentLayout, offset))

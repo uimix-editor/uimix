@@ -1,4 +1,4 @@
-import { NodeClipboardData } from "@uimix/model/src/data/v1";
+import * as Data from "@uimix/model/src/data/v1";
 import { projectState } from "./ProjectState";
 import { DefaultClipboardHandler } from "./DefaultClipboardHandler";
 import { ClipboardHandler } from "../types/ClipboardHandler";
@@ -9,12 +9,12 @@ import isSvg from "is-svg";
 export class Clipboard {
   static handler: ClipboardHandler = new DefaultClipboardHandler();
 
-  static async writeNodes(data: NodeClipboardData) {
+  static async writeNodes(data: Data.NodeClipboardData) {
     const text = JSON.stringify(data);
     await this.handler.set("text", text);
   }
 
-  static async readNodes(): Promise<NodeClipboardData | undefined> {
+  static async readNodes(): Promise<Data.NodeClipboardData | undefined> {
     const imageDataURL = await this.handler.get("image");
     if (imageDataURL) {
       const [hash] = await projectState.project.imageManager.insertDataURL(
@@ -65,7 +65,7 @@ export class Clipboard {
       }
 
       try {
-        return NodeClipboardData.parse(JSON.parse(text));
+        return Data.NodeClipboardData.parse(JSON.parse(text));
       } catch (e) {
         console.error(e);
         return;

@@ -1,12 +1,12 @@
-import * as UIMix from "@uimix/model/src/data/v1";
+import * as Data from "@uimix/model/src/data/v1";
 import { getURLSafeBase64Hash, imageToDataURL, rgbaToHex } from "../util";
 
 function getPositionStylePartial(
   node: SceneNode & LayoutMixin,
   parentLayout: BaseFrameMixin["layoutMode"],
   offset: [number, number]
-): Partial<UIMix.StyleJSON> {
-  const style: Partial<UIMix.StyleJSON> = {};
+): Partial<Data.StyleJSON> {
+  const style: Partial<Data.StyleJSON> = {};
 
   style.hidden = !node.visible;
 
@@ -60,9 +60,7 @@ function getPositionStylePartial(
   return style;
 }
 
-async function paintToUIMix(
-  paint: Paint
-): Promise<UIMix.SolidFill | undefined> {
+async function paintToUIMix(paint: Paint): Promise<Data.SolidFill | undefined> {
   if (!paint.visible) {
     return;
   }
@@ -136,8 +134,8 @@ async function paintToUIMix(
 
 async function paintsToUIMix(
   paints: readonly Paint[]
-): Promise<UIMix.SolidFill[]> {
-  const fills: UIMix.SolidFill[] = [];
+): Promise<Data.SolidFill[]> {
+  const fills: Data.SolidFill[] = [];
   for (const paint of paints) {
     const fillStyle = await paintToUIMix(paint);
     if (fillStyle) {
@@ -149,8 +147,8 @@ async function paintsToUIMix(
 
 async function getFillBorderStylePartial(
   node: GeometryMixin & BlendMixin & IndividualStrokesMixin
-): Promise<Partial<UIMix.StyleJSON>> {
-  const style: Partial<UIMix.StyleJSON> = {};
+): Promise<Partial<Data.StyleJSON>> {
+  const style: Partial<Data.StyleJSON> = {};
 
   if (node.fills !== figma.mixed) {
     const fills = await paintsToUIMix(node.fills);
@@ -217,8 +215,8 @@ function getFontNameStylePartial(font: FontName): {
 
 async function getTextStylePartial(
   node: TextNode
-): Promise<Partial<UIMix.StyleJSON>> {
-  const style: Partial<UIMix.StyleJSON> = {};
+): Promise<Partial<Data.StyleJSON>> {
+  const style: Partial<Data.StyleJSON> = {};
 
   if (node.fontSize !== figma.mixed) {
     style.fontSize = node.fontSize;
@@ -313,8 +311,8 @@ function applyTextCase(text: string, textCase: TextCase): string {
 
 function getLayoutStylePartial(
   node: BaseFrameMixin & IndividualStrokesMixin
-): Partial<UIMix.StyleJSON> {
-  const style: Partial<UIMix.StyleJSON> = {};
+): Partial<Data.StyleJSON> {
+  const style: Partial<Data.StyleJSON> = {};
 
   if (node.layoutMode === "NONE") {
     return {};
@@ -389,7 +387,7 @@ function getLayoutStylePartial(
 
 function getCornerStylePartial(
   node: RectangleCornerMixin
-): Partial<UIMix.StyleJSON> {
+): Partial<Data.StyleJSON> {
   return {
     topLeftRadius: node.topLeftRadius,
     topRightRadius: node.topRightRadius,
@@ -402,7 +400,7 @@ export async function getGroupStyle(
   node: GroupNode,
   parentLayout: BaseFrameMixin["layoutMode"],
   offset: [number, number]
-): Promise<Partial<UIMix.StyleJSON>> {
+): Promise<Partial<Data.StyleJSON>> {
   return {
     ...getPositionStylePartial(node, parentLayout, offset),
   };
@@ -412,7 +410,7 @@ export async function getFrameStyle(
   node: FrameNode | ComponentNode | ComponentSetNode | InstanceNode,
   parentLayout: BaseFrameMixin["layoutMode"],
   offset: [number, number]
-): Promise<Partial<UIMix.StyleJSON>> {
+): Promise<Partial<Data.StyleJSON>> {
   return {
     ...getPositionStylePartial(node, parentLayout, offset),
     ...getLayoutStylePartial(node),
@@ -425,7 +423,7 @@ export async function getTextStyle(
   node: TextNode,
   parentLayout: BaseFrameMixin["layoutMode"],
   offset: [number, number]
-): Promise<Partial<UIMix.StyleJSON>> {
+): Promise<Partial<Data.StyleJSON>> {
   return {
     ...getPositionStylePartial(node, parentLayout, offset),
     ...(await getTextStylePartial(node)),
@@ -436,19 +434,19 @@ export async function getSVGStyle(
   node: SceneNode & LayoutMixin,
   parentLayout: BaseFrameMixin["layoutMode"],
   offset: [number, number]
-): Promise<Partial<UIMix.StyleJSON>> {
+): Promise<Partial<Data.StyleJSON>> {
   return {
     ...getPositionStylePartial(node, parentLayout, offset),
   };
 }
 
 export async function getImageStyle(
-  images: Map<string, UIMix.Image>,
+  images: Map<string, Data.Image>,
   node: RectangleNode,
   parentLayout: BaseFrameMixin["layoutMode"],
   offset: [number, number]
-): Promise<Partial<UIMix.StyleJSON>> {
-  const baseStyle: Partial<UIMix.StyleJSON> = {
+): Promise<Partial<Data.StyleJSON>> {
+  const baseStyle: Partial<Data.StyleJSON> = {
     ...getPositionStylePartial(node, parentLayout, offset),
     ...getCornerStylePartial(node),
     ...(await getFillBorderStylePartial(node)),

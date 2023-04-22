@@ -6,13 +6,7 @@ import { getOrCreate } from "@uimix/foundation/src/utils/Collection";
 import { computed, makeObservable, observable } from "mobx";
 import { Rect } from "paintvec";
 import { resizeWithBoundingBox } from "../services/resizeWithBoundingBox";
-import {
-  SelectableJSON,
-  NodeJSON,
-  NodeType,
-  ProjectJSON,
-  StyleJSON,
-} from "../data/v1";
+import * as Data from "../data/v1";
 import { Project } from "./Project";
 import { Component, Variant } from "./Component";
 import { ObjectData } from "./ObjectData";
@@ -43,7 +37,7 @@ class SelectablePartialStyle extends PartialStyle {
   }
 
   readonly selectable: Selectable;
-  readonly data: ObjectData<StyleJSON>;
+  readonly data: ObjectData<Data.StyleJSON>;
 }
 
 // a node or a inner node of an instance
@@ -440,13 +434,13 @@ export class Selectable {
     return true;
   }
 
-  createBefore(type: NodeType, next: Selectable | undefined): Selectable {
+  createBefore(type: Data.NodeType, next: Selectable | undefined): Selectable {
     const node = this.project.nodes.create(type);
     this.originalNode.insertBefore([node], next?.originalNode);
     return this.project.selectables.get([node.id]);
   }
 
-  append(type: NodeType): Selectable {
+  append(type: Data.NodeType): Selectable {
     return this.createBefore(type, undefined);
   }
 
@@ -601,7 +595,7 @@ export class Selectable {
     ];
   }
 
-  toJSON(): SelectableJSON {
+  toJSON(): Data.SelectableJSON {
     const originalNode = this.originalNode;
     const node = this.node;
 
@@ -620,7 +614,7 @@ export class Selectable {
     };
   }
 
-  static fromJSON(project: Project, json: SelectableJSON): Selectable {
+  static fromJSON(project: Project, json: Data.SelectableJSON): Selectable {
     const node = project.nodes.create(json.type);
     node.name = json.name;
     const selectable = node.selectable;
@@ -642,7 +636,9 @@ export class SelectableMap {
     this.project = project;
   }
 
-  get stylesData(): ObservableYMap<Y.Map<StyleJSON[keyof StyleJSON]>> {
+  get stylesData(): ObservableYMap<
+    Y.Map<Data.StyleJSON[keyof Data.StyleJSON]>
+  > {
     return ObservableYMap.get(this.project.data.styles);
   }
   get selectionData(): ObservableYMap<true> {
@@ -662,8 +658,8 @@ export class SelectableMap {
 // TODO generate correctly from instance contents
 export function selectablesToProjectJSON(
   selectables: Selectable[]
-): ProjectJSON {
-  const nodeJSONs: Record<string, NodeJSON> = {};
+): Data.ProjectJSON {
+  const nodeJSONs: Record<string, Data.NodeJSON> = {};
   const styles: Record<string, Partial<IStyle>> = {};
 
   const addRecursively = (selectable: Selectable) => {

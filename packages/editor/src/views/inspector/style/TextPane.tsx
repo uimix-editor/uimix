@@ -14,10 +14,7 @@ import { InspectorNumberInput } from "./inputs/InspectorNumberInput";
 import { InspectorPane } from "../components/InspectorPane";
 import { InspectorToggleGroup } from "./inputs/InspectorToggleGroup";
 import { ToggleGroupItem } from "@uimix/foundation/src/components";
-import {
-  TextHorizontalAlign,
-  TextVerticalAlign,
-} from "@uimix/model/src/data/v1";
+import * as Data from "@uimix/model/src/data/v1";
 import { InspectorTargetContext } from "../components/InspectorTargetContext";
 import { projectState } from "../../../state/ProjectState";
 import { InspectorComboBox } from "./inputs/InspectorComboBox";
@@ -28,7 +25,7 @@ const googleFontOptions = googleFonts.items.map((item) => ({
   text: item.family,
 }));
 
-const textAlignOptions: ToggleGroupItem<TextHorizontalAlign>[] = [
+const textAlignOptions: ToggleGroupItem<Data.TextHorizontalAlign>[] = [
   {
     value: "start",
     icon: formatAlignLeftIcon,
@@ -47,7 +44,7 @@ const textAlignOptions: ToggleGroupItem<TextHorizontalAlign>[] = [
   },
 ];
 
-const verticalAlignOptions: ToggleGroupItem<TextVerticalAlign>[] = [
+const verticalAlignOptions: ToggleGroupItem<Data.TextVerticalAlign>[] = [
   {
     value: "start",
     icon: verticalAlignTopIcon,

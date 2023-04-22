@@ -3,7 +3,7 @@ import { Project } from "../models";
 import { ProjectEmitter } from "./ProjectEmitter";
 import { ProjectLoader } from "./ProjectLoader";
 import { loadFromJSXFile, stringifyAsJSXFile } from "./types";
-import { ProjectJSON } from "../data/v1";
+import * as Data from "../data/v1";
 import prettier from "prettier/standalone";
 import parserTypeScript from "prettier/parser-typescript";
 // @ts-ignore
@@ -18,7 +18,7 @@ function formatTypeScript(text: string): string {
 
 describe(ProjectEmitter.name, () => {
   it("works", async () => {
-    const projectJSON = ProjectJSON.parse(
+    const projectJSON = Data.ProjectJSON.parse(
       JSON.parse(projectJSONFile as string)
     );
     const project = new Project();

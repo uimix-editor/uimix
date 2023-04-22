@@ -1,6 +1,6 @@
 import React, { createRef, useEffect, useRef } from "react";
 import { observer } from "mobx-react-lite";
-import { StackDirection } from "@uimix/model/src/data/v1";
+import * as Data from "@uimix/model/src/data/v1";
 import {
   Selectable,
   buildNodeCSS,
@@ -48,7 +48,7 @@ const computedRectUpdater = new ComputedRectUpdater();
 
 export const NodeRenderer: React.FC<{
   selectable: Selectable;
-  parentLayout?: StackDirection | "grid";
+  parentLayout?: Data.StackDirection | "grid";
   forThumbnail?: boolean; // must not be changed after mount
   style?: React.CSSProperties;
   foreignComponentManager: ForeignComponentManager;

@@ -1,7 +1,7 @@
 import { ObservableYMap } from "@uimix/foundation/src/utils/ObservableYMap";
 import * as Y from "yjs";
 import { ObservableRBTree } from "@uimix/foundation/src/utils/ObservableRBTree";
-import { NodeJSON, NodeType, VariantCondition } from "../data/v1";
+import * as Data from "../data/v1";
 import { getOrCreate } from "@uimix/foundation/src/utils/Collection";
 import { generateID } from "@uimix/foundation/src/utils/ID";
 import { computed, makeObservable } from "mobx";
@@ -22,8 +22,12 @@ function compareNodeKey(a: NodeKey, b: NodeKey) {
   return a.index - b.index;
 }
 
-export const abstractNodeTypes: NodeType[] = ["project", "page", "component"];
-export const normalNodeTypes: NodeType[] = [
+export const abstractNodeTypes: Data.NodeType[] = [
+  "project",
+  "page",
+  "component",
+];
+export const normalNodeTypes: Data.NodeType[] = [
   "frame",
   "text",
   "image",
@@ -38,7 +42,7 @@ export class Node {
     this.project = project;
     this.nodeMap = project.nodes;
     this.id = id;
-    this.data = new ObjectData<NodeJSON>(id, project.nodes.data);
+    this.data = new ObjectData<Data.NodeJSON>(id, project.nodes.data);
 
     makeObservable(this);
   }
@@ -46,7 +50,7 @@ export class Node {
   readonly project: Project;
   readonly nodeMap: NodeMap;
   readonly id: string;
-  readonly data: ObjectData<NodeJSON>;
+  readonly data: ObjectData<Data.NodeJSON>;
 
   get sortKey(): NodeKey {
     return { index: this.index, id: this.id };
@@ -63,7 +67,7 @@ export class Node {
   lastParentID: string | undefined;
   lastIndex = 0;
 
-  get type(): NodeType {
+  get type(): Data.NodeType {
     return this.data.get("type") ?? "frame";
   }
 
@@ -81,11 +85,11 @@ export class Node {
 
   // Applicable only to variant nodes
 
-  @computed get condition(): VariantCondition | undefined {
+  @computed get condition(): Data.VariantCondition | undefined {
     return this.data.get("condition");
   }
 
-  set condition(value: VariantCondition | undefined) {
+  set condition(value: Data.VariantCondition | undefined) {
     this.data.set({ condition: value });
   }
 
@@ -149,7 +153,7 @@ export class Node {
     return this.nodeMap.get(previousSiblingID);
   }
 
-  canInsert(type: NodeType): boolean {
+  canInsert(type: Data.NodeType): boolean {
     if (this.type === "project") {
       return type === "page";
     }
@@ -230,7 +234,7 @@ export class Node {
 
   /// JSON
 
-  toJSON(): NodeJSON {
+  toJSON(): Data.NodeJSON {
     return {
       type: this.type,
       name: this.name,
@@ -240,7 +244,7 @@ export class Node {
     };
   }
 
-  loadJSON(json: NodeJSON) {
+  loadJSON(json: Data.NodeJSON) {
     this.data.set({
       name: json.name,
       condition: json.condition,
@@ -323,7 +327,7 @@ export class NodeMap {
 
   readonly project: Project;
 
-  get data(): ObservableYMap<Y.Map<NodeJSON[keyof NodeJSON]>> {
+  get data(): ObservableYMap<Y.Map<Data.NodeJSON[keyof Data.NodeJSON]>> {
     return ObservableYMap.get(this.project.data.nodes);
   }
 
@@ -345,8 +349,8 @@ export class NodeMap {
     return node;
   }
 
-  create(type: NodeType, id: string = generateID()): Node {
-    const data = new Y.Map<NodeJSON[keyof NodeJSON]>();
+  create(type: Data.NodeType, id: string = generateID()): Node {
+    const data = new Y.Map<Data.NodeJSON[keyof Data.NodeJSON]>();
     data.set("type", type);
     data.set("index", 0);
     this.data.set(id, data);
@@ -354,7 +358,7 @@ export class NodeMap {
     return this.nodeMap.get(id)!;
   }
 
-  getOrCreate(type: NodeType, id: string): Node {
+  getOrCreate(type: Data.NodeType, id: string): Node {
     let node = this.get(id);
     if (!node) {
       node = this.create(type, id);

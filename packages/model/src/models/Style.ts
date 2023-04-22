@@ -1,10 +1,10 @@
 import { isEqual } from "lodash-es";
-import { StyleJSON } from "../data/v1";
+import * as Data from "../data/v1";
 import { ObjectData } from "./ObjectData";
 
-export type IStyle = StyleJSON;
+export type IStyle = Data.StyleJSON;
 
-export const defaultStyle: StyleJSON = {
+export const defaultStyle: Data.StyleJSON = {
   hidden: false,
   locked: false,
   position: {
@@ -91,15 +91,15 @@ export const defaultStyle: StyleJSON = {
   tagName: null,
 };
 
-export const styleKeys = Object.keys(defaultStyle) as (keyof StyleJSON)[];
+export const styleKeys = Object.keys(defaultStyle) as (keyof Data.StyleJSON)[];
 
 export abstract class PartialStyle implements Partial<IStyle> {
-  abstract data: ObjectData<StyleJSON>;
+  abstract data: ObjectData<Data.StyleJSON>;
 
-  toJSON(): Partial<StyleJSON> {
+  toJSON(): Partial<Data.StyleJSON> {
     return this.data.toJSON();
   }
-  loadJSON(json: Partial<StyleJSON>) {
+  loadJSON(json: Partial<Data.StyleJSON>) {
     this.data.loadJSON(json);
   }
 }
@@ -112,7 +112,7 @@ for (const key of styleKeys) {
     get: function (this: PartialStyle) {
       return this.data.get(key);
     },
-    set(this: PartialStyle, value: StyleJSON[keyof StyleJSON]) {
+    set(this: PartialStyle, value: Data.StyleJSON[keyof Data.StyleJSON]) {
       this.data.set({ [key]: value });
     },
   });
@@ -126,7 +126,7 @@ export class CascadedStyle implements IStyle {
   style: PartialStyle;
   parent: IStyle;
 
-  loadJSON(json: Partial<StyleJSON>) {
+  loadJSON(json: Partial<Data.StyleJSON>) {
     for (const [key, value] of Object.entries(json)) {
       if (key in this && value !== undefined) {
         // @ts-ignore
@@ -135,8 +135,8 @@ export class CascadedStyle implements IStyle {
     }
   }
 
-  toJSON(): Partial<StyleJSON> {
-    const ret: Partial<StyleJSON> = {};
+  toJSON(): Partial<Data.StyleJSON> {
+    const ret: Partial<Data.StyleJSON> = {};
 
     for (const key of styleKeys) {
       if (!isEqual(this[key], defaultStyle[key])) {

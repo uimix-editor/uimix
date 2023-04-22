@@ -3,11 +3,11 @@ import react from "@vitejs/plugin-react";
 import { build } from "vite";
 import { getComponents } from "../codeAssets/getComponents";
 import { codeAssetsDestination } from "./constants";
-import { ProjectManifestJSON } from "@uimix/model/src/data/v1";
+import * as Data from "@uimix/model/src/data/v1";
 
 export async function buildCodeAssets(
   rootPath: string,
-  manifest: ProjectManifestJSON,
+  manifest: Data.ProjectManifestJSON,
   options: {
     watch?: boolean;
   }

@@ -5,8 +5,8 @@ import { InspectorPane } from "../components/InspectorPane";
 import { InspectorTargetContext } from "../components/InspectorTargetContext";
 import { ForeignComponentManager } from "../../../state/ForeignComponentManager";
 import { Input, Select, Tooltip } from "@uimix/foundation/src/components";
-import { ForeignComponentRef } from "@uimix/model/src/data/v1";
 import { action } from "mobx";
+import * as Data from "@uimix/model/src/data/v1";
 import * as CodeAsset from "@uimix/code-asset-types";
 
 export const PropertyPane: React.FC = observer(function PropertyPane() {
@@ -51,7 +51,7 @@ export const PropertyPane: React.FC = observer(function PropertyPane() {
                     if (!oldComponentID) {
                       return;
                     }
-                    const componentID: ForeignComponentRef = {
+                    const componentID: Data.ForeignComponentRef = {
                       ...oldComponentID,
                       props: {
                         ...oldComponentID.props,

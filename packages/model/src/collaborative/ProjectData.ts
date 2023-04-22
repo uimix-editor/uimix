@@ -1,10 +1,4 @@
-import {
-  ColorToken,
-  Image,
-  NodeJSON,
-  ProjectJSON,
-  StyleJSON,
-} from "../data/v1";
+import * as Data from "../data/v1";
 import * as Y from "yjs";
 
 export class ProjectData {
@@ -14,11 +8,11 @@ export class ProjectData {
 
   readonly doc: Y.Doc;
 
-  get nodes(): Y.Map<Y.Map<NodeJSON[keyof NodeJSON]>> {
+  get nodes(): Y.Map<Y.Map<Data.NodeJSON[keyof Data.NodeJSON]>> {
     return this.doc.getMap("nodes");
   }
 
-  get styles(): Y.Map<Y.Map<StyleJSON[keyof StyleJSON]>> {
+  get styles(): Y.Map<Y.Map<Data.StyleJSON[keyof Data.StyleJSON]>> {
     return this.doc.getMap("styles");
   }
 
@@ -26,11 +20,11 @@ export class ProjectData {
     return this.doc.getArray("componentURLs");
   }
 
-  get colors(): Y.Map<Y.Map<ColorToken[keyof ColorToken]>> {
+  get colors(): Y.Map<Y.Map<Data.ColorToken[keyof Data.ColorToken]>> {
     return this.doc.getMap("colors");
   }
 
-  get images(): Y.Map<Image> {
+  get images(): Y.Map<Data.Image> {
     return this.doc.getMap("images");
   }
 
@@ -49,13 +43,13 @@ export class ProjectData {
     });
   }
 
-  loadJSON(projectJSON: ProjectJSON): void {
+  loadJSON(projectJSON: Data.ProjectJSON): void {
     this.doc.transact(() => {
       this.clear();
 
       const nodes = this.nodes;
       for (const [id, json] of Object.entries(projectJSON.nodes)) {
-        const data = new Y.Map<NodeJSON[keyof NodeJSON]>();
+        const data = new Y.Map<Data.NodeJSON[keyof Data.NodeJSON]>();
         for (const [key, value] of Object.entries(json)) {
           data.set(key, value);
         }
@@ -64,7 +58,7 @@ export class ProjectData {
 
       const styles = this.styles;
       for (const [id, json] of Object.entries(projectJSON.styles)) {
-        const data = new Y.Map<StyleJSON[keyof StyleJSON]>();
+        const data = new Y.Map<Data.StyleJSON[keyof Data.StyleJSON]>();
         for (const [key, value] of Object.entries(json)) {
           data.set(key, value);
         }
@@ -83,7 +77,7 @@ export class ProjectData {
 
       const colors = this.colors;
       for (const [name, json] of Object.entries(projectJSON.colors ?? {})) {
-        const data = new Y.Map<ColorToken[keyof ColorToken]>(
+        const data = new Y.Map<Data.ColorToken[keyof Data.ColorToken]>(
           Object.entries(json)
         );
         colors.set(name, data);
@@ -91,8 +85,8 @@ export class ProjectData {
     });
   }
 
-  toJSON(): ProjectJSON {
-    const json: ProjectJSON = {
+  toJSON(): Data.ProjectJSON {
+    const json: Data.ProjectJSON = {
       nodes: this.nodes.toJSON(),
       styles: this.styles.toJSON(),
       componentURLs: this.componentURLs.toJSON() as string[],

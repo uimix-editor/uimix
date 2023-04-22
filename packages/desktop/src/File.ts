@@ -1,5 +1,5 @@
 import path from "path";
-import { ProjectJSON } from "../../model/src/data/v1";
+import * as Data from "../../model/src/data/v1";
 import { compareProjectJSONs } from "../../model/src/data/util";
 import { DocumentMetadata } from "../../dashboard/src/types/DesktopAPI";
 import { TypedEmitter } from "tiny-typed-emitter";
@@ -10,7 +10,7 @@ import { NodeFileAccess } from "../../cli/src/project/NodeFileAccess";
 export class File extends TypedEmitter<{
   editedChange: (edited: boolean) => void;
   metadataChange: (metadata: DocumentMetadata) => void;
-  dataChange: (data: ProjectJSON) => void;
+  dataChange: (data: Data.ProjectJSON) => void;
 }> {
   constructor(loader?: WorkspaceLoader) {
     super();
@@ -55,17 +55,17 @@ export class File extends TypedEmitter<{
   loader?: WorkspaceLoader;
   edited = false;
 
-  private _data: ProjectJSON;
-  get data(): ProjectJSON {
+  private _data: Data.ProjectJSON;
+  get data(): Data.ProjectJSON {
     return this._data;
   }
-  setData(data: ProjectJSON) {
+  setData(data: Data.ProjectJSON) {
     this._data = data;
     this.edited = !compareProjectJSONs(this.savedData, this._data);
     this.emit("editedChange", this.edited);
   }
 
-  private savedData: ProjectJSON;
+  private savedData: Data.ProjectJSON;
 
   revert() {
     this.setData(this.savedData);

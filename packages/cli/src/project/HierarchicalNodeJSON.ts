@@ -1,11 +1,11 @@
-import { NodeJSON } from "@uimix/model/src/data/v1";
+import * as Data from "@uimix/model/src/data/v1";
 
-export interface HierarchicalNodeJSON extends NodeJSON {
+export interface HierarchicalNodeJSON extends Data.NodeJSON {
   id: string;
   children: HierarchicalNodeJSON[];
 }
 export function toHierarchicalNodeJSONRecord(
-  nodes: Record<string, NodeJSON>
+  nodes: Record<string, Data.NodeJSON>
 ): Record<string, HierarchicalNodeJSON> {
   const hierarchicalNodes: Record<string, HierarchicalNodeJSON> = {};
 
@@ -31,7 +31,7 @@ export function toHierarchicalNodeJSONRecord(
 }
 
 export function toHierarchicalNodeJSONs(
-  nodes: Record<string, NodeJSON>
+  nodes: Record<string, Data.NodeJSON>
 ): HierarchicalNodeJSON[] {
   const hierarchicalNodes = toHierarchicalNodeJSONRecord(nodes);
   return Object.values(hierarchicalNodes).filter((node) => !node.parent);

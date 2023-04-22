@@ -1,5 +1,5 @@
 import { sum } from "lodash-es";
-import { StackAlign } from "../data/v1";
+import * as Data from "../data/v1";
 import { Rect } from "paintvec";
 import { Selectable, StubComputedRectProvider } from "../models/Selectable";
 import { assertNonNull } from "@uimix/foundation/src/utils/Assert";
@@ -176,7 +176,7 @@ interface Flex {
   bbox: Rect;
   direction: "x" | "y";
   margins: number[];
-  align: StackAlign;
+  align: Data.StackAlign;
 }
 
 export function detectFlex(elements: readonly Selectable[]): Flex {

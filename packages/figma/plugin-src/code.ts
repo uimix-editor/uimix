@@ -1,7 +1,6 @@
 import { MessageToCode, MessageToUI } from "../types/message";
 import { figmaNodesToMacaron } from "./toUIMix/node";
-import * as UIMix from "@uimix/model/src/data/v1";
-import { NodeClipboardData } from "@uimix/model/src/data/v1";
+import * as Data from "@uimix/model/src/data/v1";
 
 figma.showUI(__html__);
 
@@ -17,14 +16,14 @@ figma.ui.onmessage = async (msg: MessageToCode) => {
         break;
       }
 
-      const images = new Map<string, UIMix.Image>();
+      const images = new Map<string, Data.Image>();
       const macaronLayers = await figmaNodesToMacaron(
         images,
         figma.currentPage.selection,
         "NONE",
         [0, 0]
       );
-      const clipboardJSON: NodeClipboardData = {
+      const clipboardJSON: Data.NodeClipboardData = {
         uimixClipboardVersion: "0.0.1",
         type: "nodes",
         images: Object.fromEntries(images),
