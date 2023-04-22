@@ -155,6 +155,14 @@ class PageLoader {
     }
   }
 
+  loadStyleForSelectable(selectable: Selectable, style: File.StyleProps) {
+    selectable.selfStyle.loadJSON(this.transformStyle(style));
+
+    if (selectable.originalNode.type === "instance" && style.overrides) {
+      this.loadInstanceOverrides(selectable, style.overrides ?? {});
+    }
+  }
+
   loadInstanceOverrides(
     instanceSelectable: Selectable,
     overrides: Record<string, File.StyleProps>
@@ -188,14 +196,6 @@ class PageLoader {
     };
 
     instanceSelectable.children.forEach(visit);
-  }
-
-  loadStyleForSelectable(selectable: Selectable, style: File.StyleProps) {
-    selectable.selfStyle.loadJSON(this.transformStyle(style));
-
-    if (selectable.originalNode.type === "instance" && style.overrides) {
-      this.loadInstanceOverrides(selectable, style.overrides ?? {});
-    }
   }
 
   absolutePath(relativePath: string): string {

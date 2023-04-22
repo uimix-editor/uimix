@@ -157,59 +157,57 @@ export class PageEmitter {
   }
 
   getStyleForSelectable(selectable: Selectable): File.StyleProps {
-    const getInstanceOverrides = (
-      instanceSelectable: Selectable
-    ): Record<string, File.StyleProps> => {
-      const mainComponent = instanceSelectable.mainComponent;
-      if (!mainComponent) {
-        return {};
-      }
-      // TODO: cache refIDs
-      const refIDs = mainComponent.refIDs;
-
-      const overrides: Record<string, File.StyleProps> = {};
-
-      const visit = (selectable: Selectable) => {
-        const refID = refIDs.get(selectable.originalNode.id);
-        if (!refID) {
-          return;
-        }
-
-        const style: File.StyleProps = this.transformStyle(
-          selectable.selfStyle
-        );
-
-        if (selectable.originalNode.type === "instance") {
-          const innerOverrides = getInstanceOverrides(selectable);
-          if (Object.keys(innerOverrides).length > 0) {
-            style.overrides = innerOverrides;
-          }
-        }
-
-        if (Object.keys(style).length > 0) {
-          overrides[refID] = style;
-        }
-
-        if (selectable.originalNode.type !== "instance") {
-          selectable.children.forEach((child) => visit(child));
-        }
-      };
-
-      instanceSelectable.children.forEach(visit);
-
-      return overrides;
-    };
-
     const style: File.StyleProps = this.transformStyle(selectable.selfStyle);
 
     if (selectable.originalNode.type === "instance") {
-      const overrides = getInstanceOverrides(selectable);
+      const overrides = this.getInstanceOverrides(selectable);
       if (Object.keys(overrides).length > 0) {
         style.overrides = overrides;
       }
     }
 
     return style;
+  }
+
+  getInstanceOverrides(
+    instanceSelectable: Selectable
+  ): Record<string, File.StyleProps> {
+    const mainComponent = instanceSelectable.mainComponent;
+    if (!mainComponent) {
+      return {};
+    }
+    // TODO: cache refIDs
+    const refIDs = mainComponent.refIDs;
+
+    const overrides: Record<string, File.StyleProps> = {};
+
+    const visit = (selectable: Selectable) => {
+      const refID = refIDs.get(selectable.originalNode.id);
+      if (!refID) {
+        return;
+      }
+
+      const style: File.StyleProps = this.transformStyle(selectable.selfStyle);
+
+      if (selectable.originalNode.type === "instance") {
+        const innerOverrides = this.getInstanceOverrides(selectable);
+        if (Object.keys(innerOverrides).length > 0) {
+          style.overrides = innerOverrides;
+        }
+      }
+
+      if (Object.keys(style).length > 0) {
+        overrides[refID] = style;
+      }
+
+      if (selectable.originalNode.type !== "instance") {
+        selectable.children.forEach((child) => visit(child));
+      }
+    };
+
+    instanceSelectable.children.forEach(visit);
+
+    return overrides;
   }
 
   relativePath(absolutePath: string): string {
