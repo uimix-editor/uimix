@@ -73,6 +73,8 @@ export class WorkspaceIO {
   };
 
   async load(): Promise<LoadResult> {
+    // filter out files in sub-projects
+
     const projectBoundaryFilePaths = await this.fileAccess.glob(this.rootPath, [
       this.projectBoundary,
     ]);
