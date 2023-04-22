@@ -6,6 +6,9 @@ name: Node.js CI
 on:
   push:
 
+env:
+  NODE_OPTIONS: --max-old-space-size=16384
+
 jobs:
   build:
     runs-on: ubuntu-latest
