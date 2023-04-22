@@ -26,7 +26,7 @@ function buildTreeViewItem(
   parent?: PageTreeViewItem
 ): PageTreeViewItem {
   const treeViewItem: PageTreeViewItem = {
-    key: entry.id,
+    key: entry.path,
     parent,
     entry,
     children: [],
