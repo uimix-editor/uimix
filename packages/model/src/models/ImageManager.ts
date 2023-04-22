@@ -14,6 +14,7 @@ export class Image {
   get data(): Data.Image {
     return (
       this.manager.project.data.images.get(this.filePath) ?? {
+        hash: "",
         width: 0,
         height: 0,
         url: "",
@@ -71,13 +72,14 @@ export class ImageManager {
     const imgElem = await imageFromURL(url);
 
     const image: Data.Image = {
+      hash: hash,
       width: imgElem.width,
       height: imgElem.height,
       url,
       type,
     };
 
-    this.data.set(hash, image);
+    this.data.set("images/" + hash, image);
     return [hash, image];
   }
 

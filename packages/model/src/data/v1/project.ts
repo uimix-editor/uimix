@@ -1,6 +1,7 @@
 import { z } from "zod";
 import { Node } from "./node.js";
 import { Style } from "./style.js";
+import { Image } from "./image.js";
 
 export const ColorToken = z.object({
   name: z.string(),
@@ -9,18 +10,6 @@ export const ColorToken = z.object({
   page: z.string().optional(),
 });
 export type ColorToken = z.infer<typeof ColorToken>;
-
-export const ImageType = z.enum(["image/png", "image/jpeg"]);
-export type ImageType = z.infer<typeof ImageType>;
-
-export const Image = z.object({
-  width: z.number(),
-  height: z.number(),
-  type: ImageType,
-  url: z.string(),
-});
-
-export type Image = z.infer<typeof Image>;
 
 export const Project = z.object({
   // TODO: version
