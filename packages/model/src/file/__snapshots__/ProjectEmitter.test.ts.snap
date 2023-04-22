@@ -117,7 +117,6 @@ exports[`ProjectEmitter > works > src/components 1`] = `
           name=\\"Button\\"
           position={{ left: 416, top: 234 }}
           component=\\"./button.uimix#Button\\"
-          overrides={{ text: {} }}
         />
       </frame>
     </component>
@@ -144,7 +143,6 @@ exports[`ProjectEmitter > works > src/components 1`] = `
           component=\\"./stories/Header.tsx#Header\\"
           componentType=\\"react\\"
           props={{}}
-          variants={{ \\"maxWidth:767\\": {} }}
         />
         <frame
           id=\\"frame\\"
@@ -153,7 +151,6 @@ exports[`ProjectEmitter > works > src/components 1`] = `
           width={{ min: 0 }}
           height={{ min: 0 }}
           fills={[{ solid: \\"#FFFFFF\\" }]}
-          variants={{ \\"maxWidth:767\\": {} }}
         >
           <foreign
             id=\\"button\\"
@@ -169,7 +166,6 @@ exports[`ProjectEmitter > works > src/components 1`] = `
               backgroundColor: \\"red\\",
               size: \\"large\\",
             }}
-            variants={{ \\"maxWidth:767\\": {} }}
           />
           <instance
             id=\\"instance\\"
@@ -178,7 +174,6 @@ exports[`ProjectEmitter > works > src/components 1`] = `
             fills={[{ solid: \\"#BABABA\\" }]}
             component=\\"./button.uimix#Button\\"
             overrides={{ text: { textContent: \\"Override Name\\" } }}
-            variants={{ \\"maxWidth:767\\": { overrides: { text: {} } } }}
           />
           <image
             id=\\"image\\"
@@ -188,7 +183,6 @@ exports[`ProjectEmitter > works > src/components 1`] = `
             height={100}
             fills={[{ solid: \\"#FFFFFF\\" }]}
             image=\\"./images/YmY-tuteU03QY-k_2ARy1uacNmXDNmOX-FFAlj2qCIo.png\\"
-            variants={{ \\"maxWidth:767\\": {} }}
           />
           <instance
             id=\\"stack\\"
@@ -196,11 +190,7 @@ exports[`ProjectEmitter > works > src/components 1`] = `
             position={{ left: 165, top: 86 }}
             component=\\"Stack\\"
             overrides={{
-              item_0: {},
-              item_1: {},
               hidden_Item: { hidden: false },
-              item_2: {},
-              text: {},
               button: {
                 overrides: { text: { textContent: \\"Nested Override\\" } },
               },
@@ -208,11 +198,6 @@ exports[`ProjectEmitter > works > src/components 1`] = `
             variants={{
               \\"maxWidth:767\\": {
                 overrides: {
-                  item_0: {},
-                  item_1: {},
-                  hidden_Item: {},
-                  item_2: {},
-                  text: {},
                   button: {
                     overrides: { text: { fills: [{ solid: \\"#FF0000\\" }] } },
                   },
@@ -716,40 +701,6 @@ exports[`ProjectEmitter > works > src/landing 1`] = `
           position={{ left: 0, top: 0 }}
           width={{ min: 0 }}
           component=\\"Header\\"
-          overrides={{
-            frame_102: {},
-            frame_178: {},
-            uIMix: {},
-            frame_179: {},
-            frame_3: {},
-            sign_In: {},
-            frame_4: {},
-            get_Early_Access: {},
-            frame_180: {},
-            features: {},
-            pricing: {},
-            docs: {},
-            gitHub: {},
-          }}
-          variants={{
-            \\"maxWidth:767\\": {
-              overrides: {
-                frame_102: {},
-                frame_178: {},
-                uIMix: {},
-                frame_179: {},
-                frame_3: {},
-                sign_In: {},
-                frame_4: {},
-                get_Early_Access: {},
-                frame_180: {},
-                features: {},
-                pricing: {},
-                docs: {},
-                gitHub: {},
-              },
-            },
-          }}
         />
         <frame
           id=\\"frame1\\"
@@ -762,7 +713,6 @@ exports[`ProjectEmitter > works > src/landing 1`] = `
           flexAlign=\\"center\\"
           paddingRight={24}
           paddingLeft={24}
-          variants={{ \\"maxWidth:767\\": {} }}
         >
           <frame
             id=\\"frame2\\"
@@ -775,7 +725,6 @@ exports[`ProjectEmitter > works > src/landing 1`] = `
             marginBottom={-422}
             layout=\\"flex\\"
             flexJustify=\\"center\\"
-            variants={{ \\"maxWidth:767\\": {} }}
           >
             <image
               id=\\"image_2\\"
@@ -792,7 +741,6 @@ exports[`ProjectEmitter > works > src/landing 1`] = `
               overflowHidden={true}
               shadows={[]}
               image=\\"./images/XMIUgNq9VxH1FiVdc4M95ZcfqaSP3aF07GtbcGHi9AY.png\\"
-              variants={{ \\"maxWidth:767\\": {} }}
             />
           </frame>
           <text
@@ -816,7 +764,6 @@ exports[`ProjectEmitter > works > src/landing 1`] = `
             letterSpacing=\\"0%\\"
             textHorizontalAlign=\\"center\\"
             textVerticalAlign=\\"start\\"
-            variants={{ \\"maxWidth:767\\": {} }}
           />
           <text
             id=\\"uIMix_is_a_open_source_design_tool_that_combines_intuitive_editing__React_integration__AI_assistance__and_advanced_design_tokens_\\"
@@ -838,7 +785,6 @@ exports[`ProjectEmitter > works > src/landing 1`] = `
             letterSpacing=\\"0%\\"
             textHorizontalAlign=\\"center\\"
             textVerticalAlign=\\"start\\"
-            variants={{ \\"maxWidth:767\\": {} }}
           />
           <frame
             id=\\"frame_4\\"
@@ -865,7 +811,6 @@ exports[`ProjectEmitter > works > src/landing 1`] = `
             paddingRight={0}
             paddingBottom={0}
             paddingLeft={0}
-            variants={{ \\"maxWidth:767\\": {} }}
           >
             <frame
               id=\\"frame_2\\"
@@ -894,7 +839,6 @@ exports[`ProjectEmitter > works > src/landing 1`] = `
               paddingRight={24}
               paddingBottom={12}
               paddingLeft={24}
-              variants={{ \\"maxWidth:767\\": {} }}
             >
               <text
                 id=\\"get_Early_Access\\"
@@ -912,7 +856,6 @@ exports[`ProjectEmitter > works > src/landing 1`] = `
                 letterSpacing=\\"0%\\"
                 textHorizontalAlign=\\"center\\"
                 textVerticalAlign=\\"start\\"
-                variants={{ \\"maxWidth:767\\": {} }}
               />
             </frame>
           </frame>
@@ -940,7 +883,6 @@ exports[`ProjectEmitter > works > src/landing 1`] = `
             ]}
             marginBottom={64}
             image=\\"./images/1yKf5NvwGW-XtLSBDlS3GqZfbEGnLshgQrjyQJImqaM.png\\"
-            variants={{ \\"maxWidth:767\\": {} }}
           />
         </frame>
         <frame
@@ -968,7 +910,6 @@ exports[`ProjectEmitter > works > src/landing 1`] = `
           paddingRight={24}
           paddingBottom={48}
           paddingLeft={24}
-          variants={{ \\"maxWidth:767\\": {} }}
         >
           <frame
             id=\\"frame_181\\"
@@ -1020,7 +961,6 @@ exports[`ProjectEmitter > works > src/landing 1`] = `
               paddingRight={20}
               paddingBottom={20}
               paddingLeft={20}
-              variants={{ \\"maxWidth:767\\": {} }}
             >
               <frame
                 id=\\"frame_5\\"
@@ -1046,7 +986,6 @@ exports[`ProjectEmitter > works > src/landing 1`] = `
                 paddingRight={4}
                 paddingBottom={4}
                 paddingLeft={4}
-                variants={{ \\"maxWidth:767\\": {} }}
               >
                 <svg
                   id=\\"heroicons_pencil_square\\"
@@ -1056,7 +995,6 @@ exports[`ProjectEmitter > works > src/landing 1`] = `
                   svg={
                     '<svg width=\\"24\\" height=\\"24\\" viewBox=\\"0 0 24 24\\" fill=\\"none\\" xmlns=\\"http://www.w3.org/2000/svg\\">\\\\n<path d=\\"M16.862 4.487L18.549 2.799C18.9007 2.44733 19.3777 2.24976 19.875 2.24976C20.3723 2.24976 20.8493 2.44733 21.201 2.799C21.5527 3.15068 21.7502 3.62766 21.7502 4.125C21.7502 4.62235 21.5527 5.09933 21.201 5.451L10.582 16.07C10.0533 16.5984 9.40137 16.9867 8.685 17.2L6 18L6.8 15.315C7.01328 14.5986 7.40163 13.9467 7.93 13.418L16.862 4.487ZM16.862 4.487L19.5 7.125M18 14V18.75C18 19.3467 17.7629 19.919 17.341 20.341C16.919 20.763 16.3467 21 15.75 21H5.25C4.65326 21 4.08097 20.763 3.65901 20.341C3.23705 19.919 3 19.3467 3 18.75V8.25C3 7.65327 3.23705 7.08097 3.65901 6.65901C4.08097 6.23706 4.65326 6 5.25 6H10\\" stroke=\\"#3B82F6\\" stroke-width=\\"1.5\\" stroke-linecap=\\"round\\" stroke-linejoin=\\"round\\"/>\\\\n</svg>\\\\n'
                   }
-                  variants={{ \\"maxWidth:767\\": {} }}
                 />
               </frame>
               <text
@@ -1075,7 +1013,6 @@ exports[`ProjectEmitter > works > src/landing 1`] = `
                 letterSpacing=\\"0%\\"
                 textHorizontalAlign=\\"start\\"
                 textVerticalAlign=\\"start\\"
-                variants={{ \\"maxWidth:767\\": {} }}
               />
               <text
                 id=\\"experience_a_user_friendly_interface_with_familiar_design_tools__making_it_easy_for_both_beginners_and_professionals_to_create_stunning_web_designs_\\"
@@ -1093,7 +1030,6 @@ exports[`ProjectEmitter > works > src/landing 1`] = `
                 letterSpacing=\\"0%\\"
                 textHorizontalAlign=\\"start\\"
                 textVerticalAlign=\\"start\\"
-                variants={{ \\"maxWidth:767\\": {} }}
               />
             </frame>
             <frame
@@ -1120,7 +1056,6 @@ exports[`ProjectEmitter > works > src/landing 1`] = `
               paddingRight={20}
               paddingBottom={20}
               paddingLeft={20}
-              variants={{ \\"maxWidth:767\\": {} }}
             >
               <frame
                 id=\\"frame_15\\"
@@ -1146,7 +1081,6 @@ exports[`ProjectEmitter > works > src/landing 1`] = `
                 paddingRight={4}
                 paddingBottom={4}
                 paddingLeft={4}
-                variants={{ \\"maxWidth:767\\": {} }}
               >
                 <svg
                   id=\\"heroicons_code_bracket\\"
@@ -1156,7 +1090,6 @@ exports[`ProjectEmitter > works > src/landing 1`] = `
                   svg={
                     '<svg width=\\"24\\" height=\\"24\\" viewBox=\\"0 0 24 24\\" fill=\\"none\\" xmlns=\\"http://www.w3.org/2000/svg\\">\\\\n<path d=\\"M17.25 6.75L22.5 12L17.25 17.25M6.75 17.25L1.5 12L6.75 6.75M14.25 3.75L9.75 20.25\\" stroke=\\"#0EA5E9\\" stroke-width=\\"1.5\\" stroke-linecap=\\"round\\" stroke-linejoin=\\"round\\"/>\\\\n</svg>\\\\n'
                   }
-                  variants={{ \\"maxWidth:767\\": {} }}
                 />
               </frame>
               <text
@@ -1175,7 +1108,6 @@ exports[`ProjectEmitter > works > src/landing 1`] = `
                 letterSpacing=\\"0%\\"
                 textHorizontalAlign=\\"start\\"
                 textVerticalAlign=\\"start\\"
-                variants={{ \\"maxWidth:767\\": {} }}
               />
               <text
                 id=\\"seamlessly_work_with_React_components__boosting_your_design_to_development_workflow_\\"
@@ -1195,7 +1127,6 @@ exports[`ProjectEmitter > works > src/landing 1`] = `
                 letterSpacing=\\"0%\\"
                 textHorizontalAlign=\\"start\\"
                 textVerticalAlign=\\"start\\"
-                variants={{ \\"maxWidth:767\\": {} }}
               />
             </frame>
             <frame
@@ -1222,7 +1153,6 @@ exports[`ProjectEmitter > works > src/landing 1`] = `
               paddingRight={20}
               paddingBottom={20}
               paddingLeft={20}
-              variants={{ \\"maxWidth:767\\": {} }}
             >
               <frame
                 id=\\"frame_17\\"
@@ -1248,7 +1178,6 @@ exports[`ProjectEmitter > works > src/landing 1`] = `
                 paddingRight={4}
                 paddingBottom={4}
                 paddingLeft={4}
-                variants={{ \\"maxWidth:767\\": {} }}
               >
                 <svg
                   id=\\"heroicons_cloud\\"
@@ -1258,7 +1187,6 @@ exports[`ProjectEmitter > works > src/landing 1`] = `
                   svg={
                     '<svg width=\\"24\\" height=\\"24\\" viewBox=\\"0 0 24 24\\" fill=\\"none\\" xmlns=\\"http://www.w3.org/2000/svg\\">\\\\n<path d=\\"M2.25 15C2.25 16.1935 2.72411 17.3381 3.56802 18.182C4.41193 19.0259 5.55653 19.5 6.75 19.5H18C18.8778 19.5009 19.7282 19.1939 20.4029 18.6324C21.0776 18.0708 21.534 17.2904 21.6924 16.427C21.8509 15.5636 21.7015 14.6719 21.2701 13.9074C20.8388 13.1428 20.1529 12.5538 19.332 12.243C19.5176 11.7152 19.5519 11.1461 19.431 10.5998C19.3102 10.0536 19.039 9.55206 18.6481 9.15182C18.2572 8.75159 17.7622 8.46862 17.219 8.33488C16.6758 8.20114 16.106 8.22196 15.574 8.39498C15.2299 7.07501 14.3856 5.94078 13.2198 5.2325C12.054 4.52422 10.6583 4.29749 9.32821 4.60033C7.99817 4.90318 6.83821 5.71181 6.09398 6.855C5.34976 7.99818 5.0797 9.38615 5.341 10.725C4.44158 11.0218 3.65869 11.5948 3.10374 12.3623C2.54879 13.1298 2.25004 14.0528 2.25 15Z\\" stroke=\\"#F43F5E\\" stroke-width=\\"1.5\\" stroke-linecap=\\"round\\" stroke-linejoin=\\"round\\"/>\\\\n</svg>\\\\n'
                   }
-                  variants={{ \\"maxWidth:767\\": {} }}
                 />
               </frame>
               <text
@@ -1277,7 +1205,6 @@ exports[`ProjectEmitter > works > src/landing 1`] = `
                 letterSpacing=\\"0%\\"
                 textHorizontalAlign=\\"start\\"
                 textVerticalAlign=\\"start\\"
-                variants={{ \\"maxWidth:767\\": {} }}
               />
               <text
                 id=\\"collaborate_in_real_time_with_your_team__whether_they_re_designers__developers__or_stakeholders_\\"
@@ -1297,7 +1224,6 @@ exports[`ProjectEmitter > works > src/landing 1`] = `
                 letterSpacing=\\"0%\\"
                 textHorizontalAlign=\\"start\\"
                 textVerticalAlign=\\"start\\"
-                variants={{ \\"maxWidth:767\\": {} }}
               />
             </frame>
             <frame
@@ -1324,7 +1250,6 @@ exports[`ProjectEmitter > works > src/landing 1`] = `
               paddingRight={20}
               paddingBottom={20}
               paddingLeft={20}
-              variants={{ \\"maxWidth:767\\": {} }}
             >
               <frame
                 id=\\"frame_20\\"
@@ -1350,7 +1275,6 @@ exports[`ProjectEmitter > works > src/landing 1`] = `
                 paddingRight={4}
                 paddingBottom={4}
                 paddingLeft={4}
-                variants={{ \\"maxWidth:767\\": {} }}
               >
                 <svg
                   id=\\"heroicons_computer_desktop\\"
@@ -1360,7 +1284,6 @@ exports[`ProjectEmitter > works > src/landing 1`] = `
                   svg={
                     '<svg width=\\"24\\" height=\\"24\\" viewBox=\\"0 0 24 24\\" fill=\\"none\\" xmlns=\\"http://www.w3.org/2000/svg\\">\\\\n<path d=\\"M9 17.25V18.257C9.00005 18.6511 8.92244 19.0414 8.77162 19.4055C8.6208 19.7696 8.39971 20.1004 8.121 20.379L7.5 21H16.5L15.879 20.379C15.6003 20.1004 15.3792 19.7696 15.2284 19.4055C15.0776 19.0414 15 18.6511 15 18.257V17.25M21 5.25V15C21 15.5967 20.7629 16.169 20.341 16.591C19.919 17.0129 19.3467 17.25 18.75 17.25H5.25C4.65326 17.25 4.08097 17.0129 3.65901 16.591C3.23705 16.169 3 15.5967 3 15V5.25M21 5.25C21 4.65326 20.7629 4.08097 20.341 3.65901C19.919 3.23705 19.3467 3 18.75 3H5.25C4.65326 3 4.08097 3.23705 3.65901 3.65901C3.23705 4.08097 3 4.65326 3 5.25M21 5.25V12C21 12.5967 20.7629 13.169 20.341 13.591C19.919 14.0129 19.3467 14.25 18.75 14.25H5.25C4.65326 14.25 4.08097 14.0129 3.65901 13.591C3.23705 13.169 3 12.5967 3 12V5.25\\" stroke=\\"#EAB308\\" stroke-width=\\"1.5\\" stroke-linecap=\\"round\\" stroke-linejoin=\\"round\\"/>\\\\n</svg>\\\\n'
                   }
-                  variants={{ \\"maxWidth:767\\": {} }}
                 />
               </frame>
               <text
@@ -1379,7 +1302,6 @@ exports[`ProjectEmitter > works > src/landing 1`] = `
                 letterSpacing=\\"0%\\"
                 textHorizontalAlign=\\"start\\"
                 textVerticalAlign=\\"start\\"
-                variants={{ \\"maxWidth:767\\": {} }}
               />
               <text
                 id=\\"benefit_from_UIMix_s_seamless_offline_editing__offering_local_file_management__hot_reloading__and_an_uninterrupted_workflow_\\"
@@ -1399,7 +1321,6 @@ exports[`ProjectEmitter > works > src/landing 1`] = `
                 letterSpacing=\\"0%\\"
                 textHorizontalAlign=\\"start\\"
                 textVerticalAlign=\\"start\\"
-                variants={{ \\"maxWidth:767\\": {} }}
               />
             </frame>
             <frame
@@ -1426,7 +1347,6 @@ exports[`ProjectEmitter > works > src/landing 1`] = `
               paddingRight={20}
               paddingBottom={20}
               paddingLeft={20}
-              variants={{ \\"maxWidth:767\\": {} }}
             >
               <frame
                 id=\\"frame_22\\"
@@ -1452,7 +1372,6 @@ exports[`ProjectEmitter > works > src/landing 1`] = `
                 paddingRight={4}
                 paddingBottom={4}
                 paddingLeft={4}
-                variants={{ \\"maxWidth:767\\": {} }}
               >
                 <svg
                   id=\\"carbon_machine_learning\\"
@@ -1462,7 +1381,6 @@ exports[`ProjectEmitter > works > src/landing 1`] = `
                   svg={
                     '<svg width=\\"24\\" height=\\"24\\" viewBox=\\"0 0 24 24\\" fill=\\"none\\" xmlns=\\"http://www.w3.org/2000/svg\\">\\\\n<path d=\\"M12 18.75C11.1337 18.7508 10.2807 18.5368 9.51724 18.1273C8.75381 17.7178 8.10378 17.1254 7.62525 16.4033L8.87475 15.573C9.2168 16.0888 9.68119 16.5119 10.2265 16.8046C10.7718 17.0973 11.3811 17.2505 12 17.2505C12.6189 17.2505 13.2282 17.0973 13.7735 16.8046C14.3188 16.5119 14.7832 16.0888 15.1253 15.573L16.3748 16.4033C15.8962 17.1254 15.2462 17.7178 14.4828 18.1273C13.7193 18.5368 12.8663 18.7508 12 18.75ZM15 10.5C14.7033 10.5 14.4133 10.588 14.1666 10.7528C13.92 10.9176 13.7277 11.1519 13.6142 11.426C13.5006 11.7001 13.4709 12.0017 13.5288 12.2927C13.5867 12.5836 13.7296 12.8509 13.9393 13.0607C14.1491 13.2705 14.4164 13.4133 14.7074 13.4712C14.9983 13.5291 15.2999 13.4994 15.574 13.3858C15.8481 13.2723 16.0824 13.08 16.2472 12.8334C16.412 12.5867 16.5 12.2967 16.5 12C16.502 11.8025 16.4646 11.6065 16.3899 11.4236C16.3152 11.2407 16.2048 11.0746 16.0651 10.9349C15.9254 10.7952 15.7593 10.6848 15.5764 10.6101C15.3935 10.5354 15.1975 10.498 15 10.5ZM9 10.5C8.70333 10.5 8.41332 10.588 8.16665 10.7528C7.91997 10.9176 7.72771 11.1519 7.61418 11.426C7.50065 11.7001 7.47094 12.0017 7.52882 12.2927C7.5867 12.5836 7.72956 12.8509 7.93934 13.0607C8.14912 13.2705 8.41639 13.4133 8.70737 13.4712C8.99834 13.5291 9.29994 13.4994 9.57403 13.3858C9.84811 13.2723 10.0824 13.08 10.2472 12.8334C10.412 12.5867 10.5 12.2967 10.5 12C10.502 11.8025 10.4646 11.6065 10.3899 11.4236C10.3152 11.2407 10.2048 11.0746 10.0651 10.9349C9.92544 10.7952 9.75928 10.6848 9.57639 10.6101C9.3935 10.5354 9.19754 10.498 9 10.5Z\\" fill=\\"#10B981\\"/>\\\\n<path d=\\"M22.5 12V10.5H21V7.5C20.999 6.70466 20.6826 5.94217 20.1202 5.37978C19.5578 4.81738 18.7953 4.50099 18 4.5H16.5V1.5H15V4.5H9V1.5H7.5V4.5H6C5.20466 4.50099 4.44217 4.81738 3.87978 5.37978C3.31738 5.94217 3.00099 6.70466 3 7.5V10.5H1.5V12H3V15.75H1.5V17.25H3V19.5C3.00099 20.2953 3.31738 21.0578 3.87978 21.6202C4.44217 22.1826 5.20466 22.499 6 22.5H18C18.7953 22.499 19.5578 22.1826 20.1202 21.6202C20.6826 21.0578 20.999 20.2953 21 19.5V17.25H22.5V15.75H21V12H22.5ZM19.5 19.5C19.4996 19.8977 19.3414 20.279 19.0602 20.5602C18.779 20.8414 18.3977 20.9996 18 21H6C5.6023 20.9996 5.221 20.8414 4.93978 20.5602C4.65856 20.279 4.5004 19.8977 4.5 19.5V7.5C4.5004 7.1023 4.65856 6.721 4.93978 6.43978C5.221 6.15856 5.6023 6.0004 6 6H18C18.3977 6.0004 18.779 6.15856 19.0602 6.43978C19.3414 6.721 19.4996 7.1023 19.5 7.5V19.5Z\\" fill=\\"#10B981\\"/>\\\\n</svg>\\\\n'
                   }
-                  variants={{ \\"maxWidth:767\\": {} }}
                 />
               </frame>
               <text
@@ -1481,7 +1399,6 @@ exports[`ProjectEmitter > works > src/landing 1`] = `
                 letterSpacing=\\"0%\\"
                 textHorizontalAlign=\\"start\\"
                 textVerticalAlign=\\"start\\"
-                variants={{ \\"maxWidth:767\\": {} }}
               />
               <text
                 id=\\"supercharge_your_design_process_with_AI_generated_and_refined_text_contents__as_well_as_AI_generated_images_that_fit_perfectly_into_your_project_\\"
@@ -1499,7 +1416,6 @@ exports[`ProjectEmitter > works > src/landing 1`] = `
                 letterSpacing=\\"0%\\"
                 textHorizontalAlign=\\"start\\"
                 textVerticalAlign=\\"start\\"
-                variants={{ \\"maxWidth:767\\": {} }}
               />
             </frame>
             <frame
@@ -1526,7 +1442,6 @@ exports[`ProjectEmitter > works > src/landing 1`] = `
               paddingRight={20}
               paddingBottom={20}
               paddingLeft={20}
-              variants={{ \\"maxWidth:767\\": {} }}
             >
               <frame
                 id=\\"frame_24\\"
@@ -1552,7 +1467,6 @@ exports[`ProjectEmitter > works > src/landing 1`] = `
                 paddingRight={4}
                 paddingBottom={4}
                 paddingLeft={4}
-                variants={{ \\"maxWidth:767\\": {} }}
               >
                 <svg
                   id=\\"carbon_logo_figma\\"
@@ -1562,7 +1476,6 @@ exports[`ProjectEmitter > works > src/landing 1`] = `
                   svg={
                     '<svg width=\\"24\\" height=\\"24\\" viewBox=\\"0 0 24 24\\" fill=\\"none\\" xmlns=\\"http://www.w3.org/2000/svg\\">\\\\n<path d=\\"M17.7 8.7C18.45 8.25 18.975 7.575 19.275 6.75C19.575 5.925 19.575 5.1 19.35 4.275C19.125 3.45 18.6 2.775 17.925 2.25C17.25 1.725 16.35 1.5 15.525 1.5H8.62501C7.72501 1.5 6.90001 1.8 6.22501 2.25C5.40001 2.775 4.95001 3.525 4.65001 4.275C4.42501 5.1 4.42501 6 4.72501 6.75C5.02501 7.575 5.55001 8.25 6.30001 8.7C5.77501 9.075 5.25001 9.525 4.95001 10.125C4.65001 10.725 4.50001 11.325 4.50001 12C4.50001 12.675 4.65001 13.275 4.95001 13.875C5.25001 14.475 5.70001 14.925 6.30001 15.3C5.55001 15.75 5.02501 16.425 4.72501 17.25C4.42501 18.075 4.42501 18.9 4.65001 19.725C4.87501 20.55 5.40001 21.225 6.15001 21.75C6.82501 22.275 7.72501 22.5 8.55001 22.5C9.60001 22.5 10.65 22.05 11.475 21.375C12.225 20.625 12.675 19.65 12.675 18.6V15C13.425 15.675 14.4 16.05 15.375 16.05H15.45C16.35 16.05 17.175 15.75 17.85 15.3C18.525 14.775 19.05 14.1 19.275 13.275C19.5 12.45 19.5 11.625 19.2 10.8C18.975 9.825 18.375 9.15 17.7 8.7ZM12.675 2.775H15.45C15.825 2.775 16.2 2.775 16.5 2.925C16.875 3.075 17.175 3.225 17.4 3.525C17.7 3.75 17.85 4.05 18 4.425C18.15 4.8 18.225 5.1 18.225 5.475C18.225 5.85 18.15 6.225 18 6.525C17.85 6.825 17.625 7.125 17.4 7.425C17.1 7.65 16.8 7.875 16.5 8.025C16.125 8.175 15.75 8.175 15.45 8.175H12.675V2.775ZM8.55001 2.775H11.325V8.025H8.55001C7.87501 8.025 7.20001 7.725 6.75001 7.2C6.22501 6.75 6.00001 6.075 6.00001 5.4C6.00001 4.725 6.30001 4.05 6.75001 3.6C7.20001 3.15 7.87501 2.85 8.55001 2.775ZM5.85001 12C5.85001 11.325 6.15001 10.65 6.67501 10.125C7.20001 9.6 7.87501 9.375 8.62501 9.375H11.4V14.625H8.62501C7.87501 14.625 7.20001 14.325 6.67501 13.875C6.15001 13.35 5.85001 12.675 5.85001 12ZM11.325 18.525C11.325 19.275 11.025 19.95 10.5 20.4C9.97501 20.925 9.30001 21.15 8.55001 21.15C8.17501 21.15 7.80001 21.15 7.50001 21C7.12501 20.85 6.82501 20.7 6.60001 20.475C6.30001 20.25 6.15001 19.95 6.00001 19.575C5.85001 19.275 5.77501 18.9 5.77501 18.525C5.77501 18.15 5.85001 17.775 6.00001 17.475C6.15001 17.175 6.37501 16.875 6.60001 16.575C6.90001 16.35 7.20001 16.125 7.50001 15.975C7.87501 15.825 8.25001 15.825 8.55001 15.825H11.325V18.525ZM15.45 14.625H15.375C14.7 14.625 14.025 14.325 13.575 13.8C13.125 13.275 12.825 12.675 12.825 12C12.825 11.325 13.125 10.65 13.575 10.2C14.025 9.675 14.7 9.45 15.375 9.375H15.45C15.825 9.375 16.2 9.375 16.5 9.525C16.875 9.675 17.175 9.825 17.4 10.125C17.7 10.35 17.85 10.65 18 11.025C18.15 11.325 18.225 11.7 18.225 12.075C18.225 12.45 18.15 12.825 18 13.125C17.85 13.425 17.625 13.725 17.4 14.025C17.1 14.25 16.8 14.475 16.5 14.625H15.45Z\\" fill=\\"#A855F7\\"/>\\\\n</svg>\\\\n'
                   }
-                  variants={{ \\"maxWidth:767\\": {} }}
                 />
               </frame>
               <text
@@ -1581,7 +1494,6 @@ exports[`ProjectEmitter > works > src/landing 1`] = `
                 letterSpacing=\\"0%\\"
                 textHorizontalAlign=\\"start\\"
                 textVerticalAlign=\\"start\\"
-                variants={{ \\"maxWidth:767\\": {} }}
               />
               <text
                 id=\\"easily_import_designs_from_Figma_and_export_components_back_to_Figma__ensuring_seamless_collaboration_between_UIMix_and_your_favorite_design_tool_\\"
@@ -1599,7 +1511,6 @@ exports[`ProjectEmitter > works > src/landing 1`] = `
                 letterSpacing=\\"0%\\"
                 textHorizontalAlign=\\"start\\"
                 textVerticalAlign=\\"start\\"
-                variants={{ \\"maxWidth:767\\": {} }}
               />
             </frame>
           </frame>
@@ -1617,7 +1528,6 @@ exports[`ProjectEmitter > works > src/landing 1`] = `
           paddingRight={24}
           paddingBottom={128}
           paddingLeft={24}
-          variants={{ \\"maxWidth:767\\": {} }}
         >
           <text
             id=\\"open_Source\\"
@@ -1637,7 +1547,6 @@ exports[`ProjectEmitter > works > src/landing 1`] = `
             letterSpacing=\\"0%\\"
             textHorizontalAlign=\\"center\\"
             textVerticalAlign=\\"start\\"
-            variants={{ \\"maxWidth:767\\": {} }}
           />
           <text
             id=\\"uIMix_s_open_source_editor_and_backend_promote_community_driven_development_and_offer_extensive_customization_options__Self_host_both_components_for_greater_control_over_your_design_environment_and_data_security_\\"
@@ -1659,7 +1568,6 @@ exports[`ProjectEmitter > works > src/landing 1`] = `
             letterSpacing=\\"0%\\"
             textHorizontalAlign=\\"center\\"
             textVerticalAlign=\\"start\\"
-            variants={{ \\"maxWidth:767\\": {} }}
           />
           <frame
             id=\\"frame_3\\"
@@ -1694,7 +1602,6 @@ exports[`ProjectEmitter > works > src/landing 1`] = `
             paddingRight={22.5}
             paddingBottom={10.5}
             paddingLeft={22.5}
-            variants={{ \\"maxWidth:767\\": {} }}
           >
             <text
               id=\\"explore_GitHub_repo\\"
@@ -1712,7 +1619,6 @@ exports[`ProjectEmitter > works > src/landing 1`] = `
               letterSpacing=\\"0%\\"
               textHorizontalAlign=\\"center\\"
               textVerticalAlign=\\"start\\"
-              variants={{ \\"maxWidth:767\\": {} }}
             />
           </frame>
           <text
@@ -1733,7 +1639,6 @@ exports[`ProjectEmitter > works > src/landing 1`] = `
             letterSpacing=\\"0%\\"
             textHorizontalAlign=\\"center\\"
             textVerticalAlign=\\"start\\"
-            variants={{ \\"maxWidth:767\\": {} }}
           />
           <frame
             id=\\"frame4\\"
@@ -1745,7 +1650,6 @@ exports[`ProjectEmitter > works > src/landing 1`] = `
             flexJustify=\\"center\\"
             rowGap={24}
             columnGap={24}
-            variants={{ \\"maxWidth:767\\": {} }}
           >
             <frame
               id=\\"frame5\\"
@@ -1755,7 +1659,6 @@ exports[`ProjectEmitter > works > src/landing 1`] = `
               height=\\"hug\\"
               layout=\\"flex\\"
               flexDirection=\\"y\\"
-              variants={{ \\"maxWidth:767\\": {} }}
             >
               <text
                 id=\\"a__Start_Your_Project\\"
@@ -1775,7 +1678,6 @@ exports[`ProjectEmitter > works > src/landing 1`] = `
                 letterSpacing=\\"0%\\"
                 textHorizontalAlign=\\"start\\"
                 textVerticalAlign=\\"start\\"
-                variants={{ \\"maxWidth:767\\": {} }}
               />
               <text
                 id=\\"sign_up_for_a_free_account_or_log_in__Create_a_new_project_or_import_an_existing_Figma_design__Organize_your_components_and_design_tokens_in_the_user_friendly_interface_\\"
@@ -1796,7 +1698,6 @@ exports[`ProjectEmitter > works > src/landing 1`] = `
                 letterSpacing=\\"0%\\"
                 textHorizontalAlign=\\"start\\"
                 textVerticalAlign=\\"start\\"
-                variants={{ \\"maxWidth:767\\": {} }}
               />
             </frame>
             <frame
@@ -1807,7 +1708,6 @@ exports[`ProjectEmitter > works > src/landing 1`] = `
               height=\\"hug\\"
               layout=\\"flex\\"
               flexDirection=\\"y\\"
-              variants={{ \\"maxWidth:767\\": {} }}
             >
               <text
                 id=\\"b__Design___Develop\\"
@@ -1827,7 +1727,6 @@ exports[`ProjectEmitter > works > src/landing 1`] = `
                 letterSpacing=\\"0%\\"
                 textHorizontalAlign=\\"start\\"
                 textVerticalAlign=\\"start\\"
-                variants={{ \\"maxWidth:767\\": {} }}
               />
               <text
                 id=\\"utilize_Figma_like_editing_tools_to_create_and_modify_designs__Seamlessly_import_React_components_into_your_UIMix_project__Leverage_AI_assistance_to_efficiently_generate_and_refine_your_content_\\"
@@ -1848,7 +1747,6 @@ exports[`ProjectEmitter > works > src/landing 1`] = `
                 letterSpacing=\\"0%\\"
                 textHorizontalAlign=\\"start\\"
                 textVerticalAlign=\\"start\\"
-                variants={{ \\"maxWidth:767\\": {} }}
               />
             </frame>
             <frame
@@ -1859,7 +1757,6 @@ exports[`ProjectEmitter > works > src/landing 1`] = `
               height=\\"hug\\"
               layout=\\"flex\\"
               flexDirection=\\"y\\"
-              variants={{ \\"maxWidth:767\\": {} }}
             >
               <text
                 id=\\"c__Collaborate___Publish\\"
@@ -1879,7 +1776,6 @@ exports[`ProjectEmitter > works > src/landing 1`] = `
                 letterSpacing=\\"0%\\"
                 textHorizontalAlign=\\"start\\"
                 textVerticalAlign=\\"start\\"
-                variants={{ \\"maxWidth:767\\": {} }}
               />
               <text
                 id=\\"collaborate_using_the_online_editor_or_work_offline_for_an_optimized_development_experience__Integrate_with_GitHub_for_streamlined_version_control__Easily_import_UIMix_components_into_React_apps_or_export_final_designs_back_to_Figma_\\"
@@ -1900,7 +1796,6 @@ exports[`ProjectEmitter > works > src/landing 1`] = `
                 letterSpacing=\\"0%\\"
                 textHorizontalAlign=\\"start\\"
                 textVerticalAlign=\\"start\\"
-                variants={{ \\"maxWidth:767\\": {} }}
               />
             </frame>
           </frame>
@@ -1924,7 +1819,6 @@ exports[`ProjectEmitter > works > src/landing 1`] = `
           flexAlign=\\"center\\"
           paddingTop={96}
           paddingBottom={96}
-          variants={{ \\"maxWidth:767\\": {} }}
         >
           <image
             id=\\"image_4\\"
@@ -1942,7 +1836,6 @@ exports[`ProjectEmitter > works > src/landing 1`] = `
             overflowHidden={true}
             shadows={[]}
             image=\\"./images/DGLFxM8eMqBjHUQYEekprnB3xC-f5uvLxL7x2odVAEU.png\\"
-            variants={{ \\"maxWidth:767\\": {} }}
           />
           <text
             id=\\"ready_to_revolutionize_your_web_design_workflow_\\"
@@ -1962,7 +1855,6 @@ exports[`ProjectEmitter > works > src/landing 1`] = `
             letterSpacing=\\"0%\\"
             textHorizontalAlign=\\"center\\"
             textVerticalAlign=\\"start\\"
-            variants={{ \\"maxWidth:767\\": {} }}
           />
           <frame
             id=\\"frame_26\\"
@@ -1991,7 +1883,6 @@ exports[`ProjectEmitter > works > src/landing 1`] = `
             paddingRight={0}
             paddingBottom={0}
             paddingLeft={0}
-            variants={{ \\"maxWidth:767\\": {} }}
           >
             <frame
               id=\\"frame_6\\"
@@ -2020,7 +1911,6 @@ exports[`ProjectEmitter > works > src/landing 1`] = `
               paddingRight={24}
               paddingBottom={12}
               paddingLeft={24}
-              variants={{ \\"maxWidth:767\\": {} }}
             >
               <text
                 id=\\"get_Early_Access1\\"
@@ -2038,7 +1928,6 @@ exports[`ProjectEmitter > works > src/landing 1`] = `
                 letterSpacing=\\"0%\\"
                 textHorizontalAlign=\\"center\\"
                 textVerticalAlign=\\"start\\"
-                variants={{ \\"maxWidth:767\\": {} }}
               />
             </frame>
           </frame>

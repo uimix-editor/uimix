@@ -132,10 +132,11 @@ export class PageEmitter {
           if (!condition) {
             return;
           }
-          return [
-            variantConditionText(condition),
-            this.getStyleForSelectable(corresponding.selectable),
-          ];
+          const style = this.getStyleForSelectable(corresponding.selectable);
+          if (Object.keys(style).length === 0) {
+            return;
+          }
+          return [variantConditionText(condition), style];
         })
       )
     );
@@ -174,11 +175,22 @@ export class PageEmitter {
           return;
         }
 
-        overrides[refID] = this.transformStyle(selectable.selfStyle);
+        const style: File.StyleProps = this.transformStyle(
+          selectable.selfStyle
+        );
 
         if (selectable.originalNode.type === "instance") {
-          overrides[refID]["overrides"] = getInstanceOverrides(selectable);
-        } else {
+          const innerOverrides = getInstanceOverrides(selectable);
+          if (Object.keys(innerOverrides).length > 0) {
+            style.overrides = innerOverrides;
+          }
+        }
+
+        if (Object.keys(style).length > 0) {
+          overrides[refID] = style;
+        }
+
+        if (selectable.originalNode.type !== "instance") {
           selectable.children.forEach((child) => visit(child));
         }
       };
@@ -188,14 +200,16 @@ export class PageEmitter {
       return overrides;
     };
 
-    return {
-      ...this.transformStyle(selectable.selfStyle),
-      ...(selectable.originalNode.type === "instance"
-        ? {
-            overrides: getInstanceOverrides(selectable),
-          }
-        : {}),
-    };
+    const style: File.StyleProps = this.transformStyle(selectable.selfStyle);
+
+    if (selectable.originalNode.type === "instance") {
+      const overrides = getInstanceOverrides(selectable);
+      if (Object.keys(overrides).length > 0) {
+        style.overrides = overrides;
+      }
+    }
+
+    return style;
   }
 
   relativePath(absolutePath: string): string {
