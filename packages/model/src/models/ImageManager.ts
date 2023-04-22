@@ -28,7 +28,7 @@ export class Image {
   }
 
   get filePath(): string {
-    return this.filePath;
+    return this.data.filePath;
   }
 
   readonly manager: ImageManager;
