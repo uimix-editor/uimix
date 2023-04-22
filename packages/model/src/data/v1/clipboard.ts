@@ -1,6 +1,6 @@
 import { z } from "zod";
 import { NodeType, VariantCondition } from "./node";
-import { Image } from "./project";
+import { Image } from "./image";
 import { Style } from "./style";
 
 const SelectableBase = z.object({
