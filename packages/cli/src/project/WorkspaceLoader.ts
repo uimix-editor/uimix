@@ -28,11 +28,30 @@ interface ProjectData {
   imagePaths: Map<string, string>; // hash to path
 }
 
+interface LoadProblem {
+  filePath: string;
+  error: unknown;
+}
+
+interface LoadResult {
+  changed: boolean;
+  problems: LoadProblem[];
+}
+
 // Important TODO: fix paths in Windows!!
 export class WorkspaceLoader {
   static async load(fileAccess: FileAccess) {
     const loader = new WorkspaceLoader(fileAccess);
-    await loader.load();
+    const result = await loader.load();
+    if (result.problems.length) {
+      throw new Error(
+        `Problems loading workspace:\n${result.problems
+          .map(
+            (problem) => `  ${problem.filePath}:\n    ${String(problem.error)}`
+          )
+          .join("\n")}`
+      );
+    }
     return loader;
   }
 
@@ -79,7 +98,7 @@ export class WorkspaceLoader {
     );
   }
 
-  async load(): Promise<boolean> {
+  async load(): Promise<LoadResult> {
     const filePaths = await this.fileAccess.glob(
       `{${this.filePattern},${this.imagePatterns.join(",")},**/${
         this.projectBoundary
@@ -113,16 +132,24 @@ export class WorkspaceLoader {
     }
 
     let changed = false;
+    const problems: LoadProblem[] = [];
     for (const [projectPath, filePaths] of filePathsForProject) {
-      changed = changed || (await this.loadProject(projectPath, filePaths));
+      const result = await this.loadProject(projectPath, filePaths);
+      changed = changed || result.changed;
+      problems.push(...result.problems);
     }
-    return changed;
+    return {
+      changed,
+      problems,
+    };
   }
 
   private async loadProject(
     projectPath: string,
     filePaths: string[]
-  ): Promise<boolean> {
+  ): Promise<LoadResult> {
+    const problems: LoadProblem[] = [];
+
     try {
       let manifest: ProjectManifestJSON = {};
 
@@ -138,8 +165,11 @@ export class WorkspaceLoader {
               ).toString()
             )
           );
-        } catch (e) {
-          console.warn("cannot load uimix.json:", e);
+        } catch (error) {
+          problems.push({
+            filePath: manifestPath,
+            error,
+          });
         }
       }
 
@@ -160,8 +190,11 @@ export class WorkspaceLoader {
               .relative(projectPath, filePath)
               .replace(/\.uimix$/, "");
             pages.set(pageName, pageNode);
-          } catch (e) {
-            console.warn("cannot load page", filePath, e);
+          } catch (error) {
+            problems.push({
+              filePath,
+              error,
+            });
           }
         } else {
           try {
@@ -179,8 +212,11 @@ export class WorkspaceLoader {
             };
             images.set(hash, image);
             imagePaths.set(hash, filePath);
-          } catch (e) {
-            console.warn("cannot load image", filePath, e);
+          } catch (error) {
+            problems.push({
+              filePath,
+              error,
+            });
           }
         }
       }
@@ -194,7 +230,10 @@ export class WorkspaceLoader {
       }
 
       if (isEqual(pages, existingProject?.pages ?? new Map())) {
-        return false;
+        return {
+          changed: false,
+          problems,
+        };
       }
 
       this.projects.set(projectPath, {
@@ -203,10 +242,21 @@ export class WorkspaceLoader {
         pages,
         imagePaths,
       });
-      return true;
-    } catch (e) {
-      console.warn("cannot load project", projectPath, e);
-      return false;
+
+      return {
+        changed: true,
+        problems,
+      };
+    } catch (error) {
+      problems.push({
+        filePath: projectPath,
+        error,
+      });
+
+      return {
+        changed: false,
+        problems,
+      };
     }
   }
 
@@ -295,7 +345,7 @@ export class WorkspaceLoader {
           if (this.isSaving) {
             return;
           }
-          if (await this.load()) {
+          if ((await this.load()).changed) {
             onChange();
           }
         } catch (e) {
