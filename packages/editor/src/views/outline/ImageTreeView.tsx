@@ -26,7 +26,7 @@ function buildTreeViewItem(
   parent?: ImageTreeViewItem
 ): ImageTreeViewItem {
   const treeViewItem: ImageTreeViewItem = {
-    key: entry.path,
+    key: entry.id,
     parent,
     entry,
     children: [],

@@ -23,6 +23,10 @@ export class Image {
     );
   }
 
+  get id(): string {
+    return this.hash;
+  }
+
   get filePath(): string {
     return this.filePath;
   }
@@ -76,6 +80,7 @@ export class ImageManager {
     const imgElem = await imageFromURL(url);
 
     const image: Data.Image = {
+      filePath: `images/${hash.slice(0, 8)}.png`,
       width: imgElem.width,
       height: imgElem.height,
       url,

@@ -2,10 +2,12 @@ import { observable } from "mobx";
 
 export interface PathTreeModelTarget {
   filePath: string;
+  id: string;
 }
 
 export interface PathTreeModelFolderItem<T extends PathTreeModelTarget> {
   type: "directory";
+  id: string;
   path: string;
   name: string;
   children: PathTreeModelItem<T>[];
@@ -13,6 +15,7 @@ export interface PathTreeModelFolderItem<T extends PathTreeModelTarget> {
 
 export interface PathTreeModelFileItem<T extends PathTreeModelTarget> {
   type: "file";
+  id: string;
   path: string;
   name: string;
   target: T;
@@ -27,6 +30,7 @@ function buildTree<T extends PathTreeModelTarget>(
 ): PathTreeModelFolderItem<T> {
   const root: PathTreeModelFolderItem<T> = {
     type: "directory",
+    id: "",
     name: "",
     path: "",
     children: [],
@@ -47,6 +51,7 @@ function buildTree<T extends PathTreeModelTarget>(
     const parent = mkdirp(segments.slice(0, -1));
     const dir: PathTreeModelFolderItem<T> = {
       type: "directory",
+      id: segments.join("/"),
       name: segments[segments.length - 1],
       path: segments.join("/"),
       children: [],
@@ -64,6 +69,7 @@ function buildTree<T extends PathTreeModelTarget>(
 
     const item: PathTreeModelFileItem<T> = {
       type: "file",
+      id: target.id,
       name: segments[segments.length - 1],
       path: target.filePath,
       target,
