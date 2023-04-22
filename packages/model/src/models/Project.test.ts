@@ -16,7 +16,7 @@ describe(Project.name, () => {
 
       expect([...project.nodes.data.keys()]).toMatchSnapshot();
       expect([...project.selectables.stylesData.keys()]).toMatchSnapshot();
-      expect(project.imageManager.images.toJSON()).toMatchSnapshot();
+      expect(project.imageManager.data.toJSON()).toMatchSnapshot();
       expect(project.componentURLs).toMatchSnapshot();
       expect(project.toJSON()).toEqual(projectJSON);
     });

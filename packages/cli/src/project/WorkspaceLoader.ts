@@ -223,7 +223,7 @@ export class WorkspaceLoader {
       const loader = new ProjectLoader(existingProject?.project);
       loader.load(pages);
       for (const [key, image] of images) {
-        loader.project.imageManager.images.set(key, image);
+        loader.project.imageManager.data.set(key, image);
       }
 
       if (isEqual(pages, existingProject?.pages ?? new Map())) {
@@ -288,7 +288,7 @@ export class WorkspaceLoader {
           project.project.toJSON()
         );
 
-        for (const [hash, image] of project.project.imageManager.images) {
+        for (const [hash, image] of project.project.imageManager.data) {
           if (!usedImageHashes.has(hash)) {
             continue;
           }

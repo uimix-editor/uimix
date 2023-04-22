@@ -5,13 +5,34 @@ import * as Data from "../data/v1";
 import { getURLSafeBase64Hash } from "@uimix/foundation/src/utils/Hash";
 import { compact } from "lodash-es";
 
+export class Image {
+  constructor(manager: ImageManager, filePath: string) {
+    this.manager = manager;
+    this.filePath = filePath;
+  }
+
+  get data(): Data.Image {
+    return (
+      this.manager.project.data.images.get(this.filePath) ?? {
+        width: 0,
+        height: 0,
+        url: "",
+        type: "image/png",
+      }
+    );
+  }
+
+  readonly manager: ImageManager;
+  readonly filePath: string;
+}
+
 export class ImageManager {
   constructor(project: Project) {
     this.project = project;
   }
 
   readonly project: Project;
-  get images(): ObservableYMap<Data.Image> {
+  get data(): ObservableYMap<Data.Image> {
     return ObservableYMap.get(this.project.data.images);
   }
 
@@ -31,7 +52,7 @@ export class ImageManager {
 
     const hash = await getURLSafeBase64Hash(buffer);
 
-    const existing = this.images.get(hash);
+    const existing = this.data.get(hash);
     if (existing) {
       return [hash, existing];
     }
@@ -51,12 +72,12 @@ export class ImageManager {
       type,
     };
 
-    this.images.set(hash, image);
+    this.data.set(hash, image);
     return [hash, image];
   }
 
   get(hashBase64: string): Data.Image | undefined {
-    return this.images.get(hashBase64);
+    return this.data.get(hashBase64);
   }
 
   async getWithDataURL(hashBase64: string): Promise<Data.Image | undefined> {
@@ -74,7 +95,7 @@ export class ImageManager {
   }
 
   has(hashBase64: string): boolean {
-    return this.images.has(hashBase64);
+    return this.data.has(hashBase64);
   }
 
   async uploadImages(
