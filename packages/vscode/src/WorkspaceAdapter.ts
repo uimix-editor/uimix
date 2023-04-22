@@ -20,6 +20,7 @@ class VSCodeFileAccess implements FileAccess {
   }
 
   watch(cwd: string, patterns: string[], onChange: () => void): () => void {
+    // TODO: should use rootFolder instead of cwd?
     const watcher = vscode.workspace.createFileSystemWatcher(
       new vscode.RelativePattern(cwd, `**/{${patterns.join(",")},}`)
     );
@@ -38,6 +39,7 @@ class VSCodeFileAccess implements FileAccess {
 
   async glob(cwd: string, patterns: string[]): Promise<string[]> {
     const urls = await vscode.workspace.findFiles(
+      // TODO: should use rootFolder instead of cwd?
       new vscode.RelativePattern(cwd, `**/{${patterns.join(",")},}`),
       // TODO: configure excludes
       "**/node_modules/**"
