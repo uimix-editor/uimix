@@ -1,5 +1,5 @@
 import * as vscode from "vscode";
-import { WorkspaceData } from "./WorkspaceData";
+import { WorkspaceAdapter } from "./WorkspaceAdapter";
 import { ProjectData } from "@uimix/model/src/collaborative";
 import {
   IEditorToVSCodeRPCHandler,
@@ -37,24 +37,24 @@ const debouncedUpdate = (
 export class CustomDocument implements vscode.CustomDocument {
   constructor(
     context: vscode.ExtensionContext,
-    workspaceData: WorkspaceData,
+    workspaceAdapter: WorkspaceAdapter,
     uri: vscode.Uri
   ) {
     this.context = context;
-    this.workspaceData = workspaceData;
+    this.workspaceAdapter = workspaceAdapter;
     this.uri = uri;
   }
 
   readonly context: vscode.ExtensionContext;
-  readonly workspaceData: WorkspaceData;
+  readonly workspaceAdapter: WorkspaceAdapter;
   readonly uri: vscode.Uri;
 
   get data(): ProjectData {
-    return this.workspaceData.getDataForFile(this.uri);
+    return this.workspaceAdapter.getDataForFile(this.uri);
   }
 
   get pageID(): string {
-    return this.workspaceData.pageIDForFile(this.uri);
+    return this.workspaceAdapter.pageIDForFile(this.uri);
   }
 
   dispose(): void {}
@@ -70,7 +70,7 @@ export class CustomDocument implements vscode.CustomDocument {
 
     let unsubscribeDoc: (() => void) | undefined;
 
-    const projectData = this.workspaceData.getDataForFile(this.uri);
+    const projectData = this.workspaceAdapter.getDataForFile(this.uri);
 
     const rpc = new RPC<IVSCodeToEditorRPCHandler, IEditorToVSCodeRPCHandler>(
       {
@@ -114,9 +114,11 @@ export class CustomDocument implements vscode.CustomDocument {
       }
     );
 
-    const unsubscribeAssetChanges = this.workspaceData.onDidChangeCodeAssets(
+    const unsubscribeAssetChanges = this.workspaceAdapter.onDidChangeCodeAssets(
       async (projectPath) => {
-        if (projectPath !== this.workspaceData.projectPathForFile(this.uri)) {
+        if (
+          projectPath !== this.workspaceAdapter.projectPathForFile(this.uri)
+        ) {
           return;
         }
 
@@ -135,7 +137,7 @@ export class CustomDocument implements vscode.CustomDocument {
   }
 
   private readonly saveDebounced = debounce(async () => {
-    await this.workspaceData.save(this.uri);
+    await this.workspaceAdapter.save(this.uri);
     console.log("save");
   }, 500);
 
@@ -147,7 +149,7 @@ export class CustomDocument implements vscode.CustomDocument {
       ].map((assetName) =>
         vscode.Uri.file(
           path.join(
-            this.workspaceData.rootFolder.uri.fsPath,
+            this.workspaceAdapter.rootFolder.uri.fsPath,
             codeAssetsDestination.directory,
             assetName
           )

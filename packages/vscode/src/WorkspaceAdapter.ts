@@ -72,7 +72,7 @@ class VSCodeFileAccess implements FileAccess {
   }
 }
 
-export class WorkspaceData {
+export class WorkspaceAdapter {
   static async load(rootFolder: vscode.WorkspaceFolder) {
     const workspaceIO = new WorkspaceIO(new VSCodeFileAccess(rootFolder));
     const result = await workspaceIO.load();
@@ -85,7 +85,7 @@ export class WorkspaceData {
       vscode.window.showErrorMessage(message);
     }
 
-    return new WorkspaceData(rootFolder, workspaceIO);
+    return new WorkspaceAdapter(rootFolder, workspaceIO);
   }
 
   constructor(rootFolder: vscode.WorkspaceFolder, workspaceIO: WorkspaceIO) {
