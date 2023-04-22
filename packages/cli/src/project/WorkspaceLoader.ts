@@ -113,8 +113,17 @@ export class WorkspaceLoader {
     }
 
     let changed = false;
-
     for (const [projectPath, filePaths] of filePathsForProject) {
+      changed = changed || (await this.loadProject(projectPath, filePaths));
+    }
+    return changed;
+  }
+
+  private async loadProject(
+    projectPath: string,
+    filePaths: string[]
+  ): Promise<boolean> {
+    try {
       let manifest: ProjectManifestJSON = {};
 
       const manifestPath = path.join(projectPath, this.uimixProjectFile);
@@ -142,29 +151,37 @@ export class WorkspaceLoader {
         // TODO: reload changed files only
 
         if (filePath.endsWith(".uimix")) {
-          const pageText = (
-            await this.fileAccess.readFile(filePath)
-          ).toString();
-          const pageNode = loadFromJSXFile(pageText);
-          const pageName = path
-            .relative(projectPath, filePath)
-            .replace(/\.uimix$/, "");
-          pages.set(pageName, pageNode);
+          try {
+            const pageText = (
+              await this.fileAccess.readFile(filePath)
+            ).toString();
+            const pageNode = loadFromJSXFile(pageText);
+            const pageName = path
+              .relative(projectPath, filePath)
+              .replace(/\.uimix$/, "");
+            pages.set(pageName, pageNode);
+          } catch (e) {
+            console.warn("cannot load page", filePath, e);
+          }
         } else {
-          // TODO: lookup specific directories only
-          const imageData = await this.fileAccess.readFile(filePath);
-          const hash = await getURLSafeBase64Hash(imageData);
-          const mimeType = mime.lookup(filePath) || "image/png";
-          const size = sizeOf(imageData);
+          try {
+            // TODO: lookup specific directories only
+            const imageData = await this.fileAccess.readFile(filePath);
+            const hash = await getURLSafeBase64Hash(imageData);
+            const mimeType = mime.lookup(filePath) || "image/png";
+            const size = sizeOf(imageData);
 
-          const image: Image = {
-            width: size.width ?? 0,
-            height: size.height ?? 0,
-            type: mimeType as ImageType,
-            url: `data:${mimeType};base64,${imageData.toString("base64")}`,
-          };
-          images.set(hash, image);
-          imagePaths.set(hash, filePath);
+            const image: Image = {
+              width: size.width ?? 0,
+              height: size.height ?? 0,
+              type: mimeType as ImageType,
+              url: `data:${mimeType};base64,${imageData.toString("base64")}`,
+            };
+            images.set(hash, image);
+            imagePaths.set(hash, filePath);
+          } catch (e) {
+            console.warn("cannot load image", filePath, e);
+          }
         }
       }
 
@@ -176,8 +193,8 @@ export class WorkspaceLoader {
         loader.project.imageManager.images.set(key, image);
       }
 
-      if (!isEqual(pages, existingProject?.pages ?? new Map())) {
-        changed = true;
+      if (isEqual(pages, existingProject?.pages ?? new Map())) {
+        return false;
       }
 
       this.projects.set(projectPath, {
@@ -186,9 +203,11 @@ export class WorkspaceLoader {
         pages,
         imagePaths,
       });
+      return true;
+    } catch (e) {
+      console.warn("cannot load project", projectPath, e);
+      return false;
     }
-
-    return changed;
   }
 
   private isSaving = false;
