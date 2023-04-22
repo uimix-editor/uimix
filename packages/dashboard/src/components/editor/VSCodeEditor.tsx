@@ -131,7 +131,7 @@ const VSCodeEditor: React.FC = () => {
       "://",
       // TODO: use unique ID for subdomain?
       `://local.`
-    ) + "?embed=true&uiScaling=0.75&fontSize=11&narrowMode=true";
+    ) + "?embed=true&uiScaling=0.75&fontSize=11&narrowMode=false";
 
   return (
     <div className="text-neutral-800 text-xs">
