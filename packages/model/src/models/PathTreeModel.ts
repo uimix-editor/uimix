@@ -3,15 +3,15 @@ export interface PathTreeModelTarget {
   filePath: string;
 }
 
-export interface FolderItem<T extends PathTreeModelTarget> {
+export interface PathTreeModelFolderItem<T extends PathTreeModelTarget> {
   type: "directory";
   id: string;
   path: string;
   name: string;
-  children: Item<T>[];
+  children: PathTreeModelItem<T>[];
 }
 
-export interface FileItem<T extends PathTreeModelTarget> {
+export interface PathTreeModelFileItem<T extends PathTreeModelTarget> {
   type: "file";
   id: string;
   path: string;
@@ -19,20 +19,24 @@ export interface FileItem<T extends PathTreeModelTarget> {
   target: T;
 }
 
-export type Item<T extends PathTreeModelTarget> = FolderItem<T> | FileItem<T>;
+export type PathTreeModelItem<T extends PathTreeModelTarget> =
+  | PathTreeModelFolderItem<T>
+  | PathTreeModelFileItem<T>;
 
-function build<T extends PathTreeModelTarget>(targets: T[]): FolderItem<T> {
-  const root: FolderItem<T> = {
+function buildTree<T extends PathTreeModelTarget>(
+  targets: T[]
+): PathTreeModelFolderItem<T> {
+  const root: PathTreeModelFolderItem<T> = {
     type: "directory",
     id: "",
     name: "",
     path: "",
     children: [],
   };
-  const parents = new Map<string, FolderItem<T>>();
+  const parents = new Map<string, PathTreeModelFolderItem<T>>();
   parents.set("", root);
 
-  const mkdirp = (segments: string[]): FolderItem<T> => {
+  const mkdirp = (segments: string[]): PathTreeModelFolderItem<T> => {
     if (segments.length === 0) {
       return root;
     }
@@ -43,7 +47,7 @@ function build<T extends PathTreeModelTarget>(targets: T[]): FolderItem<T> {
     }
 
     const parent = mkdirp(segments.slice(0, -1));
-    const dir: FolderItem<T> = {
+    const dir: PathTreeModelFolderItem<T> = {
       type: "directory",
       id: segments.join("/"),
       name: segments[segments.length - 1],
@@ -61,7 +65,7 @@ function build<T extends PathTreeModelTarget>(targets: T[]): FolderItem<T> {
     const segments = target.filePath.split("/");
     const parent = mkdirp(segments.slice(0, -1));
 
-    const item: FileItem<T> = {
+    const item: PathTreeModelFileItem<T> = {
       type: "file",
       id: target.id,
       name: segments[segments.length - 1],
@@ -83,34 +87,29 @@ function targetsForPath<T extends PathTreeModelTarget>(
   );
 }
 
-export const PathHierarchy = {
-  build,
-  targetsForPath,
-};
-
-interface Delegate<T extends PathTreeModelTarget> {
+interface PathTreeModelDelegate<T extends PathTreeModelTarget> {
   getTargets: () => T[];
   delete(target: T): void;
   rename(target: T, newName: string): void;
 }
 
 export class PathTreeModel<T extends PathTreeModelTarget> {
-  constructor(delegate: Delegate<T>) {
+  constructor(delegate: PathTreeModelDelegate<T>) {
     this.delegate = delegate;
   }
 
-  private delegate: Delegate<T>;
+  private delegate: PathTreeModelDelegate<T>;
 
   get targets(): T[] {
     return this.delegate.getTargets();
   }
 
-  get root(): FolderItem<T> {
-    return build(this.targets);
+  get root(): PathTreeModelFolderItem<T> {
+    return buildTree(this.targets);
   }
 
   delete(path: string) {
-    for (const target of PathHierarchy.targetsForPath(this.targets, path)) {
+    for (const target of targetsForPath(this.targets, path)) {
       this.delegate.delete(target);
     }
   }
@@ -120,7 +119,7 @@ export class PathTreeModel<T extends PathTreeModelTarget> {
       return;
     }
 
-    for (const target of PathHierarchy.targetsForPath(this.targets, path)) {
+    for (const target of targetsForPath(this.targets, path)) {
       const newName = newPath + target.filePath.slice(path.length);
       this.delegate.rename(target, newName);
     }
