@@ -1,7 +1,7 @@
 import { computed, makeObservable, observable } from "mobx";
 import * as Y from "yjs";
 import * as Data from "@uimix/model/src/data/v1";
-import { getPageID, usedImageHashesInStyle } from "@uimix/model/src/data/util";
+import { usedImageHashesInStyle } from "@uimix/model/src/data/util";
 import {
   Project,
   Page,
@@ -301,7 +301,6 @@ export class ProjectState {
   renamePagePath(path: string, newPath: string) {
     const oldCurrent = this.page;
     const oldToNew = this.pageTreeModel.rename(path, newPath);
-    console.log(path, newPath);
 
     if (oldCurrent) {
       const newCurrent = oldToNew.get(oldCurrent);
