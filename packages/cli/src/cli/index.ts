@@ -3,20 +3,20 @@ import { generateCode } from "../compiler/generateCode";
 import * as fs from "fs";
 import * as path from "path";
 import mkdirp from "mkdirp";
-import { WorkspaceLoader } from "../project/WorkspaceLoader";
+import { WorkspaceIO } from "../project/WorkspaceIO";
 import { NodeFileAccess } from "../project/NodeFileAccess";
 import { buildCodeAssets } from "../codeAssets/build";
 
-async function compileProject(loader: WorkspaceLoader) {
+async function compileProject(workspaceIO: WorkspaceIO) {
   const outFiles = await generateCode(
-    loader.rootPath,
-    loader.rootProject.manifest,
-    loader.rootProject.project.toJSON(),
-    loader.rootProject.imagePaths
+    workspaceIO.rootPath,
+    workspaceIO.rootProject.manifest,
+    workspaceIO.rootProject.project.toJSON(),
+    workspaceIO.rootProject.imagePaths
   );
 
   for (const outFile of outFiles) {
-    const outPath = path.join(loader.rootPath, outFile.filePath);
+    const outPath = path.join(workspaceIO.rootPath, outFile.filePath);
     const outPathDir = path.dirname(outPath);
     mkdirp.sync(outPathDir);
     fs.writeFileSync(outPath, outFile.content);
@@ -29,14 +29,14 @@ async function compileCommand(
     watch?: boolean;
   }
 ): Promise<void> {
-  const loader = await WorkspaceLoader.load(new NodeFileAccess(rootPath));
+  const workspaceIO = await WorkspaceIO.load(new NodeFileAccess(rootPath));
 
   if (options.watch) {
-    loader.watch(() => compileProject(loader));
+    workspaceIO.watch(() => compileProject(workspaceIO));
   }
 
-  await buildCodeAssets(rootPath, loader.rootProject.manifest, options);
-  await compileProject(loader);
+  await buildCodeAssets(rootPath, workspaceIO.rootProject.manifest, options);
+  await compileProject(workspaceIO);
 }
 
 const cli = cac("uimix");

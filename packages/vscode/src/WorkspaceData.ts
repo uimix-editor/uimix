@@ -1,5 +1,5 @@
 import * as vscode from "vscode";
-import { WorkspaceLoader } from "uimix/src/project/WorkspaceLoader";
+import { WorkspaceIO } from "uimix/src/project/WorkspaceIO";
 import { FileAccess, Stats } from "uimix/src/project/FileAccess";
 import { ProjectData } from "@uimix/model/src/collaborative";
 import * as path from "path";
@@ -74,8 +74,8 @@ class VSCodeFileAccess implements FileAccess {
 
 export class WorkspaceData {
   static async load(rootFolder: vscode.WorkspaceFolder) {
-    const loader = new WorkspaceLoader(new VSCodeFileAccess(rootFolder));
-    const result = await loader.load();
+    const workspaceIO = new WorkspaceIO(new VSCodeFileAccess(rootFolder));
+    const result = await workspaceIO.load();
     if (result.problems.length) {
       const message =
         `Error loading workspace:\n` +
@@ -85,14 +85,14 @@ export class WorkspaceData {
       vscode.window.showErrorMessage(message);
     }
 
-    return new WorkspaceData(rootFolder, loader);
+    return new WorkspaceData(rootFolder, workspaceIO);
   }
 
-  constructor(rootFolder: vscode.WorkspaceFolder, loader: WorkspaceLoader) {
+  constructor(rootFolder: vscode.WorkspaceFolder, workspaceIO: WorkspaceIO) {
     this.rootFolder = rootFolder;
-    this.loader = loader;
+    this.workspaceIO = workspaceIO;
     this.disposables.push({
-      dispose: loader.watch(() => {}),
+      dispose: workspaceIO.watch(() => {}),
     });
 
     this.codeAssetsWatcher = vscode.workspace.createFileSystemWatcher(
@@ -118,37 +118,39 @@ export class WorkspaceData {
   }
 
   readonly rootFolder: vscode.WorkspaceFolder;
-  readonly loader: WorkspaceLoader;
+  readonly workspaceIO: WorkspaceIO;
 
   readonly codeAssetsWatcher: vscode.FileSystemWatcher;
   private readonly _onDidChangeCodeAssets = new vscode.EventEmitter<string>();
   readonly onDidChangeCodeAssets = this._onDidChangeCodeAssets.event;
 
   getDataForProject(projectPath: string): ProjectData {
-    return this.loader.getOrCreateProject(projectPath).project.data;
+    return this.workspaceIO.getOrCreateProject(projectPath).project.data;
   }
 
   getDataForFile(uri: vscode.Uri): ProjectData {
-    return this.getDataForProject(this.loader.projectPathForFile(uri.fsPath));
+    return this.getDataForProject(
+      this.workspaceIO.projectPathForFile(uri.fsPath)
+    );
   }
 
   pageIDForFile(uri: vscode.Uri): string {
     // Important TODO: fix paths in Windows!!
     const relativePath = path.relative(
-      this.loader.projectPathForFile(uri.fsPath),
+      this.workspaceIO.projectPathForFile(uri.fsPath),
       uri.fsPath
     );
     return getPageID(relativePath.replace(/\.uimix$/, ""));
   }
 
   projectPathForFile(uri: vscode.Uri): string {
-    return this.loader.projectPathForFile(uri.fsPath);
+    return this.workspaceIO.projectPathForFile(uri.fsPath);
   }
 
   async save(uri: vscode.Uri) {
-    const projectPath = this.loader.projectPathForFile(uri.fsPath);
+    const projectPath = this.workspaceIO.projectPathForFile(uri.fsPath);
     try {
-      await this.loader.save(projectPath);
+      await this.workspaceIO.save(projectPath);
     } catch (e) {
       vscode.window.showErrorMessage(`Error saving project:\n${e}`);
     }

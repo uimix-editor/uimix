@@ -7,9 +7,9 @@ import { mkdirpSync } from "mkdirp";
 import { Project } from "@uimix/model/src/models";
 import { ProjectEmitter } from "@uimix/model/src/file";
 import { NodeFileAccess } from "./NodeFileAccess";
-import { WorkspaceLoader } from "./WorkspaceLoader";
+import { WorkspaceIO } from "./WorkspaceIO";
 
-describe(WorkspaceLoader.name, () => {
+describe(WorkspaceIO.name, () => {
   let tmpObj: tmp.DirResult;
 
   beforeEach(async () => {
@@ -50,23 +50,23 @@ describe(WorkspaceLoader.name, () => {
     const innerProjectPath = tmpObj.name + "/demo-project/inner";
     const deepInnerProjectPath = tmpObj.name + "/demo-project/inner/inner";
 
-    const loader = new WorkspaceLoader(
+    const workspaceIO = new WorkspaceIO(
       new NodeFileAccess(tmpObj.name + "/demo-project")
     );
-    loader.rootProject.project = project;
-    loader.projects.set(innerProjectPath, {
+    workspaceIO.rootProject.project = project;
+    workspaceIO.projects.set(innerProjectPath, {
       manifest: {},
       project: innerProject,
       pages: new Map(),
       imagePaths: new Map(),
     });
-    loader.projects.set(deepInnerProjectPath, {
+    workspaceIO.projects.set(deepInnerProjectPath, {
       manifest: {},
       project: deepInnerProject,
       pages: new Map(),
       imagePaths: new Map(),
     });
-    await loader.save();
+    await workspaceIO.save();
 
     fs.writeFileSync(tmpObj.name + "/demo-project/inner/package.json", "{}");
     fs.writeFileSync(
@@ -75,10 +75,12 @@ describe(WorkspaceLoader.name, () => {
     );
 
     expect(
-      loader.projectPathForFile(tmpObj.name + "/demo-project/src/page1.uimix")
+      workspaceIO.projectPathForFile(
+        tmpObj.name + "/demo-project/src/page1.uimix"
+      )
     ).toEqual(tmpObj.name + "/demo-project");
     expect(
-      loader.projectPathForFile(
+      workspaceIO.projectPathForFile(
         tmpObj.name + "/demo-project/inner/src/inner1.uimix"
       )
     ).toEqual(tmpObj.name + "/demo-project/inner");
@@ -101,7 +103,7 @@ describe(WorkspaceLoader.name, () => {
     );
     expect(innerPage1File).toMatchSnapshot();
 
-    const workspaceIO2 = await WorkspaceLoader.load(
+    const workspaceIO2 = await WorkspaceIO.load(
       new NodeFileAccess(tmpObj.name + "/demo-project")
     );
 
@@ -127,11 +129,11 @@ describe(WorkspaceLoader.name, () => {
     const innerPage1 = innerProject.pages.create("src/inner1");
     innerPage1.node.append([innerProject.nodes.create("frame", "inner")]);
 
-    const loader = new WorkspaceLoader(
+    const workspaceIO = new WorkspaceIO(
       new NodeFileAccess(tmpObj.name + "/demo-project")
     );
-    loader.rootProject.project = project;
-    loader.projects.set(path.resolve(loader.rootPath, "inner"), {
+    workspaceIO.rootProject.project = project;
+    workspaceIO.projects.set(path.resolve(workspaceIO.rootPath, "inner"), {
       manifest: {},
       project: innerProject,
       pages: new Map(),
@@ -139,11 +141,11 @@ describe(WorkspaceLoader.name, () => {
     });
     mkdirpSync(tmpObj.name + "/demo-project/inner");
     fs.writeFileSync(tmpObj.name + "/demo-project/inner/package.json", "{}");
-    await loader.save();
+    await workspaceIO.save();
     await new Promise((resolve) => setTimeout(resolve, 500));
 
     let watchCount = 0;
-    loader.watch(() => {
+    workspaceIO.watch(() => {
       watchCount++;
     });
     await new Promise((resolve) => setTimeout(resolve, 500));
@@ -151,7 +153,7 @@ describe(WorkspaceLoader.name, () => {
 
     console.log("save");
     // saves not cause watch
-    await loader.save();
+    await workspaceIO.save();
     await new Promise((resolve) => setTimeout(resolve, 500));
     expect(watchCount).toBe(0);
 
@@ -167,7 +169,7 @@ describe(WorkspaceLoader.name, () => {
     expect(watchCount).toBe(2);
 
     expect(
-      loader.rootProject.project.pages.all.map((page) => page.filePath)
+      workspaceIO.rootProject.project.pages.all.map((page) => page.filePath)
     ).toEqual(["src/page2"]);
   });
 });

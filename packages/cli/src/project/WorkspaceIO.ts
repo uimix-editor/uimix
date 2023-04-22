@@ -36,10 +36,10 @@ interface LoadResult {
 }
 
 // Important TODO: fix paths in Windows!!
-export class WorkspaceLoader {
+export class WorkspaceIO {
   static async load(fileAccess: FileAccess) {
-    const loader = new WorkspaceLoader(fileAccess);
-    const result = await loader.load();
+    const workspaceIO = new WorkspaceIO(fileAccess);
+    const result = await workspaceIO.load();
     if (result.problems.length) {
       throw new Error(
         `Problems loading workspace:\n${result.problems
@@ -49,7 +49,7 @@ export class WorkspaceLoader {
           .join("\n")}`
       );
     }
-    return loader;
+    return workspaceIO;
   }
 
   constructor(fileAccess: FileAccess) {
