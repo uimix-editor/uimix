@@ -78,7 +78,7 @@ export class File extends TypedEmitter<{
       return;
     }
 
-    this.projectIO.rootProject.project.loadJSON(this.data);
+    this.projectIO.project.project.loadJSON(this.data);
     await this.projectIO.save();
     app.addRecentDocument(this.projectIO.rootPath);
     this.savedData = this.data;
@@ -97,7 +97,7 @@ export class File extends TypedEmitter<{
     }
     console.log("newPath", newPath);
 
-    this.projectIO = new ProjectIO(new NodeFileAccess(newPath));
+    this.projectIO = new ProjectIO(new NodeFileAccess(), newPath);
     await this.save();
     this.watch();
 
@@ -118,7 +118,7 @@ export class File extends TypedEmitter<{
   }
 
   static async openFilePath(filePath: string) {
-    const projectIO = await ProjectIO.load(new NodeFileAccess(filePath));
+    const projectIO = await ProjectIO.load(new NodeFileAccess(), filePath);
     return new File(projectIO);
   }
 
@@ -134,7 +134,7 @@ export class File extends TypedEmitter<{
     }
 
     this.watchDisposer = loader.watch(() => {
-      const json = loader.rootProject.project.toJSON();
+      const json = loader.project.project.toJSON();
       console.log("changed");
       if (this.edited) {
         // TODO: warn
