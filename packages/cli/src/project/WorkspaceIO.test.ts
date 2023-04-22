@@ -1,9 +1,7 @@
 import { describe, it, expect, beforeEach, afterEach } from "vitest";
 import * as fs from "fs";
-import * as path from "path";
 import shell from "shelljs";
 import tmp from "tmp";
-import { mkdirpSync } from "mkdirp";
 import { Project } from "@uimix/model/src/models";
 import { ProjectEmitter } from "@uimix/model/src/file";
 import { NodeFileAccess } from "./NodeFileAccess";
