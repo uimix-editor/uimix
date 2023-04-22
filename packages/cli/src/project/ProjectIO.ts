@@ -37,6 +37,8 @@ interface LoadResult {
 
 // Important TODO: fix paths in Windows!!
 export class ProjectIO {
+  static readonly projectBoundary = "package.json"; // TODO: other project boundaries
+
   static async load(fileAccess: FileAccess, rootPath: string) {
     const projectIO = new ProjectIO(fileAccess, rootPath);
     const result = await projectIO.load();
@@ -63,7 +65,6 @@ export class ProjectIO {
   readonly filePattern = "*.uimix";
   readonly imagePatterns = ["*.png", "*.jpg", "*.jpeg"];
   readonly uimixProjectFile = "uimix.json";
-  readonly projectBoundary = "package.json"; // TODO: other project boundaries
 
   content: ProjectIOContent = {
     manifest: {},
@@ -76,7 +77,7 @@ export class ProjectIO {
     // filter out files in sub-projects
 
     const projectBoundaryFilePaths = await this.fileAccess.glob(this.rootPath, [
-      this.projectBoundary,
+      ProjectIO.projectBoundary,
     ]);
 
     const projectPaths = projectBoundaryFilePaths
@@ -284,7 +285,7 @@ export class ProjectIO {
 
     return this.fileAccess.watch(
       this.rootPath,
-      [this.filePattern, this.projectBoundary],
+      [this.filePattern, ProjectIO.projectBoundary],
       async () => {
         try {
           if (this.isSaving) {

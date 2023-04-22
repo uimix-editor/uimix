@@ -111,7 +111,7 @@ export class WorkspaceAdapter {
       return fsPath;
     }
 
-    const packageJSONPath = path.join(fsPath, "package.json");
+    const packageJSONPath = path.join(fsPath, ProjectIO.projectBoundary);
 
     try {
       const stat = await vscode.workspace.fs.stat(
