@@ -1,3 +1,5 @@
+import { observable } from "mobx";
+
 export interface PathTreeModelTarget {
   id: string;
   filePath: string;
@@ -99,6 +101,8 @@ export class PathTreeModel<T extends PathTreeModelTarget> {
   }
 
   private delegate: PathTreeModelDelegate<T>;
+
+  readonly collapsedPaths = observable.set<string>();
 
   get targets(): T[] {
     return this.delegate.getTargets();

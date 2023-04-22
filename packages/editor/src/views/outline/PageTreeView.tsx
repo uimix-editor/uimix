@@ -34,7 +34,7 @@ function buildTreeViewItem(
 
   if (
     entry.type === "directory" &&
-    !projectState.collapsedPaths.has(entry.path)
+    !projectState.pageTreeModel.collapsedPaths.has(entry.path)
   ) {
     treeViewItem.children = entry.children.map((child) =>
       buildTreeViewItem(child, treeViewItem)
@@ -58,7 +58,7 @@ const PageRow = observer(
 
     const selected =
       entry.type === "file" && entry.target.id === projectState.page?.id;
-    const collapsed = projectState.collapsedPaths.has(entry.path);
+    const collapsed = projectState.pageTreeModel.collapsedPaths.has(entry.path);
 
     const onClick = action(() => {
       if (entry.type === "file") {
@@ -67,9 +67,9 @@ const PageRow = observer(
     });
     const onCollapsedChange = action((value: boolean) => {
       if (value) {
-        projectState.collapsedPaths.add(entry.path);
+        projectState.pageTreeModel.collapsedPaths.add(entry.path);
       } else {
-        projectState.collapsedPaths.delete(entry.path);
+        projectState.pageTreeModel.collapsedPaths.delete(entry.path);
       }
     });
 

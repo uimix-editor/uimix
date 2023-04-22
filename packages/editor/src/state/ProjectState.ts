@@ -274,8 +274,6 @@ export class ProjectState {
     },
   });
 
-  readonly collapsedPaths = observable.set<string>();
-
   openPage(page: Page) {
     this.pageID = page.id;
   }
