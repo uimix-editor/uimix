@@ -126,13 +126,7 @@ export const StyleProps: z.ZodType<StyleProps> =
     overrides: z.lazy(() => z.record(StyleProps)).optional(),
   });
 
-export interface SceneNode {
-  type: "frame" | "instance" | "text" | "svg" | "image" | "foreign";
-  props: { id: string; name: string } & StyleProps;
-  children: SceneNode[];
-}
-
-export const SceneNode: z.ZodType<SceneNode> = z.object({
+const SceneNodeBase = z.object({
   type: z.enum(["frame", "instance", "text", "svg", "image", "foreign"]),
   props: z.intersection(
     z.object({
@@ -141,8 +135,15 @@ export const SceneNode: z.ZodType<SceneNode> = z.object({
     }),
     StyleProps
   ),
+});
+type SceneNodeBase = z.infer<typeof SceneNodeBase>;
+
+export const SceneNode: z.ZodType<SceneNode> = SceneNodeBase.extend({
   children: z.lazy(() => z.array(SceneNode)),
 });
+export interface SceneNode extends SceneNodeBase {
+  children: SceneNode[];
+}
 
 export const VariantNode = z.object({
   type: z.literal("variant"),
