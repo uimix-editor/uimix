@@ -18,7 +18,7 @@ function formatTypeScript(text: string): string {
 
 describe(ProjectEmitter.name, () => {
   it("works", async () => {
-    const projectJSON = Data.ProjectJSON.parse(
+    const projectJSON = Data.Project.parse(
       JSON.parse(projectJSONFile as string)
     );
     const project = new Project();

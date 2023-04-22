@@ -7,7 +7,7 @@ import * as Data from "@uimix/model/src/data/v1";
 
 export async function buildCodeAssets(
   rootPath: string,
-  manifest: Data.ProjectManifestJSON,
+  manifest: Data.ProjectManifest,
   options: {
     watch?: boolean;
   }

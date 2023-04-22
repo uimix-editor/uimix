@@ -23,7 +23,7 @@ figma.ui.onmessage = async (msg: MessageToCode) => {
         "NONE",
         [0, 0]
       );
-      const clipboardJSON: Data.NodeClipboardData = {
+      const clipboardJSON: Data.NodeClipboard = {
         uimixClipboardVersion: "0.0.1",
         type: "nodes",
         images: Object.fromEntries(images),

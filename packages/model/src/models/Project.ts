@@ -49,11 +49,11 @@ export class Project {
     this.nodes.create("project", "project");
   }
 
-  toJSON(): Data.ProjectJSON {
+  toJSON(): Data.Project {
     return this.data.toJSON();
   }
 
-  loadJSON(json: Data.ProjectJSON) {
+  loadJSON(json: Data.Project) {
     this.data.loadJSON(json);
   }
 

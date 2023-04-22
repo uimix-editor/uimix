@@ -37,7 +37,7 @@ class SelectablePartialStyle extends PartialStyle {
   }
 
   readonly selectable: Selectable;
-  readonly data: ObjectData<Data.StyleJSON>;
+  readonly data: ObjectData<Data.Style>;
 }
 
 // a node or a inner node of an instance
@@ -595,7 +595,7 @@ export class Selectable {
     ];
   }
 
-  toJSON(): Data.SelectableJSON {
+  toJSON(): Data.Selectable {
     const originalNode = this.originalNode;
     const node = this.node;
 
@@ -614,7 +614,7 @@ export class Selectable {
     };
   }
 
-  static fromJSON(project: Project, json: Data.SelectableJSON): Selectable {
+  static fromJSON(project: Project, json: Data.Selectable): Selectable {
     const node = project.nodes.create(json.type);
     node.name = json.name;
     const selectable = node.selectable;
@@ -636,9 +636,7 @@ export class SelectableMap {
     this.project = project;
   }
 
-  get stylesData(): ObservableYMap<
-    Y.Map<Data.StyleJSON[keyof Data.StyleJSON]>
-  > {
+  get stylesData(): ObservableYMap<Y.Map<Data.Style[keyof Data.Style]>> {
     return ObservableYMap.get(this.project.data.styles);
   }
   get selectionData(): ObservableYMap<true> {
@@ -658,8 +656,8 @@ export class SelectableMap {
 // TODO generate correctly from instance contents
 export function selectablesToProjectJSON(
   selectables: Selectable[]
-): Data.ProjectJSON {
-  const nodeJSONs: Record<string, Data.NodeJSON> = {};
+): Data.Project {
+  const nodeJSONs: Record<string, Data.Node> = {};
   const styles: Record<string, Partial<IStyle>> = {};
 
   const addRecursively = (selectable: Selectable) => {

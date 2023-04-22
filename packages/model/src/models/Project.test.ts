@@ -7,7 +7,7 @@ import * as Data from "../data/v1";
 describe(Project.name, () => {
   describe("loadJSON", () => {
     it("works", async () => {
-      const projectJSON = Data.ProjectJSON.parse(
+      const projectJSON = Data.Project.parse(
         JSON.parse(projectJSONFile as string)
       );
 
@@ -24,7 +24,7 @@ describe(Project.name, () => {
 
   describe("toJSON", () => {
     it("works ", async () => {
-      const projectJSON = Data.ProjectJSON.parse(
+      const projectJSON = Data.Project.parse(
         JSON.parse(projectJSONFile as string)
       );
 

@@ -1,12 +1,12 @@
-import { NodeJSON, ProjectJSON, StyleJSON } from "../v1";
+import { Node, Project, Style } from "../v1";
 import { generateID } from "@uimix/foundation/src/utils/ID";
 
 // FIXME: importing generateID breaks Next.js build (so I created a separate file for this function)
 
-export function reassignNewIDs(data: ProjectJSON): ProjectJSON {
+export function reassignNewIDs(data: Project): Project {
   const idMap = new Map<string, string>();
 
-  const newNodes: Record<string, NodeJSON> = {};
+  const newNodes: Record<string, Node> = {};
   for (const [id, node] of Object.entries(data.nodes)) {
     const newID = id === "project" ? "project" : generateID();
     idMap.set(id, newID);
@@ -19,7 +19,7 @@ export function reassignNewIDs(data: ProjectJSON): ProjectJSON {
     }
   }
 
-  const newStyles: Record<string, Partial<StyleJSON>> = {};
+  const newStyles: Record<string, Partial<Style>> = {};
   for (const [id, style] of Object.entries(data.styles)) {
     const newStyle = { ...style };
     if (newStyle.mainComponent) {

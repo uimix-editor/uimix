@@ -9,12 +9,12 @@ import isSvg from "is-svg";
 export class Clipboard {
   static handler: ClipboardHandler = new DefaultClipboardHandler();
 
-  static async writeNodes(data: Data.NodeClipboardData) {
+  static async writeNodes(data: Data.NodeClipboard) {
     const text = JSON.stringify(data);
     await this.handler.set("text", text);
   }
 
-  static async readNodes(): Promise<Data.NodeClipboardData | undefined> {
+  static async readNodes(): Promise<Data.NodeClipboard | undefined> {
     const imageDataURL = await this.handler.get("image");
     if (imageDataURL) {
       const [hash] = await projectState.project.imageManager.insertDataURL(
@@ -65,7 +65,7 @@ export class Clipboard {
       }
 
       try {
-        return Data.NodeClipboardData.parse(JSON.parse(text));
+        return Data.NodeClipboard.parse(JSON.parse(text));
       } catch (e) {
         console.error(e);
         return;

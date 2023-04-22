@@ -7,7 +7,7 @@ import projectJSONFile from "./__fixtures__/project.uimixproject?raw";
 
 describe(selectablesToProjectJSON.name, () => {
   it("works", async () => {
-    const projectJSON = Data.ProjectJSON.parse(
+    const projectJSON = Data.Project.parse(
       JSON.parse(projectJSONFile as string)
     );
 

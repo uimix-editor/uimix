@@ -85,7 +85,7 @@ function getExternalModulePaths(components: Component[]): Set<string> {
 export class ReactGenerator {
   constructor(options: {
     rootPath: string;
-    manifest: Data.ProjectManifestJSON;
+    manifest: Data.ProjectManifest;
     page: Page;
     imagePaths: Map<string, string>;
     classNameGenerator: ClassNameGenerator;
@@ -108,7 +108,7 @@ export class ReactGenerator {
   }
 
   rootPath: string;
-  manifest: Data.ProjectManifestJSON;
+  manifest: Data.ProjectManifest;
   page: Page;
   imagePaths: Map<string, string>;
   classNameGenerator: ClassNameGenerator;

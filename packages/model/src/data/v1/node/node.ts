@@ -30,7 +30,7 @@ export const VariantCondition = z.union([
 
 export type VariantCondition = z.infer<typeof VariantCondition>;
 
-export const NodeJSON = z.object({
+export const Node = z.object({
   type: NodeType,
   name: z.string().optional(),
   condition: VariantCondition.optional(),
@@ -38,4 +38,4 @@ export const NodeJSON = z.object({
   index: z.number(),
 });
 
-export type NodeJSON = z.infer<typeof NodeJSON>;
+export type Node = z.infer<typeof Node>;

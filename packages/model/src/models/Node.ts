@@ -42,7 +42,7 @@ export class Node {
     this.project = project;
     this.nodeMap = project.nodes;
     this.id = id;
-    this.data = new ObjectData<Data.NodeJSON>(id, project.nodes.data);
+    this.data = new ObjectData<Data.Node>(id, project.nodes.data);
 
     makeObservable(this);
   }
@@ -50,7 +50,7 @@ export class Node {
   readonly project: Project;
   readonly nodeMap: NodeMap;
   readonly id: string;
-  readonly data: ObjectData<Data.NodeJSON>;
+  readonly data: ObjectData<Data.Node>;
 
   get sortKey(): NodeKey {
     return { index: this.index, id: this.id };
@@ -234,7 +234,7 @@ export class Node {
 
   /// JSON
 
-  toJSON(): Data.NodeJSON {
+  toJSON(): Data.Node {
     return {
       type: this.type,
       name: this.name,
@@ -244,7 +244,7 @@ export class Node {
     };
   }
 
-  loadJSON(json: Data.NodeJSON) {
+  loadJSON(json: Data.Node) {
     this.data.set({
       name: json.name,
       condition: json.condition,
@@ -327,7 +327,7 @@ export class NodeMap {
 
   readonly project: Project;
 
-  get data(): ObservableYMap<Y.Map<Data.NodeJSON[keyof Data.NodeJSON]>> {
+  get data(): ObservableYMap<Y.Map<Data.Node[keyof Data.Node]>> {
     return ObservableYMap.get(this.project.data.nodes);
   }
 
@@ -350,7 +350,7 @@ export class NodeMap {
   }
 
   create(type: Data.NodeType, id: string = generateID()): Node {
-    const data = new Y.Map<Data.NodeJSON[keyof Data.NodeJSON]>();
+    const data = new Y.Map<Data.Node[keyof Data.Node]>();
     data.set("type", type);
     data.set("index", 0);
     this.data.set(id, data);

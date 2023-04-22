@@ -10,7 +10,7 @@ import { NodeFileAccess } from "../../cli/src/project/NodeFileAccess";
 export class File extends TypedEmitter<{
   editedChange: (edited: boolean) => void;
   metadataChange: (metadata: DocumentMetadata) => void;
-  dataChange: (data: Data.ProjectJSON) => void;
+  dataChange: (data: Data.Project) => void;
 }> {
   constructor(loader?: WorkspaceLoader) {
     super();
@@ -55,17 +55,17 @@ export class File extends TypedEmitter<{
   loader?: WorkspaceLoader;
   edited = false;
 
-  private _data: Data.ProjectJSON;
-  get data(): Data.ProjectJSON {
+  private _data: Data.Project;
+  get data(): Data.Project {
     return this._data;
   }
-  setData(data: Data.ProjectJSON) {
+  setData(data: Data.Project) {
     this._data = data;
     this.edited = !compareProjectJSONs(this.savedData, this._data);
     this.emit("editedChange", this.edited);
   }
 
-  private savedData: Data.ProjectJSON;
+  private savedData: Data.Project;
 
   revert() {
     this.setData(this.savedData);

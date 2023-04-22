@@ -1,6 +1,6 @@
 import { z } from "zod";
-import { NodeJSON } from "./node/node.js";
-import { StyleJSON } from "./style/style.js";
+import { Node } from "./node/node.js";
+import { Style } from "./style/style.js";
 
 export const ColorToken = z.object({
   name: z.string(),
@@ -22,18 +22,18 @@ export const Image = z.object({
 
 export type Image = z.infer<typeof Image>;
 
-export const ProjectJSON = z.object({
+export const Project = z.object({
   // TODO: version
-  nodes: z.record(NodeJSON),
-  styles: z.record(StyleJSON.partial()),
+  nodes: z.record(Node),
+  styles: z.record(Style.partial()),
   componentURLs: z.array(z.string()),
   images: z.record(Image),
   colors: z.record(ColorToken),
 });
 
-export type ProjectJSON = z.infer<typeof ProjectJSON>;
+export type Project = z.infer<typeof Project>;
 
-export const ProjectManifestJSON = z.object({
+export const ProjectManifest = z.object({
   prebuiltAssets: z.array(z.string()).optional(),
   components: z
     .object({
@@ -42,4 +42,4 @@ export const ProjectManifestJSON = z.object({
     .optional(),
   designTokens: z.string().optional(),
 });
-export type ProjectManifestJSON = z.infer<typeof ProjectManifestJSON>;
+export type ProjectManifest = z.infer<typeof ProjectManifest>;

@@ -1,6 +1,6 @@
 import type * as Data from "@uimix/model/src/data/v1";
 
-type ProjectJSON = Data.ProjectJSON;
+type ProjectJSON = Data.Project;
 
 export type { ProjectJSON };
 

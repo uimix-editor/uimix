@@ -57,7 +57,7 @@ export async function importJSON() {
 
   if (!file) return;
   const data = await file.text();
-  const projectJSON = Data.ProjectJSON.parse(JSON.parse(data));
+  const projectJSON = Data.Project.parse(JSON.parse(data));
   projectJSON.images = await projectState.project.imageManager.uploadImages(
     projectJSON.images ?? {}
   );

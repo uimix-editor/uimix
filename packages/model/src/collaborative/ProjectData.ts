@@ -8,11 +8,11 @@ export class ProjectData {
 
   readonly doc: Y.Doc;
 
-  get nodes(): Y.Map<Y.Map<Data.NodeJSON[keyof Data.NodeJSON]>> {
+  get nodes(): Y.Map<Y.Map<Data.Node[keyof Data.Node]>> {
     return this.doc.getMap("nodes");
   }
 
-  get styles(): Y.Map<Y.Map<Data.StyleJSON[keyof Data.StyleJSON]>> {
+  get styles(): Y.Map<Y.Map<Data.Style[keyof Data.Style]>> {
     return this.doc.getMap("styles");
   }
 
@@ -43,13 +43,13 @@ export class ProjectData {
     });
   }
 
-  loadJSON(projectJSON: Data.ProjectJSON): void {
+  loadJSON(projectJSON: Data.Project): void {
     this.doc.transact(() => {
       this.clear();
 
       const nodes = this.nodes;
       for (const [id, json] of Object.entries(projectJSON.nodes)) {
-        const data = new Y.Map<Data.NodeJSON[keyof Data.NodeJSON]>();
+        const data = new Y.Map<Data.Node[keyof Data.Node]>();
         for (const [key, value] of Object.entries(json)) {
           data.set(key, value);
         }
@@ -58,7 +58,7 @@ export class ProjectData {
 
       const styles = this.styles;
       for (const [id, json] of Object.entries(projectJSON.styles)) {
-        const data = new Y.Map<Data.StyleJSON[keyof Data.StyleJSON]>();
+        const data = new Y.Map<Data.Style[keyof Data.Style]>();
         for (const [key, value] of Object.entries(json)) {
           data.set(key, value);
         }
@@ -85,8 +85,8 @@ export class ProjectData {
     });
   }
 
-  toJSON(): Data.ProjectJSON {
-    const json: Data.ProjectJSON = {
+  toJSON(): Data.Project {
+    const json: Data.Project = {
       nodes: this.nodes.toJSON(),
       styles: this.styles.toJSON(),
       componentURLs: this.componentURLs.toJSON() as string[],

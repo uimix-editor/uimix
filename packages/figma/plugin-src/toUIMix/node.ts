@@ -22,7 +22,7 @@ async function figmaToMacaron(
   node: SceneNode,
   parentLayout: BaseFrameMixin["layoutMode"],
   offset: [number, number]
-): Promise<Data.SelectableJSON | undefined> {
+): Promise<Data.Selectable | undefined> {
   // TODO: export hidden nodes as well
   if (!node.visible) {
     return;
@@ -134,7 +134,7 @@ export async function figmaNodesToMacaron(
   nodes: readonly SceneNode[],
   parentLayout: BaseFrameMixin["layoutMode"],
   offset: [number, number]
-): Promise<Data.SelectableJSON[]> {
+): Promise<Data.Selectable[]> {
   return compact(
     await Promise.all(
       nodes.map((child) => figmaToMacaron(images, child, parentLayout, offset))

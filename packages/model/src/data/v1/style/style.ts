@@ -8,7 +8,7 @@ import { SizeConstraint } from "./value/size.js";
 import { StackAlign, StackDirection, StackJustify } from "./value/stack.js";
 import { TextHorizontalAlign, TextVerticalAlign } from "./value/text.js";
 
-export const StyleJSON = z.object({
+export const Style = z.object({
   hidden: z.boolean(),
   locked: z.boolean(),
   position: z.object({
@@ -84,4 +84,4 @@ export const StyleJSON = z.object({
   tagName: z.union([z.string(), z.null()]),
 });
 
-export type StyleJSON = z.infer<typeof StyleJSON>;
+export type Style = z.infer<typeof Style>;

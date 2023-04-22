@@ -61,7 +61,7 @@ export class ProjectState {
   // MARK: Nodes
 
   loadDemoFile() {
-    const projectJSON = Data.ProjectJSON.parse(JSON.parse(demoFile));
+    const projectJSON = Data.Project.parse(JSON.parse(demoFile));
     this.project.loadJSON(projectJSON);
     this.project.componentURLs.push([
       "https://cdn.jsdelivr.net/gh/uimix-editor/uimix@ba0157d5/packages/sandbox/dist-components/components.js",
@@ -71,7 +71,7 @@ export class ProjectState {
     this.undoManager.clear();
   }
 
-  loadJSON(projectJSON: Data.ProjectJSON) {
+  loadJSON(projectJSON: Data.Project) {
     if (Object.keys(projectJSON.nodes).length) {
       this.project.loadJSON(projectJSON);
       const allPages = this.project.pages.all;
@@ -87,7 +87,7 @@ export class ProjectState {
     }
   }
 
-  async getNodeClipboardData(): Promise<Data.NodeClipboardData | undefined> {
+  async getNodeClipboardData(): Promise<Data.NodeClipboard | undefined> {
     const selection = this.selectedSelectables;
     if (selection.length === 0) {
       return undefined;
@@ -104,7 +104,7 @@ export class ProjectState {
 
     const imageHashes = new Set<string>();
 
-    const visit = (json: Data.SelectableJSON) => {
+    const visit = (json: Data.Selectable) => {
       for (const hash of usedImageHashesInStyle(json.style)) {
         imageHashes.add(hash);
       }
@@ -130,7 +130,7 @@ export class ProjectState {
     };
   }
 
-  async pasteNodeClipboardData(data: Data.NodeClipboardData) {
+  async pasteNodeClipboardData(data: Data.NodeClipboard) {
     const getInsertionTarget = () => {
       const defaultTarget = {
         parent: this.page?.node,
@@ -158,7 +158,7 @@ export class ProjectState {
       };
     };
 
-    const hydrateJSON = (json: Data.SelectableJSON): Selectable => {
+    const hydrateJSON = (json: Data.Selectable): Selectable => {
       const project = this.project;
       if (json.original?.type === "component") {
         // create instance
@@ -185,7 +185,7 @@ export class ProjectState {
           node.name = json.name;
           const selectable = node.selectable;
 
-          const loadOverride = (json: Data.SelectableJSON) => {
+          const loadOverride = (json: Data.Selectable) => {
             const idPath = json.id.split(":");
             idPath[0] = node.id;
             const selectable = project.selectables.get(idPath);

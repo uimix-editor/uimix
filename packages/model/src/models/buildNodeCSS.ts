@@ -2,7 +2,7 @@ import * as Data from "../data/v1";
 import * as CSS from "csstype";
 
 export function getLayoutType(
-  style: Data.StyleJSON
+  style: Data.Style
 ): Data.StackDirection | "grid" | undefined {
   if (style.layout === "flex") {
     return style.flexDirection;
@@ -14,7 +14,7 @@ export function getLayoutType(
 
 export function buildNodeCSS(
   nodeType: Data.NodeType,
-  style: Data.StyleJSON,
+  style: Data.Style,
   getColorToken: (id: string) => string,
   parentLayout?: Data.StackDirection | "grid"
 ): CSS.Properties {

@@ -10,8 +10,8 @@ import { ClassNameGenerator } from "./ClassNameGenerator.js";
 
 export async function generateCode(
   rootPath: string,
-  manifest: Data.ProjectManifestJSON,
-  projectJSON: Data.ProjectJSON,
+  manifest: Data.ProjectManifest,
+  projectJSON: Data.Project,
   imagePaths: Map<string, string>
 ): Promise<
   {

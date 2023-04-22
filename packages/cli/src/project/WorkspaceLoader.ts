@@ -18,7 +18,7 @@ import { dataUriToBuffer } from "data-uri-to-buffer";
 import * as mime from "mime-types";
 
 interface ProjectData {
-  manifest: Data.ProjectManifestJSON;
+  manifest: Data.ProjectManifest;
   project: Project;
   pages: Map<string, PageNode>;
   imagePaths: Map<string, string>; // hash to path
@@ -147,12 +147,12 @@ export class WorkspaceLoader {
     const problems: LoadProblem[] = [];
 
     try {
-      let manifest: Data.ProjectManifestJSON = {};
+      let manifest: Data.ProjectManifest = {};
 
       const manifestPath = path.join(projectPath, this.uimixProjectFile);
       if ((await this.fileAccess.stat(manifestPath))?.type === "file") {
         try {
-          manifest = Data.ProjectManifestJSON.parse(
+          manifest = Data.ProjectManifest.parse(
             JSON.parse(
               (
                 await this.fileAccess.readFile(
