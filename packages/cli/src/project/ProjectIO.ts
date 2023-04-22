@@ -97,26 +97,23 @@ export class ProjectIO {
     );
     filePaths.sort();
 
-    return this.loadProject(this.rootPath, filePaths);
+    return this.loadProject(filePaths);
   }
 
-  private async loadProject(
-    projectPath: string,
-    filePaths: string[]
-  ): Promise<LoadResult> {
+  private async loadProject(filePaths: string[]): Promise<LoadResult> {
     const problems: LoadProblem[] = [];
 
     try {
       let manifest: ProjectManifest = {};
 
-      const manifestPath = path.join(projectPath, this.uimixProjectFile);
+      const manifestPath = path.join(this.rootPath, this.uimixProjectFile);
       if ((await this.fileAccess.stat(manifestPath))?.type === "file") {
         try {
           manifest = ProjectManifest.parse(
             JSON.parse(
               (
                 await this.fileAccess.readFile(
-                  path.join(projectPath, this.uimixProjectFile)
+                  path.join(this.rootPath, this.uimixProjectFile)
                 )
               ).toString()
             )
@@ -143,7 +140,7 @@ export class ProjectIO {
             ).toString();
             const pageNode = loadFromJSXFile(pageText);
             const pageName = path
-              .relative(projectPath, filePath)
+              .relative(this.rootPath, filePath)
               .replace(/\.uimix$/, "");
             pages.set(pageName, pageNode);
           } catch (error) {
@@ -200,7 +197,7 @@ export class ProjectIO {
       };
     } catch (error) {
       problems.push({
-        filePath: projectPath,
+        filePath: this.rootPath,
         error,
       });
 
