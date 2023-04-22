@@ -182,7 +182,9 @@ export class Node {
         throw new Error("Cannot insert a node into one of its descendants");
       }
       if (!this.canInsert(node.type)) {
-        throw new Error("Cannot insert a node of this type into this node");
+        throw new Error(
+          `Cannot insert a ${node.type}:${node.id} into ${this.type}:${this.id}`
+        );
       }
     }
     if (next && next.parent !== this) {
@@ -300,6 +302,7 @@ export class NodeMap {
               const node = this.nodeMap.get(id);
               if (node) {
                 this.removeFromParentChildrenMap(node);
+                this.childrenMaps.delete(id);
               }
             }
           }
@@ -369,8 +372,8 @@ export class NodeMap {
 
   private removeFromParentChildrenMap(node: Node) {
     if (node.lastParentID) {
-      const parentChildrenMap = this.getChildrenMap(node.lastParentID);
-      parentChildrenMap.delete({
+      const parentChildrenMap = this.childrenMaps.get(node.lastParentID);
+      parentChildrenMap?.delete({
         index: node.lastIndex,
         id: node.id,
       });

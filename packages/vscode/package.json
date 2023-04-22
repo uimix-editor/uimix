@@ -45,7 +45,7 @@
     ],
     "languages": [
       {
-        "id": "json",
+        "id": "javascript",
         "extensions": [
           ".uimix"
         ]

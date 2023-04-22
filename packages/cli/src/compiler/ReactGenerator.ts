@@ -1,17 +1,15 @@
-import { Component } from "@uimix/model/src/models/Component";
-import { Selectable } from "@uimix/model/src/models/Selectable";
-import {
-  generateJSIdentifier,
-  getIncrementalUniqueName,
-} from "@uimix/foundation/src/utils/Name";
 import { camelCase, compact } from "lodash-es";
 import { posix as path } from "path";
 import htmlReactParser from "html-react-parser";
 import reactElementToJSXString from "react-element-to-jsx-string";
 import React from "react";
-import { Page } from "@uimix/model/src/models/Page";
-import mime from "mime-types";
+import {
+  generateJSIdentifier,
+  getIncrementalUniqueName,
+} from "@uimix/foundation/src/utils/Name";
+import { Component, Selectable, Page } from "@uimix/model/src/models";
 import { ProjectManifestJSON } from "@uimix/model/src/data/v1";
+import { ClassNameGenerator } from "./ClassNameGenerator";
 
 // TODO: remove this when react-element-to-jsx-string is fixed
 const reactElementToJSXStringFixed =
@@ -89,12 +87,14 @@ export class ReactGenerator {
     rootPath: string;
     manifest: ProjectManifestJSON;
     page: Page;
-    imagesPath: string;
+    imagePaths: Map<string, string>;
+    classNameGenerator: ClassNameGenerator;
   }) {
-    this.imagesPath = options.imagesPath;
     this.rootPath = options.rootPath;
     this.manifest = options.manifest;
     this.page = options.page;
+    this.imagePaths = options.imagePaths;
+    this.classNameGenerator = options.classNameGenerator;
 
     const componentNames = new Set<string>();
     for (const component of this.page.components) {
@@ -107,10 +107,11 @@ export class ReactGenerator {
     }
   }
 
-  imagesPath: string;
   rootPath: string;
   manifest: ProjectManifestJSON;
   page: Page;
+  imagePaths: Map<string, string>;
+  classNameGenerator: ClassNameGenerator;
   componentsWithNames: [Component, string][] = [];
   refIDs = new Map<string, string>();
   moduleVarNames = new Map<string, string>(); // path -> varName
@@ -140,25 +141,25 @@ export class ReactGenerator {
       this.moduleVarNames.set(modulePath, varName);
     }
 
-    for (const [hash, image] of this.page.project.imageManager.images) {
-      const extension = mime.extension(image.type) || "";
-      const imagePathFromRoot = path.join(
-        this.imagesPath,
-        hash + "." + extension
-      );
-      const imagePathFromPage = path.relative(
+    for (const [hash, imagePathFromRoot] of this.imagePaths) {
+      let imagePathFromPage = path.relative(
         path.dirname(this.page.filePath),
         imagePathFromRoot
       );
+      if (!imagePathFromPage.startsWith(".")) {
+        imagePathFromPage = "./" + imagePathFromPage;
+      }
 
       const varName = imageHashToVarName(hash);
       results.push(`import ${varName} from "${imagePathFromPage}";`);
       this.imageVarNames.set(hash, varName);
     }
 
-    const basename = path.basename(this.page.filePath);
-
-    results.push(`import './${basename}.uimix.css';`);
+    // TODO: import needed CSS files only
+    for (const page of this.page.project.pages.all) {
+      const basename = path.basename(page.filePath);
+      results.push(`import './${basename}.uimix.css';`);
+    }
 
     results.push(applyOverridesSnippet);
 
@@ -216,7 +217,7 @@ export class ReactGenerator {
 
     const classNames: string[] = [];
     for (let i = 0; i < idPath.length; ++i) {
-      classNames.push("uimix-" + idPath.slice(i).join("-"));
+      classNames.push(this.classNameGenerator.get(idPath.slice(i)));
     }
 
     if (
@@ -225,7 +226,9 @@ export class ReactGenerator {
     ) {
       const mainComponent = selectable.mainComponent;
       if (mainComponent) {
-        classNames.push(`uimix-${mainComponent.rootNode.id}`);
+        classNames.push(
+          this.classNameGenerator.get([mainComponent.rootNode.id])
+        );
       }
     }
 

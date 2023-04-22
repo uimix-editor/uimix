@@ -2,6 +2,7 @@
   "compilerOptions": {
     "target": "ESNext",
     "moduleResolution": "Node",
+    "resolveJsonModule": true,
     "module": "CommonJS",
     "sourceMap": true,
     "declaration": true,

@@ -1,31 +1,28 @@
 // Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
 exports[`WorkspaceLoader > saves 1`] = `
-"{
-  \\"nodes\\": { \\"frame1\\": { \\"type\\": \\"frame\\", \\"index\\": 0 } },
-  \\"styles\\": {},
-  \\"images\\": {},
-  \\"colors\\": {}
-}
+"export default (
+  <page>
+    <frame name=\\"\\" />
+  </page>
+);
 "
 `;
 
 exports[`WorkspaceLoader > saves 2`] = `
-"{
-  \\"nodes\\": { \\"text1\\": { \\"type\\": \\"text\\", \\"index\\": 0 } },
-  \\"styles\\": {},
-  \\"images\\": {},
-  \\"colors\\": {}
-}
+"export default (
+  <page>
+    <text name=\\"\\" />
+  </page>
+);
 "
 `;
 
 exports[`WorkspaceLoader > saves 3`] = `
-"{
-  \\"nodes\\": { \\"inner1\\": { \\"type\\": \\"frame\\", \\"index\\": 0 } },
-  \\"styles\\": {},
-  \\"images\\": {},
-  \\"colors\\": {}
-}
+"export default (
+  <page>
+    <frame name=\\"\\" />
+  </page>
+);
 "
 `;

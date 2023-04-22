@@ -1,18 +1,18 @@
-import { ProjectJSON, ProjectManifestJSON } from "@uimix/model/src/data/v1";
-import { Project } from "@uimix/model/src/models/Project";
-import { formatTypeScript } from "../format.js";
-import { CSSGenerator } from "./CSSGenerator.js";
-import { ReactGenerator } from "./ReactGenerator.js";
-import { dataUriToBuffer } from "data-uri-to-buffer";
-import * as mime from "mime-types";
-import { codeAssetsDestination } from "../codeAssets/constants.js";
 import * as path from "path";
 import { DesignTokens } from "@uimix/code-asset-types";
+import { ProjectJSON, ProjectManifestJSON } from "@uimix/model/src/data/v1";
+import { Project } from "@uimix/model/src/models";
+import { formatTypeScript } from "../format.js";
+import { codeAssetsDestination } from "../codeAssets/constants.js";
+import { CSSGenerator } from "./CSSGenerator.js";
+import { ReactGenerator } from "./ReactGenerator.js";
+import { ClassNameGenerator } from "./ClassNameGenerator.js";
 
 export async function generateCode(
   rootPath: string,
   manifest: ProjectManifestJSON,
-  projectJSON: ProjectJSON
+  projectJSON: ProjectJSON,
+  imagePaths: Map<string, string>
 ): Promise<
   {
     filePath: string;
@@ -33,29 +33,30 @@ export async function generateCode(
   } = await import(codeAssetJSPath);
   const designTokens = codeAssetJS.tokens;
 
-  const imagesPath = ".uimix/images";
-
   const results: {
     filePath: string;
     content: string | Buffer;
   }[] = [];
 
-  for (const [hash, image] of Object.entries(projectJSON.images ?? {})) {
-    const decoded = dataUriToBuffer(image.url);
-    const suffix = mime.extension(decoded.type) || "bin";
-    results.push({
-      filePath: `${imagesPath}/${hash}.${suffix}`,
-      content: decoded,
-    });
-  }
+  const classNameGenerator = new ClassNameGenerator(project);
 
   for (const page of project.pages.all) {
     const tsContent = formatTypeScript(
-      new ReactGenerator({ rootPath, manifest, page, imagesPath })
+      new ReactGenerator({
+        rootPath,
+        manifest,
+        page,
+        imagePaths,
+        classNameGenerator,
+      })
         .render()
         .join("\n")
     );
-    const cssContent = new CSSGenerator(page, designTokens).generate();
+    const cssContent = new CSSGenerator(
+      page,
+      designTokens,
+      classNameGenerator
+    ).generate();
 
     results.push(
       {

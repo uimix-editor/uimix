@@ -10,6 +10,7 @@ import { PageList } from "./PageList";
 import { ProjectData } from "../collaborative/ProjectData";
 import { CodeAssets } from "./CodeAssets";
 import { makeObservable, observable } from "mobx";
+import { Page } from "./Page";
 
 export class Project {
   constructor() {
@@ -43,6 +44,11 @@ export class Project {
     ]);
   }
 
+  clear(): void {
+    this.data.clear();
+    this.nodes.create("project", "project");
+  }
+
   toJSON(): ProjectJSON {
     return this.data.toJSON();
   }
@@ -61,6 +67,8 @@ export class Project {
 
   @observable localCodeAssets: CodeAssets | undefined = undefined;
 
+  // Selection
+
   clearSelection() {
     this.selectables.selectionData.clear();
   }
@@ -69,6 +77,26 @@ export class Project {
     this.clearSelection();
     for (const selectable of selectables) {
       selectable.select();
+    }
+  }
+
+  // Get by ID
+
+  nodeForID(id: string): Node | undefined {
+    return this.nodes.get(id);
+  }
+
+  pageForID(id: string): Page | undefined {
+    const node = this.nodeForID(id);
+    if (node) {
+      return Page.from(node);
+    }
+  }
+
+  componentForID(id: string): Component | undefined {
+    const node = this.nodeForID(id);
+    if (node) {
+      return Component.from(node);
     }
   }
 }

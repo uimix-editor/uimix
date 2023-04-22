@@ -37,7 +37,7 @@ export async function exportToJSON() {
   const url = URL.createObjectURL(blob);
   const a = document.createElement("a");
   a.href = url;
-  a.download = "project.uimix";
+  a.download = "project.uimixproject";
   a.click();
   URL.revokeObjectURL(url);
 }
@@ -48,7 +48,7 @@ export async function importJSON() {
   const file = await new Promise<File | undefined>((resolve) => {
     const input = document.createElement("input");
     input.type = "file";
-    input.accept = ".uimix";
+    input.accept = ".uimixproject";
     input.onchange = () => {
       resolve(input.files?.[0]);
     };

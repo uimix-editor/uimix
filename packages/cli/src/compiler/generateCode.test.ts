@@ -7,22 +7,25 @@ import { NodeFileAccess } from "../project/NodeFileAccess";
 describe(generateCode.name, () => {
   it("generates code", async () => {
     const rootDir = path.resolve("../sandbox");
-    const files = await WorkspaceLoader.load(new NodeFileAccess(rootDir));
-    const code = await generateCode(
-      rootDir,
-      files.rootProject.manifest,
-      files.rootProject.json
+
+    const workspaceLoader = await WorkspaceLoader.load(
+      new NodeFileAccess(rootDir)
     );
-    const result: Record<string, string> = {};
-    for (const file of code) {
-      if (
-        file.filePath.includes("components.") &&
-        typeof file.content === "string"
-      ) {
-        result[file.filePath] = file.content;
+
+    // FIXME: you need to build code assets before generating code
+
+    const files = await generateCode(
+      rootDir,
+      // TODO: better args
+      workspaceLoader.rootProject.manifest,
+      workspaceLoader.rootProject.project.toJSON(),
+      workspaceLoader.rootProject.imagePaths
+    );
+
+    for (const file of files) {
+      if (typeof file.content === "string") {
+        expect(file.content).toMatchSnapshot(file.filePath);
       }
     }
-
-    expect(result).toMatchSnapshot();
   });
 });

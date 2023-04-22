@@ -38,10 +38,22 @@ export class ProjectData {
     return this.doc.getMap("selection");
   }
 
+  clear() {
+    this.doc.transact(() => {
+      this.nodes.clear();
+      this.styles.clear();
+      this.componentURLs.delete(0, this.componentURLs.length);
+      this.colors.clear();
+      this.images.clear();
+      this.selection.clear();
+    });
+  }
+
   loadJSON(projectJSON: ProjectJSON): void {
     this.doc.transact(() => {
+      this.clear();
+
       const nodes = this.nodes;
-      nodes.clear();
       for (const [id, json] of Object.entries(projectJSON.nodes)) {
         const data = new Y.Map<NodeJSON[keyof NodeJSON]>();
         for (const [key, value] of Object.entries(json)) {
@@ -51,7 +63,6 @@ export class ProjectData {
       }
 
       const styles = this.styles;
-      styles.clear();
       for (const [id, json] of Object.entries(projectJSON.styles)) {
         const data = new Y.Map<StyleJSON[keyof StyleJSON]>();
         for (const [key, value] of Object.entries(json)) {
@@ -61,19 +72,16 @@ export class ProjectData {
       }
 
       const componentURLs = this.componentURLs;
-      componentURLs.delete(0, componentURLs.length);
       for (const url of projectJSON.componentURLs ?? []) {
         componentURLs.push([url]);
       }
 
       const images = this.images;
-      images.clear();
       for (const [hash, url] of Object.entries(projectJSON.images ?? {})) {
         images.set(hash, url);
       }
 
       const colors = this.colors;
-      colors.clear();
       for (const [name, json] of Object.entries(projectJSON.colors ?? {})) {
         const data = new Y.Map<ColorToken[keyof ColorToken]>(
           Object.entries(json)
@@ -87,7 +95,7 @@ export class ProjectData {
     const json: ProjectJSON = {
       nodes: this.nodes.toJSON(),
       styles: this.styles.toJSON(),
-      componentURLs: this.componentURLs.toJSON(),
+      componentURLs: this.componentURLs.toJSON() as string[],
       images: this.images.toJSON(),
       colors: this.colors.toJSON(),
     };

@@ -56,20 +56,15 @@ class VSCodeFileAccess implements FileAccess {
     }
   }
 
-  async writeText(filePath: string, data: string): Promise<void> {
+  async writeFile(filePath: string, data: Buffer): Promise<void> {
     lastSaveTime = Date.now();
 
-    await vscode.workspace.fs.writeFile(
-      vscode.Uri.file(filePath),
-      Buffer.from(data)
-    );
+    await vscode.workspace.fs.writeFile(vscode.Uri.file(filePath), data);
   }
 
-  async readText(filePath: string): Promise<string> {
+  async readFile(filePath: string): Promise<Buffer> {
     const url = vscode.Uri.file(filePath);
-    const buffer = await vscode.workspace.fs.readFile(url);
-    const text = buffer.toString();
-    return text;
+    return Buffer.from(await vscode.workspace.fs.readFile(url));
   }
 
   async remove(filePath: string): Promise<void> {
@@ -87,12 +82,8 @@ export class WorkspaceData {
   constructor(rootFolder: vscode.WorkspaceFolder, loader: WorkspaceLoader) {
     this.rootFolder = rootFolder;
     this.loader = loader;
-    this.updateData();
     this.disposables.push({
-      dispose: this.loader.watch(() => {
-        console.log("reload");
-        this.updateData();
-      }),
+      dispose: loader.watch(() => {}),
     });
 
     this.codeAssetsWatcher = vscode.workspace.createFileSystemWatcher(
@@ -120,19 +111,12 @@ export class WorkspaceData {
   readonly rootFolder: vscode.WorkspaceFolder;
   readonly loader: WorkspaceLoader;
 
-  private readonly dataForProject = new Map<string /* path */, ProjectData>();
-
   readonly codeAssetsWatcher: vscode.FileSystemWatcher;
   private readonly _onDidChangeCodeAssets = new vscode.EventEmitter<string>();
   readonly onDidChangeCodeAssets = this._onDidChangeCodeAssets.event;
 
   getDataForProject(projectPath: string): ProjectData {
-    let data = this.dataForProject.get(projectPath);
-    if (!data) {
-      data = new ProjectData();
-      this.dataForProject.set(projectPath, data);
-    }
-    return data;
+    return this.loader.getOrCreateProject(projectPath).project.data;
   }
 
   getDataForFile(uri: vscode.Uri): ProjectData {
@@ -152,16 +136,8 @@ export class WorkspaceData {
     return this.loader.projectPathForFile(uri.fsPath);
   }
 
-  private updateData() {
-    for (const [projectPath, project] of this.loader.projects) {
-      this.getDataForProject(projectPath).loadJSON(project.json);
-    }
-  }
-
   save(uri: vscode.Uri) {
     const projectPath = this.loader.projectPathForFile(uri.fsPath);
-    this.loader.getOrCreateProject(projectPath).json =
-      this.getDataForProject(projectPath).toJSON();
     this.loader.save(projectPath);
   }
 

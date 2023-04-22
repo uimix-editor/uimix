@@ -20,12 +20,15 @@ export class File extends TypedEmitter<{
       this.loader = loader;
     }
 
-    this._data = this.loader?.json ?? {
+    this._data = this.loader?.rootProject.project.toJSON() ?? {
       // default project
       nodes: {
         project: { type: "project", index: 0 },
       },
       styles: {},
+      componentURLs: [],
+      images: {},
+      colors: {},
     };
     this.savedData = this._data;
     if (loader) {
@@ -75,7 +78,7 @@ export class File extends TypedEmitter<{
       return;
     }
 
-    this.loader.json = this.data;
+    this.loader.rootProject.project.loadJSON(this.data);
     await this.loader.save();
     app.addRecentDocument(this.loader.rootPath);
     this.savedData = this.data;
@@ -131,7 +134,7 @@ export class File extends TypedEmitter<{
     }
 
     this.watchDisposer = loader.watch(() => {
-      const json = loader.json;
+      const json = loader.rootProject.project.toJSON();
       console.log("changed");
       if (this.edited) {
         // TODO: warn

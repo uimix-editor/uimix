@@ -7,7 +7,7 @@ export interface FileAccess {
   watch(pattern: string, onChange: () => void): () => void;
   glob(pattern: string): Promise<string[]>;
   stat(filePath: string): Promise<Stats | undefined>;
-  writeText(filePath: string, data: string): Promise<void>;
-  readText(filePath: string): Promise<string>;
+  writeFile(filePath: string, data: Buffer): Promise<void>;
+  readFile(filePath: string): Promise<Buffer>;
   remove(filePath: string): Promise<void>;
 }

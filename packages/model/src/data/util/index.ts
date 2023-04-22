@@ -12,14 +12,24 @@ export function compareProjectJSONs(a: ProjectJSON, b: ProjectJSON): boolean {
   return isEqual(omit(a, "images"), omit(b, "images"));
 }
 
-export function usedImageHashesInStyle(style: Partial<StyleJSON>): string[] {
-  const hashes: string[] = [];
+export function usedImageHashesInStyle(style: Partial<StyleJSON>): Set<string> {
+  const hashes = new Set<string>();
 
   if (style.imageHash) {
-    hashes.push(style.imageHash);
+    hashes.add(style.imageHash);
   }
 
   // TODO: background images? (in the future)
 
+  return hashes;
+}
+
+export function usedImageHashesInProject(project: ProjectJSON): Set<string> {
+  const hashes = new Set<string>();
+  for (const style of Object.values(project.styles)) {
+    for (const hash of usedImageHashesInStyle(style)) {
+      hashes.add(hash);
+    }
+  }
   return hashes;
 }

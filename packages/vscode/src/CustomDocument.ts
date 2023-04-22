@@ -12,6 +12,28 @@ import path from "path";
 import { codeAssetsDestination } from "uimix/src/codeAssets/constants";
 import { CodeAssets } from "@uimix/model/src/models/CodeAssets";
 
+const debouncedUpdate = (
+  onUpdate: (update: Uint8Array) => void
+): ((update: Uint8Array) => void) => {
+  const updates: Uint8Array[] = [];
+  let queued = false;
+  const debounced = (update: Uint8Array) => {
+    updates.push(update);
+    if (queued) {
+      return;
+    }
+    queued = true;
+    queueMicrotask(() => {
+      queued = false;
+      if (updates.length) {
+        onUpdate(Y.mergeUpdates(updates));
+        updates.length = 0;
+      }
+    });
+  };
+  return debounced;
+};
+
 export class CustomDocument implements vscode.CustomDocument {
   constructor(
     context: vscode.ExtensionContext,
@@ -64,9 +86,9 @@ export class CustomDocument implements vscode.CustomDocument {
         ready: async () => {
           unsubscribeDoc?.();
 
-          const onDocUpdate = (update: Uint8Array) => {
+          const onDocUpdate = debouncedUpdate((update: Uint8Array) => {
             rpc.remote.update(update);
-          };
+          });
           projectData.doc.on("update", onDocUpdate);
           unsubscribeDoc = () => projectData.doc.off("update", onDocUpdate);
 

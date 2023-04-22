@@ -2,287 +2,54 @@
 
 exports[`selectablesToProjectJSON > works 1`] = `
 {
+  "colors": {},
+  "componentURLs": [],
+  "images": {},
   "nodes": {
-    "1Bvi2z3TfkSpYXW29daTN8": {
+    "1BxVZYYacLUNzbRLytgvUS": {
       "condition": undefined,
       "index": 0,
-      "name": "Stack",
-      "parent": "1Bvi2zJALza4DrqmNaGYAk",
-      "type": "frame",
-    },
-    "1Bvi2z3To8ddXo6R6ZftVD": {
-      "condition": undefined,
-      "index": 1,
-      "name": "Item 1",
-      "parent": "1Bvi2z3TfkSpYXW29daTN8",
-      "type": "frame",
-    },
-    "1Bvi2z3TpKXtTJLTRPTEd8": {
-      "condition": undefined,
-      "index": 0,
-      "name": "Item 0",
-      "parent": "1Bvi2z3TfkSpYXW29daTN8",
-      "type": "frame",
-    },
-    "1Bvi2z3U3SiK6r7gf9vh7N": {
-      "condition": undefined,
-      "index": 3,
-      "name": "Text",
-      "parent": "1Bvi2z3TfkSpYXW29daTN8",
-      "type": "text",
-    },
-    "1Bvi2z3UB1xUVg4Xz9WTpJ": {
-      "condition": undefined,
-      "index": 2,
-      "name": "Item 2",
-      "parent": "1Bvi2z3TfkSpYXW29daTN8",
-      "type": "frame",
-    },
-    "1Bvi2z3UGTM64JtRT7Qc1S": {
-      "condition": undefined,
-      "index": 0,
-      "name": "Text",
-      "parent": "1Bvi2z3UPfi6W3L8nDt5VA",
-      "type": "text",
-    },
-    "1Bvi2z3UPfi6W3L8nDt5VA": {
-      "condition": undefined,
-      "index": 0,
-      "name": "",
-      "parent": "1Bvi2z3USBZi1pWrvPd6Ut",
-      "type": "frame",
-    },
-    "1Bvi2z3USBZi1pWrvPd6Ut": {
-      "condition": undefined,
-      "index": 11,
       "name": "Button",
       "parent": undefined,
       "type": "component",
     },
-    "1Bvi2z3UVsEskiSt2TcdL7": {
+    "1BxVZYYakpA193wZk25yNe": {
       "condition": {
         "type": "hover",
       },
       "index": 1,
       "name": "",
-      "parent": "1Bvi2z3USBZi1pWrvPd6Ut",
+      "parent": "1BxVZYYacLUNzbRLytgvUS",
       "type": "variant",
     },
-    "1Bvi2z3UaHFmaikKtfcmGX": {
+    "1BxVZYYaqDD9idS6vW4B8o": {
+      "condition": undefined,
+      "index": 0,
+      "name": "",
+      "parent": "1BxVZYYacLUNzbRLytgvUS",
+      "type": "frame",
+    },
+    "1BxVZYYasmCUk8kAkkRRX4": {
       "condition": {
         "type": "maxWidth",
         "value": 767,
       },
       "index": 2,
       "name": "",
-      "parent": "1Bvi2z3USBZi1pWrvPd6Ut",
+      "parent": "1BxVZYYacLUNzbRLytgvUS",
       "type": "variant",
     },
-    "1Bvi2z3UrU9VkawwAteXs8": {
-      "condition": undefined,
-      "index": 1,
-      "name": "Instance",
-      "parent": "1Bvi365mtWZmXKDPeJTB4s",
-      "type": "instance",
-    },
-    "1Bvi2zJALza4DrqmNaGYAk": {
-      "condition": undefined,
-      "index": 13,
-      "name": "Stack",
-      "parent": undefined,
-      "type": "component",
-    },
-    "1Bvi319YVxZELz4tEskN1S": {
+    "1BxVZYYawXvMKFQmDaHCHq": {
       "condition": undefined,
       "index": 0,
-      "name": "Frame",
-      "parent": "1Bvi3BSSb2oaHb1ZqUEk6H",
-      "type": "frame",
-    },
-    "1Bvi31VKu8gfy6XzJ8xrHA": {
-      "condition": undefined,
-      "index": 1,
-      "name": "Header",
-      "parent": "1Bvi319YVxZELz4tEskN1S",
-      "type": "foreign",
-    },
-    "1Bvi32d9RMi3ES5kk2UvuM": {
-      "condition": undefined,
-      "index": 0,
-      "name": "Button",
-      "parent": "1Bvi365mtWZmXKDPeJTB4s",
-      "type": "foreign",
-    },
-    "1Bvi365mtWZmXKDPeJTB4s": {
-      "condition": undefined,
-      "index": 3,
-      "name": "Frame",
-      "parent": "1Bvi319YVxZELz4tEskN1S",
-      "type": "frame",
-    },
-    "1Bvi392qBdMy93LGLcVymb": {
-      "condition": undefined,
-      "index": 2,
-      "name": "Image",
-      "parent": "1Bvi365mtWZmXKDPeJTB4s",
-      "type": "image",
-    },
-    "1Bvi39mct9UNYZ9eTCCRdV": {
-      "condition": undefined,
-      "index": 3,
-      "name": "Stack",
-      "parent": "1Bvi365mtWZmXKDPeJTB4s",
-      "type": "instance",
-    },
-    "1Bvi3BSSb2oaHb1ZqUEk6H": {
-      "condition": undefined,
-      "index": 14,
-      "name": "Page",
-      "parent": undefined,
-      "type": "component",
-    },
-    "1BwWRgjHmYZ8qLKDj3Tvdy": {
-      "condition": undefined,
-      "index": 1,
-      "name": "title",
-      "parent": "1BwWRgjHrhVbbuTV7m36kM",
+      "name": "Text",
+      "parent": "1BxVZYYaqDD9idS6vW4B8o",
       "type": "text",
-    },
-    "1BwWRgjHr8HNgX8BRooGv7": {
-      "condition": undefined,
-      "index": 0,
-      "name": "heroicons:code-bracket",
-      "parent": "1BwWRgjHyEzJjsehRefVBE",
-      "type": "svg",
-    },
-    "1BwWRgjHrhVbbuTV7m36kM": {
-      "condition": undefined,
-      "index": 0,
-      "name": "Frame 14",
-      "parent": "1BwWRiQqGA4gTdwZRLXFBh",
-      "type": "frame",
-    },
-    "1BwWRgjHuAe9UTxVhowwYu": {
-      "condition": undefined,
-      "index": 2,
-      "name": "description",
-      "parent": "1BwWRgjHrhVbbuTV7m36kM",
-      "type": "text",
-    },
-    "1BwWRgjHyEzJjsehRefVBE": {
-      "condition": undefined,
-      "index": 0,
-      "name": "icon",
-      "parent": "1BwWRgjHrhVbbuTV7m36kM",
-      "type": "frame",
-    },
-    "1BwWRiQqGA4gTdwZRLXFBh": {
-      "condition": undefined,
-      "index": 15,
-      "name": "Card",
-      "parent": undefined,
-      "type": "component",
-    },
-    "1BwspVKcGYvxVctYVzjPu6": {
-      "condition": undefined,
-      "index": 1.5,
-      "name": "Hidden Item",
-      "parent": "1Bvi2z3TfkSpYXW29daTN8",
-      "type": "frame",
     },
   },
   "styles": {
-    "1Bvi2z3TfkSpYXW29daTN8": {
-      "columnGap": 10,
-      "fills": [
-        {
-          "color": "#FFFFFF",
-          "type": "solid",
-        },
-      ],
-      "height": {
-        "type": "hug",
-      },
-      "layout": "flex",
-      "paddingBottom": 30,
-      "paddingLeft": 40,
-      "paddingRight": 20,
-      "paddingTop": 10,
-      "position": {
-        "x": {
-          "start": 50,
-          "type": "start",
-        },
-        "y": {
-          "start": 184,
-          "type": "start",
-        },
-      },
-      "rowGap": 10,
-      "width": {
-        "type": "hug",
-      },
-    },
-    "1Bvi2z3To8ddXo6R6ZftVD": {
-      "fills": [
-        {
-          "color": "#22C55E",
-          "type": "solid",
-        },
-      ],
-      "height": {
-        "type": "fixed",
-        "value": 80,
-      },
-      "width": {
-        "type": "fixed",
-        "value": 40,
-      },
-    },
-    "1Bvi2z3TpKXtTJLTRPTEd8": {
-      "fills": [
-        {
-          "color": {
-            "id": "1BwuQkMEqq1sH8PAPnDWRJ",
-            "type": "token",
-          },
-          "type": "solid",
-        },
-      ],
-      "height": {
-        "max": 60,
-        "min": 20,
-        "type": "fill",
-        "value": 50,
-      },
-      "width": {
-        "max": 100,
-        "min": 25,
-        "type": "fill",
-        "value": 50,
-      },
-    },
-    "1Bvi2z3U3SiK6r7gf9vh7N": {
-      "fills": [
-        {
-          "color": "#000000",
-          "type": "solid",
-        },
-      ],
-      "fontSize": 20,
-      "height": {
-        "type": "hug",
-      },
-      "marginBottom": 30,
-      "marginLeft": 40,
-      "marginRight": 20,
-      "marginTop": 10,
-      "textContent": "Hello, world!",
-      "width": {
-        "type": "hug",
-      },
-    },
-    "1Bvi2z3UB1xUVg4Xz9WTpJ": {
+    "1BxVZYYacLUNzbRLytgvUS": {},
+    "1BxVZYYakpA193wZk25yNe": {
       "fills": [
         {
           "color": {
@@ -292,31 +59,26 @@ exports[`selectablesToProjectJSON > works 1`] = `
           "type": "solid",
         },
       ],
-      "height": {
-        "type": "fixed",
-        "value": 40,
-      },
-      "width": {
-        "type": "fixed",
-        "value": 80,
+      "position": {
+        "x": {
+          "start": 200,
+          "type": "start",
+        },
+        "y": {
+          "start": 400,
+          "type": "start",
+        },
       },
     },
-    "1Bvi2z3UGTM64JtRT7Qc1S": {
+    "1BxVZYYakpA193wZk25yNe:1BxVZYYawXvMKFQmDaHCHq": {
       "fills": [
         {
-          "color": "#111827",
+          "color": "#FFFFFF",
           "type": "solid",
         },
       ],
-      "height": {
-        "type": "hug",
-      },
-      "textContent": "Button",
-      "width": {
-        "type": "hug",
-      },
     },
-    "1Bvi2z3UPfi6W3L8nDt5VA": {
+    "1BxVZYYaqDD9idS6vW4B8o": {
       "fills": [
         {
           "color": "#E5E7EB",
@@ -345,37 +107,7 @@ exports[`selectablesToProjectJSON > works 1`] = `
         "type": "hug",
       },
     },
-    "1Bvi2z3USBZi1pWrvPd6Ut": {},
-    "1Bvi2z3UVsEskiSt2TcdL7": {
-      "fills": [
-        {
-          "color": {
-            "id": "blue/500",
-            "type": "token",
-          },
-          "type": "solid",
-        },
-      ],
-      "position": {
-        "x": {
-          "start": 200,
-          "type": "start",
-        },
-        "y": {
-          "start": 400,
-          "type": "start",
-        },
-      },
-    },
-    "1Bvi2z3UVsEskiSt2TcdL7:1Bvi2z3UGTM64JtRT7Qc1S": {
-      "fills": [
-        {
-          "color": "#FFFFFF",
-          "type": "solid",
-        },
-      ],
-    },
-    "1Bvi2z3UaHFmaikKtfcmGX": {
+    "1BxVZYYasmCUk8kAkkRRX4": {
       "paddingBottom": 2,
       "paddingLeft": 4,
       "paddingRight": 4,
@@ -391,328 +123,22 @@ exports[`selectablesToProjectJSON > works 1`] = `
         },
       },
     },
-    "1Bvi2z3UaHFmaikKtfcmGX:1Bvi2z3UGTM64JtRT7Qc1S": {
+    "1BxVZYYasmCUk8kAkkRRX4:1BxVZYYawXvMKFQmDaHCHq": {
       "fontSize": 14,
     },
-    "1Bvi2z3UrU9VkawwAteXs8": {
+    "1BxVZYYawXvMKFQmDaHCHq": {
       "fills": [
         {
-          "color": "#BABABA",
-          "type": "solid",
-        },
-      ],
-      "mainComponent": "1Bvi2z3USBZi1pWrvPd6Ut",
-      "position": {
-        "x": {
-          "start": 160,
-          "type": "start",
-        },
-        "y": {
-          "start": 28,
-          "type": "start",
-        },
-      },
-    },
-    "1Bvi2z3UrU9VkawwAteXs8:1Bvi2z3UGTM64JtRT7Qc1S": {
-      "textContent": "Override Name",
-    },
-    "1Bvi2zJALza4DrqmNaGYAk": {},
-    "1Bvi319YVxZELz4tEskN1S": {
-      "fills": [
-        {
-          "color": "#FFFFFF",
-          "type": "solid",
-        },
-      ],
-      "flexAlign": "center",
-      "flexDirection": "y",
-      "height": {
-        "type": "fixed",
-        "value": 456,
-      },
-      "layout": "flex",
-      "position": {
-        "x": {
-          "start": 50,
-          "type": "start",
-        },
-        "y": {
-          "start": 585,
-          "type": "start",
-        },
-      },
-      "width": {
-        "type": "fixed",
-        "value": 744,
-      },
-    },
-    "1Bvi31VKu8gfy6XzJ8xrHA": {
-      "foreignComponent": {
-        "name": "Header",
-        "path": "src/stories/Header.tsx",
-        "props": {},
-        "type": "react",
-      },
-      "height": {
-        "type": "hug",
-      },
-      "width": {
-        "type": "fill",
-        "value": 744,
-      },
-    },
-    "1Bvi32d9RMi3ES5kk2UvuM": {
-      "foreignComponent": {
-        "name": "Button",
-        "path": "src/stories/Button.tsx",
-        "props": {
-          "backgroundColor": "red",
-          "label": "Button1",
-          "primary": true,
-          "size": "large",
-        },
-        "type": "react",
-      },
-      "height": {
-        "type": "hug",
-      },
-      "position": {
-        "x": {
-          "start": 33,
-          "type": "start",
-        },
-        "y": {
-          "start": 28,
-          "type": "start",
-        },
-      },
-      "width": {
-        "type": "hug",
-      },
-    },
-    "1Bvi365mtWZmXKDPeJTB4s": {
-      "fills": [
-        {
-          "color": "#FFFFFF",
+          "color": "#111827",
           "type": "solid",
         },
       ],
       "height": {
-        "type": "fill",
-        "value": 173,
-      },
-      "position": {
-        "x": {
-          "start": 210,
-          "type": "start",
-        },
-        "y": {
-          "start": 142,
-          "type": "start",
-        },
-      },
-      "width": {
-        "type": "fill",
-        "value": 428,
-      },
-    },
-    "1Bvi392qBdMy93LGLcVymb": {
-      "fills": [
-        {
-          "color": "#FFFFFF",
-          "type": "solid",
-        },
-      ],
-      "height": {
-        "type": "fixed",
-        "value": 100,
-      },
-      "imageHash": "YmY-tuteU03QY-k_2ARy1uacNmXDNmOX-FFAlj2qCIo",
-      "position": {
-        "x": {
-          "start": 33,
-          "type": "start",
-        },
-        "y": {
-          "start": 97,
-          "type": "start",
-        },
-      },
-      "width": {
-        "type": "fixed",
-        "value": 100,
-      },
-    },
-    "1Bvi39mct9UNYZ9eTCCRdV": {
-      "mainComponent": "1Bvi2zJALza4DrqmNaGYAk",
-      "position": {
-        "x": {
-          "start": 165,
-          "type": "start",
-        },
-        "y": {
-          "start": 86,
-          "type": "start",
-        },
-      },
-    },
-    "1Bvi39mct9UNYZ9eTCCRdV:1Bvi2z3To8ddXo6R6ZftVD": {},
-    "1Bvi39mct9UNYZ9eTCCRdV:1Bvi2z3TpKXtTJLTRPTEd8": {},
-    "1Bvi39mct9UNYZ9eTCCRdV:1Bvi2z3U3SiK6r7gf9vh7N": {},
-    "1Bvi39mct9UNYZ9eTCCRdV:1Bvi2z3UB1xUVg4Xz9WTpJ": {},
-    "1Bvi39mct9UNYZ9eTCCRdV:1BwspVKcGYvxVctYVzjPu6": {
-      "hidden": false,
-    },
-    "1Bvi3BSSb2oaHb1ZqUEk6H": {},
-    "1BwWRgjHmYZ8qLKDj3Tvdy": {
-      "fills": [
-        {
-          "color": "#1f2937",
-          "type": "solid",
-        },
-      ],
-      "fontFamily": "Satoshi",
-      "fontSize": 20,
-      "fontWeight": 700,
-      "height": {
         "type": "hug",
       },
-      "hidden": false,
-      "letterSpacing": 0,
-      "opacity": 1,
-      "textContent": "React Components Import/Export",
-      "textHorizontalAlign": "start",
-      "textVerticalAlign": "start",
-      "width": {
-        "type": "fill",
-        "value": 315.640625,
-      },
-    },
-    "1BwWRgjHr8HNgX8BRooGv7": {
-      "height": {
-        "type": "hug",
-      },
-      "svgContent": "<svg width=\\"24\\" height=\\"24\\" viewBox=\\"0 0 24 24\\" fill=\\"none\\" xmlns=\\"http://www.w3.org/2000/svg\\">
-<path d=\\"M17.25 6.75L22.5 12L17.25 17.25M6.75 17.25L1.5 12L6.75 6.75M14.25 3.75L9.75 20.25\\" stroke=\\"#0EA5E9\\" stroke-width=\\"1.5\\" stroke-linecap=\\"round\\" stroke-linejoin=\\"round\\"/>
-</svg>
-",
+      "textContent": "Button",
       "width": {
         "type": "hug",
-      },
-    },
-    "1BwWRgjHrhVbbuTV7m36kM": {
-      "bottomLeftRadius": 20,
-      "bottomRightRadius": 20,
-      "columnGap": 20,
-      "fills": [
-        {
-          "color": "#ffffff",
-          "type": "solid",
-        },
-      ],
-      "flexAlign": "start",
-      "flexDirection": "y",
-      "flexJustify": "start",
-      "height": {
-        "type": "hug",
-      },
-      "hidden": false,
-      "layout": "flex",
-      "opacity": 1,
-      "overflowHidden": false,
-      "paddingBottom": 19,
-      "paddingLeft": 19,
-      "paddingRight": 19,
-      "paddingTop": 19,
-      "position": {
-        "x": {
-          "start": 50,
-          "type": "start",
-        },
-        "y": {
-          "start": 1144,
-          "type": "start",
-        },
-      },
-      "rowGap": 20,
-      "topLeftRadius": 20,
-      "topRightRadius": 20,
-      "width": {
-        "type": "fixed",
-        "value": 400,
-      },
-    },
-    "1BwWRgjHuAe9UTxVhowwYu": {
-      "fills": [
-        {
-          "color": "#4b5563",
-          "type": "solid",
-        },
-      ],
-      "fontFamily": "Inter",
-      "fontSize": 16,
-      "fontWeight": 400,
-      "height": {
-        "type": "hug",
-      },
-      "hidden": false,
-      "letterSpacing": 0,
-      "opacity": 1,
-      "textContent": "Seamlessly work with React components, boosting your design-to-development workflow.
-",
-      "textHorizontalAlign": "start",
-      "textVerticalAlign": "start",
-      "width": {
-        "type": "fill",
-      },
-    },
-    "1BwWRgjHyEzJjsehRefVBE": {
-      "bottomLeftRadius": 8,
-      "bottomRightRadius": 8,
-      "columnGap": 10,
-      "fills": [
-        {
-          "color": "#f0f9ff",
-          "type": "solid",
-        },
-      ],
-      "flexAlign": "start",
-      "flexDirection": "x",
-      "flexJustify": "start",
-      "height": {
-        "type": "hug",
-      },
-      "hidden": false,
-      "layout": "flex",
-      "opacity": 1,
-      "overflowHidden": false,
-      "paddingBottom": 3,
-      "paddingLeft": 3,
-      "paddingRight": 3,
-      "paddingTop": 3,
-      "rowGap": 10,
-      "topLeftRadius": 8,
-      "topRightRadius": 8,
-      "width": {
-        "type": "hug",
-      },
-    },
-    "1BwWRiQqGA4gTdwZRLXFBh": {},
-    "1BwspVKcGYvxVctYVzjPu6": {
-      "fills": [
-        {
-          "color": "#22C55E",
-          "type": "solid",
-        },
-      ],
-      "height": {
-        "type": "fixed",
-        "value": 80,
-      },
-      "hidden": true,
-      "width": {
-        "type": "fixed",
-        "value": 40,
       },
     },
   },

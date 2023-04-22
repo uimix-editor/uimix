@@ -24,6 +24,9 @@ function generateInitialData(): Uint8Array {
       },
     },
     styles: {},
+    componentURLs: [],
+    images: {},
+    colors: {},
   });
 
   return Y.encodeStateAsUpdate(data.doc);
