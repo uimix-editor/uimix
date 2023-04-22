@@ -293,12 +293,12 @@ export class ProjectState {
     this.undoManager.stopCapturing();
   }
 
-  deletePageOrPageFolder(path: string) {
+  deletePagePath(path: string) {
     this.pageTreeModel.delete(path);
     this.undoManager.stopCapturing();
   }
 
-  renamePageOrPageFolder(path: string, newPath: string) {
+  renamePagePath(path: string, newPath: string) {
     const oldCurrent = this.page;
     const oldToNew = this.pageTreeModel.rename(path, newPath);
     console.log(path, newPath);

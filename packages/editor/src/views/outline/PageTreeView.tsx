@@ -116,7 +116,7 @@ const PageRow = observer(
             value={entry.name}
             onChange={action((name: string) => {
               const newPath = path.join(path.dirname(entry.path), name);
-              projectState.renamePageOrPageFolder(entry.path, newPath);
+              projectState.renamePagePath(entry.path, newPath);
             })}
           />
         </div>
@@ -164,7 +164,7 @@ export const PageTreeView = observer(() => {
             const oldName = draggedItem.entry.name;
             const newPath = path.join(newDir, oldName);
 
-            projectState.renamePageOrPageFolder(entry.path, newPath);
+            projectState.renamePagePath(entry.path, newPath);
           }
         });
       }}

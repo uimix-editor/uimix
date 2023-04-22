@@ -676,7 +676,7 @@ class Commands {
           text: "Delete",
           // disabled: projectState.project.pages.count === 1,
           onClick: action(() => {
-            projectState.deletePageOrPageFolder(page.path);
+            projectState.deletePagePath(page.path);
           }),
         },
       ];
@@ -687,7 +687,7 @@ class Commands {
           text: "Delete",
           // disabled: projectState.project.pages.count === 1,
           onClick: action(() => {
-            projectState.deletePageOrPageFolder(page.path);
+            projectState.deletePagePath(page.path);
           }),
         },
       ];
