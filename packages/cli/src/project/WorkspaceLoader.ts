@@ -28,11 +28,30 @@ interface ProjectData {
   imagePaths: Map<string, string>; // hash to path
 }
 
+interface LoadProblem {
+  filePath: string;
+  error: unknown;
+}
+
+interface LoadResult {
+  changed: boolean;
+  problems: LoadProblem[];
+}
+
 // Important TODO: fix paths in Windows!!
 export class WorkspaceLoader {
   static async load(fileAccess: FileAccess) {
     const loader = new WorkspaceLoader(fileAccess);
-    await loader.load();
+    const result = await loader.load();
+    if (result.problems.length) {
+      throw new Error(
+        `Problems loading workspace:\n${result.problems
+          .map(
+            (problem) => `  ${problem.filePath}:\n    ${String(problem.error)}`
+          )
+          .join("\n")}`
+      );
+    }
     return loader;
   }
 
@@ -79,7 +98,7 @@ export class WorkspaceLoader {
     );
   }
 
-  async load(): Promise<boolean> {
+  async load(): Promise<LoadResult> {
     const filePaths = await this.fileAccess.glob(
       `{${this.filePattern},${this.imagePatterns.join(",")},**/${
         this.projectBoundary
@@ -113,8 +132,25 @@ export class WorkspaceLoader {
     }
 
     let changed = false;
-
+    const problems: LoadProblem[] = [];
     for (const [projectPath, filePaths] of filePathsForProject) {
+      const result = await this.loadProject(projectPath, filePaths);
+      changed = changed || result.changed;
+      problems.push(...result.problems);
+    }
+    return {
+      changed,
+      problems,
+    };
+  }
+
+  private async loadProject(
+    projectPath: string,
+    filePaths: string[]
+  ): Promise<LoadResult> {
+    const problems: LoadProblem[] = [];
+
+    try {
       let manifest: ProjectManifestJSON = {};
 
       const manifestPath = path.join(projectPath, this.uimixProjectFile);
@@ -129,8 +165,11 @@ export class WorkspaceLoader {
               ).toString()
             )
           );
-        } catch (e) {
-          console.warn("cannot load uimix.json:", e);
+        } catch (error) {
+          problems.push({
+            filePath: manifestPath,
+            error,
+          });
         }
       }
 
@@ -142,29 +181,43 @@ export class WorkspaceLoader {
         // TODO: reload changed files only
 
         if (filePath.endsWith(".uimix")) {
-          const pageText = (
-            await this.fileAccess.readFile(filePath)
-          ).toString();
-          const pageNode = loadFromJSXFile(pageText);
-          const pageName = path
-            .relative(projectPath, filePath)
-            .replace(/\.uimix$/, "");
-          pages.set(pageName, pageNode);
+          try {
+            const pageText = (
+              await this.fileAccess.readFile(filePath)
+            ).toString();
+            const pageNode = loadFromJSXFile(pageText);
+            const pageName = path
+              .relative(projectPath, filePath)
+              .replace(/\.uimix$/, "");
+            pages.set(pageName, pageNode);
+          } catch (error) {
+            problems.push({
+              filePath,
+              error,
+            });
+          }
         } else {
-          // TODO: lookup specific directories only
-          const imageData = await this.fileAccess.readFile(filePath);
-          const hash = await getURLSafeBase64Hash(imageData);
-          const mimeType = mime.lookup(filePath) || "image/png";
-          const size = sizeOf(imageData);
+          try {
+            // TODO: lookup specific directories only
+            const imageData = await this.fileAccess.readFile(filePath);
+            const hash = await getURLSafeBase64Hash(imageData);
+            const mimeType = mime.lookup(filePath) || "image/png";
+            const size = sizeOf(imageData);
 
-          const image: Image = {
-            width: size.width ?? 0,
-            height: size.height ?? 0,
-            type: mimeType as ImageType,
-            url: `data:${mimeType};base64,${imageData.toString("base64")}`,
-          };
-          images.set(hash, image);
-          imagePaths.set(hash, filePath);
+            const image: Image = {
+              width: size.width ?? 0,
+              height: size.height ?? 0,
+              type: mimeType as ImageType,
+              url: `data:${mimeType};base64,${imageData.toString("base64")}`,
+            };
+            images.set(hash, image);
+            imagePaths.set(hash, filePath);
+          } catch (error) {
+            problems.push({
+              filePath,
+              error,
+            });
+          }
         }
       }
 
@@ -176,8 +229,11 @@ export class WorkspaceLoader {
         loader.project.imageManager.images.set(key, image);
       }
 
-      if (!isEqual(pages, existingProject?.pages ?? new Map())) {
-        changed = true;
+      if (isEqual(pages, existingProject?.pages ?? new Map())) {
+        return {
+          changed: false,
+          problems,
+        };
       }
 
       this.projects.set(projectPath, {
@@ -186,9 +242,22 @@ export class WorkspaceLoader {
         pages,
         imagePaths,
       });
-    }
 
-    return changed;
+      return {
+        changed: true,
+        problems,
+      };
+    } catch (error) {
+      problems.push({
+        filePath: projectPath,
+        error,
+      });
+
+      return {
+        changed: false,
+        problems,
+      };
+    }
   }
 
   private isSaving = false;
@@ -276,7 +345,7 @@ export class WorkspaceLoader {
           if (this.isSaving) {
             return;
           }
-          if (await this.load()) {
+          if ((await this.load()).changed) {
             onChange();
           }
         } catch (e) {
