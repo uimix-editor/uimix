@@ -1,6 +1,6 @@
 import { z } from "zod";
-import { Node } from "./node/node.js";
-import { Style } from "./style/style.js";
+import { Node } from "./node.js";
+import { Style } from "./style.js";
 
 export const ColorToken = z.object({
   name: z.string(),

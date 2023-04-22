@@ -1,7 +1,7 @@
 import { z } from "zod";
-import { NodeType, VariantCondition } from "./node/node";
+import { NodeType, VariantCondition } from "./node";
 import { Image } from "./project";
-import { Style } from "./style/style";
+import { Style } from "./style";
 
 const SelectableBase = z.object({
   id: z.string(),
