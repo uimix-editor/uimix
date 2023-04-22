@@ -8,10 +8,7 @@ export class CustomEditorProvider implements vscode.CustomEditorProvider {
     if (!rootFolder) {
       throw new Error("No workspace folder found");
     }
-    return new CustomEditorProvider(
-      context,
-      await WorkspaceAdapter.load(rootFolder)
-    );
+    return new CustomEditorProvider(context, new WorkspaceAdapter(rootFolder));
   }
 
   constructor(

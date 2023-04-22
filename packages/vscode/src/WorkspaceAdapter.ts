@@ -75,30 +75,8 @@ class VSCodeFileAccess implements FileAccess {
 }
 
 export class WorkspaceAdapter {
-  static async load(rootFolder: vscode.WorkspaceFolder) {
-    const workspaceIO = new WorkspaceIO(
-      new VSCodeFileAccess(rootFolder),
-      rootFolder.uri.fsPath
-    );
-    const result = await workspaceIO.load();
-    if (result.problems.length) {
-      const message =
-        `Error loading workspace:\n` +
-        result.problems
-          .map((problem) => `${problem.filePath}:\n  ${String(problem.error)}`)
-          .join("\n");
-      vscode.window.showErrorMessage(message);
-    }
-
-    return new WorkspaceAdapter(rootFolder, workspaceIO);
-  }
-
-  constructor(rootFolder: vscode.WorkspaceFolder, workspaceIO: WorkspaceIO) {
+  constructor(rootFolder: vscode.WorkspaceFolder) {
     this.rootFolder = rootFolder;
-    this.workspaceIO = workspaceIO;
-    this.disposables.push({
-      dispose: workspaceIO.watch(() => {}),
-    });
 
     this.codeAssetsWatcher = vscode.workspace.createFileSystemWatcher(
       new vscode.RelativePattern(
@@ -123,39 +101,73 @@ export class WorkspaceAdapter {
   }
 
   readonly rootFolder: vscode.WorkspaceFolder;
-  readonly workspaceIO: WorkspaceIO;
 
   readonly codeAssetsWatcher: vscode.FileSystemWatcher;
   private readonly _onDidChangeCodeAssets = new vscode.EventEmitter<string>();
   readonly onDidChangeCodeAssets = this._onDidChangeCodeAssets.event;
 
-  getDataForProject(projectPath: string): ProjectData {
-    return this.workspaceIO.getOrCreateProject(projectPath).project.data;
+  readonly workspaceIOs = new Map<
+    string /* project root path */,
+    WorkspaceIO
+  >();
+
+  async projectPathForFile(fsPath: string): Promise<string> {
+    if (fsPath === this.rootFolder.uri.fsPath) {
+      return fsPath;
+    }
+
+    const packageJSONPath = path.join(fsPath, "package.json");
+
+    try {
+      const stat = await vscode.workspace.fs.stat(
+        vscode.Uri.file(packageJSONPath)
+      );
+      if (stat.type & vscode.FileType.File) {
+        // fsPath is a directory that contains a package.json file
+        return fsPath;
+      }
+    } catch (e) {
+      // no-op
+    }
+
+    return this.projectPathForFile(path.dirname(fsPath));
   }
 
-  getDataForFile(uri: vscode.Uri): ProjectData {
-    return this.getDataForProject(
-      this.workspaceIO.projectPathForFile(uri.fsPath)
-    );
-  }
+  async getWorkspaceIOForFile(uri: vscode.Uri): Promise<WorkspaceIO> {
+    const projectPath = await this.projectPathForFile(uri.fsPath);
+    console.log("project path:", projectPath);
 
-  pageIDForFile(uri: vscode.Uri): string {
-    // Important TODO: fix paths in Windows!!
-    const relativePath = path.relative(
-      this.workspaceIO.projectPathForFile(uri.fsPath),
-      uri.fsPath
-    );
-    return getPageID(relativePath.replace(/\.uimix$/, ""));
-  }
+    let workspaceIO = this.workspaceIOs.get(projectPath);
+    if (!workspaceIO) {
+      workspaceIO = new WorkspaceIO(
+        new VSCodeFileAccess(this.rootFolder),
+        projectPath
+      );
+      const result = await workspaceIO.load();
+      if (result.problems.length) {
+        const message =
+          `Error loading workspace:\n` +
+          result.problems
+            .map(
+              (problem) => `${problem.filePath}:\n  ${String(problem.error)}`
+            )
+            .join("\n");
+        vscode.window.showErrorMessage(message);
+      }
+      this.disposables.push({
+        dispose: workspaceIO.watch(() => {}),
+      });
 
-  projectPathForFile(uri: vscode.Uri): string {
-    return this.workspaceIO.projectPathForFile(uri.fsPath);
+      this.workspaceIOs.set(projectPath, workspaceIO);
+    }
+
+    return workspaceIO;
   }
 
   async save(uri: vscode.Uri) {
-    const projectPath = this.workspaceIO.projectPathForFile(uri.fsPath);
+    const workspaceIO = await this.getWorkspaceIOForFile(uri);
     try {
-      await this.workspaceIO.save(projectPath);
+      await workspaceIO.save();
     } catch (e) {
       vscode.window.showErrorMessage(`Error saving project:\n${e}`);
     }

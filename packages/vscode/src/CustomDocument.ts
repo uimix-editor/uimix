@@ -11,6 +11,7 @@ import debounce from "just-debounce-it";
 import path from "path";
 import { codeAssetsDestination } from "uimix/src/codeAssets/constants";
 import { CodeAssets } from "@uimix/model/src/models/CodeAssets";
+import { getPageID } from "@uimix/model/src/data/util";
 
 const debouncedUpdate = (
   onUpdate: (update: Uint8Array) => void
@@ -49,14 +50,6 @@ export class CustomDocument implements vscode.CustomDocument {
   readonly workspaceAdapter: WorkspaceAdapter;
   readonly uri: vscode.Uri;
 
-  get data(): ProjectData {
-    return this.workspaceAdapter.getDataForFile(this.uri);
-  }
-
-  get pageID(): string {
-    return this.workspaceAdapter.pageIDForFile(this.uri);
-  }
-
   dispose(): void {}
 
   async resolveCustomEditor(
@@ -70,7 +63,22 @@ export class CustomDocument implements vscode.CustomDocument {
 
     let unsubscribeDoc: (() => void) | undefined;
 
-    const projectData = this.workspaceAdapter.getDataForFile(this.uri);
+    const workspaceIO = await this.workspaceAdapter.getWorkspaceIOForFile(
+      this.uri
+    );
+    const relativePath = path.relative(workspaceIO.rootPath, this.uri.fsPath);
+    const pageID = getPageID(relativePath.replace(/\.uimix$/, ""));
+
+    const projectData = workspaceIO.project.project.data;
+
+    const saveDebounced = debounce(async () => {
+      try {
+        await workspaceIO.save();
+      } catch (e) {
+        vscode.window.showErrorMessage(`Error saving project:\n${e}`);
+      }
+      console.log("save");
+    }, 500);
 
     const rpc = new RPC<IVSCodeToEditorRPCHandler, IEditorToVSCodeRPCHandler>(
       {
@@ -92,17 +100,14 @@ export class CustomDocument implements vscode.CustomDocument {
           projectData.doc.on("update", onDocUpdate);
           unsubscribeDoc = () => projectData.doc.off("update", onDocUpdate);
 
-          void rpc.remote.init(
-            Y.encodeStateAsUpdate(projectData.doc),
-            this.pageID
-          );
+          void rpc.remote.init(Y.encodeStateAsUpdate(projectData.doc), pageID);
 
           console.log("ready");
         },
         update: async (data) => {
           console.log("sync");
           Y.applyUpdate(projectData.doc, data);
-          this.saveDebounced();
+          saveDebounced();
         },
         getClipboard: async () => {
           throw new Error("should be intercepted in webview.");
@@ -116,9 +121,7 @@ export class CustomDocument implements vscode.CustomDocument {
 
     const unsubscribeAssetChanges = this.workspaceAdapter.onDidChangeCodeAssets(
       async (projectPath) => {
-        if (
-          projectPath !== this.workspaceAdapter.projectPathForFile(this.uri)
-        ) {
+        if (projectPath !== workspaceIO.rootPath) {
           return;
         }
 
@@ -135,11 +138,6 @@ export class CustomDocument implements vscode.CustomDocument {
       unsubscribeAssetChanges.dispose();
     });
   }
-
-  private readonly saveDebounced = debounce(async () => {
-    await this.workspaceAdapter.save(this.uri);
-    console.log("save");
-  }, 500);
 
   private async loadCodeAssets(): Promise<CodeAssets | undefined> {
     try {
