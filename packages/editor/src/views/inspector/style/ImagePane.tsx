@@ -23,15 +23,14 @@ export const ImagePane: React.FC = observer(function ImagePane() {
 
   const imageManager = projectState.project.imageManager;
 
-  const src = imageHash && imageManager.get(imageHash)?.url;
+  const image = imageHash != null ? imageManager.get(imageHash) : undefined;
 
   const copyImage = async () => {
-    const imageWithDataURL =
-      imageHash && (await imageManager.getWithDataURL(imageHash));
-    if (!imageWithDataURL) {
+    const dataURL = await image?.getDataURL();
+    if (!dataURL) {
       return;
     }
-    await Clipboard.handler.set("image", imageWithDataURL.url);
+    await Clipboard.handler.set("image", dataURL);
   };
 
   const pasteImage = async () => {
@@ -39,10 +38,10 @@ export const ImagePane: React.FC = observer(function ImagePane() {
     if (!dataURL) {
       return;
     }
-    const [hash] = await imageManager.insertDataURL(dataURL);
+    const image = await imageManager.insertDataURL(dataURL);
     runInAction(() => {
       for (const selectable of selectables) {
-        selectable.style.imageHash = hash;
+        selectable.style.imageHash = image.filePath;
       }
       projectState.undoManager.stopCapturing();
     });
@@ -53,24 +52,23 @@ export const ImagePane: React.FC = observer(function ImagePane() {
     if (!file) {
       return;
     }
-    const [hash] = await imageManager.insert(file);
+    const image = await imageManager.insert(file);
     runInAction(() => {
       for (const selectable of selectables) {
-        selectable.style.imageHash = hash;
+        selectable.style.imageHash = image.filePath;
       }
       projectState.undoManager.stopCapturing();
     });
   };
 
   const downloadImage = async () => {
-    const imageWithDataURL =
-      imageHash && (await imageManager.getWithDataURL(imageHash));
-    if (!imageWithDataURL) {
+    const image = imageHash && imageManager.get(imageHash);
+    if (!image) {
       return;
     }
 
     const a = document.createElement("a");
-    a.href = imageWithDataURL.url;
+    a.href = await image.getDataURL();
     a.download = "image.png";
     a.click();
   };
@@ -80,7 +78,7 @@ export const ImagePane: React.FC = observer(function ImagePane() {
       <InspectorHeading icon={imageIcon} text="Image" />
       <InspectorTargetContext.Provider value={selectables}>
         <img
-          src={src ?? undefined}
+          src={image?.url ?? undefined}
           className="w-full aspect-video object-contain border border-macaron-separator bg-macaron-uiBackground rounded-lg overflow-hidden p-2
         "
         />

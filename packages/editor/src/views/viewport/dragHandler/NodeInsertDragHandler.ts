@@ -50,9 +50,9 @@ export class NodeInsertDragHandler implements DragHandler {
       this.selectable.style.width = { type: "fixed", value: 100 };
       this.selectable.style.height = { type: "fixed", value: 100 };
       void projectState.project.imageManager.insert(mode.blob).then(
-        action(([hash]) => {
-          console.log(hash);
-          this.selectable.style.imageHash = hash;
+        action((image) => {
+          console.log(image.filePath);
+          this.selectable.style.imageHash = image.filePath;
         })
       );
     } else {

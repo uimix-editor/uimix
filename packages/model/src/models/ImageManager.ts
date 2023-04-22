@@ -23,6 +23,36 @@ export class Image {
     );
   }
 
+  get hash(): string {
+    return this.data.hash;
+  }
+
+  get width(): number {
+    return this.data.width;
+  }
+
+  get height(): number {
+    return this.data.height;
+  }
+
+  get url(): string {
+    return this.data.url;
+  }
+
+  get type(): Data.ImageType {
+    return this.data.type;
+  }
+
+  async getDataURL(): Promise<string> {
+    if (this.url.startsWith("data:")) {
+      return this.url;
+    }
+
+    const response = await fetch(this.url);
+    const blob = await response.blob();
+    return await blobToDataURL(blob);
+  }
+
   readonly manager: ImageManager;
   readonly filePath: string;
 }
@@ -48,19 +78,20 @@ export class ImageManager {
     data: Uint8Array
   ) => Promise<string>;
 
-  async insertDataURL(dataURL: string): Promise<[string, Data.Image]> {
+  async insertDataURL(dataURL: string): Promise<Image> {
     return this.insert(await (await fetch(dataURL)).blob());
   }
 
-  async insert(blob: Blob): Promise<[string, Data.Image]> {
+  async insert(blob: Blob): Promise<Image> {
     const type = Data.ImageType.parse(blob.type);
     const buffer = await blob.arrayBuffer();
 
     const hash = await getURLSafeBase64Hash(buffer);
 
-    const existing = this.data.get(hash);
+    // TODO: index hash
+    const existing = this.images.find((image) => image.data.hash === hash);
     if (existing) {
-      return [hash, existing];
+      return existing;
     }
 
     const uploadImage = this.uploadImage;
@@ -72,33 +103,23 @@ export class ImageManager {
     const imgElem = await imageFromURL(url);
 
     const image: Data.Image = {
-      hash: hash,
+      hash,
       width: imgElem.width,
       height: imgElem.height,
       url,
       type,
     };
 
-    this.data.set("images/" + hash, image);
-    return [hash, image];
+    const filePath = `images/${hash}.png`;
+    this.data.set(filePath, image);
+    return new Image(this, filePath);
   }
 
-  get(hashBase64: string): Data.Image | undefined {
-    return this.data.get(hashBase64);
-  }
-
-  async getWithDataURL(hashBase64: string): Promise<Data.Image | undefined> {
-    const image = this.get(hashBase64);
-    if (!image) {
-      return;
+  get(filePath: string): Image | undefined {
+    const data = this.data.get(filePath);
+    if (data) {
+      return new Image(this, filePath);
     }
-    const response = await fetch(image.url);
-    const blob = await response.blob();
-    const dataURL = await blobToDataURL(blob);
-    return {
-      ...image,
-      url: dataURL,
-    };
   }
 
   has(hashBase64: string): boolean {
@@ -120,7 +141,7 @@ export class ImageManager {
             return;
           }
           const blob = await fetch(image.url).then((res) => res.blob());
-          return await this.insert(blob);
+          return [hash, (await this.insert(blob)).data] as [string, Data.Image];
         })
       )
     );

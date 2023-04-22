@@ -17,7 +17,7 @@ export class Clipboard {
   static async readNodes(): Promise<Data.NodeClipboard | undefined> {
     const imageDataURL = await this.handler.get("image");
     if (imageDataURL) {
-      const [hash] = await projectState.project.imageManager.insertDataURL(
+      const image = await projectState.project.imageManager.insertDataURL(
         imageDataURL
       );
 
@@ -32,7 +32,7 @@ export class Clipboard {
             style: {
               width: { type: "hug" },
               height: { type: "hug" },
-              imageHash: hash,
+              imageHash: image.filePath,
             },
             children: [],
           },
