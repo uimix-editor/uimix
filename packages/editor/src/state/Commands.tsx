@@ -660,14 +660,14 @@ class Commands {
     ];
   }
 
-  contextMenuForFile(file: PathTreeModelItem<Page>): MenuItemDef[] {
-    if (file.type === "directory") {
+  contextMenuForPage(page: PathTreeModelItem<Page>): MenuItemDef[] {
+    if (page.type === "directory") {
       return [
         {
           type: "command",
           text: "New File",
           onClick: action(() => {
-            const newPath = path.join(file.path, "Page 1");
+            const newPath = path.join(page.path, "Page 1");
             projectState.createPage(newPath);
           }),
         },
@@ -676,7 +676,7 @@ class Commands {
           text: "Delete",
           // disabled: projectState.project.pages.count === 1,
           onClick: action(() => {
-            projectState.pageTreeModel.delete(file.path);
+            projectState.deletePageOrPageFolder(page.path);
           }),
         },
       ];
@@ -687,7 +687,7 @@ class Commands {
           text: "Delete",
           // disabled: projectState.project.pages.count === 1,
           onClick: action(() => {
-            projectState.pageTreeModel.delete(file.path);
+            projectState.deletePageOrPageFolder(page.path);
           }),
         },
       ];

@@ -78,7 +78,7 @@ const PageRow = observer(
         onClick={onClick}
         onContextMenu={action((e) => {
           e.preventDefault();
-          showContextMenu(e, commands.contextMenuForFile(entry));
+          showContextMenu(e, commands.contextMenuForPage(entry));
         })}
         className="w-full h-7 px-1"
       >
@@ -143,7 +143,7 @@ export const PageTreeView = observer(() => {
           onContextMenu={action((e) => {
             e.preventDefault();
 
-            showContextMenu(e, commands.contextMenuForFile(rootItem.entry));
+            showContextMenu(e, commands.contextMenuForPage(rootItem.entry));
           })}
         />
       }
