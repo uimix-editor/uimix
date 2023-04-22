@@ -38,53 +38,12 @@ describe(WorkspaceIO.name, () => {
     page1.node.append([project.nodes.create("frame", "frame1")]);
     page2.node.append([project.nodes.create("text", "text1")]);
 
-    const innerProject = new Project();
-    const innerPage1 = innerProject.pages.create("src/inner1");
-    const innerPage2 = innerProject.pages.create("src/inner2");
-    innerPage1.node.append([innerProject.nodes.create("frame", "inner1")]);
-    innerPage2.node.append([innerProject.nodes.create("frame", "inner2")]);
-
-    const deepInnerProject = new Project();
-    deepInnerProject.pages.create("src/inner1");
-
-    const innerProjectPath = tmpObj.name + "/demo-project/inner";
-    const deepInnerProjectPath = tmpObj.name + "/demo-project/inner/inner";
-
     const workspaceIO = new WorkspaceIO(
       new NodeFileAccess(),
       tmpObj.name + "/demo-project"
     );
-    workspaceIO.rootProject.project = project;
-    workspaceIO.projects.set(innerProjectPath, {
-      manifest: {},
-      project: innerProject,
-      pages: new Map(),
-      imagePaths: new Map(),
-    });
-    workspaceIO.projects.set(deepInnerProjectPath, {
-      manifest: {},
-      project: deepInnerProject,
-      pages: new Map(),
-      imagePaths: new Map(),
-    });
+    workspaceIO.project.project = project;
     await workspaceIO.save();
-
-    fs.writeFileSync(tmpObj.name + "/demo-project/inner/package.json", "{}");
-    fs.writeFileSync(
-      tmpObj.name + "/demo-project/inner/inner/package.json",
-      "{}"
-    );
-
-    expect(
-      workspaceIO.projectPathForFile(
-        tmpObj.name + "/demo-project/src/page1.uimix"
-      )
-    ).toEqual(tmpObj.name + "/demo-project");
-    expect(
-      workspaceIO.projectPathForFile(
-        tmpObj.name + "/demo-project/inner/src/inner1.uimix"
-      )
-    ).toEqual(tmpObj.name + "/demo-project/inner");
 
     const page1File = fs.readFileSync(
       tmpObj.name + "/demo-project/src/page1.uimix",
@@ -98,25 +57,14 @@ describe(WorkspaceIO.name, () => {
     );
     expect(page2File).toMatchSnapshot();
 
-    const innerPage1File = fs.readFileSync(
-      tmpObj.name + "/demo-project/inner/src/inner1.uimix",
-      "utf8"
-    );
-    expect(innerPage1File).toMatchSnapshot();
-
     const workspaceIO2 = await WorkspaceIO.load(
       new NodeFileAccess(),
       tmpObj.name + "/demo-project"
     );
 
-    expect(new ProjectEmitter(workspaceIO2.rootProject.project).emit()).toEqual(
+    expect(new ProjectEmitter(workspaceIO2.project.project).emit()).toEqual(
       new ProjectEmitter(project).emit()
     );
-    expect(
-      new ProjectEmitter(
-        workspaceIO2.projects.get(innerProjectPath)!.project
-      ).emit()
-    ).toEqual(new ProjectEmitter(innerProject).emit());
   });
 
   it("watches project", async () => {
@@ -127,23 +75,12 @@ describe(WorkspaceIO.name, () => {
     page1.node.append([project.nodes.create("frame", "frame1")]);
     page2.node.append([project.nodes.create("text", "text1")]);
 
-    const innerProject = new Project();
-    const innerPage1 = innerProject.pages.create("src/inner1");
-    innerPage1.node.append([innerProject.nodes.create("frame", "inner")]);
-
     const workspaceIO = new WorkspaceIO(
       new NodeFileAccess(),
       tmpObj.name + "/demo-project"
     );
-    workspaceIO.rootProject.project = project;
-    workspaceIO.projects.set(path.resolve(workspaceIO.rootPath, "inner"), {
-      manifest: {},
-      project: innerProject,
-      pages: new Map(),
-      imagePaths: new Map(),
-    });
-    mkdirpSync(tmpObj.name + "/demo-project/inner");
-    fs.writeFileSync(tmpObj.name + "/demo-project/inner/package.json", "{}");
+    workspaceIO.project.project = project;
+
     await workspaceIO.save();
     await new Promise((resolve) => setTimeout(resolve, 500));
 
@@ -166,13 +103,8 @@ describe(WorkspaceIO.name, () => {
     await new Promise((resolve) => setTimeout(resolve, 500));
     expect(watchCount).toBe(1);
 
-    // change inner file
-    fs.rmSync(tmpObj.name + "/demo-project/inner/src/inner1.uimix");
-    await new Promise((resolve) => setTimeout(resolve, 500));
-    expect(watchCount).toBe(2);
-
     expect(
-      workspaceIO.rootProject.project.pages.all.map((page) => page.filePath)
+      workspaceIO.project.project.pages.all.map((page) => page.filePath)
     ).toEqual(["src/page2"]);
   });
 });

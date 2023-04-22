@@ -64,79 +64,37 @@ export class WorkspaceIO {
   readonly imagePatterns = ["*.png", "*.jpg", "*.jpeg"];
   readonly uimixProjectFile = "uimix.json";
   readonly projectBoundary = "package.json"; // TODO: other project boundaries
-  projects = new Map<string, ProjectData>(); // project path -> project json
 
-  get rootProject(): ProjectData {
-    return this.getOrCreateProject(this.rootPath);
-  }
-
-  getOrCreateProject(projectPath: string): ProjectData {
-    let project = this.projects.get(projectPath);
-    if (!project) {
-      project = {
-        manifest: {},
-        project: new Project(),
-        pages: new Map(),
-        imagePaths: new Map(),
-      };
-      this.projects.set(projectPath, project);
-    }
-    return project;
-  }
-
-  projectPathForFile(pagePath: string): string {
-    return (
-      [...this.projects.keys()]
-        .sort((a, b) => b.length - a.length)
-        .find((projectPath) => pagePath.startsWith(projectPath + path.sep)) ??
-      this.rootPath
-    );
-  }
+  project: ProjectData = {
+    manifest: {},
+    project: new Project(),
+    pages: new Map(),
+    imagePaths: new Map(),
+  };
 
   async load(): Promise<LoadResult> {
-    const filePaths = await this.fileAccess.glob(this.rootPath, [
+    let filePaths = await this.fileAccess.glob(this.rootPath, [
       this.filePattern,
       ...this.imagePatterns,
       this.projectBoundary,
     ]);
     filePaths.sort();
 
-    const filePathsForProject = new Map<string, string[]>([
-      [this.rootPath, []],
-    ]);
-
-    for (const manifestPaths of filePaths.filter((filePath) =>
+    const projectBoundaryFilePaths = filePaths.filter((filePath) =>
       filePath.endsWith(this.projectBoundary)
-    )) {
-      const parentPath = path.dirname(manifestPaths);
-      filePathsForProject.set(parentPath, []);
-    }
+    );
+    const projectPaths = projectBoundaryFilePaths
+      .map((filePath) => path.dirname(filePath))
+      .filter((projectPath) => this.rootPath !== projectPath);
 
-    for (const filePath of filePaths) {
-      if (filePath.endsWith(this.projectBoundary)) {
-        continue;
-      }
+    filePaths = filePaths.filter(
+      (filePath) =>
+        !projectPaths.some((projectPath) =>
+          filePath.startsWith(projectPath + "/")
+        )
+    );
 
-      const projectPath = [...filePathsForProject.keys()]
-        .sort((a, b) => b.length - a.length)
-        .find((projectPath) => filePath.startsWith(projectPath + path.sep));
-      if (!projectPath) {
-        throw new Error("not supposed to happen");
-      }
-      filePathsForProject.get(projectPath)?.push(filePath);
-    }
-
-    let changed = false;
-    const problems: LoadProblem[] = [];
-    for (const [projectPath, filePaths] of filePathsForProject) {
-      const result = await this.loadProject(projectPath, filePaths);
-      changed = changed || result.changed;
-      problems.push(...result.problems);
-    }
-    return {
-      changed,
-      problems,
-    };
+    return this.loadProject(this.rootPath, filePaths);
   }
 
   private async loadProject(
@@ -216,27 +174,22 @@ export class WorkspaceIO {
         }
       }
 
-      const existingProject = this.projects.get(projectPath);
-
-      const loader = new ProjectLoader(existingProject?.project);
+      const loader = new ProjectLoader(this.project.project);
       loader.load(pages);
       for (const [key, image] of images) {
         loader.project.imageManager.images.set(key, image);
       }
 
-      if (isEqual(pages, existingProject?.pages ?? new Map())) {
+      if (isEqual(pages, this.project.pages)) {
         return {
           changed: false,
           problems,
         };
       }
 
-      this.projects.set(projectPath, {
-        manifest,
-        project: loader.project,
-        pages,
-        imagePaths,
-      });
+      this.project.manifest = manifest;
+      this.project.pages = pages;
+      this.project.imagePaths = imagePaths;
 
       return {
         changed: true,
@@ -257,7 +210,7 @@ export class WorkspaceIO {
 
   private isSaving = false;
 
-  async save(projectPathToSave?: string): Promise<void> {
+  async save(): Promise<void> {
     try {
       this.isSaving = true;
 
@@ -265,62 +218,56 @@ export class WorkspaceIO {
         await this.fileAccess.glob(this.rootPath, [this.filePattern])
       );
 
-      for (const [projectPath, project] of this.projects) {
-        if (projectPathToSave && projectPath !== projectPathToSave) {
+      const projectEmitter = new ProjectEmitter(this.project.project);
+      const pages = projectEmitter.emit();
+
+      for (const [pageName, pageNode] of pages) {
+        const pagePath = path.join(this.rootPath, pageName + ".uimix");
+        await this.fileAccess.writeFile(
+          pagePath,
+          Buffer.from(formatTypeScript(stringifyAsJSXFile(pageNode)))
+        );
+        pagePathsToDelete.delete(pagePath);
+      }
+
+      const usedImageHashes = usedImageHashesInProject(
+        this.project.project.toJSON()
+      );
+
+      for (const [hash, image] of this.project.project.imageManager.images) {
+        if (!usedImageHashes.has(hash)) {
           continue;
         }
 
-        const projectEmitter = new ProjectEmitter(project.project);
-        const pages = projectEmitter.emit();
-
-        for (const [pageName, pageNode] of pages) {
-          const pagePath = path.join(projectPath, pageName + ".uimix");
-          await this.fileAccess.writeFile(
-            pagePath,
-            Buffer.from(formatTypeScript(stringifyAsJSXFile(pageNode)))
-          );
-          pagePathsToDelete.delete(pagePath);
-        }
-
-        const usedImageHashes = usedImageHashesInProject(
-          project.project.toJSON()
+        const decoded = dataUriToBuffer(image.url);
+        const suffix = mime.extension(decoded.type) || "bin";
+        await this.fileAccess.writeFile(
+          path.join(this.rootPath, "src/images", `${hash}.${suffix}`),
+          decoded
         );
-
-        for (const [hash, image] of project.project.imageManager.images) {
-          if (!usedImageHashes.has(hash)) {
-            continue;
-          }
-
-          const decoded = dataUriToBuffer(image.url);
-          const suffix = mime.extension(decoded.type) || "bin";
-          await this.fileAccess.writeFile(
-            path.join(projectPath, "src/images", `${hash}.${suffix}`),
-            decoded
-          );
-        }
-
-        // TODO: save manifest
-
-        // const manifestPath = path.join(projectPath, this.uimixProjectFile);
-
-        // let parsed: ProjectManifestJSON;
-        // try {
-        //   parsed = JSON.parse(
-        //     (await this.fileAccess.readFile(manifestPath)).toString()
-        //   ) as ProjectManifestJSON;
-        // } catch (e) {
-        //   parsed = {};
-        // }
-        // parsed.prebuiltAssets = project.manifest.prebuiltAssets;
-
-        // TODO: avoid overwriting malformed uimix.json
-        // await this.fileAccess.writeFile(
-        //   manifestPath,
-        //   Buffer.from(formatJSON(JSON.stringify(parsed)))
-        // );
-
-        project.pages = pages;
       }
+
+      // TODO: save manifest
+
+      // const manifestPath = path.join(projectPath, this.uimixProjectFile);
+
+      // let parsed: ProjectManifestJSON;
+      // try {
+      //   parsed = JSON.parse(
+      //     (await this.fileAccess.readFile(manifestPath)).toString()
+      //   ) as ProjectManifestJSON;
+      // } catch (e) {
+      //   parsed = {};
+      // }
+      // parsed.prebuiltAssets = project.manifest.prebuiltAssets;
+
+      // TODO: avoid overwriting malformed uimix.json
+      // await this.fileAccess.writeFile(
+      //   manifestPath,
+      //   Buffer.from(formatJSON(JSON.stringify(parsed)))
+      // );
+
+      this.project.pages = pages;
 
       for (const pagePath of pagePathsToDelete) {
         await this.fileAccess.remove(pagePath);
