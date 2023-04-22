@@ -202,6 +202,7 @@ export class WorkspaceLoader {
             const size = sizeOf(imageData);
 
             const image: Data.Image = {
+              filePath,
               width: size.width ?? 0,
               height: size.height ?? 0,
               type: mimeType as Data.ImageType,
