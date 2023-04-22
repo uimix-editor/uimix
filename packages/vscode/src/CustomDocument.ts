@@ -62,17 +62,15 @@ export class CustomDocument implements vscode.CustomDocument {
 
     let unsubscribeDoc: (() => void) | undefined;
 
-    const workspaceIO = await this.workspaceAdapter.getWorkspaceIOForFile(
-      this.uri
-    );
-    const relativePath = path.relative(workspaceIO.rootPath, this.uri.fsPath);
+    const projectIO = await this.workspaceAdapter.getProjectIOForFile(this.uri);
+    const relativePath = path.relative(projectIO.rootPath, this.uri.fsPath);
     const pageID = getPageID(relativePath.replace(/\.uimix$/, ""));
 
-    const projectData = workspaceIO.project.project.data;
+    const projectData = projectIO.project.project.data;
 
     const saveDebounced = debounce(async () => {
       try {
-        await workspaceIO.save();
+        await projectIO.save();
       } catch (e) {
         vscode.window.showErrorMessage(`Error saving project:\n${e}`);
       }
@@ -120,7 +118,7 @@ export class CustomDocument implements vscode.CustomDocument {
 
     const unsubscribeAssetChanges = this.workspaceAdapter.onDidChangeCodeAssets(
       async (projectPath) => {
-        if (projectPath !== workspaceIO.rootPath) {
+        if (projectPath !== projectIO.rootPath) {
           return;
         }
 

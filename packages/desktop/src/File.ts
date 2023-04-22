@@ -4,7 +4,7 @@ import { compareProjectJSONs } from "../../model/src/data/util";
 import { DocumentMetadata } from "../../dashboard/src/types/DesktopAPI";
 import { TypedEmitter } from "tiny-typed-emitter";
 import { app, dialog } from "electron";
-import { WorkspaceIO } from "../../cli/src/project/WorkspaceIO";
+import { ProjectIO } from "../../cli/src/project/ProjectIO";
 import { NodeFileAccess } from "../../cli/src/project/NodeFileAccess";
 
 export class File extends TypedEmitter<{
@@ -12,15 +12,15 @@ export class File extends TypedEmitter<{
   metadataChange: (metadata: DocumentMetadata) => void;
   dataChange: (data: Data.Project) => void;
 }> {
-  constructor(workspaceIO?: WorkspaceIO) {
+  constructor(projectIO?: ProjectIO) {
     super();
 
-    if (workspaceIO) {
-      app.addRecentDocument(workspaceIO.rootPath);
-      this.workspaceIO = workspaceIO;
+    if (projectIO) {
+      app.addRecentDocument(projectIO.rootPath);
+      this.projectIO = projectIO;
     }
 
-    this._data = this.workspaceIO?.rootProject.project.toJSON() ?? {
+    this._data = this.projectIO?.project.project.toJSON() ?? {
       // default project
       nodes: {
         project: { type: "project", index: 0 },
@@ -31,19 +31,19 @@ export class File extends TypedEmitter<{
       colors: {},
     };
     this.savedData = this._data;
-    if (workspaceIO) {
+    if (projectIO) {
       this.watch();
     }
   }
 
   get name(): string {
-    return this.workspaceIO
-      ? path.basename(this.workspaceIO.rootPath)
+    return this.projectIO
+      ? path.basename(this.projectIO.rootPath)
       : "Untitled Project";
   }
 
   get filePath(): string | undefined {
-    return this.workspaceIO?.rootPath;
+    return this.projectIO?.rootPath;
   }
 
   get metadata(): DocumentMetadata {
@@ -52,7 +52,7 @@ export class File extends TypedEmitter<{
     };
   }
 
-  workspaceIO?: WorkspaceIO;
+  projectIO?: ProjectIO;
   edited = false;
 
   private _data: Data.Project;
@@ -73,14 +73,14 @@ export class File extends TypedEmitter<{
   }
 
   async save() {
-    if (!this.workspaceIO) {
+    if (!this.projectIO) {
       await this.saveAs();
       return;
     }
 
-    this.workspaceIO.rootProject.project.loadJSON(this.data);
-    await this.workspaceIO.save();
-    app.addRecentDocument(this.workspaceIO.rootPath);
+    this.projectIO.rootProject.project.loadJSON(this.data);
+    await this.projectIO.save();
+    app.addRecentDocument(this.projectIO.rootPath);
     this.savedData = this.data;
     this.edited = false;
     this.emit("editedChange", this.edited);
@@ -97,7 +97,7 @@ export class File extends TypedEmitter<{
     }
     console.log("newPath", newPath);
 
-    this.workspaceIO = new WorkspaceIO(new NodeFileAccess(newPath));
+    this.projectIO = new ProjectIO(new NodeFileAccess(newPath));
     await this.save();
     this.watch();
 
@@ -118,8 +118,8 @@ export class File extends TypedEmitter<{
   }
 
   static async openFilePath(filePath: string) {
-    const workspaceIO = await WorkspaceIO.load(new NodeFileAccess(filePath));
-    return new File(workspaceIO);
+    const projectIO = await ProjectIO.load(new NodeFileAccess(filePath));
+    return new File(projectIO);
   }
 
   watch() {
@@ -128,7 +128,7 @@ export class File extends TypedEmitter<{
       this.watchDisposer = undefined;
     }
 
-    const { workspaceIO: loader } = this;
+    const { projectIO: loader } = this;
     if (!loader) {
       return;
     }

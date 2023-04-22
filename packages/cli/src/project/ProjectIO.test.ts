@@ -5,9 +5,9 @@ import tmp from "tmp";
 import { Project } from "@uimix/model/src/models";
 import { ProjectEmitter } from "@uimix/model/src/file";
 import { NodeFileAccess } from "./NodeFileAccess";
-import { WorkspaceIO } from "./WorkspaceIO";
+import { ProjectIO } from "./ProjectIO";
 
-describe(WorkspaceIO.name, () => {
+describe(ProjectIO.name, () => {
   let tmpObj: tmp.DirResult;
 
   beforeEach(async () => {
@@ -36,12 +36,12 @@ describe(WorkspaceIO.name, () => {
     page1.node.append([project.nodes.create("frame", "frame1")]);
     page2.node.append([project.nodes.create("text", "text1")]);
 
-    const workspaceIO = new WorkspaceIO(
+    const projectIO = new ProjectIO(
       new NodeFileAccess(),
       tmpObj.name + "/demo-project"
     );
-    workspaceIO.project.project = project;
-    await workspaceIO.save();
+    projectIO.project.project = project;
+    await projectIO.save();
 
     const page1File = fs.readFileSync(
       tmpObj.name + "/demo-project/src/page1.uimix",
@@ -55,12 +55,12 @@ describe(WorkspaceIO.name, () => {
     );
     expect(page2File).toMatchSnapshot();
 
-    const workspaceIO2 = await WorkspaceIO.load(
+    const projectIO2 = await ProjectIO.load(
       new NodeFileAccess(),
       tmpObj.name + "/demo-project"
     );
 
-    expect(new ProjectEmitter(workspaceIO2.project.project).emit()).toEqual(
+    expect(new ProjectEmitter(projectIO2.project.project).emit()).toEqual(
       new ProjectEmitter(project).emit()
     );
   });
@@ -73,17 +73,17 @@ describe(WorkspaceIO.name, () => {
     page1.node.append([project.nodes.create("frame", "frame1")]);
     page2.node.append([project.nodes.create("text", "text1")]);
 
-    const workspaceIO = new WorkspaceIO(
+    const projectIO = new ProjectIO(
       new NodeFileAccess(),
       tmpObj.name + "/demo-project"
     );
-    workspaceIO.project.project = project;
+    projectIO.project.project = project;
 
-    await workspaceIO.save();
+    await projectIO.save();
     await new Promise((resolve) => setTimeout(resolve, 500));
 
     let watchCount = 0;
-    workspaceIO.watch(() => {
+    projectIO.watch(() => {
       watchCount++;
     });
     await new Promise((resolve) => setTimeout(resolve, 500));
@@ -91,7 +91,7 @@ describe(WorkspaceIO.name, () => {
 
     console.log("save");
     // saves not cause watch
-    await workspaceIO.save();
+    await projectIO.save();
     await new Promise((resolve) => setTimeout(resolve, 500));
     expect(watchCount).toBe(0);
 
@@ -102,7 +102,7 @@ describe(WorkspaceIO.name, () => {
     expect(watchCount).toBe(1);
 
     expect(
-      workspaceIO.project.project.pages.all.map((page) => page.filePath)
+      projectIO.project.project.pages.all.map((page) => page.filePath)
     ).toEqual(["src/page2"]);
   });
 });

@@ -1,5 +1,5 @@
 import * as vscode from "vscode";
-import { WorkspaceIO } from "uimix/src/project/WorkspaceIO";
+import { ProjectIO } from "uimix/src/project/ProjectIO";
 import { FileAccess, Stats } from "uimix/src/project/FileAccess";
 import * as path from "path";
 import { codeAssetsDestination } from "uimix/src/codeAssets/constants";
@@ -104,10 +104,7 @@ export class WorkspaceAdapter {
   private readonly _onDidChangeCodeAssets = new vscode.EventEmitter<string>();
   readonly onDidChangeCodeAssets = this._onDidChangeCodeAssets.event;
 
-  readonly workspaceIOs = new Map<
-    string /* project root path */,
-    WorkspaceIO
-  >();
+  readonly projectIOs = new Map<string /* project root path */, ProjectIO>();
 
   async projectPathForFile(fsPath: string): Promise<string> {
     if (fsPath === this.rootFolder.uri.fsPath) {
@@ -131,17 +128,17 @@ export class WorkspaceAdapter {
     return this.projectPathForFile(path.dirname(fsPath));
   }
 
-  async getWorkspaceIOForFile(uri: vscode.Uri): Promise<WorkspaceIO> {
+  async getProjectIOForFile(uri: vscode.Uri): Promise<ProjectIO> {
     const projectPath = await this.projectPathForFile(uri.fsPath);
     console.log("project path:", projectPath);
 
-    let workspaceIO = this.workspaceIOs.get(projectPath);
-    if (!workspaceIO) {
-      workspaceIO = new WorkspaceIO(
+    let projectIO = this.projectIOs.get(projectPath);
+    if (!projectIO) {
+      projectIO = new ProjectIO(
         new VSCodeFileAccess(this.rootFolder),
         projectPath
       );
-      const result = await workspaceIO.load();
+      const result = await projectIO.load();
       if (result.problems.length) {
         const message =
           `Error loading workspace:\n` +
@@ -153,22 +150,13 @@ export class WorkspaceAdapter {
         vscode.window.showErrorMessage(message);
       }
       this.disposables.push({
-        dispose: workspaceIO.watch(() => {}),
+        dispose: projectIO.watch(() => {}),
       });
 
-      this.workspaceIOs.set(projectPath, workspaceIO);
+      this.projectIOs.set(projectPath, projectIO);
     }
 
-    return workspaceIO;
-  }
-
-  async save(uri: vscode.Uri) {
-    const workspaceIO = await this.getWorkspaceIOForFile(uri);
-    try {
-      await workspaceIO.save();
-    } catch (e) {
-      vscode.window.showErrorMessage(`Error saving project:\n${e}`);
-    }
+    return projectIO;
   }
 
   readonly disposables: vscode.Disposable[] = [];
