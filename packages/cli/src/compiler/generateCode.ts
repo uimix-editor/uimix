@@ -7,10 +7,11 @@ import { codeAssetsDestination } from "../codeAssets/constants.js";
 import { CSSGenerator } from "./CSSGenerator.js";
 import { ReactGenerator } from "./ReactGenerator.js";
 import { ClassNameGenerator } from "./ClassNameGenerator.js";
+import { ProjectManifest } from "@uimix/model/src/file/types.js";
 
 export async function generateCode(
   rootPath: string,
-  manifest: Data.ProjectManifest,
+  manifest: ProjectManifest,
   projectJSON: Data.Project,
   imagePaths: Map<string, string>
 ): Promise<

@@ -11,6 +11,7 @@ import {
   PageNode,
   loadFromJSXFile,
   stringifyAsJSXFile,
+  ProjectManifest,
 } from "@uimix/model/src/file";
 import { getURLSafeBase64Hash } from "@uimix/foundation/src/utils/Hash";
 import sizeOf from "image-size";
@@ -18,7 +19,7 @@ import { dataUriToBuffer } from "data-uri-to-buffer";
 import * as mime from "mime-types";
 
 interface ProjectData {
-  manifest: Data.ProjectManifest;
+  manifest: ProjectManifest;
   project: Project;
   pages: Map<string, PageNode>;
   imagePaths: Map<string, string>; // hash to path
@@ -147,12 +148,12 @@ export class WorkspaceLoader {
     const problems: LoadProblem[] = [];
 
     try {
-      let manifest: Data.ProjectManifest = {};
+      let manifest: ProjectManifest = {};
 
       const manifestPath = path.join(projectPath, this.uimixProjectFile);
       if ((await this.fileAccess.stat(manifestPath))?.type === "file") {
         try {
-          manifest = Data.ProjectManifest.parse(
+          manifest = ProjectManifest.parse(
             JSON.parse(
               (
                 await this.fileAccess.readFile(

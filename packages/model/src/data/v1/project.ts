@@ -32,14 +32,3 @@ export const Project = z.object({
 });
 
 export type Project = z.infer<typeof Project>;
-
-export const ProjectManifest = z.object({
-  prebuiltAssets: z.array(z.string()).optional(),
-  components: z
-    .object({
-      react: z.array(z.string()).optional(),
-    })
-    .optional(),
-  designTokens: z.string().optional(),
-});
-export type ProjectManifest = z.infer<typeof ProjectManifest>;
