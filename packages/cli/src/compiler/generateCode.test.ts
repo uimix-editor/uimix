@@ -15,9 +15,9 @@ describe(generateCode.name, () => {
     const files = await generateCode(
       rootDir,
       // TODO: better args
-      projectIO.project.manifest,
-      projectIO.project.project.toJSON(),
-      projectIO.project.imagePaths
+      projectIO.content.manifest,
+      projectIO.content.project.toJSON(),
+      projectIO.content.imagePaths
     );
 
     for (const file of files) {

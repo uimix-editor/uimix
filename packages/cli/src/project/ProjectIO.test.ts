@@ -40,7 +40,7 @@ describe(ProjectIO.name, () => {
       new NodeFileAccess(),
       tmpObj.name + "/demo-project"
     );
-    projectIO.project.project = project;
+    projectIO.content.project = project;
     await projectIO.save();
 
     const page1File = fs.readFileSync(
@@ -60,7 +60,7 @@ describe(ProjectIO.name, () => {
       tmpObj.name + "/demo-project"
     );
 
-    expect(new ProjectEmitter(projectIO2.project.project).emit()).toEqual(
+    expect(new ProjectEmitter(projectIO2.content.project).emit()).toEqual(
       new ProjectEmitter(project).emit()
     );
   });
@@ -77,7 +77,7 @@ describe(ProjectIO.name, () => {
       new NodeFileAccess(),
       tmpObj.name + "/demo-project"
     );
-    projectIO.project.project = project;
+    projectIO.content.project = project;
 
     await projectIO.save();
     await new Promise((resolve) => setTimeout(resolve, 500));
@@ -102,7 +102,7 @@ describe(ProjectIO.name, () => {
     expect(watchCount).toBe(1);
 
     expect(
-      projectIO.project.project.pages.all.map((page) => page.filePath)
+      projectIO.content.project.pages.all.map((page) => page.filePath)
     ).toEqual(["src/page2"]);
   });
 });

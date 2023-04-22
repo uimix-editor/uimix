@@ -10,9 +10,9 @@ import { buildCodeAssets } from "../codeAssets/build";
 async function compileProject(projectIO: ProjectIO) {
   const outFiles = await generateCode(
     projectIO.rootPath,
-    projectIO.project.manifest,
-    projectIO.project.project.toJSON(),
-    projectIO.project.imagePaths
+    projectIO.content.manifest,
+    projectIO.content.project.toJSON(),
+    projectIO.content.imagePaths
   );
 
   for (const outFile of outFiles) {
@@ -35,7 +35,7 @@ async function compileCommand(
     projectIO.watch(() => compileProject(projectIO));
   }
 
-  await buildCodeAssets(rootPath, projectIO.project.manifest, options);
+  await buildCodeAssets(rootPath, projectIO.content.manifest, options);
   await compileProject(projectIO);
 }
 

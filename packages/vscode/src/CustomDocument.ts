@@ -66,7 +66,7 @@ export class CustomDocument implements vscode.CustomDocument {
     const relativePath = path.relative(projectIO.rootPath, this.uri.fsPath);
     const pageID = getPageID(relativePath.replace(/\.uimix$/, ""));
 
-    const projectData = projectIO.project.project.data;
+    const projectData = projectIO.content.project.data;
 
     const saveDebounced = debounce(async () => {
       try {

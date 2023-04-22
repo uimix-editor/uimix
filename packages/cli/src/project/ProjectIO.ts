@@ -18,7 +18,7 @@ import sizeOf from "image-size";
 import { dataUriToBuffer } from "data-uri-to-buffer";
 import * as mime from "mime-types";
 
-interface ProjectData {
+interface ProjectIOContent {
   manifest: ProjectManifest;
   project: Project;
   pages: Map<string, PageNode>;
@@ -65,7 +65,7 @@ export class ProjectIO {
   readonly uimixProjectFile = "uimix.json";
   readonly projectBoundary = "package.json"; // TODO: other project boundaries
 
-  project: ProjectData = {
+  content: ProjectIOContent = {
     manifest: {},
     project: new Project(),
     pages: new Map(),
@@ -176,22 +176,22 @@ export class ProjectIO {
         }
       }
 
-      const loader = new ProjectLoader(this.project.project);
+      const loader = new ProjectLoader(this.content.project);
       loader.load(pages);
       for (const [key, image] of images) {
         loader.project.imageManager.images.set(key, image);
       }
 
-      if (isEqual(pages, this.project.pages)) {
+      if (isEqual(pages, this.content.pages)) {
         return {
           changed: false,
           problems,
         };
       }
 
-      this.project.manifest = manifest;
-      this.project.pages = pages;
-      this.project.imagePaths = imagePaths;
+      this.content.manifest = manifest;
+      this.content.pages = pages;
+      this.content.imagePaths = imagePaths;
 
       return {
         changed: true,
@@ -220,7 +220,7 @@ export class ProjectIO {
         await this.fileAccess.glob(this.rootPath, [this.filePattern])
       );
 
-      const projectEmitter = new ProjectEmitter(this.project.project);
+      const projectEmitter = new ProjectEmitter(this.content.project);
       const pages = projectEmitter.emit();
 
       for (const [pageName, pageNode] of pages) {
@@ -233,10 +233,10 @@ export class ProjectIO {
       }
 
       const usedImageHashes = usedImageHashesInProject(
-        this.project.project.toJSON()
+        this.content.project.toJSON()
       );
 
-      for (const [hash, image] of this.project.project.imageManager.images) {
+      for (const [hash, image] of this.content.project.imageManager.images) {
         if (!usedImageHashes.has(hash)) {
           continue;
         }
@@ -269,7 +269,7 @@ export class ProjectIO {
       //   Buffer.from(formatJSON(JSON.stringify(parsed)))
       // );
 
-      this.project.pages = pages;
+      this.content.pages = pages;
 
       for (const pagePath of pagePathsToDelete) {
         await this.fileAccess.remove(pagePath);
