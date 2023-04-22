@@ -1,9 +1,7 @@
 import * as vscode from "vscode";
-import { WorkspaceIO } from "uimix/src/project/WorkspaceIO";
+import { ProjectIO } from "uimix/src/project/ProjectIO";
 import { FileAccess, Stats } from "uimix/src/project/FileAccess";
-import { ProjectData } from "@uimix/model/src/collaborative";
 import * as path from "path";
-import { getPageID } from "@uimix/model/src/data/util";
 import { codeAssetsDestination } from "uimix/src/codeAssets/constants";
 
 let lastSaveTime = 0;
@@ -19,9 +17,10 @@ class VSCodeFileAccess implements FileAccess {
     return this.rootFolder.uri.fsPath;
   }
 
-  watch(pattern: string, onChange: () => void): () => void {
+  watch(cwd: string, patterns: string[], onChange: () => void): () => void {
+    // TODO: should use rootFolder instead of cwd?
     const watcher = vscode.workspace.createFileSystemWatcher(
-      new vscode.RelativePattern(this.rootFolder, pattern)
+      new vscode.RelativePattern(cwd, `**/{${patterns.join(",")},}`)
     );
 
     const _onChange = () => {
@@ -36,9 +35,10 @@ class VSCodeFileAccess implements FileAccess {
     return () => watcher.dispose();
   }
 
-  async glob(pattern: string): Promise<string[]> {
+  async glob(cwd: string, patterns: string[]): Promise<string[]> {
     const urls = await vscode.workspace.findFiles(
-      new vscode.RelativePattern(this.rootFolder, pattern),
+      // TODO: should use rootFolder instead of cwd?
+      new vscode.RelativePattern(cwd, `**/{${patterns.join(",")},}`),
       // TODO: configure excludes
       "**/node_modules/**"
     );
@@ -73,27 +73,8 @@ class VSCodeFileAccess implements FileAccess {
 }
 
 export class WorkspaceAdapter {
-  static async load(rootFolder: vscode.WorkspaceFolder) {
-    const workspaceIO = new WorkspaceIO(new VSCodeFileAccess(rootFolder));
-    const result = await workspaceIO.load();
-    if (result.problems.length) {
-      const message =
-        `Error loading workspace:\n` +
-        result.problems
-          .map((problem) => `${problem.filePath}:\n  ${String(problem.error)}`)
-          .join("\n");
-      vscode.window.showErrorMessage(message);
-    }
-
-    return new WorkspaceAdapter(rootFolder, workspaceIO);
-  }
-
-  constructor(rootFolder: vscode.WorkspaceFolder, workspaceIO: WorkspaceIO) {
+  constructor(rootFolder: vscode.WorkspaceFolder) {
     this.rootFolder = rootFolder;
-    this.workspaceIO = workspaceIO;
-    this.disposables.push({
-      dispose: workspaceIO.watch(() => {}),
-    });
 
     this.codeAssetsWatcher = vscode.workspace.createFileSystemWatcher(
       new vscode.RelativePattern(
@@ -118,42 +99,64 @@ export class WorkspaceAdapter {
   }
 
   readonly rootFolder: vscode.WorkspaceFolder;
-  readonly workspaceIO: WorkspaceIO;
 
   readonly codeAssetsWatcher: vscode.FileSystemWatcher;
   private readonly _onDidChangeCodeAssets = new vscode.EventEmitter<string>();
   readonly onDidChangeCodeAssets = this._onDidChangeCodeAssets.event;
 
-  getDataForProject(projectPath: string): ProjectData {
-    return this.workspaceIO.getOrCreateProject(projectPath).project.data;
-  }
+  readonly projectIOs = new Map<string /* project root path */, ProjectIO>();
 
-  getDataForFile(uri: vscode.Uri): ProjectData {
-    return this.getDataForProject(
-      this.workspaceIO.projectPathForFile(uri.fsPath)
-    );
-  }
-
-  pageIDForFile(uri: vscode.Uri): string {
-    // Important TODO: fix paths in Windows!!
-    const relativePath = path.relative(
-      this.workspaceIO.projectPathForFile(uri.fsPath),
-      uri.fsPath
-    );
-    return getPageID(relativePath.replace(/\.uimix$/, ""));
-  }
-
-  projectPathForFile(uri: vscode.Uri): string {
-    return this.workspaceIO.projectPathForFile(uri.fsPath);
-  }
-
-  async save(uri: vscode.Uri) {
-    const projectPath = this.workspaceIO.projectPathForFile(uri.fsPath);
-    try {
-      await this.workspaceIO.save(projectPath);
-    } catch (e) {
-      vscode.window.showErrorMessage(`Error saving project:\n${e}`);
+  async projectPathForFile(fsPath: string): Promise<string> {
+    if (fsPath === this.rootFolder.uri.fsPath) {
+      return fsPath;
     }
+
+    const packageJSONPath = path.join(fsPath, ProjectIO.projectBoundary);
+
+    try {
+      const stat = await vscode.workspace.fs.stat(
+        vscode.Uri.file(packageJSONPath)
+      );
+      if (stat.type & vscode.FileType.File) {
+        // fsPath is a directory that contains a package.json file
+        return fsPath;
+      }
+    } catch (e) {
+      // no-op
+    }
+
+    return this.projectPathForFile(path.dirname(fsPath));
+  }
+
+  async getProjectIOForFile(uri: vscode.Uri): Promise<ProjectIO> {
+    const projectPath = await this.projectPathForFile(uri.fsPath);
+    console.log("project path:", projectPath);
+
+    let projectIO = this.projectIOs.get(projectPath);
+    if (!projectIO) {
+      projectIO = new ProjectIO(
+        new VSCodeFileAccess(this.rootFolder),
+        projectPath
+      );
+      const result = await projectIO.load();
+      if (result.problems.length) {
+        const message =
+          `Error loading workspace:\n` +
+          result.problems
+            .map(
+              (problem) => `${problem.filePath}:\n  ${String(problem.error)}`
+            )
+            .join("\n");
+        vscode.window.showErrorMessage(message);
+      }
+      this.disposables.push({
+        dispose: projectIO.watch(() => {}),
+      });
+
+      this.projectIOs.set(projectPath, projectIO);
+    }
+
+    return projectIO;
   }
 
   readonly disposables: vscode.Disposable[] = [];

@@ -1,6 +1,6 @@
 // Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`WorkspaceIO > saves 1`] = `
+exports[`ProjectIO > saves 1`] = `
 "export default (
   <page>
     <frame name=\\"\\" />
@@ -9,19 +9,10 @@ exports[`WorkspaceIO > saves 1`] = `
 "
 `;
 
-exports[`WorkspaceIO > saves 2`] = `
+exports[`ProjectIO > saves 2`] = `
 "export default (
   <page>
     <text name=\\"\\" />
-  </page>
-);
-"
-`;
-
-exports[`WorkspaceIO > saves 3`] = `
-"export default (
-  <page>
-    <frame name=\\"\\" />
   </page>
 );
 "

@@ -2,8 +2,6 @@ export default (
   <page>
     <component id="Button" name="Button">
       <frame
-        id=""
-        name=""
         position={{ left: 50, top: 400 }}
         width="hug"
         height="hug"
@@ -45,8 +43,6 @@ export default (
     </component>
     <component id="Stack" name="Stack">
       <frame
-        id=""
-        name="Stack"
         position={{ left: 50, top: 184 }}
         width="hug"
         height="hug"
@@ -106,14 +102,11 @@ export default (
           name="Button"
           position={{ left: 416, top: 234 }}
           component="Button"
-          overrides={{ text: {} }}
         />
       </frame>
     </component>
     <component id="Page" name="Page">
       <frame
-        id=""
-        name="Frame"
         position={{ left: 50, top: 585 }}
         width={900}
         height={456}
@@ -133,7 +126,6 @@ export default (
           component="./stories/Header.tsx#Header"
           componentType="react"
           props={{}}
-          variants={{ "maxWidth:767": {} }}
         />
         <frame
           id="frame"
@@ -142,7 +134,6 @@ export default (
           width={{ min: 0 }}
           height={{ min: 0 }}
           fills={[{ solid: "#FFFFFF" }]}
-          variants={{ "maxWidth:767": {} }}
         >
           <foreign
             id="button"
@@ -158,7 +149,6 @@ export default (
               backgroundColor: "red",
               size: "large",
             }}
-            variants={{ "maxWidth:767": {} }}
           />
           <instance
             id="instance"
@@ -167,7 +157,6 @@ export default (
             fills={[{ solid: "#BABABA" }]}
             component="Button"
             overrides={{ text: { textContent: "Override Name" } }}
-            variants={{ "maxWidth:767": { overrides: { text: {} } } }}
           />
           <image
             id="image"
@@ -176,8 +165,7 @@ export default (
             width={100}
             height={100}
             fills={[{ solid: "#FFFFFF" }]}
-            image="./images/YmY-tuteU03QY-k_2ARy1uacNmXDNmOX-FFAlj2qCIo.png"
-            variants={{ "maxWidth:767": {} }}
+            image="./src/images/YmY-tuteU03QY-k_2ARy1uacNmXDNmOX-FFAlj2qCIo.png"
           />
           <instance
             id="stack"
@@ -185,11 +173,7 @@ export default (
             position={{ left: 165, top: 86 }}
             component="Stack"
             overrides={{
-              item_0: {},
-              item_1: {},
               hidden_Item: { hidden: false },
-              item_2: {},
-              text: {},
               button: {
                 overrides: { text: { textContent: "Nested Override" } },
               },
@@ -197,11 +181,6 @@ export default (
             variants={{
               "maxWidth:767": {
                 overrides: {
-                  item_0: {},
-                  item_1: {},
-                  hidden_Item: {},
-                  item_2: {},
-                  text: {},
                   button: {
                     overrides: { text: { fills: [{ solid: "#FF0000" }] } },
                   },
@@ -215,8 +194,6 @@ export default (
     </component>
     <component id="Card" name="Card">
       <frame
-        id=""
-        name="Frame 14"
         hidden={false}
         position={{ left: 50, top: 1144 }}
         width={400}
@@ -310,7 +287,6 @@ export default (
       </frame>
     </component>
     <frame
-      id=""
       name="Frame"
       position={{ left: 631, top: 184 }}
       width={459}
@@ -323,7 +299,6 @@ export default (
       paddingLeft={12}
     >
       <frame
-        id=""
         name="Stack"
         position={{ left: 24, top: 14 }}
         width="hug"
@@ -338,21 +313,18 @@ export default (
         paddingLeft={40}
       >
         <frame
-          id=""
           name="Item 0"
           width={{ min: 25, max: 100 }}
           height={{ min: 20, max: 60 }}
           fills={[{ solid: { token: "red_Orange" } }]}
         />
         <frame
-          id=""
           name="Item 1"
           width={40}
           height={80}
           fills={[{ solid: "#22C55E" }]}
         />
         <frame
-          id=""
           name="Hidden Item"
           hidden={true}
           width={40}
@@ -360,14 +332,12 @@ export default (
           fills={[{ solid: "#22C55E" }]}
         />
         <frame
-          id=""
           name="Item 2"
           width={80}
           height={40}
           fills={[{ solid: { token: "blue/500" } }]}
         />
         <text
-          id=""
           name="Text"
           width="hug"
           height="hug"
