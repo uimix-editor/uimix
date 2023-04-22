@@ -80,7 +80,7 @@ export class ProjectIO {
       ProjectIO.projectBoundary,
     ]);
 
-    const projectPaths = projectBoundaryFilePaths
+    const subProjectPaths = projectBoundaryFilePaths
       .map((filePath) => path.dirname(filePath))
       .filter((projectPath) => this.rootPath !== projectPath);
 
@@ -91,7 +91,7 @@ export class ProjectIO {
       ])
     ).filter(
       (filePath) =>
-        !projectPaths.some((projectPath) =>
+        !subProjectPaths.some((projectPath) =>
           filePath.startsWith(projectPath + "/")
         )
     );
