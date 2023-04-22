@@ -31,4 +31,4 @@ jobs:
       - run: cd packages/desktop && npm install
       - run: pnpm build
       - run: pnpm test
-      - run: pnpm lint --concurrency 2
+      - run: pnpm lint --concurrency 1
