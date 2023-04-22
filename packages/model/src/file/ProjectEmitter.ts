@@ -293,7 +293,7 @@ export class PageEmitter {
     }
   }
 
-  transformStyle(style: Partial<Data.StyleJSON>): Partial<File.BaseStyleProps> {
+  transformStyle(style: Partial<Data.Style>): Partial<File.BaseStyleProps> {
     const mainComponent =
       style.mainComponent != null
         ? this.project.componentForID(style.mainComponent)

@@ -1,4 +1,4 @@
-import { VariantCondition } from "../data/v1";
+import * as Data from "../data/v1";
 import { generateRefIDs } from "@uimix/foundation/src/utils/Name";
 import { Node } from "./Node";
 import { Selectable } from "./Selectable";
@@ -88,11 +88,11 @@ export class Variant {
     return Component.from(parent);
   }
 
-  get condition(): VariantCondition | undefined {
+  get condition(): Data.VariantCondition | undefined {
     return this.node.condition;
   }
 
-  set condition(condition: VariantCondition | undefined) {
+  set condition(condition: Data.VariantCondition | undefined) {
     this.node.condition = condition;
   }
 }

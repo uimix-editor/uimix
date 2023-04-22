@@ -8,8 +8,8 @@ import {
   getIncrementalUniqueName,
 } from "@uimix/foundation/src/utils/Name";
 import { Component, Selectable, Page } from "@uimix/model/src/models";
-import { ProjectManifestJSON } from "@uimix/model/src/data/v1";
 import { ClassNameGenerator } from "./ClassNameGenerator";
+import { ProjectManifest } from "@uimix/model/src/file";
 
 // TODO: remove this when react-element-to-jsx-string is fixed
 const reactElementToJSXStringFixed =
@@ -85,7 +85,7 @@ function getExternalModulePaths(components: Component[]): Set<string> {
 export class ReactGenerator {
   constructor(options: {
     rootPath: string;
-    manifest: ProjectManifestJSON;
+    manifest: ProjectManifest;
     page: Page;
     imagePaths: Map<string, string>;
     classNameGenerator: ClassNameGenerator;
@@ -108,7 +108,7 @@ export class ReactGenerator {
   }
 
   rootPath: string;
-  manifest: ProjectManifestJSON;
+  manifest: ProjectManifest;
   page: Page;
   imagePaths: Map<string, string>;
   classNameGenerator: ClassNameGenerator;

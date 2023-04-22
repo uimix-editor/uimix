@@ -1,4 +1,4 @@
-import { ForeignComponentRef } from "@uimix/model/src/data/v1";
+import * as Data from "@uimix/model/src/data/v1";
 import { action, observable, reaction } from "mobx";
 import type React from "react";
 import type ReactDOM from "react-dom/client";
@@ -118,7 +118,7 @@ export class ForeignComponentManager {
   readonly loadedLinks: HTMLLinkElement[] = [];
 
   get(
-    ref: ForeignComponentRef
+    ref: Data.ForeignComponentRef
   ): (CodeAsset.Component & { key: number }) | undefined {
     return this.components.get(foreignComponentKey(ref));
   }

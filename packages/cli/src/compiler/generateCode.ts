@@ -1,17 +1,18 @@
 import * as path from "path";
 import { DesignTokens } from "@uimix/code-asset-types";
-import { ProjectJSON, ProjectManifestJSON } from "@uimix/model/src/data/v1";
+import * as Data from "@uimix/model/src/data/v1";
 import { Project } from "@uimix/model/src/models";
 import { formatTypeScript } from "../format.js";
 import { codeAssetsDestination } from "../codeAssets/constants.js";
 import { CSSGenerator } from "./CSSGenerator.js";
 import { ReactGenerator } from "./ReactGenerator.js";
 import { ClassNameGenerator } from "./ClassNameGenerator.js";
+import { ProjectManifest } from "@uimix/model/src/file/types.js";
 
 export async function generateCode(
   rootPath: string,
-  manifest: ProjectManifestJSON,
-  projectJSON: ProjectJSON,
+  manifest: ProjectManifest,
+  projectJSON: Data.Project,
   imagePaths: Map<string, string>
 ): Promise<
   {

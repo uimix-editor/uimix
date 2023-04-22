@@ -262,3 +262,14 @@ export function loadFromJSXFile(text: string): PageNode {
   });
   return PageNode.parse(exports.default);
 }
+
+export const ProjectManifest = z.object({
+  prebuiltAssets: z.array(z.string()).optional(),
+  components: z
+    .object({
+      react: z.array(z.string()).optional(),
+    })
+    .optional(),
+  designTokens: z.string().optional(),
+});
+export type ProjectManifest = z.infer<typeof ProjectManifest>;

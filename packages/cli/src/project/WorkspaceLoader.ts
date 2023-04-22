@@ -1,8 +1,4 @@
-import {
-  Image,
-  ProjectManifestJSON,
-  ImageType,
-} from "@uimix/model/src/data/v1";
+import * as Data from "@uimix/model/src/data/v1";
 import { usedImageHashesInProject } from "@uimix/model/src/data/util";
 import { isEqual } from "lodash-es";
 import { formatTypeScript } from "../format";
@@ -15,6 +11,7 @@ import {
   PageNode,
   loadFromJSXFile,
   stringifyAsJSXFile,
+  ProjectManifest,
 } from "@uimix/model/src/file";
 import { getURLSafeBase64Hash } from "@uimix/foundation/src/utils/Hash";
 import sizeOf from "image-size";
@@ -22,7 +19,7 @@ import { dataUriToBuffer } from "data-uri-to-buffer";
 import * as mime from "mime-types";
 
 interface ProjectData {
-  manifest: ProjectManifestJSON;
+  manifest: ProjectManifest;
   project: Project;
   pages: Map<string, PageNode>;
   imagePaths: Map<string, string>; // hash to path
@@ -151,12 +148,12 @@ export class WorkspaceLoader {
     const problems: LoadProblem[] = [];
 
     try {
-      let manifest: ProjectManifestJSON = {};
+      let manifest: ProjectManifest = {};
 
       const manifestPath = path.join(projectPath, this.uimixProjectFile);
       if ((await this.fileAccess.stat(manifestPath))?.type === "file") {
         try {
-          manifest = ProjectManifestJSON.parse(
+          manifest = ProjectManifest.parse(
             JSON.parse(
               (
                 await this.fileAccess.readFile(
@@ -173,7 +170,7 @@ export class WorkspaceLoader {
         }
       }
 
-      const images = new Map<string, Image>();
+      const images = new Map<string, Data.Image>();
       const pages = new Map<string, PageNode>();
       const imagePaths = new Map<string, string>();
 
@@ -204,10 +201,10 @@ export class WorkspaceLoader {
             const mimeType = mime.lookup(filePath) || "image/png";
             const size = sizeOf(imageData);
 
-            const image: Image = {
+            const image: Data.Image = {
               width: size.width ?? 0,
               height: size.height ?? 0,
-              type: mimeType as ImageType,
+              type: mimeType as Data.ImageType,
               url: `data:${mimeType};base64,${imageData.toString("base64")}`,
             };
             images.set(hash, image);

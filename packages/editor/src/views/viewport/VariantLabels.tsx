@@ -20,7 +20,7 @@ import { viewportState } from "../../state/ViewportState";
 import { Rect, Vec2 } from "paintvec";
 import { resizeWithBoundingBox } from "@uimix/model/src/services";
 import { twMerge } from "tailwind-merge";
-import { VariantCondition } from "@uimix/model/src/data/v1";
+import * as Data from "@uimix/model/src/data/v1";
 import { startCase } from "lodash-es";
 import { viewOptions } from "../../state/ViewOptions";
 import { showContextMenu } from "../ContextMenu";
@@ -446,7 +446,7 @@ export const VariantLabels: React.FC = observer(function VariantLabels() {
 
 export function getIconAndTextForCondition(
   condition:
-    | VariantCondition
+    | Data.VariantCondition
     | {
         type: "default";
       }
@@ -489,8 +489,8 @@ export function getIconAndTextForCondition(
 }
 
 const ConditionEditor: React.FC<{
-  value: VariantCondition;
-  onChangeValue: (value: VariantCondition) => void;
+  value: Data.VariantCondition;
+  onChangeValue: (value: Data.VariantCondition) => void;
 }> = ({ value: condition, onChangeValue: onChangeCondition }) => {
   return (
     <div className="grid grid-cols-[1fr_1fr] gap-2 items-center">

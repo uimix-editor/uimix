@@ -1,7 +1,7 @@
 import * as Y from "yjs";
 import { Selectable, SelectableMap } from "./Selectable";
 import { Node, NodeMap } from "./Node";
-import { ProjectJSON } from "../data/v1";
+import * as Data from "../data/v1";
 import { ImageManager } from "./ImageManager";
 import { Component } from "./Component";
 import { ObservableYArray } from "@uimix/foundation/src/utils/ObservableYArray";
@@ -49,11 +49,11 @@ export class Project {
     this.nodes.create("project", "project");
   }
 
-  toJSON(): ProjectJSON {
+  toJSON(): Data.Project {
     return this.data.toJSON();
   }
 
-  loadJSON(json: ProjectJSON) {
+  loadJSON(json: Data.Project) {
     this.data.loadJSON(json);
   }
 

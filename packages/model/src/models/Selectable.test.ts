@@ -1,13 +1,13 @@
 import { describe, expect, it } from "vitest";
 import { Project } from "./Project";
 import { selectablesToProjectJSON } from "./Selectable";
-import { ProjectJSON } from "../data/v1";
+import * as Data from "../data/v1";
 // @ts-ignore
 import projectJSONFile from "./__fixtures__/project.uimixproject?raw";
 
 describe(selectablesToProjectJSON.name, () => {
   it("works", async () => {
-    const projectJSON = ProjectJSON.parse(
+    const projectJSON = Data.Project.parse(
       JSON.parse(projectJSONFile as string)
     );
 

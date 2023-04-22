@@ -284,7 +284,7 @@ class PageLoader {
     return path.basename(imagePath, path.extname(imagePath));
   }
 
-  transformStyle(style: Partial<File.BaseStyleProps>): Partial<Data.StyleJSON> {
+  transformStyle(style: Partial<File.BaseStyleProps>): Partial<Data.Style> {
     let mainComponentID: string | undefined;
     let foreignComponentRef: Data.ForeignComponentRef | undefined;
 
@@ -308,7 +308,7 @@ class PageLoader {
       }
     }
 
-    return filterUndefined<Partial<Data.StyleJSON>>({
+    return filterUndefined<Partial<Data.Style>>({
       hidden: style.hidden,
       locked: style.locked,
       position: style.position && this.transformPosition(style.position),

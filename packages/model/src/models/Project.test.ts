@@ -2,12 +2,12 @@ import { describe, expect, it } from "vitest";
 import { Project } from "./Project";
 // @ts-ignore
 import projectJSONFile from "./__fixtures__/project.uimixproject?raw";
-import { ProjectJSON } from "../data/v1";
+import * as Data from "../data/v1";
 
 describe(Project.name, () => {
   describe("loadJSON", () => {
     it("works", async () => {
-      const projectJSON = ProjectJSON.parse(
+      const projectJSON = Data.Project.parse(
         JSON.parse(projectJSONFile as string)
       );
 
@@ -24,7 +24,7 @@ describe(Project.name, () => {
 
   describe("toJSON", () => {
     it("works ", async () => {
-      const projectJSON = ProjectJSON.parse(
+      const projectJSON = Data.Project.parse(
         JSON.parse(projectJSONFile as string)
       );
 
