@@ -114,7 +114,8 @@ export class PageEmitter {
 
   emitNode(
     selectable: Selectable,
-    refIDs: Map<string, string>
+    refIDs: Map<string, string>,
+    isComponentRoot = false
   ): File.SceneNode {
     const node = selectable.originalNode;
 
@@ -141,17 +142,24 @@ export class PageEmitter {
       )
     );
 
+    const props: File.SceneNode["props"] = {};
+    if (refID) {
+      props.id = refID;
+    }
+    if (!isComponentRoot) {
+      props.name = node.name;
+    }
+
+    Object.assign(props, this.getStyleForSelectable(selectable));
+
+    if (Object.keys(variantStyles).length > 0) {
+      props.variants = variantStyles;
+    }
+
     return {
       // TODO: better typing
       type: node.type as File.SceneNode["type"],
-      props: {
-        id: refID ?? "",
-        name: node.name,
-        ...this.getStyleForSelectable(selectable),
-        ...(Object.keys(variantStyles).length > 0
-          ? { variants: variantStyles }
-          : {}),
-      },
+      props,
       children,
     };
   }
@@ -400,7 +408,8 @@ export class ComponentEmitter {
       children: [
         this.pageEmitter.emitNode(
           this.component.rootNode.selectable,
-          this.refIDs
+          this.refIDs,
+          true
         ),
         ...this.emitVariants(),
       ],

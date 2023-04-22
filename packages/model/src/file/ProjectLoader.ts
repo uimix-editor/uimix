@@ -101,7 +101,9 @@ class PageLoader {
     node.append(children);
 
     this.nodeToInput.set(node, inputNode);
-    refIDs.set(node.id, inputNode.props.id);
+    if (inputNode.props.id) {
+      refIDs.set(node.id, inputNode.props.id);
+    }
 
     return node;
   }

@@ -5,8 +5,6 @@ exports[`ProjectEmitter > works > src/button 1`] = `
   <page>
     <component id=\\"Button\\" name=\\"Button\\">
       <frame
-        id=\\"\\"
-        name=\\"\\"
         position={{ left: 50, top: 400 }}
         width=\\"hug\\"
         height=\\"hug\\"
@@ -56,8 +54,6 @@ exports[`ProjectEmitter > works > src/components 1`] = `
   <page>
     <component id=\\"Stack\\" name=\\"Stack\\">
       <frame
-        id=\\"\\"
-        name=\\"Stack\\"
         position={{ left: 50, top: 184 }}
         width=\\"hug\\"
         height=\\"hug\\"
@@ -122,8 +118,6 @@ exports[`ProjectEmitter > works > src/components 1`] = `
     </component>
     <component id=\\"Page\\" name=\\"Page\\">
       <frame
-        id=\\"\\"
-        name=\\"Frame\\"
         position={{ left: 50, top: 585 }}
         width={900}
         height={456}
@@ -211,8 +205,6 @@ exports[`ProjectEmitter > works > src/components 1`] = `
     </component>
     <component id=\\"Card\\" name=\\"Card\\">
       <frame
-        id=\\"\\"
-        name=\\"Frame 14\\"
         hidden={false}
         position={{ left: 50, top: 1144 }}
         width={400}
@@ -306,7 +298,6 @@ exports[`ProjectEmitter > works > src/components 1`] = `
       </frame>
     </component>
     <frame
-      id=\\"\\"
       name=\\"Frame\\"
       position={{ left: 631, top: 184 }}
       width={459}
@@ -319,7 +310,6 @@ exports[`ProjectEmitter > works > src/components 1`] = `
       paddingLeft={12}
     >
       <frame
-        id=\\"\\"
         name=\\"Stack\\"
         position={{ left: 24, top: 14 }}
         width=\\"hug\\"
@@ -334,21 +324,18 @@ exports[`ProjectEmitter > works > src/components 1`] = `
         paddingLeft={40}
       >
         <frame
-          id=\\"\\"
           name=\\"Item 0\\"
           width={{ min: 25, max: 100 }}
           height={{ min: 20, max: 60 }}
           fills={[{ solid: { token: \\"red_Orange\\" } }]}
         />
         <frame
-          id=\\"\\"
           name=\\"Item 1\\"
           width={40}
           height={80}
           fills={[{ solid: \\"#22C55E\\" }]}
         />
         <frame
-          id=\\"\\"
           name=\\"Hidden Item\\"
           hidden={true}
           width={40}
@@ -356,14 +343,12 @@ exports[`ProjectEmitter > works > src/components 1`] = `
           fills={[{ solid: \\"#22C55E\\" }]}
         />
         <frame
-          id=\\"\\"
           name=\\"Item 2\\"
           width={80}
           height={40}
           fills={[{ solid: { token: \\"blue/500\\" } }]}
         />
         <text
-          id=\\"\\"
           name=\\"Text\\"
           width=\\"hug\\"
           height=\\"hug\\"
@@ -388,8 +373,6 @@ exports[`ProjectEmitter > works > src/landing 1`] = `
   <page>
     <component id=\\"Header\\" name=\\"Header\\">
       <frame
-        id=\\"\\"
-        name=\\"Frame\\"
         position={{ left: 20, top: 20 }}
         width={1183}
         height={72}
@@ -674,8 +657,6 @@ exports[`ProjectEmitter > works > src/landing 1`] = `
     </component>
     <component id=\\"Landing\\" name=\\"Landing\\">
       <frame
-        id=\\"\\"
-        name=\\"Landing\\"
         hidden={false}
         position={{ left: 20, top: 200 }}
         width={1440}

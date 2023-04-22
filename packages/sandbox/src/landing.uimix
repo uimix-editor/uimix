@@ -2,8 +2,6 @@ export default (
   <page>
     <component id="Header" name="Header">
       <frame
-        id=""
-        name="Frame"
         position={{ left: 20, top: 20 }}
         width={1183}
         height={72}
@@ -288,8 +286,6 @@ export default (
     </component>
     <component id="Landing" name="Landing">
       <frame
-        id=""
-        name="Landing"
         hidden={false}
         position={{ left: 20, top: 200 }}
         width={1440}

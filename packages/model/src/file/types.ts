@@ -130,8 +130,8 @@ const SceneNodeBase = z.object({
   type: z.enum(["frame", "instance", "text", "svg", "image", "foreign"]),
   props: z.intersection(
     z.object({
-      id: z.string(),
-      name: z.string(),
+      id: z.string().optional(),
+      name: z.string().optional(),
     }),
     StyleProps
   ),

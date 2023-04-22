@@ -3,7 +3,7 @@
 exports[`WorkspaceLoader > saves 1`] = `
 "export default (
   <page>
-    <frame id=\\"\\" name=\\"\\" />
+    <frame name=\\"\\" />
   </page>
 );
 "
@@ -12,7 +12,7 @@ exports[`WorkspaceLoader > saves 1`] = `
 exports[`WorkspaceLoader > saves 2`] = `
 "export default (
   <page>
-    <text id=\\"\\" name=\\"\\" />
+    <text name=\\"\\" />
   </page>
 );
 "
@@ -21,7 +21,7 @@ exports[`WorkspaceLoader > saves 2`] = `
 exports[`WorkspaceLoader > saves 3`] = `
 "export default (
   <page>
-    <frame id=\\"\\" name=\\"\\" />
+    <frame name=\\"\\" />
   </page>
 );
 "

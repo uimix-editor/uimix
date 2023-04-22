@@ -2,8 +2,6 @@ export default (
   <page>
     <component id="Button" name="Button">
       <frame
-        id=""
-        name=""
         position={{ left: 50, top: 400 }}
         width="hug"
         height="hug"
