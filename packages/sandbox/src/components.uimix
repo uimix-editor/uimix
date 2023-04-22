@@ -63,7 +63,6 @@ export default (
           name="Button"
           position={{ left: 416, top: 234 }}
           component="./button.uimix#Button"
-          overrides={{ text: {} }}
         />
       </frame>
     </component>
@@ -90,7 +89,6 @@ export default (
           component="./stories/Header.tsx#Header"
           componentType="react"
           props={{}}
-          variants={{ "maxWidth:767": {} }}
         />
         <frame
           id="frame"
@@ -99,7 +97,6 @@ export default (
           width={{ min: 0 }}
           height={{ min: 0 }}
           fills={[{ solid: "#FFFFFF" }]}
-          variants={{ "maxWidth:767": {} }}
         >
           <foreign
             id="button"
@@ -115,7 +112,6 @@ export default (
               backgroundColor: "red",
               size: "large",
             }}
-            variants={{ "maxWidth:767": {} }}
           />
           <instance
             id="instance"
@@ -124,7 +120,6 @@ export default (
             fills={[{ solid: "#BABABA" }]}
             component="./button.uimix#Button"
             overrides={{ text: { textContent: "Override Name" } }}
-            variants={{ "maxWidth:767": { overrides: { text: {} } } }}
           />
           <image
             id="image"
@@ -134,7 +129,6 @@ export default (
             height={100}
             fills={[{ solid: "#FFFFFF" }]}
             image="./images/YmY-tuteU03QY-k_2ARy1uacNmXDNmOX-FFAlj2qCIo.png"
-            variants={{ "maxWidth:767": {} }}
           />
           <instance
             id="stack"
@@ -142,11 +136,7 @@ export default (
             position={{ left: 165, top: 86 }}
             component="Stack"
             overrides={{
-              item_0: {},
-              item_1: {},
               hidden_Item: { hidden: false },
-              item_2: {},
-              text: {},
               button: {
                 overrides: { text: { textContent: "Nested Override" } },
               },
@@ -154,11 +144,6 @@ export default (
             variants={{
               "maxWidth:767": {
                 overrides: {
-                  item_0: {},
-                  item_1: {},
-                  hidden_Item: {},
-                  item_2: {},
-                  text: {},
                   button: {
                     overrides: { text: { fills: [{ solid: "#FF0000" }] } },
                   },
