@@ -296,6 +296,11 @@ export class WorkspaceLoader {
 
           const decoded = dataUriToBuffer(image.url);
           // const suffix = mime.extension(decoded.type) || "bin";
+
+          // TODO:
+          // - update file if hash is different
+          // - auto-fix name collisions
+
           const filePath = path.join(projectPath, image.filePath);
           if (await this.fileAccess.stat(filePath)) {
             continue;
