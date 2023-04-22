@@ -14,15 +14,15 @@ import {
 } from "@uimix/foundation/src/components";
 import { projectState } from "../../state/ProjectState";
 import { commands } from "../../state/Commands";
-import { PageHierarchyEntry } from "@uimix/model/src/models";
+import { Page, PathHierarchy } from "@uimix/model/src/models";
 import { showContextMenu } from "../ContextMenu";
 
 interface PageTreeViewItem extends TreeViewItem {
-  entry: PageHierarchyEntry;
+  entry: PathHierarchy<Page>;
 }
 
 function buildTreeViewItem(
-  entry: PageHierarchyEntry,
+  entry: PathHierarchy<Page>,
   parent?: PageTreeViewItem
 ): PageTreeViewItem {
   const treeViewItem: PageTreeViewItem = {
@@ -57,12 +57,12 @@ const PageRow = observer(
     const { entry } = item;
 
     const selected =
-      entry.type === "file" && entry.page.id === projectState.page?.id;
+      entry.type === "file" && entry.target.id === projectState.page?.id;
     const collapsed = projectState.collapsedPaths.has(entry.path);
 
     const onClick = action(() => {
       if (entry.type === "file") {
-        projectState.openPage(entry.page);
+        projectState.openPage(entry.target);
       }
     });
     const onCollapsedChange = action((value: boolean) => {

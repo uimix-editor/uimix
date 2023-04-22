@@ -1,4 +1,3 @@
-import { posix as path } from "path-browserify";
 import { Node } from "./Node";
 import { computed, makeObservable } from "mobx";
 import { Page } from "./Page";
@@ -6,26 +5,7 @@ import { compact } from "lodash-es";
 import { assertNonNull } from "@uimix/foundation/src/utils/Assert";
 import { Project } from "./Project";
 import { getPageID } from "../data/util";
-
-export interface PageHierarchyFolderEntry {
-  type: "directory";
-  id: string;
-  path: string;
-  name: string;
-  children: PageHierarchyEntry[];
-}
-
-export interface PageHierarchyPageEntry {
-  type: "file";
-  id: string;
-  path: string;
-  name: string;
-  page: Page;
-}
-
-export type PageHierarchyEntry =
-  | PageHierarchyFolderEntry
-  | PageHierarchyPageEntry;
+import { PathHierarchyFolder, PathHierarchy } from "./PathHierarchy";
 
 export class PageList {
   constructor(project: Project) {
@@ -54,68 +34,12 @@ export class PageList {
     return page;
   }
 
-  toHierarchy(): PageHierarchyFolderEntry {
-    const root: PageHierarchyFolderEntry = {
-      type: "directory",
-      id: "",
-      name: "",
-      path: "",
-      children: [],
-    };
-    const parents = new Map<string, PageHierarchyFolderEntry>();
-    parents.set("", root);
-
-    const mkdirp = (segments: string[]): PageHierarchyFolderEntry => {
-      if (segments.length === 0) {
-        return root;
-      }
-
-      const existing = parents.get(segments.join("/"));
-      if (existing) {
-        return existing;
-      }
-
-      const parent = mkdirp(segments.slice(0, -1));
-      const dir: PageHierarchyFolderEntry = {
-        type: "directory",
-        id: segments.join("/"),
-        name: segments[segments.length - 1],
-        path: segments.join("/"),
-        children: [],
-      };
-      parent.children.push(dir);
-      parents.set(segments.join("/"), dir);
-      return dir;
-    };
-
-    const pages = Array.from(this.all);
-    pages.sort((a, b) => a.filePath.localeCompare(b.filePath));
-
-    for (const page of pages) {
-      const segments = page.filePath.split(path.sep);
-      const parent = mkdirp(segments.slice(0, -1));
-
-      const item: PageHierarchyPageEntry = {
-        type: "file",
-        id: page.id,
-        name: segments[segments.length - 1],
-        path: page.filePath,
-        page,
-      };
-      parent.children.push(item);
-    }
-
-    return root;
-  }
-
-  pagesForPath(path: string): Page[] {
-    return this.all.filter(
-      (page) => page.filePath === path || page.filePath.startsWith(path + "/")
-    );
+  toHierarchy(): PathHierarchyFolder<Page> {
+    return PathHierarchy.build(this.all);
   }
 
   delete(path: string): Page[] {
-    const deletedPages = this.pagesForPath(path);
+    const deletedPages = PathHierarchy.targetsForPath(this.all, path);
 
     for (const page of deletedPages) {
       page.node.remove();
@@ -140,7 +64,7 @@ export class PageList {
       };
     }
 
-    const originalPages = this.pagesForPath(path);
+    const originalPages = PathHierarchy.targetsForPath(this.all, path);
     const newPages: Page[] = [];
 
     for (const page of originalPages) {
