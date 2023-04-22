@@ -1,6 +1,5 @@
 import * as vscode from "vscode";
 import { WorkspaceAdapter } from "./WorkspaceAdapter";
-import { ProjectData } from "@uimix/model/src/collaborative";
 import {
   IEditorToVSCodeRPCHandler,
   IVSCodeToEditorRPCHandler,

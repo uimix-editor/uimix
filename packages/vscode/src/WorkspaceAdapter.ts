@@ -1,9 +1,7 @@
 import * as vscode from "vscode";
 import { WorkspaceIO } from "uimix/src/project/WorkspaceIO";
 import { FileAccess, Stats } from "uimix/src/project/FileAccess";
-import { ProjectData } from "@uimix/model/src/collaborative";
 import * as path from "path";
-import { getPageID } from "@uimix/model/src/data/util";
 import { codeAssetsDestination } from "uimix/src/codeAssets/constants";
 
 let lastSaveTime = 0;
