@@ -73,26 +73,26 @@ export class WorkspaceIO {
   };
 
   async load(): Promise<LoadResult> {
-    let filePaths = await this.fileAccess.glob(this.rootPath, [
-      this.filePattern,
-      ...this.imagePatterns,
+    const projectBoundaryFilePaths = await this.fileAccess.glob(this.rootPath, [
       this.projectBoundary,
     ]);
-    filePaths.sort();
 
-    const projectBoundaryFilePaths = filePaths.filter((filePath) =>
-      filePath.endsWith(this.projectBoundary)
-    );
     const projectPaths = projectBoundaryFilePaths
       .map((filePath) => path.dirname(filePath))
       .filter((projectPath) => this.rootPath !== projectPath);
 
-    filePaths = filePaths.filter(
+    const filePaths = (
+      await this.fileAccess.glob(this.rootPath, [
+        this.filePattern,
+        ...this.imagePatterns,
+      ])
+    ).filter(
       (filePath) =>
         !projectPaths.some((projectPath) =>
           filePath.startsWith(projectPath + "/")
         )
     );
+    filePaths.sort();
 
     return this.loadProject(this.rootPath, filePaths);
   }

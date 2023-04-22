@@ -17,12 +17,3 @@ exports[`WorkspaceIO > saves 2`] = `
 );
 "
 `;
-
-exports[`WorkspaceIO > saves 3`] = `
-"export default (
-  <page>
-    <frame name=\\"\\" />
-  </page>
-);
-"
-`;
