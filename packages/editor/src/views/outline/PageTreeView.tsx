@@ -14,15 +14,15 @@ import {
 } from "@uimix/foundation/src/components";
 import { projectState } from "../../state/ProjectState";
 import { commands } from "../../state/Commands";
-import { Page, PathHierarchy } from "@uimix/model/src/models";
+import { Page, PathTreeModelItem } from "@uimix/model/src/models";
 import { showContextMenu } from "../ContextMenu";
 
 interface PageTreeViewItem extends TreeViewItem {
-  entry: PathHierarchy<Page>;
+  entry: PathTreeModelItem<Page>;
 }
 
 function buildTreeViewItem(
-  entry: PathHierarchy<Page>,
+  entry: PathTreeModelItem<Page>,
   parent?: PageTreeViewItem
 ): PageTreeViewItem {
   const treeViewItem: PageTreeViewItem = {
@@ -126,7 +126,7 @@ const PageRow = observer(
 );
 
 export const PageTreeView = observer(() => {
-  const rootItem = buildTreeViewItem(projectState.project.pages.toHierarchy());
+  const rootItem = buildTreeViewItem(projectState.pageTreeModel.root);
 
   return (
     <TreeView

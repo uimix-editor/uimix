@@ -1,8 +1,13 @@
 import { computed, makeObservable, observable } from "mobx";
 import * as Y from "yjs";
 import * as Data from "@uimix/model/src/data/v1";
-import { usedImageHashesInStyle } from "@uimix/model/src/data/util";
-import { Project, Page, Selectable } from "@uimix/model/src/models";
+import { getPageID, usedImageHashesInStyle } from "@uimix/model/src/data/util";
+import {
+  Project,
+  Page,
+  Selectable,
+  PathTreeModel,
+} from "@uimix/model/src/models";
 import { getIncrementalUniqueName } from "@uimix/foundation/src/utils/Name";
 import { PageState } from "./PageState";
 import { ScrollState } from "./ScrollState";
@@ -53,10 +58,6 @@ export class ProjectState {
   @computed get selectedSelectables(): Selectable[] {
     return this.pageState?.selectedSelectables ?? [];
   }
-
-  // MARK: Collapsing
-
-  readonly collapsedPaths = observable.set<string>();
 
   // MARK: Nodes
 
@@ -260,6 +261,21 @@ export class ProjectState {
 
   // MARK: Pages
 
+  readonly pageTreeModel = new PathTreeModel({
+    getTargets: () => this.project.pages.all,
+    delete: (page) => {
+      page.node.remove();
+    },
+    rename: (page, newName) => {
+      const newPage = this.project.pages.create(newName);
+      newPage.node.append(page.node.children);
+      page.node.remove();
+      return newPage;
+    },
+  });
+
+  readonly collapsedPaths = observable.set<string>();
+
   openPage(page: Page) {
     this.pageID = page.id;
   }
@@ -278,29 +294,20 @@ export class ProjectState {
   }
 
   deletePageOrPageFolder(path: string) {
-    const deletedPages = this.project.pages.delete(path);
-
-    const deletingCurrent = this.page
-      ? deletedPages.includes(this.page)
-      : false;
-    if (deletingCurrent) {
-      this.pageID = this.project.pages.all[0]?.id;
-    }
-
+    this.pageTreeModel.delete(path);
     this.undoManager.stopCapturing();
   }
 
   renamePageOrPageFolder(path: string, newPath: string) {
-    const { originalPages, newPages } = this.project.pages.rename(
-      path,
-      newPath
-    );
+    const oldCurrent = this.page;
+    const oldToNew = this.pageTreeModel.rename(path, newPath);
+    console.log(path, newPath);
 
-    const selectedOriginalPageIndex = originalPages.findIndex(
-      (page) => page.id === this.pageID
-    );
-    if (selectedOriginalPageIndex !== -1) {
-      this.pageID = newPages[selectedOriginalPageIndex].id;
+    if (oldCurrent) {
+      const newCurrent = oldToNew.get(oldCurrent);
+      if (newCurrent && newCurrent !== oldCurrent) {
+        this.pageID = newCurrent.id;
+      }
     }
 
     this.undoManager.stopCapturing();

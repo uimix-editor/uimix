@@ -90,7 +90,7 @@ function targetsForPath<T extends PathTreeModelTarget>(
 interface PathTreeModelDelegate<T extends PathTreeModelTarget> {
   getTargets: () => T[];
   delete(target: T): void;
-  rename(target: T, newName: string): void;
+  rename(target: T, newName: string): T;
 }
 
 export class PathTreeModel<T extends PathTreeModelTarget> {
@@ -114,14 +114,20 @@ export class PathTreeModel<T extends PathTreeModelTarget> {
     }
   }
 
-  rename(path: string, newPath: string) {
+  rename(path: string, newPath: string): Map<T, T> {
     if (path === newPath) {
-      return;
+      return new Map();
     }
+
+    const oldToNew = new Map<T, T>();
 
     for (const target of targetsForPath(this.targets, path)) {
       const newName = newPath + target.filePath.slice(path.length);
-      this.delegate.rename(target, newName);
+      const newTarget = this.delegate.rename(target, newName);
+
+      oldToNew.set(target, newTarget);
     }
+
+    return oldToNew;
   }
 }

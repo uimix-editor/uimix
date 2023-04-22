@@ -3,9 +3,9 @@ import { isTextInput } from "@uimix/foundation/src/utils/Focus";
 import { Shortcut } from "@uimix/foundation/src/utils/Shortcut";
 import {
   Selectable,
-  PageHierarchyEntry,
   Component,
   Page,
+  PathTreeModelItem,
 } from "@uimix/model/src/models";
 import { exportToJSON as exportJSON, importJSON } from "./JSONExport";
 import { viewportState } from "./ViewportState";
@@ -660,7 +660,7 @@ class Commands {
     ];
   }
 
-  contextMenuForFile(file: PageHierarchyEntry): MenuItemDef[] {
+  contextMenuForFile(file: PathTreeModelItem<Page>): MenuItemDef[] {
     if (file.type === "directory") {
       return [
         {
@@ -676,7 +676,7 @@ class Commands {
           text: "Delete",
           // disabled: projectState.project.pages.count === 1,
           onClick: action(() => {
-            projectState.deletePageOrPageFolder(file.path);
+            projectState.pageTreeModel.delete(file.path);
           }),
         },
       ];
@@ -687,7 +687,7 @@ class Commands {
           text: "Delete",
           // disabled: projectState.project.pages.count === 1,
           onClick: action(() => {
-            projectState.deletePageOrPageFolder(file.path);
+            projectState.pageTreeModel.delete(file.path);
           }),
         },
       ];

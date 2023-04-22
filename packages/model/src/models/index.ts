@@ -7,7 +7,7 @@ export * from "./Node";
 export * from "./ObjectData";
 export * from "./Page";
 export * from "./PageList";
-export * from "./PathHierarchy";
+export * from "./PathTreeModel";
 export * from "./Project";
 export * from "../collaborative/ProjectData";
 export * from "./Selectable";
