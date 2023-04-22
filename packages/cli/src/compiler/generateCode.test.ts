@@ -8,7 +8,7 @@ describe(generateCode.name, () => {
   it("generates code", async () => {
     const rootDir = path.resolve("../sandbox");
 
-    const workspaceIO = await WorkspaceIO.load(new NodeFileAccess(rootDir));
+    const workspaceIO = await WorkspaceIO.load(new NodeFileAccess(), rootDir);
 
     // FIXME: you need to build code assets before generating code
 

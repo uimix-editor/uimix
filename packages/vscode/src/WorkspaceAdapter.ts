@@ -19,9 +19,9 @@ class VSCodeFileAccess implements FileAccess {
     return this.rootFolder.uri.fsPath;
   }
 
-  watch(pattern: string, onChange: () => void): () => void {
+  watch(cwd: string, patterns: string[], onChange: () => void): () => void {
     const watcher = vscode.workspace.createFileSystemWatcher(
-      new vscode.RelativePattern(this.rootFolder, pattern)
+      new vscode.RelativePattern(cwd, `**/{${patterns.join(",")},}`)
     );
 
     const _onChange = () => {
@@ -36,9 +36,9 @@ class VSCodeFileAccess implements FileAccess {
     return () => watcher.dispose();
   }
 
-  async glob(pattern: string): Promise<string[]> {
+  async glob(cwd: string, patterns: string[]): Promise<string[]> {
     const urls = await vscode.workspace.findFiles(
-      new vscode.RelativePattern(this.rootFolder, pattern),
+      new vscode.RelativePattern(cwd, `**/{${patterns.join(",")},}`),
       // TODO: configure excludes
       "**/node_modules/**"
     );
@@ -74,7 +74,10 @@ class VSCodeFileAccess implements FileAccess {
 
 export class WorkspaceAdapter {
   static async load(rootFolder: vscode.WorkspaceFolder) {
-    const workspaceIO = new WorkspaceIO(new VSCodeFileAccess(rootFolder));
+    const workspaceIO = new WorkspaceIO(
+      new VSCodeFileAccess(rootFolder),
+      rootFolder.uri.fsPath
+    );
     const result = await workspaceIO.load();
     if (result.problems.length) {
       const message =

@@ -37,8 +37,8 @@ interface LoadResult {
 
 // Important TODO: fix paths in Windows!!
 export class WorkspaceIO {
-  static async load(fileAccess: FileAccess) {
-    const workspaceIO = new WorkspaceIO(fileAccess);
+  static async load(fileAccess: FileAccess, rootPath: string) {
+    const workspaceIO = new WorkspaceIO(fileAccess, rootPath);
     const result = await workspaceIO.load();
     if (result.problems.length) {
       throw new Error(
@@ -52,18 +52,16 @@ export class WorkspaceIO {
     return workspaceIO;
   }
 
-  constructor(fileAccess: FileAccess) {
+  constructor(fileAccess: FileAccess, rootPath: string) {
     this.fileAccess = fileAccess;
+    this.rootPath = rootPath;
   }
 
   readonly fileAccess: FileAccess;
+  readonly rootPath: string;
 
-  get rootPath(): string {
-    return this.fileAccess.rootPath;
-  }
-
-  readonly filePattern = "**/*.uimix";
-  readonly imagePatterns = ["**/*.png", "**/*.jpg", "**/*.jpeg"];
+  readonly filePattern = "*.uimix";
+  readonly imagePatterns = ["*.png", "*.jpg", "*.jpeg"];
   readonly uimixProjectFile = "uimix.json";
   readonly projectBoundary = "package.json"; // TODO: other project boundaries
   projects = new Map<string, ProjectData>(); // project path -> project json
@@ -96,11 +94,11 @@ export class WorkspaceIO {
   }
 
   async load(): Promise<LoadResult> {
-    const filePaths = await this.fileAccess.glob(
-      `{${this.filePattern},${this.imagePatterns.join(",")},**/${
-        this.projectBoundary
-      }}`
-    );
+    const filePaths = await this.fileAccess.glob(this.rootPath, [
+      this.filePattern,
+      ...this.imagePatterns,
+      this.projectBoundary,
+    ]);
     filePaths.sort();
 
     const filePathsForProject = new Map<string, string[]>([
@@ -264,7 +262,7 @@ export class WorkspaceIO {
       this.isSaving = true;
 
       const pagePathsToDelete = new Set(
-        await this.fileAccess.glob(this.filePattern)
+        await this.fileAccess.glob(this.rootPath, [this.filePattern])
       );
 
       for (const [projectPath, project] of this.projects) {
@@ -336,7 +334,8 @@ export class WorkspaceIO {
     console.log("start watching...");
 
     return this.fileAccess.watch(
-      `{${this.filePattern},**/${this.projectBoundary}}`,
+      this.rootPath,
+      [this.filePattern, this.projectBoundary],
       async () => {
         try {
           if (this.isSaving) {

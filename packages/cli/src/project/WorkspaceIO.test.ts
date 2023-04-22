@@ -51,7 +51,8 @@ describe(WorkspaceIO.name, () => {
     const deepInnerProjectPath = tmpObj.name + "/demo-project/inner/inner";
 
     const workspaceIO = new WorkspaceIO(
-      new NodeFileAccess(tmpObj.name + "/demo-project")
+      new NodeFileAccess(),
+      tmpObj.name + "/demo-project"
     );
     workspaceIO.rootProject.project = project;
     workspaceIO.projects.set(innerProjectPath, {
@@ -104,7 +105,8 @@ describe(WorkspaceIO.name, () => {
     expect(innerPage1File).toMatchSnapshot();
 
     const workspaceIO2 = await WorkspaceIO.load(
-      new NodeFileAccess(tmpObj.name + "/demo-project")
+      new NodeFileAccess(),
+      tmpObj.name + "/demo-project"
     );
 
     expect(new ProjectEmitter(workspaceIO2.rootProject.project).emit()).toEqual(
@@ -130,7 +132,8 @@ describe(WorkspaceIO.name, () => {
     innerPage1.node.append([innerProject.nodes.create("frame", "inner")]);
 
     const workspaceIO = new WorkspaceIO(
-      new NodeFileAccess(tmpObj.name + "/demo-project")
+      new NodeFileAccess(),
+      tmpObj.name + "/demo-project"
     );
     workspaceIO.rootProject.project = project;
     workspaceIO.projects.set(path.resolve(workspaceIO.rootPath, "inner"), {

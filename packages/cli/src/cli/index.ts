@@ -29,7 +29,7 @@ async function compileCommand(
     watch?: boolean;
   }
 ): Promise<void> {
-  const workspaceIO = await WorkspaceIO.load(new NodeFileAccess(rootPath));
+  const workspaceIO = await WorkspaceIO.load(new NodeFileAccess(), rootPath);
 
   if (options.watch) {
     workspaceIO.watch(() => compileProject(workspaceIO));

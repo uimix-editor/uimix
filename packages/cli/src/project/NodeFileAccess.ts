@@ -6,14 +6,9 @@ import { mkdirp } from "mkdirp";
 import { globby } from "globby";
 
 export class NodeFileAccess implements FileAccess {
-  constructor(rootPath: string) {
-    this.rootPath = path.resolve(rootPath);
-  }
-
-  readonly rootPath: string;
-
-  watch(pattern: string, onChange: () => void): () => void {
-    const watcher = chokidar.watch(path.resolve(this.rootPath, pattern), {
+  watch(cwd: string, patterns: string[], onChange: () => void): () => void {
+    const watcher = chokidar.watch(`**/{${patterns.join(",")},}`, {
+      cwd,
       ignored: ["**/node_modules/**", "**/.git/**"],
     });
     watcher.on("change", onChange);
@@ -22,20 +17,18 @@ export class NodeFileAccess implements FileAccess {
     return () => watcher.close();
   }
 
-  async glob(pattern: string): Promise<string[]> {
+  async glob(cwd: string, patterns: string[]): Promise<string[]> {
     return (
-      await globby(pattern, {
-        cwd: this.rootPath,
+      await globby(`**/{${patterns.join(",")},}`, {
+        cwd,
         ignore: ["**/node_modules/**", "**/.git/**"],
       })
-    ).map((filePath) => path.resolve(this.rootPath, filePath));
+    ).map((filePath) => path.resolve(cwd, filePath));
   }
 
   async stat(filePath: string): Promise<Stats | undefined> {
     try {
-      const stat = await fs.promises.stat(
-        path.resolve(this.rootPath, filePath)
-      );
+      const stat = await fs.promises.stat(filePath);
       return {
         type: stat.isDirectory() ? "directory" : "file",
       };
@@ -54,6 +47,6 @@ export class NodeFileAccess implements FileAccess {
   }
 
   async remove(filePath: string): Promise<void> {
-    await fs.promises.rm(path.resolve(this.rootPath, filePath));
+    await fs.promises.rm(filePath);
   }
 }
