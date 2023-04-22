@@ -75,7 +75,16 @@ class VSCodeFileAccess implements FileAccess {
 export class WorkspaceData {
   static async load(rootFolder: vscode.WorkspaceFolder) {
     const loader = new WorkspaceLoader(new VSCodeFileAccess(rootFolder));
-    await loader.load();
+    const result = await loader.load();
+    if (result.problems.length) {
+      const message =
+        `Error loading workspace:\n` +
+        result.problems
+          .map((problem) => `${problem.filePath}:\n  ${String(problem.error)}`)
+          .join("\n");
+      vscode.window.showErrorMessage(message);
+    }
+
     return new WorkspaceData(rootFolder, loader);
   }
 
@@ -136,9 +145,13 @@ export class WorkspaceData {
     return this.loader.projectPathForFile(uri.fsPath);
   }
 
-  save(uri: vscode.Uri) {
+  async save(uri: vscode.Uri) {
     const projectPath = this.loader.projectPathForFile(uri.fsPath);
-    this.loader.save(projectPath);
+    try {
+      await this.loader.save(projectPath);
+    } catch (e) {
+      vscode.window.showErrorMessage(`Error saving project:\n${e}`);
+    }
   }
 
   readonly disposables: vscode.Disposable[] = [];

@@ -134,8 +134,8 @@ export class CustomDocument implements vscode.CustomDocument {
     });
   }
 
-  private readonly saveDebounced = debounce(() => {
-    this.workspaceData.save(this.uri);
+  private readonly saveDebounced = debounce(async () => {
+    await this.workspaceData.save(this.uri);
     console.log("save");
   }, 500);
 
