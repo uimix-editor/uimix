@@ -14,6 +14,7 @@ export const ImageType = z.enum(["image/png", "image/jpeg"]);
 export type ImageType = z.infer<typeof ImageType>;
 
 export const Image = z.object({
+  filePath: z.string(),
   width: z.number(),
   height: z.number(),
   type: ImageType,

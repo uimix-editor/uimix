@@ -6,14 +6,15 @@ import { getURLSafeBase64Hash } from "@uimix/foundation/src/utils/Hash";
 import { compact } from "lodash-es";
 
 export class Image {
-  constructor(manager: ImageManager, filePath: string) {
+  constructor(manager: ImageManager, hash: string) {
     this.manager = manager;
-    this.filePath = filePath;
+    this.hash = hash;
   }
 
   get data(): Data.Image {
     return (
-      this.manager.project.data.images.get(this.filePath) ?? {
+      this.manager.project.data.images.get(this.hash) ?? {
+        filePath: "__invalid.png",
         width: 0,
         height: 0,
         url: "",
@@ -22,8 +23,12 @@ export class Image {
     );
   }
 
+  get filePath(): string {
+    return this.filePath;
+  }
+
   readonly manager: ImageManager;
-  readonly filePath: string;
+  readonly hash: string;
 }
 
 export class ImageManager {
