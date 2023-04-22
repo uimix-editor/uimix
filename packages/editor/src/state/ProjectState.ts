@@ -259,6 +259,19 @@ export class ProjectState {
     );
   }
 
+  // MARK: Images
+
+  readonly imageTreeModel = new PathTreeModel({
+    getTargets: () => this.project.imageManager.images,
+    delete: (image) => {
+      // TODO
+    },
+    rename: (image, newName) => {
+      // TODO
+      return image;
+    },
+  });
+
   // MARK: Pages
 
   readonly pageTreeModel = new PathTreeModel({
