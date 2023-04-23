@@ -1,11 +1,6 @@
 import React from "react";
 import ReactDOM from "react-dom/client";
-import {
-  Component,
-  ComponentRenderer,
-  Prop,
-  PropType,
-} from "@uimix/adapter-types";
+import { Component, ComponentRenderer, PropType } from "@uimix/adapter-types";
 
 export class ReactRenderer implements ComponentRenderer {
   constructor(element: HTMLElement, Component: React.ElementType) {
