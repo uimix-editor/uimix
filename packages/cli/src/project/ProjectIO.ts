@@ -213,11 +213,13 @@ export class ProjectIO {
     try {
       this.isSaving = true;
 
+      const project = this.content.project;
+
       const pagePathsToDelete = new Set(
         await this.fileAccess.glob(this.rootPath, [this.filePattern])
       );
 
-      const projectEmitter = new ProjectEmitter(this.content.project);
+      const projectEmitter = new ProjectEmitter(project);
       const pages = projectEmitter.emit();
 
       for (const [pageName, pageNode] of pages) {
@@ -229,9 +231,9 @@ export class ProjectIO {
         pagePathsToDelete.delete(pagePath);
       }
 
-      const usedImageHashes = this.content.project.imageManager.usedImageHashes;
+      const usedImageHashes = project.imageManager.usedImageHashes;
 
-      for (const [hash, image] of this.content.project.imageManager.images) {
+      for (const [hash, image] of project.imageManager.images) {
         if (!usedImageHashes.has(hash)) {
           continue;
         }
