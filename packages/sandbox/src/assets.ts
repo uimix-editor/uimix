@@ -1,10 +1,10 @@
-import { Button } from "./stories/Button";
 import {
   reactComponent,
   Component,
   DesignTokens,
   PropType,
 } from "@uimix/adapter-react";
+import { Button } from "./stories/Button";
 import designTokens from "./designTokens";
 
 export const components: Component[] = [
