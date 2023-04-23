@@ -72,7 +72,10 @@ export class ProjectIO {
     imagePaths: new Map(),
   };
 
-  async load(): Promise<LoadResult> {
+  private async getFilePaths(): Promise<{
+    pages: string[];
+    images: string[];
+  }> {
     // filter out files in sub-projects
 
     const projectBoundaryFilePaths = await this.fileAccess.glob(this.rootPath, [
@@ -96,13 +99,21 @@ export class ProjectIO {
     );
     filePaths.sort();
 
-    return this.loadProject(filePaths);
+    const pages = filePaths.filter((filePath) => filePath.endsWith(".uimix"));
+    const images = filePaths.filter((filePath) => !filePath.endsWith(".uimix"));
+
+    return {
+      pages,
+      images,
+    };
   }
 
-  private async loadProject(filePaths: string[]): Promise<LoadResult> {
+  async load(): Promise<LoadResult> {
     const problems: LoadProblem[] = [];
 
     try {
+      const filePaths = await this.getFilePaths();
+
       let manifest: ProjectManifest = {};
 
       const manifestPath = path.join(this.rootPath, this.uimixProjectFile);
@@ -129,47 +140,46 @@ export class ProjectIO {
       const pages = new Map<string, PageNode>();
       const imagePaths = new Map<string, string>();
 
-      for (const filePath of filePaths) {
-        // TODO: reload changed files only
+      // TODO: reload changed files only
+      for (const filePath of filePaths.pages) {
+        try {
+          const pageText = (
+            await this.fileAccess.readFile(filePath)
+          ).toString();
+          const pageNode = loadFromJSXFile(pageText);
+          const pageName = path
+            .relative(this.rootPath, filePath)
+            .replace(/\.uimix$/, "");
+          pages.set(pageName, pageNode);
+        } catch (error) {
+          problems.push({
+            filePath,
+            error,
+          });
+        }
+      }
 
-        if (filePath.endsWith(".uimix")) {
-          try {
-            const pageText = (
-              await this.fileAccess.readFile(filePath)
-            ).toString();
-            const pageNode = loadFromJSXFile(pageText);
-            const pageName = path
-              .relative(this.rootPath, filePath)
-              .replace(/\.uimix$/, "");
-            pages.set(pageName, pageNode);
-          } catch (error) {
-            problems.push({
-              filePath,
-              error,
-            });
-          }
-        } else {
-          try {
-            // TODO: lookup specific directories only
-            const imageData = await this.fileAccess.readFile(filePath);
-            const hash = await getURLSafeBase64Hash(imageData);
-            const mimeType = mime.lookup(filePath) || "image/png";
-            const size = sizeOf(imageData);
+      for (const filePath of filePaths.images) {
+        try {
+          // TODO: lookup specific directories only
+          const imageData = await this.fileAccess.readFile(filePath);
+          const hash = await getURLSafeBase64Hash(imageData);
+          const mimeType = mime.lookup(filePath) || "image/png";
+          const size = sizeOf(imageData);
 
-            const image: Data.Image = {
-              width: size.width ?? 0,
-              height: size.height ?? 0,
-              type: mimeType as Data.ImageType,
-              url: `data:${mimeType};base64,${imageData.toString("base64")}`,
-            };
-            images.set(hash, image);
-            imagePaths.set(hash, filePath);
-          } catch (error) {
-            problems.push({
-              filePath,
-              error,
-            });
-          }
+          const image: Data.Image = {
+            width: size.width ?? 0,
+            height: size.height ?? 0,
+            type: mimeType as Data.ImageType,
+            url: `data:${mimeType};base64,${imageData.toString("base64")}`,
+          };
+          images.set(hash, image);
+          imagePaths.set(hash, filePath);
+        } catch (error) {
+          problems.push({
+            filePath,
+            error,
+          });
         }
       }
 
