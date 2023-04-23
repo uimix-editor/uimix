@@ -255,6 +255,7 @@ export class ProjectIO {
         const decoded = dataUriToBuffer(image.url);
         const suffix = mime.extension(decoded.type) || "bin";
         await this.fileAccess.writeFile(
+          // TODO: make default image directory configurable
           path.join(this.rootPath, "src/images", `${hash}.${suffix}`),
           decoded
         );
