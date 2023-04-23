@@ -350,7 +350,7 @@ export default (
               opacity={0.5}
               overflowHidden={true}
               shadows={[]}
-              image="./images/XMIUgNq9VxH1FiVdc4M95ZcfqaSP3aF07GtbcGHi9AY.png"
+              image="./images/white-pattern.png"
             />
           </frame>
           <text
@@ -492,7 +492,7 @@ export default (
               { color: "#0000001a", x: 0, y: 20, blur: 25, spread: -5 },
             ]}
             marginBottom={64}
-            image="./images/1yKf5NvwGW-XtLSBDlS3GqZfbEGnLshgQrjyQJImqaM.png"
+            image="./images/screenshot.png"
           />
         </frame>
         <frame
@@ -1445,7 +1445,7 @@ export default (
             opacity={1}
             overflowHidden={true}
             shadows={[]}
-            image="./images/DGLFxM8eMqBjHUQYEekprnB3xC-f5uvLxL7x2odVAEU.png"
+            image="./images/black-pattern.png"
           />
           <text
             id="ready_to_revolutionize_your_web_design_workflow_"

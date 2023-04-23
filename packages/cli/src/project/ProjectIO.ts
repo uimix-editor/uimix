@@ -1,5 +1,4 @@
 import * as Data from "@uimix/model/src/data/v1";
-import { usedImageHashesInProject } from "@uimix/model/src/data/util";
 import { isEqual } from "lodash-es";
 import { formatTypeScript } from "../format";
 import { FileAccess } from "./FileAccess";
@@ -73,7 +72,10 @@ export class ProjectIO {
     imagePaths: new Map(),
   };
 
-  async load(): Promise<LoadResult> {
+  private async getFilePaths(): Promise<{
+    pages: string[];
+    images: string[];
+  }> {
     // filter out files in sub-projects
 
     const projectBoundaryFilePaths = await this.fileAccess.glob(this.rootPath, [
@@ -97,13 +99,21 @@ export class ProjectIO {
     );
     filePaths.sort();
 
-    return this.loadProject(filePaths);
+    const pages = filePaths.filter((filePath) => filePath.endsWith(".uimix"));
+    const images = filePaths.filter((filePath) => !filePath.endsWith(".uimix"));
+
+    return {
+      pages,
+      images,
+    };
   }
 
-  private async loadProject(filePaths: string[]): Promise<LoadResult> {
+  async load(): Promise<LoadResult> {
     const problems: LoadProblem[] = [];
 
     try {
+      const filePaths = await this.getFilePaths();
+
       let manifest: ProjectManifest = {};
 
       const manifestPath = path.join(this.rootPath, this.uimixProjectFile);
@@ -130,51 +140,56 @@ export class ProjectIO {
       const pages = new Map<string, PageNode>();
       const imagePaths = new Map<string, string>();
 
-      for (const filePath of filePaths) {
-        // TODO: reload changed files only
-
-        if (filePath.endsWith(".uimix")) {
-          try {
-            const pageText = (
-              await this.fileAccess.readFile(filePath)
-            ).toString();
-            const pageNode = loadFromJSXFile(pageText);
-            const pageName = path
-              .relative(this.rootPath, filePath)
-              .replace(/\.uimix$/, "");
-            pages.set(pageName, pageNode);
-          } catch (error) {
-            problems.push({
-              filePath,
-              error,
-            });
-          }
-        } else {
-          try {
-            // TODO: lookup specific directories only
-            const imageData = await this.fileAccess.readFile(filePath);
-            const hash = await getURLSafeBase64Hash(imageData);
-            const mimeType = mime.lookup(filePath) || "image/png";
-            const size = sizeOf(imageData);
-
-            const image: Data.Image = {
-              width: size.width ?? 0,
-              height: size.height ?? 0,
-              type: mimeType as Data.ImageType,
-              url: `data:${mimeType};base64,${imageData.toString("base64")}`,
-            };
-            images.set(hash, image);
-            imagePaths.set(hash, filePath);
-          } catch (error) {
-            problems.push({
-              filePath,
-              error,
-            });
-          }
+      // TODO: reload changed files only
+      for (const filePath of filePaths.pages) {
+        try {
+          const pageText = (
+            await this.fileAccess.readFile(filePath)
+          ).toString();
+          const pageNode = loadFromJSXFile(pageText);
+          const pageName = path
+            .relative(this.rootPath, filePath)
+            .replace(/\.uimix$/, "");
+          pages.set(pageName, pageNode);
+        } catch (error) {
+          problems.push({
+            filePath,
+            error,
+          });
         }
       }
 
-      const loader = new ProjectLoader(this.content.project);
+      for (const filePath of filePaths.images) {
+        try {
+          console.log("loading image", filePath);
+          // TODO: lookup specific directories only
+          const imageData = await this.fileAccess.readFile(filePath);
+          const hash = await getURLSafeBase64Hash(imageData);
+          const mimeType = mime.lookup(filePath) || "image/png";
+          const size = sizeOf(imageData);
+
+          const image: Data.Image = {
+            width: size.width ?? 0,
+            height: size.height ?? 0,
+            type: mimeType as Data.ImageType,
+            url: `data:${mimeType};base64,${imageData.toString("base64")}`,
+          };
+          images.set(hash, image);
+          imagePaths.set(hash, filePath);
+        } catch (error) {
+          problems.push({
+            filePath,
+            error,
+          });
+        }
+      }
+
+      const imagePathToHash = new Map<string, string>();
+      for (const [hash, absPath] of imagePaths) {
+        imagePathToHash.set(path.relative(this.rootPath, absPath), hash);
+      }
+
+      const loader = new ProjectLoader(this.content.project, imagePathToHash);
       loader.load(pages);
       for (const [key, image] of images) {
         loader.project.imageManager.images.set(key, image);
@@ -213,29 +228,27 @@ export class ProjectIO {
   async save(): Promise<void> {
     try {
       this.isSaving = true;
+      const project = this.content.project;
 
-      const pagePathsToDelete = new Set(
-        await this.fileAccess.glob(this.rootPath, [this.filePattern])
-      );
+      // save images
 
-      const projectEmitter = new ProjectEmitter(this.content.project);
-      const pages = projectEmitter.emit();
+      const imagePathsInProject = new Map<string, string>();
 
-      for (const [pageName, pageNode] of pages) {
-        const pagePath = path.join(this.rootPath, pageName + ".uimix");
-        await this.fileAccess.writeFile(
-          pagePath,
-          Buffer.from(formatTypeScript(stringifyAsJSXFile(pageNode)))
-        );
-        pagePathsToDelete.delete(pagePath);
+      for (const imagePath of (await this.getFilePaths()).images) {
+        const imageData = await this.fileAccess.readFile(imagePath);
+        const hash = await getURLSafeBase64Hash(imageData);
+        imagePathsInProject.set(hash, path.relative(this.rootPath, imagePath));
       }
 
-      const usedImageHashes = usedImageHashesInProject(
-        this.content.project.toJSON()
-      );
+      const usedImageHashes = project.imageManager.usedImageHashes;
 
-      for (const [hash, image] of this.content.project.imageManager.images) {
+      for (const [hash, image] of project.imageManager.images) {
         if (!usedImageHashes.has(hash)) {
+          // not used
+          continue;
+        }
+        if (imagePathsInProject.has(hash)) {
+          // already saved
           continue;
         }
 
@@ -245,6 +258,24 @@ export class ProjectIO {
           path.join(this.rootPath, "src/images", `${hash}.${suffix}`),
           decoded
         );
+      }
+
+      // save pages
+
+      const pagePathsToDelete = new Set(
+        await this.fileAccess.glob(this.rootPath, [this.filePattern])
+      );
+
+      const projectEmitter = new ProjectEmitter(project, imagePathsInProject);
+      const pages = projectEmitter.emit();
+
+      for (const [pageName, pageNode] of pages) {
+        const pagePath = path.join(this.rootPath, pageName + ".uimix");
+        await this.fileAccess.writeFile(
+          pagePath,
+          Buffer.from(formatTypeScript(stringifyAsJSXFile(pageNode)))
+        );
+        pagePathsToDelete.delete(pagePath);
       }
 
       // TODO: save manifest

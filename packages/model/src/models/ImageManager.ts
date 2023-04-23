@@ -4,10 +4,12 @@ import { ObservableYMap } from "@uimix/foundation/src/utils/ObservableYMap";
 import * as Data from "../data/v1";
 import { getURLSafeBase64Hash } from "@uimix/foundation/src/utils/Hash";
 import { compact } from "lodash-es";
+import { computed, makeObservable } from "mobx";
 
 export class ImageManager {
   constructor(project: Project) {
     this.project = project;
+    makeObservable(this);
   }
 
   readonly project: Project;
@@ -98,5 +100,15 @@ export class ImageManager {
     );
 
     return Object.fromEntries(entries);
+  }
+
+  @computed.struct get usedImageHashes(): Set<string> {
+    const set = new Set<string>();
+    for (const page of this.project.pages.all) {
+      for (const hash of page.selectable.usedImageHashes) {
+        set.add(hash);
+      }
+    }
+    return set;
   }
 }

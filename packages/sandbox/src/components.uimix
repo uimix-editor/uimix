@@ -124,7 +124,7 @@ export default (
             width={100}
             height={100}
             fills={[{ solid: "#FFFFFF" }]}
-            image="./images/YmY-tuteU03QY-k_2ARy1uacNmXDNmOX-FFAlj2qCIo.png"
+            image="./images/icon.png"
           />
           <instance
             id="stack"

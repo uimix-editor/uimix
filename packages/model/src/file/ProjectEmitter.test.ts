@@ -24,7 +24,15 @@ describe(ProjectEmitter.name, () => {
     const project = new Project();
     project.loadJSON(projectJSON);
 
-    const emitter = new ProjectEmitter(project);
+    const hashToPath = new Map<string, string>();
+    const pathToHash = new Map<string, string>();
+    for (const hash of project.imageManager.usedImageHashes) {
+      const path = `src/images/${hash}.png`;
+      hashToPath.set(hash, path);
+      pathToHash.set(path, hash);
+    }
+
+    const emitter = new ProjectEmitter(project, hashToPath);
 
     const emitted = emitter.emit();
     const emittedFiles = new Map(
@@ -43,10 +51,10 @@ describe(ProjectEmitter.name, () => {
     );
     //expect(parsed).toEqual(emitted.get("src/components"));
 
-    const loader = new ProjectLoader();
+    const loader = new ProjectLoader(new Project(), pathToHash);
     loader.load(parsedFiles);
 
-    const emitted2 = new ProjectEmitter(loader.project).emit();
+    const emitted2 = new ProjectEmitter(loader.project, hashToPath).emit();
 
     for (const [path, content] of emitted2) {
       expect(content).toEqual(emitted.get(path));
