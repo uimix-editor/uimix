@@ -18,9 +18,7 @@ export async function buildCodeAssets(
   // TODO: make build options configurable
 
   await build({
-    configFile: false,
     root: rootPath,
-    plugins: [react()],
     build: {
       lib: {
         entry: path.resolve(rootPath, manifest.assets),
