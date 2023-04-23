@@ -1,28 +1,25 @@
 import { Button } from "./stories/Button";
+import { reactComponent } from "@uimix/adapter-react";
 
 export const components = [
   // local components
-  {
-    type: "react",
-    path: "/src/stories/Button",
-    name: "Button",
+  reactComponent({
+    path: "/src/stories/Button#Button",
     component: Button,
     // TODO; type-check props based on Button parameters
     props: {
       label: { type: "string" },
       size: { type: "enum", options: ["small", "medium", "large"] },
     },
-  },
+  }),
   // external components
-  {
-    type: "react",
+  reactComponent({
     path: "@mui/material/Button",
-    name: "default",
     component: await import("@mui/material/Button"),
     props: {
       // TODO
     },
-  },
+  }),
 ];
 
 export const tokens = [
