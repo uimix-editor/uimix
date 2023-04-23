@@ -26,23 +26,29 @@ export class ReactRenderer implements ComponentRenderer {
   component: React.ElementType;
 }
 
-export function reactComponent<Props>(options: {
+export function reactComponent<Props>({
+  path,
+  name = "default",
+  component,
+  // eslint-disable-next-line @typescript-eslint/ban-types
+  props = PropType.object<{}>({}),
+}: {
   path: string;
   name?: string;
   component: React.ComponentType<Props>;
-  props: PropType.ObjectType<Partial<Props>>;
+  props?: PropType.ObjectType<Partial<Props>>;
 }): Component {
   return {
     framework: "react",
     // relative to the package root (closest package.json)
-    path: options.path,
-    name: options.name ?? "default",
-    props: Object.entries(options.props.props).map(([name, type]) => ({
+    path,
+    name,
+    props: Object.entries(props.props).map(([name, type]) => ({
       name: name,
       type: type as PropType.AbstractType<unknown>,
     })),
     createRenderer: (element: HTMLElement) =>
-      new ReactRenderer(element, options.component),
+      new ReactRenderer(element, component),
   };
 }
 
