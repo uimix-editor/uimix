@@ -4,7 +4,7 @@
   "private": true,
   "type": "module",
   "scripts": {
-    "build": "run-z build:uimix build:tsc build:assets build:vite",
+    "build": "run-z build:tsc build:assets build:uimix build:vite",
     "build-storybook": "storybook build",
     "build:tsc": "tsc",
     "build:uimix": "uimix compile",
