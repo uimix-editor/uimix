@@ -8,24 +8,12 @@ export const defaultStyle: Data.Style = {
   hidden: false,
   locked: false,
   position: {
-    x: {
-      type: "start",
-      start: 0,
-    },
-    y: {
-      type: "start",
-      start: 0,
-    },
+    x: { type: "start", start: 0 },
+    y: { type: "start", start: 0 },
   },
   absolute: false,
-  width: {
-    type: "fixed",
-    value: 0,
-  },
-  height: {
-    type: "fixed",
-    value: 0,
-  },
+  width: { type: "hug" },
+  height: { type: "hug" },
 
   topLeftRadius: 0,
   topRightRadius: 0,
