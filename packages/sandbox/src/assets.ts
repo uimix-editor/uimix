@@ -1,10 +1,11 @@
 import { Button } from "./stories/Button";
-import { reactComponent } from "@uimix/adapter-react";
+import { reactComponent, Component, DesignTokens } from "@uimix/adapter-react";
 
-export const components = [
+export const components: Component[] = [
   // local components
   reactComponent({
-    path: "/src/stories/Button#Button",
+    path: "/src/stories/Button",
+    name: "Button",
     component: Button,
     // TODO; type-check props based on Button parameters
     props: {
@@ -22,6 +23,6 @@ export const components = [
   }),
 ];
 
-export const tokens = [
+export const tokens: DesignTokens = {
   // TODO
-];
+};
