@@ -103,7 +103,7 @@ exports[`render 2`] = `
     <img
       alt="Image"
       className="uimix-PageRBRbRk__image"
-      src="/src/images/YmY-tuteU03QY-k_2ARy1uacNmXDNmOX-FFAlj2qCIo.png"
+      src="/src/images/icon.png"
     />
     <div
       className="uimix-PageRBRbRk__stack uimix-StackRBRbRk"

@@ -113,6 +113,7 @@ export class ProjectIO {
 
     try {
       const filePaths = await this.getFilePaths();
+      console.log(filePaths);
 
       let manifest: ProjectManifest = {};
 
@@ -161,6 +162,7 @@ export class ProjectIO {
 
       for (const filePath of filePaths.images) {
         try {
+          console.log("loading image", filePath);
           // TODO: lookup specific directories only
           const imageData = await this.fileAccess.readFile(filePath);
           const hash = await getURLSafeBase64Hash(imageData);
@@ -183,7 +185,12 @@ export class ProjectIO {
         }
       }
 
-      const loader = new ProjectLoader(this.content.project);
+      const imagePathToHash = new Map<string, string>();
+      for (const [hash, absPath] of imagePaths) {
+        imagePathToHash.set(path.relative(this.rootPath, absPath), hash);
+      }
+
+      const loader = new ProjectLoader(this.content.project, imagePathToHash);
       loader.load(pages);
       for (const [key, image] of images) {
         loader.project.imageManager.images.set(key, image);

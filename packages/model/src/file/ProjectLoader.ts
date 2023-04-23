@@ -15,11 +15,13 @@ import { generateLowerJSIdentifier } from "@uimix/foundation/src/utils/Name";
 import { assertNonNull } from "@uimix/foundation/src/utils/Assert";
 
 export class ProjectLoader {
-  constructor(project?: Project) {
-    this.project = project ?? new Project();
+  constructor(project: Project, imagePathToHash: Map<string, string>) {
+    this.project = project;
+    this.imagePathToHash = imagePathToHash;
   }
 
   project: Project;
+  imagePathToHash: Map<string, string>;
   pathToComponent = new Map<
     string, // path to component from root (e.g., "src/components.uimix#Button")
     Component
@@ -201,7 +203,7 @@ class PageLoader {
   }
 
   absolutePath(relativePath: string): string {
-    if (!relativePath.includes("#")) {
+    if (!relativePath.includes("#") && !relativePath.startsWith(".")) {
       return this.filePath + "#" + relativePath;
     }
     return path.join(path.dirname(this.filePath), relativePath);
@@ -279,9 +281,8 @@ class PageLoader {
     };
   }
 
-  getImageHashFromImagePath(imagePath: string): string {
-    // TODO: improve
-    return path.basename(imagePath, path.extname(imagePath));
+  getImageHashFromImagePath(imagePath: string): string | undefined {
+    return this.projectLoader.imagePathToHash.get(this.absolutePath(imagePath));
   }
 
   transformStyle(style: Partial<File.BaseStyleProps>): Partial<Data.Style> {
