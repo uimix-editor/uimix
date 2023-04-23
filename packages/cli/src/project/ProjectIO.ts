@@ -113,7 +113,6 @@ export class ProjectIO {
 
     try {
       const filePaths = await this.getFilePaths();
-      console.log(filePaths);
 
       let manifest: ProjectManifest = {};
 
