@@ -1,6 +1,11 @@
 import React from "react";
 import ReactDOM from "react-dom/client";
-import { Component, ComponentRenderer, Prop } from "@uimix/adapter-types";
+import {
+  Component,
+  ComponentRenderer,
+  Prop,
+  PropType,
+} from "@uimix/adapter-types";
 
 export class ReactRenderer implements ComponentRenderer {
   constructor(element: HTMLElement, Component: React.ElementType) {
@@ -30,7 +35,7 @@ export function reactComponent<Props>(options: {
   path: string;
   name?: string;
   component: React.ComponentType<Props>;
-  props: Record<string, Prop>;
+  props: PropType.ObjectType<Partial<Props>>;
 }): Component {
   return {
     framework: "react",

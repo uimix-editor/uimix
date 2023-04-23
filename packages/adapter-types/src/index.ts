@@ -1,25 +1,17 @@
-export type PropType =
-  | {
-      type: "string";
-    }
-  | {
-      type: "boolean";
-    }
-  | {
-      type: "enum";
-      values: string[];
-    };
+import * as PropType from "./props";
 
-export interface Prop {
+export { PropType };
+
+export interface Prop<T> {
   name: string;
-  type: PropType;
+  type: PropType.AbstractType<T>;
 }
 
 export interface Component {
   framework: "react"; // TODO: support other frameworks
   path: string; // path relative to project root e.g. "src/Button.tsx"
   name: string; // export name; e.g. "Button" ("default" for default export)
-  props: Prop[];
+  props: Prop<unknown>[];
   createRenderer: (element: HTMLElement) => ComponentRenderer;
 }
 
