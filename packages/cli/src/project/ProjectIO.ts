@@ -222,29 +222,27 @@ export class ProjectIO {
   async save(): Promise<void> {
     try {
       this.isSaving = true;
-
       const project = this.content.project;
 
-      const pagePathsToDelete = new Set(
-        await this.fileAccess.glob(this.rootPath, [this.filePattern])
-      );
+      // save images
 
-      const projectEmitter = new ProjectEmitter(project);
-      const pages = projectEmitter.emit();
+      const imagePathsInProject = new Map<string, string>();
 
-      for (const [pageName, pageNode] of pages) {
-        const pagePath = path.join(this.rootPath, pageName + ".uimix");
-        await this.fileAccess.writeFile(
-          pagePath,
-          Buffer.from(formatTypeScript(stringifyAsJSXFile(pageNode)))
-        );
-        pagePathsToDelete.delete(pagePath);
+      for (const imagePath of (await this.getFilePaths()).images) {
+        const imageData = await this.fileAccess.readFile(imagePath);
+        const hash = await getURLSafeBase64Hash(imageData);
+        imagePathsInProject.set(hash, path.relative(this.rootPath, imagePath));
       }
 
       const usedImageHashes = project.imageManager.usedImageHashes;
 
       for (const [hash, image] of project.imageManager.images) {
         if (!usedImageHashes.has(hash)) {
+          // not used
+          continue;
+        }
+        if (imagePathsInProject.has(hash)) {
+          // already saved
           continue;
         }
 
@@ -254,6 +252,24 @@ export class ProjectIO {
           path.join(this.rootPath, "src/images", `${hash}.${suffix}`),
           decoded
         );
+      }
+
+      // save pages
+
+      const pagePathsToDelete = new Set(
+        await this.fileAccess.glob(this.rootPath, [this.filePattern])
+      );
+
+      const projectEmitter = new ProjectEmitter(project, imagePathsInProject);
+      const pages = projectEmitter.emit();
+
+      for (const [pageName, pageNode] of pages) {
+        const pagePath = path.join(this.rootPath, pageName + ".uimix");
+        await this.fileAccess.writeFile(
+          pagePath,
+          Buffer.from(formatTypeScript(stringifyAsJSXFile(pageNode)))
+        );
+        pagePathsToDelete.delete(pagePath);
       }
 
       // TODO: save manifest

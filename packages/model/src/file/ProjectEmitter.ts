@@ -12,12 +12,13 @@ import { filterUndefined, variantConditionText } from "./util";
 import { assertNonNull } from "@uimix/foundation/src/utils/Assert";
 
 export class ProjectEmitter {
-  constructor(project: Project) {
+  constructor(project: Project, imagePaths: Map<string, string>) {
     this.project = project;
+    this.imagePaths = imagePaths;
   }
 
   project: Project;
-
+  imagePaths: Map<string, string>;
   componentPaths = new Map<
     string,
     {
@@ -249,6 +250,14 @@ export class PageEmitter {
     return this.relativePath(path);
   }
 
+  imageRelativePath(imageHash: string): string | undefined {
+    const absPath = this.projectEmitter.imagePaths.get(imageHash);
+    if (!absPath) {
+      return;
+    }
+    return this.relativePath(absPath);
+  }
+
   transformColor(color: Data.Color): File.Color {
     if (typeof color === "object") {
       const token = this.project.colorTokens.get(color.id);
@@ -362,10 +371,7 @@ export class PageEmitter {
       textHorizontalAlign: style.textHorizontalAlign,
       textVerticalAlign: style.textVerticalAlign,
 
-      image:
-        style.imageHash &&
-        this.relativePath("src/images/" + style.imageHash + ".png"),
-
+      image: style.imageHash && this.imageRelativePath(style.imageHash),
       svg: style.svgContent,
 
       component: style.foreignComponent

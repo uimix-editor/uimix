@@ -60,9 +60,9 @@ describe(ProjectIO.name, () => {
       tmpObj.name + "/demo-project"
     );
 
-    expect(new ProjectEmitter(projectIO2.content.project).emit()).toEqual(
-      new ProjectEmitter(project).emit()
-    );
+    expect(
+      new ProjectEmitter(projectIO2.content.project, new Map()).emit()
+    ).toEqual(new ProjectEmitter(project, new Map()).emit());
   });
 
   it("watches project", async () => {
