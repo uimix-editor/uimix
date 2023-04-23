@@ -32,7 +32,8 @@ export const components: Component[] = [
     path: "@mui/material/Button",
     component: MUIButton,
     props: PropType.object({
-      // TODO
+      children: PropType.string(),
+      variant: PropType.enum_(["text", "outlined", "contained"]),
     }),
   }),
 ];
