@@ -2,7 +2,7 @@
   "name": "@uimix/adapter-react",
   "license": "MIT",
   "type": "module",
-  "main": "src/index.ts",
+  "main": "src/index.tsx",
   "scripts": {
     "lint": "eslint src"
   },
