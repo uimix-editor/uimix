@@ -42,27 +42,10 @@ export function reactComponent<Props>(options: {
     // relative to the package root (closest package.json)
     path: options.path,
     name: options.name ?? "default",
-    props: [
-      {
-        name: "primary",
-        type: { type: "boolean" },
-      },
-      {
-        name: "backgroundColor",
-        type: { type: "string" },
-      },
-      {
-        name: "size",
-        type: {
-          type: "enum",
-          values: ["small", "medium", "large"],
-        },
-      },
-      {
-        name: "label",
-        type: { type: "string" },
-      },
-    ],
+    props: Object.entries(options.props.props).map(([name, type]) => ({
+      name: name,
+      type: type as PropType.AbstractType<unknown>,
+    })),
     createRenderer: (element: HTMLElement) =>
       new ReactRenderer(element, options.component),
   };
