@@ -9,7 +9,7 @@ import {
 import { viewportState } from "../../../state/ViewportState";
 import { ComputedRectProvider } from "./ComputedRectProvider";
 import { projectState } from "../../../state/ProjectState";
-import * as CodeAsset from "@uimix/code-asset-types";
+import * as CodeAsset from "@uimix/adapter-types";
 import { ForeignComponentManager } from "../../../state/ForeignComponentManager";
 import htmlReactParser from "html-react-parser";
 import { action } from "mobx";

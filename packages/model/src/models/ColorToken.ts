@@ -6,7 +6,7 @@ import * as Data from "../data/v1";
 import { Project } from "./Project";
 import { Page } from "./Page";
 import { ObjectData } from "./ObjectData";
-import * as CodeAsset from "@uimix/code-asset-types";
+import * as CodeAsset from "@uimix/adapter-types";
 import { observable } from "mobx";
 
 export class CodeColorToken {

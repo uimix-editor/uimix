@@ -10,7 +10,7 @@
   },
   "dependencies": {
     "@babel/standalone": "^7.21.4",
-    "@uimix/code-asset-types": "workspace:*",
+    "@uimix/adapter-types": "workspace:*",
     "@uimix/foundation": "workspace:*",
     "crypto-js": "^4.1.1",
     "lodash-es": "^4.17.21",

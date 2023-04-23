@@ -24,7 +24,7 @@ import colors from "@uimix/foundation/src/colors";
 import { Color } from "@uimix/foundation/src/utils/Color";
 import { FontLoader } from "../viewport/renderer/FontLoader";
 import { dialogState } from "../../state/DialogState";
-import * as CodeAsset from "@uimix/code-asset-types";
+import * as CodeAsset from "@uimix/adapter-types";
 import { ViewportEvent } from "../viewport/dragHandler/ViewportEvent";
 
 class InstancePaletteState {
