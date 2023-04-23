@@ -5,6 +5,7 @@ import {
   DesignTokens,
   PropType,
 } from "@uimix/adapter-react";
+import designTokens from "./designTokens";
 
 export const components: Component[] = [
   // local components
@@ -27,6 +28,4 @@ export const components: Component[] = [
   }),
 ];
 
-export const tokens: DesignTokens = {
-  // TODO
-};
+export const tokens: DesignTokens = designTokens;

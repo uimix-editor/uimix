@@ -1,4 +1,4 @@
-import { DesignTokens } from "@uimix/adapter-types";
+import { DesignTokens } from "@uimix/adapter-react";
 import colors from "tailwindcss/colors";
 
 type DefaultColors = typeof colors;
