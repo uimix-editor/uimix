@@ -16,7 +16,7 @@ export const components: Component[] = [
   // external components
   reactComponent({
     path: "@mui/material/Button",
-    component: await import("@mui/material/Button"),
+    component: (await import("@mui/material/Button")).default,
     props: {
       // TODO
     },

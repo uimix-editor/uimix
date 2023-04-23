@@ -26,10 +26,10 @@ export class ReactRenderer implements ComponentRenderer {
   component: React.ElementType;
 }
 
-export function reactComponent(options: {
+export function reactComponent<Props>(options: {
   path: string;
   name?: string;
-  component: React.ElementType;
+  component: React.ComponentType<Props>;
   props: Record<string, Prop>;
 }): Component {
   return {
