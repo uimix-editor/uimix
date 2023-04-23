@@ -5,6 +5,7 @@ export const components = [
   {
     type: "react",
     path: "/src/stories/Button",
+    name: "Button",
     component: Button,
     // TODO; type-check props based on Button parameters
     props: {
@@ -16,6 +17,7 @@ export const components = [
   {
     type: "react",
     path: "@mui/material/Button",
+    name: "default",
     component: await import("@mui/material/Button"),
     props: {
       // TODO
