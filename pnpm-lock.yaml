@@ -23,6 +23,16 @@ importers:
         specifier: ^1.9.1
         version: 1.9.1
 
+  packages/adapter-react:
+    dependencies:
+      '@uimix/adapter-types':
+        specifier: workspace:*
+        version: link:../adapter-types
+    devDependencies:
+      typescript:
+        specifier: ^5.0.4
+        version: 5.0.4
+
   packages/adapter-types:
     devDependencies:
       typescript:
