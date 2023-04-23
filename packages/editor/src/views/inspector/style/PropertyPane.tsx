@@ -113,7 +113,7 @@ const PropertyEdit: React.FC<{
     return (
       <Select
         className={className}
-        options={prop.type.values.map((value) => {
+        options={prop.type.options.map((value) => {
           try {
             return {
               value: value,

@@ -46,7 +46,7 @@ export function getComponents(
           type: {
             type: "enum",
             // eslint-disable-next-line
-            values: prop.type.value.map((v: any) => JSON.parse(v.value)),
+            options: prop.type.value.map((v: any) => JSON.parse(v.value)),
           },
         });
       }

@@ -7,6 +7,7 @@ import {
 import { Button } from "./stories/Button";
 import { Header } from "./stories/Header";
 import designTokens from "./designTokens";
+import MUIButton from "@mui/material/Button";
 
 export const components: Component[] = [
   // local components
@@ -29,7 +30,7 @@ export const components: Component[] = [
   // external components
   reactComponent({
     path: "@mui/material/Button",
-    component: (await import("@mui/material/Button")).default,
+    component: MUIButton,
     props: PropType.object({
       // TODO
     }),

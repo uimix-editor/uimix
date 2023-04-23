@@ -14,12 +14,13 @@ export default defineConfig({
       entry: path.resolve(__dirname, "src/assets.ts"),
       name: "bundle",
       fileName: "bundle",
+      formats: ["es"],
     },
     outDir: path.resolve(__dirname, ".uimix/assets"),
   },
-  define: {
-    "process.env": {
-      NODE_ENV: "production",
-    },
-  },
+  // define: {
+  //   "process.env": {
+  //     NODE_ENV: "production",
+  //   },
+  // },
 });

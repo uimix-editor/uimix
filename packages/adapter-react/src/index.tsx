@@ -1,6 +1,11 @@
 import React from "react";
 import ReactDOM from "react-dom/client";
-import { Component, ComponentRenderer, PropType } from "@uimix/adapter-types";
+import {
+  Component,
+  ComponentRenderer,
+  Prop,
+  PropType,
+} from "@uimix/adapter-types";
 
 export class ReactRenderer implements ComponentRenderer {
   constructor(element: HTMLElement, Component: React.ElementType) {
@@ -45,7 +50,7 @@ export function reactComponent<Props>({
     name,
     props: Object.entries(props.props).map(([name, type]) => ({
       name: name,
-      type: type as PropType.AbstractType<unknown>,
+      type: type as Prop["type"],
     })),
     createRenderer: (element: HTMLElement) =>
       new ReactRenderer(element, component),

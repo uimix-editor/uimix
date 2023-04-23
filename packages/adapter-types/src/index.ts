@@ -2,16 +2,19 @@ import * as PropType from "./props";
 
 export { PropType };
 
-export interface Prop<T> {
+export interface Prop {
   name: string;
-  type: PropType.AbstractType<T>;
+  type:
+    | PropType.StringType
+    | PropType.BooleanType
+    | PropType.EnumType<string[]>;
 }
 
 export interface Component {
   framework: "react"; // TODO: support other frameworks
   path: string; // path relative to project root e.g. "src/Button.tsx"
   name: string; // export name; e.g. "Button" ("default" for default export)
-  props: Prop<unknown>[];
+  props: Prop[];
   createRenderer: (element: HTMLElement) => ComponentRenderer;
 }
 

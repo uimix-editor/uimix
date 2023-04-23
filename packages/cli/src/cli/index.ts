@@ -5,7 +5,6 @@ import * as path from "path";
 import mkdirp from "mkdirp";
 import { ProjectIO } from "../project/ProjectIO";
 import { NodeFileAccess } from "../project/NodeFileAccess";
-import { buildCodeAssets } from "../codeAssets/build";
 
 async function compileProject(projectIO: ProjectIO) {
   const outFiles = await generateCode(
@@ -35,7 +34,7 @@ async function compileCommand(
     projectIO.watch(() => compileProject(projectIO));
   }
 
-  await buildCodeAssets(rootPath, projectIO.content.manifest, options);
+  //await buildCodeAssets(rootPath, projectIO.content.manifest, options);
   await compileProject(projectIO);
 }
 

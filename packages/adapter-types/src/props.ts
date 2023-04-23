@@ -1,5 +1,5 @@
 export interface AbstractType<T> {
-  default: T;
+  default?: T;
 }
 
 export interface StringType extends AbstractType<string> {
