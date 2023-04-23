@@ -481,6 +481,23 @@ export class Selectable {
     return result;
   }
 
+  @computed.struct get usedImageHashes(): Set<string> {
+    const result = new Set<string>();
+
+    const { style } = this;
+    if (style.imageHash) {
+      result.add(style.imageHash);
+    }
+
+    for (const child of this.children) {
+      for (const hash of child.usedImageHashes) {
+        result.add(hash);
+      }
+    }
+
+    return result;
+  }
+
   @computed get refID(): string | undefined {
     const ownerComponent = this.originalNode.ownerComponent;
     if (!ownerComponent || ownerComponent.rootNode === this.originalNode) {

@@ -1,5 +1,4 @@
 import * as Data from "@uimix/model/src/data/v1";
-import { usedImageHashesInProject } from "@uimix/model/src/data/util";
 import { isEqual } from "lodash-es";
 import { formatTypeScript } from "../format";
 import { FileAccess } from "./FileAccess";
@@ -230,9 +229,7 @@ export class ProjectIO {
         pagePathsToDelete.delete(pagePath);
       }
 
-      const usedImageHashes = usedImageHashesInProject(
-        this.content.project.toJSON()
-      );
+      const usedImageHashes = this.content.project.imageManager.usedImageHashes;
 
       for (const [hash, image] of this.content.project.imageManager.images) {
         if (!usedImageHashes.has(hash)) {

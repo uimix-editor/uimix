@@ -1,7 +1,6 @@
 import { computed, makeObservable, observable } from "mobx";
 import * as Y from "yjs";
 import * as Data from "@uimix/model/src/data/v1";
-import { usedImageHashesInStyle } from "@uimix/model/src/data/util";
 import { Project, Page, Selectable } from "@uimix/model/src/models";
 import { getIncrementalUniqueName } from "@uimix/foundation/src/utils/Name";
 import { PageState } from "./PageState";
@@ -103,16 +102,11 @@ export class ProjectState {
     });
 
     const imageHashes = new Set<string>();
-
-    const visit = (json: Data.Selectable) => {
-      for (const hash of usedImageHashesInStyle(json.style)) {
+    for (const selectable of selection) {
+      for (const hash of selectable.usedImageHashes) {
         imageHashes.add(hash);
       }
-      if (json.children) {
-        json.children.forEach(visit);
-      }
-    };
-    nodes.forEach(visit);
+    }
 
     const images: Record<string, Data.Image> = {};
     for (const hash of imageHashes) {
