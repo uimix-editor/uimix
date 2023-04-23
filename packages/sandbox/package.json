@@ -4,16 +4,14 @@
   "private": true,
   "type": "module",
   "scripts": {
-    "build": "run-z build:tsc build:assets build:uimix build:vite",
+    "build": "run-z build:tsc build:uimix build:vite",
     "build-storybook": "storybook build",
     "build:tsc": "tsc",
     "build:uimix": "uimix compile",
-    "build:assets": "vite build --config vite.config.assets.js",
     "build:vite": "vite build",
-    "dev": "run-z dev:vite,dev:uimix,dev:assets",
+    "dev": "run-z dev:vite,dev:uimix",
     "dev:uimix": "uimix compile -w",
     "dev:vite": "vite --port 5174",
-    "dev:assets": "vite build --watch --config vite.config.assets.js",
     "preview": "vite preview",
     "storybook": "storybook dev -p 6006",
     "test": "vitest run"

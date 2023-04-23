@@ -265,11 +265,6 @@ export function loadFromJSXFile(text: string): PageNode {
 
 export const ProjectManifest = z.object({
   prebuiltAssets: z.array(z.string()).optional(),
-  components: z
-    .object({
-      react: z.array(z.string()).optional(),
-    })
-    .optional(),
-  designTokens: z.string().optional(),
+  assets: z.string().optional(),
 });
 export type ProjectManifest = z.infer<typeof ProjectManifest>;
