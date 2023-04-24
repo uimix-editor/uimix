@@ -161,7 +161,6 @@ export class ProjectIO {
 
       for (const filePath of filePaths.images) {
         try {
-          console.log("loading image", filePath);
           // TODO: lookup specific directories only
           const imageData = await this.fileAccess.readFile(filePath);
           const hash = await getURLSafeBase64Hash(imageData);

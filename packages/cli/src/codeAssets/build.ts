@@ -17,7 +17,7 @@ export async function buildCodeAssets(
 
   // TODO: make build options configurable
 
-  await build({
+  const result = await build({
     root: rootPath,
     build: {
       lib: {
@@ -30,4 +30,16 @@ export async function buildCodeAssets(
       watch: options.watch ? {} : undefined,
     },
   });
+  if ("on" in result) {
+    return new Promise<void>((resolve, reject) => {
+      result.on("event", (event) => {
+        if (event.code === "BUNDLE_END") {
+          resolve();
+        }
+        if (event.code === "ERROR") {
+          reject(event.error);
+        }
+      });
+    });
+  }
 }
