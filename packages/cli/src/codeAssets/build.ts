@@ -1,5 +1,4 @@
 import * as path from "path";
-import react from "@vitejs/plugin-react";
 import { build } from "vite";
 import { codeAssetsDestination } from "./constants";
 import { ProjectManifest } from "@uimix/model/src/file";
