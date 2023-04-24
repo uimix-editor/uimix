@@ -42,7 +42,7 @@ export const CorrespondenceIndicator: React.FC = observer(
             fill="none"
             strokeWidth={1}
             strokeDasharray="1"
-            stroke={colors.active}
+            stroke={colors.blue}
           />;
         })}
       </>

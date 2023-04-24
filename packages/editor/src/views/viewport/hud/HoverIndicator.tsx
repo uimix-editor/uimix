@@ -17,7 +17,7 @@ export const HoverIndicator: React.FC = observer(function HoverIndicator() {
       height={rect.height}
       fill="none"
       strokeWidth={1}
-      stroke={colors.active}
+      stroke={colors.blue}
     />
   ) : null;
 });

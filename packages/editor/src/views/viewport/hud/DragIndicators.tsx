@@ -28,7 +28,7 @@ export const DragIndicators: React.FC = observer(function DragIndicators() {
         <rect
           {...dragSelectionRect.toSVGRectProps()}
           fill={Color.from(colors.active)?.withAlpha(0.2).toString()}
-          stroke={colors.active}
+          stroke={colors.blue}
         />
       )}
       {dragPreviewRects.map((rect, i) => (
@@ -37,7 +37,7 @@ export const DragIndicators: React.FC = observer(function DragIndicators() {
           {...rect.toSVGRectProps()}
           fill="none"
           strokeDasharray="2 2"
-          stroke={colors.active}
+          stroke={colors.blue}
         />
       ))}
       {dropTargetPreviewRect && (
@@ -45,14 +45,14 @@ export const DragIndicators: React.FC = observer(function DragIndicators() {
           {...dropTargetPreviewRect.toSVGRectProps()}
           fill="none"
           strokeDasharray="2 2"
-          stroke={colors.active}
+          stroke={colors.blue}
           strokeWidth={2}
         />
       )}
       {dropIndexIndicator && (
         <line
           {...dropIndexIndicator.toSVGLineProps()}
-          stroke={colors.active}
+          stroke={colors.blue}
           strokeWidth={2}
         />
       )}
