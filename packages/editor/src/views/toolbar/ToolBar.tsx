@@ -129,6 +129,67 @@ export const ToolBar: React.FC<{
           </ToolButton>
         </Tooltip>
       </div>
+      <div className={twMerge("flex items-center gap-1 ml-auto")}>
+        <Tooltip text="1 Sidebar" side={tooltipSide}>
+          <ToolButton
+            aria-pressed={viewportState.layout === "twoColumn"}
+            onClick={action(() => {
+              viewportState.layout = "twoColumn";
+            })}
+          >
+            <svg
+              className="text-xl"
+              width="1em"
+              height="1em"
+              viewBox="0 0 20 20"
+              fill="none"
+            >
+              <path
+                d="M2.75 16V4C2.75 3.30964 3.30964 2.75 4 2.75H16C16.6904 2.75 17.25 3.30964 17.25 4V16C17.25 16.6904 16.6904 17.25 16 17.25H4C3.30964 17.25 2.75 16.6904 2.75 16Z"
+                stroke="currentColor"
+                strokeWidth={1.5}
+              />
+              <rect
+                x="12.5"
+                y="3"
+                width="1.5"
+                height="14"
+                fill="currentColor"
+              />
+            </svg>
+          </ToolButton>
+        </Tooltip>
+        <Tooltip text="2 Sidebars" side={tooltipSide}>
+          <ToolButton
+            aria-pressed={viewportState.layout === "threeColumn"}
+            onClick={action(() => {
+              viewportState.layout = "threeColumn";
+            })}
+          >
+            <svg
+              className="text-xl"
+              width="1em"
+              height="1em"
+              viewBox="0 0 20 20"
+              fill="none"
+            >
+              <path
+                d="M2.75 16V4C2.75 3.30964 3.30964 2.75 4 2.75H16C16.6904 2.75 17.25 3.30964 17.25 4V16C17.25 16.6904 16.6904 17.25 16 17.25H4C3.30964 17.25 2.75 16.6904 2.75 16Z"
+                stroke="currentColor"
+                strokeWidth={1.5}
+              />
+              <rect
+                x="12.5"
+                y="3"
+                width="1.5"
+                height="14"
+                fill="currentColor"
+              />
+              <rect x="6" y="3" width="1.5" height="14" fill="currentColor" />
+            </svg>
+          </ToolButton>
+        </Tooltip>
+      </div>
     </div>
   );
 });
