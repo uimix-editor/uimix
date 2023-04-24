@@ -542,17 +542,16 @@ export class Selectable {
       return;
     }
 
-    if (
-      this.idPath.length > 1 ||
-      selectables.some((selectable) => selectable.idPath.length > 1)
-    ) {
+    const originalVariantCorresponding = this.originalVariantCorresponding;
+
+    if (originalVariantCorresponding.idPath.length > 1) {
       console.log(
-        'TODO: moving items inside an instance is not supported yet"'
+        'TODO: moving items into an instance content is not supported yet"'
       );
       return;
     }
 
-    this.node.insertBefore(
+    originalVariantCorresponding.node.insertBefore(
       selectables.map((s) => s.originalNode),
       dstNextSibling?.originalNode
     );
