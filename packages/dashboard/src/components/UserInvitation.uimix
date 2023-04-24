@@ -1,0 +1,193 @@
+export default (
+  <page>
+    <frame
+      name="UserInvitation"
+      width={480}
+      height="hug"
+      fills={[{ solid: "#ffffff" }]}
+      overflowHidden={true}
+      layout="flex"
+      flexDirection="y"
+      rowGap={16}
+      columnGap={16}
+      paddingTop={16}
+      paddingRight={16}
+      paddingBottom={16}
+      paddingLeft={16}
+    >
+      <frame
+        name="invitationForm"
+        position={{ left: 15, top: 53 }}
+        width={{ min: 0 }}
+        height="hug"
+        layout="flex"
+        flexAlign="center"
+        rowGap={16}
+        columnGap={16}
+      >
+        <frame
+          name="input"
+          width={{ min: 0 }}
+          height={28}
+          topLeftRadius={4}
+          topRightRadius={4}
+          bottomRightRadius={4}
+          bottomLeftRadius={4}
+          fills={[{ solid: "#fafafa" }]}
+          layout="flex"
+          flexAlign="center"
+          rowGap={10}
+          columnGap={10}
+          paddingRight={6}
+          paddingLeft={6}
+        >
+          <text
+            name="Email"
+            width="hug"
+            height="hug"
+            fills={[{ solid: "#d4d4d4" }]}
+            textContent="Email"
+            fontSize={12}
+            lineHeight={16}
+            letterSpacing="0%"
+            textVerticalAlign="center"
+          />
+        </frame>
+        <frame
+          name="shareButton"
+          width="hug"
+          height={24}
+          topLeftRadius={4}
+          topRightRadius={4}
+          bottomRightRadius={4}
+          bottomLeftRadius={4}
+          fills={[{ solid: "#3b82f6" }]}
+          overflowHidden={true}
+          layout="flex"
+          flexAlign="center"
+          rowGap={10}
+          columnGap={10}
+          paddingTop={6}
+          paddingRight={8}
+          paddingBottom={6}
+          paddingLeft={8}
+        >
+          <text
+            name="Invite"
+            width="hug"
+            height="hug"
+            fills={[{ solid: "#ffffff" }]}
+            textContent="Invite"
+            fontWeight={500}
+            fontSize={12}
+            lineHeight={12}
+            letterSpacing="0%"
+            textHorizontalAlign="center"
+            textVerticalAlign="center"
+          />
+        </frame>
+      </frame>
+      <frame
+        name="users"
+        position={{ left: 16, top: 44 }}
+        width={{ min: 0 }}
+        height={63}
+        layout="flex"
+        flexDirection="y"
+        rowGap={16}
+        columnGap={16}
+      >
+        <frame
+          name="UserRow"
+          position={{ left: 15, top: 96 }}
+          width={{ min: 0 }}
+          height={24}
+          layout="flex"
+          flexAlign="center"
+        >
+          <image
+            name="avatar"
+            width={24}
+            height={24}
+            topLeftRadius={12}
+            topRightRadius={12}
+            bottomRightRadius={12}
+            bottomLeftRadius={12}
+            overflowHidden={true}
+            marginRight={16}
+            image="../images/W8ocgZHFoTObFOTAsqyIu7e-oN9Cso7RmNip0CsX8U0.png"
+          />
+          <text
+            name="userName"
+            position={{ left: 40, top: 4 }}
+            width={{ min: 0 }}
+            height="hug"
+            fills={[{ solid: "#000000" }]}
+            textContent="seanchas116"
+            fontSize={12}
+            lineHeight={16}
+            letterSpacing="0%"
+            textVerticalAlign="center"
+          />
+          <text
+            name="role"
+            position={{ left: 499, top: 4 }}
+            width="hug"
+            height="hug"
+            fills={[{ solid: "#000000" }]}
+            textContent="Admin"
+            fontSize={12}
+            lineHeight={16}
+            letterSpacing="0%"
+            textVerticalAlign="center"
+          />
+        </frame>
+        <frame
+          name="UserRow"
+          position={{ left: 15, top: 135 }}
+          width={{ min: 0 }}
+          height={24}
+          layout="flex"
+          flexAlign="center"
+        >
+          <image
+            name="avatar"
+            width={24}
+            height={24}
+            topLeftRadius={12}
+            topRightRadius={12}
+            bottomRightRadius={12}
+            bottomLeftRadius={12}
+            overflowHidden={true}
+            marginRight={15}
+            image="../images/aYbuLhtC5HZ7MfsM_lz43qDVp939KZ-_mZqar4r3_xc.jpeg"
+          />
+          <text
+            name="userName"
+            position={{ left: 39, top: 4 }}
+            width={{ min: 0 }}
+            height="hug"
+            fills={[{ solid: "#000000" }]}
+            textContent="Jane Doe"
+            fontSize={12}
+            lineHeight={16}
+            letterSpacing="0%"
+            textVerticalAlign="center"
+          />
+          <text
+            name="role"
+            position={{ left: 506, top: 4 }}
+            width="hug"
+            height="hug"
+            fills={[{ solid: "#000000" }]}
+            textContent="Read"
+            fontSize={12}
+            lineHeight={16}
+            letterSpacing="0%"
+            textVerticalAlign="center"
+          />
+        </frame>
+      </frame>
+    </frame>
+  </page>
+);

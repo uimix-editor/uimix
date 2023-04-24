@@ -1,46 +1,49 @@
 import path from "path";
-import { ProjectJSON } from "../../model/src/data/v1";
+import * as Data from "../../model/src/data/v1";
 import { compareProjectJSONs } from "../../model/src/data/util";
 import { DocumentMetadata } from "../../dashboard/src/types/DesktopAPI";
 import { TypedEmitter } from "tiny-typed-emitter";
 import { app, dialog } from "electron";
-import { WorkspaceLoader } from "../../cli/src/project/WorkspaceLoader";
+import { ProjectIO } from "../../cli/src/project/ProjectIO";
 import { NodeFileAccess } from "../../cli/src/project/NodeFileAccess";
 
 export class File extends TypedEmitter<{
   editedChange: (edited: boolean) => void;
   metadataChange: (metadata: DocumentMetadata) => void;
-  dataChange: (data: ProjectJSON) => void;
+  dataChange: (data: Data.Project) => void;
 }> {
-  constructor(loader?: WorkspaceLoader) {
+  constructor(projectIO?: ProjectIO) {
     super();
 
-    if (loader) {
-      app.addRecentDocument(loader.rootPath);
-      this.loader = loader;
+    if (projectIO) {
+      app.addRecentDocument(projectIO.rootPath);
+      this.projectIO = projectIO;
     }
 
-    this._data = this.loader?.json ?? {
+    this._data = this.projectIO?.content.project.toJSON() ?? {
       // default project
       nodes: {
         project: { type: "project", index: 0 },
       },
       styles: {},
+      componentURLs: [],
+      images: {},
+      colors: {},
     };
     this.savedData = this._data;
-    if (loader) {
+    if (projectIO) {
       this.watch();
     }
   }
 
   get name(): string {
-    return this.loader
-      ? path.basename(this.loader.rootPath)
+    return this.projectIO
+      ? path.basename(this.projectIO.rootPath)
       : "Untitled Project";
   }
 
   get filePath(): string | undefined {
-    return this.loader?.rootPath;
+    return this.projectIO?.rootPath;
   }
 
   get metadata(): DocumentMetadata {
@@ -49,20 +52,20 @@ export class File extends TypedEmitter<{
     };
   }
 
-  loader?: WorkspaceLoader;
+  projectIO?: ProjectIO;
   edited = false;
 
-  private _data: ProjectJSON;
-  get data(): ProjectJSON {
+  private _data: Data.Project;
+  get data(): Data.Project {
     return this._data;
   }
-  setData(data: ProjectJSON) {
+  setData(data: Data.Project) {
     this._data = data;
     this.edited = !compareProjectJSONs(this.savedData, this._data);
     this.emit("editedChange", this.edited);
   }
 
-  private savedData: ProjectJSON;
+  private savedData: Data.Project;
 
   revert() {
     this.setData(this.savedData);
@@ -70,14 +73,14 @@ export class File extends TypedEmitter<{
   }
 
   async save() {
-    if (!this.loader) {
+    if (!this.projectIO) {
       await this.saveAs();
       return;
     }
 
-    this.loader.json = this.data;
-    await this.loader.save();
-    app.addRecentDocument(this.loader.rootPath);
+    this.projectIO.content.project.loadJSON(this.data);
+    await this.projectIO.save();
+    app.addRecentDocument(this.projectIO.rootPath);
     this.savedData = this.data;
     this.edited = false;
     this.emit("editedChange", this.edited);
@@ -94,7 +97,7 @@ export class File extends TypedEmitter<{
     }
     console.log("newPath", newPath);
 
-    this.loader = new WorkspaceLoader(new NodeFileAccess(newPath));
+    this.projectIO = new ProjectIO(new NodeFileAccess(), newPath);
     await this.save();
     this.watch();
 
@@ -115,8 +118,8 @@ export class File extends TypedEmitter<{
   }
 
   static async openFilePath(filePath: string) {
-    const loader = await WorkspaceLoader.load(new NodeFileAccess(filePath));
-    return new File(loader);
+    const projectIO = await ProjectIO.load(new NodeFileAccess(), filePath);
+    return new File(projectIO);
   }
 
   watch() {
@@ -125,13 +128,13 @@ export class File extends TypedEmitter<{
       this.watchDisposer = undefined;
     }
 
-    const { loader } = this;
+    const { projectIO: loader } = this;
     if (!loader) {
       return;
     }
 
     this.watchDisposer = loader.watch(() => {
-      const json = loader.json;
+      const json = loader.content.project.toJSON();
       console.log("changed");
       if (this.edited) {
         // TODO: warn

@@ -1,17 +1,15 @@
 import { describe, expect, it } from "vitest";
 import { Project } from "./Project";
 import { selectablesToProjectJSON } from "./Selectable";
-import * as path from "path";
-import { WorkspaceLoader } from "../../../cli/src/project/WorkspaceLoader";
-import { NodeFileAccess } from "../../../cli/src/project/NodeFileAccess";
+import * as Data from "../data/v1";
+// @ts-ignore
+import projectJSONFile from "./__fixtures__/project.uimixproject?raw";
 
 describe(selectablesToProjectJSON.name, () => {
   it("works", async () => {
-    const rootDir = path.resolve("../sandbox");
-    const loader = await WorkspaceLoader.load(new NodeFileAccess(rootDir), {
-      filePattern: "src/components.uimix",
-    });
-    const projectJSON = loader.json;
+    const projectJSON = Data.Project.parse(
+      JSON.parse(projectJSONFile as string)
+    );
 
     const project = new Project();
     project.loadJSON(projectJSON);

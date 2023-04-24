@@ -13,7 +13,7 @@ import { InspectorHeading } from "../components/InspectorHeading";
 import { InspectorPane } from "../components/InspectorPane";
 import { action } from "mobx";
 import { InspectorTargetContext } from "../components/InspectorTargetContext";
-import { Shadow } from "@uimix/model/src/data/v1";
+import * as Data from "@uimix/model/src/data/v1";
 import { ColorRef } from "@uimix/model/src/models";
 
 function nanToZero(value: number) {
@@ -27,7 +27,7 @@ export const ShadowPane: React.FC = observer(function ShadowPane() {
   const shadows = sameOrMixed(selectables.map((s) => s.style.shadows));
   const hasShadow = !!(shadows && shadows !== Mixed && shadows.length);
 
-  const onChangeShadow = action((shadow: Shadow, index: number) => {
+  const onChangeShadow = action((shadow: Data.Shadow, index: number) => {
     for (const selectable of selectables) {
       const shadows = [...(selectable.style.shadows ?? [])];
       shadows[index] = shadow;
@@ -51,7 +51,7 @@ export const ShadowPane: React.FC = observer(function ShadowPane() {
               icon={addIcon}
               onClick={action(() => {
                 for (const selectable of selectables) {
-                  const newShadow: Shadow = {
+                  const newShadow: Data.Shadow = {
                     color: Color.black.withAlpha(0.25).toHex(),
                     x: 0,
                     y: 0,

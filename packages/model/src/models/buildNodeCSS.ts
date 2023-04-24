@@ -1,8 +1,9 @@
-import { Color, NodeType, StackDirection, StyleJSON } from "../data/v1";
+import * as Data from "../data/v1";
+import * as CSS from "csstype";
 
 export function getLayoutType(
-  style: StyleJSON
-): StackDirection | "grid" | undefined {
+  style: Data.Style
+): Data.StackDirection | "grid" | undefined {
   if (style.layout === "flex") {
     return style.flexDirection;
   }
@@ -12,12 +13,12 @@ export function getLayoutType(
 }
 
 export function buildNodeCSS(
-  nodeType: NodeType,
-  style: StyleJSON,
+  nodeType: Data.NodeType,
+  style: Data.Style,
   getColorToken: (id: string) => string,
-  parentLayout?: StackDirection | "grid"
-): React.CSSProperties {
-  const resolveColorToken = (color: Color): string => {
+  parentLayout?: Data.StackDirection | "grid"
+): CSS.Properties {
+  const resolveColorToken = (color: Data.Color): string => {
     if (typeof color === "string") {
       return color;
     }
@@ -28,7 +29,7 @@ export function buildNodeCSS(
     return {};
   }
 
-  const cssStyle: React.CSSProperties = {};
+  const cssStyle: CSS.Properties = {};
 
   const cssPosition = parentLayout && !style.absolute ? "relative" : "absolute";
   cssStyle.position = cssPosition;

@@ -4,26 +4,32 @@
   "type": "module",
   "main": "src/index.ts",
   "scripts": {
-    "lint": "eslint src",
     "build": "tsc",
+    "lint": "eslint src",
     "test": "vitest run"
   },
   "dependencies": {
+    "@babel/standalone": "^7.21.4",
+    "@uimix/adapter-types": "workspace:*",
     "@uimix/foundation": "workspace:*",
     "crypto-js": "^4.1.1",
     "lodash-es": "^4.17.21",
     "mobx": "^6.9.0",
     "paintvec": "workspace:*",
     "path-browserify": "^1.0.1",
+    "prettier": "^2.8.7",
     "yjs": "^13.5.52",
     "zod": "^3.21.4"
   },
   "devDependencies": {
+    "@types/babel__standalone": "^7.1.4",
     "@types/crypto-js": "^4.1.1",
     "@types/lodash-es": "^4.17.7",
     "@types/path-browserify": "^1.0.0",
+    "@types/prettier": "^2.7.2",
+    "csstype": "^3.1.2",
     "tailwindcss": "^3.3.1",
     "typescript": "^5.0.4",
-    "vitest": "^0.30.0"
+    "vitest": "^0.30.1"
   }
 }

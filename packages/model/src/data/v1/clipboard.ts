@@ -1,9 +1,9 @@
 import { z } from "zod";
-import { NodeType, VariantCondition } from "./node/node";
+import { NodeType, VariantCondition } from "./node";
 import { Image } from "./project";
-import { StyleJSON } from "./style/style";
+import { Style } from "./style";
 
-const SelectableJSONBase = z.object({
+const SelectableBase = z.object({
   id: z.string(),
   type: NodeType,
   name: z.string().optional(),
@@ -14,24 +14,23 @@ const SelectableJSONBase = z.object({
       condition: VariantCondition.optional(),
     })
     .optional(),
-  style: StyleJSON.partial(),
-  selfStyle: StyleJSON.partial().optional(),
+  style: Style.partial(),
+  selfStyle: Style.partial().optional(),
 });
 
-export type SelectableJSON = z.infer<typeof SelectableJSONBase> & {
-  children: SelectableJSON[];
+export type Selectable = z.infer<typeof SelectableBase> & {
+  children: Selectable[];
 };
 
-export const SelectableJSON: z.ZodType<SelectableJSON> =
-  SelectableJSONBase.extend({
-    children: z.lazy(() => z.array(SelectableJSON)),
-  });
+export const Selectable: z.ZodType<Selectable> = SelectableBase.extend({
+  children: z.lazy(() => z.array(Selectable)),
+});
 
-export const NodeClipboardData = z.object({
+export const NodeClipboard = z.object({
   uimixClipboardVersion: z.literal("0.0.1"),
   type: z.literal("nodes"),
-  nodes: z.array(SelectableJSON),
+  nodes: z.array(Selectable),
   images: z.record(Image), // URLs must be data URLs
 });
 
-export type NodeClipboardData = z.infer<typeof NodeClipboardData>;
+export type NodeClipboard = z.infer<typeof NodeClipboard>;

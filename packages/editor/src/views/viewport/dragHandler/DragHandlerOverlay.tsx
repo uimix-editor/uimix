@@ -32,7 +32,7 @@ export const DragHandlerOverlay: React.FC = observer(
         return;
       }
 
-      const onPointerDown = (e: PointerEvent) => {
+      const onPointerDown = action((e: PointerEvent) => {
         if (e.button !== 0) {
           return;
         }
@@ -82,7 +82,7 @@ export const DragHandlerOverlay: React.FC = observer(
         dragHandlerRef.current = new BackgroundClickMoveDragHandler(
           viewportEvent
         );
-      };
+      });
       const onPointerMove = action((e: PointerEvent) => {
         if (e.buttons === 0) {
           onEnd(e);

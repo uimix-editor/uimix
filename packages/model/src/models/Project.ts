@@ -1,13 +1,16 @@
 import * as Y from "yjs";
 import { Selectable, SelectableMap } from "./Selectable";
 import { Node, NodeMap } from "./Node";
-import { ProjectJSON } from "../data/v1";
+import * as Data from "../data/v1";
 import { ImageManager } from "./ImageManager";
 import { Component } from "./Component";
 import { ObservableYArray } from "@uimix/foundation/src/utils/ObservableYArray";
 import { ColorTokenMap } from "./ColorToken";
 import { PageList } from "./PageList";
 import { ProjectData } from "../collaborative/ProjectData";
+import { CodeAssets } from "./CodeAssets";
+import { makeObservable, observable } from "mobx";
+import { Page } from "./Page";
 
 export class Project {
   constructor() {
@@ -16,6 +19,7 @@ export class Project {
     this.colorTokens = new ColorTokenMap(this);
     this.node = this.nodes.create("project", "project");
     this.pages = new PageList(this);
+    makeObservable(this);
   }
 
   readonly data = new ProjectData();
@@ -40,11 +44,16 @@ export class Project {
     ]);
   }
 
-  toJSON(): ProjectJSON {
+  clear(): void {
+    this.data.clear();
+    this.nodes.create("project", "project");
+  }
+
+  toJSON(): Data.Project {
     return this.data.toJSON();
   }
 
-  loadJSON(json: ProjectJSON) {
+  loadJSON(json: Data.Project) {
     this.data.loadJSON(json);
   }
 
@@ -56,6 +65,10 @@ export class Project {
     return ObservableYArray.get(this.data.componentURLs);
   }
 
+  @observable localCodeAssets: CodeAssets | undefined = undefined;
+
+  // Selection
+
   clearSelection() {
     this.selectables.selectionData.clear();
   }
@@ -64,6 +77,26 @@ export class Project {
     this.clearSelection();
     for (const selectable of selectables) {
       selectable.select();
+    }
+  }
+
+  // Get by ID
+
+  nodeForID(id: string): Node | undefined {
+    return this.nodes.get(id);
+  }
+
+  pageForID(id: string): Page | undefined {
+    const node = this.nodeForID(id);
+    if (node) {
+      return Page.from(node);
+    }
+  }
+
+  componentForID(id: string): Component | undefined {
+    const node = this.nodeForID(id);
+    if (node) {
+      return Component.from(node);
     }
   }
 }

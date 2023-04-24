@@ -1,17 +1,19 @@
 import { blobToDataURL, imageFromURL } from "@uimix/foundation/src/utils/Blob";
 import { Project } from "./Project";
 import { ObservableYMap } from "@uimix/foundation/src/utils/ObservableYMap";
-import { Image, ImageType } from "../data/v1";
+import * as Data from "../data/v1";
 import { getURLSafeBase64Hash } from "@uimix/foundation/src/utils/Hash";
 import { compact } from "lodash-es";
+import { computed, makeObservable } from "mobx";
 
 export class ImageManager {
   constructor(project: Project) {
     this.project = project;
+    makeObservable(this);
   }
 
   readonly project: Project;
-  get images(): ObservableYMap<Image> {
+  get images(): ObservableYMap<Data.Image> {
     return ObservableYMap.get(this.project.data.images);
   }
 
@@ -21,12 +23,12 @@ export class ImageManager {
     data: Uint8Array
   ) => Promise<string>;
 
-  async insertDataURL(dataURL: string): Promise<[string, Image]> {
+  async insertDataURL(dataURL: string): Promise<[string, Data.Image]> {
     return this.insert(await (await fetch(dataURL)).blob());
   }
 
-  async insert(blob: Blob): Promise<[string, Image]> {
-    const type = ImageType.parse(blob.type);
+  async insert(blob: Blob): Promise<[string, Data.Image]> {
+    const type = Data.ImageType.parse(blob.type);
     const buffer = await blob.arrayBuffer();
 
     const hash = await getURLSafeBase64Hash(buffer);
@@ -44,7 +46,7 @@ export class ImageManager {
     const url = await uploadImage(hash, blob.type, new Uint8Array(buffer));
     const imgElem = await imageFromURL(url);
 
-    const image: Image = {
+    const image: Data.Image = {
       width: imgElem.width,
       height: imgElem.height,
       url,
@@ -55,11 +57,11 @@ export class ImageManager {
     return [hash, image];
   }
 
-  get(hashBase64: string): Image | undefined {
+  get(hashBase64: string): Data.Image | undefined {
     return this.images.get(hashBase64);
   }
 
-  async getWithDataURL(hashBase64: string): Promise<Image | undefined> {
+  async getWithDataURL(hashBase64: string): Promise<Data.Image | undefined> {
     const image = this.get(hashBase64);
     if (!image) {
       return;
@@ -78,8 +80,8 @@ export class ImageManager {
   }
 
   async uploadImages(
-    images: Record<string, Image>
-  ): Promise<Record<string, Image>> {
+    images: Record<string, Data.Image>
+  ): Promise<Record<string, Data.Image>> {
     const uploadImage = this.uploadImage;
     if (!uploadImage) {
       throw new Error("No uploadImage function set");
@@ -98,5 +100,15 @@ export class ImageManager {
     );
 
     return Object.fromEntries(entries);
+  }
+
+  @computed.struct get usedImageHashes(): Set<string> {
+    const set = new Set<string>();
+    for (const page of this.project.pages.all) {
+      for (const hash of page.selectable.usedImageHashes) {
+        set.add(hash);
+      }
+    }
+    return set;
   }
 }

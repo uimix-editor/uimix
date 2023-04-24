@@ -31,4 +31,6 @@ jobs:
       - run: cd packages/desktop && npm install
       - run: pnpm build
       - run: pnpm test
-      - run: pnpm lint
+      - run: pnpm lint --concurrency 1
+        env:
+          NODE_OPTIONS: --max-old-space-size=16384

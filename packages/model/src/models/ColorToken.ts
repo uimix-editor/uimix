@@ -2,16 +2,39 @@ import * as Y from "yjs";
 import { Color } from "@uimix/foundation/src/utils/Color";
 import { ObservableYMap } from "@uimix/foundation/src/utils/ObservableYMap";
 import { generateID } from "@uimix/foundation/src/utils/ID";
-import { ColorToken as ColorTokenJSON } from "../data/v1";
+import * as Data from "../data/v1";
 import { Project } from "./Project";
 import { Page } from "./Page";
 import { ObjectData } from "./ObjectData";
+import * as CodeAsset from "@uimix/adapter-types";
+import { observable } from "mobx";
+
+export class CodeColorToken {
+  constructor(path: string, token: CodeAsset.ColorToken) {
+    this.path = path;
+    this.value = Color.from(token.$value) ?? Color.black;
+  }
+
+  readonly path: string;
+  get id(): string {
+    return this.path;
+  }
+  get name(): string {
+    return this.path;
+  }
+
+  readonly value: Color;
+
+  get type(): "code" {
+    return "code";
+  }
+}
 
 export class ColorToken {
   constructor(project: Project, id: string) {
     this.id = id;
     this.project = project;
-    this.data = new ObjectData<ColorTokenJSON>(
+    this.data = new ObjectData<Data.ColorToken>(
       this.id,
       this.project.colorTokens.data
     );
@@ -19,7 +42,11 @@ export class ColorToken {
 
   readonly id: string;
   readonly project: Project;
-  readonly data: ObjectData<ColorTokenJSON>;
+  readonly data: ObjectData<Data.ColorToken>;
+
+  get type(): "normal" {
+    return "normal";
+  }
 
   get name(): string | undefined {
     return this.data.get("name");
@@ -53,6 +80,13 @@ export class ColorToken {
   set pageID(value: string | undefined) {
     this.data.set({ page: value });
   }
+
+  get page(): Page | undefined {
+    const pageID = this.pageID;
+    if (pageID) {
+      return this.project.pageForID(pageID);
+    }
+  }
 }
 
 export class ColorTokenMap {
@@ -62,15 +96,18 @@ export class ColorTokenMap {
 
   readonly project: Project;
 
-  get data(): ObservableYMap<Y.Map<ColorTokenJSON[keyof ColorTokenJSON]>> {
+  get data(): ObservableYMap<Y.Map<Data.ColorToken[keyof Data.ColorToken]>> {
     return ObservableYMap.get(this.project.data.colors);
   }
 
-  get(id: string): ColorToken | undefined {
-    if (!this.data.has(id)) {
-      return undefined;
+  get(id: string): ColorToken | CodeColorToken | undefined {
+    const codeToken = this.codeColorTokens.get(id);
+    if (codeToken) {
+      return codeToken;
     }
-    return new ColorToken(this.project, id);
+    if (this.data.has(id)) {
+      return new ColorToken(this.project, id);
+    }
   }
 
   resolve(id: string): string {
@@ -84,6 +121,8 @@ export class ColorTokenMap {
   get all(): ColorToken[] {
     return [...this.data.keys()].map((id) => new ColorToken(this.project, id));
   }
+
+  readonly codeColorTokens = observable.map<string, CodeColorToken>();
 }
 
 export class ColorTokenList {

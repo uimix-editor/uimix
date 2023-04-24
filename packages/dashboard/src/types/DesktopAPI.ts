@@ -1,6 +1,8 @@
-import type { ProjectJSON } from "@uimix/model/src/data/v1";
+import type * as Data from "@uimix/model/src/data/v1";
 
-export { ProjectJSON };
+type ProjectJSON = Data.Project;
+
+export type { ProjectJSON };
 
 export interface DocumentMetadata {
   name: string;

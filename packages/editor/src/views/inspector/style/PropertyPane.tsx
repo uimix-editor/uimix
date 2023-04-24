@@ -5,9 +5,9 @@ import { InspectorPane } from "../components/InspectorPane";
 import { InspectorTargetContext } from "../components/InspectorTargetContext";
 import { ForeignComponentManager } from "../../../state/ForeignComponentManager";
 import { Input, Select, Tooltip } from "@uimix/foundation/src/components";
-import { ForeignComponentRef } from "@uimix/model/src/data/v1";
 import { action } from "mobx";
-import { Prop } from "../../../types/ForeignComponent";
+import * as Data from "@uimix/model/src/data/v1";
+import * as CodeAsset from "@uimix/adapter-types";
 
 export const PropertyPane: React.FC = observer(function PropertyPane() {
   const selectables = projectState.selectedSelectables.filter(
@@ -51,7 +51,7 @@ export const PropertyPane: React.FC = observer(function PropertyPane() {
                     if (!oldComponentID) {
                       return;
                     }
-                    const componentID: ForeignComponentRef = {
+                    const componentID: Data.ForeignComponentRef = {
                       ...oldComponentID,
                       props: {
                         ...oldComponentID.props,
@@ -71,7 +71,7 @@ export const PropertyPane: React.FC = observer(function PropertyPane() {
 });
 
 const PropertyEdit: React.FC<{
-  prop: Prop;
+  prop: CodeAsset.Prop;
   value: unknown;
   className?: string;
   onValueChange: (value: unknown) => void;
@@ -113,7 +113,7 @@ const PropertyEdit: React.FC<{
     return (
       <Select
         className={className}
-        options={prop.type.values.map((value) => {
+        options={prop.type.options.map((value) => {
           try {
             return {
               value: value,

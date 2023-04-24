@@ -1,8 +1,9 @@
 import colors from "tailwindcss/colors.js";
 
 export default {
-  active: colors.blue[500],
-  activeHover: colors.blue[600],
+  active: colors.neutral[600],
+  activeHover: colors.neutral[700],
+  blue: colors.blue[500],
   red: colors.red[500],
   component: colors.sky[500],
   componentText: colors.sky[400],

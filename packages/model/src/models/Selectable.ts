@@ -6,17 +6,12 @@ import { getOrCreate } from "@uimix/foundation/src/utils/Collection";
 import { computed, makeObservable, observable } from "mobx";
 import { Rect } from "paintvec";
 import { resizeWithBoundingBox } from "../services/resizeWithBoundingBox";
-import {
-  SelectableJSON,
-  NodeJSON,
-  NodeType,
-  ProjectJSON,
-  StyleJSON,
-} from "../data/v1";
+import * as Data from "../data/v1";
 import { Project } from "./Project";
-import { Component } from "./Component";
+import { Component, Variant } from "./Component";
 import { ObjectData } from "./ObjectData";
 import { assertNonNull } from "@uimix/foundation/src/utils/Assert";
+import { Page } from "./Page";
 
 export interface IComputedRectProvider {
   readonly value: Rect | undefined;
@@ -42,7 +37,7 @@ class SelectablePartialStyle extends PartialStyle {
   }
 
   readonly selectable: Selectable;
-  readonly data: ObjectData<StyleJSON>;
+  readonly data: ObjectData<Data.Style>;
 }
 
 // a node or a inner node of an instance
@@ -132,11 +127,11 @@ export class Selectable {
     return children;
   }
 
-  @computed get pageSelectable(): Selectable | undefined {
+  @computed get page(): Page | undefined {
     if (this.originalNode.type === "page") {
-      return this;
+      return Page.from(this.originalNode);
     }
-    return this.parent?.pageSelectable;
+    return this.parent?.page;
   }
 
   // ancestors ([root, ..., parent, this])
@@ -439,13 +434,13 @@ export class Selectable {
     return true;
   }
 
-  createBefore(type: NodeType, next: Selectable | undefined): Selectable {
+  createBefore(type: Data.NodeType, next: Selectable | undefined): Selectable {
     const node = this.project.nodes.create(type);
     this.originalNode.insertBefore([node], next?.originalNode);
     return this.project.selectables.get([node.id]);
   }
 
-  append(type: NodeType): Selectable {
+  append(type: Data.NodeType): Selectable {
     return this.createBefore(type, undefined);
   }
 
@@ -483,6 +478,23 @@ export class Selectable {
         result.add(font);
       }
     }
+    return result;
+  }
+
+  @computed.struct get usedImageHashes(): Set<string> {
+    const result = new Set<string>();
+
+    const { style } = this;
+    if (style.imageHash) {
+      result.add(style.imageHash);
+    }
+
+    for (const child of this.children) {
+      for (const hash of child.usedImageHashes) {
+        result.add(hash);
+      }
+    }
+
     return result;
   }
 
@@ -571,29 +583,35 @@ export class Selectable {
     return this;
   }
 
-  get variantCorrespondings(): Selectable[] {
+  get variantCorrespondings(): { variant?: Variant; selectable: Selectable }[] {
     const original = this.originalVariantCorresponding;
     const component = original.ownerComponent;
     if (!component) {
-      return [this];
+      return [{ selectable: this }];
     }
 
     if (component.rootNode === original.originalNode) {
       return [
-        component.rootNode.selectable,
-        ...component.variants.map((v) => v.selectable),
+        { selectable: component.rootNode.selectable },
+        ...component.variants.map((v) => ({
+          variant: v,
+          selectable: v.selectable,
+        })),
       ];
     }
 
     return [
-      original,
-      ...component.variants.map((v) =>
-        this.selectableMap.get([v.node.id, ...original.idPath])
-      ),
+      {
+        selectable: original,
+      },
+      ...component.variants.map((v) => ({
+        variant: v,
+        selectable: this.selectableMap.get([v.node.id, ...original.idPath]),
+      })),
     ];
   }
 
-  toJSON(): SelectableJSON {
+  toJSON(): Data.Selectable {
     const originalNode = this.originalNode;
     const node = this.node;
 
@@ -612,7 +630,7 @@ export class Selectable {
     };
   }
 
-  static fromJSON(project: Project, json: SelectableJSON): Selectable {
+  static fromJSON(project: Project, json: Data.Selectable): Selectable {
     const node = project.nodes.create(json.type);
     node.name = json.name;
     const selectable = node.selectable;
@@ -634,7 +652,7 @@ export class SelectableMap {
     this.project = project;
   }
 
-  get stylesData(): ObservableYMap<Y.Map<StyleJSON[keyof StyleJSON]>> {
+  get stylesData(): ObservableYMap<Y.Map<Data.Style[keyof Data.Style]>> {
     return ObservableYMap.get(this.project.data.styles);
   }
   get selectionData(): ObservableYMap<true> {
@@ -654,8 +672,8 @@ export class SelectableMap {
 // TODO generate correctly from instance contents
 export function selectablesToProjectJSON(
   selectables: Selectable[]
-): ProjectJSON {
-  const nodeJSONs: Record<string, NodeJSON> = {};
+): Data.Project {
+  const nodeJSONs: Record<string, Data.Node> = {};
   const styles: Record<string, Partial<IStyle>> = {};
 
   const addRecursively = (selectable: Selectable) => {
@@ -680,5 +698,8 @@ export function selectablesToProjectJSON(
   return {
     nodes: nodeJSONs,
     styles,
+    componentURLs: [],
+    images: {},
+    colors: {},
   };
 }

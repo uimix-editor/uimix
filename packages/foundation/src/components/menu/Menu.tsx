@@ -4,6 +4,7 @@ import chevronRightIcon from "@iconify-icons/ic/chevron-right";
 import { MenuItemDef, MenuSubmenuDef } from "./MenuItemDef";
 import { PopoverState } from "ariakit/popover";
 import { Icon } from "@iconify/react";
+import { omit } from "lodash-es";
 
 const shortcutClassNames = `text-macaron-disabledText text-macaron-base ml-auto pl-4`;
 
@@ -117,7 +118,7 @@ export const DropdownMenu: React.FC<{
 
   return (
     <>
-      {trigger(menuButtunProps)}
+      {trigger(omit(menuButtunProps, "wrapElement"))}
       <Menu state={state} defs={defs} />
     </>
   );

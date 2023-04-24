@@ -23,11 +23,13 @@ class NodeResizeBoxState {
   private heightChanged = false;
 
   get selectedInstances(): Selectable[] {
-    return projectState.selectedSelectables;
+    return projectState.selectedSelectables.filter(
+      (s) => s.originalNode.type !== "component"
+    );
   }
 
   @computed get stroke(): string {
-    return colors.active;
+    return colors.blue;
   }
 
   @computed get boundingBox(): Rect | undefined {

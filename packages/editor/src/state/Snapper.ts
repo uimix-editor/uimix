@@ -73,7 +73,7 @@ export class Snapper {
 
     return [
       ...[...siblings].map((c) => c.computedRect),
-      parent.computedPaddingRect,
+      ...(!parent.originalNode.isAbstract ? [parent.computedPaddingRect] : []),
     ];
   }
 
@@ -85,7 +85,8 @@ export class Snapper {
     if (selectables.length === 0) {
       return point;
     }
-    const parent = selectables[0].offsetParent ?? selectables[0].pageSelectable;
+    const parent =
+      selectables[0].offsetParent ?? selectables[0].page?.selectable;
     if (!parent) {
       return point;
     }

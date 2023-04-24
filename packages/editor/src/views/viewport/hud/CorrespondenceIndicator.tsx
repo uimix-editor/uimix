@@ -18,12 +18,19 @@ export const CorrespondenceIndicator: React.FC = observer(
     }
 
     const correspondings = new Set(
+<<<<<<< HEAD
       [...targets].flatMap((s) => s.variantCorrespondings)
+=======
+      [...targets].flatMap((s) =>
+        s.variantCorrespondings.map(({ selectable }) => selectable)
+      )
+>>>>>>> main
     );
     for (const target of targets) {
       correspondings.delete(target);
     }
 
+<<<<<<< HEAD
     // TODO: group by variant and union?
     const rects = [...correspondings].map((s) =>
       s.computedRect.transform(documentToViewport)
@@ -43,6 +50,32 @@ export const CorrespondenceIndicator: React.FC = observer(
             stroke={colors.active}
           />
         ))}
+=======
+    console.log(correspondings);
+    console.log([...correspondings].map((c) => c.computedRect));
+
+    // TODO: group by variant and union?
+
+    return (
+      <>
+        {[...correspondings].map((s) => {
+          const rect = s.computedRect.transform(documentToViewport);
+
+          return (
+            <rect
+              id={s.id}
+              x={rect.left}
+              y={rect.top}
+              width={rect.width}
+              height={rect.height}
+              fill="none"
+              strokeWidth={1}
+              strokeDasharray="1"
+              stroke={colors.blue}
+            />
+          );
+        })}
+>>>>>>> main
       </>
     );
   }

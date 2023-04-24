@@ -1,12 +1,42 @@
-import { Selectable } from "@uimix/model/src/models/Selectable";
-import { Variant } from "@uimix/model/src/models/Component";
-import {
-  buildNodeCSS,
-  getLayoutType,
-} from "@uimix/model/src/models/buildNodeCSS";
 import { kebabCase } from "lodash-es";
 import * as CSS from "csstype";
 import { Page } from "@uimix/model/src/models/Page";
+import * as CodeAsset from "@uimix/adapter-types";
+import {
+  buildNodeCSS,
+  getLayoutType,
+  Selectable,
+  Variant,
+} from "@uimix/model/src/models";
+import { ClassNameGenerator } from "./ClassNameGenerator";
+
+function isDesignToken(
+  value: CodeAsset.DesignToken | CodeAsset.DesignTokens
+): value is CodeAsset.DesignToken {
+  return value.$type !== undefined;
+}
+
+function getColorToken(
+  designTokens: CodeAsset.DesignTokens,
+  path: string[]
+): CodeAsset.ColorToken | undefined {
+  if (path.length === 0) {
+    return undefined;
+  }
+
+  const child = designTokens[path[0]];
+  if (!child) {
+    return;
+  }
+
+  if (path.length > 1 && !isDesignToken(child)) {
+    return getColorToken(child, path.slice(1));
+  }
+
+  if (isDesignToken(child) && child.$type === "color") {
+    return child;
+  }
+}
 
 const baseCSS = [
   `box-sizing: border-box;`,
@@ -15,12 +45,22 @@ const baseCSS = [
 
 export class CSSGenerator {
   page: Page;
+  designTokens: CodeAsset.DesignTokens;
+  classNameGenerator: ClassNameGenerator;
 
-  constructor(page: Page) {
+  constructor(
+    page: Page,
+    designTokens: CodeAsset.DesignTokens,
+    classNameGenerator: ClassNameGenerator
+  ) {
     this.page = page;
+    this.designTokens = designTokens;
+    this.classNameGenerator = classNameGenerator;
   }
 
   generate(): string {
+    const { classNameGenerator } = this;
+
     const results: string[] = [];
 
     const cssForSelectable = new Map<Selectable, CSS.Properties>();
@@ -40,9 +80,11 @@ export class CSSGenerator {
       css = buildNodeCSS(
         selectable.node.type,
         selectable.style,
-        (tokenID) => selectable.project.colorTokens.resolve(tokenID),
+        (tokenID) =>
+          getColorToken(this.designTokens, tokenID.split("/"))?.$value ??
+          selectable.project.colorTokens.resolve(tokenID),
         parentLayoutType
-      ) as CSS.Properties;
+      );
 
       if (!parent) {
         css.position = "relative";
@@ -109,9 +151,10 @@ export class CSSGenerator {
         const condition = variant.condition;
         if (condition?.type === "maxWidth") {
           const selector =
-            selectable.nodePath.length === 1
-              ? `.uimix-${mainComponent.rootNode.id}`
-              : `.uimix-${selectable.idPath.slice(1).join("-")}`;
+            "." +
+            (selectable.nodePath.length === 1
+              ? classNameGenerator.get([mainComponent.rootNode.id])
+              : classNameGenerator.get(selectable.idPath.slice(1)));
 
           results.push(
             `@media (max-width: ${condition.value}px) {`,
@@ -124,20 +167,22 @@ export class CSSGenerator {
         }
 
         if (selectable.nodePath.length === 1) {
-          const selector = `.uimix-${mainComponent.rootNode.id}:hover`;
+          const selector = `.${classNameGenerator.get([
+            mainComponent.rootNode.id,
+          ])}:hover`;
           results.push(`${selector} {`, ...body, "}");
           return;
         } else {
           const innerIDPath = selectable.idPath.slice(1);
-          const selector = `.uimix-${
-            mainComponent.rootNode.id
-          }:hover .uimix-${innerIDPath.join("-")}`;
+          const selector = `.${classNameGenerator.get([
+            mainComponent.rootNode.id,
+          ])}:hover .${classNameGenerator.get(innerIDPath)}`;
           results.push(`${selector} {`, ...body, "}");
           return;
         }
       }
 
-      const selector = ".uimix-" + selectable.idPath.join("-");
+      const selector = "." + classNameGenerator.get(selectable.idPath);
       results.push(`${selector} {`, ...body, "}");
     };
 

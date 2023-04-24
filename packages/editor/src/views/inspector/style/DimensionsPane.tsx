@@ -1,10 +1,6 @@
 import { useContext } from "react";
 import { observer } from "mobx-react-lite";
-import {
-  PositionConstraint,
-  PositionConstraintType,
-  SizeConstraintType,
-} from "@uimix/model/src/data/v1";
+import * as Data from "@uimix/model/src/data/v1";
 import hugContentsIcon from "@seanchas116/design-icons/json/hug-contents.json";
 import fixedSizeIcon from "@seanchas116/design-icons/json/fixed-size.json";
 import fillAreaIcon from "@seanchas116/design-icons/json/fill-area.json";
@@ -30,41 +26,43 @@ import { action } from "mobx";
 import { InspectorToggleButton } from "./inputs/InspectorToggleButton";
 import edgeTopIcon from "@seanchas116/design-icons/json/edge-top.json";
 
-const verticalSizeConstraintOptions: ToggleGroupItem<SizeConstraintType>[] = [
-  {
-    value: "hug",
-    tooltip: "Hug Contents",
-    icon: { ...hugContentsIcon, rotate: 1 },
-  },
-  {
-    value: "fixed",
-    tooltip: "Fixed",
-    icon: { ...fixedSizeIcon, rotate: 1 },
-  },
-  {
-    value: "fill",
-    tooltip: "Fill Container",
-    icon: { ...fillAreaIcon, rotate: 1 },
-  },
-];
+const verticalSizeConstraintOptions: ToggleGroupItem<Data.SizeConstraintType>[] =
+  [
+    {
+      value: "hug",
+      tooltip: "Hug Contents",
+      icon: { ...hugContentsIcon, rotate: 1 },
+    },
+    {
+      value: "fixed",
+      tooltip: "Fixed",
+      icon: { ...fixedSizeIcon, rotate: 1 },
+    },
+    {
+      value: "fill",
+      tooltip: "Fill Container",
+      icon: { ...fillAreaIcon, rotate: 1 },
+    },
+  ];
 
-const horizontalSizeConstraintOptions: ToggleGroupItem<SizeConstraintType>[] = [
-  {
-    value: "hug",
-    tooltip: "Hug Contents",
-    icon: hugContentsIcon,
-  },
-  {
-    value: "fixed",
-    tooltip: "Fixed",
-    icon: fixedSizeIcon,
-  },
-  {
-    value: "fill",
-    tooltip: "Fill Container",
-    icon: fillAreaIcon,
-  },
-];
+const horizontalSizeConstraintOptions: ToggleGroupItem<Data.SizeConstraintType>[] =
+  [
+    {
+      value: "hug",
+      tooltip: "Hug Contents",
+      icon: hugContentsIcon,
+    },
+    {
+      value: "fixed",
+      tooltip: "Fixed",
+      icon: fixedSizeIcon,
+    },
+    {
+      value: "fill",
+      tooltip: "Fill Container",
+      icon: fillAreaIcon,
+    },
+  ];
 
 const positionTypeOptions: ToggleGroupItem<"absolute" | "relative">[] = [
   {
@@ -387,7 +385,7 @@ const PositionEdit = observer(() => {
         placeholder={(s) => s.computedOffsetTop}
         set={(s, value) => {
           const y = s.style.position.y;
-          const newY: PositionConstraint =
+          const newY: Data.PositionConstraint =
             y.type === "both"
               ? {
                   type: "both",
@@ -411,7 +409,7 @@ const PositionEdit = observer(() => {
         }}
         set={(s, value) => {
           const x = s.style.position.x;
-          const newX: PositionConstraint =
+          const newX: Data.PositionConstraint =
             x.type === "both"
               ? {
                   type: "both",
@@ -435,7 +433,7 @@ const PositionEdit = observer(() => {
         placeholder={(s) => s.computedOffsetBottom}
         set={(s, value) => {
           const y = s.style.position.y;
-          const newY: PositionConstraint =
+          const newY: Data.PositionConstraint =
             y.type === "both"
               ? {
                   type: "both",
@@ -459,7 +457,7 @@ const PositionEdit = observer(() => {
         }}
         set={(s, value) => {
           const x = s.style.position.x;
-          const newX: PositionConstraint =
+          const newX: Data.PositionConstraint =
             x.type === "both"
               ? {
                   type: "both",
@@ -596,7 +594,7 @@ function setSizeConstraintValue(
 function setSizeConstraintType(
   selectable: Selectable,
   target: "width" | "height",
-  type: SizeConstraintType | undefined
+  type: Data.SizeConstraintType | undefined
 ) {
   const { style } = selectable;
   const constraint = style[target];
@@ -707,7 +705,7 @@ function setPositionStartConstraintValue(
 function setPositionStartConstraintType(
   selectable: Selectable,
   axis: "x" | "y",
-  type: PositionConstraintType
+  type: Data.PositionConstraintType
 ) {
   const style = selectable.style;
   const constraint = style.position[axis];

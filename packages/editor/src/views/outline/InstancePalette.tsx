@@ -24,7 +24,7 @@ import colors from "@uimix/foundation/src/colors";
 import { Color } from "@uimix/foundation/src/utils/Color";
 import { FontLoader } from "../viewport/renderer/FontLoader";
 import { dialogState } from "../../state/DialogState";
-import { ForeignComponent } from "../../types/ForeignComponent";
+import * as CodeAsset from "@uimix/adapter-types";
 import { ViewportEvent } from "../viewport/dragHandler/ViewportEvent";
 
 class InstancePaletteState {
@@ -91,6 +91,7 @@ const ComponentThumbnails: React.FC<{
 
       return (
         <div
+          key={page.id}
           style={{
             display: "flex",
             flexDirection: "column",
@@ -187,7 +188,7 @@ const ComponentThumbnails: React.FC<{
 });
 
 const ComponentThumbnail: React.FC<{
-  component: Component | ForeignComponent;
+  component: Component | CodeAsset.Component;
   foreignComponentManager: ForeignComponentManager;
   iframe: HTMLIFrameElement;
 }> = observer(({ component, foreignComponentManager, iframe }) => {

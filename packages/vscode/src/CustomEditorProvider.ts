@@ -1,6 +1,6 @@
 import * as vscode from "vscode";
 import { CustomDocument } from "./CustomDocument";
-import { WorkspaceData } from "./WorkspaceData";
+import { WorkspaceAdapter } from "./WorkspaceAdapter";
 
 export class CustomEditorProvider implements vscode.CustomEditorProvider {
   static async load(context: vscode.ExtensionContext) {
@@ -8,21 +8,21 @@ export class CustomEditorProvider implements vscode.CustomEditorProvider {
     if (!rootFolder) {
       throw new Error("No workspace folder found");
     }
-    return new CustomEditorProvider(
-      context,
-      await WorkspaceData.load(rootFolder)
-    );
+    return new CustomEditorProvider(context, new WorkspaceAdapter(rootFolder));
   }
 
-  constructor(context: vscode.ExtensionContext, workspaceData: WorkspaceData) {
+  constructor(
+    context: vscode.ExtensionContext,
+    workspaceAdapter: WorkspaceAdapter
+  ) {
     this.context = context;
-    this.workspaceData = workspaceData;
-    this.disposables.push(workspaceData);
+    this.workspaceAdapter = workspaceAdapter;
+    this.disposables.push(workspaceAdapter);
   }
 
   readonly disposables: vscode.Disposable[] = [];
   readonly context: vscode.ExtensionContext;
-  readonly workspaceData: WorkspaceData;
+  readonly workspaceAdapter: WorkspaceAdapter;
   private readonly _onDidChangeCustomDocument =
     new vscode.EventEmitter<vscode.CustomDocumentContentChangeEvent>();
 
@@ -67,7 +67,7 @@ export class CustomEditorProvider implements vscode.CustomEditorProvider {
     openContext: vscode.CustomDocumentOpenContext,
     token: vscode.CancellationToken
   ): Promise<vscode.CustomDocument> {
-    return new CustomDocument(this.context, this.workspaceData, uri);
+    return new CustomDocument(this.context, this.workspaceAdapter, uri);
   }
 
   async resolveCustomEditor(

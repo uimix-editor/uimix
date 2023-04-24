@@ -16,7 +16,7 @@ import {
   ToggleGroupItem,
   Tooltip,
 } from "@uimix/foundation/src/components";
-import { StackDirection } from "@uimix/model/src/data/v1";
+import * as Data from "@uimix/model/src/data/v1";
 import { InspectorHeading } from "../components/InspectorHeading";
 import { InspectorPane } from "../components/InspectorPane";
 import { action } from "mobx";
@@ -29,7 +29,7 @@ const StackAlignmentEdit = observer(function StackAlignmentEdit({
   direction,
   className,
 }: {
-  direction: StackDirection;
+  direction: Data.StackDirection;
   className?: string;
 }) {
   const selectables = projectState.selectedSelectables;

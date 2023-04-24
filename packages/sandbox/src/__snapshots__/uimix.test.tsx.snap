@@ -2,10 +2,10 @@
 
 exports[`render 1`] = `
 <div
-  className="uimix-1Bvi2z3UPfi6W3L8nDt5VA other-class"
+  className="uimix-Buttonv4qeOq other-class"
 >
   <div
-    className="uimix-1Bvi2z3UGTM64JtRT7Qc1S"
+    className="uimix-Buttonv4qeOq__text"
   >
     Hello, world!
   </div>
@@ -14,10 +14,10 @@ exports[`render 1`] = `
 
 exports[`render 2`] = `
 <div
-  className="uimix-1Bvi319YVxZELz4tEskN1S"
+  className="uimix-PageRBRbRk"
 >
   <header
-    className="uimix-1Bvi31VKu8gfy6XzJ8xrHA"
+    className="uimix-PageRBRbRk__header"
   >
     <div
       className="wrapper"
@@ -78,10 +78,10 @@ exports[`render 2`] = `
     </div>
   </header>
   <div
-    className="uimix-1Bvi365mtWZmXKDPeJTB4s"
+    className="uimix-PageRBRbRk__frame"
   >
     <button
-      className="storybook-button storybook-button--large storybook-button--primary uimix-1Bvi32d9RMi3ES5kk2UvuM"
+      className="storybook-button storybook-button--large storybook-button--primary uimix-PageRBRbRk__button"
       style={
         {
           "backgroundColor": "red",
@@ -92,53 +92,99 @@ exports[`render 2`] = `
       Override Button Label
     </button>
     <div
-      className="uimix-1Bvi2z3UrU9VkawwAteXs8 uimix-1Bvi2z3UPfi6W3L8nDt5VA"
+      className="uimix-PageRBRbRk__instance uimix-Buttonv4qeOq"
     >
       <div
-        className="uimix-1Bvi2z3UrU9VkawwAteXs8-1Bvi2z3UGTM64JtRT7Qc1S uimix-1Bvi2z3UGTM64JtRT7Qc1S"
+        className="uimix-PageRBRbRk__instance-Buttonv4qeOq__text uimix-Buttonv4qeOq__text"
       >
         Override Name
       </div>
     </div>
     <img
       alt="Image"
-      className="uimix-1Bvi392qBdMy93LGLcVymb"
-      src="/.uimix/images/YmY-tuteU03QY-k_2ARy1uacNmXDNmOX-FFAlj2qCIo.png"
+      className="uimix-PageRBRbRk__image"
+      src="/src/images/icon.png"
     />
     <div
-      className="uimix-1Bvi39mct9UNYZ9eTCCRdV uimix-1Bvi2z3TfkSpYXW29daTN8"
+      className="uimix-PageRBRbRk__stack uimix-StackRBRbRk"
     >
       <div
-        className="uimix-1Bvi39mct9UNYZ9eTCCRdV-1Bvi2z3TpKXtTJLTRPTEd8 uimix-1Bvi2z3TpKXtTJLTRPTEd8"
+        className="uimix-PageRBRbRk__stack-StackRBRbRk__item_0 uimix-StackRBRbRk__item_0"
       />
       <div
-        className="uimix-1Bvi39mct9UNYZ9eTCCRdV-1Bvi2z3To8ddXo6R6ZftVD uimix-1Bvi2z3To8ddXo6R6ZftVD"
+        className="uimix-PageRBRbRk__stack-StackRBRbRk__item_1 uimix-StackRBRbRk__item_1"
       />
       <div
-        className="uimix-1Bvi39mct9UNYZ9eTCCRdV-1BwspVKcGYvxVctYVzjPu6 uimix-1BwspVKcGYvxVctYVzjPu6"
+        className="uimix-PageRBRbRk__stack-StackRBRbRk__hidden_Item uimix-StackRBRbRk__hidden_Item"
       />
       <div
-        className="uimix-1Bvi39mct9UNYZ9eTCCRdV-1Bvi2z3UB1xUVg4Xz9WTpJ uimix-1Bvi2z3UB1xUVg4Xz9WTpJ"
+        className="uimix-PageRBRbRk__stack-StackRBRbRk__item_2 uimix-StackRBRbRk__item_2"
       />
       <div
-        className="uimix-1Bvi39mct9UNYZ9eTCCRdV-1Bvi2z3U3SiK6r7gf9vh7N uimix-1Bvi2z3U3SiK6r7gf9vh7N"
+        className="uimix-PageRBRbRk__stack-StackRBRbRk__text uimix-StackRBRbRk__text"
       >
         Override inner item
       </div>
+      <div
+        className="uimix-PageRBRbRk__stack-StackRBRbRk__button uimix-StackRBRbRk__button"
+      >
+        <div
+          className="uimix-PageRBRbRk__stack-StackRBRbRk__button-Buttonv4qeOq__text uimix-StackRBRbRk__button-Buttonv4qeOq__text uimix-Buttonv4qeOq__text"
+        >
+          Nested Override
+        </div>
+      </div>
     </div>
+    <style
+      dangerouslySetInnerHTML={
+        {
+          "__html": ".css-1yu95zv-MuiButton-root{font-family:\\"Roboto\\",\\"Helvetica\\",\\"Arial\\",sans-serif;font-weight:500;font-size:0.875rem;line-height:1.75;letter-spacing:0.02857em;text-transform:uppercase;min-width:64px;padding:6px 16px;border-radius:4px;-webkit-transition:background-color 250ms cubic-bezier(0.4, 0, 0.2, 1) 0ms,box-shadow 250ms cubic-bezier(0.4, 0, 0.2, 1) 0ms,border-color 250ms cubic-bezier(0.4, 0, 0.2, 1) 0ms,color 250ms cubic-bezier(0.4, 0, 0.2, 1) 0ms;transition:background-color 250ms cubic-bezier(0.4, 0, 0.2, 1) 0ms,box-shadow 250ms cubic-bezier(0.4, 0, 0.2, 1) 0ms,border-color 250ms cubic-bezier(0.4, 0, 0.2, 1) 0ms,color 250ms cubic-bezier(0.4, 0, 0.2, 1) 0ms;color:#fff;background-color:#1976d2;box-shadow:0px 3px 1px -2px rgba(0,0,0,0.2),0px 2px 2px 0px rgba(0,0,0,0.14),0px 1px 5px 0px rgba(0,0,0,0.12);}.css-1yu95zv-MuiButton-root:hover{-webkit-text-decoration:none;text-decoration:none;background-color:#1565c0;box-shadow:0px 2px 4px -1px rgba(0,0,0,0.2),0px 4px 5px 0px rgba(0,0,0,0.14),0px 1px 10px 0px rgba(0,0,0,0.12);}@media (hover: none){.css-1yu95zv-MuiButton-root:hover{background-color:#1976d2;}}.css-1yu95zv-MuiButton-root:active{box-shadow:0px 5px 5px -3px rgba(0,0,0,0.2),0px 8px 10px 1px rgba(0,0,0,0.14),0px 3px 14px 2px rgba(0,0,0,0.12);}.css-1yu95zv-MuiButton-root.Mui-focusVisible{box-shadow:0px 3px 5px -1px rgba(0,0,0,0.2),0px 6px 10px 0px rgba(0,0,0,0.14),0px 1px 18px 0px rgba(0,0,0,0.12);}.css-1yu95zv-MuiButton-root.Mui-disabled{color:rgba(0, 0, 0, 0.26);box-shadow:none;background-color:rgba(0, 0, 0, 0.12);}",
+        }
+      }
+      data-emotion="css 1yu95zv-MuiButton-root"
+    />
+    <style
+      dangerouslySetInnerHTML={
+        {
+          "__html": ".css-sghohy-MuiButtonBase-root-MuiButton-root{display:-webkit-inline-box;display:-webkit-inline-flex;display:-ms-inline-flexbox;display:inline-flex;-webkit-align-items:center;-webkit-box-align:center;-ms-flex-align:center;align-items:center;-webkit-box-pack:center;-ms-flex-pack:center;-webkit-justify-content:center;justify-content:center;position:relative;box-sizing:border-box;-webkit-tap-highlight-color:transparent;background-color:transparent;outline:0;border:0;margin:0;border-radius:0;padding:0;cursor:pointer;-webkit-user-select:none;-moz-user-select:none;-ms-user-select:none;user-select:none;vertical-align:middle;-moz-appearance:none;-webkit-appearance:none;-webkit-text-decoration:none;text-decoration:none;color:inherit;font-family:\\"Roboto\\",\\"Helvetica\\",\\"Arial\\",sans-serif;font-weight:500;font-size:0.875rem;line-height:1.75;letter-spacing:0.02857em;text-transform:uppercase;min-width:64px;padding:6px 16px;border-radius:4px;-webkit-transition:background-color 250ms cubic-bezier(0.4, 0, 0.2, 1) 0ms,box-shadow 250ms cubic-bezier(0.4, 0, 0.2, 1) 0ms,border-color 250ms cubic-bezier(0.4, 0, 0.2, 1) 0ms,color 250ms cubic-bezier(0.4, 0, 0.2, 1) 0ms;transition:background-color 250ms cubic-bezier(0.4, 0, 0.2, 1) 0ms,box-shadow 250ms cubic-bezier(0.4, 0, 0.2, 1) 0ms,border-color 250ms cubic-bezier(0.4, 0, 0.2, 1) 0ms,color 250ms cubic-bezier(0.4, 0, 0.2, 1) 0ms;color:#fff;background-color:#1976d2;box-shadow:0px 3px 1px -2px rgba(0,0,0,0.2),0px 2px 2px 0px rgba(0,0,0,0.14),0px 1px 5px 0px rgba(0,0,0,0.12);}.css-sghohy-MuiButtonBase-root-MuiButton-root::-moz-focus-inner{border-style:none;}.css-sghohy-MuiButtonBase-root-MuiButton-root.Mui-disabled{pointer-events:none;cursor:default;}@media print{.css-sghohy-MuiButtonBase-root-MuiButton-root{-webkit-print-color-adjust:exact;color-adjust:exact;}}.css-sghohy-MuiButtonBase-root-MuiButton-root:hover{-webkit-text-decoration:none;text-decoration:none;background-color:#1565c0;box-shadow:0px 2px 4px -1px rgba(0,0,0,0.2),0px 4px 5px 0px rgba(0,0,0,0.14),0px 1px 10px 0px rgba(0,0,0,0.12);}@media (hover: none){.css-sghohy-MuiButtonBase-root-MuiButton-root:hover{background-color:#1976d2;}}.css-sghohy-MuiButtonBase-root-MuiButton-root:active{box-shadow:0px 5px 5px -3px rgba(0,0,0,0.2),0px 8px 10px 1px rgba(0,0,0,0.14),0px 3px 14px 2px rgba(0,0,0,0.12);}.css-sghohy-MuiButtonBase-root-MuiButton-root.Mui-focusVisible{box-shadow:0px 3px 5px -1px rgba(0,0,0,0.2),0px 6px 10px 0px rgba(0,0,0,0.14),0px 1px 18px 0px rgba(0,0,0,0.12);}.css-sghohy-MuiButtonBase-root-MuiButton-root.Mui-disabled{color:rgba(0, 0, 0, 0.26);box-shadow:none;background-color:rgba(0, 0, 0, 0.12);}",
+        }
+      }
+      data-emotion="css sghohy-MuiButtonBase-root-MuiButton-root"
+    />
+    <button
+      className="MuiButtonBase-root MuiButton-root MuiButton-contained MuiButton-containedPrimary MuiButton-sizeMedium MuiButton-containedSizeMedium MuiButton-root MuiButton-contained MuiButton-containedPrimary MuiButton-sizeMedium MuiButton-containedSizeMedium uimix-PageRBRbRk__mUIButton css-sghohy-MuiButtonBase-root-MuiButton-root"
+      disabled={false}
+      label="Button"
+      onBlur={[Function]}
+      onContextMenu={[Function]}
+      onDragLeave={[Function]}
+      onFocus={[Function]}
+      onKeyDown={[Function]}
+      onKeyUp={[Function]}
+      onMouseDown={[Function]}
+      onMouseLeave={[Function]}
+      onMouseUp={[Function]}
+      onTouchEnd={[Function]}
+      onTouchMove={[Function]}
+      onTouchStart={[Function]}
+      tabIndex={0}
+      type="button"
+    >
+      MUI Button
+    </button>
   </div>
 </div>
 `;
 
 exports[`render 3`] = `
 <div
-  className="uimix-1BwWRgjHrhVbbuTV7m36kM"
+  className="uimix-CardRBRbRk"
 >
   <div
-    className="uimix-1BwWRgjHyEzJjsehRefVBE"
+    className="uimix-CardRBRbRk__icon"
   >
     <svg
-      className="uimix-1BwWRgjHr8HNgX8BRooGv7"
+      className="uimix-CardRBRbRk__heroicons_code_bracket"
       fill="none"
       height="24"
       viewBox="0 0 24 24"
@@ -155,12 +201,12 @@ exports[`render 3`] = `
     </svg>
   </div>
   <div
-    className="uimix-1BwWRgjHmYZ8qLKDj3Tvdy"
+    className="uimix-CardRBRbRk__title"
   >
     React Components Import/Export
   </div>
   <div
-    className="uimix-1BwWRgjHuAe9UTxVhowwYu"
+    className="uimix-CardRBRbRk__description"
   >
     Seamlessly work with React components, boosting your design-to-development workflow.
 

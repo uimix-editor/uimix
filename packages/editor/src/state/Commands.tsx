@@ -5,6 +5,7 @@ import {
   Selectable,
   PageHierarchyEntry,
   Component,
+  Page,
 } from "@uimix/model/src/models";
 import { exportToJSON as exportJSON, importJSON } from "./JSONExport";
 import { viewportState } from "./ViewportState";
@@ -27,6 +28,7 @@ import {
   createComponent,
   detachComponent,
   resizeWithBoundingBox,
+  moveToPage,
 } from "@uimix/model/src/services";
 import { posix as path } from "path-browserify";
 import { dialogState } from "./DialogState";
@@ -243,7 +245,7 @@ class Commands {
 
       const parent =
         absoluteSelectables[0].offsetParent ??
-        absoluteSelectables[0].pageSelectable;
+        absoluteSelectables[0].page?.selectable;
       if (!parent) {
         return;
       }
@@ -283,9 +285,19 @@ class Commands {
     }
   }
 
+  moveToPage(page: Page) {
+    const selectables = projectState.selectedSelectables;
+
+    for (const selectable of selectables) {
+      moveToPage(selectable, page);
+    }
+
+    projectState.undoManager.stopCapturing();
+  }
+
   readonly exportJSONCommand: MenuCommandDef = {
     type: "command",
-    text: "Export .uimix File",
+    text: "Export .uimixproject File",
     onClick: action(() => {
       void exportJSON();
     }),
@@ -293,7 +305,7 @@ class Commands {
 
   readonly importJSONCommand: MenuCommandDef = {
     type: "command",
-    text: "Import .uimix File...",
+    text: "Import .uimixproject File...",
     onClick: action(() => {
       void importJSON();
     }),
@@ -525,6 +537,51 @@ class Commands {
     }),
   };
 
+  @computed get nodeMenu(): MenuItemDef[] {
+    const otherPages = projectState.project.pages.all.filter(
+      (page) => page !== projectState.page
+    );
+
+    return [
+      this.createComponentCommand,
+      { type: "separator" },
+      this.detachComponentCommand,
+      {
+        type: "submenu",
+        text: "Attach Component",
+        children: projectState.project.components.map((component) => {
+          return {
+            type: "command",
+            text: component.name,
+            onClick: action(() => {
+              this.attachComponent(component);
+            }),
+          };
+        }),
+      },
+      { type: "separator" },
+      this.groupCommand,
+      this.ungroupCommand,
+      { type: "separator" },
+      this.autoLayoutCommand,
+      this.removeLayoutCommand,
+      { type: "separator" },
+      {
+        type: "submenu",
+        text: "Move to Page",
+        children: otherPages.map((page): MenuItemDef => {
+          return {
+            type: "command",
+            text: page.filePath,
+            onClick: action(() => {
+              this.moveToPage(page);
+            }),
+          };
+        }),
+      },
+    ];
+  }
+
   @computed get menu(): MenuItemDef[] {
     return [
       {
@@ -572,17 +629,7 @@ class Commands {
       {
         type: "submenu",
         text: "Node",
-        children: [
-          this.createComponentCommand,
-          { type: "separator" },
-          this.detachComponentCommand,
-          { type: "separator" },
-          this.groupCommand,
-          this.ungroupCommand,
-          { type: "separator" },
-          this.autoLayoutCommand,
-          this.removeLayoutCommand,
-        ],
+        children: this.nodeMenu,
       },
       {
         type: "submenu",
@@ -609,28 +656,7 @@ class Commands {
       this.pasteCommand,
       this.deleteCommand,
       { type: "separator" },
-      this.createComponentCommand,
-      { type: "separator" },
-      this.detachComponentCommand,
-      {
-        type: "submenu",
-        text: "Attach Component",
-        children: projectState.project.components.map((component) => {
-          return {
-            type: "command",
-            text: component.name,
-            onClick: action(() => {
-              this.attachComponent(component);
-            }),
-          };
-        }),
-      },
-      { type: "separator" },
-      this.groupCommand,
-      this.ungroupCommand,
-      { type: "separator" },
-      this.autoLayoutCommand,
-      this.removeLayoutCommand,
+      ...this.nodeMenu,
     ];
   }
 

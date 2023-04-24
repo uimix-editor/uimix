@@ -1,23 +1,11 @@
 import { computed, makeObservable, observable } from "mobx";
 import * as Y from "yjs";
-import {
-  Image,
-  NodeClipboardData,
-  PageJSON,
-  ProjectJSON,
-  ProjectManifestJSON,
-  SelectableJSON,
-} from "@uimix/model/src/data/v1";
-import { usedImageHashesInStyle } from "@uimix/model/src/data/util";
-import { reassignNewIDs } from "@uimix/model/src/data/util/reassignNewIDs";
+import * as Data from "@uimix/model/src/data/v1";
 import { Project, Page, Selectable } from "@uimix/model/src/models";
 import { getIncrementalUniqueName } from "@uimix/foundation/src/utils/Name";
 import { PageState } from "./PageState";
 import { ScrollState } from "./ScrollState";
-// eslint-disable-next-line import/no-unresolved
-import demoFile from "./demoFile/demo.uimix?raw";
-import { filesToProjectJSON } from "../../../cli/src/project/WorkspaceLoader";
-import { blobToDataURL } from "@uimix/foundation/src/utils/Blob";
+import demoFile from "./demoFile/landing.uimixproject?raw";
 import { Rect } from "paintvec";
 import { resizeWithBoundingBox } from "@uimix/model/src/services";
 
@@ -72,24 +60,17 @@ export class ProjectState {
   // MARK: Nodes
 
   loadDemoFile() {
-    const manifest: ProjectManifestJSON = {
-      componentURLs: [
-        "https://cdn.jsdelivr.net/gh/uimix-editor/uimix@ba0157d5/packages/sandbox/dist-components/components.js",
-        "https://cdn.jsdelivr.net/gh/uimix-editor/uimix@ba0157d5/packages/sandbox/dist-components/style.css",
-      ],
-    };
-    const pageJSON: PageJSON = PageJSON.parse(JSON.parse(demoFile));
-
-    const projectJSON = reassignNewIDs(
-      filesToProjectJSON(manifest, new Map([["demo.uimix", pageJSON]]))
-    );
-
+    const projectJSON = Data.Project.parse(JSON.parse(demoFile));
     this.project.loadJSON(projectJSON);
+    this.project.componentURLs.push([
+      "https://cdn.jsdelivr.net/gh/uimix-editor/uimix@ba0157d5/packages/sandbox/dist-components/components.js",
+      "https://cdn.jsdelivr.net/gh/uimix-editor/uimix@ba0157d5/packages/sandbox/dist-components/style.css",
+    ]);
     this.pageID = this.project.pages.all[0].id;
     this.undoManager.clear();
   }
 
-  loadJSON(projectJSON: ProjectJSON) {
+  loadJSON(projectJSON: Data.Project) {
     if (Object.keys(projectJSON.nodes).length) {
       this.project.loadJSON(projectJSON);
       const allPages = this.project.pages.all;
@@ -105,7 +86,7 @@ export class ProjectState {
     }
   }
 
-  async getNodeClipboardData(): Promise<NodeClipboardData | undefined> {
+  async getNodeClipboardData(): Promise<Data.NodeClipboard | undefined> {
     const selection = this.selectedSelectables;
     if (selection.length === 0) {
       return undefined;
@@ -121,18 +102,13 @@ export class ProjectState {
     });
 
     const imageHashes = new Set<string>();
-
-    const visit = (json: SelectableJSON) => {
-      for (const hash of usedImageHashesInStyle(json.style)) {
+    for (const selectable of selection) {
+      for (const hash of selectable.usedImageHashes) {
         imageHashes.add(hash);
       }
-      if (json.children) {
-        json.children.forEach(visit);
-      }
-    };
-    nodes.forEach(visit);
+    }
 
-    const images: Record<string, Image> = {};
+    const images: Record<string, Data.Image> = {};
     for (const hash of imageHashes) {
       const image = await this.project.imageManager.getWithDataURL(hash);
       if (image) {
@@ -148,7 +124,7 @@ export class ProjectState {
     };
   }
 
-  async pasteNodeClipboardData(data: NodeClipboardData) {
+  async pasteNodeClipboardData(data: Data.NodeClipboard) {
     const getInsertionTarget = () => {
       const defaultTarget = {
         parent: this.page?.node,
@@ -176,7 +152,7 @@ export class ProjectState {
       };
     };
 
-    const hydrateJSON = (json: SelectableJSON): Selectable => {
+    const hydrateJSON = (json: Data.Selectable): Selectable => {
       const project = this.project;
       if (json.original?.type === "component") {
         // create instance
@@ -203,7 +179,7 @@ export class ProjectState {
           node.name = json.name;
           const selectable = node.selectable;
 
-          const loadOverride = (json: SelectableJSON) => {
+          const loadOverride = (json: Data.Selectable) => {
             const idPath = json.id.split(":");
             idPath[0] = node.id;
             const selectable = project.selectables.get(idPath);

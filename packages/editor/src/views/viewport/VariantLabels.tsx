@@ -20,9 +20,21 @@ import { viewportState } from "../../state/ViewportState";
 import { Rect, Vec2 } from "paintvec";
 import { resizeWithBoundingBox } from "@uimix/model/src/services";
 import { twMerge } from "tailwind-merge";
-import { VariantCondition } from "@uimix/model/src/data/v1";
+import * as Data from "@uimix/model/src/data/v1";
 import { startCase } from "lodash-es";
 import { viewOptions } from "../../state/ViewOptions";
+import { showContextMenu } from "../ContextMenu";
+import { commands } from "../../state/Commands";
+
+function onContextMenuForSelectable(selectable: Selectable) {
+  return action((e: React.MouseEvent) => {
+    e.preventDefault();
+    e.stopPropagation();
+    projectState.project.clearSelection();
+    selectable.select();
+    showContextMenu(e, commands.contextMenuForSelectable(selectable));
+  });
+}
 
 const FrameLabel: React.FC<{
   selectable: Selectable;
@@ -64,16 +76,20 @@ const FrameLabel: React.FC<{
   const onPointerLeave = action(() => {
     viewportState.hoveredSelectable = undefined;
   });
+  const onContextMenu = onContextMenuForSelectable(selectable);
 
   const bboxInView = selectable.computedRect.transform(
     projectState.scroll.documentToViewport
   );
 
+  const selectedOrHovered =
+    selectable.selected || viewportState.hoveredSelectable === selectable;
+
   return (
     <div
       className={twMerge(
         "absolute text-macaron-base text-neutral-500 font-medium flex gap-1",
-        selectable.selected && "text-macaron-active"
+        selectedOrHovered && "text-macaron-blue"
       )}
       style={{
         left: `${bboxInView.left}px`,
@@ -81,6 +97,7 @@ const FrameLabel: React.FC<{
       }}
       {...dragProps}
       onPointerLeave={onPointerLeave}
+      onContextMenu={onContextMenu}
     >
       {selectable.node.name}
     </div>
@@ -100,11 +117,14 @@ const ComponentSection: React.FC<{
   }
   const bboxInView = bbox.transform(projectState.scroll.documentToViewport);
 
+  const selectedOrHovered =
+    component.selected || viewportState.hoveredSelectable === component;
+
   return (
     <div
       className={twMerge(
         "border-2 border-neutral-300 border-dotted rounded-md",
-        component.selected && "border-macaron-active"
+        selectedOrHovered && "border-macaron-blue"
       )}
       style={{
         position: "absolute",
@@ -195,17 +215,21 @@ const ComponentLabel: React.FC<{
   const onPointerLeave = action(() => {
     viewportState.hoveredSelectable = undefined;
   });
+  const onContextMenu = onContextMenuForSelectable(component);
 
   if (!bbox) {
     return null;
   }
   const bboxInView = bbox.transform(projectState.scroll.documentToViewport);
 
+  const selectedOrHovered =
+    component.selected || viewportState.hoveredSelectable === component;
+
   return (
     <div
       className={twMerge(
         "absolute text-macaron-base text-neutral-500 font-medium flex gap-1",
-        component.selected && "text-macaron-active"
+        selectedOrHovered && "text-macaron-blue"
       )}
       style={{
         left: `${bboxInView.left - componentSectionPadding}px`,
@@ -213,6 +237,7 @@ const ComponentLabel: React.FC<{
       }}
       {...dragProps}
       onPointerLeave={onPointerLeave}
+      onContextMenu={onContextMenu}
     >
       <Icon
         icon="material-symbols:widgets-rounded"
@@ -273,6 +298,7 @@ const VariantLabel: React.FC<{
   const onPointerLeave = action(() => {
     viewportState.hoveredSelectable = undefined;
   });
+  const onContextMenu = onContextMenuForSelectable(variantSelectable);
 
   const [conditionEditorOpen, setConditionEditorOpen] = useState(false);
 
@@ -333,6 +359,7 @@ const VariantLabel: React.FC<{
         className="absolute inset-0 z-0"
         {...dragProps}
         onPointerLeave={onPointerLeave}
+        onContextMenu={onContextMenu}
         onDoubleClick={() => {
           setConditionEditorOpen(true);
         }}
@@ -419,7 +446,7 @@ export const VariantLabels: React.FC = observer(function VariantLabels() {
 
 export function getIconAndTextForCondition(
   condition:
-    | VariantCondition
+    | Data.VariantCondition
     | {
         type: "default";
       }
@@ -462,8 +489,8 @@ export function getIconAndTextForCondition(
 }
 
 const ConditionEditor: React.FC<{
-  value: VariantCondition;
-  onChangeValue: (value: VariantCondition) => void;
+  value: Data.VariantCondition;
+  onChangeValue: (value: Data.VariantCondition) => void;
 }> = ({ value: condition, onChangeValue: onChangeCondition }) => {
   return (
     <div className="grid grid-cols-[1fr_1fr] gap-2 items-center">
