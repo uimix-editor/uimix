@@ -1,5 +1,5 @@
 import * as path from "path";
-import { DesignTokens } from "@uimix/code-asset-types";
+import { DesignTokens } from "@uimix/adapter-types";
 import * as Data from "@uimix/model/src/data/v1";
 import { Project } from "@uimix/model/src/models";
 import { formatTypeScript } from "../format.js";

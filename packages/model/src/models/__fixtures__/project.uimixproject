@@ -834,7 +834,7 @@
       "height": { "type": "hug" },
       "foreignComponent": {
         "type": "react",
-        "path": "src/stories/Header.tsx",
+        "path": "/src/stories/Header.tsx",
         "name": "Header",
         "props": {}
       }
@@ -849,7 +849,7 @@
       "height": { "type": "hug" },
       "foreignComponent": {
         "type": "react",
-        "path": "src/stories/Button.tsx",
+        "path": "/src/stories/Button.tsx",
         "name": "Button",
         "props": {
           "label": "Button1",

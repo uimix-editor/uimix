@@ -3,7 +3,7 @@ import { action, observable, reaction } from "mobx";
 import type React from "react";
 import type ReactDOM from "react-dom/client";
 import { projectState } from "./ProjectState";
-import * as CodeAsset from "@uimix/code-asset-types";
+import * as CodeAsset from "@uimix/adapter-types";
 import { Buffer } from "buffer";
 import { CodeColorToken } from "@uimix/model/src/models";
 

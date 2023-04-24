@@ -1,18 +1,13 @@
-export type PropType =
-  | {
-      type: "string";
-    }
-  | {
-      type: "boolean";
-    }
-  | {
-      type: "enum";
-      values: string[];
-    };
+import * as PropType from "./props";
+
+export { PropType };
 
 export interface Prop {
   name: string;
-  type: PropType;
+  type:
+    | PropType.StringType
+    | PropType.BooleanType
+    | PropType.EnumType<string[]>;
 }
 
 export interface Component {

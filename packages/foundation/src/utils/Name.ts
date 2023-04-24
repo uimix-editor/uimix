@@ -23,6 +23,14 @@ export class IncrementalUniqueNameGenerator {
     return generated;
   }
 
+  generateLowerJSIdentifier(name: string): string {
+    return this.generate(generateLowerJSIdentifier(name));
+  }
+
+  generateUpperJSIdentifier(name: string): string {
+    return this.generate(generateUpperJSIdentifier(name));
+  }
+
   readonly existingNames: Set<string>;
 }
 

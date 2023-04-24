@@ -147,6 +147,18 @@ export default (
               },
             }}
           />
+          <foreign
+            id="mUIButton"
+            name="MUIButton"
+            position={{ left: 315, top: 29 }}
+            component="@mui/material/Button#default"
+            componentType="react"
+            props={{
+              label: "Button",
+              children: "MUI Button",
+              variant: "contained",
+            }}
+          />
         </frame>
       </frame>
       <variant condition={{ type: "maxWidth", value: 767 }} />

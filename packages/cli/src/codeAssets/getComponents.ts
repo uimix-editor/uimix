@@ -1,5 +1,5 @@
 import docgen from "react-docgen-typescript";
-import type * as CodeAsset from "@uimix/code-asset-types";
+import type * as CodeAsset from "@uimix/adapter-types";
 import * as path from "node:path";
 import { globbySync } from "globby";
 
@@ -46,7 +46,7 @@ export function getComponents(
           type: {
             type: "enum",
             // eslint-disable-next-line
-            values: prop.type.value.map((v: any) => JSON.parse(v.value)),
+            options: prop.type.value.map((v: any) => JSON.parse(v.value)),
           },
         });
       }

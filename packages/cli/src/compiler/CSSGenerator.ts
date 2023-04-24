@@ -1,7 +1,7 @@
 import { kebabCase } from "lodash-es";
 import * as CSS from "csstype";
 import { Page } from "@uimix/model/src/models/Page";
-import * as CodeAsset from "@uimix/code-asset-types";
+import * as CodeAsset from "@uimix/adapter-types";
 import {
   buildNodeCSS,
   getLayoutType,

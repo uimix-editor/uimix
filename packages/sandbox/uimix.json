@@ -1,7 +1,4 @@
 {
   "prebuiltAssets": ["@uimix/mui-assets"],
-  "components": {
-    "react": ["./src/stories/*.tsx", "!./src/stories/*.stories.tsx"]
-  },
-  "designTokens": "./src/designTokens.ts"
+  "assets": "./src/assets.ts"
 }

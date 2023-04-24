@@ -17,6 +17,7 @@
     "test": "vitest run"
   },
   "dependencies": {
+    "@mui/material": "^5.12.1",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "tailwindcss": "^3.3.1"
@@ -35,7 +36,7 @@
     "@types/react": "^18.0.35",
     "@types/react-dom": "^18.0.11",
     "@types/react-test-renderer": "^18.0.0",
-    "@uimix/code-asset-types": "workspace:*",
+    "@uimix/adapter-react": "workspace:*",
     "@vitejs/plugin-react": "^3.1.0",
     "babel-loader": "^9.1.2",
     "glob": "^10.1.0",
