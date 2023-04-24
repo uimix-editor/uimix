@@ -6,8 +6,8 @@ import {
 } from "@uimix/adapter-react";
 import { Button } from "./stories/Button";
 import { Header } from "./stories/Header";
-import designTokens from "./designTokens";
 import MUIButton from "@mui/material/Button";
+import tailwindColors from "tailwindcss/colors";
 
 export const components: Component[] = [
   // local components
@@ -38,4 +38,28 @@ export const components: Component[] = [
   }),
 ];
 
-export const tokens: DesignTokens = designTokens;
+function tailwindColorsToTokens(colors: typeof tailwindColors): DesignTokens {
+  const designTokens: DesignTokens = {};
+
+  for (const [colorName, colorValue] of Object.entries(colors)) {
+    if (/[A-Z]/.test(colorName)) {
+      // Skip deprecated colors
+      continue;
+    }
+
+    if (typeof colorValue === "string") {
+      designTokens[colorName] = {
+        $value: colorValue,
+        $type: "color",
+      };
+    } else {
+      designTokens[colorName] = tailwindColorsToTokens(
+        colorValue as typeof tailwindColors
+      );
+    }
+  }
+
+  return designTokens;
+}
+
+export const tokens: DesignTokens = tailwindColorsToTokens(tailwindColors);
