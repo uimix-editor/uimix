@@ -508,6 +508,17 @@ box-sizing: border-box;
 }
 .uimix-PageRBRbRk__stack-StackRBRbRk__button-Buttonv4qeOq__text {
 }
+.uimix-PageRBRbRk__mUIButton {
+box-sizing: border-box;
+-webkit-font-smoothing: antialiased;
+  position: absolute;
+  left: 315px;
+  top: 29px;
+  width: max-content;
+  height: max-content;
+  opacity: 1;
+  overflow: visible;
+}
 @media (max-width: 767px) {
 .uimix-PageRBRbRk__header {
 }
@@ -563,6 +574,10 @@ box-sizing: border-box;
 @media (max-width: 767px) {
 .uimix-PageRBRbRk__stack-StackRBRbRk__button-Buttonv4qeOq__text {
   color: #FF0000;
+}
+}
+@media (max-width: 767px) {
+.uimix-PageRBRbRk__mUIButton {
 }
 }
 .uimix-CardRBRbRk__icon {
@@ -683,6 +698,7 @@ exports[`generateCode > generates code > src/components.uimix.tsx 1`] = `
 "import React from \\"react\\";
 import * as header from \\"../../sandbox/src/stories/Header\\";
 import * as button from \\"../../sandbox/src/stories/Button\\";
+import * as button from \\"@mui/material/Button\\";
 import image_DGLFxM8eMqBjHUQYEekprnB3xC$f5uvLxL7x2odVAEU from \\"../../sandbox/src/images/black-pattern.png\\";
 import image_1yKf5NvwGW$XtLSBDlS3GqZfbEGnLshgQrjyQJImqaM from \\"../../sandbox/src/images/screenshot.png\\";
 import image_XMIUgNq9VxH1FiVdc4M95ZcfqaSP3aF07GtbcGHi9AY from \\"../../sandbox/src/images/white-pattern.png\\";
@@ -869,6 +885,11 @@ export const Page = React.forwardRef((props, ref) => {
             </div>
           </div>
         </div>
+        <button.default
+          className={\\"uimix-PageRBRbRk__mUIButton\\"}
+          data-refID={[\\"mUIButton\\"]}
+          {...{ label: \\"Button\\", children: \\"MUI Button\\", variant: \\"contained\\" }}
+        />
       </div>
     </div>
   );
@@ -880,6 +901,7 @@ export const Page = React.forwardRef((props, ref) => {
     instanceProps?: JSX.IntrinsicElements[\\"div\\"];
     imageProps?: JSX.IntrinsicElements[\\"div\\"];
     stackProps?: JSX.IntrinsicElements[\\"div\\"];
+    mUIButtonProps?: Partial<React.ComponentProps<typeof button.default>>;
   }
 >;
 

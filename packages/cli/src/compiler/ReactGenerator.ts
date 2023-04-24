@@ -132,12 +132,12 @@ export class ReactGenerator {
       const varName = camelCase(
         path.basename(modulePath, path.extname(modulePath))
       );
-      results.push(
-        `import * as ${varName} from "${pathToRoot}/${modulePath.replace(
-          /\.[jt]sx?$/,
-          ""
-        )}";`
-      );
+
+      const importPath = modulePath.startsWith("/")
+        ? path.join(pathToRoot, modulePath.slice(1).replace(/\.[jt]sx?$/, ""))
+        : modulePath;
+
+      results.push(`import * as ${varName} from "${importPath}";`);
       this.moduleVarNames.set(modulePath, varName);
     }
 
