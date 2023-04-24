@@ -26,6 +26,9 @@ export const CorrespondenceIndicator: React.FC = observer(
       correspondings.delete(target);
     }
 
+    console.log(correspondings);
+    console.log([...correspondings].map((c) => c.computedRect));
+
     // TODO: group by variant and union?
 
     return (
@@ -33,17 +36,19 @@ export const CorrespondenceIndicator: React.FC = observer(
         {[...correspondings].map((s) => {
           const rect = s.computedRect.transform(documentToViewport);
 
-          <rect
-            id={s.id}
-            x={rect.left}
-            y={rect.top}
-            width={rect.width}
-            height={rect.height}
-            fill="none"
-            strokeWidth={1}
-            strokeDasharray="1"
-            stroke={colors.blue}
-          />;
+          return (
+            <rect
+              id={s.id}
+              x={rect.left}
+              y={rect.top}
+              width={rect.width}
+              height={rect.height}
+              fill="none"
+              strokeWidth={1}
+              strokeDasharray="1"
+              stroke={colors.blue}
+            />
+          );
         })}
       </>
     );
