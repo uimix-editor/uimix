@@ -258,6 +258,15 @@ export class PageEmitter {
     return this.relativePath(absPath);
   }
 
+  foreignComponentRelativePath(path: string): string {
+    if (path.startsWith("/")) {
+      // internal
+      return this.relativePath(path.slice(1));
+    }
+    // external
+    return path;
+  }
+
   transformColor(color: Data.Color): File.Color {
     if (typeof color === "object") {
       const token = this.project.colorTokens.get(color.id);
@@ -375,7 +384,7 @@ export class PageEmitter {
       svg: style.svgContent,
 
       component: style.foreignComponent
-        ? `${this.relativePath(style.foreignComponent.path)}#${
+        ? `${this.foreignComponentRelativePath(style.foreignComponent.path)}#${
             style.foreignComponent.name
           }`
         : mainComponentPath,

@@ -222,6 +222,13 @@ class PageLoader {
     );
   }
 
+  foreignComponentFromRelativePath(relativePath: string): string {
+    if (relativePath.startsWith(".")) {
+      return "/" + this.absolutePath(relativePath);
+    }
+    return relativePath;
+  }
+
   transformColor(color: File.Color): Data.Color {
     if (typeof color === "object") {
       const tokenPath = color.token;
@@ -291,11 +298,10 @@ class PageLoader {
 
     if (style.componentType && style.component) {
       const [filePath, name] = style.component.split("#");
-      const absPath = path.join(path.dirname(this.filePath), filePath);
 
       foreignComponentRef = {
         type: style.componentType,
-        path: absPath,
+        path: this.foreignComponentFromRelativePath(filePath),
         name,
         props: style.props ?? {},
       };

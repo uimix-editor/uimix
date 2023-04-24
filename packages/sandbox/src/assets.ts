@@ -12,7 +12,7 @@ import MUIButton from "@mui/material/Button";
 export const components: Component[] = [
   // local components
   reactComponent({
-    path: "/src/stories/Button",
+    path: "/src/stories/Button.tsx",
     name: "Button",
     component: Button,
     props: PropType.object({
@@ -23,7 +23,7 @@ export const components: Component[] = [
     }),
   }),
   reactComponent({
-    path: "/src/stories/Header",
+    path: "/src/stories/Header.tsx",
     name: "Header",
     component: Header,
   }),
