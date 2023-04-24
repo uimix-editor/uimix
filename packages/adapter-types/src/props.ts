@@ -10,6 +10,10 @@ export interface BooleanType extends AbstractType<boolean> {
   type: "boolean";
 }
 
+export interface NumberType extends AbstractType<number> {
+  type: "number";
+}
+
 export interface EnumType<T extends readonly string[]>
   extends AbstractType<T[number]> {
   type: "enum";
@@ -33,6 +37,13 @@ export function boolean(): BooleanType {
   return {
     type: "boolean",
     default: false,
+  };
+}
+
+export function number(): NumberType {
+  return {
+    type: "number",
+    default: 0,
   };
 }
 

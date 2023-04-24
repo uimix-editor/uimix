@@ -8,6 +8,7 @@ import { Button } from "./stories/Button";
 import { Header } from "./stories/Header";
 import { ThrowingComponent } from "./stories/ThrowingComponent";
 import MUIButton from "@mui/material/Button";
+import MUISlider from "@mui/material/Slider";
 import tailwindColors from "tailwindcss/colors";
 
 export const components: Component[] = [
@@ -40,6 +41,16 @@ export const components: Component[] = [
     props: PropType.object({
       children: PropType.string(),
       variant: PropType.enum(["text", "outlined", "contained"]),
+    }),
+  }),
+  reactComponent({
+    path: "@mui/material/Slider",
+    component: MUISlider,
+    props: PropType.object({
+      defaultValue: PropType.number(),
+      min: PropType.number(),
+      max: PropType.number(),
+      step: PropType.number(),
     }),
   }),
 ];
