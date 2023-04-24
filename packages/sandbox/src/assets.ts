@@ -6,6 +6,7 @@ import {
 } from "@uimix/adapter-react";
 import { Button } from "./stories/Button";
 import { Header } from "./stories/Header";
+import { ThrowingComponent } from "./stories/ThrowingComponent";
 import MUIButton from "@mui/material/Button";
 import tailwindColors from "tailwindcss/colors";
 
@@ -26,6 +27,11 @@ export const components: Component[] = [
     path: "/src/stories/Header.tsx",
     name: "Header",
     component: Header,
+  }),
+  reactComponent({
+    path: "/src/stories/ThrowingComponent.tsx",
+    name: "ThrowingComponent",
+    component: ThrowingComponent,
   }),
   // external components
   reactComponent({
