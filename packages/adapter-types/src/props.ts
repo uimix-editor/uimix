@@ -36,7 +36,7 @@ export function boolean(): BooleanType {
   };
 }
 
-export function enum_<U extends string, T extends Readonly<[U, ...U[]]>>(
+function enum_<U extends string, T extends Readonly<[U, ...U[]]>>(
   options: T
 ): EnumType<T> {
   return {
@@ -45,6 +45,7 @@ export function enum_<U extends string, T extends Readonly<[U, ...U[]]>>(
     options,
   };
 }
+export { enum_ as enum };
 
 export function object<T extends Record<string, unknown>>(props: {
   [K in keyof T]: AbstractType<T[K]>;

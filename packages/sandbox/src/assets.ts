@@ -19,7 +19,7 @@ export const components: Component[] = [
       primary: PropType.boolean(),
       backgroundColor: PropType.string(),
       label: PropType.string(),
-      size: PropType.enum_(["small", "medium", "large"]),
+      size: PropType.enum(["small", "medium", "large"]),
     }),
   }),
   reactComponent({
@@ -33,7 +33,7 @@ export const components: Component[] = [
     component: MUIButton,
     props: PropType.object({
       children: PropType.string(),
-      variant: PropType.enum_(["text", "outlined", "contained"]),
+      variant: PropType.enum(["text", "outlined", "contained"]),
     }),
   }),
 ];
