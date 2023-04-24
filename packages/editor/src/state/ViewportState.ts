@@ -22,6 +22,8 @@ export class ViewportState {
 
   @observable isSideBarsVisible = true;
   @observable lastSideBarLeftOffset = 0;
+
+  @observable layout: "twoColumn" | "threeColumn" = "threeColumn";
 }
 
 export const viewportState = new ViewportState();

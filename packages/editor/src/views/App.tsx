@@ -93,12 +93,13 @@ export const App = observer(function App() {
           </div>
         ) : (
           <div className="flex flex-1">
-            {viewportState.isSideBarsVisible && (
-              <>
-                <OutlineSideBar />
-                <div className="bg-macaron-separator w-px" />
-              </>
-            )}
+            {viewportState.layout === "threeColumn" &&
+              viewportState.isSideBarsVisible && (
+                <>
+                  <OutlineSideBar />
+                  <div className="bg-macaron-separator w-px" />
+                </>
+              )}
             <div className="flex flex-1 flex-col border-r border-macaron-separator">
               <ToolBar position="top" />
               <div className="flex flex-1 border-t border-macaron-separator relative">
@@ -106,7 +107,19 @@ export const App = observer(function App() {
                 <InstancePaletteOverlay />
               </div>
             </div>
-            {viewportState.isSideBarsVisible && <InspectorSideBar />}
+            {viewportState.isSideBarsVisible &&
+            viewportState.layout === "threeColumn" ? (
+              <InspectorSideBar />
+            ) : (
+              <div className="flex flex-col w-64">
+                <div className="flex-1 border-b border-macaron-separator">
+                  <ScrollArea className="absolute left-0 top-0 w-full h-full">
+                    <NodeTreeView />
+                  </ScrollArea>
+                </div>
+                <InspectorSideBar className="flex-[2_2_0%]" />
+              </div>
+            )}
           </div>
         )}
       </div>
