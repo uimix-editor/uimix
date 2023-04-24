@@ -79,10 +79,10 @@ box-sizing: border-box;
 
 exports[`generateCode > generates code > src/button.uimix.tsx 1`] = `
 "import React from \\"react\\";
-import image_DGLFxM8eMqBjHUQYEekprnB3xC$f5uvLxL7x2odVAEU from \\"../../sandbox/src/images/black-pattern.png\\";
-import image_1yKf5NvwGW$XtLSBDlS3GqZfbEGnLshgQrjyQJImqaM from \\"../../sandbox/src/images/screenshot.png\\";
-import image_XMIUgNq9VxH1FiVdc4M95ZcfqaSP3aF07GtbcGHi9AY from \\"../../sandbox/src/images/white-pattern.png\\";
-import image_YmY$tuteU03QY$k_2ARy1uacNmXDNmOX$FFAlj2qCIo from \\"../../sandbox/src/images/icon.png\\";
+import image__DGLFxM8eMqBjHUQYEekprnB3xC$f5uvLxL7x2odVAEU from \\"../../sandbox/src/images/black-pattern.png\\";
+import image__1yKf5NvwGW$XtLSBDlS3GqZfbEGnLshgQrjyQJImqaM from \\"../../sandbox/src/images/screenshot.png\\";
+import image__XMIUgNq9VxH1FiVdc4M95ZcfqaSP3aF07GtbcGHi9AY from \\"../../sandbox/src/images/white-pattern.png\\";
+import image__YmY$tuteU03QY$k_2ARy1uacNmXDNmOX$FFAlj2qCIo from \\"../../sandbox/src/images/icon.png\\";
 import \\"./button.uimix.css\\";
 import \\"./components.uimix.css\\";
 import \\"./landing.uimix.css\\";
@@ -696,13 +696,13 @@ box-sizing: border-box;
 
 exports[`generateCode > generates code > src/components.uimix.tsx 1`] = `
 "import React from \\"react\\";
-import * as header from \\"../../sandbox/src/stories/Header\\";
-import * as button from \\"../../sandbox/src/stories/Button\\";
-import * as button from \\"@mui/material/Button\\";
-import image_DGLFxM8eMqBjHUQYEekprnB3xC$f5uvLxL7x2odVAEU from \\"../../sandbox/src/images/black-pattern.png\\";
-import image_1yKf5NvwGW$XtLSBDlS3GqZfbEGnLshgQrjyQJImqaM from \\"../../sandbox/src/images/screenshot.png\\";
-import image_XMIUgNq9VxH1FiVdc4M95ZcfqaSP3aF07GtbcGHi9AY from \\"../../sandbox/src/images/white-pattern.png\\";
-import image_YmY$tuteU03QY$k_2ARy1uacNmXDNmOX$FFAlj2qCIo from \\"../../sandbox/src/images/icon.png\\";
+import * as external__Header from \\"../../sandbox/src/stories/Header\\";
+import * as external__Button from \\"../../sandbox/src/stories/Button\\";
+import * as external__Button1 from \\"@mui/material/Button\\";
+import image__DGLFxM8eMqBjHUQYEekprnB3xC$f5uvLxL7x2odVAEU from \\"../../sandbox/src/images/black-pattern.png\\";
+import image__1yKf5NvwGW$XtLSBDlS3GqZfbEGnLshgQrjyQJImqaM from \\"../../sandbox/src/images/screenshot.png\\";
+import image__XMIUgNq9VxH1FiVdc4M95ZcfqaSP3aF07GtbcGHi9AY from \\"../../sandbox/src/images/white-pattern.png\\";
+import image__YmY$tuteU03QY$k_2ARy1uacNmXDNmOX$FFAlj2qCIo from \\"../../sandbox/src/images/icon.png\\";
 import \\"./button.uimix.css\\";
 import \\"./components.uimix.css\\";
 import \\"./landing.uimix.css\\";
@@ -798,13 +798,13 @@ export const Page = React.forwardRef((props, ref) => {
   return applyOverrides(
     { ...props, ref },
     <div className={\\"uimix-PageRBRbRk\\"}>
-      <header.Header
+      <external__Header.Header
         className={\\"uimix-PageRBRbRk__header\\"}
         data-refID={[\\"header\\"]}
         {...{}}
       />
       <div className={\\"uimix-PageRBRbRk__frame\\"} data-refID={[\\"frame\\"]}>
-        <button.Button
+        <external__Button.Button
           className={\\"uimix-PageRBRbRk__button\\"}
           data-refID={[\\"button\\"]}
           {...{
@@ -830,7 +830,7 @@ export const Page = React.forwardRef((props, ref) => {
         <img
           className={\\"uimix-PageRBRbRk__image\\"}
           data-refID={[\\"image\\"]}
-          src={image_YmY$tuteU03QY$k_2ARy1uacNmXDNmOX$FFAlj2qCIo}
+          src={image__YmY$tuteU03QY$k_2ARy1uacNmXDNmOX$FFAlj2qCIo}
           alt=\\"Image\\"
         />
         <div
@@ -885,7 +885,7 @@ export const Page = React.forwardRef((props, ref) => {
             </div>
           </div>
         </div>
-        <button.default
+        <external__Button1.default
           className={\\"uimix-PageRBRbRk__mUIButton\\"}
           data-refID={[\\"mUIButton\\"]}
           {...{ label: \\"Button\\", children: \\"MUI Button\\", variant: \\"contained\\" }}
@@ -895,13 +895,15 @@ export const Page = React.forwardRef((props, ref) => {
   );
 }) as React.FC<
   JSX.IntrinsicElements[\\"div\\"] & {
-    headerProps?: Partial<React.ComponentProps<typeof header.Header>>;
+    headerProps?: Partial<React.ComponentProps<typeof external__Header.Header>>;
     frameProps?: JSX.IntrinsicElements[\\"div\\"];
-    buttonProps?: Partial<React.ComponentProps<typeof button.Button>>;
+    buttonProps?: Partial<React.ComponentProps<typeof external__Button.Button>>;
     instanceProps?: JSX.IntrinsicElements[\\"div\\"];
     imageProps?: JSX.IntrinsicElements[\\"div\\"];
     stackProps?: JSX.IntrinsicElements[\\"div\\"];
-    mUIButtonProps?: Partial<React.ComponentProps<typeof button.default>>;
+    mUIButtonProps?: Partial<
+      React.ComponentProps<typeof external__Button1.default>
+    >;
   }
 >;
 
@@ -3641,10 +3643,10 @@ box-sizing: border-box;
 
 exports[`generateCode > generates code > src/landing.uimix.tsx 1`] = `
 "import React from \\"react\\";
-import image_DGLFxM8eMqBjHUQYEekprnB3xC$f5uvLxL7x2odVAEU from \\"../../sandbox/src/images/black-pattern.png\\";
-import image_1yKf5NvwGW$XtLSBDlS3GqZfbEGnLshgQrjyQJImqaM from \\"../../sandbox/src/images/screenshot.png\\";
-import image_XMIUgNq9VxH1FiVdc4M95ZcfqaSP3aF07GtbcGHi9AY from \\"../../sandbox/src/images/white-pattern.png\\";
-import image_YmY$tuteU03QY$k_2ARy1uacNmXDNmOX$FFAlj2qCIo from \\"../../sandbox/src/images/icon.png\\";
+import image__DGLFxM8eMqBjHUQYEekprnB3xC$f5uvLxL7x2odVAEU from \\"../../sandbox/src/images/black-pattern.png\\";
+import image__1yKf5NvwGW$XtLSBDlS3GqZfbEGnLshgQrjyQJImqaM from \\"../../sandbox/src/images/screenshot.png\\";
+import image__XMIUgNq9VxH1FiVdc4M95ZcfqaSP3aF07GtbcGHi9AY from \\"../../sandbox/src/images/white-pattern.png\\";
+import image__YmY$tuteU03QY$k_2ARy1uacNmXDNmOX$FFAlj2qCIo from \\"../../sandbox/src/images/icon.png\\";
 import \\"./button.uimix.css\\";
 import \\"./components.uimix.css\\";
 import \\"./landing.uimix.css\\";
@@ -3925,7 +3927,7 @@ export const Landing = React.forwardRef((props, ref) => {
           <img
             className={\\"uimix-LandingXg2GP1__image_2\\"}
             data-refID={[\\"image_2\\"]}
-            src={image_XMIUgNq9VxH1FiVdc4M95ZcfqaSP3aF07GtbcGHi9AY}
+            src={image__XMIUgNq9VxH1FiVdc4M95ZcfqaSP3aF07GtbcGHi9AY}
             alt=\\"image 2\\"
           />
         </div>
@@ -3970,7 +3972,7 @@ export const Landing = React.forwardRef((props, ref) => {
         <img
           className={\\"uimix-LandingXg2GP1__image_1\\"}
           data-refID={[\\"image_1\\"]}
-          src={image_1yKf5NvwGW$XtLSBDlS3GqZfbEGnLshgQrjyQJImqaM}
+          src={image__1yKf5NvwGW$XtLSBDlS3GqZfbEGnLshgQrjyQJImqaM}
           alt=\\"image 1\\"
         />
       </div>
@@ -4368,7 +4370,7 @@ export const Landing = React.forwardRef((props, ref) => {
         <img
           className={\\"uimix-LandingXg2GP1__image_4\\"}
           data-refID={[\\"image_4\\"]}
-          src={image_DGLFxM8eMqBjHUQYEekprnB3xC$f5uvLxL7x2odVAEU}
+          src={image__DGLFxM8eMqBjHUQYEekprnB3xC$f5uvLxL7x2odVAEU}
           alt=\\"image 4\\"
         />
         <div

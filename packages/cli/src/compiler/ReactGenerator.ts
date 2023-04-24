@@ -4,6 +4,7 @@ import htmlReactParser from "html-react-parser";
 import reactElementToJSXString from "react-element-to-jsx-string";
 import React from "react";
 import {
+  IncrementalUniqueNameGenerator,
   generateJSIdentifier,
   getIncrementalUniqueName,
 } from "@uimix/foundation/src/utils/Name";
@@ -60,7 +61,7 @@ function applyOverrides(
 `;
 
 function imageHashToVarName(hash: string): string {
-  return "image_" + hash.replaceAll("-", "$");
+  return "image__" + hash.replaceAll("-", "$");
 }
 
 function getExternalModulePaths(components: Component[]): Set<string> {
@@ -128,9 +129,11 @@ export class ReactGenerator {
       this.rootPath
     );
 
+    const namer = new IncrementalUniqueNameGenerator();
+
     for (const modulePath of getExternalModulePaths(components)) {
-      const varName = camelCase(
-        path.basename(modulePath, path.extname(modulePath))
+      const varName = namer.generateLowerJSIdentifier(
+        "external__" + path.basename(modulePath, path.extname(modulePath))
       );
 
       const importPath = modulePath.startsWith("/")
