@@ -89,7 +89,7 @@ const FrameLabel: React.FC<{
     <div
       className={twMerge(
         "absolute text-macaron-base text-neutral-500 font-medium flex gap-1",
-        selectedOrHovered && "text-macaron-active"
+        selectedOrHovered && "text-macaron-blue"
       )}
       style={{
         left: `${bboxInView.left}px`,
@@ -124,7 +124,7 @@ const ComponentSection: React.FC<{
     <div
       className={twMerge(
         "border-2 border-neutral-300 border-dotted rounded-md",
-        selectedOrHovered && "border-macaron-active"
+        selectedOrHovered && "border-macaron-blue"
       )}
       style={{
         position: "absolute",
@@ -229,7 +229,7 @@ const ComponentLabel: React.FC<{
     <div
       className={twMerge(
         "absolute text-macaron-base text-neutral-500 font-medium flex gap-1",
-        selectedOrHovered && "text-macaron-active"
+        selectedOrHovered && "text-macaron-blue"
       )}
       style={{
         left: `${bboxInView.left - componentSectionPadding}px`,

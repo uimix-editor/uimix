@@ -29,7 +29,7 @@ class NodeResizeBoxState {
   }
 
   @computed get stroke(): string {
-    return colors.active;
+    return colors.blue;
   }
 
   @computed get boundingBox(): Rect | undefined {

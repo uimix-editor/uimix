@@ -17,7 +17,7 @@ const SelectionInfoWrap = styled.div`
   display: flex;
   align-items: center;
 
-  background: ${colors.active};
+  background: ${colors.blue};
 
   white-space: nowrap;
 `;
