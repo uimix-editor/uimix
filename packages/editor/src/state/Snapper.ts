@@ -73,7 +73,7 @@ export class Snapper {
 
     return [
       ...[...siblings].map((c) => c.computedRect),
-      parent.computedPaddingRect,
+      ...(!parent.originalNode.isAbstract ? [parent.computedPaddingRect] : []),
     ];
   }
 
