@@ -130,7 +130,7 @@ export const ToolBar: React.FC<{
         </Tooltip>
       </div>
       <div className={twMerge("flex items-center gap-1 ml-auto")}>
-        <Tooltip text="2-column" side={tooltipSide}>
+        <Tooltip text="1 Sidebar" side={tooltipSide}>
           <ToolButton
             aria-pressed={viewportState.layout === "twoColumn"}
             onClick={action(() => {
@@ -159,7 +159,7 @@ export const ToolBar: React.FC<{
             </svg>
           </ToolButton>
         </Tooltip>
-        <Tooltip text="3-column" side={tooltipSide}>
+        <Tooltip text="2 Sidebars" side={tooltipSide}>
           <ToolButton
             aria-pressed={viewportState.layout === "threeColumn"}
             onClick={action(() => {
