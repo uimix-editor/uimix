@@ -3,6 +3,7 @@ import { Rect } from "paintvec";
 import { Selectable } from "@uimix/model/src/models";
 import { DropDestination } from "./DropDestination";
 import { Tool } from "./Tool";
+import { viewOptions } from "./ViewOptions";
 
 export class ViewportState {
   constructor() {
@@ -23,7 +24,9 @@ export class ViewportState {
   @observable isSideBarsVisible = true;
   @observable lastSideBarLeftOffset = 0;
 
-  @observable layout: "twoColumn" | "threeColumn" = "threeColumn";
+  @observable layout: "twoColumn" | "threeColumn" = viewOptions.narrowMode
+    ? "twoColumn"
+    : "threeColumn";
 }
 
 export const viewportState = new ViewportState();
