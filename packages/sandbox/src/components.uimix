@@ -148,8 +148,8 @@ export default (
             }}
           />
           <foreign
-            id="default_"
-            name="default"
+            id="mUIButton"
+            name="MUIButton"
             position={{ left: 315, top: 29 }}
             component="@mui/material/Button#default"
             componentType="react"
