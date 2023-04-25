@@ -16,6 +16,7 @@ import { toastController } from "@uimix/foundation/src/components/toast/Toast";
 import { LoadingErrorOverlay } from "./LoadingErrorOverlay";
 import { assertNonNull } from "../../utils/assertNonNull";
 import { DefaultClipboardHandler } from "@uimix/editor/src/state/DefaultClipboardHandler";
+import * as Dialog from "@radix-ui/react-dialog";
 
 class Connection extends TypedEmitter<{
   readyToShow(): void;
@@ -183,6 +184,24 @@ const Editor: React.FC<{
             }
           }}
         />
+        <div className="absolute right-0 top-0 bottom-0 flex items-center px-2 gap-2">
+          <button className="h-fit bg-blue-500 hover:bg-blue-700 text-xs text-white py-1 px-3 rounded flex items-center gap-1">
+            Share
+          </button>
+          <Dialog.Root>
+            <Dialog.Trigger asChild>
+              <button className="h-fit bg-blue-500 hover:bg-blue-700 text-xs text-white py-1 px-3 rounded flex items-center gap-1">
+                Connect GitHub...
+              </button>
+            </Dialog.Trigger>
+            <Dialog.Portal>
+              <Dialog.Overlay className="fixed inset-0 bg-black bg-opacity-30 z-20" />
+              <Dialog.Content className="fixed inset-20 bg-white z-30">
+                Test dialog
+              </Dialog.Content>
+            </Dialog.Portal>
+          </Dialog.Root>
+        </div>
       </div>
       <iframe
         ref={iframeRef}
