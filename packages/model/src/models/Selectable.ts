@@ -578,7 +578,7 @@ export class Selectable {
 
   get originalVariantCorresponding(): Selectable {
     if (this.nodePath[0].type === "variant") {
-      return assertNonNull(this.superSelectable);
+      return this.superSelectable ?? this;
     }
     return this;
   }
