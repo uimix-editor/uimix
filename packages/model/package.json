@@ -17,8 +17,8 @@
     "mobx": "^6.9.0",
     "paintvec": "workspace:*",
     "path-browserify": "^1.0.1",
-    "prettier": "^2.8.7",
-    "yjs": "^13.5.52",
+    "prettier": "^2.8.8",
+    "yjs": "^13.6.0",
     "zod": "^3.21.4"
   },
   "devDependencies": {
