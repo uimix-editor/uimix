@@ -27,7 +27,7 @@ export const DragIndicators: React.FC = observer(function DragIndicators() {
       {dragSelectionRect && (
         <rect
           {...dragSelectionRect.toSVGRectProps()}
-          fill={Color.from(colors.active)?.withAlpha(0.2).toString()}
+          fill={Color.from(colors.blue)?.withAlpha(0.2).toString()}
           stroke={colors.blue}
         />
       )}
