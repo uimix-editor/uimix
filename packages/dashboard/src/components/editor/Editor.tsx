@@ -196,8 +196,22 @@ const Editor: React.FC<{
             </Dialog.Trigger>
             <Dialog.Portal>
               <Dialog.Overlay className="fixed inset-0 bg-black bg-opacity-30 z-20" />
-              <Dialog.Content className="fixed inset-20 bg-white z-30">
-                Test dialog
+              <Dialog.Content className="fixed inset-20 bg-white z-30 p-4">
+                <div>
+                  <label>Repository</label>
+                  <input />
+                </div>
+                <div>
+                  <label>Branch</label>
+                  <input />
+                </div>
+                <div>
+                  <label>Directory</label>
+                  <input />
+                </div>
+                <button className="w-fit h-fit bg-blue-500 hover:bg-blue-700 text-xs text-white py-1 px-3 rounded flex items-center gap-1">
+                  Save
+                </button>
               </Dialog.Content>
             </Dialog.Portal>
           </Dialog.Root>
