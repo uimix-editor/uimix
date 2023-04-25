@@ -29,11 +29,20 @@ export async function generateCode(
     codeAssetsDestination.directory,
     codeAssetsDestination.js
   );
-  // eslint-disable-next-line
-  const codeAssetJS: {
-    tokens: DesignTokens;
-  } = await import(codeAssetJSPath);
-  const designTokens = codeAssetJS.tokens;
+
+  let designTokens: DesignTokens = {};
+  if (manifest.assets) {
+    try {
+      // eslint-disable-next-line
+      const codeAssetJS: {
+        tokens: DesignTokens;
+      } = await import(codeAssetJSPath);
+      designTokens = codeAssetJS.tokens;
+    } catch (e) {
+      console.error("Error loading code assets:");
+      console.error(e);
+    }
+  }
 
   const results: {
     filePath: string;
