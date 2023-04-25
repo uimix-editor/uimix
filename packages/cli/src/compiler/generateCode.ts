@@ -8,6 +8,7 @@ import { CSSGenerator } from "./CSSGenerator.js";
 import { ReactGenerator } from "./ReactGenerator.js";
 import { ClassNameGenerator } from "./ClassNameGenerator.js";
 import { ProjectManifest } from "@uimix/model/src/file/types.js";
+import CleanCSS from "clean-css";
 
 export async function generateCode(
   rootPath: string,
@@ -40,6 +41,10 @@ export async function generateCode(
   }[] = [];
 
   const classNameGenerator = new ClassNameGenerator(project);
+  const cleanCSS = new CleanCSS({
+    level: 2,
+    format: "beautify",
+  });
 
   for (const page of project.pages.all) {
     const tsContent = formatTypeScript(
@@ -53,11 +58,9 @@ export async function generateCode(
         .render()
         .join("\n")
     );
-    const cssContent = new CSSGenerator(
-      page,
-      designTokens,
-      classNameGenerator
-    ).generate();
+    const cssContent = cleanCSS.minify(
+      new CSSGenerator(page, designTokens, classNameGenerator).generate()
+    ).styles;
 
     results.push(
       {
