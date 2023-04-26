@@ -67,7 +67,7 @@ export const Box: React.FC<
     ...props,
   });
 
-  const id = useId();
+  const id = useId().replaceAll(":", "_");
   const className = `box-${id}`;
 
   const cssBody = Object.entries(style.self)
