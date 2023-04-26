@@ -94,16 +94,16 @@ export class CSSGenerator {
 
       let diffCSS: SelfAndChildrenCSS;
       if (superSelectable) {
-        const keys = new Set([
-          ...Object.keys(css),
-          ...Object.keys(superCSS),
-        ]) as Set<keyof CSS.Properties>;
-
         diffCSS = {
           self: {},
           children: {},
         };
         for (const target of ["self", "children"] as const) {
+          const keys = new Set([
+            ...Object.keys(css[target]),
+            ...Object.keys(superCSS[target]),
+          ]) as Set<keyof CSS.Properties>;
+
           for (const key of keys) {
             if (css[target][key] !== superCSS[target][key]) {
               // @ts-ignore
