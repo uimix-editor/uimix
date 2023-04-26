@@ -7,10 +7,7 @@ export type IStyle = Data.Style;
 export const defaultStyle: Data.Style = {
   hidden: false,
   locked: false,
-  position: {
-    x: { type: "start", start: 0 },
-    y: { type: "start", start: 0 },
-  },
+  position: null,
   preferAbsolute: false,
   width: { type: "hug" },
   height: { type: "hug" },

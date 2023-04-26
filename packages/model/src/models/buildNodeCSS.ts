@@ -64,6 +64,8 @@ export function buildNodeCSS(
       cssStyle.top = "start" in position.y ? `${position.y.start}px` : "auto";
       cssStyle.bottom = "end" in position.y ? `${position.y.end}px` : "auto";
     }
+  } else {
+    cssStyle.position = "relative";
   }
 
   cssStyle.marginTop = `${style.marginTop}px`;
