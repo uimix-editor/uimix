@@ -101,6 +101,7 @@ export function buildNodeCSS(
 
   const width = style.width;
   if (width.type === "fill") {
+    // polyfill width:stretch
     cssStyle[xFlexGrowVarName] = 1;
     cssStyle[yWidthVarName] = cssStyle[gridWidthVarName] = `calc(100% - ${
       style.marginLeft + style.marginRight
@@ -119,6 +120,7 @@ export function buildNodeCSS(
 
   const height = style.height;
   if (height.type === "fill") {
+    // polyfill height:stretch
     cssStyle[yFlexGrowVarName] = 1;
     cssStyle[xHeightVarName] = cssStyle[gridHeightVarName] = `calc(100% - ${
       style.marginTop + style.marginBottom
