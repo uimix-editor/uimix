@@ -88,10 +88,6 @@ export class CSSGenerator {
         delete css.self.right;
         delete css.self.top;
         delete css.self.bottom;
-        delete css.self["--uimix-left"];
-        delete css.self["--uimix-right"];
-        delete css.self["--uimix-top"];
-        delete css.self["--uimix-bottom"];
       }
 
       cssForSelectable.set(selectable, css);
