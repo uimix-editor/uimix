@@ -133,11 +133,14 @@ export type ForeignComponentRef = z.infer<typeof ForeignComponentRef>;
 export const Style = z.object({
   hidden: z.boolean(),
   locked: z.boolean(),
-  position: z.object({
-    x: PositionConstraint,
-    y: PositionConstraint,
-  }),
-  absolute: z.boolean(),
+  position: z.union([
+    z.null(),
+    z.object({
+      x: PositionConstraint,
+      y: PositionConstraint,
+    }),
+  ]),
+  preferAbsolute: z.boolean(),
   width: SizeConstraint,
   height: SizeConstraint,
 
