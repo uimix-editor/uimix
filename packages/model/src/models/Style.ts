@@ -104,11 +104,11 @@ for (const key of styleKeys) {
 }
 
 export class CascadedStyle implements IStyle {
-  constructor(style: PartialStyle, parent: IStyle) {
+  constructor(style: Partial<IStyle>, parent: IStyle) {
     this.style = style;
     this.parent = parent;
   }
-  style: PartialStyle;
+  style: Partial<IStyle>;
   parent: IStyle;
 
   loadJSON(json: Partial<Data.Style>) {

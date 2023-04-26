@@ -195,10 +195,23 @@ export class Selectable {
       superSelectable = this.project.selectables.get(this.idPath.slice(1));
     }
 
-    return new CascadedStyle(
-      this.selfStyle,
-      superSelectable?.style ?? defaultStyle
-    );
+    if (superSelectable) {
+      if (
+        superSelectable.idPath.length === 1 &&
+        superSelectable.originalNode.parent?.type === "component"
+      ) {
+        // super selectable is a component root node or a variant
+
+        return new CascadedStyle(
+          this.selfStyle,
+          new CascadedStyle({ position: null }, superSelectable.style)
+        );
+      }
+
+      return new CascadedStyle(this.selfStyle, superSelectable.style);
+    }
+
+    return new CascadedStyle(this.selfStyle, defaultStyle);
   }
 
   get superSelectable(): Selectable | undefined {
