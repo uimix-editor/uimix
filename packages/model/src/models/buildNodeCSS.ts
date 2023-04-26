@@ -109,14 +109,18 @@ export function buildNodeCSS(
     cssStyle.minWidth = width.min !== undefined ? `${width.min}px` : undefined;
     cssStyle.maxWidth = width.max !== undefined ? `${width.max}px` : undefined;
   } else {
-    cssStyle[xFlexGrowVarName] = 0;
-
+    let cssWidth: string;
     if (width.type === "fixed") {
-      cssStyle.width = `${width.value}px`;
-    } else if (width.type === "hug") {
-      cssStyle.width = "max-content";
+      cssWidth = `${width.value}px`;
+    } else {
+      cssWidth = "max-content";
     }
-    cssStyle[yWidthVarName] = cssStyle[gridWidthVarName] = cssStyle.width;
+
+    cssStyle[xFlexGrowVarName] = 0;
+    cssStyle[yWidthVarName] =
+      cssStyle[gridWidthVarName] =
+      cssStyle.width =
+        cssWidth;
   }
 
   const height = style.height;
@@ -131,14 +135,18 @@ export function buildNodeCSS(
     cssStyle.maxHeight =
       height.max !== undefined ? `${height.max}px` : undefined;
   } else {
-    cssStyle[yFlexGrowVarName] = 0;
-
+    let cssHeight: string;
     if (height.type === "fixed") {
-      cssStyle.height = `${height.value}px`;
-    } else if (height.type === "hug") {
-      cssStyle.height = "max-content";
+      cssHeight = `${height.value}px`;
+    } else {
+      cssHeight = "max-content";
     }
-    cssStyle[xHeightVarName] = cssStyle[gridHeightVarName] = cssStyle.height;
+
+    cssStyle[yFlexGrowVarName] = 0;
+    cssStyle[xHeightVarName] =
+      cssStyle[gridHeightVarName] =
+      cssStyle.height =
+        cssHeight;
   }
 
   cssStyle.opacity = style.opacity;
