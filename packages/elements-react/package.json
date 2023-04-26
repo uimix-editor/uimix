@@ -1,0 +1,17 @@
+{
+  "name": "@uimix/elements-react",
+  "license": "MIT",
+  "type": "module",
+  "main": "src/index.tsx",
+  "scripts": {
+    "lint": "eslint src"
+  },
+  "dependencies": {},
+  "devDependencies": {
+    "@types/react": "^18.0.38",
+    "@types/react-dom": "^18.0.11",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
+    "typescript": "^5.0.4"
+  }
+}
