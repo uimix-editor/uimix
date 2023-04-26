@@ -107,7 +107,7 @@ export class CSSGenerator {
           for (const key of keys) {
             if (css[target][key] !== superCSS[target][key]) {
               // @ts-ignore
-              diffCSS[target][key] = css[target][key] ?? "unset";
+              diffCSS[target][key] = css[target][key];
             }
           }
         }
