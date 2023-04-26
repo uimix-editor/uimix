@@ -187,10 +187,7 @@ export class Selectable {
   }
 
   @computed get style(): CascadedStyle {
-    return this.getStyle("displayed");
-  }
-  @computed get originalStyle(): CascadedStyle {
-    return this.getStyle("original");
+    return this.getStyle();
   }
 
   get superSelectable(): Selectable | undefined {
@@ -204,8 +201,18 @@ export class Selectable {
     return this.project.selectables.get(this.idPath.slice(1));
   }
 
-  // resolveMainComponent=false to get main component ID of an instance
-  private getStyle(type: "original" | "displayed"): CascadedStyle {
+  private get mainComponentID(): string | null {
+    if (this.selfStyle.mainComponent) {
+      return this.selfStyle.mainComponent;
+    }
+    if (this.idPath.length === 1) {
+      return null;
+    }
+    const superSelectable = this.project.selectables.get(this.idPath.slice(1));
+    return superSelectable.mainComponentID;
+  }
+
+  private getStyle(): CascadedStyle {
     const { nodePath } = this;
 
     let superStyle: IStyle;
@@ -213,19 +220,17 @@ export class Selectable {
     if (nodePath.length === 1) {
       superStyle = defaultStyle;
 
-      if (type === "displayed") {
-        const mainComponent = this.mainComponent;
-        if (mainComponent) {
-          superStyle = this.project.selectables
-            .get([mainComponent.rootNode.id])
-            .getStyle("original");
-        }
+      const mainComponent = this.mainComponent;
+      if (mainComponent) {
+        superStyle = this.project.selectables
+          .get([mainComponent.rootNode.id])
+          .getStyle();
       }
     } else {
       const superSelectable = this.project.selectables.get(
         this.idPath.slice(1)
       );
-      superStyle = superSelectable.getStyle(type);
+      superStyle = superSelectable.getStyle();
     }
 
     return new CascadedStyle(this.selfStyle, superStyle);
@@ -234,7 +239,7 @@ export class Selectable {
   @computed get mainComponent(): Component | undefined {
     const originalNode = this.originalNode;
     if (originalNode.type === "instance") {
-      const mainComponentID = this.originalStyle.mainComponent;
+      const mainComponentID = this.mainComponentID;
       if (mainComponentID) {
         const ownerComponents = this.nodePath.map(
           (node) => node.ownerComponent?.node
