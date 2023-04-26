@@ -721,10 +721,6 @@
     },
     "1BxVgCrGCH746iVt4REnNR": {
       "hidden": false,
-      "position": {
-        "x": { "type": "start", "start": 546 },
-        "y": { "type": "start", "start": 27 }
-      },
       "width": { "type": "hug" },
       "height": { "type": "hug" },
       "topLeftRadius": 0,
