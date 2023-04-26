@@ -6,7 +6,9 @@
   "scripts": {
     "lint": "eslint src"
   },
-  "dependencies": {},
+  "dependencies": {
+    "zod": "^3.21.4"
+  },
   "devDependencies": {
     "@types/react": "^18.0.38",
     "@types/react-dom": "^18.0.11",
