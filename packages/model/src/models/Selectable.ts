@@ -10,7 +10,6 @@ import * as Data from "../data/v1";
 import { Project } from "./Project";
 import { Component, Variant } from "./Component";
 import { ObjectData } from "./ObjectData";
-import { assertNonNull } from "@uimix/foundation/src/utils/Assert";
 import { Page } from "./Page";
 
 export interface IComputedRectProvider {
