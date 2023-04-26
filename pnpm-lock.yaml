@@ -636,6 +636,9 @@ importers:
 
   packages/elements-react:
     dependencies:
+      csstype:
+        specifier: ^3.1.2
+        version: 3.1.2
       zod:
         specifier: ^3.21.4
         version: 3.21.4
