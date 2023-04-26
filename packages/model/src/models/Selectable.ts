@@ -187,7 +187,25 @@ export class Selectable {
   }
 
   @computed get style(): CascadedStyle {
-    return this.getStyle();
+    const { nodePath } = this;
+
+    let superSelectable: Selectable | undefined;
+
+    if (nodePath.length === 1) {
+      const mainComponent = this.mainComponent;
+      if (mainComponent) {
+        superSelectable = this.project.selectables.get([
+          mainComponent.rootNode.id,
+        ]);
+      }
+    } else {
+      superSelectable = this.project.selectables.get(this.idPath.slice(1));
+    }
+
+    return new CascadedStyle(
+      this.selfStyle,
+      superSelectable?.style ?? defaultStyle
+    );
   }
 
   get superSelectable(): Selectable | undefined {
@@ -210,30 +228,6 @@ export class Selectable {
     }
     const superSelectable = this.project.selectables.get(this.idPath.slice(1));
     return superSelectable.mainComponentID;
-  }
-
-  private getStyle(): CascadedStyle {
-    const { nodePath } = this;
-
-    let superStyle: IStyle;
-
-    if (nodePath.length === 1) {
-      superStyle = defaultStyle;
-
-      const mainComponent = this.mainComponent;
-      if (mainComponent) {
-        superStyle = this.project.selectables
-          .get([mainComponent.rootNode.id])
-          .getStyle();
-      }
-    } else {
-      const superSelectable = this.project.selectables.get(
-        this.idPath.slice(1)
-      );
-      superStyle = superSelectable.getStyle();
-    }
-
-    return new CascadedStyle(this.selfStyle, superStyle);
   }
 
   @computed get mainComponent(): Component | undefined {
