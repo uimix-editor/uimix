@@ -18,10 +18,6 @@ const xHeightVarName = "--uimix-x-height";
 const yWidthVarName = "--uimix-y-width";
 const gridWidthVarName = "--uimix-grid-width";
 const gridHeightVarName = "--uimix-grid-height";
-const leftVarName = "--uimix-left";
-const rightVarName = "--uimix-right";
-const topVarName = "--uimix-top";
-const bottomVarName = "--uimix-bottom";
 
 type PropertiesWithVars = CSS.Properties & {
   [xFlexGrowVarName]?: number;
@@ -30,10 +26,6 @@ type PropertiesWithVars = CSS.Properties & {
   [yWidthVarName]?: CSS.Properties["width"];
   [gridWidthVarName]?: CSS.Properties["width"];
   [gridHeightVarName]?: CSS.Properties["height"];
-  [leftVarName]?: string;
-  [rightVarName]?: string;
-  [topVarName]?: string;
-  [bottomVarName]?: string;
 };
 
 export interface SelfAndChildrenCSS {
@@ -63,33 +55,15 @@ export function buildNodeCSS(
   const cssStyle: PropertiesWithVars = {};
   const childrenStyle: CSS.Properties = {};
 
-  if (style.layout === "none") {
-    childrenStyle.position = "absolute";
-    childrenStyle.left = `var(${leftVarName}, 0)`;
-    childrenStyle.right = `var(${rightVarName}, 0)`;
-    childrenStyle.top = `var(${topVarName}, auto)`;
-    childrenStyle.bottom = `var(${bottomVarName}, auto)`;
-  } else {
-    childrenStyle.position = "relative";
-  }
-  if (style.absolute) {
-    cssStyle.position = "absolute";
-    cssStyle.left = `var(${leftVarName}, 0)`;
-    cssStyle.right = `var(${rightVarName}, 0)`;
-    cssStyle.top = `var(${topVarName}, auto)`;
-    cssStyle.bottom = `var(${bottomVarName}, auto)`;
-  }
-
   const position = style.position;
   if (position) {
-    cssStyle[leftVarName] =
-      "start" in position.x ? `${position.x.start}px` : "auto";
-    cssStyle[rightVarName] =
-      "end" in position.x ? `${position.x.end}px` : "auto";
-    cssStyle[topVarName] =
-      "start" in position.y ? `${position.y.start}px` : "auto";
-    cssStyle[bottomVarName] =
-      "end" in position.y ? `${position.y.end}px` : "auto";
+    cssStyle.position = "absolute";
+    if (position) {
+      cssStyle.left = "start" in position.x ? `${position.x.start}px` : "auto";
+      cssStyle.right = "end" in position.x ? `${position.x.end}px` : "auto";
+      cssStyle.top = "start" in position.y ? `${position.y.start}px` : "auto";
+      cssStyle.bottom = "end" in position.y ? `${position.y.end}px` : "auto";
+    }
   }
 
   cssStyle.marginTop = `${style.marginTop}px`;
