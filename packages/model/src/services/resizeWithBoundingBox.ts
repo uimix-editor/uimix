@@ -64,6 +64,14 @@ export function resizeWithBoundingBox(
     height?: boolean;
   }
 ) {
+  if (targets.x || targets.y) {
+    // clear margins when repositioning
+    selectable.style.marginTop = 0;
+    selectable.style.marginRight = 0;
+    selectable.style.marginBottom = 0;
+    selectable.style.marginLeft = 0;
+  }
+
   const parent = selectable.offsetParent;
   if (parent) {
     const parentRect = parent.computedPaddingRect;
