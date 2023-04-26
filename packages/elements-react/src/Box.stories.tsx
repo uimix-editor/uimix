@@ -6,5 +6,5 @@ export default {
 };
 
 export const Basic = () => {
-  return <Box width={200} height={200} fills={[{ solid: "#333" }]} />;
+  return <Box width={100} height={200} fills={[{ solid: "#c0ffee" }]} />;
 };
