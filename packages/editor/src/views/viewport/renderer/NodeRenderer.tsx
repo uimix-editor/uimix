@@ -48,15 +48,15 @@ const computedRectUpdater = new ComputedRectUpdater();
 
 export const NodeRenderer: React.FC<{
   selectable: Selectable;
-  parentLayout?: Data.StackDirection | "grid";
   forThumbnail?: boolean; // must not be changed after mount
+  parentChildrenStyle?: React.CSSProperties;
   style?: React.CSSProperties;
   foreignComponentManager: ForeignComponentManager;
 }> = observer(
   ({
     selectable,
-    parentLayout,
     forThumbnail,
+    parentChildrenStyle,
     style: additionalCSSStyle,
     foreignComponentManager,
   }) => {
@@ -64,15 +64,15 @@ export const NodeRenderer: React.FC<{
     const style = selectable.style;
     const type = selectable.node.type;
 
+    const builtStyle = buildNodeCSS(type, style, (tokenID) =>
+      selectable.project.colorTokens.resolve(tokenID)
+    );
+
     const cssStyle: React.CSSProperties = {
       all: "revert",
       boxSizing: "border-box",
-      ...buildNodeCSS(
-        type,
-        style,
-        (tokenID) => selectable.project.colorTokens.resolve(tokenID),
-        parentLayout
-      ),
+      ...parentChildrenStyle,
+      ...builtStyle.self,
       ...(selectable === viewportState.focusedSelectable
         ? {
             opacity: 0,
@@ -106,8 +106,6 @@ export const NodeRenderer: React.FC<{
         computedRectUpdater.flush();
       });
     }
-
-    const layoutType = type === "frame" ? getLayoutType(style) : undefined;
 
     // if (selectable.node.type === "instance") {
     //   return (
@@ -239,7 +237,7 @@ export const NodeRenderer: React.FC<{
               <NodeRenderer
                 key={child.id}
                 selectable={child}
-                parentLayout={layoutType}
+                parentChildrenStyle={builtStyle.children}
                 forThumbnail={forThumbnail}
                 foreignComponentManager={foreignComponentManager}
               />

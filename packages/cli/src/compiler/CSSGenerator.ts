@@ -4,8 +4,8 @@ import { Page } from "@uimix/model/src/models/Page";
 import * as CodeAsset from "@uimix/adapter-types";
 import {
   buildNodeCSS,
-  getLayoutType,
   Selectable,
+  SelfAndChildrenCSS,
   Variant,
 } from "@uimix/model/src/models";
 import { ClassNameGenerator } from "./ClassNameGenerator";
@@ -63,36 +63,20 @@ export class CSSGenerator {
 
     const results: string[] = [];
 
-    const cssForSelectable = new Map<Selectable, CSS.Properties>();
+    const cssForSelectable = new Map<Selectable, SelfAndChildrenCSS>();
     const generateCSS = (selectable: Selectable) => {
       let css = cssForSelectable.get(selectable);
       if (css) {
         return css;
       }
 
-      let parent = selectable.parent;
-      if (parent?.originalNode.isAbstract) {
-        parent = undefined;
-      }
-      const parentLayoutType =
-        parent?.node.type === "frame" ? getLayoutType(parent.style) : undefined;
-
       css = buildNodeCSS(
         selectable.node.type,
         selectable.style,
         (tokenID) =>
           getColorToken(this.designTokens, tokenID.split("/"))?.$value ??
-          selectable.project.colorTokens.resolve(tokenID),
-        parentLayoutType
+          selectable.project.colorTokens.resolve(tokenID)
       );
-
-      if (!parent) {
-        css.position = "relative";
-        delete css.left;
-        delete css.right;
-        delete css.top;
-        delete css.bottom;
-      }
 
       cssForSelectable.set(selectable, css);
       return css;
@@ -101,37 +85,53 @@ export class CSSGenerator {
     const generateCSSText = (selectable: Selectable) => {
       const superSelectable = selectable.superSelectable;
       const css = generateCSS(selectable);
-      const superCSS = superSelectable ? generateCSS(superSelectable) : {};
+      const superCSS = superSelectable
+        ? generateCSS(superSelectable)
+        : {
+            self: {},
+            children: {},
+          };
 
-      let diffCSS: CSS.Properties;
+      let diffCSS: SelfAndChildrenCSS;
       if (superSelectable) {
         const keys = new Set([
           ...Object.keys(css),
           ...Object.keys(superCSS),
         ]) as Set<keyof CSS.Properties>;
 
-        diffCSS = {};
-        for (const key of keys) {
-          if (css[key] !== superCSS[key]) {
-            // @ts-ignore
-            diffCSS[key] = css[key] ?? "unset";
+        diffCSS = {
+          self: {},
+          children: {},
+        };
+        for (const target of ["self", "children"] as const) {
+          for (const key of keys) {
+            if (css[target][key] !== superCSS[target][key]) {
+              // @ts-ignore
+              diffCSS[target][key] = css[target][key] ?? "unset";
+            }
           }
         }
       } else {
         diffCSS = css;
       }
-      const body: string[] = [];
+
+      const body: { self: string[]; children: string[] } = {
+        self: [],
+        children: [],
+      };
       if (!superSelectable) {
-        body.push(...baseCSS);
+        body.self.push(...baseCSS);
       }
 
-      for (const [key, value] of Object.entries(diffCSS)) {
-        if (key.startsWith("--")) {
-          // eslint-disable-next-line
-          body.push(`  ${key}: ${value};`);
-        } else {
-          // eslint-disable-next-line
-          body.push(`  ${kebabCase(key)}: ${value};`);
+      for (const target of ["self", "children"] as const) {
+        for (const [key, value] of Object.entries(diffCSS[target])) {
+          if (key.startsWith("--")) {
+            // eslint-disable-next-line
+            body[target].push(`  ${key}: ${value};`);
+          } else {
+            // eslint-disable-next-line
+            body[target].push(`  ${kebabCase(key)}: ${value};`);
+          }
         }
       }
 
@@ -159,7 +159,10 @@ export class CSSGenerator {
           results.push(
             `@media (max-width: ${condition.value}px) {`,
             `${selector} {`,
-            ...body,
+            ...body.self,
+            "}",
+            `${selector} > * {`,
+            ...body.children,
             "}",
             "}"
           );
@@ -170,20 +173,41 @@ export class CSSGenerator {
           const selector = `.${classNameGenerator.get([
             mainComponent.rootNode.id,
           ])}:hover`;
-          results.push(`${selector} {`, ...body, "}");
+          results.push(
+            `${selector} {`,
+            ...body.self,
+            "}",
+            `${selector} > * {`,
+            ...body.children,
+            "}"
+          );
           return;
         } else {
           const innerIDPath = selectable.idPath.slice(1);
           const selector = `.${classNameGenerator.get([
             mainComponent.rootNode.id,
           ])}:hover .${classNameGenerator.get(innerIDPath)}`;
-          results.push(`${selector} {`, ...body, "}");
+          results.push(
+            `${selector} {`,
+            ...body.self,
+            "}",
+            `${selector} > * {`,
+            ...body.children,
+            "}"
+          );
           return;
         }
       }
 
       const selector = "." + classNameGenerator.get(selectable.idPath);
-      results.push(`${selector} {`, ...body, "}");
+      results.push(
+        `${selector} {`,
+        ...body.self,
+        "}",
+        `${selector} > * {`,
+        ...body.children,
+        "}"
+      );
     };
 
     const generateCSSTextRecursive = (selectable: Selectable) => {

@@ -12,12 +12,40 @@ export function getLayoutType(
   }
 }
 
+const xFlexGrowVarName = "--uimix-x-flex-grow";
+const yFlexGrowVarName = "--uimix-y-flex-grow";
+const xAlignSelfVarName = "--uimix-x-align-self";
+const yAlignSelfVarName = "--uimix-y-align-self";
+const gridJustifySelfVarName = "--uimix-grid-justify-self";
+const gridAlignSelfVarName = "--uimix-grid-align-self";
+const leftVarName = "--uimix-left";
+const rightVarName = "--uimix-right";
+const topVarName = "--uimix-top";
+const bottomVarName = "--uimix-bottom";
+
+type PropertiesWithVars = CSS.Properties & {
+  [xFlexGrowVarName]?: number;
+  [yFlexGrowVarName]?: number;
+  [xAlignSelfVarName]?: CSS.Properties["alignSelf"];
+  [yAlignSelfVarName]?: CSS.Properties["alignSelf"];
+  [gridJustifySelfVarName]?: CSS.Properties["justifySelf"];
+  [gridAlignSelfVarName]?: CSS.Properties["alignSelf"];
+  [leftVarName]?: string;
+  [rightVarName]?: string;
+  [topVarName]?: string;
+  [bottomVarName]?: string;
+};
+
+export interface SelfAndChildrenCSS {
+  self: PropertiesWithVars;
+  children: CSS.Properties;
+}
+
 export function buildNodeCSS(
   nodeType: Data.NodeType,
   style: Data.Style,
-  getColorToken: (id: string) => string,
-  parentLayout?: Data.StackDirection | "grid"
-): CSS.Properties {
+  getColorToken: (id: string) => string
+): SelfAndChildrenCSS {
   const resolveColorToken = (color: Data.Color): string => {
     if (typeof color === "string") {
       return color;
@@ -26,73 +54,88 @@ export function buildNodeCSS(
   };
 
   if (nodeType === "component") {
-    return {};
+    return {
+      self: {},
+      children: {},
+    };
   }
 
-  const cssStyle: CSS.Properties = {};
+  const cssStyle: PropertiesWithVars = {};
+  const childrenStyle: CSS.Properties = {};
 
-  const cssPosition = parentLayout && !style.absolute ? "relative" : "absolute";
-  cssStyle.position = cssPosition;
-  if (cssPosition === "absolute") {
-    const position = style.position;
-    if ("start" in position.x) {
-      cssStyle.left = `${position.x.start}px`;
-    }
-    if ("end" in position.x) {
-      cssStyle.right = `${position.x.end}px`;
-    }
-
-    if ("start" in position.y) {
-      cssStyle.top = `${position.y.start}px`;
-    }
-    if ("end" in position.y) {
-      cssStyle.bottom = `${position.y.end}px`;
-    }
+  if (style.layout === "none") {
+    childrenStyle.position = "absolute";
+    childrenStyle.left = `var(${leftVarName}, 0)`;
+    childrenStyle.right = `var(${rightVarName}, 0)`;
+    childrenStyle.top = `var(${topVarName}, auto)`;
+    childrenStyle.bottom = `var(${bottomVarName}, auto)`;
   } else {
-    cssStyle.marginTop = `${style.marginTop}px`;
-    cssStyle.marginRight = `${style.marginRight}px`;
-    cssStyle.marginBottom = `${style.marginBottom}px`;
-    cssStyle.marginLeft = `${style.marginLeft}px`;
+    childrenStyle.position = "relative";
   }
+  if (style.absolute) {
+    cssStyle.position = "absolute";
+    cssStyle.left = `var(${leftVarName}, 0)`;
+    cssStyle.right = `var(${rightVarName}, 0)`;
+    cssStyle.top = `var(${topVarName}, auto)`;
+    cssStyle.bottom = `var(${bottomVarName}, auto)`;
+  }
+
+  const position = style.position;
+  if (position) {
+    cssStyle[leftVarName] =
+      "start" in position.x ? `${position.x.start}px` : "auto";
+    cssStyle[rightVarName] =
+      "end" in position.x ? `${position.x.end}px` : "auto";
+    cssStyle[topVarName] =
+      "start" in position.y ? `${position.y.start}px` : "auto";
+    cssStyle[bottomVarName] =
+      "end" in position.y ? `${position.y.end}px` : "auto";
+  }
+
+  cssStyle.marginTop = `${style.marginTop}px`;
+  cssStyle.marginRight = `${style.marginRight}px`;
+  cssStyle.marginBottom = `${style.marginBottom}px`;
+  cssStyle.marginLeft = `${style.marginLeft}px`;
 
   // TODO: unset width/height when both left/right or top/bottom are set
 
   const width = style.width;
-  if (width.type === "fixed") {
-    cssStyle.width = `${width.value}px`;
-  } else if (width.type === "hug") {
-    cssStyle.width = "max-content";
-  } else {
-    if (parentLayout === "x") {
-      cssStyle.flex = 1;
-    } else if (parentLayout) {
-      cssStyle.width = `calc(100% - ${style.marginLeft + style.marginRight}px)`;
-    } else {
-      cssStyle.width = "auto";
-    }
+  if (width.type === "fill") {
+    cssStyle[xFlexGrowVarName] = 1;
+    cssStyle[yAlignSelfVarName] = "stretch";
+    cssStyle[gridJustifySelfVarName] = "stretch";
     cssStyle.minWidth = width.min !== undefined ? `${width.min}px` : undefined;
     cssStyle.maxWidth = width.max !== undefined ? `${width.max}px` : undefined;
+  } else {
+    cssStyle[xFlexGrowVarName] = 0;
+    cssStyle[yAlignSelfVarName] = "auto";
+    cssStyle[gridJustifySelfVarName] = "auto";
+    if (width.type === "fixed") {
+      cssStyle.width = `${width.value}px`;
+    } else if (width.type === "hug") {
+      cssStyle.width = "max-content";
+    }
   }
 
   const height = style.height;
-  if (height.type === "fixed") {
-    cssStyle.height = `${height.value}px`;
-  } else if (height.type === "hug") {
-    cssStyle.height = "max-content";
-  } else {
-    if (parentLayout === "y") {
-      cssStyle.flex = 1;
-    } else if (parentLayout) {
-      cssStyle.height = `calc(100% - ${
-        style.marginTop + style.marginBottom
-      }px)`;
-    } else {
-      cssStyle.height = "auto";
-    }
+  if (height.type === "fill") {
+    cssStyle[yFlexGrowVarName] = 1;
+    cssStyle[xAlignSelfVarName] = "stretch";
+    cssStyle[gridAlignSelfVarName] = "stretch";
     cssStyle.minHeight =
       height.min !== undefined ? `${height.min}px` : undefined;
     cssStyle.maxHeight =
       height.max !== undefined ? `${height.max}px` : undefined;
+  } else {
+    cssStyle[yFlexGrowVarName] = 0;
+    cssStyle[xAlignSelfVarName] = "auto";
+    cssStyle[gridAlignSelfVarName] = "auto";
+
+    if (height.type === "fixed") {
+      cssStyle.height = `${height.value}px`;
+    } else if (height.type === "hug") {
+      cssStyle.height = "max-content";
+    }
   }
 
   cssStyle.opacity = style.opacity;
@@ -127,6 +170,14 @@ export function buildNodeCSS(
       })();
       cssStyle.rowGap = `${style.rowGap}px`;
       cssStyle.columnGap = `${style.columnGap}px`;
+
+      if (style.flexDirection === "x") {
+        childrenStyle.flexGrow = `var(${xFlexGrowVarName})`;
+        childrenStyle.alignSelf = `var(${xAlignSelfVarName})`;
+      } else {
+        childrenStyle.flexGrow = `var(${yFlexGrowVarName})`;
+        childrenStyle.alignSelf = `var(${yAlignSelfVarName})`;
+      }
     } else if (layout === "grid") {
       cssStyle.display = "grid";
       const { gridRowCount, gridColumnCount } = style;
@@ -138,6 +189,9 @@ export function buildNodeCSS(
       }
       cssStyle.rowGap = `${style.rowGap}px`;
       cssStyle.columnGap = `${style.columnGap}px`;
+
+      childrenStyle.alignSelf = `var(${gridAlignSelfVarName})`;
+      childrenStyle.justifySelf = `var(${gridJustifySelfVarName})`;
     } else {
       cssStyle.display = "block";
     }
@@ -222,5 +276,5 @@ export function buildNodeCSS(
     cssStyle.display = "none";
   }
 
-  return cssStyle;
+  return { self: cssStyle, children: childrenStyle };
 }

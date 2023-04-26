@@ -12,7 +12,7 @@ export const TextEditorBody: React.FC<{
 
   const cssStyle = buildNodeCSS("text", style, (tokenID) =>
     selectable.project.colorTokens.resolve(tokenID)
-  );
+  ).self;
   const computedRect = selectable.computedRect;
   const fitWidth = style.width.type === "hug";
 
