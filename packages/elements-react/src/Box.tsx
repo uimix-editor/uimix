@@ -1,6 +1,6 @@
 import { ReactNode, useId } from "react";
 import { StyleProps, defaultStyle } from "./StyleProps";
-import { buildNodeCSS } from "./buildNodeCSS";
+import { SelfAndChildrenCSS, buildNodeCSS } from "./buildNodeCSS";
 
 function kebabCase(str: string): string {
   return str.replace(/[A-Z]/g, (match) => `-${match.toLowerCase()}`);
@@ -11,7 +11,7 @@ export const Box: React.FC<
     children?: ReactNode;
   }
 > = (props) => {
-  const style = buildNodeCSS("frame", {
+  const styles = buildNodeCSS("frame", {
     ...defaultStyle,
     ...props,
   });
@@ -19,22 +19,9 @@ export const Box: React.FC<
   const id = useId().replaceAll(":", "_");
   const className = `box-${id}`;
 
-  const cssBody = Object.entries(style.self)
-    .map(([key, value]) => {
-      return `${kebabCase(key)}: ${String(value)};`;
-    })
-    .join(";");
-  const childrenCSSBody = Object.entries(style.children)
-    .map(([key, value]) => {
-      return `${kebabCase(key)}: ${String(value)};`;
-    })
-    .join(";");
-
-  const styleText = `.${className}{${cssBody}} .${className}>*{${childrenCSSBody}}`;
-
   return (
     <div className={className}>
-      <style>{styleText}</style>
+      <Style targetClassName={className} styles={styles} />
       {props.children}
     </div>
   );
@@ -45,7 +32,7 @@ export const Text: React.FC<
     children?: ReactNode;
   }
 > = (props) => {
-  const style = buildNodeCSS("text", {
+  const styles = buildNodeCSS("text", {
     ...defaultStyle,
     ...props,
   });
@@ -53,23 +40,30 @@ export const Text: React.FC<
   const id = useId().replaceAll(":", "_");
   const className = `box-${id}`;
 
-  const cssBody = Object.entries(style.self)
-    .map(([key, value]) => {
-      return `${kebabCase(key)}: ${String(value)};`;
-    })
-    .join(";");
-  const childrenCSSBody = Object.entries(style.children)
-    .map(([key, value]) => {
-      return `${kebabCase(key)}: ${String(value)};`;
-    })
-    .join(";");
-
-  const styleText = `.${className}{${cssBody}} .${className}>*{${childrenCSSBody}}`;
-
   return (
     <div className={className}>
-      <style>{styleText}</style>
+      <Style targetClassName={className} styles={styles} />
       {props.textContent}
     </div>
   );
+};
+
+const Style: React.FC<{
+  targetClassName: string;
+  styles: SelfAndChildrenCSS;
+}> = ({ styles, targetClassName }) => {
+  const cssBody = Object.entries(styles.self)
+    .map(([key, value]) => {
+      return `${kebabCase(key)}: ${String(value)};`;
+    })
+    .join(";");
+  const childrenCSSBody = Object.entries(styles.children)
+    .map(([key, value]) => {
+      return `${kebabCase(key)}: ${String(value)};`;
+    })
+    .join(";");
+
+  const styleText = `.${targetClassName}{${cssBody}} .${targetClassName}>*{${childrenCSSBody}}`;
+
+  return <style>{styleText}</style>;
 };
