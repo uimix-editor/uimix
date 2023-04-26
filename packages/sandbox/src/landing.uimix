@@ -305,7 +305,6 @@ export default (
         <instance
           id="frame"
           name="Frame"
-          position={null}
           width={{ min: 0 }}
           component="Header"
         />
