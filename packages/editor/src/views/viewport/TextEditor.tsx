@@ -13,6 +13,11 @@ export const TextEditorBody: React.FC<{
   const cssStyle = buildNodeCSS("text", style, (tokenID) =>
     selectable.project.colorTokens.resolve(tokenID)
   ).self;
+  delete cssStyle.marginTop;
+  delete cssStyle.marginRight;
+  delete cssStyle.marginBottom;
+  delete cssStyle.marginLeft;
+
   const computedRect = selectable.computedRect;
   const fitWidth = style.width.type === "hug";
 
