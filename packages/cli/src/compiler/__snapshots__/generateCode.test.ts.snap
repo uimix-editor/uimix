@@ -5,8 +5,15 @@ exports[`generateCode > generates code > src/button.uimix.css 1`] = `
   box-sizing: border-box;
   -webkit-font-smoothing: antialiased;
   position: relative;
+  margin: 0;
+  --uimix-x-flex-grow: 0;
   width: max-content;
+  --uimix-grid-width: max-content;
+  --uimix-y-width: max-content;
+  --uimix-y-flex-grow: 0;
   height: max-content;
+  --uimix-grid-height: max-content;
+  --uimix-x-height: max-content;
   opacity: 1;
   overflow: visible;
   display: flex;
@@ -23,6 +30,10 @@ exports[`generateCode > generates code > src/button.uimix.css 1`] = `
   border-radius: 0;
   box-shadow: none
 }
+.uimix-Buttonv4qeOq > * {
+  flex-grow: var(--uimix-x-flex-grow);
+  height: var(--uimix-x-height)
+}
 .uimix-Buttonv4qeOq:hover {
   background: #3b82f6
 }
@@ -31,8 +42,14 @@ exports[`generateCode > generates code > src/button.uimix.css 1`] = `
   -webkit-font-smoothing: antialiased;
   position: relative;
   margin: 0;
+  --uimix-x-flex-grow: 0;
   width: max-content;
+  --uimix-grid-width: max-content;
+  --uimix-y-width: max-content;
+  --uimix-y-flex-grow: 0;
   height: max-content;
+  --uimix-grid-height: max-content;
+  --uimix-x-height: max-content;
   opacity: 1;
   overflow: visible;
   white-space: break-spaces;
@@ -130,8 +147,15 @@ exports[`generateCode > generates code > src/components.uimix.css 1`] = `
   box-sizing: border-box;
   -webkit-font-smoothing: antialiased;
   position: relative;
+  margin: 0;
+  --uimix-x-flex-grow: 0;
   width: max-content;
+  --uimix-grid-width: max-content;
+  --uimix-y-width: max-content;
+  --uimix-y-flex-grow: 0;
   height: max-content;
+  --uimix-grid-height: max-content;
+  --uimix-x-height: max-content;
   opacity: 1;
   overflow: visible;
   display: flex;
@@ -148,12 +172,23 @@ exports[`generateCode > generates code > src/components.uimix.css 1`] = `
   border-radius: 0;
   box-shadow: none
 }
+.uimix-StackRBRbRk > * {
+  flex-grow: var(--uimix-x-flex-grow);
+  height: var(--uimix-x-height)
+}
 .uimix-PageRBRbRk {
   box-sizing: border-box;
   -webkit-font-smoothing: antialiased;
   position: relative;
+  margin: 0;
+  --uimix-x-flex-grow: 0;
   width: 900px;
+  --uimix-grid-width: 900px;
+  --uimix-y-width: 900px;
+  --uimix-y-flex-grow: 0;
   height: 456px;
+  --uimix-grid-height: 456px;
+  --uimix-x-height: 456px;
   opacity: 1;
   overflow: visible;
   display: flex;
@@ -170,17 +205,30 @@ exports[`generateCode > generates code > src/components.uimix.css 1`] = `
   border-radius: 0;
   box-shadow: none
 }
+.uimix-PageRBRbRk > * {
+  flex-grow: var(--uimix-y-flex-grow);
+  width: var(--uimix-y-width)
+}
 @media (max-width:767px) {
   .uimix-PageRBRbRk {
-    width: 720px
+    width: 720px;
+    --uimix-grid-width: 720px;
+    --uimix-y-width: 720px
   }
 }
 .uimix-CardRBRbRk {
   box-sizing: border-box;
   -webkit-font-smoothing: antialiased;
   position: relative;
+  margin: 0;
+  --uimix-x-flex-grow: 0;
   width: 400px;
+  --uimix-grid-width: 400px;
+  --uimix-y-width: 400px;
+  --uimix-y-flex-grow: 0;
   height: max-content;
+  --uimix-grid-height: max-content;
+  --uimix-x-height: max-content;
   opacity: 1;
   overflow: visible;
   display: flex;
@@ -197,15 +245,23 @@ exports[`generateCode > generates code > src/components.uimix.css 1`] = `
   border-radius: 20px;
   box-shadow: none
 }
+.uimix-CardRBRbRk > * {
+  flex-grow: var(--uimix-y-flex-grow);
+  width: var(--uimix-y-width)
+}
 .uimix-StackRBRbRk__item_0 {
   box-sizing: border-box;
   -webkit-font-smoothing: antialiased;
   position: relative;
   margin: 0;
-  flex: 1;
+  --uimix-x-flex-grow: 1;
+  --uimix-grid-width: calc(100% - 0px);
+  --uimix-y-width: calc(100% - 0px);
   min-width: 25px;
   max-width: 100px;
-  height: calc(100% - 0px);
+  --uimix-y-flex-grow: 1;
+  --uimix-grid-height: calc(100% - 0px);
+  --uimix-x-height: calc(100% - 0px);
   min-height: 20px;
   max-height: 60px;
   opacity: 1;
@@ -224,8 +280,14 @@ exports[`generateCode > generates code > src/components.uimix.css 1`] = `
   -webkit-font-smoothing: antialiased;
   position: relative;
   margin: 0;
+  --uimix-x-flex-grow: 0;
   width: 40px;
+  --uimix-grid-width: 40px;
+  --uimix-y-width: 40px;
+  --uimix-y-flex-grow: 0;
   height: 80px;
+  --uimix-grid-height: 80px;
+  --uimix-x-height: 80px;
   opacity: 1;
   overflow: visible;
   display: block;
@@ -242,8 +304,14 @@ exports[`generateCode > generates code > src/components.uimix.css 1`] = `
   -webkit-font-smoothing: antialiased;
   position: relative;
   margin: 0;
+  --uimix-x-flex-grow: 0;
   width: 40px;
+  --uimix-grid-width: 40px;
+  --uimix-y-width: 40px;
+  --uimix-y-flex-grow: 0;
   height: 80px;
+  --uimix-grid-height: 80px;
+  --uimix-x-height: 80px;
   opacity: 1;
   overflow: visible;
   display: none;
@@ -260,8 +328,14 @@ exports[`generateCode > generates code > src/components.uimix.css 1`] = `
   -webkit-font-smoothing: antialiased;
   position: relative;
   margin: 0;
+  --uimix-x-flex-grow: 0;
   width: 80px;
+  --uimix-grid-width: 80px;
+  --uimix-y-width: 80px;
+  --uimix-y-flex-grow: 0;
   height: 40px;
+  --uimix-grid-height: 40px;
+  --uimix-x-height: 40px;
   opacity: 1;
   overflow: visible;
   display: block;
@@ -278,8 +352,14 @@ exports[`generateCode > generates code > src/components.uimix.css 1`] = `
   -webkit-font-smoothing: antialiased;
   position: relative;
   margin: 10px 20px 30px 40px;
+  --uimix-x-flex-grow: 0;
   width: max-content;
+  --uimix-grid-width: max-content;
+  --uimix-y-width: max-content;
+  --uimix-y-flex-grow: 0;
   height: max-content;
+  --uimix-grid-height: max-content;
+  --uimix-x-height: max-content;
   opacity: 1;
   overflow: visible;
   white-space: break-spaces;
@@ -294,18 +374,20 @@ exports[`generateCode > generates code > src/components.uimix.css 1`] = `
   text-align: start;
   justify-content: flex-start
 }
-.uimix-StackRBRbRk__button {
-  margin: 0
-}
 .uimix-PageRBRbRk__header {
   box-sizing: border-box;
   -webkit-font-smoothing: antialiased;
   position: relative;
   margin: 0;
-  width: calc(100% - 0px);
+  --uimix-x-flex-grow: 1;
+  --uimix-grid-width: calc(100% - 0px);
+  --uimix-y-width: calc(100% - 0px);
   min-width: undefined;
   max-width: undefined;
+  --uimix-y-flex-grow: 0;
   height: max-content;
+  --uimix-grid-height: max-content;
+  --uimix-x-height: max-content;
   opacity: 1;
   overflow: visible
 }
@@ -314,10 +396,14 @@ exports[`generateCode > generates code > src/components.uimix.css 1`] = `
   -webkit-font-smoothing: antialiased;
   position: relative;
   margin: 0;
-  width: calc(100% - 0px);
+  --uimix-x-flex-grow: 1;
+  --uimix-grid-width: calc(100% - 0px);
+  --uimix-y-width: calc(100% - 0px);
   min-width: undefined;
   max-width: undefined;
-  flex: 1;
+  --uimix-y-flex-grow: 1;
+  --uimix-grid-height: calc(100% - 0px);
+  --uimix-x-height: calc(100% - 0px);
   min-height: undefined;
   max-height: undefined;
   opacity: 1;
@@ -336,16 +422,27 @@ exports[`generateCode > generates code > src/components.uimix.css 1`] = `
   -webkit-font-smoothing: antialiased;
   position: absolute;
   left: 33px;
+  right: auto;
   top: 28px;
+  bottom: auto;
+  margin: 0;
+  --uimix-x-flex-grow: 0;
   width: max-content;
+  --uimix-grid-width: max-content;
+  --uimix-y-width: max-content;
+  --uimix-y-flex-grow: 0;
   height: max-content;
+  --uimix-grid-height: max-content;
+  --uimix-x-height: max-content;
   opacity: 1;
   overflow: visible
 }
 .uimix-PageRBRbRk__instance {
   position: absolute;
   left: 160px;
+  right: auto;
   top: 28px;
+  bottom: auto;
   background: #bababa
 }
 .uimix-PageRBRbRk__image {
@@ -353,9 +450,18 @@ exports[`generateCode > generates code > src/components.uimix.css 1`] = `
   -webkit-font-smoothing: antialiased;
   position: absolute;
   left: 33px;
+  right: auto;
   top: 97px;
+  bottom: auto;
+  margin: 0;
+  --uimix-x-flex-grow: 0;
   width: 100px;
+  --uimix-grid-width: 100px;
+  --uimix-y-width: 100px;
+  --uimix-y-flex-grow: 0;
   height: 100px;
+  --uimix-grid-height: 100px;
+  --uimix-x-height: 100px;
   opacity: 1;
   overflow: visible;
   background: #fff;
@@ -368,7 +474,9 @@ exports[`generateCode > generates code > src/components.uimix.css 1`] = `
 .uimix-PageRBRbRk__stack {
   position: absolute;
   left: 165px;
-  top: 86px
+  right: auto;
+  top: 86px;
+  bottom: auto
 }
 .uimix-PageRBRbRk__stack-StackRBRbRk__hidden_Item {
   display: block
@@ -378,9 +486,18 @@ exports[`generateCode > generates code > src/components.uimix.css 1`] = `
   -webkit-font-smoothing: antialiased;
   position: absolute;
   left: 315px;
+  right: auto;
   top: 29px;
+  bottom: auto;
+  margin: 0;
+  --uimix-x-flex-grow: 0;
   width: max-content;
+  --uimix-grid-width: max-content;
+  --uimix-y-width: max-content;
+  --uimix-y-flex-grow: 0;
   height: max-content;
+  --uimix-grid-height: max-content;
+  --uimix-x-height: max-content;
   opacity: 1;
   overflow: visible
 }
@@ -394,8 +511,14 @@ exports[`generateCode > generates code > src/components.uimix.css 1`] = `
   -webkit-font-smoothing: antialiased;
   position: relative;
   margin: 0;
+  --uimix-x-flex-grow: 0;
   width: max-content;
+  --uimix-grid-width: max-content;
+  --uimix-y-width: max-content;
+  --uimix-y-flex-grow: 0;
   height: max-content;
+  --uimix-grid-height: max-content;
+  --uimix-x-height: max-content;
   opacity: 1;
   overflow: visible;
   display: flex;
@@ -412,13 +535,23 @@ exports[`generateCode > generates code > src/components.uimix.css 1`] = `
   border-radius: 8px;
   box-shadow: none
 }
+.uimix-CardRBRbRk__icon > * {
+  flex-grow: var(--uimix-x-flex-grow);
+  height: var(--uimix-x-height)
+}
 .uimix-CardRBRbRk__heroicons_code_bracket {
   box-sizing: border-box;
   -webkit-font-smoothing: antialiased;
   position: relative;
   margin: 0;
+  --uimix-x-flex-grow: 0;
   width: max-content;
+  --uimix-grid-width: max-content;
+  --uimix-y-width: max-content;
+  --uimix-y-flex-grow: 0;
   height: max-content;
+  --uimix-grid-height: max-content;
+  --uimix-x-height: max-content;
   opacity: 1;
   overflow: visible;
   background: 0 0;
@@ -433,10 +566,15 @@ exports[`generateCode > generates code > src/components.uimix.css 1`] = `
   -webkit-font-smoothing: antialiased;
   position: relative;
   margin: 0;
-  width: calc(100% - 0px);
+  --uimix-x-flex-grow: 1;
+  --uimix-grid-width: calc(100% - 0px);
+  --uimix-y-width: calc(100% - 0px);
   min-width: undefined;
   max-width: undefined;
+  --uimix-y-flex-grow: 0;
   height: max-content;
+  --uimix-grid-height: max-content;
+  --uimix-x-height: max-content;
   opacity: 1;
   overflow: visible;
   white-space: break-spaces;
@@ -456,10 +594,15 @@ exports[`generateCode > generates code > src/components.uimix.css 1`] = `
   -webkit-font-smoothing: antialiased;
   position: relative;
   margin: 0;
-  width: calc(100% - 0px);
+  --uimix-x-flex-grow: 1;
+  --uimix-grid-width: calc(100% - 0px);
+  --uimix-y-width: calc(100% - 0px);
   min-width: undefined;
   max-width: undefined;
+  --uimix-y-flex-grow: 0;
   height: max-content;
+  --uimix-grid-height: max-content;
+  --uimix-x-height: max-content;
   opacity: 1;
   overflow: visible;
   white-space: break-spaces;
@@ -741,8 +884,15 @@ exports[`generateCode > generates code > src/landing.uimix.css 1`] = `
   box-sizing: border-box;
   -webkit-font-smoothing: antialiased;
   position: relative;
+  margin: 0;
+  --uimix-x-flex-grow: 0;
   width: 1183px;
+  --uimix-grid-width: 1183px;
+  --uimix-y-width: 1183px;
+  --uimix-y-flex-grow: 0;
   height: 72px;
+  --uimix-grid-height: 72px;
+  --uimix-x-height: 72px;
   opacity: 1;
   overflow: visible;
   display: flex;
@@ -759,12 +909,22 @@ exports[`generateCode > generates code > src/landing.uimix.css 1`] = `
   border-radius: 0;
   box-shadow: none
 }
+.uimix-HeaderXg2GP1 > * {
+  flex-grow: var(--uimix-x-flex-grow);
+  height: var(--uimix-x-height)
+}
 .uimix-LandingXg2GP1 {
   box-sizing: border-box;
   -webkit-font-smoothing: antialiased;
   position: relative;
+  margin: 0;
+  --uimix-x-flex-grow: 0;
   width: 1440px;
-  height: auto;
+  --uimix-grid-width: 1440px;
+  --uimix-y-width: 1440px;
+  --uimix-y-flex-grow: 1;
+  --uimix-grid-height: calc(100% - 0px);
+  --uimix-x-height: calc(100% - 0px);
   min-height: undefined;
   max-height: undefined;
   opacity: 1;
@@ -783,9 +943,15 @@ exports[`generateCode > generates code > src/landing.uimix.css 1`] = `
   border-radius: 0;
   box-shadow: none
 }
+.uimix-LandingXg2GP1 > * {
+  flex-grow: var(--uimix-y-flex-grow);
+  width: var(--uimix-y-width)
+}
 @media (max-width:767px) {
   .uimix-LandingXg2GP1 {
-    width: 720px
+    width: 720px;
+    --uimix-grid-width: 720px;
+    --uimix-y-width: 720px
   }
 }
 .uimix-HeaderXg2GP1__frame_102 {
@@ -793,9 +959,18 @@ exports[`generateCode > generates code > src/landing.uimix.css 1`] = `
   -webkit-font-smoothing: antialiased;
   position: absolute;
   left: 48px;
+  right: auto;
   top: 24px;
+  bottom: auto;
+  margin: 0;
+  --uimix-x-flex-grow: 0;
   width: max-content;
+  --uimix-grid-width: max-content;
+  --uimix-y-width: max-content;
+  --uimix-y-flex-grow: 0;
   height: max-content;
+  --uimix-grid-height: max-content;
+  --uimix-x-height: max-content;
   opacity: 1;
   overflow: visible;
   display: flex;
@@ -812,13 +987,23 @@ exports[`generateCode > generates code > src/landing.uimix.css 1`] = `
   border-radius: 0;
   box-shadow: none
 }
+.uimix-HeaderXg2GP1__frame_102 > * {
+  flex-grow: var(--uimix-x-flex-grow);
+  height: var(--uimix-x-height)
+}
 .uimix-HeaderXg2GP1__frame_178 {
   box-sizing: border-box;
   -webkit-font-smoothing: antialiased;
   position: relative;
   margin: 0;
+  --uimix-x-flex-grow: 0;
   width: max-content;
+  --uimix-grid-width: max-content;
+  --uimix-y-width: max-content;
+  --uimix-y-flex-grow: 0;
   height: max-content;
+  --uimix-grid-height: max-content;
+  --uimix-x-height: max-content;
   opacity: 1;
   overflow: visible;
   background: 0 0;
@@ -833,8 +1018,14 @@ exports[`generateCode > generates code > src/landing.uimix.css 1`] = `
   -webkit-font-smoothing: antialiased;
   position: relative;
   margin: 0;
+  --uimix-x-flex-grow: 0;
   width: max-content;
+  --uimix-grid-width: max-content;
+  --uimix-y-width: max-content;
+  --uimix-y-flex-grow: 0;
   height: max-content;
+  --uimix-grid-height: max-content;
+  --uimix-x-height: max-content;
   opacity: 1;
   overflow: visible;
   white-space: break-spaces;
@@ -853,10 +1044,19 @@ exports[`generateCode > generates code > src/landing.uimix.css 1`] = `
   box-sizing: border-box;
   -webkit-font-smoothing: antialiased;
   position: absolute;
+  left: auto;
   right: 47.99984677551083px;
   top: 16px;
+  bottom: auto;
+  margin: 0;
+  --uimix-x-flex-grow: 0;
   width: 247px;
+  --uimix-grid-width: 247px;
+  --uimix-y-width: 247px;
+  --uimix-y-flex-grow: 0;
   height: 41px;
+  --uimix-grid-height: 41px;
+  --uimix-x-height: 41px;
   opacity: 1;
   overflow: visible;
   display: flex;
@@ -873,13 +1073,23 @@ exports[`generateCode > generates code > src/landing.uimix.css 1`] = `
   border-radius: 0;
   box-shadow: none
 }
+.uimix-HeaderXg2GP1__frame_179 > * {
+  flex-grow: var(--uimix-x-flex-grow);
+  height: var(--uimix-x-height)
+}
 .uimix-HeaderXg2GP1__frame_3 {
   box-sizing: border-box;
   -webkit-font-smoothing: antialiased;
   position: relative;
   margin: 0;
+  --uimix-x-flex-grow: 0;
   width: max-content;
+  --uimix-grid-width: max-content;
+  --uimix-y-width: max-content;
+  --uimix-y-flex-grow: 0;
   height: max-content;
+  --uimix-grid-height: max-content;
+  --uimix-x-height: max-content;
   opacity: 1;
   overflow: visible;
   display: flex;
@@ -896,13 +1106,23 @@ exports[`generateCode > generates code > src/landing.uimix.css 1`] = `
   border-radius: 25px;
   box-shadow: 0 4px 6px -4px #3b82f61a,0 10px 15px -3px #3b82f61a
 }
+.uimix-HeaderXg2GP1__frame_3 > * {
+  flex-grow: var(--uimix-x-flex-grow);
+  height: var(--uimix-x-height)
+}
 .uimix-HeaderXg2GP1__sign_In {
   box-sizing: border-box;
   -webkit-font-smoothing: antialiased;
   position: relative;
   margin: 0;
+  --uimix-x-flex-grow: 0;
   width: max-content;
+  --uimix-grid-width: max-content;
+  --uimix-y-width: max-content;
+  --uimix-y-flex-grow: 0;
   height: max-content;
+  --uimix-grid-height: max-content;
+  --uimix-x-height: max-content;
   opacity: 1;
   overflow: visible;
   white-space: break-spaces;
@@ -922,8 +1142,14 @@ exports[`generateCode > generates code > src/landing.uimix.css 1`] = `
   -webkit-font-smoothing: antialiased;
   position: relative;
   margin: 0;
+  --uimix-x-flex-grow: 0;
   width: max-content;
+  --uimix-grid-width: max-content;
+  --uimix-y-width: max-content;
+  --uimix-y-flex-grow: 0;
   height: max-content;
+  --uimix-grid-height: max-content;
+  --uimix-x-height: max-content;
   opacity: 1;
   overflow: visible;
   display: flex;
@@ -940,13 +1166,23 @@ exports[`generateCode > generates code > src/landing.uimix.css 1`] = `
   border-radius: 25px;
   box-shadow: 0 4px 6px -4px #3b82f61a,0 10px 15px -3px #3b82f61a
 }
+.uimix-HeaderXg2GP1__frame_4 > * {
+  flex-grow: var(--uimix-x-flex-grow);
+  height: var(--uimix-x-height)
+}
 .uimix-HeaderXg2GP1__get_Early_Access {
   box-sizing: border-box;
   -webkit-font-smoothing: antialiased;
   position: relative;
   margin: 0;
+  --uimix-x-flex-grow: 0;
   width: max-content;
+  --uimix-grid-width: max-content;
+  --uimix-y-width: max-content;
+  --uimix-y-flex-grow: 0;
   height: max-content;
+  --uimix-grid-height: max-content;
+  --uimix-x-height: max-content;
   opacity: 1;
   overflow: visible;
   white-space: break-spaces;
@@ -966,8 +1202,14 @@ exports[`generateCode > generates code > src/landing.uimix.css 1`] = `
   -webkit-font-smoothing: antialiased;
   position: relative;
   margin: 0;
+  --uimix-x-flex-grow: 0;
   width: max-content;
+  --uimix-grid-width: max-content;
+  --uimix-y-width: max-content;
+  --uimix-y-flex-grow: 0;
   height: max-content;
+  --uimix-grid-height: max-content;
+  --uimix-x-height: max-content;
   opacity: 1;
   overflow: visible;
   display: flex;
@@ -984,6 +1226,10 @@ exports[`generateCode > generates code > src/landing.uimix.css 1`] = `
   border-radius: 0;
   box-shadow: none
 }
+.uimix-HeaderXg2GP1__frame_180 > * {
+  flex-grow: var(--uimix-x-flex-grow);
+  height: var(--uimix-x-height)
+}
 .uimix-HeaderXg2GP1__docs,
 .uimix-HeaderXg2GP1__features,
 .uimix-HeaderXg2GP1__gitHub,
@@ -992,8 +1238,14 @@ exports[`generateCode > generates code > src/landing.uimix.css 1`] = `
   -webkit-font-smoothing: antialiased;
   position: relative;
   margin: 0;
+  --uimix-x-flex-grow: 0;
   width: max-content;
+  --uimix-grid-width: max-content;
+  --uimix-y-width: max-content;
+  --uimix-y-flex-grow: 0;
   height: max-content;
+  --uimix-grid-height: max-content;
+  --uimix-x-height: max-content;
   opacity: 1;
   overflow: visible;
   white-space: break-spaces;
@@ -1009,18 +1261,25 @@ exports[`generateCode > generates code > src/landing.uimix.css 1`] = `
   justify-content: center
 }
 .uimix-LandingXg2GP1__frame {
-  margin: 0;
-  width: calc(100% - 0px)
+  --uimix-x-flex-grow: 1;
+  --uimix-grid-width: calc(100% - 0px);
+  --uimix-y-width: calc(100% - 0px);
+  width: undefined
 }
 .uimix-LandingXg2GP1__frame1 {
   box-sizing: border-box;
   -webkit-font-smoothing: antialiased;
   position: relative;
   margin: 0;
-  width: calc(100% - 0px);
+  --uimix-x-flex-grow: 1;
+  --uimix-grid-width: calc(100% - 0px);
+  --uimix-y-width: calc(100% - 0px);
   min-width: undefined;
   max-width: undefined;
+  --uimix-y-flex-grow: 0;
   height: max-content;
+  --uimix-grid-height: max-content;
+  --uimix-x-height: max-content;
   opacity: 1;
   overflow: visible;
   display: flex;
@@ -1037,6 +1296,10 @@ exports[`generateCode > generates code > src/landing.uimix.css 1`] = `
   border-radius: 0;
   box-shadow: none
 }
+.uimix-LandingXg2GP1__frame1 > * {
+  flex-grow: var(--uimix-y-flex-grow);
+  width: var(--uimix-y-width)
+}
 .uimix-LandingXg2GP1__frame2 {
   box-sizing: border-box;
   -webkit-font-smoothing: antialiased;
@@ -1044,10 +1307,17 @@ exports[`generateCode > generates code > src/landing.uimix.css 1`] = `
   left: 0;
   right: 0;
   top: 0;
-  width: calc(100% - 0px);
+  bottom: auto;
+  margin: 0 0 -422px;
+  --uimix-x-flex-grow: 1;
+  --uimix-grid-width: calc(100% - 0px);
+  --uimix-y-width: calc(100% - 0px);
   min-width: undefined;
   max-width: undefined;
+  --uimix-y-flex-grow: 0;
   height: max-content;
+  --uimix-grid-height: max-content;
+  --uimix-x-height: max-content;
   opacity: 1;
   overflow: visible;
   display: flex;
@@ -1064,13 +1334,27 @@ exports[`generateCode > generates code > src/landing.uimix.css 1`] = `
   border-radius: 0;
   box-shadow: none
 }
+.uimix-LandingXg2GP1__frame2 > * {
+  flex-grow: var(--uimix-x-flex-grow);
+  height: var(--uimix-x-height)
+}
 .uimix-LandingXg2GP1__image_2 {
   box-sizing: border-box;
   -webkit-font-smoothing: antialiased;
-  position: relative;
+  position: absolute;
+  left: 343px;
+  right: auto;
+  top: 45px;
+  bottom: auto;
   margin: 0;
+  --uimix-x-flex-grow: 0;
   width: 750px;
+  --uimix-grid-width: 750px;
+  --uimix-y-width: 750px;
+  --uimix-y-flex-grow: 0;
   height: 550px;
+  --uimix-grid-height: 550px;
+  --uimix-x-height: 550px;
   opacity: .5;
   overflow: hidden;
   background: 0 0;
@@ -1085,10 +1369,15 @@ exports[`generateCode > generates code > src/landing.uimix.css 1`] = `
   -webkit-font-smoothing: antialiased;
   position: relative;
   margin: 96px 0 48px;
-  width: calc(100% - 0px);
+  --uimix-x-flex-grow: 1;
+  --uimix-grid-width: calc(100% - 0px);
+  --uimix-y-width: calc(100% - 0px);
   min-width: undefined;
   max-width: undefined;
+  --uimix-y-flex-grow: 0;
   height: max-content;
+  --uimix-grid-height: max-content;
+  --uimix-x-height: max-content;
   opacity: 1;
   overflow: visible;
   white-space: break-spaces;
@@ -1108,10 +1397,15 @@ exports[`generateCode > generates code > src/landing.uimix.css 1`] = `
   -webkit-font-smoothing: antialiased;
   position: relative;
   margin: 0 0 48px;
-  width: calc(100% - 0px);
+  --uimix-x-flex-grow: 1;
+  --uimix-grid-width: calc(100% - 0px);
+  --uimix-y-width: calc(100% - 0px);
   min-width: undefined;
   max-width: undefined;
+  --uimix-y-flex-grow: 0;
   height: max-content;
+  --uimix-grid-height: max-content;
+  --uimix-x-height: max-content;
   opacity: 1;
   overflow: visible;
   white-space: break-spaces;
@@ -1131,8 +1425,14 @@ exports[`generateCode > generates code > src/landing.uimix.css 1`] = `
   -webkit-font-smoothing: antialiased;
   position: relative;
   margin: 0 0 64px;
+  --uimix-x-flex-grow: 0;
   width: max-content;
+  --uimix-grid-width: max-content;
+  --uimix-y-width: max-content;
+  --uimix-y-flex-grow: 0;
   height: max-content;
+  --uimix-grid-height: max-content;
+  --uimix-x-height: max-content;
   opacity: 1;
   overflow: visible;
   display: flex;
@@ -1149,13 +1449,23 @@ exports[`generateCode > generates code > src/landing.uimix.css 1`] = `
   border-radius: 0;
   box-shadow: none
 }
+.uimix-LandingXg2GP1__frame_4 > * {
+  flex-grow: var(--uimix-x-flex-grow);
+  height: var(--uimix-x-height)
+}
 .uimix-LandingXg2GP1__frame_2 {
   box-sizing: border-box;
   -webkit-font-smoothing: antialiased;
   position: relative;
   margin: 0;
+  --uimix-x-flex-grow: 0;
   width: max-content;
+  --uimix-grid-width: max-content;
+  --uimix-y-width: max-content;
+  --uimix-y-flex-grow: 0;
   height: max-content;
+  --uimix-grid-height: max-content;
+  --uimix-x-height: max-content;
   opacity: 1;
   overflow: visible;
   display: flex;
@@ -1172,13 +1482,23 @@ exports[`generateCode > generates code > src/landing.uimix.css 1`] = `
   border-radius: 25px;
   box-shadow: 0 4px 6px -4px #3b82f61a,0 10px 15px -3px #3b82f61a
 }
+.uimix-LandingXg2GP1__frame_2 > * {
+  flex-grow: var(--uimix-x-flex-grow);
+  height: var(--uimix-x-height)
+}
 .uimix-LandingXg2GP1__get_Early_Access {
   box-sizing: border-box;
   -webkit-font-smoothing: antialiased;
   position: relative;
   margin: 0;
+  --uimix-x-flex-grow: 0;
   width: max-content;
+  --uimix-grid-width: max-content;
+  --uimix-y-width: max-content;
+  --uimix-y-flex-grow: 0;
   height: max-content;
+  --uimix-grid-height: max-content;
+  --uimix-x-height: max-content;
   opacity: 1;
   overflow: visible;
   white-space: break-spaces;
@@ -1196,12 +1516,21 @@ exports[`generateCode > generates code > src/landing.uimix.css 1`] = `
 .uimix-LandingXg2GP1__image_1 {
   box-sizing: border-box;
   -webkit-font-smoothing: antialiased;
-  position: relative;
+  position: absolute;
+  left: 360px;
+  right: auto;
+  top: 581px;
+  bottom: auto;
   margin: 0 0 64px;
-  width: calc(100% - 0px);
+  --uimix-x-flex-grow: 1;
+  --uimix-grid-width: calc(100% - 0px);
+  --uimix-y-width: calc(100% - 0px);
   min-width: undefined;
   max-width: 720px;
+  --uimix-y-flex-grow: 0;
   height: max-content;
+  --uimix-grid-height: max-content;
+  --uimix-x-height: max-content;
   opacity: 1;
   overflow: hidden;
   background: 0 0;
@@ -1216,10 +1545,15 @@ exports[`generateCode > generates code > src/landing.uimix.css 1`] = `
   -webkit-font-smoothing: antialiased;
   position: relative;
   margin: 0;
-  width: calc(100% - 0px);
+  --uimix-x-flex-grow: 1;
+  --uimix-grid-width: calc(100% - 0px);
+  --uimix-y-width: calc(100% - 0px);
   min-width: undefined;
   max-width: undefined;
+  --uimix-y-flex-grow: 0;
   height: max-content;
+  --uimix-grid-height: max-content;
+  --uimix-x-height: max-content;
   opacity: 1;
   overflow: hidden;
   display: flex;
@@ -1236,15 +1570,23 @@ exports[`generateCode > generates code > src/landing.uimix.css 1`] = `
   border-radius: 0;
   box-shadow: none
 }
+.uimix-LandingXg2GP1__frame_19 > * {
+  flex-grow: var(--uimix-y-flex-grow);
+  width: var(--uimix-y-width)
+}
 .uimix-LandingXg2GP1__frame_181 {
   box-sizing: border-box;
   -webkit-font-smoothing: antialiased;
   position: relative;
   margin: 0;
-  width: calc(100% - 0px);
+  --uimix-x-flex-grow: 1;
+  --uimix-grid-width: calc(100% - 0px);
+  --uimix-y-width: calc(100% - 0px);
   min-width: undefined;
   max-width: 1200px;
-  flex: 1;
+  --uimix-y-flex-grow: 1;
+  --uimix-grid-height: calc(100% - 0px);
+  --uimix-x-height: calc(100% - 0px);
   min-height: undefined;
   max-height: undefined;
   opacity: 1;
@@ -1261,15 +1603,23 @@ exports[`generateCode > generates code > src/landing.uimix.css 1`] = `
   border-radius: 0;
   box-shadow: none
 }
+.uimix-LandingXg2GP1__frame_181 > * {
+  width: var(--uimix-grid-width);
+  height: var(--uimix-grid-height)
+}
 .uimix-LandingXg2GP1__frame_13 {
   box-sizing: border-box;
   -webkit-font-smoothing: antialiased;
   position: relative;
   margin: 0;
-  width: calc(100% - 0px);
+  --uimix-x-flex-grow: 1;
+  --uimix-grid-width: calc(100% - 0px);
+  --uimix-y-width: calc(100% - 0px);
   min-width: undefined;
   max-width: undefined;
-  height: calc(100% - 0px);
+  --uimix-y-flex-grow: 1;
+  --uimix-grid-height: calc(100% - 0px);
+  --uimix-x-height: calc(100% - 0px);
   min-height: undefined;
   max-height: undefined;
   opacity: 1;
@@ -1288,13 +1638,23 @@ exports[`generateCode > generates code > src/landing.uimix.css 1`] = `
   border-radius: 20px;
   box-shadow: none
 }
+.uimix-LandingXg2GP1__frame_13 > * {
+  flex-grow: var(--uimix-y-flex-grow);
+  width: var(--uimix-y-width)
+}
 .uimix-LandingXg2GP1__frame_5 {
   box-sizing: border-box;
   -webkit-font-smoothing: antialiased;
   position: relative;
   margin: 0;
+  --uimix-x-flex-grow: 0;
   width: max-content;
+  --uimix-grid-width: max-content;
+  --uimix-y-width: max-content;
+  --uimix-y-flex-grow: 0;
   height: max-content;
+  --uimix-grid-height: max-content;
+  --uimix-x-height: max-content;
   opacity: 1;
   overflow: visible;
   display: flex;
@@ -1311,13 +1671,23 @@ exports[`generateCode > generates code > src/landing.uimix.css 1`] = `
   border-radius: 8px;
   box-shadow: none
 }
+.uimix-LandingXg2GP1__frame_5 > * {
+  flex-grow: var(--uimix-x-flex-grow);
+  height: var(--uimix-x-height)
+}
 .uimix-LandingXg2GP1__heroicons_pencil_square {
   box-sizing: border-box;
   -webkit-font-smoothing: antialiased;
   position: relative;
   margin: 0;
+  --uimix-x-flex-grow: 0;
   width: max-content;
+  --uimix-grid-width: max-content;
+  --uimix-y-width: max-content;
+  --uimix-y-flex-grow: 0;
   height: max-content;
+  --uimix-grid-height: max-content;
+  --uimix-x-height: max-content;
   opacity: 1;
   overflow: visible;
   background: 0 0;
@@ -1332,10 +1702,15 @@ exports[`generateCode > generates code > src/landing.uimix.css 1`] = `
   -webkit-font-smoothing: antialiased;
   position: relative;
   margin: 0;
-  width: calc(100% - 0px);
+  --uimix-x-flex-grow: 1;
+  --uimix-grid-width: calc(100% - 0px);
+  --uimix-y-width: calc(100% - 0px);
   min-width: undefined;
   max-width: undefined;
+  --uimix-y-flex-grow: 0;
   height: max-content;
+  --uimix-grid-height: max-content;
+  --uimix-x-height: max-content;
   opacity: 1;
   overflow: visible;
   white-space: break-spaces;
@@ -1355,10 +1730,15 @@ exports[`generateCode > generates code > src/landing.uimix.css 1`] = `
   -webkit-font-smoothing: antialiased;
   position: relative;
   margin: 0;
-  width: calc(100% - 0px);
+  --uimix-x-flex-grow: 1;
+  --uimix-grid-width: calc(100% - 0px);
+  --uimix-y-width: calc(100% - 0px);
   min-width: undefined;
   max-width: undefined;
+  --uimix-y-flex-grow: 0;
   height: max-content;
+  --uimix-grid-height: max-content;
+  --uimix-x-height: max-content;
   opacity: 1;
   overflow: visible;
   white-space: break-spaces;
@@ -1378,10 +1758,14 @@ exports[`generateCode > generates code > src/landing.uimix.css 1`] = `
   -webkit-font-smoothing: antialiased;
   position: relative;
   margin: 0;
-  width: calc(100% - 0px);
+  --uimix-x-flex-grow: 1;
+  --uimix-grid-width: calc(100% - 0px);
+  --uimix-y-width: calc(100% - 0px);
   min-width: undefined;
   max-width: undefined;
-  height: calc(100% - 0px);
+  --uimix-y-flex-grow: 1;
+  --uimix-grid-height: calc(100% - 0px);
+  --uimix-x-height: calc(100% - 0px);
   min-height: undefined;
   max-height: undefined;
   opacity: 1;
@@ -1400,13 +1784,23 @@ exports[`generateCode > generates code > src/landing.uimix.css 1`] = `
   border-radius: 20px;
   box-shadow: none
 }
+.uimix-LandingXg2GP1__frame_14 > * {
+  flex-grow: var(--uimix-y-flex-grow);
+  width: var(--uimix-y-width)
+}
 .uimix-LandingXg2GP1__frame_15 {
   box-sizing: border-box;
   -webkit-font-smoothing: antialiased;
   position: relative;
   margin: 0;
+  --uimix-x-flex-grow: 0;
   width: max-content;
+  --uimix-grid-width: max-content;
+  --uimix-y-width: max-content;
+  --uimix-y-flex-grow: 0;
   height: max-content;
+  --uimix-grid-height: max-content;
+  --uimix-x-height: max-content;
   opacity: 1;
   overflow: visible;
   display: flex;
@@ -1423,13 +1817,23 @@ exports[`generateCode > generates code > src/landing.uimix.css 1`] = `
   border-radius: 8px;
   box-shadow: none
 }
+.uimix-LandingXg2GP1__frame_15 > * {
+  flex-grow: var(--uimix-x-flex-grow);
+  height: var(--uimix-x-height)
+}
 .uimix-LandingXg2GP1__heroicons_code_bracket {
   box-sizing: border-box;
   -webkit-font-smoothing: antialiased;
   position: relative;
   margin: 0;
+  --uimix-x-flex-grow: 0;
   width: max-content;
+  --uimix-grid-width: max-content;
+  --uimix-y-width: max-content;
+  --uimix-y-flex-grow: 0;
   height: max-content;
+  --uimix-grid-height: max-content;
+  --uimix-x-height: max-content;
   opacity: 1;
   overflow: visible;
   background: 0 0;
@@ -1444,10 +1848,15 @@ exports[`generateCode > generates code > src/landing.uimix.css 1`] = `
   -webkit-font-smoothing: antialiased;
   position: relative;
   margin: 0;
-  width: calc(100% - 0px);
+  --uimix-x-flex-grow: 1;
+  --uimix-grid-width: calc(100% - 0px);
+  --uimix-y-width: calc(100% - 0px);
   min-width: undefined;
   max-width: undefined;
+  --uimix-y-flex-grow: 0;
   height: max-content;
+  --uimix-grid-height: max-content;
+  --uimix-x-height: max-content;
   opacity: 1;
   overflow: visible;
   white-space: break-spaces;
@@ -1467,10 +1876,15 @@ exports[`generateCode > generates code > src/landing.uimix.css 1`] = `
   -webkit-font-smoothing: antialiased;
   position: relative;
   margin: 0;
-  width: calc(100% - 0px);
+  --uimix-x-flex-grow: 1;
+  --uimix-grid-width: calc(100% - 0px);
+  --uimix-y-width: calc(100% - 0px);
   min-width: undefined;
   max-width: undefined;
+  --uimix-y-flex-grow: 0;
   height: max-content;
+  --uimix-grid-height: max-content;
+  --uimix-x-height: max-content;
   opacity: 1;
   overflow: visible;
   white-space: break-spaces;
@@ -1490,10 +1904,14 @@ exports[`generateCode > generates code > src/landing.uimix.css 1`] = `
   -webkit-font-smoothing: antialiased;
   position: relative;
   margin: 0;
-  width: calc(100% - 0px);
+  --uimix-x-flex-grow: 1;
+  --uimix-grid-width: calc(100% - 0px);
+  --uimix-y-width: calc(100% - 0px);
   min-width: undefined;
   max-width: undefined;
-  height: calc(100% - 0px);
+  --uimix-y-flex-grow: 1;
+  --uimix-grid-height: calc(100% - 0px);
+  --uimix-x-height: calc(100% - 0px);
   min-height: undefined;
   max-height: undefined;
   opacity: 1;
@@ -1512,13 +1930,23 @@ exports[`generateCode > generates code > src/landing.uimix.css 1`] = `
   border-radius: 20px;
   box-shadow: none
 }
+.uimix-LandingXg2GP1__frame_16 > * {
+  flex-grow: var(--uimix-y-flex-grow);
+  width: var(--uimix-y-width)
+}
 .uimix-LandingXg2GP1__frame_17 {
   box-sizing: border-box;
   -webkit-font-smoothing: antialiased;
   position: relative;
   margin: 0;
+  --uimix-x-flex-grow: 0;
   width: max-content;
+  --uimix-grid-width: max-content;
+  --uimix-y-width: max-content;
+  --uimix-y-flex-grow: 0;
   height: max-content;
+  --uimix-grid-height: max-content;
+  --uimix-x-height: max-content;
   opacity: 1;
   overflow: visible;
   display: flex;
@@ -1535,13 +1963,23 @@ exports[`generateCode > generates code > src/landing.uimix.css 1`] = `
   border-radius: 8px;
   box-shadow: none
 }
+.uimix-LandingXg2GP1__frame_17 > * {
+  flex-grow: var(--uimix-x-flex-grow);
+  height: var(--uimix-x-height)
+}
 .uimix-LandingXg2GP1__heroicons_cloud {
   box-sizing: border-box;
   -webkit-font-smoothing: antialiased;
   position: relative;
   margin: 0;
+  --uimix-x-flex-grow: 0;
   width: max-content;
+  --uimix-grid-width: max-content;
+  --uimix-y-width: max-content;
+  --uimix-y-flex-grow: 0;
   height: max-content;
+  --uimix-grid-height: max-content;
+  --uimix-x-height: max-content;
   opacity: 1;
   overflow: visible;
   background: 0 0;
@@ -1556,10 +1994,15 @@ exports[`generateCode > generates code > src/landing.uimix.css 1`] = `
   -webkit-font-smoothing: antialiased;
   position: relative;
   margin: 0;
-  width: calc(100% - 0px);
+  --uimix-x-flex-grow: 1;
+  --uimix-grid-width: calc(100% - 0px);
+  --uimix-y-width: calc(100% - 0px);
   min-width: undefined;
   max-width: undefined;
+  --uimix-y-flex-grow: 0;
   height: max-content;
+  --uimix-grid-height: max-content;
+  --uimix-x-height: max-content;
   opacity: 1;
   overflow: visible;
   white-space: break-spaces;
@@ -1579,10 +2022,15 @@ exports[`generateCode > generates code > src/landing.uimix.css 1`] = `
   -webkit-font-smoothing: antialiased;
   position: relative;
   margin: 0;
-  width: calc(100% - 0px);
+  --uimix-x-flex-grow: 1;
+  --uimix-grid-width: calc(100% - 0px);
+  --uimix-y-width: calc(100% - 0px);
   min-width: undefined;
   max-width: undefined;
+  --uimix-y-flex-grow: 0;
   height: max-content;
+  --uimix-grid-height: max-content;
+  --uimix-x-height: max-content;
   opacity: 1;
   overflow: visible;
   white-space: break-spaces;
@@ -1602,10 +2050,14 @@ exports[`generateCode > generates code > src/landing.uimix.css 1`] = `
   -webkit-font-smoothing: antialiased;
   position: relative;
   margin: 0;
-  width: calc(100% - 0px);
+  --uimix-x-flex-grow: 1;
+  --uimix-grid-width: calc(100% - 0px);
+  --uimix-y-width: calc(100% - 0px);
   min-width: undefined;
   max-width: undefined;
-  height: calc(100% - 0px);
+  --uimix-y-flex-grow: 1;
+  --uimix-grid-height: calc(100% - 0px);
+  --uimix-x-height: calc(100% - 0px);
   min-height: undefined;
   max-height: undefined;
   opacity: 1;
@@ -1624,13 +2076,23 @@ exports[`generateCode > generates code > src/landing.uimix.css 1`] = `
   border-radius: 20px;
   box-shadow: none
 }
+.uimix-LandingXg2GP1__frame_18 > * {
+  flex-grow: var(--uimix-y-flex-grow);
+  width: var(--uimix-y-width)
+}
 .uimix-LandingXg2GP1__frame_20 {
   box-sizing: border-box;
   -webkit-font-smoothing: antialiased;
   position: relative;
   margin: 0;
+  --uimix-x-flex-grow: 0;
   width: max-content;
+  --uimix-grid-width: max-content;
+  --uimix-y-width: max-content;
+  --uimix-y-flex-grow: 0;
   height: max-content;
+  --uimix-grid-height: max-content;
+  --uimix-x-height: max-content;
   opacity: 1;
   overflow: visible;
   display: flex;
@@ -1647,13 +2109,23 @@ exports[`generateCode > generates code > src/landing.uimix.css 1`] = `
   border-radius: 8px;
   box-shadow: none
 }
+.uimix-LandingXg2GP1__frame_20 > * {
+  flex-grow: var(--uimix-x-flex-grow);
+  height: var(--uimix-x-height)
+}
 .uimix-LandingXg2GP1__heroicons_computer_desktop {
   box-sizing: border-box;
   -webkit-font-smoothing: antialiased;
   position: relative;
   margin: 0;
+  --uimix-x-flex-grow: 0;
   width: max-content;
+  --uimix-grid-width: max-content;
+  --uimix-y-width: max-content;
+  --uimix-y-flex-grow: 0;
   height: max-content;
+  --uimix-grid-height: max-content;
+  --uimix-x-height: max-content;
   opacity: 1;
   overflow: visible;
   background: 0 0;
@@ -1668,10 +2140,15 @@ exports[`generateCode > generates code > src/landing.uimix.css 1`] = `
   -webkit-font-smoothing: antialiased;
   position: relative;
   margin: 0;
-  width: calc(100% - 0px);
+  --uimix-x-flex-grow: 1;
+  --uimix-grid-width: calc(100% - 0px);
+  --uimix-y-width: calc(100% - 0px);
   min-width: undefined;
   max-width: undefined;
+  --uimix-y-flex-grow: 0;
   height: max-content;
+  --uimix-grid-height: max-content;
+  --uimix-x-height: max-content;
   opacity: 1;
   overflow: visible;
   white-space: break-spaces;
@@ -1691,10 +2168,15 @@ exports[`generateCode > generates code > src/landing.uimix.css 1`] = `
   -webkit-font-smoothing: antialiased;
   position: relative;
   margin: 0;
-  width: calc(100% - 0px);
+  --uimix-x-flex-grow: 1;
+  --uimix-grid-width: calc(100% - 0px);
+  --uimix-y-width: calc(100% - 0px);
   min-width: undefined;
   max-width: undefined;
+  --uimix-y-flex-grow: 0;
   height: max-content;
+  --uimix-grid-height: max-content;
+  --uimix-x-height: max-content;
   opacity: 1;
   overflow: visible;
   white-space: break-spaces;
@@ -1714,10 +2196,14 @@ exports[`generateCode > generates code > src/landing.uimix.css 1`] = `
   -webkit-font-smoothing: antialiased;
   position: relative;
   margin: 0;
-  width: calc(100% - 0px);
+  --uimix-x-flex-grow: 1;
+  --uimix-grid-width: calc(100% - 0px);
+  --uimix-y-width: calc(100% - 0px);
   min-width: undefined;
   max-width: undefined;
-  height: calc(100% - 0px);
+  --uimix-y-flex-grow: 1;
+  --uimix-grid-height: calc(100% - 0px);
+  --uimix-x-height: calc(100% - 0px);
   min-height: undefined;
   max-height: undefined;
   opacity: 1;
@@ -1736,13 +2222,23 @@ exports[`generateCode > generates code > src/landing.uimix.css 1`] = `
   border-radius: 20px;
   box-shadow: none
 }
+.uimix-LandingXg2GP1__frame_21 > * {
+  flex-grow: var(--uimix-y-flex-grow);
+  width: var(--uimix-y-width)
+}
 .uimix-LandingXg2GP1__frame_22 {
   box-sizing: border-box;
   -webkit-font-smoothing: antialiased;
   position: relative;
   margin: 0;
+  --uimix-x-flex-grow: 0;
   width: max-content;
+  --uimix-grid-width: max-content;
+  --uimix-y-width: max-content;
+  --uimix-y-flex-grow: 0;
   height: max-content;
+  --uimix-grid-height: max-content;
+  --uimix-x-height: max-content;
   opacity: 1;
   overflow: visible;
   display: flex;
@@ -1759,13 +2255,23 @@ exports[`generateCode > generates code > src/landing.uimix.css 1`] = `
   border-radius: 8px;
   box-shadow: none
 }
+.uimix-LandingXg2GP1__frame_22 > * {
+  flex-grow: var(--uimix-x-flex-grow);
+  height: var(--uimix-x-height)
+}
 .uimix-LandingXg2GP1__carbon_machine_learning {
   box-sizing: border-box;
   -webkit-font-smoothing: antialiased;
   position: relative;
   margin: 0;
+  --uimix-x-flex-grow: 0;
   width: max-content;
+  --uimix-grid-width: max-content;
+  --uimix-y-width: max-content;
+  --uimix-y-flex-grow: 0;
   height: max-content;
+  --uimix-grid-height: max-content;
+  --uimix-x-height: max-content;
   opacity: 1;
   overflow: visible;
   background: 0 0;
@@ -1780,10 +2286,15 @@ exports[`generateCode > generates code > src/landing.uimix.css 1`] = `
   -webkit-font-smoothing: antialiased;
   position: relative;
   margin: 0;
-  width: calc(100% - 0px);
+  --uimix-x-flex-grow: 1;
+  --uimix-grid-width: calc(100% - 0px);
+  --uimix-y-width: calc(100% - 0px);
   min-width: undefined;
   max-width: undefined;
+  --uimix-y-flex-grow: 0;
   height: max-content;
+  --uimix-grid-height: max-content;
+  --uimix-x-height: max-content;
   opacity: 1;
   overflow: visible;
   white-space: break-spaces;
@@ -1803,10 +2314,15 @@ exports[`generateCode > generates code > src/landing.uimix.css 1`] = `
   -webkit-font-smoothing: antialiased;
   position: relative;
   margin: 0;
-  width: calc(100% - 0px);
+  --uimix-x-flex-grow: 1;
+  --uimix-grid-width: calc(100% - 0px);
+  --uimix-y-width: calc(100% - 0px);
   min-width: undefined;
   max-width: undefined;
+  --uimix-y-flex-grow: 0;
   height: max-content;
+  --uimix-grid-height: max-content;
+  --uimix-x-height: max-content;
   opacity: 1;
   overflow: visible;
   white-space: break-spaces;
@@ -1826,10 +2342,14 @@ exports[`generateCode > generates code > src/landing.uimix.css 1`] = `
   -webkit-font-smoothing: antialiased;
   position: relative;
   margin: 0;
-  width: calc(100% - 0px);
+  --uimix-x-flex-grow: 1;
+  --uimix-grid-width: calc(100% - 0px);
+  --uimix-y-width: calc(100% - 0px);
   min-width: undefined;
   max-width: undefined;
-  height: calc(100% - 0px);
+  --uimix-y-flex-grow: 1;
+  --uimix-grid-height: calc(100% - 0px);
+  --uimix-x-height: calc(100% - 0px);
   min-height: undefined;
   max-height: undefined;
   opacity: 1;
@@ -1848,13 +2368,23 @@ exports[`generateCode > generates code > src/landing.uimix.css 1`] = `
   border-radius: 20px;
   box-shadow: none
 }
+.uimix-LandingXg2GP1__frame_23 > * {
+  flex-grow: var(--uimix-y-flex-grow);
+  width: var(--uimix-y-width)
+}
 .uimix-LandingXg2GP1__frame_24 {
   box-sizing: border-box;
   -webkit-font-smoothing: antialiased;
   position: relative;
   margin: 0;
+  --uimix-x-flex-grow: 0;
   width: max-content;
+  --uimix-grid-width: max-content;
+  --uimix-y-width: max-content;
+  --uimix-y-flex-grow: 0;
   height: max-content;
+  --uimix-grid-height: max-content;
+  --uimix-x-height: max-content;
   opacity: 1;
   overflow: visible;
   display: flex;
@@ -1871,13 +2401,23 @@ exports[`generateCode > generates code > src/landing.uimix.css 1`] = `
   border-radius: 8px;
   box-shadow: none
 }
+.uimix-LandingXg2GP1__frame_24 > * {
+  flex-grow: var(--uimix-x-flex-grow);
+  height: var(--uimix-x-height)
+}
 .uimix-LandingXg2GP1__carbon_logo_figma {
   box-sizing: border-box;
   -webkit-font-smoothing: antialiased;
   position: relative;
   margin: 0;
+  --uimix-x-flex-grow: 0;
   width: max-content;
+  --uimix-grid-width: max-content;
+  --uimix-y-width: max-content;
+  --uimix-y-flex-grow: 0;
   height: max-content;
+  --uimix-grid-height: max-content;
+  --uimix-x-height: max-content;
   opacity: 1;
   overflow: visible;
   background: 0 0;
@@ -1892,10 +2432,15 @@ exports[`generateCode > generates code > src/landing.uimix.css 1`] = `
   -webkit-font-smoothing: antialiased;
   position: relative;
   margin: 0;
-  width: calc(100% - 0px);
+  --uimix-x-flex-grow: 1;
+  --uimix-grid-width: calc(100% - 0px);
+  --uimix-y-width: calc(100% - 0px);
   min-width: undefined;
   max-width: undefined;
+  --uimix-y-flex-grow: 0;
   height: max-content;
+  --uimix-grid-height: max-content;
+  --uimix-x-height: max-content;
   opacity: 1;
   overflow: visible;
   white-space: break-spaces;
@@ -1915,10 +2460,15 @@ exports[`generateCode > generates code > src/landing.uimix.css 1`] = `
   -webkit-font-smoothing: antialiased;
   position: relative;
   margin: 0;
-  width: calc(100% - 0px);
+  --uimix-x-flex-grow: 1;
+  --uimix-grid-width: calc(100% - 0px);
+  --uimix-y-width: calc(100% - 0px);
   min-width: undefined;
   max-width: undefined;
+  --uimix-y-flex-grow: 0;
   height: max-content;
+  --uimix-grid-height: max-content;
+  --uimix-x-height: max-content;
   opacity: 1;
   overflow: visible;
   white-space: break-spaces;
@@ -1938,10 +2488,15 @@ exports[`generateCode > generates code > src/landing.uimix.css 1`] = `
   -webkit-font-smoothing: antialiased;
   position: relative;
   margin: 0;
-  width: calc(100% - 0px);
+  --uimix-x-flex-grow: 1;
+  --uimix-grid-width: calc(100% - 0px);
+  --uimix-y-width: calc(100% - 0px);
   min-width: undefined;
   max-width: undefined;
+  --uimix-y-flex-grow: 0;
   height: max-content;
+  --uimix-grid-height: max-content;
+  --uimix-x-height: max-content;
   opacity: 1;
   overflow: visible;
   display: flex;
@@ -1958,15 +2513,24 @@ exports[`generateCode > generates code > src/landing.uimix.css 1`] = `
   border-radius: 0;
   box-shadow: none
 }
+.uimix-LandingXg2GP1__frame3 > * {
+  flex-grow: var(--uimix-y-flex-grow);
+  width: var(--uimix-y-width)
+}
 .uimix-LandingXg2GP1__open_Source {
   box-sizing: border-box;
   -webkit-font-smoothing: antialiased;
   position: relative;
   margin: 0 0 24px;
-  width: calc(100% - 0px);
+  --uimix-x-flex-grow: 1;
+  --uimix-grid-width: calc(100% - 0px);
+  --uimix-y-width: calc(100% - 0px);
   min-width: undefined;
   max-width: undefined;
+  --uimix-y-flex-grow: 0;
   height: max-content;
+  --uimix-grid-height: max-content;
+  --uimix-x-height: max-content;
   opacity: 1;
   overflow: visible;
   white-space: break-spaces;
@@ -1986,10 +2550,15 @@ exports[`generateCode > generates code > src/landing.uimix.css 1`] = `
   -webkit-font-smoothing: antialiased;
   position: relative;
   margin: 0 0 48px;
-  width: calc(100% - 0px);
+  --uimix-x-flex-grow: 1;
+  --uimix-grid-width: calc(100% - 0px);
+  --uimix-y-width: calc(100% - 0px);
   min-width: undefined;
   max-width: undefined;
+  --uimix-y-flex-grow: 0;
   height: max-content;
+  --uimix-grid-height: max-content;
+  --uimix-x-height: max-content;
   opacity: 1;
   overflow: visible;
   white-space: break-spaces;
@@ -2009,8 +2578,14 @@ exports[`generateCode > generates code > src/landing.uimix.css 1`] = `
   -webkit-font-smoothing: antialiased;
   position: relative;
   margin: 0 0 128px;
+  --uimix-x-flex-grow: 0;
   width: max-content;
+  --uimix-grid-width: max-content;
+  --uimix-y-width: max-content;
+  --uimix-y-flex-grow: 0;
   height: max-content;
+  --uimix-grid-height: max-content;
+  --uimix-x-height: max-content;
   opacity: 1;
   overflow: visible;
   display: flex;
@@ -2027,13 +2602,23 @@ exports[`generateCode > generates code > src/landing.uimix.css 1`] = `
   border-radius: 25px;
   box-shadow: 0 4px 6px -4px #3b82f61a,0 10px 15px -3px #3b82f61a
 }
+.uimix-LandingXg2GP1__frame_3 > * {
+  flex-grow: var(--uimix-x-flex-grow);
+  height: var(--uimix-x-height)
+}
 .uimix-LandingXg2GP1__explore_GitHub_repo {
   box-sizing: border-box;
   -webkit-font-smoothing: antialiased;
   position: relative;
   margin: 0;
+  --uimix-x-flex-grow: 0;
   width: max-content;
+  --uimix-grid-width: max-content;
+  --uimix-y-width: max-content;
+  --uimix-y-flex-grow: 0;
   height: max-content;
+  --uimix-grid-height: max-content;
+  --uimix-x-height: max-content;
   opacity: 1;
   overflow: visible;
   white-space: break-spaces;
@@ -2053,10 +2638,15 @@ exports[`generateCode > generates code > src/landing.uimix.css 1`] = `
   -webkit-font-smoothing: antialiased;
   position: relative;
   margin: 0 0 72px;
-  width: calc(100% - 0px);
+  --uimix-x-flex-grow: 1;
+  --uimix-grid-width: calc(100% - 0px);
+  --uimix-y-width: calc(100% - 0px);
   min-width: undefined;
   max-width: undefined;
+  --uimix-y-flex-grow: 0;
   height: max-content;
+  --uimix-grid-height: max-content;
+  --uimix-x-height: max-content;
   opacity: 1;
   overflow: visible;
   white-space: break-spaces;
@@ -2076,10 +2666,15 @@ exports[`generateCode > generates code > src/landing.uimix.css 1`] = `
   -webkit-font-smoothing: antialiased;
   position: relative;
   margin: 0;
-  width: calc(100% - 0px);
+  --uimix-x-flex-grow: 1;
+  --uimix-grid-width: calc(100% - 0px);
+  --uimix-y-width: calc(100% - 0px);
   min-width: undefined;
   max-width: 1280px;
+  --uimix-y-flex-grow: 0;
   height: max-content;
+  --uimix-grid-height: max-content;
+  --uimix-x-height: max-content;
   opacity: 1;
   overflow: visible;
   display: flex;
@@ -2096,15 +2691,24 @@ exports[`generateCode > generates code > src/landing.uimix.css 1`] = `
   border-radius: 0;
   box-shadow: none
 }
+.uimix-LandingXg2GP1__frame4 > * {
+  flex-grow: var(--uimix-x-flex-grow);
+  height: var(--uimix-x-height)
+}
 .uimix-LandingXg2GP1__frame5 {
   box-sizing: border-box;
   -webkit-font-smoothing: antialiased;
   position: relative;
   margin: 0;
-  flex: 1;
+  --uimix-x-flex-grow: 1;
+  --uimix-grid-width: calc(100% - 0px);
+  --uimix-y-width: calc(100% - 0px);
   min-width: undefined;
   max-width: undefined;
+  --uimix-y-flex-grow: 0;
   height: max-content;
+  --uimix-grid-height: max-content;
+  --uimix-x-height: max-content;
   opacity: 1;
   overflow: visible;
   display: flex;
@@ -2121,15 +2725,24 @@ exports[`generateCode > generates code > src/landing.uimix.css 1`] = `
   border-radius: 0;
   box-shadow: none
 }
+.uimix-LandingXg2GP1__frame5 > * {
+  flex-grow: var(--uimix-y-flex-grow);
+  width: var(--uimix-y-width)
+}
 .uimix-LandingXg2GP1__a__Start_Your_Project {
   box-sizing: border-box;
   -webkit-font-smoothing: antialiased;
   position: relative;
   margin: 0 0 26px;
-  width: calc(100% - 0px);
+  --uimix-x-flex-grow: 1;
+  --uimix-grid-width: calc(100% - 0px);
+  --uimix-y-width: calc(100% - 0px);
   min-width: undefined;
   max-width: undefined;
+  --uimix-y-flex-grow: 0;
   height: max-content;
+  --uimix-grid-height: max-content;
+  --uimix-x-height: max-content;
   opacity: 1;
   overflow: visible;
   white-space: break-spaces;
@@ -2149,10 +2762,15 @@ exports[`generateCode > generates code > src/landing.uimix.css 1`] = `
   -webkit-font-smoothing: antialiased;
   position: relative;
   margin: 0;
-  width: calc(100% - 0px);
+  --uimix-x-flex-grow: 1;
+  --uimix-grid-width: calc(100% - 0px);
+  --uimix-y-width: calc(100% - 0px);
   min-width: undefined;
   max-width: undefined;
+  --uimix-y-flex-grow: 0;
   height: max-content;
+  --uimix-grid-height: max-content;
+  --uimix-x-height: max-content;
   opacity: 1;
   overflow: visible;
   white-space: break-spaces;
@@ -2172,10 +2790,15 @@ exports[`generateCode > generates code > src/landing.uimix.css 1`] = `
   -webkit-font-smoothing: antialiased;
   position: relative;
   margin: 0;
-  flex: 1;
+  --uimix-x-flex-grow: 1;
+  --uimix-grid-width: calc(100% - 0px);
+  --uimix-y-width: calc(100% - 0px);
   min-width: undefined;
   max-width: undefined;
+  --uimix-y-flex-grow: 0;
   height: max-content;
+  --uimix-grid-height: max-content;
+  --uimix-x-height: max-content;
   opacity: 1;
   overflow: visible;
   display: flex;
@@ -2192,15 +2815,24 @@ exports[`generateCode > generates code > src/landing.uimix.css 1`] = `
   border-radius: 0;
   box-shadow: none
 }
+.uimix-LandingXg2GP1__frame6 > * {
+  flex-grow: var(--uimix-y-flex-grow);
+  width: var(--uimix-y-width)
+}
 .uimix-LandingXg2GP1__b__Design___Develop {
   box-sizing: border-box;
   -webkit-font-smoothing: antialiased;
   position: relative;
   margin: 0 0 20px;
-  width: calc(100% - 0px);
+  --uimix-x-flex-grow: 1;
+  --uimix-grid-width: calc(100% - 0px);
+  --uimix-y-width: calc(100% - 0px);
   min-width: undefined;
   max-width: undefined;
+  --uimix-y-flex-grow: 0;
   height: max-content;
+  --uimix-grid-height: max-content;
+  --uimix-x-height: max-content;
   opacity: 1;
   overflow: visible;
   white-space: break-spaces;
@@ -2220,10 +2852,15 @@ exports[`generateCode > generates code > src/landing.uimix.css 1`] = `
   -webkit-font-smoothing: antialiased;
   position: relative;
   margin: 0;
-  width: calc(100% - 0px);
+  --uimix-x-flex-grow: 1;
+  --uimix-grid-width: calc(100% - 0px);
+  --uimix-y-width: calc(100% - 0px);
   min-width: undefined;
   max-width: undefined;
+  --uimix-y-flex-grow: 0;
   height: max-content;
+  --uimix-grid-height: max-content;
+  --uimix-x-height: max-content;
   opacity: 1;
   overflow: visible;
   white-space: break-spaces;
@@ -2243,10 +2880,15 @@ exports[`generateCode > generates code > src/landing.uimix.css 1`] = `
   -webkit-font-smoothing: antialiased;
   position: relative;
   margin: 0;
-  flex: 1;
+  --uimix-x-flex-grow: 1;
+  --uimix-grid-width: calc(100% - 0px);
+  --uimix-y-width: calc(100% - 0px);
   min-width: undefined;
   max-width: undefined;
+  --uimix-y-flex-grow: 0;
   height: max-content;
+  --uimix-grid-height: max-content;
+  --uimix-x-height: max-content;
   opacity: 1;
   overflow: visible;
   display: flex;
@@ -2263,15 +2905,24 @@ exports[`generateCode > generates code > src/landing.uimix.css 1`] = `
   border-radius: 0;
   box-shadow: none
 }
+.uimix-LandingXg2GP1__frame7 > * {
+  flex-grow: var(--uimix-y-flex-grow);
+  width: var(--uimix-y-width)
+}
 .uimix-LandingXg2GP1__c__Collaborate___Publish {
   box-sizing: border-box;
   -webkit-font-smoothing: antialiased;
   position: relative;
   margin: 0 0 20px;
-  width: calc(100% - 0px);
+  --uimix-x-flex-grow: 1;
+  --uimix-grid-width: calc(100% - 0px);
+  --uimix-y-width: calc(100% - 0px);
   min-width: undefined;
   max-width: undefined;
+  --uimix-y-flex-grow: 0;
   height: max-content;
+  --uimix-grid-height: max-content;
+  --uimix-x-height: max-content;
   opacity: 1;
   overflow: visible;
   white-space: break-spaces;
@@ -2291,10 +2942,15 @@ exports[`generateCode > generates code > src/landing.uimix.css 1`] = `
   -webkit-font-smoothing: antialiased;
   position: relative;
   margin: 0;
-  width: calc(100% - 0px);
+  --uimix-x-flex-grow: 1;
+  --uimix-grid-width: calc(100% - 0px);
+  --uimix-y-width: calc(100% - 0px);
   min-width: undefined;
   max-width: undefined;
+  --uimix-y-flex-grow: 0;
   height: max-content;
+  --uimix-grid-height: max-content;
+  --uimix-x-height: max-content;
   opacity: 1;
   overflow: visible;
   white-space: break-spaces;
@@ -2314,10 +2970,15 @@ exports[`generateCode > generates code > src/landing.uimix.css 1`] = `
   -webkit-font-smoothing: antialiased;
   position: relative;
   margin: 0;
-  width: calc(100% - 0px);
+  --uimix-x-flex-grow: 1;
+  --uimix-grid-width: calc(100% - 0px);
+  --uimix-y-width: calc(100% - 0px);
   min-width: undefined;
   max-width: undefined;
+  --uimix-y-flex-grow: 0;
   height: max-content;
+  --uimix-grid-height: max-content;
+  --uimix-x-height: max-content;
   opacity: 1;
   overflow: hidden;
   display: flex;
@@ -2334,14 +2995,27 @@ exports[`generateCode > generates code > src/landing.uimix.css 1`] = `
   border-radius: 0;
   box-shadow: none
 }
+.uimix-LandingXg2GP1__frame_25 > * {
+  flex-grow: var(--uimix-y-flex-grow);
+  width: var(--uimix-y-width)
+}
 .uimix-LandingXg2GP1__image_4 {
   box-sizing: border-box;
   -webkit-font-smoothing: antialiased;
   position: absolute;
   left: -23px;
+  right: auto;
   top: -368px;
+  bottom: auto;
+  margin: 0;
+  --uimix-x-flex-grow: 0;
   width: 1500px;
+  --uimix-grid-width: 1500px;
+  --uimix-y-width: 1500px;
+  --uimix-y-flex-grow: 0;
   height: 1100px;
+  --uimix-grid-height: 1100px;
+  --uimix-x-height: 1100px;
   opacity: 1;
   overflow: hidden;
   background: 0 0;
@@ -2356,10 +3030,15 @@ exports[`generateCode > generates code > src/landing.uimix.css 1`] = `
   -webkit-font-smoothing: antialiased;
   position: relative;
   margin: 0 0 48px;
-  width: calc(100% - 0px);
+  --uimix-x-flex-grow: 1;
+  --uimix-grid-width: calc(100% - 0px);
+  --uimix-y-width: calc(100% - 0px);
   min-width: undefined;
   max-width: undefined;
+  --uimix-y-flex-grow: 0;
   height: max-content;
+  --uimix-grid-height: max-content;
+  --uimix-x-height: max-content;
   opacity: 1;
   overflow: visible;
   white-space: break-spaces;
@@ -2379,8 +3058,14 @@ exports[`generateCode > generates code > src/landing.uimix.css 1`] = `
   -webkit-font-smoothing: antialiased;
   position: relative;
   margin: 0;
+  --uimix-x-flex-grow: 0;
   width: max-content;
+  --uimix-grid-width: max-content;
+  --uimix-y-width: max-content;
+  --uimix-y-flex-grow: 0;
   height: max-content;
+  --uimix-grid-height: max-content;
+  --uimix-x-height: max-content;
   opacity: 1;
   overflow: visible;
   display: flex;
@@ -2397,13 +3082,23 @@ exports[`generateCode > generates code > src/landing.uimix.css 1`] = `
   border-radius: 0;
   box-shadow: 0 8px 10px -6px #ffffff1a,0 20px 25px -5px #ffffff1a
 }
+.uimix-LandingXg2GP1__frame_26 > * {
+  flex-grow: var(--uimix-x-flex-grow);
+  height: var(--uimix-x-height)
+}
 .uimix-LandingXg2GP1__frame_6 {
   box-sizing: border-box;
   -webkit-font-smoothing: antialiased;
   position: relative;
   margin: 0;
+  --uimix-x-flex-grow: 0;
   width: max-content;
+  --uimix-grid-width: max-content;
+  --uimix-y-width: max-content;
+  --uimix-y-flex-grow: 0;
   height: max-content;
+  --uimix-grid-height: max-content;
+  --uimix-x-height: max-content;
   opacity: 1;
   overflow: visible;
   display: flex;
@@ -2420,13 +3115,23 @@ exports[`generateCode > generates code > src/landing.uimix.css 1`] = `
   border-radius: 25px;
   box-shadow: 0 4px 6px -4px #3b82f61a,0 10px 15px -3px #3b82f61a
 }
+.uimix-LandingXg2GP1__frame_6 > * {
+  flex-grow: var(--uimix-x-flex-grow);
+  height: var(--uimix-x-height)
+}
 .uimix-LandingXg2GP1__get_Early_Access1 {
   box-sizing: border-box;
   -webkit-font-smoothing: antialiased;
   position: relative;
   margin: 0;
+  --uimix-x-flex-grow: 0;
   width: max-content;
+  --uimix-grid-width: max-content;
+  --uimix-y-width: max-content;
+  --uimix-y-flex-grow: 0;
   height: max-content;
+  --uimix-grid-height: max-content;
+  --uimix-x-height: max-content;
   opacity: 1;
   overflow: visible;
   white-space: break-spaces;
