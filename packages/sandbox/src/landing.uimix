@@ -17,7 +17,6 @@ export default (
           name="Frame 102"
           hidden={false}
           position={{ left: 48, top: 24 }}
-          absolute={true}
           width="hug"
           height="hug"
           topLeftRadius={0}
@@ -70,7 +69,6 @@ export default (
           name="Frame 179"
           hidden={false}
           position={{ right: 47.99984677551083, top: 16 }}
-          absolute={true}
           width={247}
           height={41}
           topLeftRadius={0}
@@ -192,7 +190,6 @@ export default (
           id="frame_180"
           name="Frame 180"
           hidden={false}
-          position={{ left: 546, top: 27 }}
           width="hug"
           height="hug"
           topLeftRadius={0}
@@ -308,14 +305,12 @@ export default (
         <instance
           id="frame"
           name="Frame"
-          position={{ left: 0, top: 0 }}
           width={{ min: 0 }}
           component="Header"
         />
         <frame
           id="frame1"
           name="Frame"
-          position={{ left: 0, top: 45 }}
           width={{ min: 0 }}
           height="hug"
           layout="flex"
@@ -329,7 +324,6 @@ export default (
             name="Frame"
             locked={true}
             position={{ left: 0, right: 0, top: 0 }}
-            absolute={true}
             width={{ min: 0 }}
             height="hug"
             marginBottom={-422}
@@ -357,7 +351,6 @@ export default (
             id="revolutionize_Your_Web_Design_and_Development_Workflow"
             name="Revolutionize Your Web Design and Development Workflow"
             hidden={false}
-            position={{ left: 360, top: 173 }}
             width={{ min: 0 }}
             height="hug"
             fills={[{ solid: "#1F2937" }]}
@@ -379,7 +372,6 @@ export default (
             id="uIMix_is_a_open_source_design_tool_that_combines_intuitive_editing__React_integration__AI_assistance__and_advanced_design_tokens_"
             name="UIMix is a open-source design tool that combines intuitive editing, React integration, AI assistance, and advanced design tokens."
             hidden={false}
-            position={{ left: 412, top: 354 }}
             width={{ min: 0 }}
             height="hug"
             fills={[{ solid: "#6b7280" }]}
@@ -400,7 +392,6 @@ export default (
             id="frame_4"
             name="Frame 4"
             hidden={false}
-            position={{ left: 629, top: 465 }}
             width="hug"
             height="hug"
             topLeftRadius={0}
@@ -499,7 +490,6 @@ export default (
           id="frame_19"
           name="Frame 19"
           hidden={false}
-          position={{ left: -1, top: 1134 }}
           width={{ min: 0 }}
           height="hug"
           topLeftRadius={0}
@@ -1128,7 +1118,6 @@ export default (
         <frame
           id="frame3"
           name="Frame"
-          position={{ left: 0, top: 1730 }}
           width={{ min: 0 }}
           height="hug"
           layout="flex"
@@ -1143,7 +1132,6 @@ export default (
             id="open_Source"
             name="Open Source"
             hidden={false}
-            position={{ left: 594, top: 101 }}
             width={{ min: 0 }}
             height="hug"
             fills={[{ solid: "#1f2937" }]}
@@ -1162,7 +1150,6 @@ export default (
             id="uIMix_s_open_source_editor_and_backend_promote_community_driven_development_and_offer_extensive_customization_options__Self_host_both_components_for_greater_control_over_your_design_environment_and_data_security_"
             name="UIMix's open-source editor and backend promote community-driven development and offer extensive customization options. Self-host both components for greater control over your design environment and data security."
             hidden={false}
-            position={{ left: 421, top: 187 }}
             width={{ min: 0 }}
             height="hug"
             fills={[{ solid: "#4b5563" }]}
@@ -1183,7 +1170,6 @@ export default (
             id="frame_3"
             name="Frame 3"
             hidden={false}
-            position={{ left: 618, top: 342 }}
             width="hug"
             height="hug"
             topLeftRadius={25}
@@ -1235,7 +1221,6 @@ export default (
             id="how_It_Works"
             name="How It Works"
             hidden={false}
-            position={{ left: 589, top: 525 }}
             width={{ min: 0 }}
             height="hug"
             fills={[{ solid: "#1f2937" }]}
@@ -1253,7 +1238,6 @@ export default (
           <frame
             id="frame4"
             name="Frame"
-            position={{ left: 110, top: 662 }}
             width={{ min: 0, max: 1280 }}
             height="hug"
             layout="flex"
@@ -1264,7 +1248,6 @@ export default (
             <frame
               id="frame5"
               name="Frame"
-              position={{ left: 110, top: 662 }}
               width={{ min: 0 }}
               height="hug"
               layout="flex"
@@ -1274,7 +1257,6 @@ export default (
                 id="a__Start_Your_Project"
                 name="A. Start Your Project"
                 hidden={false}
-                position={{ left: 118, top: 662 }}
                 width={{ min: 0 }}
                 height="hug"
                 fills={[{ solid: "#1f2937" }]}
@@ -1293,7 +1275,6 @@ export default (
                 id="sign_up_for_a_free_account_or_log_in__Create_a_new_project_or_import_an_existing_Figma_design__Organize_your_components_and_design_tokens_in_the_user_friendly_interface_"
                 name="Sign up for a free account or log in. Create a new project or import an existing Figma design. Organize your components and design tokens in the user-friendly interface."
                 hidden={false}
-                position={{ left: 110, top: 718 }}
                 width={{ min: 0 }}
                 height="hug"
                 fills={[{ solid: "#4b5563" }]}
@@ -1313,7 +1294,6 @@ export default (
             <frame
               id="frame6"
               name="Frame"
-              position={{ left: 553, top: 662 }}
               width={{ min: 0 }}
               height="hug"
               layout="flex"
@@ -1323,7 +1303,6 @@ export default (
                 id="b__Design___Develop"
                 name="B. Design & Develop"
                 hidden={false}
-                position={{ left: 561, top: 662 }}
                 width={{ min: 0 }}
                 height="hug"
                 fills={[{ solid: "#1f2937" }]}
@@ -1342,7 +1321,6 @@ export default (
                 id="utilize_Figma_like_editing_tools_to_create_and_modify_designs__Seamlessly_import_React_components_into_your_UIMix_project__Leverage_AI_assistance_to_efficiently_generate_and_refine_your_content_"
                 name="Utilize Figma-like editing tools to create and modify designs. Seamlessly import React components into your UIMix project. Leverage AI assistance to efficiently generate and refine your content."
                 hidden={false}
-                position={{ left: 553, top: 712 }}
                 width={{ min: 0 }}
                 height="hug"
                 fills={[{ solid: "#4b5563" }]}
@@ -1362,7 +1340,6 @@ export default (
             <frame
               id="frame7"
               name="Frame"
-              position={{ left: 988, top: 662 }}
               width={{ min: 0 }}
               height="hug"
               layout="flex"
@@ -1372,7 +1349,6 @@ export default (
                 id="c__Collaborate___Publish"
                 name="C. Collaborate & Publish"
                 hidden={false}
-                position={{ left: 990, top: 662 }}
                 width={{ min: 0 }}
                 height="hug"
                 fills={[{ solid: "#1f2937" }]}
@@ -1391,7 +1367,6 @@ export default (
                 id="collaborate_using_the_online_editor_or_work_offline_for_an_optimized_development_experience__Integrate_with_GitHub_for_streamlined_version_control__Easily_import_UIMix_components_into_React_apps_or_export_final_designs_back_to_Figma_"
                 name="Collaborate using the online editor or work offline for an optimized development experience. Integrate with GitHub for streamlined version control. Easily import UIMix components into React apps or export final designs back to Figma."
                 hidden={false}
-                position={{ left: 988, top: 712 }}
                 width={{ min: 0 }}
                 height="hug"
                 fills={[{ solid: "#4b5563" }]}
@@ -1414,7 +1389,6 @@ export default (
           id="frame_25"
           name="Frame 21"
           hidden={false}
-          position={{ left: -1, top: 2728 }}
           width={{ min: 0 }}
           height="hug"
           topLeftRadius={0}
@@ -1435,7 +1409,6 @@ export default (
             name="image 4"
             hidden={false}
             position={{ left: -23, top: -368 }}
-            absolute={true}
             width={1500}
             height={1100}
             topLeftRadius={0}
@@ -1451,7 +1424,6 @@ export default (
             id="ready_to_revolutionize_your_web_design_workflow_"
             name="Ready to revolutionize your web design workflow?"
             hidden={false}
-            position={{ left: 248, top: 96 }}
             width={{ min: 0 }}
             height="hug"
             fills={[{ solid: "#ffffff" }]}
@@ -1470,7 +1442,6 @@ export default (
             id="frame_26"
             name="Frame 20"
             hidden={false}
-            position={{ left: 622, top: 205 }}
             width="hug"
             height="hug"
             topLeftRadius={0}

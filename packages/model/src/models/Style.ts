@@ -7,11 +7,8 @@ export type IStyle = Data.Style;
 export const defaultStyle: Data.Style = {
   hidden: false,
   locked: false,
-  position: {
-    x: { type: "start", start: 0 },
-    y: { type: "start", start: 0 },
-  },
-  absolute: false,
+  position: null,
+  preferAbsolute: false,
   width: { type: "hug" },
   height: { type: "hug" },
 
@@ -107,11 +104,11 @@ for (const key of styleKeys) {
 }
 
 export class CascadedStyle implements IStyle {
-  constructor(style: PartialStyle, parent: IStyle) {
+  constructor(style: Partial<IStyle>, parent: IStyle) {
     this.style = style;
     this.parent = parent;
   }
-  style: PartialStyle;
+  style: Partial<IStyle>;
   parent: IStyle;
 
   loadJSON(json: Partial<Data.Style>) {

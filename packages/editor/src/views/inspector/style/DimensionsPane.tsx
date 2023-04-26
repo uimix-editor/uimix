@@ -83,8 +83,8 @@ const InspectorAnchorEdit = observer(function InspectorAnchorEdit({
   className?: string;
 }) {
   const selectables = useContext(InspectorTargetContext);
-  const xValue = sameOrMixed(selectables.map((s) => s.style.position.x.type));
-  const yValue = sameOrMixed(selectables.map((s) => s.style.position.y.type));
+  const xValue = sameOrMixed(selectables.map((s) => s.style.position?.x.type));
+  const yValue = sameOrMixed(selectables.map((s) => s.style.position?.y.type));
 
   return (
     <SimpleAnchorEdit
@@ -343,13 +343,18 @@ const AbsoluteToggle = observer(() => {
   if (parentHasLayout) {
     return (
       <InspectorToggleGroup
-        get={(s) => (s.style.absolute ? "absolute" : "relative")}
+        get={(s) => (s.style.position ? "absolute" : "relative")}
         items={positionTypeOptions}
         set={(s, value) => {
           if (value === "absolute") {
-            s.style.absolute = true;
+            s.style.position = {
+              x: { type: "start", start: s.computedOffsetLeft },
+              y: { type: "start", start: s.computedOffsetTop },
+            };
+            s.style.preferAbsolute = true;
           } else if (value === "relative") {
-            s.style.absolute = false;
+            s.style.position = null;
+            s.style.preferAbsolute = false;
           }
         }}
       />
@@ -359,9 +364,9 @@ const AbsoluteToggle = observer(() => {
   return (
     <InspectorToggleButton
       icon={pinIcon}
-      get={(s) => s.style.absolute}
+      get={(s) => s.style.preferAbsolute}
       set={(s: Selectable, value?: boolean) => {
-        s.style.absolute = !!value;
+        s.style.preferAbsolute = !!value;
       }}
       tooltip="Keep Absolute on Auto Layout"
     />
@@ -377,14 +382,19 @@ const PositionEdit = observer(() => {
         tooltip="Top"
         className="col-start-2 row-start-1"
         get={(s) => {
-          const y = s.style.position.y;
-          if ("start" in y) {
+          const y = s.style.position?.y;
+          if (y && "start" in y) {
             return { value: y.start };
           }
         }}
         placeholder={(s) => s.computedOffsetTop}
         set={(s, value) => {
-          const y = s.style.position.y;
+          const position = s.style.position ?? {
+            x: { type: "start", start: 0 },
+            y: { type: "start", start: 0 },
+          };
+
+          const y = position.y;
           const newY: Data.PositionConstraint =
             y.type === "both"
               ? {
@@ -393,7 +403,7 @@ const PositionEdit = observer(() => {
                   end: y.end,
                 }
               : { type: "start", start: value?.value ?? 0 };
-          s.style.position = { ...s.style.position, y: newY };
+          s.style.position = { ...position, y: newY };
         }}
       />
       <InspectorNumberInput
@@ -402,13 +412,18 @@ const PositionEdit = observer(() => {
         className="col-start-3 row-start-2"
         placeholder={(s) => s.computedOffsetRight}
         get={(s) => {
-          const x = s.style.position.x;
-          if ("end" in x) {
+          const x = s.style.position?.x;
+          if (x && "end" in x) {
             return { value: x.end };
           }
         }}
         set={(s, value) => {
-          const x = s.style.position.x;
+          const position = s.style.position ?? {
+            x: { type: "start", start: 0 },
+            y: { type: "start", start: 0 },
+          };
+
+          const x = position.x;
           const newX: Data.PositionConstraint =
             x.type === "both"
               ? {
@@ -417,7 +432,7 @@ const PositionEdit = observer(() => {
                   end: value?.value ?? 0,
                 }
               : { type: "end", end: value?.value ?? 0 };
-          s.style.position = { ...s.style.position, x: newX };
+          s.style.position = { ...position, x: newX };
         }}
       />
       <InspectorNumberInput
@@ -425,14 +440,19 @@ const PositionEdit = observer(() => {
         tooltip="Bottom"
         className="col-start-2 row-start-3"
         get={(s) => {
-          const y = s.style.position.y;
-          if ("end" in y) {
+          const y = s.style.position?.y;
+          if (y && "end" in y) {
             return { value: y.end };
           }
         }}
         placeholder={(s) => s.computedOffsetBottom}
         set={(s, value) => {
-          const y = s.style.position.y;
+          const position = s.style.position ?? {
+            x: { type: "start", start: 0 },
+            y: { type: "start", start: 0 },
+          };
+
+          const y = position.y;
           const newY: Data.PositionConstraint =
             y.type === "both"
               ? {
@@ -441,7 +461,7 @@ const PositionEdit = observer(() => {
                   end: value?.value ?? 0,
                 }
               : { type: "end", end: value?.value ?? 0 };
-          s.style.position = { ...s.style.position, y: newY };
+          s.style.position = { ...position, y: newY };
         }}
       />
       <InspectorNumberInput
@@ -450,13 +470,18 @@ const PositionEdit = observer(() => {
         className="col-start-1 row-start-2"
         placeholder={(s) => s.computedOffsetLeft}
         get={(s) => {
-          const x = s.style.position.x;
-          if ("start" in x) {
+          const x = s.style.position?.x;
+          if (x && "start" in x) {
             return { value: x.start };
           }
         }}
         set={(s, value) => {
-          const x = s.style.position.x;
+          const position = s.style.position ?? {
+            x: { type: "start", start: 0 },
+            y: { type: "start", start: 0 },
+          };
+
+          const x = position.x;
           const newX: Data.PositionConstraint =
             x.type === "both"
               ? {
@@ -465,7 +490,7 @@ const PositionEdit = observer(() => {
                   end: x.end,
                 }
               : { type: "start", start: value?.value ?? 0 };
-          s.style.position = { ...s.style.position, x: newX };
+          s.style.position = { ...position, x: newX };
         }}
       />
       <InspectorAnchorEdit className="col-start-2 row-start-2" />
@@ -708,7 +733,13 @@ function setPositionStartConstraintType(
   type: Data.PositionConstraintType
 ) {
   const style = selectable.style;
-  const constraint = style.position[axis];
+
+  const position = style.position ?? {
+    x: { type: "start", start: 0 },
+    y: { type: "start", start: 0 },
+  };
+
+  const constraint = position[axis];
   if (constraint.type === type) {
     return;
   }
@@ -754,7 +785,7 @@ function setPositionStartConstraintType(
   }
 
   style.position = {
-    ...style.position,
+    ...position,
     [axis]: newConstraint,
   };
 }

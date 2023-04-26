@@ -59,7 +59,7 @@ export default (
         <instance
           id="button"
           name="Button"
-          position={{ left: 416, top: 234 }}
+          position={null}
           component="./button.uimix#Button"
         />
       </frame>
@@ -89,7 +89,6 @@ export default (
         <frame
           id="frame"
           name="Frame"
-          position={{ left: 210, top: 142 }}
           width={{ min: 0 }}
           height={{ min: 0 }}
           fills={[{ solid: "#FFFFFF" }]}
