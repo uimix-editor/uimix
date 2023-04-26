@@ -45,12 +45,7 @@ const Size = z.union([
 ]);
 type Size = z.infer<typeof Size>;
 
-const Color = z.union([
-  z.string(), // hex
-  z.object({
-    token: z.string(),
-  }),
-]);
+const Color = z.string();
 type Color = z.infer<typeof Color>;
 
 const Fill = z.object({
@@ -123,74 +118,106 @@ interface StyleProps {
   tagName: string | null;
 }
 
+const xFlexGrowVarName = "--uimix-x-flex-grow";
+const yFlexGrowVarName = "--uimix-y-flex-grow";
+const xHeightVarName = "--uimix-x-height";
+const yWidthVarName = "--uimix-y-width";
+const gridWidthVarName = "--uimix-grid-width";
+const gridHeightVarName = "--uimix-grid-height";
+
+type PropertiesWithVars = CSS.Properties & {
+  [xFlexGrowVarName]?: number;
+  [yFlexGrowVarName]?: number;
+  [xHeightVarName]?: CSS.Properties["height"];
+  [yWidthVarName]?: CSS.Properties["width"];
+  [gridWidthVarName]?: CSS.Properties["width"];
+  [gridHeightVarName]?: CSS.Properties["height"];
+};
+
+export interface SelfAndChildrenCSS {
+  self: PropertiesWithVars;
+  children: CSS.Properties;
+}
+
 export function buildNodeCSS(
   nodeType: "frame" | "text" | "image" | "svg",
   style: StyleProps
-): CSS.Properties {
-  const cssStyle: CSS.Properties = {};
+): SelfAndChildrenCSS {
+  const cssStyle: PropertiesWithVars = {};
+  const childrenStyle: CSS.Properties = {};
 
-  const cssPosition = parentLayout && !style.absolute ? "relative" : "absolute";
-  cssStyle.position = cssPosition;
-  if (cssPosition === "absolute") {
-    const position = style.position;
-    if ("start" in position.x) {
-      cssStyle.left = `${position.x.start}px`;
-    }
-    if ("end" in position.x) {
-      cssStyle.right = `${position.x.end}px`;
-    }
-
-    if ("start" in position.y) {
-      cssStyle.top = `${position.y.start}px`;
-    }
-    if ("end" in position.y) {
-      cssStyle.bottom = `${position.y.end}px`;
+  const position = style.position;
+  if (position) {
+    cssStyle.position = "absolute";
+    if (position) {
+      cssStyle.top =
+        position.top !== undefined ? `${position.top}px` : undefined;
+      cssStyle.right =
+        position.right !== undefined ? `${position.right}px` : undefined;
+      cssStyle.bottom =
+        position.bottom !== undefined ? `${position.bottom}px` : undefined;
+      cssStyle.left =
+        position.left !== undefined ? `${position.left}px` : undefined;
     }
   } else {
-    cssStyle.marginTop = `${style.marginTop}px`;
-    cssStyle.marginRight = `${style.marginRight}px`;
-    cssStyle.marginBottom = `${style.marginBottom}px`;
-    cssStyle.marginLeft = `${style.marginLeft}px`;
+    cssStyle.position = "relative";
   }
+
+  cssStyle.marginTop = `${style.marginTop}px`;
+  cssStyle.marginRight = `${style.marginRight}px`;
+  cssStyle.marginBottom = `${style.marginBottom}px`;
+  cssStyle.marginLeft = `${style.marginLeft}px`;
 
   // TODO: unset width/height when both left/right or top/bottom are set
 
   const width = style.width;
-  if (width.type === "fixed") {
-    cssStyle.width = `${width.value}px`;
-  } else if (width.type === "hug") {
-    cssStyle.width = "max-content";
-  } else {
-    if (parentLayout === "x") {
-      cssStyle.flex = 1;
-    } else if (parentLayout) {
-      cssStyle.width = `calc(100% - ${style.marginLeft + style.marginRight}px)`;
-    } else {
-      cssStyle.width = "auto";
-    }
+  if (typeof width === "object") {
+    // polyfill width:stretch
+    cssStyle[xFlexGrowVarName] = 1;
+    cssStyle[yWidthVarName] = cssStyle[gridWidthVarName] = `calc(100% - ${
+      style.marginLeft + style.marginRight
+    }px)`;
     cssStyle.minWidth = width.min !== undefined ? `${width.min}px` : undefined;
     cssStyle.maxWidth = width.max !== undefined ? `${width.max}px` : undefined;
+  } else {
+    let cssWidth: string;
+    if (width === "hug") {
+      cssWidth = "max-content";
+    } else {
+      cssWidth = `${width}px`;
+    }
+
+    cssStyle[xFlexGrowVarName] = 0;
+    cssStyle[yWidthVarName] =
+      cssStyle[gridWidthVarName] =
+      cssStyle.width =
+        cssWidth;
   }
 
   const height = style.height;
-  if (height.type === "fixed") {
-    cssStyle.height = `${height.value}px`;
-  } else if (height.type === "hug") {
-    cssStyle.height = "max-content";
-  } else {
-    if (parentLayout === "y") {
-      cssStyle.flex = 1;
-    } else if (parentLayout) {
-      cssStyle.height = `calc(100% - ${
-        style.marginTop + style.marginBottom
-      }px)`;
-    } else {
-      cssStyle.height = "auto";
-    }
+  if (typeof height === "object") {
+    // polyfill height:stretch
+    cssStyle[yFlexGrowVarName] = 1;
+    cssStyle[xHeightVarName] = cssStyle[gridHeightVarName] = `calc(100% - ${
+      style.marginTop + style.marginBottom
+    }px)`;
     cssStyle.minHeight =
       height.min !== undefined ? `${height.min}px` : undefined;
     cssStyle.maxHeight =
       height.max !== undefined ? `${height.max}px` : undefined;
+  } else {
+    let cssHeight: string;
+    if (height === "hug") {
+      cssHeight = "max-content";
+    } else {
+      cssHeight = `${height}px`;
+    }
+
+    cssStyle[yFlexGrowVarName] = 0;
+    cssStyle[xHeightVarName] =
+      cssStyle[gridHeightVarName] =
+      cssStyle.height =
+        cssHeight;
   }
 
   cssStyle.opacity = style.opacity;
@@ -225,6 +252,14 @@ export function buildNodeCSS(
       })();
       cssStyle.rowGap = `${style.rowGap}px`;
       cssStyle.columnGap = `${style.columnGap}px`;
+
+      if (style.flexDirection === "x") {
+        childrenStyle.flexGrow = `var(${xFlexGrowVarName})`;
+        childrenStyle.height = `var(${xHeightVarName})`;
+      } else {
+        childrenStyle.flexGrow = `var(${yFlexGrowVarName})`;
+        childrenStyle.width = `var(${yWidthVarName})`;
+      }
     } else if (layout === "grid") {
       cssStyle.display = "grid";
       const { gridRowCount, gridColumnCount } = style;
@@ -236,6 +271,9 @@ export function buildNodeCSS(
       }
       cssStyle.rowGap = `${style.rowGap}px`;
       cssStyle.columnGap = `${style.columnGap}px`;
+
+      childrenStyle.width = `var(${gridWidthVarName})`;
+      childrenStyle.height = `var(${gridHeightVarName})`;
     } else {
       cssStyle.display = "block";
     }
@@ -247,12 +285,10 @@ export function buildNodeCSS(
 
   if (nodeType === "frame" || nodeType === "image" || nodeType === "svg") {
     const fills = style.fills;
-    cssStyle.background = fills.length
-      ? resolveColorToken(fills[0].color)
-      : "transparent";
+    cssStyle.background = fills.length ? fills[0].solid : "transparent";
     cssStyle.borderStyle = "solid";
     cssStyle.borderColor =
-      (style.border && resolveColorToken(style.border.color)) ?? "transparent";
+      (style.border && style.border.solid) ?? "transparent";
     cssStyle.borderTopWidth = `${style.borderTopWidth}px`;
     cssStyle.borderRightWidth = `${style.borderRightWidth}px`;
     cssStyle.borderBottomWidth = `${style.borderBottomWidth}px`;
@@ -273,7 +309,7 @@ export function buildNodeCSS(
           const y = `${shadow.y}px`;
           const blur = `${shadow.blur}px`;
           const spread = `${shadow.spread}px`;
-          const color = resolveColorToken(shadow.color);
+          const color = shadow.color;
           return `${x} ${y} ${blur} ${spread} ${color}`;
         })
         .join(", ");
@@ -285,24 +321,16 @@ export function buildNodeCSS(
     cssStyle.display = "flex";
     cssStyle.flexDirection = "column";
     const fills = style.fills;
-    cssStyle.color = fills.length
-      ? resolveColorToken(fills[0].color)
-      : "transparent";
+    cssStyle.color = fills.length ? fills[0].solid : "transparent";
     cssStyle.fontFamily = style.fontFamily;
     cssStyle.fontSize = `${style.fontSize}px`;
     cssStyle.fontWeight = style.fontWeight;
     const lineHeight = style.lineHeight;
     cssStyle.lineHeight =
-      lineHeight === null
-        ? "normal"
-        : typeof lineHeight === "number"
-        ? `${lineHeight}px`
-        : lineHeight.join("");
+      typeof lineHeight === "number" ? `${lineHeight}px` : lineHeight ?? "auto";
     const letterSpacing = style.letterSpacing;
     cssStyle.letterSpacing =
-      typeof letterSpacing === "number"
-        ? `${letterSpacing}px`
-        : `${letterSpacing[0] / 100}em`;
+      typeof letterSpacing === "number" ? `${letterSpacing}px` : letterSpacing;
     cssStyle.textAlign = style.textHorizontalAlign;
     cssStyle.justifyContent = (() => {
       switch (style.textVerticalAlign) {
@@ -320,5 +348,5 @@ export function buildNodeCSS(
     cssStyle.display = "none";
   }
 
-  return cssStyle;
+  return { self: cssStyle, children: childrenStyle };
 }
