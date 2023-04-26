@@ -77,6 +77,22 @@ export class CSSGenerator {
           getColorToken(this.designTokens, tokenID.split("/"))?.$value ??
           selectable.project.colorTokens.resolve(tokenID)
       );
+      const isTopLevel =
+        selectable.idPath.length === 1 &&
+        selectable.originalNode.parent?.type === "component";
+      console.log(isTopLevel);
+      if (isTopLevel) {
+        // remove position-related properties for top-level nodes
+        css.self.position = "relative";
+        delete css.self.left;
+        delete css.self.right;
+        delete css.self.top;
+        delete css.self.bottom;
+        delete css.self["--uimix-left"];
+        delete css.self["--uimix-right"];
+        delete css.self["--uimix-top"];
+        delete css.self["--uimix-bottom"];
+      }
 
       cssForSelectable.set(selectable, css);
       return css;
