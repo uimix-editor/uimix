@@ -187,17 +187,10 @@ export class Selectable {
   }
 
   @computed get style(): CascadedStyle {
-    const { nodePath } = this;
-
     let superSelectable: Selectable | undefined;
 
-    if (nodePath.length === 1) {
-      const mainComponent = this.mainComponent;
-      if (mainComponent) {
-        superSelectable = this.project.selectables.get([
-          mainComponent.rootNode.id,
-        ]);
-      }
+    if (this.idPath.length === 1) {
+      superSelectable = this.mainComponent?.rootNode.selectable;
     } else {
       superSelectable = this.project.selectables.get(this.idPath.slice(1));
     }
