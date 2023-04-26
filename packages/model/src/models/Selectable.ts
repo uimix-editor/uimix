@@ -567,6 +567,14 @@ export class Selectable {
           resizeWithBoundingBox(selectable, bbox, { x: true, y: true });
         }
       }
+
+      if (this.style.layout !== "none") {
+        for (const selectable of selectables) {
+          if (!selectable.style.preferAbsolute) {
+            selectable.style.position = null;
+          }
+        }
+      }
     }
   }
 
