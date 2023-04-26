@@ -10,7 +10,6 @@ import * as Data from "../data/v1";
 import { Project } from "./Project";
 import { Component, Variant } from "./Component";
 import { ObjectData } from "./ObjectData";
-import { assertNonNull } from "@uimix/foundation/src/utils/Assert";
 import { Page } from "./Page";
 
 export interface IComputedRectProvider {
@@ -187,10 +186,31 @@ export class Selectable {
   }
 
   @computed get style(): CascadedStyle {
-    return this.getStyle("displayed");
-  }
-  @computed get originalStyle(): CascadedStyle {
-    return this.getStyle("original");
+    let superSelectable: Selectable | undefined;
+
+    if (this.idPath.length === 1) {
+      superSelectable = this.mainComponent?.rootNode.selectable;
+    } else {
+      superSelectable = this.project.selectables.get(this.idPath.slice(1));
+    }
+
+    if (superSelectable) {
+      if (
+        superSelectable.idPath.length === 1 &&
+        superSelectable.originalNode.parent?.type === "component"
+      ) {
+        // super selectable is a component root node or a variant
+
+        return new CascadedStyle(
+          this.selfStyle,
+          new CascadedStyle({ position: null }, superSelectable.style)
+        );
+      }
+
+      return new CascadedStyle(this.selfStyle, superSelectable.style);
+    }
+
+    return new CascadedStyle(this.selfStyle, defaultStyle);
   }
 
   get superSelectable(): Selectable | undefined {
@@ -204,37 +224,21 @@ export class Selectable {
     return this.project.selectables.get(this.idPath.slice(1));
   }
 
-  // resolveMainComponent=false to get main component ID of an instance
-  private getStyle(type: "original" | "displayed"): CascadedStyle {
-    const { nodePath } = this;
-
-    let superStyle: IStyle;
-
-    if (nodePath.length === 1) {
-      superStyle = defaultStyle;
-
-      if (type === "displayed") {
-        const mainComponent = this.mainComponent;
-        if (mainComponent) {
-          superStyle = this.project.selectables
-            .get([mainComponent.rootNode.id])
-            .getStyle("original");
-        }
-      }
-    } else {
-      const superSelectable = this.project.selectables.get(
-        this.idPath.slice(1)
-      );
-      superStyle = superSelectable.getStyle(type);
+  private get mainComponentID(): string | null {
+    if (this.selfStyle.mainComponent) {
+      return this.selfStyle.mainComponent;
     }
-
-    return new CascadedStyle(this.selfStyle, superStyle);
+    if (this.idPath.length === 1) {
+      return null;
+    }
+    const superSelectable = this.project.selectables.get(this.idPath.slice(1));
+    return superSelectable.mainComponentID;
   }
 
   @computed get mainComponent(): Component | undefined {
     const originalNode = this.originalNode;
     if (originalNode.type === "instance") {
-      const mainComponentID = this.originalStyle.mainComponent;
+      const mainComponentID = this.mainComponentID;
       if (mainComponentID) {
         const ownerComponents = this.nodePath.map(
           (node) => node.ownerComponent?.node
@@ -429,7 +433,7 @@ export class Selectable {
 
   @computed get isAbsolute(): boolean {
     if (this.parent?.style.layout !== "none") {
-      return this.style.absolute;
+      return !!this.style.position;
     }
     return true;
   }
@@ -558,12 +562,17 @@ export class Selectable {
 
     if (fixPosition) {
       for (const selectable of selectables) {
-        const absolute =
-          this.style.layout === "none" || selectable.style.absolute;
-
-        if (absolute) {
+        if (selectable.isAbsolute) {
           const bbox = selectable.computedRect;
           resizeWithBoundingBox(selectable, bbox, { x: true, y: true });
+        }
+      }
+
+      if (this.style.layout !== "none") {
+        for (const selectable of selectables) {
+          if (!selectable.style.preferAbsolute) {
+            selectable.style.position = null;
+          }
         }
       }
     }

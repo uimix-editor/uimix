@@ -3,501 +3,501 @@
     "project": { "type": "project", "index": 0 },
     "Xg2GP1ntg1rdapBK2O4Ybjkm_3ZDNotvWabzYDQYd_0": {
       "type": "page",
-      "index": 0,
       "name": "src/landing",
-      "parent": "project"
+      "parent": "project",
+      "index": 0
     },
     "1BxVgCrFNqPbwi2b2KCsWF": {
       "type": "component",
-      "index": 0,
       "name": "Header",
-      "parent": "Xg2GP1ntg1rdapBK2O4Ybjkm_3ZDNotvWabzYDQYd_0"
+      "parent": "Xg2GP1ntg1rdapBK2O4Ybjkm_3ZDNotvWabzYDQYd_0",
+      "index": 0
     },
     "1BxVgCrFQWD6Ao4DZdjXdU": {
       "type": "frame",
-      "index": 0,
       "name": "Frame",
-      "parent": "1BxVgCrFNqPbwi2b2KCsWF"
+      "parent": "1BxVgCrFNqPbwi2b2KCsWF",
+      "index": 0
     },
     "1BxVgCrFVDivDhMxg521p1": {
       "type": "frame",
-      "index": 0,
       "name": "Frame 102",
-      "parent": "1BxVgCrFQWD6Ao4DZdjXdU"
+      "parent": "1BxVgCrFQWD6Ao4DZdjXdU",
+      "index": 0
     },
     "1BxVgCrFy7dx3E3bTKqBsc": {
       "type": "svg",
-      "index": 0,
       "name": "Frame 178",
-      "parent": "1BxVgCrFVDivDhMxg521p1"
+      "parent": "1BxVgCrFVDivDhMxg521p1",
+      "index": 0
     },
     "1BxVgCrG6eHqWiCCYYm65F": {
       "type": "text",
-      "index": 1,
       "name": "UIMix",
-      "parent": "1BxVgCrFVDivDhMxg521p1"
+      "parent": "1BxVgCrFVDivDhMxg521p1",
+      "index": 1
     },
     "1BxVgCrFud2MvgE9rbBEWD": {
       "type": "frame",
-      "index": 1,
       "name": "Frame 179",
-      "parent": "1BxVgCrFQWD6Ao4DZdjXdU"
+      "parent": "1BxVgCrFQWD6Ao4DZdjXdU",
+      "index": 1
     },
     "1BxVgCrGBjPTUf2GU8udzv": {
       "type": "frame",
-      "index": 0,
       "name": "Frame 3",
-      "parent": "1BxVgCrFud2MvgE9rbBEWD"
+      "parent": "1BxVgCrFud2MvgE9rbBEWD",
+      "index": 0
     },
     "1BxVgCrG7Bd9uLHtA1hHPJ": {
       "type": "text",
-      "index": 0,
       "name": "Sign In",
-      "parent": "1BxVgCrGBjPTUf2GU8udzv"
+      "parent": "1BxVgCrGBjPTUf2GU8udzv",
+      "index": 0
     },
     "1BxVgCrGLcRFBUrWst2Q3V": {
       "type": "frame",
-      "index": 1,
       "name": "Frame 4",
-      "parent": "1BxVgCrFud2MvgE9rbBEWD"
+      "parent": "1BxVgCrFud2MvgE9rbBEWD",
+      "index": 1
     },
     "1BxVgCrG8VCRZeyuZtwyZh": {
       "type": "text",
-      "index": 0,
       "name": "Get Early Access",
-      "parent": "1BxVgCrGLcRFBUrWst2Q3V"
+      "parent": "1BxVgCrGLcRFBUrWst2Q3V",
+      "index": 0
     },
     "1BxVgCrGCH746iVt4REnNR": {
       "type": "frame",
-      "index": 2,
       "name": "Frame 180",
-      "parent": "1BxVgCrFQWD6Ao4DZdjXdU"
+      "parent": "1BxVgCrFQWD6Ao4DZdjXdU",
+      "index": 2
     },
     "1BxVgCrGCe1y4Co4ootkvs": {
       "type": "text",
-      "index": 0,
       "name": "Features",
-      "parent": "1BxVgCrGCH746iVt4REnNR"
+      "parent": "1BxVgCrGCH746iVt4REnNR",
+      "index": 0
     },
     "1BxVgCrG7UEH7EufXwqgPy": {
       "type": "text",
-      "index": 1,
       "name": "Pricing",
-      "parent": "1BxVgCrGCH746iVt4REnNR"
+      "parent": "1BxVgCrGCH746iVt4REnNR",
+      "index": 1
     },
     "1BxVgCrG7EDVczNPttMM1T": {
       "type": "text",
-      "index": 2,
       "name": "Docs",
-      "parent": "1BxVgCrGCH746iVt4REnNR"
+      "parent": "1BxVgCrGCH746iVt4REnNR",
+      "index": 2
     },
     "1BxVgCrGJkk5ayt3rQKdhZ": {
       "type": "text",
-      "index": 3,
       "name": "GitHub",
-      "parent": "1BxVgCrGCH746iVt4REnNR"
+      "parent": "1BxVgCrGCH746iVt4REnNR",
+      "index": 3
     },
     "1BxVgCrGSEvWcXqP3yNE3Z": {
       "type": "component",
-      "index": 1,
       "name": "Landing",
-      "parent": "Xg2GP1ntg1rdapBK2O4Ybjkm_3ZDNotvWabzYDQYd_0"
+      "parent": "Xg2GP1ntg1rdapBK2O4Ybjkm_3ZDNotvWabzYDQYd_0",
+      "index": 1
     },
     "1BxVgCrGaA6oe1YHZoom8z": {
       "type": "frame",
-      "index": 0,
       "name": "Landing",
-      "parent": "1BxVgCrGSEvWcXqP3yNE3Z"
+      "parent": "1BxVgCrGSEvWcXqP3yNE3Z",
+      "index": 0
     },
     "1BxVgCrGVd7trdBMwvtsE1": {
       "type": "instance",
-      "index": 0,
       "name": "Frame",
-      "parent": "1BxVgCrGaA6oe1YHZoom8z"
+      "parent": "1BxVgCrGaA6oe1YHZoom8z",
+      "index": 0
     },
     "1BxVgCrGVNtxoaPQU7c3ih": {
       "type": "frame",
-      "index": 1,
       "name": "Frame",
-      "parent": "1BxVgCrGaA6oe1YHZoom8z"
+      "parent": "1BxVgCrGaA6oe1YHZoom8z",
+      "index": 1
     },
     "1BxVgCrGRjYMV4NFK2nw8a": {
       "type": "frame",
-      "index": 0,
       "name": "Frame",
-      "parent": "1BxVgCrGVNtxoaPQU7c3ih"
+      "parent": "1BxVgCrGVNtxoaPQU7c3ih",
+      "index": 0
     },
     "1BxVgCrGb5ecNkQbaZ9k1T": {
       "type": "image",
-      "index": 0,
       "name": "image 2",
-      "parent": "1BxVgCrGRjYMV4NFK2nw8a"
+      "parent": "1BxVgCrGRjYMV4NFK2nw8a",
+      "index": 0
     },
     "1BxVgCrGSPU8HZCJiW1EVq": {
       "type": "text",
-      "index": 1,
       "name": "Revolutionize Your Web Design and Development Workflow",
-      "parent": "1BxVgCrGVNtxoaPQU7c3ih"
+      "parent": "1BxVgCrGVNtxoaPQU7c3ih",
+      "index": 1
     },
     "1BxVgCrGYDAAfs6kS5Jzxa": {
       "type": "text",
-      "index": 2,
       "name": "UIMix is a open-source design tool that combines intuitive editing, React integration, AI assistance, and advanced design tokens.",
-      "parent": "1BxVgCrGVNtxoaPQU7c3ih"
+      "parent": "1BxVgCrGVNtxoaPQU7c3ih",
+      "index": 2
     },
     "1BxVgCrGfDwRkVm796YbSq": {
       "type": "frame",
-      "index": 3,
       "name": "Frame 4",
-      "parent": "1BxVgCrGVNtxoaPQU7c3ih"
+      "parent": "1BxVgCrGVNtxoaPQU7c3ih",
+      "index": 3
     },
     "1BxVgCrGcjjGEhT3SGRBHL": {
       "type": "frame",
-      "index": 0,
       "name": "Frame 2",
-      "parent": "1BxVgCrGfDwRkVm796YbSq"
+      "parent": "1BxVgCrGfDwRkVm796YbSq",
+      "index": 0
     },
     "1BxVgCrGhMzb7tqMrDBPQK": {
       "type": "text",
-      "index": 0,
       "name": "Get Early Access",
-      "parent": "1BxVgCrGcjjGEhT3SGRBHL"
+      "parent": "1BxVgCrGcjjGEhT3SGRBHL",
+      "index": 0
     },
     "1BxVgCrGfgyMEuaF1j3Pg2": {
       "type": "image",
-      "index": 4,
       "name": "image 1",
-      "parent": "1BxVgCrGVNtxoaPQU7c3ih"
+      "parent": "1BxVgCrGVNtxoaPQU7c3ih",
+      "index": 4
     },
     "1BxVgCrGqXCLCCDREyNBQ9": {
       "type": "frame",
-      "index": 2,
       "name": "Frame 19",
-      "parent": "1BxVgCrGaA6oe1YHZoom8z"
+      "parent": "1BxVgCrGaA6oe1YHZoom8z",
+      "index": 2
     },
     "1BxVgCrGfyD1W2b5YnXRmb": {
       "type": "frame",
-      "index": 0,
       "name": "Frame 181",
-      "parent": "1BxVgCrGqXCLCCDREyNBQ9"
+      "parent": "1BxVgCrGqXCLCCDREyNBQ9",
+      "index": 0
     },
     "1BxVgCrGnGfrx1mYpUJBpY": {
       "type": "frame",
-      "index": 0,
       "name": "Frame 13",
-      "parent": "1BxVgCrGfyD1W2b5YnXRmb"
+      "parent": "1BxVgCrGfyD1W2b5YnXRmb",
+      "index": 0
     },
     "1BxVgCrGm8CQzzi2QAw8Fs": {
       "type": "frame",
-      "index": 0,
       "name": "Frame 5",
-      "parent": "1BxVgCrGnGfrx1mYpUJBpY"
+      "parent": "1BxVgCrGnGfrx1mYpUJBpY",
+      "index": 0
     },
     "1BxVgCrGhZ8cyrb7AQZHnS": {
       "type": "svg",
-      "index": 0,
       "name": "heroicons:pencil-square",
-      "parent": "1BxVgCrGm8CQzzi2QAw8Fs"
+      "parent": "1BxVgCrGm8CQzzi2QAw8Fs",
+      "index": 0
     },
     "1BxVgCrGka6UjqjDMyv2wX": {
       "type": "text",
-      "index": 1,
       "name": "Figma-like Intuitive Editing",
-      "parent": "1BxVgCrGnGfrx1mYpUJBpY"
+      "parent": "1BxVgCrGnGfrx1mYpUJBpY",
+      "index": 1
     },
     "1BxVgCrGcTKi5XeFpsdqV2": {
       "type": "text",
-      "index": 2,
       "name": "Experience a user-friendly interface with familiar design tools, making it easy for both beginners and professionals to create stunning web designs.",
-      "parent": "1BxVgCrGnGfrx1mYpUJBpY"
+      "parent": "1BxVgCrGnGfrx1mYpUJBpY",
+      "index": 2
     },
     "1BxVgCrGrV1CcwgcoGhuAB": {
       "type": "frame",
-      "index": 1,
       "name": "Frame 14",
-      "parent": "1BxVgCrGfyD1W2b5YnXRmb"
+      "parent": "1BxVgCrGfyD1W2b5YnXRmb",
+      "index": 1
     },
     "1BxVgCrGtGgyeXXHnyK1rz": {
       "type": "frame",
-      "index": 0,
       "name": "Frame 13",
-      "parent": "1BxVgCrGrV1CcwgcoGhuAB"
+      "parent": "1BxVgCrGrV1CcwgcoGhuAB",
+      "index": 0
     },
     "1BxVgCrGtxzCgjfjS3unrj": {
       "type": "svg",
-      "index": 0,
       "name": "heroicons:code-bracket",
-      "parent": "1BxVgCrGtGgyeXXHnyK1rz"
+      "parent": "1BxVgCrGtGgyeXXHnyK1rz",
+      "index": 0
     },
     "1BxVgCrH6YipDwpWBiUNqR": {
       "type": "text",
-      "index": 1,
       "name": "React Components Import/Export",
-      "parent": "1BxVgCrGrV1CcwgcoGhuAB"
+      "parent": "1BxVgCrGrV1CcwgcoGhuAB",
+      "index": 1
     },
     "1BxVgCrH4wHE5XFChLQBto": {
       "type": "text",
-      "index": 2,
       "name": "Seamlessly work with React components, boosting your design-to-development workflow.",
-      "parent": "1BxVgCrGrV1CcwgcoGhuAB"
+      "parent": "1BxVgCrGrV1CcwgcoGhuAB",
+      "index": 2
     },
     "1BxVgCrGxLWSLhnrAW3Brn": {
       "type": "frame",
-      "index": 2,
       "name": "Frame 15",
-      "parent": "1BxVgCrGfyD1W2b5YnXRmb"
+      "parent": "1BxVgCrGfyD1W2b5YnXRmb",
+      "index": 2
     },
     "1BxVgCrH21sSKsUF8LyMJT": {
       "type": "frame",
-      "index": 0,
       "name": "Frame 13",
-      "parent": "1BxVgCrGxLWSLhnrAW3Brn"
+      "parent": "1BxVgCrGxLWSLhnrAW3Brn",
+      "index": 0
     },
     "1BxVgCrGyMXh2Pc5Y91WyA": {
       "type": "svg",
-      "index": 0,
       "name": "heroicons:cloud",
-      "parent": "1BxVgCrH21sSKsUF8LyMJT"
+      "parent": "1BxVgCrH21sSKsUF8LyMJT",
+      "index": 0
     },
     "1BxVgCrHFw8HzVY2YrVSYL": {
       "type": "text",
-      "index": 1,
       "name": "Collaboration for Everyone",
-      "parent": "1BxVgCrGxLWSLhnrAW3Brn"
+      "parent": "1BxVgCrGxLWSLhnrAW3Brn",
+      "index": 1
     },
     "1BxVgCrHHf5y1BM7iMrC4T": {
       "type": "text",
-      "index": 2,
       "name": "Collaborate in real-time with your team, whether they're designers, developers, or stakeholders.",
-      "parent": "1BxVgCrGxLWSLhnrAW3Brn"
+      "parent": "1BxVgCrGxLWSLhnrAW3Brn",
+      "index": 2
     },
     "1BxVgCrHLDmwrNJXgVkuY7": {
       "type": "frame",
-      "index": 3,
       "name": "Frame 16",
-      "parent": "1BxVgCrGfyD1W2b5YnXRmb"
+      "parent": "1BxVgCrGfyD1W2b5YnXRmb",
+      "index": 3
     },
     "1BxVgCrHCC7duwTWZfjPqr": {
       "type": "frame",
-      "index": 0,
       "name": "Frame 13",
-      "parent": "1BxVgCrHLDmwrNJXgVkuY7"
+      "parent": "1BxVgCrHLDmwrNJXgVkuY7",
+      "index": 0
     },
     "1BxVgCrHGqDA8GWLMDBaBw": {
       "type": "svg",
-      "index": 0,
       "name": "heroicons:computer-desktop",
-      "parent": "1BxVgCrHCC7duwTWZfjPqr"
+      "parent": "1BxVgCrHCC7duwTWZfjPqr",
+      "index": 0
     },
     "1BxVgCrH9yW7oaszPBiGTR": {
       "type": "text",
-      "index": 1,
       "name": "Offline Editing Experience",
-      "parent": "1BxVgCrHLDmwrNJXgVkuY7"
+      "parent": "1BxVgCrHLDmwrNJXgVkuY7",
+      "index": 1
     },
     "1BxVgCrHCCgRyvJu9o8pSe": {
       "type": "text",
-      "index": 2,
       "name": "Benefit from UIMix's seamless offline editing, offering local file management, hot reloading, and an uninterrupted workflow.",
-      "parent": "1BxVgCrHLDmwrNJXgVkuY7"
+      "parent": "1BxVgCrHLDmwrNJXgVkuY7",
+      "index": 2
     },
     "1BxVgCrH76ZQwwKCWNUHgN": {
       "type": "frame",
-      "index": 4,
       "name": "Frame 17",
-      "parent": "1BxVgCrGfyD1W2b5YnXRmb"
+      "parent": "1BxVgCrGfyD1W2b5YnXRmb",
+      "index": 4
     },
     "1BxVgCrH8sJUYRSDLGMvAy": {
       "type": "frame",
-      "index": 0,
       "name": "Frame 13",
-      "parent": "1BxVgCrH76ZQwwKCWNUHgN"
+      "parent": "1BxVgCrH76ZQwwKCWNUHgN",
+      "index": 0
     },
     "1BxVgCrH6magaGQznbF157": {
       "type": "svg",
-      "index": 0,
       "name": "carbon:machine-learning",
-      "parent": "1BxVgCrH8sJUYRSDLGMvAy"
+      "parent": "1BxVgCrH8sJUYRSDLGMvAy",
+      "index": 0
     },
     "1BxVgCrHKapAC9ymt6qR6o": {
       "type": "text",
-      "index": 1,
       "name": "AI Assistance",
-      "parent": "1BxVgCrH76ZQwwKCWNUHgN"
+      "parent": "1BxVgCrH76ZQwwKCWNUHgN",
+      "index": 1
     },
     "1BxVgCrH8vTJhZqrpJwkQ9": {
       "type": "text",
-      "index": 2,
       "name": "Supercharge your design process with AI-generated and refined text contents, as well as AI-generated images that fit perfectly into your project.",
-      "parent": "1BxVgCrH76ZQwwKCWNUHgN"
+      "parent": "1BxVgCrH76ZQwwKCWNUHgN",
+      "index": 2
     },
     "1BxVgCrHKCXgvRDBxZKKWH": {
       "type": "frame",
-      "index": 5,
       "name": "Frame 18",
-      "parent": "1BxVgCrGfyD1W2b5YnXRmb"
+      "parent": "1BxVgCrGfyD1W2b5YnXRmb",
+      "index": 5
     },
     "1BxVgCrHHXYnKapdoZE14y": {
       "type": "frame",
-      "index": 0,
       "name": "Frame 13",
-      "parent": "1BxVgCrHKCXgvRDBxZKKWH"
+      "parent": "1BxVgCrHKCXgvRDBxZKKWH",
+      "index": 0
     },
     "1BxVgCrHHtrubqFQqjP4HR": {
       "type": "svg",
-      "index": 0,
       "name": "carbon:logo-figma",
-      "parent": "1BxVgCrHHXYnKapdoZE14y"
+      "parent": "1BxVgCrHHXYnKapdoZE14y",
+      "index": 0
     },
     "1BxVgCrHPTPVe3oHjKqYGL": {
       "type": "text",
-      "index": 1,
       "name": "Figma Integration",
-      "parent": "1BxVgCrHKCXgvRDBxZKKWH"
+      "parent": "1BxVgCrHKCXgvRDBxZKKWH",
+      "index": 1
     },
     "1BxVgCrHNzRkcSDw7ygaqA": {
       "type": "text",
-      "index": 2,
       "name": "Easily import designs from Figma and export components back to Figma, ensuring seamless collaboration between UIMix and your favorite design tool.",
-      "parent": "1BxVgCrHKCXgvRDBxZKKWH"
+      "parent": "1BxVgCrHKCXgvRDBxZKKWH",
+      "index": 2
     },
     "1BxVgCrHRdQax9so25TKxh": {
       "type": "frame",
-      "index": 3,
       "name": "Frame",
-      "parent": "1BxVgCrGaA6oe1YHZoom8z"
+      "parent": "1BxVgCrGaA6oe1YHZoom8z",
+      "index": 3
     },
     "1BxVgCrHNtLaCZw68eQM9y": {
       "type": "text",
-      "index": 0,
       "name": "Open Source",
-      "parent": "1BxVgCrHRdQax9so25TKxh"
+      "parent": "1BxVgCrHRdQax9so25TKxh",
+      "index": 0
     },
     "1BxVgCrHSbRTwnk62WuEc2": {
       "type": "text",
-      "index": 1,
       "name": "UIMix's open-source editor and backend promote community-driven development and offer extensive customization options. Self-host both components for greater control over your design environment and data security.",
-      "parent": "1BxVgCrHRdQax9so25TKxh"
+      "parent": "1BxVgCrHRdQax9so25TKxh",
+      "index": 1
     },
     "1BxVgCrJHfRYsSpKbhMUNg": {
       "type": "frame",
-      "index": 2,
       "name": "Frame 3",
-      "parent": "1BxVgCrHRdQax9so25TKxh"
+      "parent": "1BxVgCrHRdQax9so25TKxh",
+      "index": 2
     },
     "1BxVgCrJ7SbcXqNXe95eD1": {
       "type": "text",
-      "index": 0,
       "name": "Explore GitHub repo",
-      "parent": "1BxVgCrJHfRYsSpKbhMUNg"
+      "parent": "1BxVgCrJHfRYsSpKbhMUNg",
+      "index": 0
     },
     "1BxVgCrJFQDfkPiLrmdmFe": {
       "type": "text",
-      "index": 3,
       "name": "How It Works",
-      "parent": "1BxVgCrHRdQax9so25TKxh"
+      "parent": "1BxVgCrHRdQax9so25TKxh",
+      "index": 3
     },
     "1BxVgCrJJuQcm3gGtAcBXB": {
       "type": "frame",
-      "index": 4,
       "name": "Frame",
-      "parent": "1BxVgCrHRdQax9so25TKxh"
+      "parent": "1BxVgCrHRdQax9so25TKxh",
+      "index": 4
     },
     "1BxVgCrJNeE5Z6SSihBFZa": {
       "type": "frame",
-      "index": 0,
       "name": "Frame",
-      "parent": "1BxVgCrJJuQcm3gGtAcBXB"
+      "parent": "1BxVgCrJJuQcm3gGtAcBXB",
+      "index": 0
     },
     "1BxVgCrJZa8AYSv4nULTfe": {
       "type": "text",
-      "index": 0,
       "name": "A. Start Your Project",
-      "parent": "1BxVgCrJNeE5Z6SSihBFZa"
+      "parent": "1BxVgCrJNeE5Z6SSihBFZa",
+      "index": 0
     },
     "1BxVgCrJX7Qi1CDciLGmun": {
       "type": "text",
-      "index": 1,
       "name": "Sign up for a free account or log in. Create a new project or import an existing Figma design. Organize your components and design tokens in the user-friendly interface.",
-      "parent": "1BxVgCrJNeE5Z6SSihBFZa"
+      "parent": "1BxVgCrJNeE5Z6SSihBFZa",
+      "index": 1
     },
     "1BxVgCrJTzNsqz2C6MTMfS": {
       "type": "frame",
-      "index": 1,
       "name": "Frame",
-      "parent": "1BxVgCrJJuQcm3gGtAcBXB"
+      "parent": "1BxVgCrJJuQcm3gGtAcBXB",
+      "index": 1
     },
     "1BxVgCrJTTSjV1Q7T4UHrq": {
       "type": "text",
-      "index": 0,
       "name": "B. Design & Develop",
-      "parent": "1BxVgCrJTzNsqz2C6MTMfS"
+      "parent": "1BxVgCrJTzNsqz2C6MTMfS",
+      "index": 0
     },
     "1BxVgCrJpKhLcVsRhsfWLz": {
       "type": "text",
-      "index": 1,
       "name": "Utilize Figma-like editing tools to create and modify designs. Seamlessly import React components into your UIMix project. Leverage AI assistance to efficiently generate and refine your content.",
-      "parent": "1BxVgCrJTzNsqz2C6MTMfS"
+      "parent": "1BxVgCrJTzNsqz2C6MTMfS",
+      "index": 1
     },
     "1BxVgCrJkX6m2gd6cBKC7S": {
       "type": "frame",
-      "index": 2,
       "name": "Frame",
-      "parent": "1BxVgCrJJuQcm3gGtAcBXB"
+      "parent": "1BxVgCrJJuQcm3gGtAcBXB",
+      "index": 2
     },
     "1BxVgCrJngMrQXNcKiWiE7": {
       "type": "text",
-      "index": 0,
       "name": "C. Collaborate & Publish",
-      "parent": "1BxVgCrJkX6m2gd6cBKC7S"
+      "parent": "1BxVgCrJkX6m2gd6cBKC7S",
+      "index": 0
     },
     "1BxVgCrJd4FEddLFCHf8we": {
       "type": "text",
-      "index": 1,
       "name": "Collaborate using the online editor or work offline for an optimized development experience. Integrate with GitHub for streamlined version control. Easily import UIMix components into React apps or export final designs back to Figma.",
-      "parent": "1BxVgCrJkX6m2gd6cBKC7S"
+      "parent": "1BxVgCrJkX6m2gd6cBKC7S",
+      "index": 1
     },
     "1BxVgCrJtYkwp8vbsMSDX8": {
       "type": "frame",
-      "index": 4,
       "name": "Frame 21",
-      "parent": "1BxVgCrGaA6oe1YHZoom8z"
+      "parent": "1BxVgCrGaA6oe1YHZoom8z",
+      "index": 4
     },
     "1BxVgCrK1KurrWLV4z9Ws5": {
       "type": "image",
-      "index": 0,
       "name": "image 4",
-      "parent": "1BxVgCrJtYkwp8vbsMSDX8"
+      "parent": "1BxVgCrJtYkwp8vbsMSDX8",
+      "index": 0
     },
     "1BxVgCrK2NfSwYDomgRyfH": {
       "type": "text",
-      "index": 1,
       "name": "Ready to revolutionize your web design workflow?",
-      "parent": "1BxVgCrJtYkwp8vbsMSDX8"
+      "parent": "1BxVgCrJtYkwp8vbsMSDX8",
+      "index": 1
     },
     "1BxVgCrJzLYED98uJfNVQi": {
       "type": "frame",
-      "index": 2,
       "name": "Frame 20",
-      "parent": "1BxVgCrJtYkwp8vbsMSDX8"
+      "parent": "1BxVgCrJtYkwp8vbsMSDX8",
+      "index": 2
     },
     "1BxVgCrK599h4tAkJJsyP1": {
       "type": "frame",
-      "index": 0,
       "name": "Frame 2",
-      "parent": "1BxVgCrJzLYED98uJfNVQi"
+      "parent": "1BxVgCrJzLYED98uJfNVQi",
+      "index": 0
     },
     "1BxVgCrJzf2R19MbMP4FW4": {
       "type": "text",
-      "index": 0,
       "name": "Get Early Access",
-      "parent": "1BxVgCrK599h4tAkJJsyP1"
+      "parent": "1BxVgCrK599h4tAkJJsyP1",
+      "index": 0
     },
     "1BxVgCrJyjiqRVKXbUrUyw": {
       "type": "variant",
-      "index": 1,
       "condition": { "type": "maxWidth", "value": 767 },
-      "parent": "1BxVgCrGSEvWcXqP3yNE3Z"
+      "parent": "1BxVgCrGSEvWcXqP3yNE3Z",
+      "index": 1
     }
   },
   "styles": {
@@ -527,7 +527,6 @@
         "x": { "type": "start", "start": 48 },
         "y": { "type": "start", "start": 24 }
       },
-      "absolute": true,
       "width": { "type": "hug" },
       "height": { "type": "hug" },
       "topLeftRadius": 0,
@@ -640,7 +639,6 @@
         "x": { "type": "end", "end": 47.99984677551083 },
         "y": { "type": "start", "start": 16 }
       },
-      "absolute": true,
       "width": { "type": "fixed", "value": 247 },
       "height": { "type": "fixed", "value": 41 },
       "topLeftRadius": 0,
@@ -723,10 +721,6 @@
     },
     "1BxVgCrGCH746iVt4REnNR": {
       "hidden": false,
-      "position": {
-        "x": { "type": "start", "start": 546 },
-        "y": { "type": "start", "start": 27 }
-      },
       "width": { "type": "hug" },
       "height": { "type": "hug" },
       "topLeftRadius": 0,
@@ -762,10 +756,6 @@
       "paddingBottom": 24
     },
     "1BxVgCrGVd7trdBMwvtsE1": {
-      "position": {
-        "x": { "type": "start", "start": 0 },
-        "y": { "type": "start", "start": 0 }
-      },
       "width": { "type": "fill" },
       "mainComponent": "1BxVgCrFNqPbwi2b2KCsWF"
     },
@@ -820,7 +810,6 @@
         "x": { "type": "both", "start": 0, "end": 0 },
         "y": { "type": "start", "start": 0 }
       },
-      "absolute": true,
       "width": { "type": "fill" },
       "height": { "type": "hug" },
       "marginBottom": -422,
@@ -830,10 +819,6 @@
     "1BxVgCrJyjiqRVKXbUrUyw:1BxVgCrGRjYMV4NFK2nw8a": {},
     "1BxVgCrGSPU8HZCJiW1EVq": {
       "hidden": false,
-      "position": {
-        "x": { "type": "start", "start": 360 },
-        "y": { "type": "start", "start": 173 }
-      },
       "width": { "type": "fill" },
       "height": { "type": "hug" },
       "fills": [{ "type": "solid", "color": "#1F2937" }],
@@ -852,10 +837,6 @@
     "1BxVgCrJyjiqRVKXbUrUyw:1BxVgCrGSPU8HZCJiW1EVq": {},
     "1BxVgCrGYDAAfs6kS5Jzxa": {
       "hidden": false,
-      "position": {
-        "x": { "type": "start", "start": 412 },
-        "y": { "type": "start", "start": 354 }
-      },
       "width": { "type": "fill" },
       "height": { "type": "hug" },
       "fills": [{ "type": "solid", "color": "#6b7280" }],
@@ -916,10 +897,6 @@
     "1BxVgCrJyjiqRVKXbUrUyw:1BxVgCrGcjjGEhT3SGRBHL": {},
     "1BxVgCrGfDwRkVm796YbSq": {
       "hidden": false,
-      "position": {
-        "x": { "type": "start", "start": 629 },
-        "y": { "type": "start", "start": 465 }
-      },
       "width": { "type": "hug" },
       "height": { "type": "hug" },
       "topLeftRadius": 0,
@@ -944,10 +921,6 @@
     "1BxVgCrJyjiqRVKXbUrUyw:1BxVgCrGfDwRkVm796YbSq": {},
     "1BxVgCrGfgyMEuaF1j3Pg2": {
       "hidden": false,
-      "position": {
-        "x": { "type": "start", "start": 360 },
-        "y": { "type": "start", "start": 581 }
-      },
       "width": { "type": "fill", "max": 720 },
       "height": { "type": "hug" },
       "topLeftRadius": 10,
@@ -970,10 +943,6 @@
     },
     "1BxVgCrJyjiqRVKXbUrUyw:1BxVgCrGfgyMEuaF1j3Pg2": {},
     "1BxVgCrGVNtxoaPQU7c3ih": {
-      "position": {
-        "x": { "type": "start", "start": 0 },
-        "y": { "type": "start", "start": 45 }
-      },
       "width": { "type": "fill" },
       "height": { "type": "hug" },
       "layout": "flex",
@@ -1525,10 +1494,6 @@
     "1BxVgCrJyjiqRVKXbUrUyw:1BxVgCrGfyD1W2b5YnXRmb": { "gridColumnCount": 1 },
     "1BxVgCrGqXCLCCDREyNBQ9": {
       "hidden": false,
-      "position": {
-        "x": { "type": "start", "start": -1 },
-        "y": { "type": "start", "start": 1134 }
-      },
       "width": { "type": "fill" },
       "height": { "type": "hug" },
       "topLeftRadius": 0,
@@ -1553,10 +1518,6 @@
     "1BxVgCrJyjiqRVKXbUrUyw:1BxVgCrGqXCLCCDREyNBQ9": {},
     "1BxVgCrHNtLaCZw68eQM9y": {
       "hidden": false,
-      "position": {
-        "x": { "type": "start", "start": 594 },
-        "y": { "type": "start", "start": 101 }
-      },
       "width": { "type": "fill" },
       "height": { "type": "hug" },
       "fills": [{ "type": "solid", "color": "#1f2937" }],
@@ -1574,10 +1535,6 @@
     "1BxVgCrJyjiqRVKXbUrUyw:1BxVgCrHNtLaCZw68eQM9y": {},
     "1BxVgCrHSbRTwnk62WuEc2": {
       "hidden": false,
-      "position": {
-        "x": { "type": "start", "start": 421 },
-        "y": { "type": "start", "start": 187 }
-      },
       "width": { "type": "fill" },
       "height": { "type": "hug" },
       "fills": [{ "type": "solid", "color": "#4b5563" }],
@@ -1611,10 +1568,6 @@
     "1BxVgCrJyjiqRVKXbUrUyw:1BxVgCrJ7SbcXqNXe95eD1": {},
     "1BxVgCrJHfRYsSpKbhMUNg": {
       "hidden": false,
-      "position": {
-        "x": { "type": "start", "start": 618 },
-        "y": { "type": "start", "start": 342 }
-      },
       "width": { "type": "hug" },
       "height": { "type": "hug" },
       "topLeftRadius": 25,
@@ -1647,10 +1600,6 @@
     "1BxVgCrJyjiqRVKXbUrUyw:1BxVgCrJHfRYsSpKbhMUNg": {},
     "1BxVgCrJFQDfkPiLrmdmFe": {
       "hidden": false,
-      "position": {
-        "x": { "type": "start", "start": 589 },
-        "y": { "type": "start", "start": 525 }
-      },
       "width": { "type": "fill" },
       "height": { "type": "hug" },
       "fills": [{ "type": "solid", "color": "#1f2937" }],
@@ -1668,10 +1617,6 @@
     "1BxVgCrJyjiqRVKXbUrUyw:1BxVgCrJFQDfkPiLrmdmFe": {},
     "1BxVgCrJZa8AYSv4nULTfe": {
       "hidden": false,
-      "position": {
-        "x": { "type": "start", "start": 118 },
-        "y": { "type": "start", "start": 662 }
-      },
       "width": { "type": "fill" },
       "height": { "type": "hug" },
       "fills": [{ "type": "solid", "color": "#1f2937" }],
@@ -1689,10 +1634,6 @@
     "1BxVgCrJyjiqRVKXbUrUyw:1BxVgCrJZa8AYSv4nULTfe": {},
     "1BxVgCrJX7Qi1CDciLGmun": {
       "hidden": false,
-      "position": {
-        "x": { "type": "start", "start": 110 },
-        "y": { "type": "start", "start": 718 }
-      },
       "width": { "type": "fill" },
       "height": { "type": "hug" },
       "fills": [{ "type": "solid", "color": "#4b5563" }],
@@ -1708,10 +1649,6 @@
     },
     "1BxVgCrJyjiqRVKXbUrUyw:1BxVgCrJX7Qi1CDciLGmun": {},
     "1BxVgCrJNeE5Z6SSihBFZa": {
-      "position": {
-        "x": { "type": "start", "start": 110 },
-        "y": { "type": "start", "start": 662 }
-      },
       "width": { "type": "fill" },
       "height": { "type": "hug" },
       "layout": "flex",
@@ -1720,10 +1657,6 @@
     "1BxVgCrJyjiqRVKXbUrUyw:1BxVgCrJNeE5Z6SSihBFZa": {},
     "1BxVgCrJTTSjV1Q7T4UHrq": {
       "hidden": false,
-      "position": {
-        "x": { "type": "start", "start": 561 },
-        "y": { "type": "start", "start": 662 }
-      },
       "width": { "type": "fill" },
       "height": { "type": "hug" },
       "fills": [{ "type": "solid", "color": "#1f2937" }],
@@ -1741,10 +1674,6 @@
     "1BxVgCrJyjiqRVKXbUrUyw:1BxVgCrJTTSjV1Q7T4UHrq": {},
     "1BxVgCrJpKhLcVsRhsfWLz": {
       "hidden": false,
-      "position": {
-        "x": { "type": "start", "start": 553 },
-        "y": { "type": "start", "start": 712 }
-      },
       "width": { "type": "fill" },
       "height": { "type": "hug" },
       "fills": [{ "type": "solid", "color": "#4b5563" }],
@@ -1760,10 +1689,6 @@
     },
     "1BxVgCrJyjiqRVKXbUrUyw:1BxVgCrJpKhLcVsRhsfWLz": {},
     "1BxVgCrJTzNsqz2C6MTMfS": {
-      "position": {
-        "x": { "type": "start", "start": 553 },
-        "y": { "type": "start", "start": 662 }
-      },
       "width": { "type": "fill" },
       "height": { "type": "hug" },
       "layout": "flex",
@@ -1772,10 +1697,6 @@
     "1BxVgCrJyjiqRVKXbUrUyw:1BxVgCrJTzNsqz2C6MTMfS": {},
     "1BxVgCrJngMrQXNcKiWiE7": {
       "hidden": false,
-      "position": {
-        "x": { "type": "start", "start": 990 },
-        "y": { "type": "start", "start": 662 }
-      },
       "width": { "type": "fill" },
       "height": { "type": "hug" },
       "fills": [{ "type": "solid", "color": "#1f2937" }],
@@ -1793,10 +1714,6 @@
     "1BxVgCrJyjiqRVKXbUrUyw:1BxVgCrJngMrQXNcKiWiE7": {},
     "1BxVgCrJd4FEddLFCHf8we": {
       "hidden": false,
-      "position": {
-        "x": { "type": "start", "start": 988 },
-        "y": { "type": "start", "start": 712 }
-      },
       "width": { "type": "fill" },
       "height": { "type": "hug" },
       "fills": [{ "type": "solid", "color": "#4b5563" }],
@@ -1812,10 +1729,6 @@
     },
     "1BxVgCrJyjiqRVKXbUrUyw:1BxVgCrJd4FEddLFCHf8we": {},
     "1BxVgCrJkX6m2gd6cBKC7S": {
-      "position": {
-        "x": { "type": "start", "start": 988 },
-        "y": { "type": "start", "start": 662 }
-      },
       "width": { "type": "fill" },
       "height": { "type": "hug" },
       "layout": "flex",
@@ -1823,10 +1736,6 @@
     },
     "1BxVgCrJyjiqRVKXbUrUyw:1BxVgCrJkX6m2gd6cBKC7S": {},
     "1BxVgCrJJuQcm3gGtAcBXB": {
-      "position": {
-        "x": { "type": "start", "start": 110 },
-        "y": { "type": "start", "start": 662 }
-      },
       "width": { "type": "fill", "max": 1280 },
       "height": { "type": "hug" },
       "layout": "flex",
@@ -1836,10 +1745,6 @@
     },
     "1BxVgCrJyjiqRVKXbUrUyw:1BxVgCrJJuQcm3gGtAcBXB": {},
     "1BxVgCrHRdQax9so25TKxh": {
-      "position": {
-        "x": { "type": "start", "start": 0 },
-        "y": { "type": "start", "start": 1730 }
-      },
       "width": { "type": "fill" },
       "height": { "type": "hug" },
       "layout": "flex",
@@ -1857,7 +1762,6 @@
         "x": { "type": "start", "start": -23 },
         "y": { "type": "start", "start": -368 }
       },
-      "absolute": true,
       "width": { "type": "fixed", "value": 1500 },
       "height": { "type": "fixed", "value": 1100 },
       "topLeftRadius": 0,
@@ -1872,10 +1776,6 @@
     "1BxVgCrJyjiqRVKXbUrUyw:1BxVgCrK1KurrWLV4z9Ws5": {},
     "1BxVgCrK2NfSwYDomgRyfH": {
       "hidden": false,
-      "position": {
-        "x": { "type": "start", "start": 248 },
-        "y": { "type": "start", "start": 96 }
-      },
       "width": { "type": "fill" },
       "height": { "type": "hug" },
       "fills": [{ "type": "solid", "color": "#ffffff" }],
@@ -1936,10 +1836,6 @@
     "1BxVgCrJyjiqRVKXbUrUyw:1BxVgCrK599h4tAkJJsyP1": {},
     "1BxVgCrJzLYED98uJfNVQi": {
       "hidden": false,
-      "position": {
-        "x": { "type": "start", "start": 622 },
-        "y": { "type": "start", "start": 205 }
-      },
       "width": { "type": "hug" },
       "height": { "type": "hug" },
       "topLeftRadius": 0,
@@ -1966,10 +1862,6 @@
     "1BxVgCrJyjiqRVKXbUrUyw:1BxVgCrJzLYED98uJfNVQi": {},
     "1BxVgCrJtYkwp8vbsMSDX8": {
       "hidden": false,
-      "position": {
-        "x": { "type": "start", "start": -1 },
-        "y": { "type": "start", "start": 2728 }
-      },
       "width": { "type": "fill" },
       "height": { "type": "hug" },
       "topLeftRadius": 0,
@@ -2014,7 +1906,10 @@
       "width": { "type": "fixed", "value": 720 }
     }
   },
-  "componentURLs": [],
+  "componentURLs": [
+    "https://cdn.jsdelivr.net/gh/uimix-editor/uimix@ba0157d5/packages/sandbox/dist-components/components.js",
+    "https://cdn.jsdelivr.net/gh/uimix-editor/uimix@ba0157d5/packages/sandbox/dist-components/style.css"
+  ],
   "images": {
     "1yKf5NvwGW-XtLSBDlS3GqZfbEGnLshgQrjyQJImqaM": {
       "width": 2880,

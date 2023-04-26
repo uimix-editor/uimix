@@ -54,7 +54,7 @@ export class NodeMoveDragHandler implements DragHandler {
 
     // don't show insertion line if all targets prefer absolute position
     const allPrefersAbsolute = [...this.targets.keys()].every(
-      (target) => target.style.absolute
+      (target) => target.style.preferAbsolute
     );
     if (allPrefersAbsolute) {
       viewportState.dropDestination = {

@@ -44,8 +44,8 @@ export type Fill = z.infer<typeof Fill>;
 export const BaseStyleProps = z.object({
   hidden: z.boolean(),
   locked: z.boolean(),
-  position: Position,
-  absolute: z.boolean(),
+  position: z.union([z.null(), Position]),
+  preferAbsolute: z.boolean(),
   width: Size,
   height: Size,
 
