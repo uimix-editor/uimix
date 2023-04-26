@@ -116,6 +116,7 @@ export function buildNodeCSS(
     } else if (width.type === "hug") {
       cssStyle.width = "max-content";
     }
+    cssStyle[yWidthVarName] = cssStyle[gridWidthVarName] = cssStyle.width;
   }
 
   const height = style.height;
@@ -137,6 +138,7 @@ export function buildNodeCSS(
     } else if (height.type === "hug") {
       cssStyle.height = "max-content";
     }
+    cssStyle[xHeightVarName] = cssStyle[gridHeightVarName] = cssStyle.height;
   }
 
   cssStyle.opacity = style.opacity;
