@@ -14,10 +14,10 @@ export function getLayoutType(
 
 const xFlexGrowVarName = "--uimix-x-flex-grow";
 const yFlexGrowVarName = "--uimix-y-flex-grow";
-const xAlignSelfVarName = "--uimix-x-align-self";
-const yAlignSelfVarName = "--uimix-y-align-self";
-const gridJustifySelfVarName = "--uimix-grid-justify-self";
-const gridAlignSelfVarName = "--uimix-grid-align-self";
+const xHeightVarName = "--uimix-x-height";
+const yWidthVarName = "--uimix-y-width";
+const gridWidthVarName = "--uimix-grid-width";
+const gridHeightVarName = "--uimix-grid-height";
 const leftVarName = "--uimix-left";
 const rightVarName = "--uimix-right";
 const topVarName = "--uimix-top";
@@ -26,10 +26,10 @@ const bottomVarName = "--uimix-bottom";
 type PropertiesWithVars = CSS.Properties & {
   [xFlexGrowVarName]?: number;
   [yFlexGrowVarName]?: number;
-  [xAlignSelfVarName]?: CSS.Properties["alignSelf"];
-  [yAlignSelfVarName]?: CSS.Properties["alignSelf"];
-  [gridJustifySelfVarName]?: CSS.Properties["justifySelf"];
-  [gridAlignSelfVarName]?: CSS.Properties["alignSelf"];
+  [xHeightVarName]?: CSS.Properties["height"];
+  [yWidthVarName]?: CSS.Properties["width"];
+  [gridWidthVarName]?: CSS.Properties["width"];
+  [gridHeightVarName]?: CSS.Properties["height"];
   [leftVarName]?: string;
   [rightVarName]?: string;
   [topVarName]?: string;
@@ -102,14 +102,14 @@ export function buildNodeCSS(
   const width = style.width;
   if (width.type === "fill") {
     cssStyle[xFlexGrowVarName] = 1;
-    cssStyle[yAlignSelfVarName] = "stretch";
-    cssStyle[gridJustifySelfVarName] = "stretch";
+    cssStyle[yWidthVarName] = cssStyle[gridWidthVarName] = `calc(100% - ${
+      style.marginLeft + style.marginRight
+    }px)`;
     cssStyle.minWidth = width.min !== undefined ? `${width.min}px` : undefined;
     cssStyle.maxWidth = width.max !== undefined ? `${width.max}px` : undefined;
   } else {
     cssStyle[xFlexGrowVarName] = 0;
-    cssStyle[yAlignSelfVarName] = "auto";
-    cssStyle[gridJustifySelfVarName] = "auto";
+
     if (width.type === "fixed") {
       cssStyle.width = `${width.value}px`;
     } else if (width.type === "hug") {
@@ -120,16 +120,15 @@ export function buildNodeCSS(
   const height = style.height;
   if (height.type === "fill") {
     cssStyle[yFlexGrowVarName] = 1;
-    cssStyle[xAlignSelfVarName] = "stretch";
-    cssStyle[gridAlignSelfVarName] = "stretch";
+    cssStyle[xHeightVarName] = cssStyle[gridHeightVarName] = `calc(100% - ${
+      style.marginTop + style.marginBottom
+    }px)`;
     cssStyle.minHeight =
       height.min !== undefined ? `${height.min}px` : undefined;
     cssStyle.maxHeight =
       height.max !== undefined ? `${height.max}px` : undefined;
   } else {
     cssStyle[yFlexGrowVarName] = 0;
-    cssStyle[xAlignSelfVarName] = "auto";
-    cssStyle[gridAlignSelfVarName] = "auto";
 
     if (height.type === "fixed") {
       cssStyle.height = `${height.value}px`;
@@ -173,10 +172,10 @@ export function buildNodeCSS(
 
       if (style.flexDirection === "x") {
         childrenStyle.flexGrow = `var(${xFlexGrowVarName})`;
-        childrenStyle.alignSelf = `var(${xAlignSelfVarName})`;
+        childrenStyle.height = `var(${xHeightVarName})`;
       } else {
         childrenStyle.flexGrow = `var(${yFlexGrowVarName})`;
-        childrenStyle.alignSelf = `var(${yAlignSelfVarName})`;
+        childrenStyle.width = `var(${yWidthVarName})`;
       }
     } else if (layout === "grid") {
       cssStyle.display = "grid";
@@ -190,8 +189,8 @@ export function buildNodeCSS(
       cssStyle.rowGap = `${style.rowGap}px`;
       cssStyle.columnGap = `${style.columnGap}px`;
 
-      childrenStyle.alignSelf = `var(${gridAlignSelfVarName})`;
-      childrenStyle.justifySelf = `var(${gridJustifySelfVarName})`;
+      childrenStyle.width = `var(${gridWidthVarName})`;
+      childrenStyle.height = `var(${gridHeightVarName})`;
     } else {
       cssStyle.display = "block";
     }
