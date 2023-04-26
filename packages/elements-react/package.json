@@ -4,17 +4,31 @@
   "type": "module",
   "main": "src/index.tsx",
   "scripts": {
-    "lint": "eslint src"
+    "lint": "eslint src",
+    "storybook": "storybook dev -p 8008",
+    "build-storybook": "storybook build"
   },
   "dependencies": {
     "csstype": "^3.1.2",
     "zod": "^3.21.4"
   },
   "devDependencies": {
+    "@babel/preset-env": "^7.21.4",
+    "@babel/preset-react": "^7.18.6",
+    "@babel/preset-typescript": "^7.21.4",
+    "@storybook/addon-essentials": "^7.0.7",
+    "@storybook/addon-interactions": "^7.0.7",
+    "@storybook/addon-links": "^7.0.7",
+    "@storybook/blocks": "^7.0.7",
+    "@storybook/react": "^7.0.7",
+    "@storybook/react-webpack5": "^7.0.7",
+    "@storybook/testing-library": "^0.0.14-next.2",
     "@types/react": "^18.0.38",
     "@types/react-dom": "^18.0.11",
+    "prop-types": "^15.8.1",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
+    "storybook": "^7.0.7",
     "typescript": "^5.0.4"
   }
 }
