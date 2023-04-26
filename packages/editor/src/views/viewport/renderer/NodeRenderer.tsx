@@ -1,11 +1,6 @@
 import React, { createRef, useEffect, useRef } from "react";
 import { observer } from "mobx-react-lite";
-import * as Data from "@uimix/model/src/data/v1";
-import {
-  Selectable,
-  buildNodeCSS,
-  getLayoutType,
-} from "@uimix/model/src/models";
+import { Selectable, buildNodeCSS } from "@uimix/model/src/models";
 import { viewportState } from "../../../state/ViewportState";
 import { ComputedRectProvider } from "./ComputedRectProvider";
 import { projectState } from "../../../state/ProjectState";

@@ -1,17 +1,6 @@
 import * as Data from "../data/v1";
 import * as CSS from "csstype";
 
-export function getLayoutType(
-  style: Data.Style
-): Data.StackDirection | "grid" | undefined {
-  if (style.layout === "flex") {
-    return style.flexDirection;
-  }
-  if (style.layout === "grid") {
-    return "grid";
-  }
-}
-
 const xFlexGrowVarName = "--uimix-x-flex-grow";
 const yFlexGrowVarName = "--uimix-y-flex-grow";
 const xHeightVarName = "--uimix-x-height";
