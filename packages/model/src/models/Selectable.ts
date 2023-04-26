@@ -429,7 +429,7 @@ export class Selectable {
 
   @computed get isAbsolute(): boolean {
     if (this.parent?.style.layout !== "none") {
-      return this.style.absolute;
+      return !!this.style.position;
     }
     return true;
   }
@@ -558,10 +558,7 @@ export class Selectable {
 
     if (fixPosition) {
       for (const selectable of selectables) {
-        const absolute =
-          this.style.layout === "none" || selectable.style.absolute;
-
-        if (absolute) {
+        if (selectable.isAbsolute) {
           const bbox = selectable.computedRect;
           resizeWithBoundingBox(selectable, bbox, { x: true, y: true });
         }

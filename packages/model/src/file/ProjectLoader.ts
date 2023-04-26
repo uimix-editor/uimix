@@ -319,7 +319,7 @@ class PageLoader {
       hidden: style.hidden,
       locked: style.locked,
       position: style.position && this.transformPosition(style.position),
-      absolute: style.absolute,
+      preferAbsolute: style.preferAbsolute,
       width:
         style.width !== undefined ? this.transformSize(style.width) : undefined,
       height:

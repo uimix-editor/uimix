@@ -11,7 +11,7 @@ export const defaultStyle: Data.Style = {
     x: { type: "start", start: 0 },
     y: { type: "start", start: 0 },
   },
-  absolute: false,
+  preferAbsolute: false,
   width: { type: "hug" },
   height: { type: "hug" },
 

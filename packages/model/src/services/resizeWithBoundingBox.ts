@@ -9,7 +9,12 @@ function setPositionConstraintValue(
 ) {
   const { style } = selectable;
 
-  const constraint = style.position[axis];
+  const position = style.position ?? {
+    x: { type: "start", start: 0 },
+    y: { type: "start", start: 0 },
+  };
+
+  const constraint = position[axis];
   const parentSize = parentRect[axis === "x" ? "width" : "height"];
   const start =
     rect[axis === "x" ? "left" : "top"] -
@@ -44,7 +49,7 @@ function setPositionConstraintValue(
   }
 
   style.position = {
-    ...style.position,
+    ...position,
     [axis]: newConstraint,
   };
 }
@@ -69,9 +74,14 @@ export function resizeWithBoundingBox(
       setPositionConstraintValue(selectable, "y", bbox, parentRect);
     }
   } else {
+    let position = selectable.style.position ?? {
+      x: { type: "start", start: 0 },
+      y: { type: "start", start: 0 },
+    };
+
     if (targets.x) {
-      selectable.style.position = {
-        ...selectable.style.position,
+      position = {
+        ...position,
         x: {
           type: "start",
           start: bbox.left,
@@ -79,14 +89,15 @@ export function resizeWithBoundingBox(
       };
     }
     if (targets.y) {
-      selectable.style.position = {
-        ...selectable.style.position,
+      position = {
+        ...position,
         y: {
           type: "start",
           start: bbox.top,
         },
       };
     }
+    selectable.style.position = position;
   }
 
   if (targets.width) {

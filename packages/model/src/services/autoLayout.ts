@@ -94,7 +94,7 @@ export function autoLayout(selectable: Selectable): void {
   const paddingRect = selectable.computedPaddingRect;
 
   const flex = detectFlex(
-    selectable.children.filter((child) => !child.style.absolute)
+    selectable.children.filter((child) => !child.style.preferAbsolute)
   );
 
   const offsetBBox = flex.bbox.translate(paddingRect.topLeft.neg);
@@ -110,6 +110,10 @@ export function autoLayout(selectable: Selectable): void {
   for (const [i, margin] of flex.margins.entries()) {
     const prop = flex.direction === "x" ? "marginRight" : "marginBottom";
     flex.elements[i].style[prop] = margin;
+  }
+
+  for (const children of flex.elements) {
+    children.style.position = null;
   }
 
   selectable.originalNode.append(flex.elements.map((e) => e.originalNode));
@@ -161,6 +165,9 @@ export function groupAndAutoLayout(
   for (const [i, margin] of flex.margins.entries()) {
     const prop = flex.direction === "x" ? "marginRight" : "marginBottom";
     flex.elements[i].style[prop] = margin;
+  }
+  for (const children of flex.elements) {
+    children.style.position = null;
   }
 
   frame.computedRectProvider = new StubComputedRectProvider(flex.bbox);
