@@ -63,8 +63,7 @@ export const Box: React.FC<
 
 interface StyleProps {
   hidden: boolean;
-  position: Position;
-  absolute: boolean;
+  position: Position | null;
   width: Size;
   height: Size;
   topLeftRadius: number;
@@ -117,6 +116,65 @@ interface StyleProps {
   // tag name
   tagName: string | null;
 }
+
+export const defaultStyle: StyleProps = {
+  hidden: false,
+  position: null,
+  width: "hug",
+  height: "hug",
+
+  topLeftRadius: 0,
+  topRightRadius: 0,
+  bottomRightRadius: 0,
+  bottomLeftRadius: 0,
+
+  fills: [],
+  border: null,
+  borderTopWidth: 0,
+  borderRightWidth: 0,
+  borderBottomWidth: 0,
+  borderLeftWidth: 0,
+
+  opacity: 1,
+  overflowHidden: false,
+
+  shadows: [],
+
+  marginTop: 0,
+  marginRight: 0,
+  marginBottom: 0,
+  marginLeft: 0,
+
+  // stack (auto layout)
+
+  layout: "none",
+  flexDirection: "x",
+  flexAlign: "start",
+  flexJustify: "start",
+  gridColumnCount: null,
+  gridRowCount: null,
+  rowGap: 0,
+  columnGap: 0,
+  paddingTop: 0,
+  paddingRight: 0,
+  paddingBottom: 0,
+  paddingLeft: 0,
+
+  // text
+
+  textContent: "",
+  fontFamily: "Inter",
+  fontWeight: 400,
+  fontSize: 16,
+  lineHeight: null,
+  letterSpacing: 0,
+  textHorizontalAlign: "start",
+  textVerticalAlign: "start",
+
+  image: null,
+
+  tagName: null,
+};
 
 const xFlexGrowVarName = "--uimix-x-flex-grow";
 const yFlexGrowVarName = "--uimix-y-flex-grow";
