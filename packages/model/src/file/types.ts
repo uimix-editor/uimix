@@ -1,6 +1,7 @@
 import {
   Fill,
   Position,
+  PercentString,
   Shadow,
   Size,
   StackAlign,
@@ -65,8 +66,8 @@ export const BaseStyleProps = z.object({
   fontFamily: z.string(),
   fontWeight: z.number(),
   fontSize: z.number(),
-  lineHeight: z.union([z.number(), z.string(), z.null()]), // percent means relative to font size (null for auto)
-  letterSpacing: z.union([z.number(), z.string()]), // percent means relative to font size: ;
+  lineHeight: z.union([z.number(), PercentString, z.null()]), // percent means relative to font size (null for auto)
+  letterSpacing: z.union([z.number(), PercentString]), // percent means relative to font size
   textHorizontalAlign: TextHorizontalAlign,
   textVerticalAlign: TextVerticalAlign,
 
