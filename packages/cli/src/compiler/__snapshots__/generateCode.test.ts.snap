@@ -382,8 +382,7 @@ exports[`generateCode > generates code > src/components.uimix.css 1`] = `
   --uimix-x-flex-grow: 1;
   --uimix-grid-width: calc(100% - 0px);
   --uimix-y-width: calc(100% - 0px);
-  min-width: undefined;
-  max-width: undefined;
+  min-width: 0;
   --uimix-y-flex-grow: 0;
   height: max-content;
   --uimix-grid-height: max-content;
@@ -399,13 +398,11 @@ exports[`generateCode > generates code > src/components.uimix.css 1`] = `
   --uimix-x-flex-grow: 1;
   --uimix-grid-width: calc(100% - 0px);
   --uimix-y-width: calc(100% - 0px);
-  min-width: undefined;
-  max-width: undefined;
+  min-width: 0;
   --uimix-y-flex-grow: 1;
   --uimix-grid-height: calc(100% - 0px);
   --uimix-x-height: calc(100% - 0px);
-  min-height: undefined;
-  max-height: undefined;
+  min-height: 0;
   opacity: 1;
   overflow: visible;
   display: block;
@@ -421,10 +418,8 @@ exports[`generateCode > generates code > src/components.uimix.css 1`] = `
   box-sizing: border-box;
   -webkit-font-smoothing: antialiased;
   position: absolute;
-  left: 33px;
-  right: auto;
   top: 28px;
-  bottom: auto;
+  left: 33px;
   margin: 0;
   --uimix-x-flex-grow: 0;
   width: max-content;
@@ -439,20 +434,16 @@ exports[`generateCode > generates code > src/components.uimix.css 1`] = `
 }
 .uimix-PageRBRbRk__instance {
   position: absolute;
-  left: 160px;
-  right: auto;
   top: 28px;
-  bottom: auto;
+  left: 160px;
   background: #bababa
 }
 .uimix-PageRBRbRk__image {
   box-sizing: border-box;
   -webkit-font-smoothing: antialiased;
   position: absolute;
-  left: 33px;
-  right: auto;
   top: 97px;
-  bottom: auto;
+  left: 33px;
   margin: 0;
   --uimix-x-flex-grow: 0;
   width: 100px;
@@ -473,10 +464,8 @@ exports[`generateCode > generates code > src/components.uimix.css 1`] = `
 }
 .uimix-PageRBRbRk__stack {
   position: absolute;
-  left: 165px;
-  right: auto;
   top: 86px;
-  bottom: auto
+  left: 165px
 }
 .uimix-PageRBRbRk__stack-StackRBRbRk__hidden_Item {
   display: block
@@ -485,10 +474,8 @@ exports[`generateCode > generates code > src/components.uimix.css 1`] = `
   box-sizing: border-box;
   -webkit-font-smoothing: antialiased;
   position: absolute;
-  left: 315px;
-  right: auto;
   top: 29px;
-  bottom: auto;
+  left: 315px;
   margin: 0;
   --uimix-x-flex-grow: 0;
   width: max-content;
@@ -569,8 +556,7 @@ exports[`generateCode > generates code > src/components.uimix.css 1`] = `
   --uimix-x-flex-grow: 1;
   --uimix-grid-width: calc(100% - 0px);
   --uimix-y-width: calc(100% - 0px);
-  min-width: undefined;
-  max-width: undefined;
+  min-width: 0;
   --uimix-y-flex-grow: 0;
   height: max-content;
   --uimix-grid-height: max-content;
@@ -597,8 +583,7 @@ exports[`generateCode > generates code > src/components.uimix.css 1`] = `
   --uimix-x-flex-grow: 1;
   --uimix-grid-width: calc(100% - 0px);
   --uimix-y-width: calc(100% - 0px);
-  min-width: undefined;
-  max-width: undefined;
+  min-width: 0;
   --uimix-y-flex-grow: 0;
   height: max-content;
   --uimix-grid-height: max-content;
@@ -925,8 +910,7 @@ exports[`generateCode > generates code > src/landing.uimix.css 1`] = `
   --uimix-y-flex-grow: 1;
   --uimix-grid-height: calc(100% - 0px);
   --uimix-x-height: calc(100% - 0px);
-  min-height: undefined;
-  max-height: undefined;
+  min-height: 0;
   opacity: 1;
   overflow: hidden;
   display: flex;
@@ -958,10 +942,8 @@ exports[`generateCode > generates code > src/landing.uimix.css 1`] = `
   box-sizing: border-box;
   -webkit-font-smoothing: antialiased;
   position: absolute;
-  left: 48px;
-  right: auto;
   top: 24px;
-  bottom: auto;
+  left: 48px;
   margin: 0;
   --uimix-x-flex-grow: 0;
   width: max-content;
@@ -1044,10 +1026,8 @@ exports[`generateCode > generates code > src/landing.uimix.css 1`] = `
   box-sizing: border-box;
   -webkit-font-smoothing: antialiased;
   position: absolute;
-  left: auto;
-  right: 47.99984677551083px;
   top: 16px;
-  bottom: auto;
+  right: 47.99984677551083px;
   margin: 0;
   --uimix-x-flex-grow: 0;
   width: 247px;
@@ -1264,7 +1244,7 @@ exports[`generateCode > generates code > src/landing.uimix.css 1`] = `
   --uimix-x-flex-grow: 1;
   --uimix-grid-width: calc(100% - 0px);
   --uimix-y-width: calc(100% - 0px);
-  width: undefined
+  min-width: 0
 }
 .uimix-LandingXg2GP1__frame1 {
   box-sizing: border-box;
@@ -1274,8 +1254,7 @@ exports[`generateCode > generates code > src/landing.uimix.css 1`] = `
   --uimix-x-flex-grow: 1;
   --uimix-grid-width: calc(100% - 0px);
   --uimix-y-width: calc(100% - 0px);
-  min-width: undefined;
-  max-width: undefined;
+  min-width: 0;
   --uimix-y-flex-grow: 0;
   height: max-content;
   --uimix-grid-height: max-content;
@@ -1304,16 +1283,14 @@ exports[`generateCode > generates code > src/landing.uimix.css 1`] = `
   box-sizing: border-box;
   -webkit-font-smoothing: antialiased;
   position: absolute;
-  left: 0;
-  right: 0;
   top: 0;
-  bottom: auto;
+  right: 0;
+  left: 0;
   margin: 0 0 -422px;
   --uimix-x-flex-grow: 1;
   --uimix-grid-width: calc(100% - 0px);
   --uimix-y-width: calc(100% - 0px);
-  min-width: undefined;
-  max-width: undefined;
+  min-width: 0;
   --uimix-y-flex-grow: 0;
   height: max-content;
   --uimix-grid-height: max-content;
@@ -1342,10 +1319,8 @@ exports[`generateCode > generates code > src/landing.uimix.css 1`] = `
   box-sizing: border-box;
   -webkit-font-smoothing: antialiased;
   position: absolute;
-  left: 343px;
-  right: auto;
   top: 45px;
-  bottom: auto;
+  left: 343px;
   margin: 0;
   --uimix-x-flex-grow: 0;
   width: 750px;
@@ -1372,8 +1347,7 @@ exports[`generateCode > generates code > src/landing.uimix.css 1`] = `
   --uimix-x-flex-grow: 1;
   --uimix-grid-width: calc(100% - 0px);
   --uimix-y-width: calc(100% - 0px);
-  min-width: undefined;
-  max-width: undefined;
+  min-width: 0;
   --uimix-y-flex-grow: 0;
   height: max-content;
   --uimix-grid-height: max-content;
@@ -1400,8 +1374,7 @@ exports[`generateCode > generates code > src/landing.uimix.css 1`] = `
   --uimix-x-flex-grow: 1;
   --uimix-grid-width: calc(100% - 0px);
   --uimix-y-width: calc(100% - 0px);
-  min-width: undefined;
-  max-width: undefined;
+  min-width: 0;
   --uimix-y-flex-grow: 0;
   height: max-content;
   --uimix-grid-height: max-content;
@@ -1517,15 +1490,13 @@ exports[`generateCode > generates code > src/landing.uimix.css 1`] = `
   box-sizing: border-box;
   -webkit-font-smoothing: antialiased;
   position: absolute;
-  left: 360px;
-  right: auto;
   top: 581px;
-  bottom: auto;
+  left: 360px;
   margin: 0 0 64px;
   --uimix-x-flex-grow: 1;
   --uimix-grid-width: calc(100% - 0px);
   --uimix-y-width: calc(100% - 0px);
-  min-width: undefined;
+  min-width: 0;
   max-width: 720px;
   --uimix-y-flex-grow: 0;
   height: max-content;
@@ -1548,8 +1519,7 @@ exports[`generateCode > generates code > src/landing.uimix.css 1`] = `
   --uimix-x-flex-grow: 1;
   --uimix-grid-width: calc(100% - 0px);
   --uimix-y-width: calc(100% - 0px);
-  min-width: undefined;
-  max-width: undefined;
+  min-width: 0;
   --uimix-y-flex-grow: 0;
   height: max-content;
   --uimix-grid-height: max-content;
@@ -1582,13 +1552,12 @@ exports[`generateCode > generates code > src/landing.uimix.css 1`] = `
   --uimix-x-flex-grow: 1;
   --uimix-grid-width: calc(100% - 0px);
   --uimix-y-width: calc(100% - 0px);
-  min-width: undefined;
+  min-width: 0;
   max-width: 1200px;
   --uimix-y-flex-grow: 1;
   --uimix-grid-height: calc(100% - 0px);
   --uimix-x-height: calc(100% - 0px);
-  min-height: undefined;
-  max-height: undefined;
+  min-height: 0;
   opacity: 1;
   overflow: visible;
   display: grid;
@@ -1615,13 +1584,11 @@ exports[`generateCode > generates code > src/landing.uimix.css 1`] = `
   --uimix-x-flex-grow: 1;
   --uimix-grid-width: calc(100% - 0px);
   --uimix-y-width: calc(100% - 0px);
-  min-width: undefined;
-  max-width: undefined;
+  min-width: 0;
   --uimix-y-flex-grow: 1;
   --uimix-grid-height: calc(100% - 0px);
   --uimix-x-height: calc(100% - 0px);
-  min-height: undefined;
-  max-height: undefined;
+  min-height: 0;
   opacity: 1;
   overflow: visible;
   display: flex;
@@ -1705,8 +1672,7 @@ exports[`generateCode > generates code > src/landing.uimix.css 1`] = `
   --uimix-x-flex-grow: 1;
   --uimix-grid-width: calc(100% - 0px);
   --uimix-y-width: calc(100% - 0px);
-  min-width: undefined;
-  max-width: undefined;
+  min-width: 0;
   --uimix-y-flex-grow: 0;
   height: max-content;
   --uimix-grid-height: max-content;
@@ -1733,8 +1699,7 @@ exports[`generateCode > generates code > src/landing.uimix.css 1`] = `
   --uimix-x-flex-grow: 1;
   --uimix-grid-width: calc(100% - 0px);
   --uimix-y-width: calc(100% - 0px);
-  min-width: undefined;
-  max-width: undefined;
+  min-width: 0;
   --uimix-y-flex-grow: 0;
   height: max-content;
   --uimix-grid-height: max-content;
@@ -1761,13 +1726,11 @@ exports[`generateCode > generates code > src/landing.uimix.css 1`] = `
   --uimix-x-flex-grow: 1;
   --uimix-grid-width: calc(100% - 0px);
   --uimix-y-width: calc(100% - 0px);
-  min-width: undefined;
-  max-width: undefined;
+  min-width: 0;
   --uimix-y-flex-grow: 1;
   --uimix-grid-height: calc(100% - 0px);
   --uimix-x-height: calc(100% - 0px);
-  min-height: undefined;
-  max-height: undefined;
+  min-height: 0;
   opacity: 1;
   overflow: visible;
   display: flex;
@@ -1851,8 +1814,7 @@ exports[`generateCode > generates code > src/landing.uimix.css 1`] = `
   --uimix-x-flex-grow: 1;
   --uimix-grid-width: calc(100% - 0px);
   --uimix-y-width: calc(100% - 0px);
-  min-width: undefined;
-  max-width: undefined;
+  min-width: 0;
   --uimix-y-flex-grow: 0;
   height: max-content;
   --uimix-grid-height: max-content;
@@ -1879,8 +1841,7 @@ exports[`generateCode > generates code > src/landing.uimix.css 1`] = `
   --uimix-x-flex-grow: 1;
   --uimix-grid-width: calc(100% - 0px);
   --uimix-y-width: calc(100% - 0px);
-  min-width: undefined;
-  max-width: undefined;
+  min-width: 0;
   --uimix-y-flex-grow: 0;
   height: max-content;
   --uimix-grid-height: max-content;
@@ -1907,13 +1868,11 @@ exports[`generateCode > generates code > src/landing.uimix.css 1`] = `
   --uimix-x-flex-grow: 1;
   --uimix-grid-width: calc(100% - 0px);
   --uimix-y-width: calc(100% - 0px);
-  min-width: undefined;
-  max-width: undefined;
+  min-width: 0;
   --uimix-y-flex-grow: 1;
   --uimix-grid-height: calc(100% - 0px);
   --uimix-x-height: calc(100% - 0px);
-  min-height: undefined;
-  max-height: undefined;
+  min-height: 0;
   opacity: 1;
   overflow: visible;
   display: flex;
@@ -1997,8 +1956,7 @@ exports[`generateCode > generates code > src/landing.uimix.css 1`] = `
   --uimix-x-flex-grow: 1;
   --uimix-grid-width: calc(100% - 0px);
   --uimix-y-width: calc(100% - 0px);
-  min-width: undefined;
-  max-width: undefined;
+  min-width: 0;
   --uimix-y-flex-grow: 0;
   height: max-content;
   --uimix-grid-height: max-content;
@@ -2025,8 +1983,7 @@ exports[`generateCode > generates code > src/landing.uimix.css 1`] = `
   --uimix-x-flex-grow: 1;
   --uimix-grid-width: calc(100% - 0px);
   --uimix-y-width: calc(100% - 0px);
-  min-width: undefined;
-  max-width: undefined;
+  min-width: 0;
   --uimix-y-flex-grow: 0;
   height: max-content;
   --uimix-grid-height: max-content;
@@ -2053,13 +2010,11 @@ exports[`generateCode > generates code > src/landing.uimix.css 1`] = `
   --uimix-x-flex-grow: 1;
   --uimix-grid-width: calc(100% - 0px);
   --uimix-y-width: calc(100% - 0px);
-  min-width: undefined;
-  max-width: undefined;
+  min-width: 0;
   --uimix-y-flex-grow: 1;
   --uimix-grid-height: calc(100% - 0px);
   --uimix-x-height: calc(100% - 0px);
-  min-height: undefined;
-  max-height: undefined;
+  min-height: 0;
   opacity: 1;
   overflow: visible;
   display: flex;
@@ -2143,8 +2098,7 @@ exports[`generateCode > generates code > src/landing.uimix.css 1`] = `
   --uimix-x-flex-grow: 1;
   --uimix-grid-width: calc(100% - 0px);
   --uimix-y-width: calc(100% - 0px);
-  min-width: undefined;
-  max-width: undefined;
+  min-width: 0;
   --uimix-y-flex-grow: 0;
   height: max-content;
   --uimix-grid-height: max-content;
@@ -2171,8 +2125,7 @@ exports[`generateCode > generates code > src/landing.uimix.css 1`] = `
   --uimix-x-flex-grow: 1;
   --uimix-grid-width: calc(100% - 0px);
   --uimix-y-width: calc(100% - 0px);
-  min-width: undefined;
-  max-width: undefined;
+  min-width: 0;
   --uimix-y-flex-grow: 0;
   height: max-content;
   --uimix-grid-height: max-content;
@@ -2199,13 +2152,11 @@ exports[`generateCode > generates code > src/landing.uimix.css 1`] = `
   --uimix-x-flex-grow: 1;
   --uimix-grid-width: calc(100% - 0px);
   --uimix-y-width: calc(100% - 0px);
-  min-width: undefined;
-  max-width: undefined;
+  min-width: 0;
   --uimix-y-flex-grow: 1;
   --uimix-grid-height: calc(100% - 0px);
   --uimix-x-height: calc(100% - 0px);
-  min-height: undefined;
-  max-height: undefined;
+  min-height: 0;
   opacity: 1;
   overflow: visible;
   display: flex;
@@ -2289,8 +2240,7 @@ exports[`generateCode > generates code > src/landing.uimix.css 1`] = `
   --uimix-x-flex-grow: 1;
   --uimix-grid-width: calc(100% - 0px);
   --uimix-y-width: calc(100% - 0px);
-  min-width: undefined;
-  max-width: undefined;
+  min-width: 0;
   --uimix-y-flex-grow: 0;
   height: max-content;
   --uimix-grid-height: max-content;
@@ -2317,8 +2267,7 @@ exports[`generateCode > generates code > src/landing.uimix.css 1`] = `
   --uimix-x-flex-grow: 1;
   --uimix-grid-width: calc(100% - 0px);
   --uimix-y-width: calc(100% - 0px);
-  min-width: undefined;
-  max-width: undefined;
+  min-width: 0;
   --uimix-y-flex-grow: 0;
   height: max-content;
   --uimix-grid-height: max-content;
@@ -2345,13 +2294,11 @@ exports[`generateCode > generates code > src/landing.uimix.css 1`] = `
   --uimix-x-flex-grow: 1;
   --uimix-grid-width: calc(100% - 0px);
   --uimix-y-width: calc(100% - 0px);
-  min-width: undefined;
-  max-width: undefined;
+  min-width: 0;
   --uimix-y-flex-grow: 1;
   --uimix-grid-height: calc(100% - 0px);
   --uimix-x-height: calc(100% - 0px);
-  min-height: undefined;
-  max-height: undefined;
+  min-height: 0;
   opacity: 1;
   overflow: visible;
   display: flex;
@@ -2435,8 +2382,7 @@ exports[`generateCode > generates code > src/landing.uimix.css 1`] = `
   --uimix-x-flex-grow: 1;
   --uimix-grid-width: calc(100% - 0px);
   --uimix-y-width: calc(100% - 0px);
-  min-width: undefined;
-  max-width: undefined;
+  min-width: 0;
   --uimix-y-flex-grow: 0;
   height: max-content;
   --uimix-grid-height: max-content;
@@ -2463,8 +2409,7 @@ exports[`generateCode > generates code > src/landing.uimix.css 1`] = `
   --uimix-x-flex-grow: 1;
   --uimix-grid-width: calc(100% - 0px);
   --uimix-y-width: calc(100% - 0px);
-  min-width: undefined;
-  max-width: undefined;
+  min-width: 0;
   --uimix-y-flex-grow: 0;
   height: max-content;
   --uimix-grid-height: max-content;
@@ -2491,8 +2436,7 @@ exports[`generateCode > generates code > src/landing.uimix.css 1`] = `
   --uimix-x-flex-grow: 1;
   --uimix-grid-width: calc(100% - 0px);
   --uimix-y-width: calc(100% - 0px);
-  min-width: undefined;
-  max-width: undefined;
+  min-width: 0;
   --uimix-y-flex-grow: 0;
   height: max-content;
   --uimix-grid-height: max-content;
@@ -2525,8 +2469,7 @@ exports[`generateCode > generates code > src/landing.uimix.css 1`] = `
   --uimix-x-flex-grow: 1;
   --uimix-grid-width: calc(100% - 0px);
   --uimix-y-width: calc(100% - 0px);
-  min-width: undefined;
-  max-width: undefined;
+  min-width: 0;
   --uimix-y-flex-grow: 0;
   height: max-content;
   --uimix-grid-height: max-content;
@@ -2553,8 +2496,7 @@ exports[`generateCode > generates code > src/landing.uimix.css 1`] = `
   --uimix-x-flex-grow: 1;
   --uimix-grid-width: calc(100% - 0px);
   --uimix-y-width: calc(100% - 0px);
-  min-width: undefined;
-  max-width: undefined;
+  min-width: 0;
   --uimix-y-flex-grow: 0;
   height: max-content;
   --uimix-grid-height: max-content;
@@ -2641,8 +2583,7 @@ exports[`generateCode > generates code > src/landing.uimix.css 1`] = `
   --uimix-x-flex-grow: 1;
   --uimix-grid-width: calc(100% - 0px);
   --uimix-y-width: calc(100% - 0px);
-  min-width: undefined;
-  max-width: undefined;
+  min-width: 0;
   --uimix-y-flex-grow: 0;
   height: max-content;
   --uimix-grid-height: max-content;
@@ -2669,7 +2610,7 @@ exports[`generateCode > generates code > src/landing.uimix.css 1`] = `
   --uimix-x-flex-grow: 1;
   --uimix-grid-width: calc(100% - 0px);
   --uimix-y-width: calc(100% - 0px);
-  min-width: undefined;
+  min-width: 0;
   max-width: 1280px;
   --uimix-y-flex-grow: 0;
   height: max-content;
@@ -2703,8 +2644,7 @@ exports[`generateCode > generates code > src/landing.uimix.css 1`] = `
   --uimix-x-flex-grow: 1;
   --uimix-grid-width: calc(100% - 0px);
   --uimix-y-width: calc(100% - 0px);
-  min-width: undefined;
-  max-width: undefined;
+  min-width: 0;
   --uimix-y-flex-grow: 0;
   height: max-content;
   --uimix-grid-height: max-content;
@@ -2737,8 +2677,7 @@ exports[`generateCode > generates code > src/landing.uimix.css 1`] = `
   --uimix-x-flex-grow: 1;
   --uimix-grid-width: calc(100% - 0px);
   --uimix-y-width: calc(100% - 0px);
-  min-width: undefined;
-  max-width: undefined;
+  min-width: 0;
   --uimix-y-flex-grow: 0;
   height: max-content;
   --uimix-grid-height: max-content;
@@ -2765,8 +2704,7 @@ exports[`generateCode > generates code > src/landing.uimix.css 1`] = `
   --uimix-x-flex-grow: 1;
   --uimix-grid-width: calc(100% - 0px);
   --uimix-y-width: calc(100% - 0px);
-  min-width: undefined;
-  max-width: undefined;
+  min-width: 0;
   --uimix-y-flex-grow: 0;
   height: max-content;
   --uimix-grid-height: max-content;
@@ -2793,8 +2731,7 @@ exports[`generateCode > generates code > src/landing.uimix.css 1`] = `
   --uimix-x-flex-grow: 1;
   --uimix-grid-width: calc(100% - 0px);
   --uimix-y-width: calc(100% - 0px);
-  min-width: undefined;
-  max-width: undefined;
+  min-width: 0;
   --uimix-y-flex-grow: 0;
   height: max-content;
   --uimix-grid-height: max-content;
@@ -2827,8 +2764,7 @@ exports[`generateCode > generates code > src/landing.uimix.css 1`] = `
   --uimix-x-flex-grow: 1;
   --uimix-grid-width: calc(100% - 0px);
   --uimix-y-width: calc(100% - 0px);
-  min-width: undefined;
-  max-width: undefined;
+  min-width: 0;
   --uimix-y-flex-grow: 0;
   height: max-content;
   --uimix-grid-height: max-content;
@@ -2855,8 +2791,7 @@ exports[`generateCode > generates code > src/landing.uimix.css 1`] = `
   --uimix-x-flex-grow: 1;
   --uimix-grid-width: calc(100% - 0px);
   --uimix-y-width: calc(100% - 0px);
-  min-width: undefined;
-  max-width: undefined;
+  min-width: 0;
   --uimix-y-flex-grow: 0;
   height: max-content;
   --uimix-grid-height: max-content;
@@ -2883,8 +2818,7 @@ exports[`generateCode > generates code > src/landing.uimix.css 1`] = `
   --uimix-x-flex-grow: 1;
   --uimix-grid-width: calc(100% - 0px);
   --uimix-y-width: calc(100% - 0px);
-  min-width: undefined;
-  max-width: undefined;
+  min-width: 0;
   --uimix-y-flex-grow: 0;
   height: max-content;
   --uimix-grid-height: max-content;
@@ -2917,8 +2851,7 @@ exports[`generateCode > generates code > src/landing.uimix.css 1`] = `
   --uimix-x-flex-grow: 1;
   --uimix-grid-width: calc(100% - 0px);
   --uimix-y-width: calc(100% - 0px);
-  min-width: undefined;
-  max-width: undefined;
+  min-width: 0;
   --uimix-y-flex-grow: 0;
   height: max-content;
   --uimix-grid-height: max-content;
@@ -2945,8 +2878,7 @@ exports[`generateCode > generates code > src/landing.uimix.css 1`] = `
   --uimix-x-flex-grow: 1;
   --uimix-grid-width: calc(100% - 0px);
   --uimix-y-width: calc(100% - 0px);
-  min-width: undefined;
-  max-width: undefined;
+  min-width: 0;
   --uimix-y-flex-grow: 0;
   height: max-content;
   --uimix-grid-height: max-content;
@@ -2973,8 +2905,7 @@ exports[`generateCode > generates code > src/landing.uimix.css 1`] = `
   --uimix-x-flex-grow: 1;
   --uimix-grid-width: calc(100% - 0px);
   --uimix-y-width: calc(100% - 0px);
-  min-width: undefined;
-  max-width: undefined;
+  min-width: 0;
   --uimix-y-flex-grow: 0;
   height: max-content;
   --uimix-grid-height: max-content;
@@ -3003,10 +2934,8 @@ exports[`generateCode > generates code > src/landing.uimix.css 1`] = `
   box-sizing: border-box;
   -webkit-font-smoothing: antialiased;
   position: absolute;
-  left: -23px;
-  right: auto;
   top: -368px;
-  bottom: auto;
+  left: -23px;
   margin: 0;
   --uimix-x-flex-grow: 0;
   width: 1500px;
@@ -3033,8 +2962,7 @@ exports[`generateCode > generates code > src/landing.uimix.css 1`] = `
   --uimix-x-flex-grow: 1;
   --uimix-grid-width: calc(100% - 0px);
   --uimix-y-width: calc(100% - 0px);
-  min-width: undefined;
-  max-width: undefined;
+  min-width: 0;
   --uimix-y-flex-grow: 0;
   height: max-content;
   --uimix-grid-height: max-content;
