@@ -237,13 +237,11 @@ class PageLoader {
       if (!tokenId) {
         console.error(`token ${tokenPath} not found`);
         return {
-          type: "token",
-          id: tokenPath,
+          token: tokenPath,
         };
       } else {
         return {
-          type: "token",
-          id: tokenId,
+          token: tokenId,
         };
       }
     }
@@ -252,8 +250,7 @@ class PageLoader {
 
   transformFill(fill: File.Fill): Data.SolidFill {
     return {
-      type: "solid",
-      color: this.transformColor(fill.solid),
+      solid: this.transformColor(fill.solid),
     };
   }
 

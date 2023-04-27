@@ -33,19 +33,23 @@ export type Size = z.infer<typeof Size>;
 // color values
 
 export const ColorTokenReference = z.object({
-  type: z.literal("token"),
-  id: z.string(),
+  token: z.string(),
 });
+export type ColorTokenReference = z.infer<typeof ColorTokenReference>;
 
-export const Color = z.union([ColorTokenReference, z.string()]);
+export const Color = z.union([
+  z.string(), // TODO: validate hex
+  ColorTokenReference,
+]);
 export type Color = z.infer<typeof Color>;
 
 export const SolidFill = z.object({
-  type: z.literal("solid"),
-  color: Color,
+  solid: Color,
 });
-
 export type SolidFill = z.infer<typeof SolidFill>;
+
+export const Fill = SolidFill;
+export type Fill = z.infer<typeof Fill>;
 
 export const Shadow = z.object({
   color: Color,

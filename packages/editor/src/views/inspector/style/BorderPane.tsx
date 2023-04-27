@@ -90,9 +90,7 @@ export const BorderPane: React.FC = observer(function BorderPane() {
   const onChangeBorder = action((color: ColorRef | undefined) => {
     for (const selectable of selectables) {
       const adding = color && !selectable.style.border;
-      selectable.style.border = color
-        ? { type: "solid", color: color.toJSON() }
-        : null;
+      selectable.style.border = color ? { solid: color.toJSON() } : null;
       if (adding) {
         selectable.style.borderTopWidth = 1;
         selectable.style.borderRightWidth = 1;
@@ -145,7 +143,7 @@ export const BorderPane: React.FC = observer(function BorderPane() {
         ) : border ? (
           <div className="flex flex-col gap-2">
             <ColorInput
-              value={ColorRef.fromJSON(projectState.project, border.color)}
+              value={ColorRef.fromJSON(projectState.project, border.solid)}
               onChange={onChangeBorder}
               onChangeEnd={onChangeEndBorder}
             />

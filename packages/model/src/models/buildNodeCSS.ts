@@ -31,7 +31,7 @@ export function buildNodeCSS(
     if (typeof color === "string") {
       return color;
     }
-    return getColorToken(color.id);
+    return getColorToken(color.token);
   };
 
   if (nodeType === "component") {
@@ -184,11 +184,11 @@ export function buildNodeCSS(
   if (nodeType === "frame" || nodeType === "image" || nodeType === "svg") {
     const fills = style.fills;
     cssStyle.background = fills.length
-      ? resolveColorToken(fills[0].color)
+      ? resolveColorToken(fills[0].solid)
       : "transparent";
     cssStyle.borderStyle = "solid";
     cssStyle.borderColor =
-      (style.border && resolveColorToken(style.border.color)) ?? "transparent";
+      (style.border && resolveColorToken(style.border.solid)) ?? "transparent";
     cssStyle.borderTopWidth = `${style.borderTopWidth}px`;
     cssStyle.borderRightWidth = `${style.borderRightWidth}px`;
     cssStyle.borderBottomWidth = `${style.borderBottomWidth}px`;
@@ -222,7 +222,7 @@ export function buildNodeCSS(
     cssStyle.flexDirection = "column";
     const fills = style.fills;
     cssStyle.color = fills.length
-      ? resolveColorToken(fills[0].color)
+      ? resolveColorToken(fills[0].solid)
       : "transparent";
     cssStyle.fontFamily = style.fontFamily;
     cssStyle.fontSize = `${style.fontSize}px`;

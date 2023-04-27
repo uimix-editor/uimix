@@ -269,14 +269,14 @@ export class PageEmitter {
 
   transformColor(color: Data.Color): File.Color {
     if (typeof color === "object") {
-      const token = this.project.colorTokens.get(color.id);
+      const token = this.project.colorTokens.get(color.token);
       if (token?.type === "normal") {
         return {
           token: this.colorTokenRelativePath(token),
         };
       }
       return {
-        token: color.id,
+        token: color.token,
       };
     }
     return color;
@@ -284,7 +284,7 @@ export class PageEmitter {
 
   transformFill(fill: Data.SolidFill): File.Fill {
     return {
-      solid: this.transformColor(fill.color),
+      solid: this.transformColor(fill.solid),
     };
   }
 

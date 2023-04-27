@@ -6,64 +6,73 @@ exports[`selectablesToProjectJSON > works 1`] = `
   "componentURLs": [],
   "images": {},
   "nodes": {
-    "1BxgfkXJA4DN8Sa8sGEtYp": {
-      "condition": undefined,
-      "index": 0,
-      "name": "Text",
-      "parent": "1BxgfkXJGiY7qjSuJKyH3J",
-      "type": "text",
-    },
-    "1BxgfkXJGiY7qjSuJKyH3J": {
-      "condition": undefined,
-      "index": 0,
-      "name": "",
-      "parent": "1BxgfkXJLavERU26F5Jh7H",
-      "type": "frame",
-    },
-    "1BxgfkXJLavERU26F5Jh7H": {
+    "1Bxgjgs6sCdp9Np51fcYL6": {
       "condition": undefined,
       "index": 0,
       "name": "Button",
       "parent": undefined,
       "type": "component",
     },
-    "1BxgfkXJYmyPbwGFRdVjME": {
+    "1Bxgjgs6uDAKz2qq16i1NL": {
       "condition": {
         "type": "hover",
       },
       "index": 1,
       "name": "",
-      "parent": "1BxgfkXJLavERU26F5Jh7H",
+      "parent": "1Bxgjgs6sCdp9Np51fcYL6",
       "type": "variant",
     },
-    "1BxgfkXJbwHoCzPxwKKP7x": {
+    "1Bxgjgs74468hXW4Lsmyro": {
+      "condition": undefined,
+      "index": 0,
+      "name": "",
+      "parent": "1Bxgjgs6sCdp9Np51fcYL6",
+      "type": "frame",
+    },
+    "1Bxgjgs75jx7aNfgBLMn8c": {
       "condition": {
         "type": "maxWidth",
         "value": 767,
       },
       "index": 2,
       "name": "",
-      "parent": "1BxgfkXJLavERU26F5Jh7H",
+      "parent": "1Bxgjgs6sCdp9Np51fcYL6",
       "type": "variant",
+    },
+    "1Bxgjgs78B7Q9WygLinw8N": {
+      "condition": undefined,
+      "index": 0,
+      "name": "Text",
+      "parent": "1Bxgjgs74468hXW4Lsmyro",
+      "type": "text",
     },
   },
   "styles": {
-    "1BxgfkXJA4DN8Sa8sGEtYp": {
+    "1Bxgjgs6sCdp9Np51fcYL6": {},
+    "1Bxgjgs6uDAKz2qq16i1NL": {
       "fills": [
         {
-          "color": "#111827",
-          "type": "solid",
+          "solid": {
+            "token": "blue/500",
+          },
         },
       ],
-      "height": "hug",
-      "textContent": "Button",
-      "width": "hug",
+      "position": {
+        "left": 200,
+        "top": 400,
+      },
     },
-    "1BxgfkXJGiY7qjSuJKyH3J": {
+    "1Bxgjgs6uDAKz2qq16i1NL:1Bxgjgs78B7Q9WygLinw8N": {
       "fills": [
         {
-          "color": "#E5E7EB",
-          "type": "solid",
+          "solid": "#FFFFFF",
+        },
+      ],
+    },
+    "1Bxgjgs74468hXW4Lsmyro": {
+      "fills": [
+        {
+          "solid": "#E5E7EB",
         },
       ],
       "height": "hug",
@@ -78,31 +87,7 @@ exports[`selectablesToProjectJSON > works 1`] = `
       },
       "width": "hug",
     },
-    "1BxgfkXJLavERU26F5Jh7H": {},
-    "1BxgfkXJYmyPbwGFRdVjME": {
-      "fills": [
-        {
-          "color": {
-            "id": "blue/500",
-            "type": "token",
-          },
-          "type": "solid",
-        },
-      ],
-      "position": {
-        "left": 200,
-        "top": 400,
-      },
-    },
-    "1BxgfkXJYmyPbwGFRdVjME:1BxgfkXJA4DN8Sa8sGEtYp": {
-      "fills": [
-        {
-          "color": "#FFFFFF",
-          "type": "solid",
-        },
-      ],
-    },
-    "1BxgfkXJbwHoCzPxwKKP7x": {
+    "1Bxgjgs75jx7aNfgBLMn8c": {
       "paddingBottom": 2,
       "paddingLeft": 4,
       "paddingRight": 4,
@@ -112,8 +97,18 @@ exports[`selectablesToProjectJSON > works 1`] = `
         "top": 400,
       },
     },
-    "1BxgfkXJbwHoCzPxwKKP7x:1BxgfkXJA4DN8Sa8sGEtYp": {
+    "1Bxgjgs75jx7aNfgBLMn8c:1Bxgjgs78B7Q9WygLinw8N": {
       "fontSize": 14,
+    },
+    "1Bxgjgs78B7Q9WygLinw8N": {
+      "fills": [
+        {
+          "solid": "#111827",
+        },
+      ],
+      "height": "hug",
+      "textContent": "Button",
+      "width": "hug",
     },
   },
 }

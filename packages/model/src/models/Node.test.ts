@@ -67,7 +67,7 @@ describe(Node.name, () => {
       };
       style.width = 50;
       style.height = 50;
-      style.fills = [{ type: "solid", color: Color.from("red").toHex() }];
+      style.fills = [{ solid: Color.from("red").toHex() }];
 
       frames.push(frame);
     }

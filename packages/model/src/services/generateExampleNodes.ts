@@ -13,9 +13,7 @@ export function generateExampleNodes(pageNode: Node) {
     style.position = { left: i * 100 + 50, top: 90 };
     style.width = 50;
     style.height = 50;
-    style.fills = [
-      { type: "solid", color: Color.from(colors.red[500])!.toHex() },
-    ];
+    style.fills = [{ solid: Color.from(colors.red[500])!.toHex() }];
   }
 
   {
@@ -26,7 +24,7 @@ export function generateExampleNodes(pageNode: Node) {
     stackStyle.position = { left: 50, top: 200 };
     stackStyle.width = "hug";
     stackStyle.height = "hug";
-    stackStyle.fills = [{ type: "solid", color: Color.white.toHex() }];
+    stackStyle.fills = [{ solid: Color.white.toHex() }];
     stackStyle.layout = "flex";
     stackStyle.rowGap = stackStyle.columnGap = 10;
     stackStyle.paddingTop = 10;
@@ -40,9 +38,7 @@ export function generateExampleNodes(pageNode: Node) {
 
     stackItem0Style.width = 50;
     stackItem0Style.height = 50;
-    stackItem0Style.fills = [
-      { type: "solid", color: Color.from(colors.red[500])!.toHex() },
-    ];
+    stackItem0Style.fills = [{ solid: Color.from(colors.red[500])!.toHex() }];
 
     const stackItem1 = stackSelectable.append("frame");
     stackItem1.originalNode.name = "Item 1";
@@ -50,9 +46,7 @@ export function generateExampleNodes(pageNode: Node) {
 
     stackItem1Style.width = 40;
     stackItem1Style.height = 80;
-    stackItem1Style.fills = [
-      { type: "solid", color: Color.from(colors.green[500])!.toHex() },
-    ];
+    stackItem1Style.fills = [{ solid: Color.from(colors.green[500])!.toHex() }];
 
     const stackItem2 = stackSelectable.append("frame");
     stackItem2.originalNode.name = "Item 2";
@@ -60,9 +54,7 @@ export function generateExampleNodes(pageNode: Node) {
 
     stackItem2Style.width = 80;
     stackItem2Style.height = 40;
-    stackItem2Style.fills = [
-      { type: "solid", color: Color.from(colors.blue[500])!.toHex() },
-    ];
+    stackItem2Style.fills = [{ solid: Color.from(colors.blue[500])!.toHex() }];
 
     const text = stackSelectable.append("text");
     text.originalNode.name = "Text";
@@ -71,7 +63,7 @@ export function generateExampleNodes(pageNode: Node) {
     textStyle.width = "hug";
     textStyle.height = "hug";
     textStyle.fontSize = 20;
-    textStyle.fills = [{ type: "solid", color: Color.from("black").toHex() }];
+    textStyle.fills = [{ solid: Color.from("black").toHex() }];
   }
 
   {
@@ -113,9 +105,7 @@ export function generateExampleNodes(pageNode: Node) {
     rootNodeStyle.position = { left: 50, top: 400 };
     rootNodeStyle.width = "hug";
     rootNodeStyle.height = "hug";
-    rootNodeStyle.fills = [
-      { type: "solid", color: Color.from(colors.gray[200])!.toHex() },
-    ];
+    rootNodeStyle.fills = [{ solid: Color.from(colors.gray[200])!.toHex() }];
     rootNodeStyle.layout = "flex";
     rootNodeStyle.paddingLeft = 8;
     rootNodeStyle.paddingRight = 8;
@@ -125,14 +115,12 @@ export function generateExampleNodes(pageNode: Node) {
     const textNodeStyle = textNode.selectable.style;
     textNodeStyle.width = "hug";
     textNodeStyle.height = "hug";
-    textNodeStyle.fills = [
-      { type: "solid", color: Color.from(colors.gray[900])!.toHex() },
-    ];
+    textNodeStyle.fills = [{ solid: Color.from(colors.gray[900])!.toHex() }];
 
     const hoverVariantStyle = hoverVariant.selectable.style;
     hoverVariantStyle.position = { left: 200, top: 400 };
     hoverVariantStyle.fills = [
-      { type: "solid", color: Color.from(colors.blue[500])!.toHex() },
+      { solid: Color.from(colors.blue[500])!.toHex() },
     ];
 
     const mobileVariantStyle = mobileVariant.selectable.style;
@@ -142,9 +130,7 @@ export function generateExampleNodes(pageNode: Node) {
       hoverVariant.id,
       textNode.id,
     ]).style;
-    hoverTextNodeStyle.fills = [
-      { type: "solid", color: Color.from(colors.white)!.toHex() },
-    ];
+    hoverTextNodeStyle.fills = [{ solid: Color.from(colors.white)!.toHex() }];
 
     const instanceNode = project.nodes.create("instance");
     instanceNode.name = "Instance";
