@@ -464,7 +464,6 @@ export default (
             id="image_1"
             name="image 1"
             hidden={false}
-            position={{ left: 360, top: 581 }}
             width={{ min: 0, max: 720 }}
             height="hug"
             topLeftRadius={10}

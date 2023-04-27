@@ -1,5 +1,8 @@
 import {
+  Fill,
+  Position,
   Shadow,
+  Size,
   StackAlign,
   StackDirection,
   StackJustify,
@@ -9,37 +12,6 @@ import {
 } from "../data/v1";
 import { z } from "zod";
 import Babel from "@babel/standalone";
-
-export const Position = z.object({
-  left: z.number().optional(),
-  top: z.number().optional(),
-  right: z.number().optional(),
-  bottom: z.number().optional(),
-});
-export type Position = z.infer<typeof Position>;
-
-export const Size = z.union([
-  z.literal("hug"),
-  z.number(),
-  z.object({
-    min: z.number(),
-    max: z.number().optional(),
-  }),
-]);
-export type Size = z.infer<typeof Size>;
-
-export const Color = z.union([
-  z.string(), // hex
-  z.object({
-    token: z.string(),
-  }),
-]);
-export type Color = z.infer<typeof Color>;
-
-export const Fill = z.object({
-  solid: Color,
-});
-export type Fill = z.infer<typeof Fill>;
 
 export const BaseStyleProps = z.object({
   hidden: z.boolean(),

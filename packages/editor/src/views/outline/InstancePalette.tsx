@@ -227,10 +227,7 @@ const ComponentThumbnail: React.FC<{
           page.node.append([instanceNode]);
 
           const instanceNodeStyle = instanceNode.selectable.style;
-          instanceNodeStyle.position = {
-            x: { type: "start", start: pos.x },
-            y: { type: "start", start: pos.y },
-          };
+          instanceNodeStyle.position = { left: pos.x, top: pos.y };
           // TODO: exotic component
           if (component instanceof Component) {
             instanceNodeStyle.mainComponent = component.node.id;
@@ -244,12 +241,8 @@ const ComponentThumbnail: React.FC<{
                 label: "Button",
               },
             };
-            instanceNodeStyle.width = {
-              type: "hug",
-            };
-            instanceNodeStyle.height = {
-              type: "hug",
-            };
+            instanceNodeStyle.width = "hug";
+            instanceNodeStyle.height = "hug";
             instanceNode.name = component.name;
           }
 

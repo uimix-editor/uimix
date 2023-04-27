@@ -6,140 +6,109 @@ exports[`selectablesToProjectJSON > works 1`] = `
   "componentURLs": [],
   "images": {},
   "nodes": {
-    "1BxVZYYacLUNzbRLytgvUS": {
+    "1Bxgjgs6sCdp9Np51fcYL6": {
       "condition": undefined,
       "index": 0,
       "name": "Button",
       "parent": undefined,
       "type": "component",
     },
-    "1BxVZYYakpA193wZk25yNe": {
+    "1Bxgjgs6uDAKz2qq16i1NL": {
       "condition": {
         "type": "hover",
       },
       "index": 1,
       "name": "",
-      "parent": "1BxVZYYacLUNzbRLytgvUS",
+      "parent": "1Bxgjgs6sCdp9Np51fcYL6",
       "type": "variant",
     },
-    "1BxVZYYaqDD9idS6vW4B8o": {
+    "1Bxgjgs74468hXW4Lsmyro": {
       "condition": undefined,
       "index": 0,
       "name": "",
-      "parent": "1BxVZYYacLUNzbRLytgvUS",
+      "parent": "1Bxgjgs6sCdp9Np51fcYL6",
       "type": "frame",
     },
-    "1BxVZYYasmCUk8kAkkRRX4": {
+    "1Bxgjgs75jx7aNfgBLMn8c": {
       "condition": {
         "type": "maxWidth",
         "value": 767,
       },
       "index": 2,
       "name": "",
-      "parent": "1BxVZYYacLUNzbRLytgvUS",
+      "parent": "1Bxgjgs6sCdp9Np51fcYL6",
       "type": "variant",
     },
-    "1BxVZYYawXvMKFQmDaHCHq": {
+    "1Bxgjgs78B7Q9WygLinw8N": {
       "condition": undefined,
       "index": 0,
       "name": "Text",
-      "parent": "1BxVZYYaqDD9idS6vW4B8o",
+      "parent": "1Bxgjgs74468hXW4Lsmyro",
       "type": "text",
     },
   },
   "styles": {
-    "1BxVZYYacLUNzbRLytgvUS": {},
-    "1BxVZYYakpA193wZk25yNe": {
+    "1Bxgjgs6sCdp9Np51fcYL6": {},
+    "1Bxgjgs6uDAKz2qq16i1NL": {
       "fills": [
         {
-          "color": {
-            "id": "blue/500",
-            "type": "token",
+          "solid": {
+            "token": "blue/500",
           },
-          "type": "solid",
         },
       ],
       "position": {
-        "x": {
-          "start": 200,
-          "type": "start",
-        },
-        "y": {
-          "start": 400,
-          "type": "start",
-        },
+        "left": 200,
+        "top": 400,
       },
     },
-    "1BxVZYYakpA193wZk25yNe:1BxVZYYawXvMKFQmDaHCHq": {
+    "1Bxgjgs6uDAKz2qq16i1NL:1Bxgjgs78B7Q9WygLinw8N": {
       "fills": [
         {
-          "color": "#FFFFFF",
-          "type": "solid",
+          "solid": "#FFFFFF",
         },
       ],
     },
-    "1BxVZYYaqDD9idS6vW4B8o": {
+    "1Bxgjgs74468hXW4Lsmyro": {
       "fills": [
         {
-          "color": "#E5E7EB",
-          "type": "solid",
+          "solid": "#E5E7EB",
         },
       ],
-      "height": {
-        "type": "hug",
-      },
+      "height": "hug",
       "layout": "flex",
       "paddingBottom": 4,
       "paddingLeft": 8,
       "paddingRight": 8,
       "paddingTop": 4,
       "position": {
-        "x": {
-          "start": 50,
-          "type": "start",
-        },
-        "y": {
-          "start": 400,
-          "type": "start",
-        },
+        "left": 50,
+        "top": 400,
       },
-      "width": {
-        "type": "hug",
-      },
+      "width": "hug",
     },
-    "1BxVZYYasmCUk8kAkkRRX4": {
+    "1Bxgjgs75jx7aNfgBLMn8c": {
       "paddingBottom": 2,
       "paddingLeft": 4,
       "paddingRight": 4,
       "paddingTop": 2,
       "position": {
-        "x": {
-          "start": 350,
-          "type": "start",
-        },
-        "y": {
-          "start": 400,
-          "type": "start",
-        },
+        "left": 350,
+        "top": 400,
       },
     },
-    "1BxVZYYasmCUk8kAkkRRX4:1BxVZYYawXvMKFQmDaHCHq": {
+    "1Bxgjgs75jx7aNfgBLMn8c:1Bxgjgs78B7Q9WygLinw8N": {
       "fontSize": 14,
     },
-    "1BxVZYYawXvMKFQmDaHCHq": {
+    "1Bxgjgs78B7Q9WygLinw8N": {
       "fills": [
         {
-          "color": "#111827",
-          "type": "solid",
+          "solid": "#111827",
         },
       ],
-      "height": {
-        "type": "hug",
-      },
+      "height": "hug",
       "textContent": "Button",
-      "width": {
-        "type": "hug",
-      },
+      "width": "hug",
     },
   },
 }

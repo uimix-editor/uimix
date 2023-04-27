@@ -23,7 +23,7 @@ export const FillPane: React.FC = observer(function FillPane() {
   const onChangeFill = action((color: ColorRef | undefined) => {
     for (const selectable of selectables) {
       if (color) {
-        selectable.style.fills = [{ type: "solid", color: color.toJSON() }];
+        selectable.style.fills = [{ solid: color.toJSON() }];
       } else {
         selectable.style.fills = [];
       }
@@ -69,7 +69,7 @@ export const FillPane: React.FC = observer(function FillPane() {
         ) : fill ? (
           <div>
             <ColorInput
-              value={ColorRef.fromJSON(projectState.project, fill.color)}
+              value={ColorRef.fromJSON(projectState.project, fill.solid)}
               onChange={onChangeFill}
               onChangeEnd={onChangeEndFill}
             />

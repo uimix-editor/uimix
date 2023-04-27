@@ -11,79 +11,45 @@ export const PxPercentValue = z.union([
 ]);
 export type PxPercentValue = z.infer<typeof PxPercentValue>;
 
-export const PositionConstraint = z.union([
-  z.object({
-    type: z.literal("start"),
-    start: PxValue,
-  }),
-  z.object({
-    type: z.literal("end"),
-    end: PxValue,
-  }),
-  z.object({
-    type: z.literal("both"),
-    start: PxValue,
-    end: PxValue,
-  }),
-  // z.object({
-  //   type: z.literal("center"),
-  //   center: PxValue,
-  // }),
-  // z.object({
-  //   type: z.literal("scale"),
-  //   startRatio: z.number(),
-  //   sizeRatio: z.number(),
-  // }),
-]);
-export type PositionConstraint = z.infer<typeof PositionConstraint>;
-
-export const PositionConstraints = z.object({
-  x: PositionConstraint,
-  y: PositionConstraint,
+export const Position = z.object({
+  left: z.number().optional(),
+  top: z.number().optional(),
+  right: z.number().optional(),
+  bottom: z.number().optional(),
 });
-export type PositionConstraints = z.infer<typeof PositionConstraints>;
+export type Position = z.infer<typeof Position>;
 
-export type PositionConstraintType = PositionConstraint["type"];
-
-export const SizeConstraint = z.union([
+export const Size = z.union([
+  z.literal("hug"),
+  z.number(),
   z.object({
-    type: z.literal("hug"),
-  }),
-  z.object({
-    type: z.literal("fixed"),
-    value: PxValue,
-  }),
-  z.object({
-    type: z.literal("fill"),
-    min: PxValue.optional(),
-    max: PxValue.optional(),
-    /**
-     * Default size when the layer is not in a layout.
-     */
-    value: PxValue.optional(),
+    min: z.number(),
+    max: z.number().optional(),
+    default: z.number().optional(),
   }),
 ]);
-
-export type SizeConstraint = z.infer<typeof SizeConstraint>;
-
-export type SizeConstraintType = SizeConstraint["type"];
+export type Size = z.infer<typeof Size>;
 
 // color values
 
 export const ColorTokenReference = z.object({
-  type: z.literal("token"),
-  id: z.string(),
+  token: z.string(),
 });
+export type ColorTokenReference = z.infer<typeof ColorTokenReference>;
 
-export const Color = z.union([ColorTokenReference, z.string()]);
+export const Color = z.union([
+  z.string(), // TODO: validate hex
+  ColorTokenReference,
+]);
 export type Color = z.infer<typeof Color>;
 
 export const SolidFill = z.object({
-  type: z.literal("solid"),
-  color: Color,
+  solid: Color,
 });
-
 export type SolidFill = z.infer<typeof SolidFill>;
+
+export const Fill = SolidFill;
+export type Fill = z.infer<typeof Fill>;
 
 export const Shadow = z.object({
   color: Color,
@@ -133,16 +99,10 @@ export type ForeignComponentRef = z.infer<typeof ForeignComponentRef>;
 export const Style = z.object({
   hidden: z.boolean(),
   locked: z.boolean(),
-  position: z.union([
-    z.null(),
-    z.object({
-      x: PositionConstraint,
-      y: PositionConstraint,
-    }),
-  ]),
+  position: z.union([z.null(), Position]),
   preferAbsolute: z.boolean(),
-  width: SizeConstraint,
-  height: SizeConstraint,
+  width: Size,
+  height: Size,
 
   topLeftRadius: PxValue,
   topRightRadius: PxValue,

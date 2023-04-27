@@ -23,7 +23,7 @@ export class ColorRef {
       const color = Color.from(json);
       return color && new ColorRef(color);
     }
-    const token = project.colorTokens.get(json.id);
+    const token = project.colorTokens.get(json.token);
     return token && new ColorRef(token);
   }
 
@@ -32,8 +32,7 @@ export class ColorRef {
       return this.value.value.toHex();
     } else {
       return {
-        type: "token",
-        id: this.value.value.id,
+        token: this.value.value.id,
       };
     }
   }
