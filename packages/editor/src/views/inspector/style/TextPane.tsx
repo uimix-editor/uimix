@@ -112,8 +112,8 @@ export const TextPane: React.FC = observer(function TextPane() {
                   };
                 }
                 return {
-                  value: value[0],
-                  unit: value[1],
+                  value: Number.parseFloat(value),
+                  unit: "%",
                 };
               }}
               allowedUnits={["%"]}
@@ -122,7 +122,7 @@ export const TextPane: React.FC = observer(function TextPane() {
                   value === undefined
                     ? null
                     : value.unit === "%"
-                    ? [value.value, "%"]
+                    ? `${value.value}%`
                     : value.value;
               }}
             />
@@ -136,8 +136,8 @@ export const TextPane: React.FC = observer(function TextPane() {
                   };
                 }
                 return {
-                  value: value[0],
-                  unit: value[1],
+                  value: Number.parseFloat(value),
+                  unit: "%",
                 };
               }}
               allowedUnits={["%"]}
@@ -146,7 +146,7 @@ export const TextPane: React.FC = observer(function TextPane() {
                   value === undefined
                     ? 0
                     : value.unit === "%"
-                    ? [value.value, "%"]
+                    ? `${value.value}%`
                     : value.value;
               }}
             />
