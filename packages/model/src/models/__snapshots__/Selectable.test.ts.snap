@@ -6,50 +6,80 @@ exports[`selectablesToProjectJSON > works 1`] = `
   "componentURLs": [],
   "images": {},
   "nodes": {
-    "1BxVZYYacLUNzbRLytgvUS": {
+    "1BxgfkXJA4DN8Sa8sGEtYp": {
+      "condition": undefined,
+      "index": 0,
+      "name": "Text",
+      "parent": "1BxgfkXJGiY7qjSuJKyH3J",
+      "type": "text",
+    },
+    "1BxgfkXJGiY7qjSuJKyH3J": {
+      "condition": undefined,
+      "index": 0,
+      "name": "",
+      "parent": "1BxgfkXJLavERU26F5Jh7H",
+      "type": "frame",
+    },
+    "1BxgfkXJLavERU26F5Jh7H": {
       "condition": undefined,
       "index": 0,
       "name": "Button",
       "parent": undefined,
       "type": "component",
     },
-    "1BxVZYYakpA193wZk25yNe": {
+    "1BxgfkXJYmyPbwGFRdVjME": {
       "condition": {
         "type": "hover",
       },
       "index": 1,
       "name": "",
-      "parent": "1BxVZYYacLUNzbRLytgvUS",
+      "parent": "1BxgfkXJLavERU26F5Jh7H",
       "type": "variant",
     },
-    "1BxVZYYaqDD9idS6vW4B8o": {
-      "condition": undefined,
-      "index": 0,
-      "name": "",
-      "parent": "1BxVZYYacLUNzbRLytgvUS",
-      "type": "frame",
-    },
-    "1BxVZYYasmCUk8kAkkRRX4": {
+    "1BxgfkXJbwHoCzPxwKKP7x": {
       "condition": {
         "type": "maxWidth",
         "value": 767,
       },
       "index": 2,
       "name": "",
-      "parent": "1BxVZYYacLUNzbRLytgvUS",
+      "parent": "1BxgfkXJLavERU26F5Jh7H",
       "type": "variant",
-    },
-    "1BxVZYYawXvMKFQmDaHCHq": {
-      "condition": undefined,
-      "index": 0,
-      "name": "Text",
-      "parent": "1BxVZYYaqDD9idS6vW4B8o",
-      "type": "text",
     },
   },
   "styles": {
-    "1BxVZYYacLUNzbRLytgvUS": {},
-    "1BxVZYYakpA193wZk25yNe": {
+    "1BxgfkXJA4DN8Sa8sGEtYp": {
+      "fills": [
+        {
+          "color": "#111827",
+          "type": "solid",
+        },
+      ],
+      "height": "hug",
+      "textContent": "Button",
+      "width": "hug",
+    },
+    "1BxgfkXJGiY7qjSuJKyH3J": {
+      "fills": [
+        {
+          "color": "#E5E7EB",
+          "type": "solid",
+        },
+      ],
+      "height": "hug",
+      "layout": "flex",
+      "paddingBottom": 4,
+      "paddingLeft": 8,
+      "paddingRight": 8,
+      "paddingTop": 4,
+      "position": {
+        "left": 50,
+        "top": 400,
+      },
+      "width": "hug",
+    },
+    "1BxgfkXJLavERU26F5Jh7H": {},
+    "1BxgfkXJYmyPbwGFRdVjME": {
       "fills": [
         {
           "color": {
@@ -60,17 +90,11 @@ exports[`selectablesToProjectJSON > works 1`] = `
         },
       ],
       "position": {
-        "x": {
-          "start": 200,
-          "type": "start",
-        },
-        "y": {
-          "start": 400,
-          "type": "start",
-        },
+        "left": 200,
+        "top": 400,
       },
     },
-    "1BxVZYYakpA193wZk25yNe:1BxVZYYawXvMKFQmDaHCHq": {
+    "1BxgfkXJYmyPbwGFRdVjME:1BxgfkXJA4DN8Sa8sGEtYp": {
       "fills": [
         {
           "color": "#FFFFFF",
@@ -78,68 +102,18 @@ exports[`selectablesToProjectJSON > works 1`] = `
         },
       ],
     },
-    "1BxVZYYaqDD9idS6vW4B8o": {
-      "fills": [
-        {
-          "color": "#E5E7EB",
-          "type": "solid",
-        },
-      ],
-      "height": {
-        "type": "hug",
-      },
-      "layout": "flex",
-      "paddingBottom": 4,
-      "paddingLeft": 8,
-      "paddingRight": 8,
-      "paddingTop": 4,
-      "position": {
-        "x": {
-          "start": 50,
-          "type": "start",
-        },
-        "y": {
-          "start": 400,
-          "type": "start",
-        },
-      },
-      "width": {
-        "type": "hug",
-      },
-    },
-    "1BxVZYYasmCUk8kAkkRRX4": {
+    "1BxgfkXJbwHoCzPxwKKP7x": {
       "paddingBottom": 2,
       "paddingLeft": 4,
       "paddingRight": 4,
       "paddingTop": 2,
       "position": {
-        "x": {
-          "start": 350,
-          "type": "start",
-        },
-        "y": {
-          "start": 400,
-          "type": "start",
-        },
+        "left": 350,
+        "top": 400,
       },
     },
-    "1BxVZYYasmCUk8kAkkRRX4:1BxVZYYawXvMKFQmDaHCHq": {
+    "1BxgfkXJbwHoCzPxwKKP7x:1BxgfkXJA4DN8Sa8sGEtYp": {
       "fontSize": 14,
-    },
-    "1BxVZYYawXvMKFQmDaHCHq": {
-      "fills": [
-        {
-          "color": "#111827",
-          "type": "solid",
-        },
-      ],
-      "height": {
-        "type": "hug",
-      },
-      "textContent": "Button",
-      "width": {
-        "type": "hug",
-      },
     },
   },
 }

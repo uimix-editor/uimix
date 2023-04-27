@@ -68,7 +68,7 @@ export default (
           id="frame_179"
           name="Frame 179"
           hidden={false}
-          position={{ right: 47.99984677551083, top: 16 }}
+          position={{ top: 16, right: 47.99984677551083 }}
           width={247}
           height={41}
           topLeftRadius={0}
@@ -323,7 +323,7 @@ export default (
             id="frame2"
             name="Frame"
             locked={true}
-            position={{ left: 0, right: 0, top: 0 }}
+            position={{ left: 0, top: 0, right: 0 }}
             width={{ min: 0 }}
             height="hug"
             marginBottom={-422}
