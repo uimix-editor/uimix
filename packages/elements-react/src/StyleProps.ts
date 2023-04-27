@@ -1,55 +1,27 @@
-import { z } from "zod";
+interface Shadow {
+  color: string;
+  x: number;
+  y: number;
+  blur: number;
+  spread: number;
+}
 
-const Shadow = z.object({
-  color: z.string(),
-  x: z.number(),
-  y: z.number(),
-  blur: z.number(),
-  spread: z.number(),
-});
+type StackDirection = "x" | "y";
+type StackAlign = "start" | "center" | "end";
+type StackJustify = "start" | "center" | "end" | "spaceBetween";
+type TextHorizontalAlign = "start" | "center" | "end" | "justify";
+type TextVerticalAlign = "start" | "center" | "end";
 
-type Shadow = z.infer<typeof Shadow>;
+interface Position {
+  left?: number;
+  top?: number;
+  right?: number;
+  bottom?: number;
+}
 
-const StackDirection = z.enum(["x", "y"]);
-type StackDirection = z.infer<typeof StackDirection>;
+type Size = "hug" | number | { min: number; max?: number };
 
-const StackAlign = z.enum(["start", "center", "end"]);
-type StackAlign = z.infer<typeof StackAlign>;
-
-const StackJustify = z.enum(["start", "center", "end", "spaceBetween"]);
-type StackJustify = z.infer<typeof StackJustify>;
-
-const TextHorizontalAlign = z.enum(["start", "center", "end", "justify"]);
-type TextHorizontalAlign = z.infer<typeof TextHorizontalAlign>;
-
-const TextVerticalAlign = z.enum(["start", "center", "end"]);
-type TextVerticalAlign = z.infer<typeof TextVerticalAlign>;
-
-const Position = z.object({
-  left: z.number().optional(),
-  top: z.number().optional(),
-  right: z.number().optional(),
-  bottom: z.number().optional(),
-});
-type Position = z.infer<typeof Position>;
-
-const Size = z.union([
-  z.literal("hug"),
-  z.number(),
-  z.object({
-    min: z.number(),
-    max: z.number().optional(),
-  }),
-]);
-type Size = z.infer<typeof Size>;
-
-const Color = z.string();
-type Color = z.infer<typeof Color>;
-
-const Fill = z.object({
-  solid: Color,
-});
-type Fill = z.infer<typeof Fill>;
+type Fill = { solid: string };
 
 export interface StyleProps {
   hidden: boolean;

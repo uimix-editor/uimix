@@ -9,8 +9,7 @@
     "build-storybook": "storybook build"
   },
   "dependencies": {
-    "csstype": "^3.1.2",
-    "zod": "^3.21.4"
+    "csstype": "^3.1.2"
   },
   "devDependencies": {
     "@babel/preset-env": "^7.21.4",
