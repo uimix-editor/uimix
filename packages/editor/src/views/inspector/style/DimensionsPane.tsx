@@ -26,43 +26,74 @@ import { action } from "mobx";
 import { InspectorToggleButton } from "./inputs/InspectorToggleButton";
 import edgeTopIcon from "@seanchas116/design-icons/json/edge-top.json";
 
-const verticalSizeConstraintOptions: ToggleGroupItem<Data.SizeConstraintType>[] =
-  [
-    {
-      value: "hug",
-      tooltip: "Hug Contents",
-      icon: { ...hugContentsIcon, rotate: 1 },
-    },
-    {
-      value: "fixed",
-      tooltip: "Fixed",
-      icon: { ...fixedSizeIcon, rotate: 1 },
-    },
-    {
-      value: "fill",
-      tooltip: "Fill Container",
-      icon: { ...fillAreaIcon, rotate: 1 },
-    },
-  ];
+type PositionConstraintType = "start" | "end" | "both";
+type SizeConstraintType = "hug" | "fixed" | "fill";
 
-const horizontalSizeConstraintOptions: ToggleGroupItem<Data.SizeConstraintType>[] =
-  [
-    {
-      value: "hug",
-      tooltip: "Hug Contents",
-      icon: hugContentsIcon,
-    },
-    {
-      value: "fixed",
-      tooltip: "Fixed",
-      icon: fixedSizeIcon,
-    },
-    {
-      value: "fill",
-      tooltip: "Fill Container",
-      icon: fillAreaIcon,
-    },
-  ];
+function decodePositionTypes(position: Data.Position): {
+  x: PositionConstraintType;
+  y: PositionConstraintType;
+} {
+  return {
+    x:
+      position.left !== undefined && position.right !== undefined
+        ? "both"
+        : position.right !== undefined
+        ? "end"
+        : "start",
+    y:
+      position.top !== undefined && position.bottom !== undefined
+        ? "both"
+        : position.bottom !== undefined
+        ? "end"
+        : "start",
+  };
+}
+
+function getSizeType(size: Data.Size): SizeConstraintType {
+  if (size === "hug") {
+    return "hug";
+  }
+  if (typeof size === "number") {
+    return "fixed";
+  }
+  return "fill";
+}
+
+const verticalSizeConstraintOptions: ToggleGroupItem<SizeConstraintType>[] = [
+  {
+    value: "hug",
+    tooltip: "Hug Contents",
+    icon: { ...hugContentsIcon, rotate: 1 },
+  },
+  {
+    value: "fixed",
+    tooltip: "Fixed",
+    icon: { ...fixedSizeIcon, rotate: 1 },
+  },
+  {
+    value: "fill",
+    tooltip: "Fill Container",
+    icon: { ...fillAreaIcon, rotate: 1 },
+  },
+];
+
+const horizontalSizeConstraintOptions: ToggleGroupItem<SizeConstraintType>[] = [
+  {
+    value: "hug",
+    tooltip: "Hug Contents",
+    icon: hugContentsIcon,
+  },
+  {
+    value: "fixed",
+    tooltip: "Fixed",
+    icon: fixedSizeIcon,
+  },
+  {
+    value: "fill",
+    tooltip: "Fill Container",
+    icon: fillAreaIcon,
+  },
+];
 
 const positionTypeOptions: ToggleGroupItem<"absolute" | "relative">[] = [
   {
@@ -83,8 +114,11 @@ const InspectorAnchorEdit = observer(function InspectorAnchorEdit({
   className?: string;
 }) {
   const selectables = useContext(InspectorTargetContext);
-  const xValue = sameOrMixed(selectables.map((s) => s.style.position?.x.type));
-  const yValue = sameOrMixed(selectables.map((s) => s.style.position?.y.type));
+  const values = selectables.map((s) =>
+    decodePositionTypes(s.style.position ?? { left: 0, top: 0 })
+  );
+  const xValue = sameOrMixed(values.map((p) => p.x));
+  const yValue = sameOrMixed(values.map((p) => p.y));
 
   return (
     <SimpleAnchorEdit
@@ -174,7 +208,9 @@ function RadiusEdit() {
 
 const WidthEdit = observer(function WidthEdit() {
   const targets = useContext(InspectorTargetContext);
-  const constraint = sameOrMixed(targets.map((s) => s.style.width.type));
+  const constraint = sameOrMixed(
+    targets.map((s) => getSizeType(s.style.width))
+  );
 
   return (
     <div className="grid grid-cols-3 gap-2 items-center">
@@ -183,10 +219,11 @@ const WidthEdit = observer(function WidthEdit() {
         tooltip="Width"
         get={(s) => {
           const width = s.style.width;
-          if (width && "value" in width && width.value) {
-            return {
-              value: width.value,
-            };
+          if (typeof width === "number") {
+            return { value: width };
+          }
+          if (typeof width === "object" && width.default !== undefined) {
+            return { value: width.default };
           }
         }}
         placeholder={(s) => s.computedRect.width}
@@ -195,7 +232,7 @@ const WidthEdit = observer(function WidthEdit() {
         }}
       />
       <InspectorToggleGroup
-        get={(s) => s.style.width.type}
+        get={(s) => getSizeType(s.style.width)}
         set={(s, value) => {
           setSizeConstraintType(s, "width", value);
         }}
@@ -209,19 +246,17 @@ const WidthEdit = observer(function WidthEdit() {
             tooltip="Min Width"
             get={(s) => {
               const width = s.style.width;
-              if (width.type === "fill" && width.min) {
-                return {
-                  value: width.min,
-                };
+              if (typeof width === "object") {
+                return { value: width.min };
               }
             }}
             placeholder={() => 0}
             set={(s, value) => {
               const width = s.style.width;
-              if (width.type === "fill") {
+              if (typeof width === "object") {
                 s.style.width = {
                   ...width,
-                  min: value?.value,
+                  min: value?.value ?? 0,
                 };
               }
             }}
@@ -231,15 +266,13 @@ const WidthEdit = observer(function WidthEdit() {
             tooltip="Max Width"
             get={(s) => {
               const width = s.style.width;
-              if (width.type === "fill" && width.max) {
-                return {
-                  value: width.max,
-                };
+              if (typeof width === "object" && width.max) {
+                return { value: width.max };
               }
             }}
             set={(s, value) => {
               const width = s.style.width;
-              if (width.type === "fill") {
+              if (typeof width === "object") {
                 s.style.width = {
                   ...width,
                   max: value?.value,
@@ -255,7 +288,9 @@ const WidthEdit = observer(function WidthEdit() {
 
 const HeightEdit: React.FC = observer(function HeightEdit() {
   const targets = useContext(InspectorTargetContext);
-  const constraint = sameOrMixed(targets.map((s) => s.style.height.type));
+  const constraint = sameOrMixed(
+    targets.map((s) => getSizeType(s.style.height))
+  );
 
   return (
     <div className="grid grid-cols-3 gap-2 items-center">
@@ -264,10 +299,11 @@ const HeightEdit: React.FC = observer(function HeightEdit() {
         tooltip="Height"
         get={(s) => {
           const height = s.style.height;
-          if (height && "value" in height && height.value) {
-            return {
-              value: height.value,
-            };
+          if (typeof height === "number") {
+            return { value: height };
+          }
+          if (typeof height === "object" && height.default !== undefined) {
+            return { value: height.default };
           }
         }}
         placeholder={(s) => s.computedRect.height}
@@ -276,7 +312,7 @@ const HeightEdit: React.FC = observer(function HeightEdit() {
         }}
       />
       <InspectorToggleGroup
-        get={(s) => s.style.height.type}
+        get={(s) => getSizeType(s.style.height)}
         set={(s, value) => {
           setSizeConstraintType(s, "height", value);
         }}
@@ -290,19 +326,17 @@ const HeightEdit: React.FC = observer(function HeightEdit() {
             tooltip="Min Height"
             get={(s) => {
               const height = s.style.height;
-              if (height.type === "fill" && height.min) {
-                return {
-                  value: height.min,
-                };
+              if (typeof height === "object") {
+                return { value: height.min };
               }
             }}
             placeholder={() => 0}
             set={(s, value) => {
               const height = s.style.height;
-              if (height.type === "fill") {
+              if (typeof height === "object") {
                 s.style.height = {
                   ...height,
-                  min: value?.value,
+                  min: value?.value ?? 0,
                 };
               }
             }}
@@ -312,15 +346,13 @@ const HeightEdit: React.FC = observer(function HeightEdit() {
             tooltip="Max Height"
             get={(s) => {
               const height = s.style.height;
-              if (height.type === "fill" && height.max) {
-                return {
-                  value: height.max,
-                };
+              if (typeof height === "object" && height.max) {
+                return { value: height.max };
               }
             }}
             set={(s, value) => {
               const height = s.style.height;
-              if (height.type === "fill") {
+              if (typeof height === "object") {
                 s.style.height = {
                   ...height,
                   max: value?.value,
@@ -348,8 +380,8 @@ const AbsoluteToggle = observer(() => {
         set={(s, value) => {
           if (value === "absolute") {
             s.style.position = {
-              x: { type: "start", start: s.computedOffsetLeft },
-              y: { type: "start", start: s.computedOffsetTop },
+              left: s.computedOffsetLeft,
+              top: s.computedOffsetTop,
             };
             s.style.preferAbsolute = true;
           } else if (value === "relative") {
@@ -382,28 +414,15 @@ const PositionEdit = observer(() => {
         tooltip="Top"
         className="col-start-2 row-start-1"
         get={(s) => {
-          const y = s.style.position?.y;
-          if (y && "start" in y) {
-            return { value: y.start };
+          const top = s.style.position?.top;
+          if (top !== undefined) {
+            return { value: top };
           }
         }}
         placeholder={(s) => s.computedOffsetTop}
         set={(s, value) => {
-          const position = s.style.position ?? {
-            x: { type: "start", start: 0 },
-            y: { type: "start", start: 0 },
-          };
-
-          const y = position.y;
-          const newY: Data.PositionConstraint =
-            y.type === "both"
-              ? {
-                  type: "both",
-                  start: value?.value ?? 0,
-                  end: y.end,
-                }
-              : { type: "start", start: value?.value ?? 0 };
-          s.style.position = { ...position, y: newY };
+          const position = s.style.position ?? { left: 0, top: 0 };
+          s.style.position = { ...position, left: value?.value };
         }}
       />
       <InspectorNumberInput
@@ -412,27 +431,14 @@ const PositionEdit = observer(() => {
         className="col-start-3 row-start-2"
         placeholder={(s) => s.computedOffsetRight}
         get={(s) => {
-          const x = s.style.position?.x;
-          if (x && "end" in x) {
-            return { value: x.end };
+          const right = s.style.position?.right;
+          if (right !== undefined) {
+            return { value: right };
           }
         }}
         set={(s, value) => {
-          const position = s.style.position ?? {
-            x: { type: "start", start: 0 },
-            y: { type: "start", start: 0 },
-          };
-
-          const x = position.x;
-          const newX: Data.PositionConstraint =
-            x.type === "both"
-              ? {
-                  type: "both",
-                  start: x.start,
-                  end: value?.value ?? 0,
-                }
-              : { type: "end", end: value?.value ?? 0 };
-          s.style.position = { ...position, x: newX };
+          const position = s.style.position ?? { left: 0, top: 0 };
+          s.style.position = { ...position, right: value?.value };
         }}
       />
       <InspectorNumberInput
@@ -440,28 +446,15 @@ const PositionEdit = observer(() => {
         tooltip="Bottom"
         className="col-start-2 row-start-3"
         get={(s) => {
-          const y = s.style.position?.y;
-          if (y && "end" in y) {
-            return { value: y.end };
+          const bottom = s.style.position?.bottom;
+          if (bottom !== undefined) {
+            return { value: bottom };
           }
         }}
         placeholder={(s) => s.computedOffsetBottom}
         set={(s, value) => {
-          const position = s.style.position ?? {
-            x: { type: "start", start: 0 },
-            y: { type: "start", start: 0 },
-          };
-
-          const y = position.y;
-          const newY: Data.PositionConstraint =
-            y.type === "both"
-              ? {
-                  type: "both",
-                  start: y.start,
-                  end: value?.value ?? 0,
-                }
-              : { type: "end", end: value?.value ?? 0 };
-          s.style.position = { ...position, y: newY };
+          const position = s.style.position ?? { left: 0, top: 0 };
+          s.style.position = { ...position, bottom: value?.value };
         }}
       />
       <InspectorNumberInput
@@ -470,27 +463,14 @@ const PositionEdit = observer(() => {
         className="col-start-1 row-start-2"
         placeholder={(s) => s.computedOffsetLeft}
         get={(s) => {
-          const x = s.style.position?.x;
-          if (x && "start" in x) {
-            return { value: x.start };
+          const left = s.style.position?.left;
+          if (left !== undefined) {
+            return { value: left };
           }
         }}
         set={(s, value) => {
-          const position = s.style.position ?? {
-            x: { type: "start", start: 0 },
-            y: { type: "start", start: 0 },
-          };
-
-          const x = position.x;
-          const newX: Data.PositionConstraint =
-            x.type === "both"
-              ? {
-                  type: "both",
-                  start: value?.value ?? 0,
-                  end: x.end,
-                }
-              : { type: "start", start: value?.value ?? 0 };
-          s.style.position = { ...position, x: newX };
+          const position = s.style.position ?? { left: 0, top: 0 };
+          s.style.position = { ...position, left: value?.value };
         }}
       />
       <InspectorAnchorEdit className="col-start-2 row-start-2" />
@@ -599,50 +579,34 @@ function setSizeConstraintValue(
   const { style } = selectable;
   const constraint = style[target];
 
-  switch (constraint.type) {
-    case "hug":
-    case "fixed":
-      style[target] = {
-        type: "fixed",
-        value: value ?? 0,
-      };
-      break;
-    case "fill":
-      style[target] = {
-        ...constraint,
-        value,
-      };
-      break;
+  if (typeof constraint === "object") {
+    style[target] = {
+      ...constraint,
+      default: value,
+    };
+    return;
   }
+
+  style[target] = value ?? "hug";
 }
 
 function setSizeConstraintType(
   selectable: Selectable,
   target: "width" | "height",
-  type: Data.SizeConstraintType | undefined
+  type: SizeConstraintType | undefined
 ) {
   const { style } = selectable;
-  const constraint = style[target];
-
-  const oldValue = "value" in constraint ? constraint.value : undefined;
-
   const computedSize = selectable.computedRect[target];
 
   switch (type) {
     case "hug":
-      style[target] = { type: "hug" };
+      style[target] = "hug";
       break;
     case "fixed":
-      style[target] = {
-        type: "fixed",
-        value: oldValue ?? computedSize,
-      };
+      style[target] = computedSize;
       break;
     case "fill":
-      style[target] = {
-        type: "fill",
-        value: oldValue ?? computedSize,
-      };
+      style[target] = { min: 0, default: computedSize };
       break;
   }
 }
@@ -730,62 +694,32 @@ function setPositionStartConstraintValue(
 function setPositionStartConstraintType(
   selectable: Selectable,
   axis: "x" | "y",
-  type: Data.PositionConstraintType
+  type: "start" | "end" | "both"
 ) {
   const style = selectable.style;
 
-  const position = style.position ?? {
-    x: { type: "start", start: 0 },
-    y: { type: "start", start: 0 },
-  };
-
-  const constraint = position[axis];
-  if (constraint.type === type) {
-    return;
-  }
-
-  const parent = selectable.offsetParent;
-  if (!parent) {
-    // top-level, only "start" is allowed
-    return;
-  }
+  const position = style.position ?? { left: 0, top: 0 };
 
   const rect = selectable.computedRect;
-  const parentRect = parent.computedRect;
-  const size = rect[axis === "x" ? "width" : "height"];
-  const parentSize = parentRect[axis === "x" ? "width" : "height"];
-  const start =
-    rect[axis === "x" ? "left" : "top"] -
-    parentRect[axis === "x" ? "left" : "top"];
-  let newConstraint = constraint;
+  const parentRect = selectable.offsetParent?.computedRect;
 
-  switch (type) {
-    case "start": {
-      newConstraint = {
-        type: "start",
-        start,
-      };
-      break;
+  if (axis === "x") {
+    const left = rect.left - (parentRect?.left ?? 0);
+    if (type === "start" || type === "both") {
+      position.left = position.left ?? left;
     }
-    case "end": {
-      newConstraint = {
-        type: "end",
-        end: parentSize - start - size,
-      };
-      break;
+    if (parentRect && (type === "end" || type === "both")) {
+      const right = parentRect.width - left - rect.width;
+      position.right = position.right ?? right;
     }
-    case "both": {
-      newConstraint = {
-        type: "both",
-        start: start,
-        end: parentSize - start - size,
-      };
-      break;
+  } else {
+    const top = rect.top - (parentRect?.top ?? 0);
+    if (type === "start" || type === "both") {
+      position.top = position.top ?? top;
+    }
+    if (parentRect && (type === "end" || type === "both")) {
+      const bottom = parentRect.height - top - rect.height;
+      position.bottom = position.bottom ?? bottom;
     }
   }
-
-  style.position = {
-    ...position,
-    [axis]: newConstraint,
-  };
 }

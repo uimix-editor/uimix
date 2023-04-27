@@ -25,6 +25,7 @@ export const Size = z.union([
   z.object({
     min: z.number(),
     max: z.number().optional(),
+    default: z.number().optional(),
   }),
 ]);
 export type Size = z.infer<typeof Size>;

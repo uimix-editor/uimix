@@ -1,5 +1,6 @@
 import { Selectable } from "../models/Selectable";
 import { Rect } from "paintvec";
+import * as Data from "../data/v1";
 
 function setPositionConstraintValue(
   selectable: Selectable,
@@ -39,6 +40,16 @@ function setPositionConstraintValue(
   style.position = position;
 }
 
+function setSizeValue(size: Data.Size, value: number) {
+  if (typeof size === "object") {
+    return {
+      ...size,
+      default: value,
+    };
+  }
+  return value;
+}
+
 export function resizeWithBoundingBox(
   selectable: Selectable,
   bbox: Rect,
@@ -76,9 +87,12 @@ export function resizeWithBoundingBox(
   }
 
   if (targets.width) {
-    selectable.style.width = bbox.width;
+    selectable.style.width = setSizeValue(selectable.style.width, bbox.width);
   }
   if (targets.height) {
-    selectable.style.height = bbox.height;
+    selectable.style.height = setSizeValue(
+      selectable.style.height,
+      bbox.height
+    );
   }
 }
