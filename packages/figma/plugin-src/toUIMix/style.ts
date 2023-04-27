@@ -13,37 +13,37 @@ function getPositionStylePartial(
   // TODO: more constraints
   if (parentLayout === "NONE") {
     style.position = {
-      x: { type: "start", start: node.x - offset[0] },
-      y: { type: "start", start: node.y - offset[1] },
+      left: node.x - offset[0],
+      top: node.y - offset[1],
     };
   }
-  style.width = { type: "fixed", value: node.width };
-  style.height = { type: "fixed", value: node.height };
+  style.width = node.width;
+  style.height = node.height;
 
   if (parentLayout === "VERTICAL") {
     if (node.layoutGrow) {
-      style.height = { type: "fill" };
+      style.height = { min: 0 };
     }
     if (node.layoutAlign === "STRETCH") {
-      style.width = { type: "fill" };
+      style.width = { min: 0 };
     }
   } else if (parentLayout === "HORIZONTAL") {
     if (node.layoutGrow) {
-      style.width = { type: "fill" };
+      style.width = { min: 0 };
     }
     if (node.layoutAlign === "STRETCH") {
-      style.height = { type: "fill" };
+      style.height = { min: 0 };
     }
   }
 
   if (node.type === "TEXT") {
     switch (node.textAutoResize) {
       case "WIDTH_AND_HEIGHT":
-        style.width = { type: "hug" };
-        style.height = { type: "hug" };
+        style.width = "hug";
+        style.height = "hug";
         break;
       case "HEIGHT":
-        style.height = { type: "hug" };
+        style.height = "hug";
         break;
       case "NONE":
         break;
@@ -68,8 +68,7 @@ async function paintToUIMix(paint: Paint): Promise<Data.SolidFill | undefined> {
   switch (paint.type) {
     case "SOLID":
       return {
-        type: "solid",
-        color: rgbaToHex({ ...paint.color, a: paint.opacity }),
+        solid: rgbaToHex({ ...paint.color, a: paint.opacity }),
       };
     /* TODO
     case "GRADIENT_LINEAR": {
@@ -158,7 +157,7 @@ async function getFillBorderStylePartial(
   }
   if (node.strokes.length) {
     const border = await paintToUIMix(node.strokes[0]);
-    if (border?.type === "solid") {
+    if (border?.solid) {
       style.border = border;
     }
     style.borderTopWidth = node.strokeTopWeight;
@@ -226,7 +225,7 @@ async function getTextStylePartial(
     if (node.lineHeight.unit === "AUTO") {
       style.lineHeight = null;
     } else if (node.lineHeight.unit === "PERCENT") {
-      style.lineHeight = [node.lineHeight.value, "%"];
+      style.lineHeight = `${node.lineHeight.value}%`;
     } else {
       style.lineHeight = node.lineHeight.value;
     }
@@ -234,7 +233,7 @@ async function getTextStylePartial(
 
   if (node.letterSpacing !== figma.mixed) {
     if (node.letterSpacing.unit === "PERCENT") {
-      style.letterSpacing = [node.letterSpacing.value, "%"];
+      style.letterSpacing = `${node.letterSpacing.value}%`;
     } else {
       style.letterSpacing = node.letterSpacing.value;
     }
@@ -279,11 +278,11 @@ async function getTextStylePartial(
     case "NONE":
       break;
     case "HEIGHT":
-      style.height = { type: "hug" };
+      style.height = "hug";
       break;
     case "WIDTH_AND_HEIGHT":
-      style.width = { type: "hug" };
-      style.height = { type: "hug" };
+      style.width = "hug";
+      style.height = "hug";
       break;
   }
 
@@ -368,17 +367,17 @@ function getLayoutStylePartial(
 
   if (node.layoutMode === "VERTICAL") {
     if (node.primaryAxisSizingMode == "AUTO") {
-      style.height = { type: "hug" };
+      style.height = "hug";
     }
     if (node.counterAxisSizingMode == "AUTO") {
-      style.width = { type: "hug" };
+      style.width = "hug";
     }
   } else {
     if (node.primaryAxisSizingMode == "AUTO") {
-      style.width = { type: "hug" };
+      style.width = "hug";
     }
     if (node.counterAxisSizingMode == "AUTO") {
-      style.height = { type: "hug" };
+      style.height = "hug";
     }
   }
 

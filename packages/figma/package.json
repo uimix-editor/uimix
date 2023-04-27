@@ -5,7 +5,7 @@
   "description": "Figma plugin for UIMix",
   "license": "MIT",
   "scripts": {
-    "build": "npm run build:ui && npm run build:main",
+    "build": "npm run tsc && npm run build:ui && npm run build:main",
     "build:main": "esbuild plugin-src/code.ts --target=es6 --bundle --outfile=dist/code.js",
     "build:ui": "npx vite build --minify esbuild --emptyOutDir=false",
     "build:watch": "concurrently -n widget,iframe \"npm run build:main -- --watch\" \"npm run build:ui -- --watch\"",
