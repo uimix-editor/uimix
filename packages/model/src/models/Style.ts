@@ -9,8 +9,8 @@ export const defaultStyle: Data.Style = {
   locked: false,
   position: null,
   preferAbsolute: false,
-  width: { type: "hug" },
-  height: { type: "hug" },
+  width: "hug",
+  height: "hug",
 
   topLeftRadius: 0,
   topRightRadius: 0,

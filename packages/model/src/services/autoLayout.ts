@@ -14,14 +14,8 @@ export function removeLayout(selectable: Selectable): void {
 
   for (const child of selectable.children) {
     child.style.position = {
-      x: {
-        type: "start",
-        start: child.computedOffsetRect.left,
-      },
-      y: {
-        type: "start",
-        start: child.computedOffsetRect.top,
-      },
+      left: child.computedOffsetRect.left,
+      top: child.computedOffsetRect.top,
     };
     child.style.marginTop = 0;
     child.style.marginRight = 0;
@@ -29,17 +23,11 @@ export function removeLayout(selectable: Selectable): void {
     child.style.marginLeft = 0;
   }
 
-  if (selectable.style.width.type === "hug") {
-    selectable.style.width = {
-      type: "fixed",
-      value: selectable.computedRect.width,
-    };
+  if (selectable.style.width === "hug") {
+    selectable.style.width = selectable.computedRect.width;
   }
-  if (selectable.style.height.type === "hug") {
-    selectable.style.height = {
-      type: "fixed",
-      value: selectable.computedRect.height,
-    };
+  if (selectable.style.height === "hug") {
+    selectable.style.height = selectable.computedRect.height;
   }
 
   selectable.style.layout = "none";
@@ -70,14 +58,8 @@ export function ungroup(selectable: Selectable): void {
     const pos = child.computedOffsetRect.topLeft;
 
     child.style.position = {
-      x: {
-        type: "start",
-        start: pos.x,
-      },
-      y: {
-        type: "start",
-        start: pos.y,
-      },
+      left: pos.x,
+      top: pos.y,
     };
   }
 }
@@ -141,23 +123,11 @@ export function groupAndAutoLayout(
   const frame = parent.project.nodes.create("frame").selectable;
   frame.node.name = "Frame";
   frame.style.position = {
-    x: {
-      type: "start",
-      start: offsetBBox.left,
-    },
-    y: {
-      type: "start",
-      start: offsetBBox.top,
-    },
+    left: offsetBBox.left,
+    top: offsetBBox.top,
   };
-  frame.style.width = {
-    type: "fixed",
-    value: offsetBBox.width,
-  };
-  frame.style.height = {
-    type: "fixed",
-    value: offsetBBox.height,
-  };
+  frame.style.width = offsetBBox.width;
+  frame.style.height = offsetBBox.height;
 
   frame.style.layout = "flex";
   frame.style.flexDirection = flex.direction;

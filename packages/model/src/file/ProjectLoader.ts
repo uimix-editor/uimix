@@ -257,37 +257,6 @@ class PageLoader {
     };
   }
 
-  transformPosition(position: File.Position): Data.PositionConstraints {
-    return {
-      x:
-        position.left !== undefined && position.right !== undefined
-          ? { type: "both", start: position.left, end: position.right }
-          : position.right !== undefined
-          ? { type: "end", end: position.right }
-          : { type: "start", start: position.left ?? 0 },
-      y:
-        position.top !== undefined && position.bottom !== undefined
-          ? { type: "both", start: position.top, end: position.bottom }
-          : position.bottom !== undefined
-          ? { type: "end", end: position.bottom }
-          : { type: "start", start: position.top ?? 0 },
-    };
-  }
-
-  transformSize(size: File.Size): Data.SizeConstraint {
-    if (size === "hug") {
-      return { type: "hug" };
-    }
-    if (typeof size === "number") {
-      return { type: "fixed", value: size };
-    }
-    return {
-      type: "fill",
-      min: size.min || undefined,
-      max: size.max,
-    };
-  }
-
   getImageHashFromImagePath(imagePath: string): string | undefined {
     return this.projectLoader.imagePathToHash.get(this.absolutePath(imagePath));
   }
@@ -318,14 +287,10 @@ class PageLoader {
     return filterUndefined<Partial<Data.Style>>({
       hidden: style.hidden,
       locked: style.locked,
-      position: style.position && this.transformPosition(style.position),
+      position: style.position,
       preferAbsolute: style.preferAbsolute,
-      width:
-        style.width !== undefined ? this.transformSize(style.width) : undefined,
-      height:
-        style.height !== undefined
-          ? this.transformSize(style.height)
-          : undefined,
+      width: style.width,
+      height: style.height,
 
       topLeftRadius: style.topLeftRadius,
       topRightRadius: style.topRightRadius,

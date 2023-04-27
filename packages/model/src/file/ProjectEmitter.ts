@@ -288,29 +288,6 @@ export class PageEmitter {
     };
   }
 
-  transformPosition(position: Data.PositionConstraints): File.Position {
-    return {
-      left: position.x.type !== "end" ? position.x.start : undefined,
-      right: position.x.type !== "start" ? position.x.end : undefined,
-      top: position.y.type !== "end" ? position.y.start : undefined,
-      bottom: position.y.type !== "start" ? position.y.end : undefined,
-    };
-  }
-
-  transformSize(size: Data.SizeConstraint): File.Size {
-    switch (size.type) {
-      case "hug":
-        return "hug";
-      case "fixed":
-        return size.value;
-      case "fill":
-        return {
-          min: size.min ?? 0,
-          max: size.max,
-        };
-    }
-  }
-
   transformStyle(style: Partial<Data.Style>): Partial<File.BaseStyleProps> {
     const mainComponent =
       style.mainComponent != null
@@ -325,10 +302,10 @@ export class PageEmitter {
     return filterUndefined<Partial<File.BaseStyleProps>>({
       hidden: style.hidden,
       locked: style.locked,
-      position: style.position && this.transformPosition(style.position),
+      position: style.position,
       preferAbsolute: style.preferAbsolute,
-      width: style.width && this.transformSize(style.width),
-      height: style.height && this.transformSize(style.height),
+      width: style.width,
+      height: style.height,
 
       topLeftRadius: style.topLeftRadius,
       topRightRadius: style.topRightRadius,

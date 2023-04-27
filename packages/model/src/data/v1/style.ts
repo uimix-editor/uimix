@@ -11,62 +11,23 @@ export const PxPercentValue = z.union([
 ]);
 export type PxPercentValue = z.infer<typeof PxPercentValue>;
 
-export const PositionConstraint = z.union([
-  z.object({
-    type: z.literal("start"),
-    start: PxValue,
-  }),
-  z.object({
-    type: z.literal("end"),
-    end: PxValue,
-  }),
-  z.object({
-    type: z.literal("both"),
-    start: PxValue,
-    end: PxValue,
-  }),
-  // z.object({
-  //   type: z.literal("center"),
-  //   center: PxValue,
-  // }),
-  // z.object({
-  //   type: z.literal("scale"),
-  //   startRatio: z.number(),
-  //   sizeRatio: z.number(),
-  // }),
-]);
-export type PositionConstraint = z.infer<typeof PositionConstraint>;
-
-export const PositionConstraints = z.object({
-  x: PositionConstraint,
-  y: PositionConstraint,
+export const Position = z.object({
+  left: z.number().optional(),
+  top: z.number().optional(),
+  right: z.number().optional(),
+  bottom: z.number().optional(),
 });
-export type PositionConstraints = z.infer<typeof PositionConstraints>;
+export type Position = z.infer<typeof Position>;
 
-export type PositionConstraintType = PositionConstraint["type"];
-
-export const SizeConstraint = z.union([
+export const Size = z.union([
+  z.literal("hug"),
+  z.number(),
   z.object({
-    type: z.literal("hug"),
-  }),
-  z.object({
-    type: z.literal("fixed"),
-    value: PxValue,
-  }),
-  z.object({
-    type: z.literal("fill"),
-    min: PxValue.optional(),
-    max: PxValue.optional(),
-    /**
-     * Default size when the layer is not in a layout.
-     */
-    value: PxValue.optional(),
+    min: z.number(),
+    max: z.number().optional(),
   }),
 ]);
-
-export type SizeConstraint = z.infer<typeof SizeConstraint>;
-
-export type SizeConstraintType = SizeConstraint["type"];
+export type Size = z.infer<typeof Size>;
 
 // color values
 
@@ -133,16 +94,10 @@ export type ForeignComponentRef = z.infer<typeof ForeignComponentRef>;
 export const Style = z.object({
   hidden: z.boolean(),
   locked: z.boolean(),
-  position: z.union([
-    z.null(),
-    z.object({
-      x: PositionConstraint,
-      y: PositionConstraint,
-    }),
-  ]),
+  position: z.union([z.null(), Position]),
   preferAbsolute: z.boolean(),
-  width: SizeConstraint,
-  height: SizeConstraint,
+  width: Size,
+  height: Size,
 
   topLeftRadius: PxValue,
   topRightRadius: PxValue,
