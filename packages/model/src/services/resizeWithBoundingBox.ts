@@ -20,19 +20,19 @@ function setPositionConstraintValue(
   if (axis === "x") {
     const left = rect.left - parentRect.left;
     const right = parentRect.width - left - rect.width;
-    if ("left" in position) {
+    if (position.left !== undefined) {
       position.left = left;
     }
-    if ("right" in position) {
+    if (position.right !== undefined) {
       position.right = right;
     }
   } else {
     const top = rect.top - parentRect.top;
     const bottom = parentRect.height - top - rect.height;
-    if ("top" in position) {
+    if (position.top !== undefined) {
       position.top = top;
     }
-    if ("bottom" in position) {
+    if (position.bottom !== undefined) {
       position.bottom = bottom;
     }
   }
