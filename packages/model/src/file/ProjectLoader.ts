@@ -328,14 +328,8 @@ class PageLoader {
       fontFamily: style.fontFamily,
       fontWeight: style.fontWeight,
       fontSize: style.fontSize,
-      lineHeight:
-        style.lineHeight != null
-          ? transformPxPercentage(style.lineHeight)
-          : style.lineHeight,
-      letterSpacing:
-        style.letterSpacing != null
-          ? transformPxPercentage(style.letterSpacing)
-          : style.letterSpacing,
+      lineHeight: style.lineHeight,
+      letterSpacing: style.letterSpacing,
       textHorizontalAlign: style.textHorizontalAlign,
       textVerticalAlign: style.textVerticalAlign,
 
@@ -348,13 +342,4 @@ class PageLoader {
       tagName: style.tagName,
     });
   }
-}
-
-function transformPxPercentage(
-  pxPercentage: number | string
-): Data.PxPercentValue {
-  if (typeof pxPercentage === "number") {
-    return pxPercentage;
-  }
-  return [Number.parseFloat(pxPercentage), "%"];
 }

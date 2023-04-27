@@ -346,14 +346,8 @@ export class PageEmitter {
       fontFamily: style.fontFamily,
       fontWeight: style.fontWeight,
       fontSize: style.fontSize,
-      lineHeight:
-        style.lineHeight && typeof style.lineHeight === "object"
-          ? style.lineHeight.join("")
-          : style.lineHeight,
-      letterSpacing:
-        style.letterSpacing && typeof style.letterSpacing === "object"
-          ? style.letterSpacing.join("")
-          : style.letterSpacing,
+      lineHeight: style.lineHeight,
+      letterSpacing: style.letterSpacing,
       textHorizontalAlign: style.textHorizontalAlign,
       textVerticalAlign: style.textVerticalAlign,
 

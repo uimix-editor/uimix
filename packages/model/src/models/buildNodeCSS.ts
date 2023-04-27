@@ -233,12 +233,12 @@ export function buildNodeCSS(
         ? "normal"
         : typeof lineHeight === "number"
         ? `${lineHeight}px`
-        : lineHeight.join("");
+        : lineHeight;
     const letterSpacing = style.letterSpacing;
     cssStyle.letterSpacing =
       typeof letterSpacing === "number"
         ? `${letterSpacing}px`
-        : `${letterSpacing[0] / 100}em`;
+        : `${Number.parseFloat(letterSpacing) / 100}em`;
     cssStyle.textAlign = style.textHorizontalAlign;
     cssStyle.justifyContent = (() => {
       switch (style.textVerticalAlign) {
