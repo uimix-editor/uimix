@@ -5,11 +5,20 @@ import { z } from "zod";
 export const PxValue = z.number();
 export type PxValue = z.infer<typeof PxValue>;
 
-export const PxPercentValue = z.union([
-  z.number(),
-  z.tuple([z.number(), z.literal("%")]),
-]);
-export type PxPercentValue = z.infer<typeof PxPercentValue>;
+export const PercentString = z.custom<`${number}%`>((val) => {
+  try {
+    if (typeof val !== "string") {
+      return false;
+    }
+    if (!val.endsWith("%")) {
+      return false;
+    }
+    return typeof JSON.parse(val.slice(0, -1)) === "number";
+  } catch {
+    return false;
+  }
+});
+export type PercentString = z.infer<typeof PercentString>;
 
 export const Position = z.object({
   left: z.number().optional(),
@@ -148,8 +157,8 @@ export const Style = z.object({
   fontFamily: z.string(),
   fontWeight: z.number(),
   fontSize: PxValue,
-  lineHeight: z.union([PxPercentValue, z.null()]), // percent means relative to font size (null for auto)
-  letterSpacing: PxPercentValue, // percent means relative to font size
+  lineHeight: z.union([z.number(), PercentString, z.null()]), // percent means relative to font size (null for auto)
+  letterSpacing: z.union([z.number(), PercentString]), // percent means relative to font size: ;
   textHorizontalAlign: TextHorizontalAlign,
   textVerticalAlign: TextVerticalAlign,
 
