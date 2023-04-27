@@ -229,7 +229,7 @@ class PageLoader {
     return relativePath;
   }
 
-  transformColor(color: File.Color): Data.Color {
+  transformColor(color: Data.Color): Data.Color {
     if (typeof color === "object") {
       const tokenPath = color.token;
       const tokenId = this.colorTokenFromRelativePath(tokenPath)?.id;
@@ -248,7 +248,7 @@ class PageLoader {
     return color;
   }
 
-  transformFill(fill: File.Fill): Data.SolidFill {
+  transformFill(fill: Data.Fill): Data.Fill {
     return {
       solid: this.transformColor(fill.solid),
     };

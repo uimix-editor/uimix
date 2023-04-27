@@ -267,7 +267,7 @@ export class PageEmitter {
     return path;
   }
 
-  transformColor(color: Data.Color): File.Color {
+  transformColor(color: Data.Color): Data.Color {
     if (typeof color === "object") {
       const token = this.project.colorTokens.get(color.token);
       if (token?.type === "normal") {
@@ -282,7 +282,7 @@ export class PageEmitter {
     return color;
   }
 
-  transformFill(fill: Data.SolidFill): File.Fill {
+  transformFill(fill: Data.Fill): Data.Fill {
     return {
       solid: this.transformColor(fill.solid),
     };
