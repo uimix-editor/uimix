@@ -137,6 +137,10 @@ export class CSSGenerator {
 
       for (const target of ["self", "children"] as const) {
         for (const [key, value] of Object.entries(diffCSS[target])) {
+          if (value == null) {
+            continue;
+          }
+
           if (key.startsWith("--")) {
             // eslint-disable-next-line
             body[target].push(`  ${key}: ${value};`);

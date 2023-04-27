@@ -78,8 +78,6 @@ class NodeResizeBoxState {
       const newBBox = roundRectXYWH(originalBBox.transform(transform));
 
       resizeWithBoundingBox(instance, newBBox, {
-        x: true,
-        y: true,
         width: this.widthChanged,
         height: this.heightChanged,
       });

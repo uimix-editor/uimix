@@ -31,7 +31,7 @@ export function buildNodeCSS(
     if (typeof color === "string") {
       return color;
     }
-    return getColorToken(color.id);
+    return getColorToken(color.token);
   };
 
   if (nodeType === "component") {
@@ -48,10 +48,14 @@ export function buildNodeCSS(
   if (position) {
     cssStyle.position = "absolute";
     if (position) {
-      cssStyle.left = "start" in position.x ? `${position.x.start}px` : "auto";
-      cssStyle.right = "end" in position.x ? `${position.x.end}px` : "auto";
-      cssStyle.top = "start" in position.y ? `${position.y.start}px` : "auto";
-      cssStyle.bottom = "end" in position.y ? `${position.y.end}px` : "auto";
+      cssStyle.top =
+        position.top !== undefined ? `${position.top}px` : undefined;
+      cssStyle.right =
+        position.right !== undefined ? `${position.right}px` : undefined;
+      cssStyle.bottom =
+        position.bottom !== undefined ? `${position.bottom}px` : undefined;
+      cssStyle.left =
+        position.left !== undefined ? `${position.left}px` : undefined;
     }
   } else {
     cssStyle.position = "relative";
@@ -65,7 +69,7 @@ export function buildNodeCSS(
   // TODO: unset width/height when both left/right or top/bottom are set
 
   const width = style.width;
-  if (width.type === "fill") {
+  if (typeof width === "object") {
     // polyfill width:stretch
     cssStyle[xFlexGrowVarName] = 1;
     cssStyle[yWidthVarName] = cssStyle[gridWidthVarName] = `calc(100% - ${
@@ -75,10 +79,10 @@ export function buildNodeCSS(
     cssStyle.maxWidth = width.max !== undefined ? `${width.max}px` : undefined;
   } else {
     let cssWidth: string;
-    if (width.type === "fixed") {
-      cssWidth = `${width.value}px`;
-    } else {
+    if (width === "hug") {
       cssWidth = "max-content";
+    } else {
+      cssWidth = `${width}px`;
     }
 
     cssStyle[xFlexGrowVarName] = 0;
@@ -89,7 +93,7 @@ export function buildNodeCSS(
   }
 
   const height = style.height;
-  if (height.type === "fill") {
+  if (typeof height === "object") {
     // polyfill height:stretch
     cssStyle[yFlexGrowVarName] = 1;
     cssStyle[xHeightVarName] = cssStyle[gridHeightVarName] = `calc(100% - ${
@@ -101,10 +105,10 @@ export function buildNodeCSS(
       height.max !== undefined ? `${height.max}px` : undefined;
   } else {
     let cssHeight: string;
-    if (height.type === "fixed") {
-      cssHeight = `${height.value}px`;
-    } else {
+    if (height === "hug") {
       cssHeight = "max-content";
+    } else {
+      cssHeight = `${height}px`;
     }
 
     cssStyle[yFlexGrowVarName] = 0;
@@ -180,11 +184,11 @@ export function buildNodeCSS(
   if (nodeType === "frame" || nodeType === "image" || nodeType === "svg") {
     const fills = style.fills;
     cssStyle.background = fills.length
-      ? resolveColorToken(fills[0].color)
+      ? resolveColorToken(fills[0].solid)
       : "transparent";
     cssStyle.borderStyle = "solid";
     cssStyle.borderColor =
-      (style.border && resolveColorToken(style.border.color)) ?? "transparent";
+      (style.border && resolveColorToken(style.border.solid)) ?? "transparent";
     cssStyle.borderTopWidth = `${style.borderTopWidth}px`;
     cssStyle.borderRightWidth = `${style.borderRightWidth}px`;
     cssStyle.borderBottomWidth = `${style.borderBottomWidth}px`;
@@ -218,7 +222,7 @@ export function buildNodeCSS(
     cssStyle.flexDirection = "column";
     const fills = style.fills;
     cssStyle.color = fills.length
-      ? resolveColorToken(fills[0].color)
+      ? resolveColorToken(fills[0].solid)
       : "transparent";
     cssStyle.fontFamily = style.fontFamily;
     cssStyle.fontSize = `${style.fontSize}px`;

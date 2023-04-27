@@ -267,48 +267,25 @@ export class PageEmitter {
     return path;
   }
 
-  transformColor(color: Data.Color): File.Color {
+  transformColor(color: Data.Color): Data.Color {
     if (typeof color === "object") {
-      const token = this.project.colorTokens.get(color.id);
+      const token = this.project.colorTokens.get(color.token);
       if (token?.type === "normal") {
         return {
           token: this.colorTokenRelativePath(token),
         };
       }
       return {
-        token: color.id,
+        token: color.token,
       };
     }
     return color;
   }
 
-  transformFill(fill: Data.SolidFill): File.Fill {
+  transformFill(fill: Data.Fill): Data.Fill {
     return {
-      solid: this.transformColor(fill.color),
+      solid: this.transformColor(fill.solid),
     };
-  }
-
-  transformPosition(position: Data.PositionConstraints): File.Position {
-    return {
-      left: position.x.type !== "end" ? position.x.start : undefined,
-      right: position.x.type !== "start" ? position.x.end : undefined,
-      top: position.y.type !== "end" ? position.y.start : undefined,
-      bottom: position.y.type !== "start" ? position.y.end : undefined,
-    };
-  }
-
-  transformSize(size: Data.SizeConstraint): File.Size {
-    switch (size.type) {
-      case "hug":
-        return "hug";
-      case "fixed":
-        return size.value;
-      case "fill":
-        return {
-          min: size.min ?? 0,
-          max: size.max,
-        };
-    }
   }
 
   transformStyle(style: Partial<Data.Style>): Partial<File.BaseStyleProps> {
@@ -325,10 +302,10 @@ export class PageEmitter {
     return filterUndefined<Partial<File.BaseStyleProps>>({
       hidden: style.hidden,
       locked: style.locked,
-      position: style.position && this.transformPosition(style.position),
+      position: style.position,
       preferAbsolute: style.preferAbsolute,
-      width: style.width && this.transformSize(style.width),
-      height: style.height && this.transformSize(style.height),
+      width: style.width,
+      height: style.height,
 
       topLeftRadius: style.topLeftRadius,
       topRightRadius: style.topRightRadius,

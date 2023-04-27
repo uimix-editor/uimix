@@ -41,11 +41,7 @@ export function createComponent(selectable: Selectable) {
   page.node.append([component]);
 
   if (!isTopLevel) {
-    selectable.style.position = {
-      // TODO: find better position
-      x: { type: "start", start: 0 },
-      y: { type: "start", start: 0 },
-    };
+    selectable.style.position = { left: 0, top: 0 };
 
     const instance = project.nodes.create("instance");
     instance.name = selectable.node.name;

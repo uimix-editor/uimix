@@ -19,7 +19,7 @@ export const TextEditorBody: React.FC<{
   delete cssStyle.marginLeft;
 
   const computedRect = selectable.computedRect;
-  const fitWidth = style.width.type === "hug";
+  const fitWidth = style.width === "hug";
 
   const editableRef = useRef<HTMLDivElement>(null);
   useEffect(() => {

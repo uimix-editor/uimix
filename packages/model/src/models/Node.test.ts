@@ -62,12 +62,12 @@ describe(Node.name, () => {
       const frameSelectable = frame.selectable;
       const style = frameSelectable.style;
       style.position = {
-        x: { type: "start", start: i * 100 + 50 },
-        y: { type: "start", start: 90 },
+        left: i * 100 + 50,
+        top: 90,
       };
-      style.width = { type: "fixed", value: 50 };
-      style.height = { type: "fixed", value: 50 };
-      style.fills = [{ type: "solid", color: Color.from("red").toHex() }];
+      style.width = 50;
+      style.height = 50;
+      style.fills = [{ solid: Color.from("red").toHex() }];
 
       frames.push(frame);
     }
