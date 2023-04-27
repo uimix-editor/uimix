@@ -698,7 +698,7 @@ function setPositionStartConstraintType(
 ) {
   const style = selectable.style;
 
-  const position = style.position ?? { left: 0, top: 0 };
+  const position = { ...(style.position ?? { left: 0, top: 0 }) };
 
   const rect = selectable.computedRect;
   const parentRect = selectable.offsetParent?.computedRect;
@@ -707,19 +707,31 @@ function setPositionStartConstraintType(
     const left = rect.left - (parentRect?.left ?? 0);
     if (type === "start" || type === "both") {
       position.left = position.left ?? left;
+    } else {
+      delete position.left;
     }
+
     if (parentRect && (type === "end" || type === "both")) {
       const right = parentRect.width - left - rect.width;
       position.right = position.right ?? right;
+    } else {
+      delete position.right;
     }
   } else {
     const top = rect.top - (parentRect?.top ?? 0);
     if (type === "start" || type === "both") {
       position.top = position.top ?? top;
+    } else {
+      delete position.top;
     }
+
     if (parentRect && (type === "end" || type === "both")) {
       const bottom = parentRect.height - top - rect.height;
       position.bottom = position.bottom ?? bottom;
+    } else {
+      delete position.bottom;
     }
   }
+
+  style.position = position;
 }
