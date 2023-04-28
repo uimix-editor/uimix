@@ -14,8 +14,8 @@ import { Page } from "./Page";
 import {
   buildNodeCSS,
   SelfAndChildrenCSS,
-} from "@uimix/elements-react/src/buildNodeCSS";
-import { StyleProps } from "@uimix/elements-react/src/StyleProps";
+  StyleProps,
+} from "@uimix/elements-react";
 
 export interface IComputedRectProvider {
   readonly value: Rect | undefined;

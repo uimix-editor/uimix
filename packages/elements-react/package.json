@@ -2,7 +2,7 @@
   "name": "@uimix/elements-react",
   "license": "MIT",
   "type": "module",
-  "main": "src/index.tsx",
+  "main": "src/index.ts",
   "scripts": {
     "lint": "eslint src",
     "storybook": "storybook dev -p 8008",
