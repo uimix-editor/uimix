@@ -11,6 +11,11 @@ import { Project } from "./Project";
 import { Component, Variant } from "./Component";
 import { ObjectData } from "./ObjectData";
 import { Page } from "./Page";
+import {
+  buildNodeCSS,
+  SelfAndChildrenCSS,
+} from "@uimix/elements-react/src/buildNodeCSS";
+import { StyleProps } from "@uimix/elements-react/src/StyleProps";
 
 export interface IComputedRectProvider {
   readonly value: Rect | undefined;
@@ -653,6 +658,49 @@ export class Selectable {
       undefined
     );
     return selectable;
+  }
+
+  buildCSS(
+    getColorToken: (id: string) => string = (tokenID) =>
+      this.project.colorTokens.resolve(tokenID)
+  ): SelfAndChildrenCSS {
+    const style = { ...defaultStyle, ...this.style.toJSON() };
+
+    const nodeType = this.node.type;
+    const resolveColor = (color: Data.Color): string => {
+      if (typeof color === "string") {
+        return color;
+      }
+      return getColorToken(color.token);
+    };
+    const resolveFill = (fill: Data.Fill): StyleProps["fills"][number] => {
+      return {
+        solid: resolveColor(fill.solid),
+      };
+    };
+
+    if (nodeType === "component") {
+      return {
+        self: {},
+        children: {},
+      };
+    }
+
+    const resolvedStyle: StyleProps = {
+      ...style,
+      fills: style.fills.map(resolveFill),
+      border: style.border && resolveFill(style.border),
+      shadows: style.shadows.map((shadow) => ({
+        ...shadow,
+        color: resolveColor(shadow.color),
+      })),
+      image: null,
+    };
+
+    return buildNodeCSS(
+      nodeType as "frame" | "text" | "image" | "svg",
+      resolvedStyle
+    );
   }
 }
 

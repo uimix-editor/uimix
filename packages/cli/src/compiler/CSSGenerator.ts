@@ -2,13 +2,9 @@ import { kebabCase } from "lodash-es";
 import * as CSS from "csstype";
 import { Page } from "@uimix/model/src/models/Page";
 import * as CodeAsset from "@uimix/adapter-types";
-import {
-  buildNodeCSS,
-  Selectable,
-  SelfAndChildrenCSS,
-  Variant,
-} from "@uimix/model/src/models";
+import { Selectable, Variant } from "@uimix/model/src/models";
 import { ClassNameGenerator } from "./ClassNameGenerator";
+import { SelfAndChildrenCSS } from "@uimix/elements-react/src/buildNodeCSS";
 
 function isDesignToken(
   value: CodeAsset.DesignToken | CodeAsset.DesignTokens
@@ -70,9 +66,7 @@ export class CSSGenerator {
         return css;
       }
 
-      css = buildNodeCSS(
-        selectable.node.type,
-        selectable.style,
+      css = selectable.buildCSS(
         (tokenID) =>
           getColorToken(this.designTokens, tokenID.split("/"))?.$value ??
           selectable.project.colorTokens.resolve(tokenID)

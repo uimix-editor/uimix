@@ -1,6 +1,6 @@
 import React, { createRef, useEffect, useRef } from "react";
 import { observer } from "mobx-react-lite";
-import { Selectable, buildNodeCSS } from "@uimix/model/src/models";
+import { Selectable } from "@uimix/model/src/models";
 import { viewportState } from "../../../state/ViewportState";
 import { ComputedRectProvider } from "./ComputedRectProvider";
 import { projectState } from "../../../state/ProjectState";
@@ -59,9 +59,7 @@ export const NodeRenderer: React.FC<{
     const style = selectable.style;
     const type = selectable.node.type;
 
-    const builtStyle = buildNodeCSS(type, style, (tokenID) =>
-      selectable.project.colorTokens.resolve(tokenID)
-    );
+    const builtStyle = selectable.buildCSS();
 
     const cssStyle: React.CSSProperties = {
       all: "revert",

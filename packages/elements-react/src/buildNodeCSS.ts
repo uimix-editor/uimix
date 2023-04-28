@@ -210,10 +210,16 @@ export function buildNodeCSS(
     cssStyle.fontWeight = style.fontWeight;
     const lineHeight = style.lineHeight;
     cssStyle.lineHeight =
-      typeof lineHeight === "number" ? `${lineHeight}px` : lineHeight ?? "auto";
+      lineHeight === null
+        ? "normal"
+        : typeof lineHeight === "number"
+        ? `${lineHeight}px`
+        : lineHeight;
     const letterSpacing = style.letterSpacing;
     cssStyle.letterSpacing =
-      typeof letterSpacing === "number" ? `${letterSpacing}px` : letterSpacing;
+      typeof letterSpacing === "number"
+        ? `${letterSpacing}px`
+        : `${Number.parseFloat(letterSpacing) / 100}em`;
     cssStyle.textAlign = style.textHorizontalAlign;
     cssStyle.justifyContent = (() => {
       switch (style.textVerticalAlign) {

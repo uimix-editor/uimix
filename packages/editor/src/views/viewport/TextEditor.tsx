@@ -1,7 +1,7 @@
 import { action, reaction } from "mobx";
 import { observer } from "mobx-react-lite";
 import React, { useEffect, useRef } from "react";
-import { Selectable, buildNodeCSS } from "@uimix/model/src/models";
+import { Selectable } from "@uimix/model/src/models";
 import { viewportState } from "../../state/ViewportState";
 import { projectState } from "../../state/ProjectState";
 
@@ -10,9 +10,7 @@ export const TextEditorBody: React.FC<{
 }> = observer(({ selectable }) => {
   const style = selectable.style;
 
-  const cssStyle = buildNodeCSS("text", style, (tokenID) =>
-    selectable.project.colorTokens.resolve(tokenID)
-  ).self;
+  const cssStyle = selectable.buildCSS().self;
   delete cssStyle.marginTop;
   delete cssStyle.marginRight;
   delete cssStyle.marginBottom;

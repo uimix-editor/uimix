@@ -126,6 +126,9 @@ importers:
       '@uimix/adapter-types':
         specifier: workspace:*
         version: link:../adapter-types
+      '@uimix/elements-react':
+        specifier: workspace:*
+        version: link:../elements-react
       '@uimix/foundation':
         specifier: workspace:*
         version: link:../foundation
@@ -1023,6 +1026,9 @@ importers:
       '@uimix/adapter-types':
         specifier: workspace:*
         version: link:../adapter-types
+      '@uimix/elements-react':
+        specifier: workspace:*
+        version: link:../elements-react
       '@uimix/foundation':
         specifier: workspace:*
         version: link:../foundation
