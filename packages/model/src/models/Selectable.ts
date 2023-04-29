@@ -15,7 +15,7 @@ import {
   buildNodeCSS,
   SelfAndChildrenCSS,
   StyleProps,
-} from "@uimix/elements-react";
+} from "@uimix/elements-react/src/style";
 
 export interface IComputedRectProvider {
   readonly value: Rect | undefined;

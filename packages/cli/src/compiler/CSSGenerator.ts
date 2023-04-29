@@ -4,7 +4,7 @@ import { Page } from "@uimix/model/src/models/Page";
 import * as CodeAsset from "@uimix/adapter-types";
 import { Selectable, Variant } from "@uimix/model/src/models";
 import { ClassNameGenerator } from "./ClassNameGenerator";
-import { SelfAndChildrenCSS } from "@uimix/elements-react";
+import { SelfAndChildrenCSS } from "@uimix/elements-react/src/style";
 
 function isDesignToken(
   value: CodeAsset.DesignToken | CodeAsset.DesignTokens

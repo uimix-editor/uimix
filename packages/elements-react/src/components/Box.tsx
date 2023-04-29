@@ -1,6 +1,10 @@
 import { ReactNode, useId } from "react";
-import { StyleProps, defaultStyle } from "./StyleProps";
-import { SelfAndChildrenCSS, buildNodeCSS } from "./buildNodeCSS";
+import {
+  StyleProps,
+  defaultStyle,
+  SelfAndChildrenCSS,
+  buildNodeCSS,
+} from "../style";
 
 function kebabCase(str: string): string {
   return str.replace(/[A-Z]/g, (match) => `-${match.toLowerCase()}`);

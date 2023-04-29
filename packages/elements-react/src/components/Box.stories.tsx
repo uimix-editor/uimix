@@ -1,4 +1,4 @@
-import { Box, Text } from "./index";
+import { Box, Text } from "./Box";
 
 export default {
   title: "Box",
