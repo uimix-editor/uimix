@@ -68,8 +68,7 @@ export class CSSGenerator {
 
       css = selectable.buildCSS(
         (tokenID) =>
-          getColorToken(this.designTokens, tokenID.split("/"))?.$value ??
-          selectable.project.colorTokens.resolve(tokenID)
+          getColorToken(this.designTokens, tokenID.split("/"))?.$value
       );
       const isTopLevel =
         selectable.idPath.length === 1 &&

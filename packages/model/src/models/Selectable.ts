@@ -661,8 +661,7 @@ export class Selectable {
   }
 
   buildCSS(
-    getColorToken: (id: string) => string = (tokenID) =>
-      this.project.colorTokens.resolve(tokenID)
+    resolveColorToken: (tokenID: string) => string | undefined = () => undefined
   ): SelfAndChildrenCSS {
     const style = { ...defaultStyle, ...this.style.toJSON() };
 
@@ -671,7 +670,10 @@ export class Selectable {
       if (typeof color === "string") {
         return color;
       }
-      return getColorToken(color.token);
+      const tokenID = color.token;
+      return (
+        resolveColorToken(tokenID) ?? this.project.colorTokens.resolve(tokenID)
+      );
     };
     const resolveFill = (fill: Data.Fill): StyleProps["fills"][number] => {
       return {
