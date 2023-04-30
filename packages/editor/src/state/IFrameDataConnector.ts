@@ -12,18 +12,12 @@ import { ThumbnailTakerHost } from "./ThumbnailTakerHost";
 import { viewOptions } from "./ViewOptions";
 
 export function vscodeParentTarget(): Target {
-  // @ts-ignore
-  // eslint-disable-next-line
   const vscode = acquireVsCodeApi();
 
   return {
-    // eslint-disable-next-line
     post: (message) => vscode.postMessage(message),
     subscribe: (handler) => {
       const onMessage = (event: MessageEvent) => {
-        // if (event.source === window || event.source !== window.parent) {
-        //   return;
-        // }
         // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
         handler(event.data);
       };
