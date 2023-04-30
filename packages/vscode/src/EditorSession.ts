@@ -181,11 +181,10 @@ export class EditorSession {
     const configScript = `
 <script>
   window.uimixViewOptions = {
-    embed: true,
+    type: "vscode",
     uiScaling: 0.75,
     fontSize: 11,
-    narrowMode: true,
-    vscode: true,
+    layout: "twoColumn",
   };
 </script>`;
 

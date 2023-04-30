@@ -9,7 +9,6 @@ import {
 } from "../types/IFrameRPC";
 import { throttle } from "lodash-es";
 import { ThumbnailTakerHost } from "./ThumbnailTakerHost";
-import { viewOptions } from "./ViewOptions";
 
 export function vscodeParentTarget(): Target {
   const vscode = acquireVsCodeApi();
@@ -30,7 +29,7 @@ export function vscodeParentTarget(): Target {
 }
 
 export class IFrameDataConnector {
-  constructor(state: ProjectState) {
+  constructor(state: ProjectState, type: "embed" | "vscode") {
     this.state = state;
     this.updates.push(Y.encodeStateAsUpdate(state.doc));
 
@@ -48,7 +47,7 @@ export class IFrameDataConnector {
     };
 
     this.rpc = new RPC<IEditorToRootRPCHandler, IRootToEditorRPCHandler>(
-      viewOptions.vscode ? vscodeParentTarget() : parentWindowTarget(),
+      type === "vscode" ? vscodeParentTarget() : parentWindowTarget(),
       {
         update: action(async (data: Uint8Array) => {
           Y.applyUpdate(state.doc, data);

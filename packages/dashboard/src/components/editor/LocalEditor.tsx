@@ -136,7 +136,7 @@ const LocalEditor: React.FC = () => {
       "://",
       // TODO: use unique ID for subdomain?
       `://local.`
-    ) + "?embed=true&titleBarPadding=40";
+    ) + "?type=embed&titleBarPadding=40";
 
   return (
     <div className="text-neutral-800 flex flex-col text-xs">

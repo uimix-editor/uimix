@@ -6,10 +6,10 @@ import { IFrameDataConnector } from "./state/IFrameDataConnector";
 import { projectState } from "./state/ProjectState";
 import { viewOptions } from "./state/ViewOptions";
 
-if (viewOptions.embed) {
-  new IFrameDataConnector(projectState);
-} else {
+if (viewOptions.type == "demo") {
   projectState.loadDemoFile();
+} else {
+  new IFrameDataConnector(projectState, viewOptions.type);
 }
 
 ReactDOM.createRoot(document.getElementById("root") as HTMLElement).render(

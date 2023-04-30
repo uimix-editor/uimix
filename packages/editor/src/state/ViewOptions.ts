@@ -1,10 +1,9 @@
 interface ViewOptions {
-  embed: boolean;
+  type: "demo" | "embed" | "vscode";
   titleBarPadding: number;
   uiScaling: number;
   fontSize: number;
-  narrowMode: boolean;
-  vscode: boolean;
+  layout: "twoColumn" | "threeColumn";
 }
 
 declare global {
@@ -16,33 +15,32 @@ declare global {
 function getViewOptions(): ViewOptions {
   if (window.uimixViewOptions) {
     return {
-      embed: false,
       titleBarPadding: 0,
       uiScaling: 1,
       fontSize: 12,
-      narrowMode: false,
-      vscode: false,
+      layout: "threeColumn",
+      type: "demo",
       ...window.uimixViewOptions,
     };
   }
 
   const searchParams = new URLSearchParams(window.location.search);
 
-  const embed = searchParams.get("embed") === "true";
+  const type = (searchParams.get("type") ?? "demo") as ViewOptions["type"];
   const titleBarPadding = Number.parseInt(
     searchParams.get("titleBarPadding") ?? "0"
   );
   const uiScaling = Number.parseFloat(searchParams.get("uiScaling") ?? "1");
   const fontSize = Number.parseFloat(searchParams.get("fontSize") ?? "12");
-  const narrowMode = searchParams.get("narrowMode") === "true";
+  const layout = (searchParams.get("layout") ??
+    "threeColumn") as ViewOptions["layout"];
 
   return {
-    embed,
+    type,
     titleBarPadding,
     uiScaling,
     fontSize,
-    narrowMode,
-    vscode: false,
+    layout,
   };
 }
 
