@@ -1,5 +1,5 @@
-import * as Data from "../data/v1";
 import * as CSS from "csstype";
+import { StyleProps } from "./StyleProps";
 
 const xFlexGrowVarName = "--uimix-x-flex-grow";
 const yFlexGrowVarName = "--uimix-y-flex-grow";
@@ -23,24 +23,9 @@ export interface SelfAndChildrenCSS {
 }
 
 export function buildNodeCSS(
-  nodeType: Data.NodeType,
-  style: Data.Style,
-  getColorToken: (id: string) => string
+  nodeType: "frame" | "text" | "image" | "svg",
+  style: StyleProps
 ): SelfAndChildrenCSS {
-  const resolveColorToken = (color: Data.Color): string => {
-    if (typeof color === "string") {
-      return color;
-    }
-    return getColorToken(color.token);
-  };
-
-  if (nodeType === "component") {
-    return {
-      self: {},
-      children: {},
-    };
-  }
-
   const cssStyle: PropertiesWithVars = {};
   const childrenStyle: CSS.Properties = {};
 
@@ -183,12 +168,10 @@ export function buildNodeCSS(
 
   if (nodeType === "frame" || nodeType === "image" || nodeType === "svg") {
     const fills = style.fills;
-    cssStyle.background = fills.length
-      ? resolveColorToken(fills[0].solid)
-      : "transparent";
+    cssStyle.background = fills.length ? fills[0].solid : "transparent";
     cssStyle.borderStyle = "solid";
     cssStyle.borderColor =
-      (style.border && resolveColorToken(style.border.solid)) ?? "transparent";
+      (style.border && style.border.solid) ?? "transparent";
     cssStyle.borderTopWidth = `${style.borderTopWidth}px`;
     cssStyle.borderRightWidth = `${style.borderRightWidth}px`;
     cssStyle.borderBottomWidth = `${style.borderBottomWidth}px`;
@@ -209,7 +192,7 @@ export function buildNodeCSS(
           const y = `${shadow.y}px`;
           const blur = `${shadow.blur}px`;
           const spread = `${shadow.spread}px`;
-          const color = resolveColorToken(shadow.color);
+          const color = shadow.color;
           return `${x} ${y} ${blur} ${spread} ${color}`;
         })
         .join(", ");
@@ -221,9 +204,7 @@ export function buildNodeCSS(
     cssStyle.display = "flex";
     cssStyle.flexDirection = "column";
     const fills = style.fills;
-    cssStyle.color = fills.length
-      ? resolveColorToken(fills[0].solid)
-      : "transparent";
+    cssStyle.color = fills.length ? fills[0].solid : "transparent";
     cssStyle.fontFamily = style.fontFamily;
     cssStyle.fontSize = `${style.fontSize}px`;
     cssStyle.fontWeight = style.fontWeight;

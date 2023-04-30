@@ -1,4 +1,3 @@
-export * from "./buildNodeCSS";
 export * from "./ColorRef";
 export * from "./ColorToken";
 export * from "./Component";

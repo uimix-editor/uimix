@@ -11,6 +11,7 @@
   "dependencies": {
     "@babel/standalone": "^7.21.4",
     "@uimix/adapter-types": "workspace:*",
+    "@uimix/elements-react": "workspace:*",
     "@uimix/foundation": "workspace:*",
     "crypto-js": "^4.1.1",
     "lodash-es": "^4.17.21",
