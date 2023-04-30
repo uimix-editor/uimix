@@ -23,16 +23,16 @@ const googleFontOptions = googleFonts.items.map((item) => ({
 }));
 
 export const TextPane: React.FC = observer(function TextPane() {
-  const textSelectables = projectState.selectedSelectables.filter(
-    (s) => s.node.type === "text"
+  const selectables = projectState.selectedSelectables.filter(
+    (s) => s.node.type === "text" || s.node.type === "frame"
   );
 
-  if (textSelectables.length === 0) {
+  if (selectables.length === 0) {
     return null;
   }
 
   // TODO: Add InspectorColorInput?
-  const color = sameOrNone(textSelectables.map((s) => s.style.color));
+  const color = sameOrNone(selectables.map((s) => s.style.color));
 
   return (
     <InspectorPane>
@@ -40,7 +40,7 @@ export const TextPane: React.FC = observer(function TextPane() {
         icon="material-symbols:font-download-outline-rounded"
         text="Text"
       />
-      <InspectorTargetContext.Provider value={textSelectables}>
+      <InspectorTargetContext.Provider value={selectables}>
         <div className="flex flex-col gap-2">
           <ColorInput
             value={
@@ -49,7 +49,7 @@ export const TextPane: React.FC = observer(function TextPane() {
                 : undefined
             }
             onChange={action((color) => {
-              for (const selectable of textSelectables) {
+              for (const selectable of selectables) {
                 selectable.style.color = color?.toJSON() ?? "#000000";
               }
             })}
@@ -133,70 +133,20 @@ export const TextPane: React.FC = observer(function TextPane() {
             />
           </div>
         </div>
-        <div className="grid grid-cols-3 gap-2 items-center">
-          <InspectorNumberInput
-            icon={edgeTopIcon}
-            tooltip="Padding Top"
-            className="col-start-2 row-start-1"
-            get={(s) => ({ value: s.style.paddingTop })}
-            set={(s, value) => {
-              s.style.paddingTop = value?.value ?? 0;
-            }}
-          />
-          <InspectorNumberInput
-            icon={{
-              ...edgeTopIcon,
-              rotate: 1,
-            }}
-            tooltip="Padding Right"
-            className="col-start-3 row-start-2"
-            get={(s) => ({ value: s.style.paddingRight })}
-            set={(s, value) => {
-              s.style.paddingRight = value?.value ?? 0;
-            }}
-          />
-          <InspectorNumberInput
-            icon={{
-              ...edgeTopIcon,
-              rotate: 2,
-            }}
-            tooltip="Padding Bottom"
-            className="col-start-2 row-start-3"
-            get={(s) => ({ value: s.style.paddingBottom })}
-            set={(s, value) => {
-              s.style.paddingBottom = value?.value ?? 0;
-            }}
-          />
-          <InspectorNumberInput
-            icon={{
-              ...edgeTopIcon,
-              rotate: 3,
-            }}
-            tooltip="Padding Left"
-            className="col-start-1 row-start-2"
-            get={(s) => ({ value: s.style.paddingLeft })}
-            set={(s, value) => {
-              s.style.paddingLeft = value?.value ?? 0;
-            }}
-          />
-          <StackAlignmentEdit
-            direction="y"
-            className="col-start-2 row-start-2"
-          />
-        </div>
+        <TextAlignEdit />
       </InspectorTargetContext.Provider>
     </InspectorPane>
   );
 });
 
-const StackAlignmentEdit = observer(function StackAlignmentEdit({
-  direction,
-  className,
-}: {
-  direction: Data.StackDirection;
-  className?: string;
-}) {
-  const selectables = projectState.selectedSelectables;
+const TextAlignEdit = observer(function TextAlignEdit() {
+  const selectables = projectState.selectedSelectables.filter(
+    (s) => s.node.type === "text"
+  );
+  if (selectables.length === 0) {
+    return null;
+  }
+
   const align = sameOrMixed(
     selectables.map((s) => s.style.textHorizontalAlign)
   );
@@ -205,25 +155,72 @@ const StackAlignmentEdit = observer(function StackAlignmentEdit({
   );
 
   return (
-    <AlignmentEdit
-      className={className}
-      direction={direction}
-      align={
-        typeof align === "string"
-          ? align === "justify"
-            ? "start"
-            : align
-          : undefined
-      }
-      justify={typeof justify === "string" ? justify : undefined}
-      onChange={action((align, justify) => {
-        for (const selectable of selectables) {
-          selectable.style.textHorizontalAlign = align ?? "start";
-          selectable.style.textVerticalAlign =
-            justify && justify !== "spaceBetween" ? justify : "start";
+    <div className="grid grid-cols-3 gap-2 items-center">
+      <InspectorNumberInput
+        icon={edgeTopIcon}
+        tooltip="Padding Top"
+        className="col-start-2 row-start-1"
+        get={(s) => ({ value: s.style.paddingTop })}
+        set={(s, value) => {
+          s.style.paddingTop = value?.value ?? 0;
+        }}
+      />
+      <InspectorNumberInput
+        icon={{
+          ...edgeTopIcon,
+          rotate: 1,
+        }}
+        tooltip="Padding Right"
+        className="col-start-3 row-start-2"
+        get={(s) => ({ value: s.style.paddingRight })}
+        set={(s, value) => {
+          s.style.paddingRight = value?.value ?? 0;
+        }}
+      />
+      <InspectorNumberInput
+        icon={{
+          ...edgeTopIcon,
+          rotate: 2,
+        }}
+        tooltip="Padding Bottom"
+        className="col-start-2 row-start-3"
+        get={(s) => ({ value: s.style.paddingBottom })}
+        set={(s, value) => {
+          s.style.paddingBottom = value?.value ?? 0;
+        }}
+      />
+      <InspectorNumberInput
+        icon={{
+          ...edgeTopIcon,
+          rotate: 3,
+        }}
+        tooltip="Padding Left"
+        className="col-start-1 row-start-2"
+        get={(s) => ({ value: s.style.paddingLeft })}
+        set={(s, value) => {
+          s.style.paddingLeft = value?.value ?? 0;
+        }}
+      />
+      <AlignmentEdit
+        className="col-start-2 row-start-2"
+        direction="y"
+        align={
+          typeof align === "string"
+            ? align === "justify"
+              ? "start"
+              : align
+            : undefined
         }
-        projectState.undoManager.stopCapturing();
-      })}
-    />
+        justify={typeof justify === "string" ? justify : undefined}
+        onChange={action((align, justify) => {
+          for (const selectable of selectables) {
+            selectable.style.textHorizontalAlign = align ?? "start";
+            selectable.style.textVerticalAlign =
+              justify && justify !== "spaceBetween" ? justify : "start";
+          }
+          projectState.undoManager.stopCapturing();
+        })}
+      />
+    </div>
   );
 });
