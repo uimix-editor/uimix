@@ -201,6 +201,7 @@ window.__vite_plugin_react_preamble_installed__ = true
         uiScaling: 0.75,
         fontSize: 11,
         narrowMode: true,
+        vscode: true,
       };
     </script>
     <script type="module" src="http://localhost:5173/src/main.tsx"></script>

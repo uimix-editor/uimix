@@ -1,6 +1,6 @@
 import * as Y from "yjs";
 import { parentWindowTarget } from "@uimix/typed-rpc/browser";
-import { RPC } from "@uimix/typed-rpc";
+import { RPC, Target } from "@uimix/typed-rpc";
 import { ProjectState } from "./ProjectState";
 import { action } from "mobx";
 import {
@@ -10,6 +10,31 @@ import {
 import { throttle } from "lodash-es";
 import { ThumbnailTakerHost } from "./ThumbnailTakerHost";
 import { Clipboard } from "./Clipboard";
+import { viewOptions } from "./ViewOptions";
+
+export function vscodeParentTarget(): Target {
+  // @ts-ignore
+  // eslint-disable-next-line
+  const vscode = acquireVsCodeApi();
+
+  return {
+    // eslint-disable-next-line
+    post: (message) => vscode.postMessage(message),
+    subscribe: (handler) => {
+      const onMessage = (event: MessageEvent) => {
+        // if (event.source === window || event.source !== window.parent) {
+        //   return;
+        // }
+        // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
+        handler(event.data);
+      };
+      window.addEventListener("message", onMessage);
+      return () => {
+        window.removeEventListener("message", onMessage);
+      };
+    },
+  };
+}
 
 export class IFrameDataConnector {
   constructor(state: ProjectState) {
@@ -30,7 +55,7 @@ export class IFrameDataConnector {
     };
 
     this.rpc = new RPC<IEditorToRootRPCHandler, IRootToEditorRPCHandler>(
-      parentWindowTarget(),
+      viewOptions.vscode ? vscodeParentTarget() : parentWindowTarget(),
       {
         update: action(async (data: Uint8Array) => {
           Y.applyUpdate(state.doc, data);

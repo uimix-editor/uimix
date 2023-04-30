@@ -4,6 +4,7 @@ interface ViewOptions {
   uiScaling: number;
   fontSize: number;
   narrowMode: boolean;
+  vscode: boolean;
 }
 
 declare global {
@@ -20,6 +21,7 @@ function getViewOptions(): ViewOptions {
       uiScaling: 1,
       fontSize: 12,
       narrowMode: false,
+      vscode: false,
       ...window.uimixViewOptions,
     };
   }
@@ -40,6 +42,7 @@ function getViewOptions(): ViewOptions {
     uiScaling,
     fontSize,
     narrowMode,
+    vscode: false,
   };
 }
 
