@@ -109,12 +109,6 @@ export class EditorSession {
         updateThumbnail: async () => {
           // no op
         },
-        getClipboard: async () => {
-          throw new Error("should be intercepted in webview.");
-        },
-        setClipboard: async () => {
-          throw new Error("should be intercepted in webview.");
-        },
         getCodeAssets: async () => this.loadCodeAssets(),
       }
     );

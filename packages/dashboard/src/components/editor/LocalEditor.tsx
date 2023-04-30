@@ -11,7 +11,6 @@ import { ProjectData } from "@uimix/model/src/collaborative";
 import { LoadingErrorOverlay } from "./LoadingErrorOverlay";
 import { DocumentMetadata, getDesktopAPI } from "../../types/DesktopAPI";
 import { assertNonNull } from "../../utils/assertNonNull";
-import { DefaultClipboardHandler } from "@uimix/editor/src/state/DefaultClipboardHandler";
 
 // TODO: test
 
@@ -47,13 +46,6 @@ class Connection extends TypedEmitter<{
         // eslint-disable-next-line @typescript-eslint/no-unused-vars
         updateThumbnail: async (pngData) => {
           // TODO: set thumbnail for file
-        },
-
-        getClipboard: async (type) => {
-          return await new DefaultClipboardHandler().get(type);
-        },
-        setClipboard: async (type, text) => {
-          await new DefaultClipboardHandler().set(type, text);
         },
 
         getCodeAssets: async () => {
