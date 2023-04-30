@@ -139,9 +139,7 @@ export default (
             variants={{
               "maxWidth:767": {
                 overrides: {
-                  button: {
-                    overrides: { text: { color: "#FF0000" } },
-                  },
+                  button: { overrides: { text: { color: "#FF0000" } } },
                 },
               },
             }}
