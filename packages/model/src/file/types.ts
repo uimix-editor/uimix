@@ -10,6 +10,7 @@ import {
   TextHorizontalAlign,
   TextVerticalAlign,
   VariantCondition,
+  Color,
 } from "../data/v1";
 import { z } from "zod";
 import Babel from "@babel/standalone";
@@ -62,6 +63,7 @@ export const BaseStyleProps = z.object({
 
   // text
 
+  color: Color,
   textContent: z.string(),
   fontFamily: z.string(),
   fontWeight: z.number(),

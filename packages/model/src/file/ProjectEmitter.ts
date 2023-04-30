@@ -342,6 +342,10 @@ export class PageEmitter {
       paddingBottom: style.paddingBottom,
       paddingLeft: style.paddingLeft,
 
+      color:
+        style.color !== undefined
+          ? this.transformColor(style.color)
+          : undefined,
       textContent: style.textContent,
       fontFamily: style.fontFamily,
       fontWeight: style.fontWeight,
