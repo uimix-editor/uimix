@@ -6,11 +6,19 @@ import { Selectable } from "@uimix/model/src/models";
 import { projectState } from "../../../state/ProjectState";
 import colors from "@uimix/foundation/src/colors";
 import { ResizeBox } from "@uimix/foundation/src/components";
-import { roundRectXYWH } from "../../../types/Rect";
 import { snapper } from "../../../state/Snapper";
 import { assertNonNull } from "@uimix/foundation/src/utils/Assert";
 import { viewportState } from "../../../state/ViewportState";
 import { resizeWithBoundingBox } from "@uimix/model/src/services";
+
+function roundRectXYWH(rect: Rect): Rect {
+  return Rect.from({
+    x: Math.round(rect.left),
+    y: Math.round(rect.top),
+    width: Math.round(rect.width),
+    height: Math.round(rect.height),
+  });
+}
 
 class NodeResizeBoxState {
   constructor() {
