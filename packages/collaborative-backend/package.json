@@ -28,7 +28,7 @@
     "yjs": "^13.6.0"
   },
   "devDependencies": {
-    "@types/jsonwebtoken": "^9.0.1",
+    "@types/jsonwebtoken": "^9.0.2",
     "@uimix/model": "workspace:*",
     "esbuild": "^0.17.18",
     "forever": "^4.0.3",

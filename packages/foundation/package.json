@@ -16,8 +16,8 @@
     "create-index": "cti create ./src/components -i '*.stories.tsx' -i '*.test.ts' -b"
   },
   "dependencies": {
-    "@emotion/react": "^11.10.6",
-    "@emotion/styled": "^11.10.6",
+    "@emotion/react": "^11.10.8",
+    "@emotion/styled": "^11.10.8",
     "@iconify-icons/heroicons": "^1.2.7",
     "@iconify-icons/ic": "^1.2.13",
     "@iconify/react": "^4.1.0",
@@ -65,7 +65,7 @@
     "zod": "^3.21.4"
   },
   "devDependencies": {
-    "@babel/core": "^7.21.4",
+    "@babel/core": "^7.21.5",
     "@storybook/addon-actions": "^7.0.7",
     "@storybook/addon-essentials": "^7.0.7",
     "@storybook/addon-interactions": "^7.0.7",
@@ -79,9 +79,9 @@
     "@types/lodash-es": "^4.17.7",
     "@types/path-browserify": "^1.0.0",
     "@types/prettier": "^2.7.2",
-    "@types/react": "^18.0.38",
+    "@types/react": "^18.2.0",
     "@types/react-color": "^3.0.6",
-    "@types/react-dom": "^18.0.11",
+    "@types/react-dom": "^18.2.1",
     "@types/sortablejs": "^1.15.1",
     "@types/ua-parser-js": "^0.7.36",
     "@types/wicg-file-system-access": "^2020.9.6",
@@ -97,9 +97,9 @@
     "react-docgen-typescript": "^2.2.2",
     "run-z": "^1.11.0",
     "storybook": "^7.0.7",
-    "tailwindcss": "^3.3.1",
+    "tailwindcss": "^3.3.2",
     "typescript": "^5.0.4",
-    "vite": "^4.3.1",
+    "vite": "^4.3.3",
     "vitest": "^0.30.1"
   }
 }
