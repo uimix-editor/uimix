@@ -153,6 +153,7 @@ export const Style = z.object({
 
   // text
 
+  color: Color,
   textContent: z.string(),
   fontFamily: z.string(),
   fontWeight: z.number(),

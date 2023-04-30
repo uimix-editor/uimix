@@ -63,6 +63,7 @@ export interface StyleProps {
   paddingLeft: number;
 
   // text
+  color: string;
   textContent: string;
   fontFamily: string;
   fontWeight: number;
@@ -124,6 +125,7 @@ export const defaultStyle: StyleProps = {
 
   // text
 
+  color: "#000000",
   textContent: "",
   fontFamily: "Inter",
   fontWeight: 400,

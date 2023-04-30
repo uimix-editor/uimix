@@ -203,8 +203,7 @@ export function buildNodeCSS(
     cssStyle.whiteSpace = "break-spaces";
     cssStyle.display = "flex";
     cssStyle.flexDirection = "column";
-    const fills = style.fills;
-    cssStyle.color = fills.length ? fills[0].solid : "transparent";
+    cssStyle.color = style.color;
     cssStyle.fontFamily = style.fontFamily;
     cssStyle.fontSize = `${style.fontSize}px`;
     cssStyle.fontWeight = style.fontWeight;
