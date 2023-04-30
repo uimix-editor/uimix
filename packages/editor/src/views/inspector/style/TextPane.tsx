@@ -19,6 +19,10 @@ import { InspectorTargetContext } from "../components/InspectorTargetContext";
 import { projectState } from "../../../state/ProjectState";
 import { InspectorComboBox } from "./inputs/InspectorComboBox";
 import googleFonts from "@uimix/foundation/src/fonts/GoogleFonts.json";
+import { ColorInput } from "../components/ColorInput";
+import { sameOrMixed, sameOrNone } from "@uimix/foundation/src/utils/Mixed";
+import { ColorRef } from "@uimix/model/src/models";
+import { action } from "mobx";
 
 const googleFontOptions = googleFonts.items.map((item) => ({
   value: item.family,
@@ -68,6 +72,9 @@ export const TextPane: React.FC = observer(function TextPane() {
     return null;
   }
 
+  // TODO: Add InspectorColorInput?
+  const color = sameOrNone(textSelectables.map((s) => s.style.color));
+
   return (
     <InspectorPane>
       <InspectorHeading
@@ -76,6 +83,21 @@ export const TextPane: React.FC = observer(function TextPane() {
       />
       <InspectorTargetContext.Provider value={textSelectables}>
         <div className="flex flex-col gap-2">
+          <ColorInput
+            value={
+              color != null
+                ? ColorRef.fromJSON(projectState.project, color)
+                : undefined
+            }
+            onChange={action((color) => {
+              for (const selectable of textSelectables) {
+                selectable.style.color = color?.toJSON() ?? "#000000";
+              }
+            })}
+            onChangeEnd={action(() => {
+              projectState.undoManager.stopCapturing();
+            })}
+          />
           <InspectorComboBox
             get={(s) => s.style.fontFamily}
             set={(s, value) => {
