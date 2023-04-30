@@ -52,7 +52,7 @@ export default (
             hidden={false}
             width="hug"
             height="hug"
-            fills={[{ solid: "#1f2937" }]}
+            color="#1f2937"
             opacity={1}
             textContent="UIMix"
             fontFamily="Satoshi"
@@ -127,7 +127,7 @@ export default (
               hidden={false}
               width="hug"
               height="hug"
-              fills={[{ solid: "#1f2937" }]}
+              color="#1f2937"
               opacity={1}
               textContent="Sign In"
               fontFamily="Satoshi"
@@ -173,7 +173,7 @@ export default (
               hidden={false}
               width="hug"
               height="hug"
-              fills={[{ solid: "#ffffff" }]}
+              color="#ffffff"
               opacity={1}
               textContent="Get Early Access"
               fontFamily="Satoshi"
@@ -216,7 +216,7 @@ export default (
             hidden={false}
             width="hug"
             height="hug"
-            fills={[{ solid: "#000000" }]}
+            color="#000000"
             opacity={1}
             textContent="Features"
             fontFamily="Satoshi"
@@ -233,7 +233,7 @@ export default (
             hidden={false}
             width="hug"
             height="hug"
-            fills={[{ solid: "#000000" }]}
+            color="#000000"
             opacity={1}
             textContent="Pricing"
             fontFamily="Satoshi"
@@ -250,7 +250,7 @@ export default (
             hidden={false}
             width="hug"
             height="hug"
-            fills={[{ solid: "#000000" }]}
+            color="#000000"
             opacity={1}
             textContent="Docs"
             fontFamily="Satoshi"
@@ -267,7 +267,7 @@ export default (
             hidden={false}
             width="hug"
             height="hug"
-            fills={[{ solid: "#000000" }]}
+            color="#000000"
             opacity={1}
             textContent="GitHub"
             fontFamily="Satoshi"
@@ -353,7 +353,7 @@ export default (
             hidden={false}
             width={{ min: 0 }}
             height="hug"
-            fills={[{ solid: "#1F2937" }]}
+            color="#1F2937"
             opacity={1}
             marginTop={96}
             marginBottom={48}
@@ -374,7 +374,7 @@ export default (
             hidden={false}
             width={{ min: 0 }}
             height="hug"
-            fills={[{ solid: "#6b7280" }]}
+            color="#6b7280"
             opacity={1}
             marginBottom={48}
             textContent={
@@ -447,7 +447,7 @@ export default (
                 hidden={false}
                 width="hug"
                 height="hug"
-                fills={[{ solid: "#ffffff" }]}
+                color="#ffffff"
                 opacity={1}
                 textContent="Get Early Access"
                 fontFamily="Satoshi"
@@ -603,7 +603,7 @@ export default (
                 hidden={false}
                 width={{ min: 0 }}
                 height="hug"
-                fills={[{ solid: "#1f2937" }]}
+                color="#1f2937"
                 opacity={1}
                 textContent="Figma-like Intuitive Editing"
                 fontFamily="Satoshi"
@@ -620,7 +620,7 @@ export default (
                 hidden={false}
                 width={{ min: 0 }}
                 height="hug"
-                fills={[{ solid: "#4b5563" }]}
+                color="#4b5563"
                 opacity={1}
                 textContent="Experience a user-friendly interface with familiar design tools, making it easy for both beginners and professionals to create stunning web designs."
                 fontFamily="Inter"
@@ -698,7 +698,7 @@ export default (
                 hidden={false}
                 width={{ min: 0 }}
                 height="hug"
-                fills={[{ solid: "#1f2937" }]}
+                color="#1f2937"
                 opacity={1}
                 textContent="React Components Import/Export"
                 fontFamily="Satoshi"
@@ -715,7 +715,7 @@ export default (
                 hidden={false}
                 width={{ min: 0 }}
                 height="hug"
-                fills={[{ solid: "#4b5563" }]}
+                color="#4b5563"
                 opacity={1}
                 textContent={
                   "Seamlessly work with React components, boosting your design-to-development workflow.\n"
@@ -795,7 +795,7 @@ export default (
                 hidden={false}
                 width={{ min: 0 }}
                 height="hug"
-                fills={[{ solid: "#1f2937" }]}
+                color="#1f2937"
                 opacity={1}
                 textContent="Collaboration for Everyone"
                 fontFamily="Satoshi"
@@ -812,7 +812,7 @@ export default (
                 hidden={false}
                 width={{ min: 0 }}
                 height="hug"
-                fills={[{ solid: "#4b5563" }]}
+                color="#4b5563"
                 opacity={1}
                 textContent={
                   "Collaborate in real-time with your team, whether they're designers, developers, or stakeholders.\n"
@@ -892,7 +892,7 @@ export default (
                 hidden={false}
                 width={{ min: 0 }}
                 height="hug"
-                fills={[{ solid: "#1f2937" }]}
+                color="#1f2937"
                 opacity={1}
                 textContent="Offline Editing Experience"
                 fontFamily="Satoshi"
@@ -909,7 +909,7 @@ export default (
                 hidden={false}
                 width={{ min: 0 }}
                 height="hug"
-                fills={[{ solid: "#4b5563" }]}
+                color="#4b5563"
                 opacity={1}
                 textContent={
                   "Benefit from UIMix's seamless offline editing, offering local file management, hot reloading, and an uninterrupted workflow.\n\n"
@@ -989,7 +989,7 @@ export default (
                 hidden={false}
                 width={{ min: 0 }}
                 height="hug"
-                fills={[{ solid: "#1f2937" }]}
+                color="#1f2937"
                 opacity={1}
                 textContent="AI Assistance"
                 fontFamily="Satoshi"
@@ -1006,7 +1006,7 @@ export default (
                 hidden={false}
                 width={{ min: 0 }}
                 height="hug"
-                fills={[{ solid: "#4b5563" }]}
+                color="#4b5563"
                 opacity={1}
                 textContent="Supercharge your design process with AI-generated and refined text contents, as well as AI-generated images that fit perfectly into your project."
                 fontFamily="Inter"
@@ -1084,7 +1084,7 @@ export default (
                 hidden={false}
                 width={{ min: 0 }}
                 height="hug"
-                fills={[{ solid: "#1f2937" }]}
+                color="#1f2937"
                 opacity={1}
                 textContent="Figma Integration"
                 fontFamily="Satoshi"
@@ -1101,7 +1101,7 @@ export default (
                 hidden={false}
                 width={{ min: 0 }}
                 height="hug"
-                fills={[{ solid: "#4b5563" }]}
+                color="#4b5563"
                 opacity={1}
                 textContent="Easily import designs from Figma and export components back to Figma, ensuring seamless collaboration between UIMix and your favorite design tool."
                 fontFamily="Inter"
@@ -1134,7 +1134,7 @@ export default (
             hidden={false}
             width={{ min: 0 }}
             height="hug"
-            fills={[{ solid: "#1f2937" }]}
+            color="#1f2937"
             opacity={1}
             marginBottom={24}
             textContent="Open Source"
@@ -1152,7 +1152,7 @@ export default (
             hidden={false}
             width={{ min: 0 }}
             height="hug"
-            fills={[{ solid: "#4b5563" }]}
+            color="#4b5563"
             opacity={1}
             marginBottom={48}
             textContent={
@@ -1205,7 +1205,7 @@ export default (
               hidden={false}
               width="hug"
               height="hug"
-              fills={[{ solid: "#1f2937" }]}
+              color="#1f2937"
               opacity={1}
               textContent="Explore GitHub repo"
               fontFamily="Satoshi"
@@ -1223,7 +1223,7 @@ export default (
             hidden={false}
             width={{ min: 0 }}
             height="hug"
-            fills={[{ solid: "#1f2937" }]}
+            color="#1f2937"
             opacity={1}
             marginBottom={72}
             textContent="How It Works"
@@ -1259,7 +1259,7 @@ export default (
                 hidden={false}
                 width={{ min: 0 }}
                 height="hug"
-                fills={[{ solid: "#1f2937" }]}
+                color="#1f2937"
                 opacity={1}
                 marginBottom={26}
                 textContent="A. Start Your Project"
@@ -1277,7 +1277,7 @@ export default (
                 hidden={false}
                 width={{ min: 0 }}
                 height="hug"
-                fills={[{ solid: "#4b5563" }]}
+                color="#4b5563"
                 opacity={1}
                 textContent={
                   "Sign up for a free account or log in.\nCreate a new project or import an existing Figma design.\nOrganize your components and design tokens in the user-friendly interface."
@@ -1305,7 +1305,7 @@ export default (
                 hidden={false}
                 width={{ min: 0 }}
                 height="hug"
-                fills={[{ solid: "#1f2937" }]}
+                color="#1f2937"
                 opacity={1}
                 marginBottom={20}
                 textContent="B. Design & Develop"
@@ -1323,7 +1323,7 @@ export default (
                 hidden={false}
                 width={{ min: 0 }}
                 height="hug"
-                fills={[{ solid: "#4b5563" }]}
+                color="#4b5563"
                 opacity={1}
                 textContent={
                   "Utilize Figma-like editing tools to create and modify designs.\nSeamlessly import React components into your UIMix project.\nLeverage AI assistance to efficiently generate and refine your content."
@@ -1351,7 +1351,7 @@ export default (
                 hidden={false}
                 width={{ min: 0 }}
                 height="hug"
-                fills={[{ solid: "#1f2937" }]}
+                color="#1f2937"
                 opacity={1}
                 marginBottom={20}
                 textContent="C. Collaborate & Publish"
@@ -1369,7 +1369,7 @@ export default (
                 hidden={false}
                 width={{ min: 0 }}
                 height="hug"
-                fills={[{ solid: "#4b5563" }]}
+                color="#4b5563"
                 opacity={1}
                 textContent={
                   "Collaborate using the online editor or work offline for an optimized development experience.\nIntegrate with GitHub for streamlined version control.\nEasily import UIMix components into React apps or export final designs back to Figma."
@@ -1426,7 +1426,7 @@ export default (
             hidden={false}
             width={{ min: 0 }}
             height="hug"
-            fills={[{ solid: "#ffffff" }]}
+            color="#ffffff"
             opacity={1}
             marginBottom={48}
             textContent="Ready to revolutionize your web design workflow?"
@@ -1499,7 +1499,7 @@ export default (
                 hidden={false}
                 width="hug"
                 height="hug"
-                fills={[{ solid: "#3b82f6" }]}
+                color="#3b82f6"
                 opacity={1}
                 textContent="Get Early Access"
                 fontFamily="Satoshi"

@@ -30,7 +30,7 @@ export default (
           name="Text"
           width="hug"
           height="hug"
-          fills={[{ solid: "#111827" }]}
+          color="#111827"
           textContent="Button"
           variants={{
             hover: { fills: [{ solid: "#FFFFFF" }] },
