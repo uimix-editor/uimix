@@ -29,3 +29,16 @@ It aims to bridge the gap between modern design tools / no-code web builders and
 - [ ] Publish as a cloud service, enabling non-developers to utilize the platform
 - [ ] Managed website hosting that offers a complete no-code starting point for new projects, with the ability to gradually integrate code as needed
 - [ ] Publish as a WYSIWYG editor library
+
+## Build Figma plugin and VSCode extension
+
+```
+git clone --recursive git@github.com:uimix-editor/uimix.git
+cd uimix
+pnpm install
+pnpm build
+pnpm package
+```
+
+- Figma plugin: `packages/figma/uimix-figma-plugin.zip`
+- VSCode extension: `packages/vscode/uimix-vscode-{version}.vsix`
