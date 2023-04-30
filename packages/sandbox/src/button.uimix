@@ -33,7 +33,7 @@ export default (
           color="#111827"
           textContent="Button"
           variants={{
-            hover: { fills: [{ solid: "#FFFFFF" }] },
+            hover: { color: "#FFFFFF" },
             "maxWidth:767": { fontSize: 14 },
           }}
         />

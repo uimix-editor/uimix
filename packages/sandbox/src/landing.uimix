@@ -52,8 +52,8 @@ export default (
             hidden={false}
             width="hug"
             height="hug"
-            color="#1f2937"
             opacity={1}
+            color="#1f2937"
             textContent="UIMix"
             fontFamily="Satoshi"
             fontWeight={900}
@@ -127,8 +127,8 @@ export default (
               hidden={false}
               width="hug"
               height="hug"
-              color="#1f2937"
               opacity={1}
+              color="#1f2937"
               textContent="Sign In"
               fontFamily="Satoshi"
               fontWeight={700}
@@ -173,8 +173,8 @@ export default (
               hidden={false}
               width="hug"
               height="hug"
-              color="#ffffff"
               opacity={1}
+              color="#ffffff"
               textContent="Get Early Access"
               fontFamily="Satoshi"
               fontWeight={900}
@@ -216,8 +216,8 @@ export default (
             hidden={false}
             width="hug"
             height="hug"
-            color="#000000"
             opacity={1}
+            color="#000000"
             textContent="Features"
             fontFamily="Satoshi"
             fontWeight={500}
@@ -233,8 +233,8 @@ export default (
             hidden={false}
             width="hug"
             height="hug"
-            color="#000000"
             opacity={1}
+            color="#000000"
             textContent="Pricing"
             fontFamily="Satoshi"
             fontWeight={500}
@@ -250,8 +250,8 @@ export default (
             hidden={false}
             width="hug"
             height="hug"
-            color="#000000"
             opacity={1}
+            color="#000000"
             textContent="Docs"
             fontFamily="Satoshi"
             fontWeight={500}
@@ -267,8 +267,8 @@ export default (
             hidden={false}
             width="hug"
             height="hug"
-            color="#000000"
             opacity={1}
+            color="#000000"
             textContent="GitHub"
             fontFamily="Satoshi"
             fontWeight={500}
@@ -353,10 +353,10 @@ export default (
             hidden={false}
             width={{ min: 0 }}
             height="hug"
-            color="#1F2937"
             opacity={1}
             marginTop={96}
             marginBottom={48}
+            color="#1F2937"
             textContent={
               "Revolutionize Your Web Design\nand Development Workflow"
             }
@@ -374,9 +374,9 @@ export default (
             hidden={false}
             width={{ min: 0 }}
             height="hug"
-            color="#6b7280"
             opacity={1}
             marginBottom={48}
+            color="#6b7280"
             textContent={
               "UIMix is a open-source design tool that combines intuitive editing,\nReact integration, AI assistance, and advanced design tokens."
             }
@@ -447,8 +447,8 @@ export default (
                 hidden={false}
                 width="hug"
                 height="hug"
-                color="#ffffff"
                 opacity={1}
+                color="#ffffff"
                 textContent="Get Early Access"
                 fontFamily="Satoshi"
                 fontWeight={900}
@@ -603,8 +603,8 @@ export default (
                 hidden={false}
                 width={{ min: 0 }}
                 height="hug"
-                color="#1f2937"
                 opacity={1}
+                color="#1f2937"
                 textContent="Figma-like Intuitive Editing"
                 fontFamily="Satoshi"
                 fontWeight={700}
@@ -620,8 +620,8 @@ export default (
                 hidden={false}
                 width={{ min: 0 }}
                 height="hug"
-                color="#4b5563"
                 opacity={1}
+                color="#4b5563"
                 textContent="Experience a user-friendly interface with familiar design tools, making it easy for both beginners and professionals to create stunning web designs."
                 fontFamily="Inter"
                 fontWeight={400}
@@ -698,8 +698,8 @@ export default (
                 hidden={false}
                 width={{ min: 0 }}
                 height="hug"
-                color="#1f2937"
                 opacity={1}
+                color="#1f2937"
                 textContent="React Components Import/Export"
                 fontFamily="Satoshi"
                 fontWeight={700}
@@ -715,8 +715,8 @@ export default (
                 hidden={false}
                 width={{ min: 0 }}
                 height="hug"
-                color="#4b5563"
                 opacity={1}
+                color="#4b5563"
                 textContent={
                   "Seamlessly work with React components, boosting your design-to-development workflow.\n"
                 }
@@ -795,8 +795,8 @@ export default (
                 hidden={false}
                 width={{ min: 0 }}
                 height="hug"
-                color="#1f2937"
                 opacity={1}
+                color="#1f2937"
                 textContent="Collaboration for Everyone"
                 fontFamily="Satoshi"
                 fontWeight={700}
@@ -812,8 +812,8 @@ export default (
                 hidden={false}
                 width={{ min: 0 }}
                 height="hug"
-                color="#4b5563"
                 opacity={1}
+                color="#4b5563"
                 textContent={
                   "Collaborate in real-time with your team, whether they're designers, developers, or stakeholders.\n"
                 }
@@ -892,8 +892,8 @@ export default (
                 hidden={false}
                 width={{ min: 0 }}
                 height="hug"
-                color="#1f2937"
                 opacity={1}
+                color="#1f2937"
                 textContent="Offline Editing Experience"
                 fontFamily="Satoshi"
                 fontWeight={700}
@@ -909,8 +909,8 @@ export default (
                 hidden={false}
                 width={{ min: 0 }}
                 height="hug"
-                color="#4b5563"
                 opacity={1}
+                color="#4b5563"
                 textContent={
                   "Benefit from UIMix's seamless offline editing, offering local file management, hot reloading, and an uninterrupted workflow.\n\n"
                 }
@@ -989,8 +989,8 @@ export default (
                 hidden={false}
                 width={{ min: 0 }}
                 height="hug"
-                color="#1f2937"
                 opacity={1}
+                color="#1f2937"
                 textContent="AI Assistance"
                 fontFamily="Satoshi"
                 fontWeight={700}
@@ -1006,8 +1006,8 @@ export default (
                 hidden={false}
                 width={{ min: 0 }}
                 height="hug"
-                color="#4b5563"
                 opacity={1}
+                color="#4b5563"
                 textContent="Supercharge your design process with AI-generated and refined text contents, as well as AI-generated images that fit perfectly into your project."
                 fontFamily="Inter"
                 fontWeight={400}
@@ -1084,8 +1084,8 @@ export default (
                 hidden={false}
                 width={{ min: 0 }}
                 height="hug"
-                color="#1f2937"
                 opacity={1}
+                color="#1f2937"
                 textContent="Figma Integration"
                 fontFamily="Satoshi"
                 fontWeight={700}
@@ -1101,8 +1101,8 @@ export default (
                 hidden={false}
                 width={{ min: 0 }}
                 height="hug"
-                color="#4b5563"
                 opacity={1}
+                color="#4b5563"
                 textContent="Easily import designs from Figma and export components back to Figma, ensuring seamless collaboration between UIMix and your favorite design tool."
                 fontFamily="Inter"
                 fontWeight={400}
@@ -1134,9 +1134,9 @@ export default (
             hidden={false}
             width={{ min: 0 }}
             height="hug"
-            color="#1f2937"
             opacity={1}
             marginBottom={24}
+            color="#1f2937"
             textContent="Open Source"
             fontFamily="Satoshi"
             fontWeight={900}
@@ -1152,9 +1152,9 @@ export default (
             hidden={false}
             width={{ min: 0 }}
             height="hug"
-            color="#4b5563"
             opacity={1}
             marginBottom={48}
+            color="#4b5563"
             textContent={
               "UIMix's open-source editor and backend promote community-driven development and offer extensive customization options.\nSelf-host both components for greater control over your design environment and data security."
             }
@@ -1205,8 +1205,8 @@ export default (
               hidden={false}
               width="hug"
               height="hug"
-              color="#1f2937"
               opacity={1}
+              color="#1f2937"
               textContent="Explore GitHub repo"
               fontFamily="Satoshi"
               fontWeight={700}
@@ -1223,9 +1223,9 @@ export default (
             hidden={false}
             width={{ min: 0 }}
             height="hug"
-            color="#1f2937"
             opacity={1}
             marginBottom={72}
+            color="#1f2937"
             textContent="How It Works"
             fontFamily="Satoshi"
             fontWeight={900}
@@ -1259,9 +1259,9 @@ export default (
                 hidden={false}
                 width={{ min: 0 }}
                 height="hug"
-                color="#1f2937"
                 opacity={1}
                 marginBottom={26}
+                color="#1f2937"
                 textContent="A. Start Your Project"
                 fontFamily="Satoshi"
                 fontWeight={700}
@@ -1277,8 +1277,8 @@ export default (
                 hidden={false}
                 width={{ min: 0 }}
                 height="hug"
-                color="#4b5563"
                 opacity={1}
+                color="#4b5563"
                 textContent={
                   "Sign up for a free account or log in.\nCreate a new project or import an existing Figma design.\nOrganize your components and design tokens in the user-friendly interface."
                 }
@@ -1305,9 +1305,9 @@ export default (
                 hidden={false}
                 width={{ min: 0 }}
                 height="hug"
-                color="#1f2937"
                 opacity={1}
                 marginBottom={20}
+                color="#1f2937"
                 textContent="B. Design & Develop"
                 fontFamily="Satoshi"
                 fontWeight={700}
@@ -1323,8 +1323,8 @@ export default (
                 hidden={false}
                 width={{ min: 0 }}
                 height="hug"
-                color="#4b5563"
                 opacity={1}
+                color="#4b5563"
                 textContent={
                   "Utilize Figma-like editing tools to create and modify designs.\nSeamlessly import React components into your UIMix project.\nLeverage AI assistance to efficiently generate and refine your content."
                 }
@@ -1351,9 +1351,9 @@ export default (
                 hidden={false}
                 width={{ min: 0 }}
                 height="hug"
-                color="#1f2937"
                 opacity={1}
                 marginBottom={20}
+                color="#1f2937"
                 textContent="C. Collaborate & Publish"
                 fontFamily="Satoshi"
                 fontWeight={700}
@@ -1369,8 +1369,8 @@ export default (
                 hidden={false}
                 width={{ min: 0 }}
                 height="hug"
-                color="#4b5563"
                 opacity={1}
+                color="#4b5563"
                 textContent={
                   "Collaborate using the online editor or work offline for an optimized development experience.\nIntegrate with GitHub for streamlined version control.\nEasily import UIMix components into React apps or export final designs back to Figma."
                 }
@@ -1426,9 +1426,9 @@ export default (
             hidden={false}
             width={{ min: 0 }}
             height="hug"
-            color="#ffffff"
             opacity={1}
             marginBottom={48}
+            color="#ffffff"
             textContent="Ready to revolutionize your web design workflow?"
             fontFamily="Satoshi"
             fontWeight={900}
@@ -1499,8 +1499,8 @@ export default (
                 hidden={false}
                 width="hug"
                 height="hug"
-                color="#3b82f6"
                 opacity={1}
+                color="#3b82f6"
                 textContent="Get Early Access"
                 fontFamily="Satoshi"
                 fontWeight={900}

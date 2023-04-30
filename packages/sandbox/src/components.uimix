@@ -48,11 +48,11 @@ export default (
           name="Text"
           width="hug"
           height="hug"
-          color="#000000"
           marginTop={10}
           marginRight={20}
           marginBottom={30}
           marginLeft={40}
+          color="#000000"
           textContent="Hello, world!"
           fontSize={20}
         />
@@ -140,7 +140,7 @@ export default (
               "maxWidth:767": {
                 overrides: {
                   button: {
-                    overrides: { text: { fills: [{ solid: "#FF0000" }] } },
+                    overrides: { text: { color: "#FF0000" } },
                   },
                 },
               },
@@ -226,8 +226,8 @@ export default (
           hidden={false}
           width={{ min: 0 }}
           height="hug"
-          color="#1f2937"
           opacity={1}
+          color="#1f2937"
           textContent="React Components Import/Export"
           fontFamily="Satoshi"
           fontWeight={700}
@@ -242,8 +242,8 @@ export default (
           hidden={false}
           width={{ min: 0 }}
           height="hug"
-          color="#4b5563"
           opacity={1}
+          color="#4b5563"
           textContent={
             "Seamlessly work with React components, boosting your design-to-development workflow.\n"
           }
@@ -311,11 +311,11 @@ export default (
           name="Text"
           width="hug"
           height="hug"
-          color="#000000"
           marginTop={10}
           marginRight={20}
           marginBottom={30}
           marginLeft={40}
+          color="#000000"
           textContent="Hello, world!"
           fontSize={20}
         />
