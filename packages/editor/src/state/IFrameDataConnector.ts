@@ -77,14 +77,14 @@ export class IFrameDataConnector {
 
     void this.rpc.remote.ready();
 
-    Clipboard.handler = {
-      get: async (type) => {
-        return this.rpc.remote.getClipboard(type);
-      },
-      set: async (type, text) => {
-        void this.rpc.remote.setClipboard(type, text);
-      },
-    };
+    // Clipboard.handler = {
+    //   get: async (type) => {
+    //     return this.rpc.remote.getClipboard(type);
+    //   },
+    //   set: async (type, text) => {
+    //     void this.rpc.remote.setClipboard(type, text);
+    //   },
+    // };
 
     void this.rpc.remote.getCodeAssets().then((assets) => {
       if (assets) {
