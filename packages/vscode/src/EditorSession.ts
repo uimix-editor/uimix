@@ -12,6 +12,7 @@ import type {
   IRootToEditorRPCHandler,
   IEditorToRootRPCHandler,
 } from "@uimix/editor/src/types/IFrameRPC";
+import fetch from "node-fetch";
 
 const debouncedUpdate = (
   onUpdate: (update: Uint8Array) => void
@@ -51,7 +52,9 @@ export class EditorSession {
     webviewPanel.webview.options = {
       enableScripts: true,
     };
-    webviewPanel.webview.html = this.getHTMLForWebview(webviewPanel.webview);
+    webviewPanel.webview.html = await this.getHTMLForWebview(
+      webviewPanel.webview
+    );
 
     const projectIO = this.projectIO;
     const uri = this.customDocument.uri;
@@ -174,7 +177,16 @@ export class EditorSession {
     }
   }
 
-  private getHTMLForWebview(webview: vscode.Webview): string {
+  private async getHTMLForWebview(webview: vscode.Webview): Promise<string> {
+    const isDevelopment = false;
+
+    if (!isDevelopment) {
+      const remoteEditorURL = "https://local.editor.uimix.app";
+
+      const html = await (await fetch(remoteEditorURL)).text();
+      return html.replaceAll("/assets/", remoteEditorURL + "/assets/");
+    }
+
     return `
 <!DOCTYPE html>
 <html lang="en">
