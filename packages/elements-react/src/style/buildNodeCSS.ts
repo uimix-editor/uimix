@@ -166,37 +166,34 @@ export function buildNodeCSS(
     cssStyle.paddingBottom = `${style.paddingBottom}px`;
   }
 
-  if (nodeType === "frame" || nodeType === "image" || nodeType === "svg") {
-    const fills = style.fills;
-    cssStyle.background = fills.length ? fills[0].solid : "transparent";
-    cssStyle.borderStyle = "solid";
-    cssStyle.borderColor =
-      (style.border && style.border.solid) ?? "transparent";
-    cssStyle.borderTopWidth = `${style.borderTopWidth}px`;
-    cssStyle.borderRightWidth = `${style.borderRightWidth}px`;
-    cssStyle.borderBottomWidth = `${style.borderBottomWidth}px`;
-    cssStyle.borderLeftWidth = `${style.borderLeftWidth}px`;
+  const fills = style.fills;
+  cssStyle.background = fills.length ? fills[0].solid : "transparent";
+  cssStyle.borderStyle = "solid";
+  cssStyle.borderColor = (style.border && style.border.solid) ?? "transparent";
+  cssStyle.borderTopWidth = `${style.borderTopWidth}px`;
+  cssStyle.borderRightWidth = `${style.borderRightWidth}px`;
+  cssStyle.borderBottomWidth = `${style.borderBottomWidth}px`;
+  cssStyle.borderLeftWidth = `${style.borderLeftWidth}px`;
 
-    cssStyle.borderTopLeftRadius = `${style.topLeftRadius}px`;
-    cssStyle.borderTopRightRadius = `${style.topRightRadius}px`;
-    cssStyle.borderBottomRightRadius = `${style.bottomRightRadius}px`;
-    cssStyle.borderBottomLeftRadius = `${style.bottomLeftRadius}px`;
+  cssStyle.borderTopLeftRadius = `${style.topLeftRadius}px`;
+  cssStyle.borderTopRightRadius = `${style.topRightRadius}px`;
+  cssStyle.borderBottomRightRadius = `${style.bottomRightRadius}px`;
+  cssStyle.borderBottomLeftRadius = `${style.bottomLeftRadius}px`;
 
-    const shadows = style.shadows;
-    if (shadows.length === 0) {
-      cssStyle.boxShadow = "none";
-    } else {
-      cssStyle.boxShadow = shadows
-        .map((shadow) => {
-          const x = `${shadow.x}px`;
-          const y = `${shadow.y}px`;
-          const blur = `${shadow.blur}px`;
-          const spread = `${shadow.spread}px`;
-          const color = shadow.color;
-          return `${x} ${y} ${blur} ${spread} ${color}`;
-        })
-        .join(", ");
-    }
+  const shadows = style.shadows;
+  if (shadows.length === 0) {
+    cssStyle.boxShadow = "none";
+  } else {
+    cssStyle.boxShadow = shadows
+      .map((shadow) => {
+        const x = `${shadow.x}px`;
+        const y = `${shadow.y}px`;
+        const blur = `${shadow.blur}px`;
+        const spread = `${shadow.spread}px`;
+        const color = shadow.color;
+        return `${x} ${y} ${blur} ${spread} ${color}`;
+      })
+      .join(", ");
   }
 
   if (nodeType === "text") {
