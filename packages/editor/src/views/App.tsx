@@ -72,18 +72,18 @@ export const App = observer(function App() {
             </div>
           </div>
           {viewportState.isSideBarsVisible &&
-          viewportState.layout === "threeColumn" ? (
-            <InspectorSideBar />
-          ) : (
-            <div className="flex flex-col w-64">
-              <div className="flex-1 border-b border-macaron-separator">
-                <ScrollArea className="absolute left-0 top-0 w-full h-full">
-                  <NodeTreeView />
-                </ScrollArea>
+            (viewportState.layout === "threeColumn" ? (
+              <InspectorSideBar />
+            ) : (
+              <div className="flex flex-col w-64">
+                <div className="flex-1 border-b border-macaron-separator">
+                  <ScrollArea className="absolute left-0 top-0 w-full h-full">
+                    <NodeTreeView />
+                  </ScrollArea>
+                </div>
+                <InspectorSideBar className="flex-[2_2_0%]" />
               </div>
-              <InspectorSideBar className="flex-[2_2_0%]" />
-            </div>
-          )}
+            ))}
         </div>
       </div>
       <ContextMenu />
