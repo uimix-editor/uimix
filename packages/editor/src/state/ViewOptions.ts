@@ -6,7 +6,24 @@ interface ViewOptions {
   narrowMode: boolean;
 }
 
+declare global {
+  interface Window {
+    uimixViewOptions?: Partial<ViewOptions>;
+  }
+}
+
 function getViewOptions(): ViewOptions {
+  if (window.uimixViewOptions) {
+    return {
+      embed: false,
+      titleBarPadding: 0,
+      uiScaling: 1,
+      fontSize: 12,
+      narrowMode: false,
+      ...window.uimixViewOptions,
+    };
+  }
+
   const searchParams = new URLSearchParams(window.location.search);
 
   const embed = searchParams.get("embed") === "true";

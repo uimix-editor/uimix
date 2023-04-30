@@ -182,6 +182,14 @@ window.__vite_plugin_react_preamble_installed__ = true
   </head>
   <body>
     <div id="root"></div>
+    <script>
+      window.uimixViewOptions = {
+        embed: true,
+        uiScaling: 0.75,
+        fontSize: 11,
+        narrowMode: true,
+      };
+    </script>
     <script type="module" src="http://localhost:5173/src/main.tsx"></script>
   </body>
 </html>
