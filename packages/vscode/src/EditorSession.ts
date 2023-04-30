@@ -178,17 +178,30 @@ export class EditorSession {
   }
 
   private async getHTMLForWebview(webview: vscode.Webview): Promise<string> {
-    // TODO: CSP
-
     const isDevelopment =
       this.customDocument.context.extensionMode ===
       vscode.ExtensionMode.Development;
+
+    // TODO: CSP
+
+    const configScript = `
+<script>
+  window.uimixViewOptions = {
+    embed: true,
+    uiScaling: 0.75,
+    fontSize: 11,
+    narrowMode: true,
+    vscode: true,
+  };
+</script>`;
 
     if (!isDevelopment) {
       const remoteEditorURL = "https://local.editor.uimix.app";
 
       const html = await (await fetch(remoteEditorURL)).text();
-      return html.replaceAll("/assets/", remoteEditorURL + "/assets/");
+      return html
+        .replaceAll("</head>", configScript + "</head>")
+        .replaceAll("/assets/", remoteEditorURL + "/assets/");
     }
 
     return `
@@ -208,22 +221,13 @@ window.__vite_plugin_react_preamble_installed__ = true
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>UIMix Editor</title>
+    ${configScript}
   </head>
   <body>
     <div id="root"></div>
-    <script>
-      window.uimixViewOptions = {
-        embed: true,
-        uiScaling: 0.75,
-        fontSize: 11,
-        narrowMode: true,
-        vscode: true,
-      };
-    </script>
     <script type="module" src="http://localhost:5173/src/main.tsx"></script>
   </body>
-</html>
-    `;
+</html>`;
   }
   /*
   private getHTMLForWebview(webview: vscode.Webview): string {
