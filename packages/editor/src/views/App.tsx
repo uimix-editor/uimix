@@ -36,23 +36,8 @@ function useKeyHandling() {
   }, []);
 }
 
-// function useWindowTitle() {
-//   useEffect(() => {
-//     return reaction(
-//       () => projectState.fileName,
-//       (fileName) => {
-//         document.title = `${fileName} - Site & Component Editor`;
-//       },
-//       { fireImmediately: true }
-//     );
-//   }, []);
-// }
-
-// get title bar padding from query string
-
 export const App = observer(function App() {
   useKeyHandling();
-  //useWindowTitle();
 
   return (
     <TooltipProvider>
