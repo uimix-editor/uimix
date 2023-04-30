@@ -11,6 +11,7 @@
     "build": "turbo build",
     "dev": "turbo dev --concurrency 15",
     "lint": "turbo lint",
+    "package": "turbo package",
     "test": "turbo test",
     "upgrade-packages": "ncu -u && ls -d packages/*/ | xargs -I {} bash -c \"cd '{}' && ncu -u\""
   },
