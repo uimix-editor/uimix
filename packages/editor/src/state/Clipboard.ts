@@ -1,10 +1,52 @@
 import * as Data from "@uimix/model/src/data/v1";
 import { projectState } from "./ProjectState";
-import { DefaultClipboardHandler } from "./DefaultClipboardHandler";
-import { ClipboardHandler } from "../types/ClipboardHandler";
 import isSvg from "is-svg";
 
 // const mimeType = "application/x-macaron-nodes";
+
+interface ClipboardHandler {
+  get(type: "text" | "image"): Promise<string | undefined>;
+  set(type: "text" | "image", textOrDataURL: string): Promise<void>;
+}
+
+class DefaultClipboardHandler {
+  async get(type: "text" | "image") {
+    switch (type) {
+      case "text":
+        return await navigator.clipboard.readText();
+      case "image": {
+        const items = await navigator.clipboard.read();
+        const item = items.find((item) => item.types.includes(`image/png`));
+        if (!item) {
+          return;
+        }
+        const blob = await item.getType(`image/png`);
+
+        return await new Promise<string>((resolve, reject) => {
+          const reader = new FileReader();
+          reader.onload = () => resolve(reader.result as string);
+          reader.onerror = reject;
+          reader.readAsDataURL(blob);
+        });
+      }
+    }
+  }
+
+  async set(type: "text" | "image", textOrDataURL: string) {
+    switch (type) {
+      case "text":
+        await navigator.clipboard.writeText(textOrDataURL);
+      case "image": {
+        const blob = await fetch(textOrDataURL).then((r) => r.blob());
+        await navigator.clipboard.write([
+          new ClipboardItem({
+            "image/png": blob,
+          }),
+        ]);
+      }
+    }
+  }
+}
 
 export class Clipboard {
   static handler: ClipboardHandler = new DefaultClipboardHandler();

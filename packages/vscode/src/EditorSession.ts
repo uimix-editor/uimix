@@ -1,8 +1,4 @@
 import * as vscode from "vscode";
-import {
-  IEditorToVSCodeRPCHandler,
-  IVSCodeToEditorRPCHandler,
-} from "../../dashboard/src/types/VSCodeEditorRPC";
 import { RPC } from "@uimix/typed-rpc";
 import * as Y from "yjs";
 import debounce from "just-debounce-it";
@@ -12,6 +8,11 @@ import { CodeAssets } from "@uimix/model/src/models/CodeAssets";
 import { getPageID } from "@uimix/model/src/data/util";
 import { ProjectIO } from "uimix/src/project/ProjectIO";
 import { CustomDocument } from "./CustomDocument";
+import type {
+  IRootToEditorRPCHandler,
+  IEditorToRootRPCHandler,
+} from "@uimix/editor/src/types/IFrameRPC";
+import fetch from "node-fetch";
 
 const debouncedUpdate = (
   onUpdate: (update: Uint8Array) => void
@@ -51,7 +52,9 @@ export class EditorSession {
     webviewPanel.webview.options = {
       enableScripts: true,
     };
-    webviewPanel.webview.html = this.getHTMLForWebview(webviewPanel.webview);
+    webviewPanel.webview.html = await this.getHTMLForWebview(
+      webviewPanel.webview
+    );
 
     const projectIO = this.projectIO;
     const uri = this.customDocument.uri;
@@ -64,7 +67,7 @@ export class EditorSession {
 
     let unsubscribeDoc: (() => void) | undefined;
 
-    const rpc = new RPC<IVSCodeToEditorRPCHandler, IEditorToVSCodeRPCHandler>(
+    const rpc = new RPC<IRootToEditorRPCHandler, IEditorToRootRPCHandler>(
       {
         post: (message) => {
           webviewPanel.webview.postMessage(message);
@@ -93,11 +96,18 @@ export class EditorSession {
           Y.applyUpdate(projectData.doc, data);
           this.saveDebounced();
         },
-        getClipboard: async () => {
-          throw new Error("should be intercepted in webview.");
+        uploadImage: async (
+          hash: string,
+          contentType: string,
+          data: Uint8Array
+        ) => {
+          // just return data url
+          return `data:${contentType};base64,${Buffer.from(data).toString(
+            "base64"
+          )}`;
         },
-        setClipboard: async () => {
-          throw new Error("should be intercepted in webview.");
+        updateThumbnail: async () => {
+          // no op
         },
         getCodeAssets: async () => this.loadCodeAssets(),
       }
@@ -161,6 +171,59 @@ export class EditorSession {
     }
   }
 
+  private async getHTMLForWebview(webview: vscode.Webview): Promise<string> {
+    const isDevelopment =
+      this.customDocument.context.extensionMode ===
+      vscode.ExtensionMode.Development;
+
+    // TODO: CSP
+
+    const configScript = `
+<script>
+  window.uimixViewOptions = {
+    embed: true,
+    uiScaling: 0.75,
+    fontSize: 11,
+    narrowMode: true,
+    vscode: true,
+  };
+</script>`;
+
+    if (!isDevelopment) {
+      const remoteEditorURL = "https://local.editor.uimix.app";
+
+      const html = await (await fetch(remoteEditorURL)).text();
+      return html
+        .replaceAll("</head>", configScript + "</head>")
+        .replaceAll("/assets/", remoteEditorURL + "/assets/");
+    }
+
+    return `
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <script type="module">
+import RefreshRuntime from "http://localhost:5173/@react-refresh"
+RefreshRuntime.injectIntoGlobalHook(window)
+window.$RefreshReg$ = () => {}
+window.$RefreshSig$ = () => (type) => type
+window.__vite_plugin_react_preamble_installed__ = true
+</script>
+
+    <script type="module" src="http://localhost:5173/@vite/client"></script>
+
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>UIMix Editor</title>
+    ${configScript}
+  </head>
+  <body>
+    <div id="root"></div>
+    <script type="module" src="http://localhost:5173/src/main.tsx"></script>
+  </body>
+</html>`;
+  }
+  /*
   private getHTMLForWebview(webview: vscode.Webview): string {
     const nonce = getNonce();
 
@@ -270,6 +333,7 @@ export class EditorSession {
       </html>
     `;
   }
+  */
 }
 
 function getNonce(): string {

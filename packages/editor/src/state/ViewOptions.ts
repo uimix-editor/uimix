@@ -4,9 +4,28 @@ interface ViewOptions {
   uiScaling: number;
   fontSize: number;
   narrowMode: boolean;
+  vscode: boolean;
+}
+
+declare global {
+  interface Window {
+    uimixViewOptions?: Partial<ViewOptions>;
+  }
 }
 
 function getViewOptions(): ViewOptions {
+  if (window.uimixViewOptions) {
+    return {
+      embed: false,
+      titleBarPadding: 0,
+      uiScaling: 1,
+      fontSize: 12,
+      narrowMode: false,
+      vscode: false,
+      ...window.uimixViewOptions,
+    };
+  }
+
   const searchParams = new URLSearchParams(window.location.search);
 
   const embed = searchParams.get("embed") === "true";
@@ -23,6 +42,7 @@ function getViewOptions(): ViewOptions {
     uiScaling,
     fontSize,
     narrowMode,
+    vscode: false,
   };
 }
 
