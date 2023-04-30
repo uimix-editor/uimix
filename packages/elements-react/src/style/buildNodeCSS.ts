@@ -160,11 +160,12 @@ export function buildNodeCSS(
     } else {
       cssStyle.display = "block";
     }
-    cssStyle.paddingLeft = `${style.paddingLeft}px`;
-    cssStyle.paddingRight = `${style.paddingRight}px`;
-    cssStyle.paddingTop = `${style.paddingTop}px`;
-    cssStyle.paddingBottom = `${style.paddingBottom}px`;
   }
+
+  cssStyle.paddingLeft = `${style.paddingLeft}px`;
+  cssStyle.paddingRight = `${style.paddingRight}px`;
+  cssStyle.paddingTop = `${style.paddingTop}px`;
+  cssStyle.paddingBottom = `${style.paddingBottom}px`;
 
   const fills = style.fills;
   cssStyle.background = fills.length ? fills[0].solid : "transparent";

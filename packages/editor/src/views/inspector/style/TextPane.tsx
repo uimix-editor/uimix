@@ -1,19 +1,12 @@
 import { observer } from "mobx-react-lite";
 import formatSizeIcon from "@iconify-icons/ic/format-size";
 import formatLineSpacingIcon from "@iconify-icons/ic/format-line-spacing";
-import formatAlignLeftIcon from "@iconify-icons/ic/format-align-left";
-import formatAlignCenterIcon from "@iconify-icons/ic/format-align-center";
-import formatAlignRightIcon from "@iconify-icons/ic/format-align-right";
-import formatAlignJustifyIcon from "@iconify-icons/ic/format-align-justify";
-import verticalAlignTopIcon from "@iconify-icons/ic/vertical-align-top";
-import verticalAlignCenterIcon from "@iconify-icons/ic/vertical-align-center";
-import verticalAlignBottomIcon from "@iconify-icons/ic/vertical-align-bottom";
 import spaceBarIcon from "@iconify-icons/ic/space-bar";
+import edgeTopIcon from "@seanchas116/design-icons/json/edge-top.json";
 import { InspectorHeading } from "../components/InspectorHeading";
 import { InspectorNumberInput } from "./inputs/InspectorNumberInput";
 import { InspectorPane } from "../components/InspectorPane";
-import { InspectorToggleGroup } from "./inputs/InspectorToggleGroup";
-import { ToggleGroupItem } from "@uimix/foundation/src/components";
+import { AlignmentEdit } from "@uimix/foundation/src/components";
 import * as Data from "@uimix/model/src/data/v1";
 import { InspectorTargetContext } from "../components/InspectorTargetContext";
 import { projectState } from "../../../state/ProjectState";
@@ -28,40 +21,6 @@ const googleFontOptions = googleFonts.items.map((item) => ({
   value: item.family,
   text: item.family,
 }));
-
-const textAlignOptions: ToggleGroupItem<Data.TextHorizontalAlign>[] = [
-  {
-    value: "start",
-    icon: formatAlignLeftIcon,
-  },
-  {
-    value: "center",
-    icon: formatAlignCenterIcon,
-  },
-  {
-    value: "end",
-    icon: formatAlignRightIcon,
-  },
-  {
-    value: "justify",
-    icon: formatAlignJustifyIcon,
-  },
-];
-
-const verticalAlignOptions: ToggleGroupItem<Data.TextVerticalAlign>[] = [
-  {
-    value: "start",
-    icon: verticalAlignTopIcon,
-  },
-  {
-    value: "center",
-    icon: verticalAlignCenterIcon,
-  },
-  {
-    value: "end",
-    icon: verticalAlignBottomIcon,
-  },
-];
 
 export const TextPane: React.FC = observer(function TextPane() {
   const textSelectables = projectState.selectedSelectables.filter(
@@ -173,22 +132,98 @@ export const TextPane: React.FC = observer(function TextPane() {
               }}
             />
           </div>
-          <InspectorToggleGroup
-            items={textAlignOptions}
-            get={(s) => s.style.textHorizontalAlign}
+        </div>
+        <div className="grid grid-cols-3 gap-2 items-center">
+          <InspectorNumberInput
+            icon={edgeTopIcon}
+            tooltip="Padding Top"
+            className="col-start-2 row-start-1"
+            get={(s) => ({ value: s.style.paddingTop })}
             set={(s, value) => {
-              s.style.textHorizontalAlign = value ?? "start";
+              s.style.paddingTop = value?.value ?? 0;
             }}
           />
-          <InspectorToggleGroup
-            items={verticalAlignOptions}
-            get={(s) => s.style.textVerticalAlign}
-            set={(s, value) => {
-              s.style.textVerticalAlign = value ?? "start";
+          <InspectorNumberInput
+            icon={{
+              ...edgeTopIcon,
+              rotate: 1,
             }}
+            tooltip="Padding Right"
+            className="col-start-3 row-start-2"
+            get={(s) => ({ value: s.style.paddingRight })}
+            set={(s, value) => {
+              s.style.paddingRight = value?.value ?? 0;
+            }}
+          />
+          <InspectorNumberInput
+            icon={{
+              ...edgeTopIcon,
+              rotate: 2,
+            }}
+            tooltip="Padding Bottom"
+            className="col-start-2 row-start-3"
+            get={(s) => ({ value: s.style.paddingBottom })}
+            set={(s, value) => {
+              s.style.paddingBottom = value?.value ?? 0;
+            }}
+          />
+          <InspectorNumberInput
+            icon={{
+              ...edgeTopIcon,
+              rotate: 3,
+            }}
+            tooltip="Padding Left"
+            className="col-start-1 row-start-2"
+            get={(s) => ({ value: s.style.paddingLeft })}
+            set={(s, value) => {
+              s.style.paddingLeft = value?.value ?? 0;
+            }}
+          />
+          <StackAlignmentEdit
+            direction="y"
+            className="col-start-2 row-start-2"
           />
         </div>
       </InspectorTargetContext.Provider>
     </InspectorPane>
+  );
+});
+
+const StackAlignmentEdit = observer(function StackAlignmentEdit({
+  direction,
+  className,
+}: {
+  direction: Data.StackDirection;
+  className?: string;
+}) {
+  const selectables = projectState.selectedSelectables;
+  const align = sameOrMixed(
+    selectables.map((s) => s.style.textHorizontalAlign)
+  );
+  const justify = sameOrMixed(
+    selectables.map((s) => s.style.textVerticalAlign)
+  );
+
+  return (
+    <AlignmentEdit
+      className={className}
+      direction={direction}
+      align={
+        typeof align === "string"
+          ? align === "justify"
+            ? "start"
+            : align
+          : undefined
+      }
+      justify={typeof justify === "string" ? justify : undefined}
+      onChange={action((align, justify) => {
+        for (const selectable of selectables) {
+          selectable.style.textHorizontalAlign = align ?? "start";
+          selectable.style.textVerticalAlign =
+            justify && justify !== "spaceBetween" ? justify : "start";
+        }
+        projectState.undoManager.stopCapturing();
+      })}
+    />
   );
 });
