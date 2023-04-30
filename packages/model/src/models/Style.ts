@@ -51,6 +51,7 @@ export const defaultStyle: Data.Style = {
 
   // text
 
+  color: "#000000",
   textContent: "",
   fontFamily: "Inter",
   fontWeight: 400,

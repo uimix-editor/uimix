@@ -692,6 +692,7 @@ export class Selectable {
       ...style,
       fills: style.fills.map(resolveFill),
       border: style.border && resolveFill(style.border),
+      color: resolveColor(style.color ?? "#000000"),
       shadows: style.shadows.map((shadow) => ({
         ...shadow,
         color: resolveColor(shadow.color),
