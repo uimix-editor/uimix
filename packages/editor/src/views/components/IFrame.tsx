@@ -1,6 +1,23 @@
 import React from "react";
 import ReactDOM from "react-dom/client";
 
+const srcdoc = `<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <style>
+      body {
+        margin: 0;
+        -webkit-font-smoothing: antialiased;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="root"></div>
+  </body>
+</html>
+`;
+
 export const IFrame: React.FC<{
   init: (window: Window, iframe: HTMLIFrameElement) => React.ReactNode;
   className?: string;
@@ -23,7 +40,7 @@ export const IFrame: React.FC<{
     );
   };
 
-  return <iframe onLoad={onLoad} src="/iframe.html" className={className} />;
+  return <iframe onLoad={onLoad} srcDoc={srcdoc} className={className} />;
 };
 
 IFrame.displayName = "IFrame";
