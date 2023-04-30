@@ -178,7 +178,11 @@ export class EditorSession {
   }
 
   private async getHTMLForWebview(webview: vscode.Webview): Promise<string> {
-    const isDevelopment = false;
+    // TODO: CSP
+
+    const isDevelopment =
+      this.customDocument.context.extensionMode ===
+      vscode.ExtensionMode.Development;
 
     if (!isDevelopment) {
       const remoteEditorURL = "https://local.editor.uimix.app";
