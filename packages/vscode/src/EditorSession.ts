@@ -1,8 +1,4 @@
 import * as vscode from "vscode";
-import {
-  IEditorToVSCodeRPCHandler,
-  IVSCodeToEditorRPCHandler,
-} from "../../dashboard/src/types/VSCodeEditorRPC";
 import { RPC } from "@uimix/typed-rpc";
 import * as Y from "yjs";
 import debounce from "just-debounce-it";
@@ -12,6 +8,10 @@ import { CodeAssets } from "@uimix/model/src/models/CodeAssets";
 import { getPageID } from "@uimix/model/src/data/util";
 import { ProjectIO } from "uimix/src/project/ProjectIO";
 import { CustomDocument } from "./CustomDocument";
+import type {
+  IRootToEditorRPCHandler,
+  IEditorToRootRPCHandler,
+} from "@uimix/editor/src/types/IFrameRPC";
 
 const debouncedUpdate = (
   onUpdate: (update: Uint8Array) => void
@@ -64,7 +64,7 @@ export class EditorSession {
 
     let unsubscribeDoc: (() => void) | undefined;
 
-    const rpc = new RPC<IVSCodeToEditorRPCHandler, IEditorToVSCodeRPCHandler>(
+    const rpc = new RPC<IRootToEditorRPCHandler, IEditorToRootRPCHandler>(
       {
         post: (message) => {
           webviewPanel.webview.postMessage(message);
@@ -92,6 +92,19 @@ export class EditorSession {
           console.log("sync");
           Y.applyUpdate(projectData.doc, data);
           this.saveDebounced();
+        },
+        uploadImage: async (
+          hash: string,
+          contentType: string,
+          data: Uint8Array
+        ) => {
+          // just return data url
+          return `data:${contentType};base64,${Buffer.from(data).toString(
+            "base64"
+          )}`;
+        },
+        updateThumbnail: async () => {
+          // no op
         },
         getClipboard: async () => {
           throw new Error("should be intercepted in webview.");
