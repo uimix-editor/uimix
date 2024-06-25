@@ -1,5 +1,8 @@
 # UIMix
 
+> [!IMPORTANT]  
+> This project will no longer be updated. When I restart the project in the future, the codebase will be a separate one.
+
 > Macaron is rebranding to UIMix and is under active development. The old version is still available at the links below.
 >
 > - [Old Branch](https://github.com/uimix-editor/uimix/tree/old)
